@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FitTrack — Desktop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #f3efe6; }
+  * { box-sizing: border-box; }
+  @keyframes ftfade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ftslide { from { transform: translateY(30px); } to { transform: translateY(0); } }
+  image-slot { --is-bg: #efeadf; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: rgba(22,20,13,0.18); }
+  ::-webkit-scrollbar-track { background: transparent; }
+  .ft-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #e7531c; border: 2px solid #16140d; cursor: pointer; }
+  .ft-slider::-moz-range-thumb { width: 18px; height: 18px; background: #e7531c; border: 2px solid #16140d; border-radius: 0; cursor: pointer; }
+  select option { background: #f3efe6; color: #16140d; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<script src="data.js"></script>
+<script src="app/app-data.js"></script>
+<script src="app/desktop-data.js"></script>
+<script src="app/image-slot.js"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="app/app-kit.jsx"></script>
+<script type="text/babel" src="app/desktop-forms.jsx"></script>
+<script type="text/babel" src="directionA.jsx"></script>
+<script type="text/babel" src="app/desktop-screens.jsx"></script>
+<script type="text/babel" src="app/desktop-body.jsx"></script>
+<script type="text/babel" src="app/desktop-nutrition.jsx"></script>
+<script type="text/babel" src="app/desktop-train.jsx"></script>
+<script type="text/babel" src="app/desktop-library.jsx"></script>
+<script type="text/babel" src="app/desktop-shell.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+ReactDOM.createRoot(document.getElementById("app")).render(<FitTrackDesktop />);
+</script>
+</body>
+</html>
