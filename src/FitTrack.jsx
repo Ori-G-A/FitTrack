@@ -30,7 +30,7 @@ const KCAL_PER_KG = 7700;
 const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Gemelos", "Core", "Trapecio", "Antebrazo"];
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
 const MUSCLE_COLOR = {
-  Pecho: "#c5f82a", Espalda: "#5ad1ff", Hombros: "#ff8a3d", Bíceps: "#ff6b9d", Tríceps: "#b388ff",
+  Pecho: "#e7531c", Espalda: "#5ad1ff", Hombros: "#ff8a3d", Bíceps: "#ff6b9d", Tríceps: "#b388ff",
   Cuádriceps: "#ffd23d", Femoral: "#3ddc97", Glúteos: "#ff6b4a", Gemelos: "#7ee787", Core: "#f2f0e6", Trapecio: "#9aa0a6", Antebrazo: "#c0a3ff",
 };
 const SECONDARY_FACTOR = 0.5;
@@ -121,7 +121,7 @@ const addDays = (iso, n) => { const d = new Date(iso + "T00:00:00"); d.setDate(d
 const CYCLE_PHASES = {
   "Menstrual": { color: "#ff6b4a", note: "Energía variable y posibles molestias. Está bien bajar intensidad si lo necesitas; escucha a tu cuerpo." },
   "Folicular": { color: "#3ddc97", note: "Al subir el estrógeno, muchas personas reportan más energía y fuerza. Suele ser una buena ventana para intentar récords." },
-  "Ovulatoria": { color: "#c5f82a", note: "Pico de energía frecuente. Algunas notan más laxitud articular: cuida especialmente la técnica con cargas altas." },
+  "Ovulatoria": { color: "#e7531c", note: "Pico de energía frecuente. Algunas notan más laxitud articular: cuida especialmente la técnica con cargas altas." },
   "Lútea": { color: "#b388ff", note: "En la fase lútea tardía algunas reportan más fatiga, antojos y peor recuperación. Que el rendimiento fluctúe aquí es normal." },
   "Por confirmar": { color: "#878d86", note: "Tu periodo podría ir retrasado respecto a tu media. Registra el inicio cuando llegue para afinar las predicciones." },
 };
@@ -210,19 +210,19 @@ const ACTIVITY = [
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 .ft-root *{box-sizing:border-box;}
-.ft-root{--bg:#0b0d0a;--panel:#14171a;--panel2:#1b1f22;--line:#262b2d;--text:#e9ebe5;--muted:#878d86;--accent:#c5f82a;--accentdim:rgba(197,248,42,.12);--danger:#ff6b4a;--blue:#5ad1ff;--ok:#3ddc97;font-family:'Hanken Grotesk',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.4;background-image:radial-gradient(circle at 85% -5%, rgba(197,248,42,.07), transparent 45%);}
+.ft-root{--bg:#f3efe6;--panel:#faf7f0;--panel2:#ece6da;--line:#dcd4c2;--text:#16140d;--muted:#6f6a5d;--accent:#e7531c;--accentdim:rgba(231,83,28,.12);--danger:#c0341a;--blue:#2f6f8f;--ok:#3a7d44;font-family:'Hanken Grotesk',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.4;background-image:none;}
 .ft-mono{font-family:'IBM Plex Mono',monospace;}
 .ft-wrap{max-width:1120px;margin:0 auto;padding:20px 18px 90px;}
 .ft-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
 .ft-logo{display:flex;align-items:center;gap:10px;}
-.ft-logo .mark{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;color:#0b0d0a;}
+.ft-logo .mark{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;color:#f3efe6;}
 .ft-logo h1{font-family:'Archivo';font-weight:900;letter-spacing:-.04em;text-transform:uppercase;font-size:22px;line-height:1;margin:0;}
 .ft-logo span{color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase;}
 .ft-iconbtn{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:9px;padding:8px 10px;display:inline-flex;gap:6px;align-items:center;cursor:pointer;font-size:12px;font-weight:600;}
 .ft-iconbtn:hover{border-color:var(--accent);color:var(--text);}
 .ft-nav{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:24px;overflow-x:auto;}
 .ft-nav button{flex:1;min-width:78px;border:none;background:transparent;color:var(--muted);padding:11px 8px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12.5px;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;transition:.15s;}
-.ft-nav button.active{background:var(--accent);color:#0b0d0a;}
+.ft-nav button.active{background:var(--accent);color:#f3efe6;}
 .ft-nav button:not(.active):hover{color:var(--text);background:var(--panel2);}
 .ft-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;}
 .ft-card h2{font-family:'Archivo';font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:15px;margin:0 0 14px;display:flex;align-items:center;gap:9px;}
@@ -234,7 +234,7 @@ const CSS = `
 .ft-input:focus,.ft-select:focus{outline:none;border-color:var(--accent);}
 .ft-mono.ft-input{font-family:'IBM Plex Mono';}
 textarea.ft-input{resize:vertical;min-height:60px;}
-.ft-btn{background:var(--accent);color:#0b0d0a;border:none;border-radius:9px;padding:10px 16px;font-weight:800;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:7px;}
+.ft-btn{background:var(--accent);color:#f3efe6;border:none;border-radius:9px;padding:10px 16px;font-weight:800;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:7px;}
 .ft-btn:hover{filter:brightness(1.08);}
 .ft-btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);}
 .ft-btn.ghost:hover{border-color:var(--accent);}
@@ -291,7 +291,7 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-secchip.on{border-color:var(--accent);color:var(--accent);background:var(--accentdim);}
 .ft-toggle{display:inline-flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:3px;margin-bottom:14px;flex-wrap:wrap;}
 .ft-toggle button{border:none;background:transparent;color:var(--muted);padding:7px 14px;border-radius:7px;cursor:pointer;font-weight:700;font-size:12px;}
-.ft-toggle button.on{background:var(--accent);color:#0b0d0a;}
+.ft-toggle button.on{background:var(--accent);color:#f3efe6;}
 .ft-combo{position:relative;}
 .ft-combo-list{position:absolute;top:100%;left:0;right:0;z-index:30;background:var(--panel2);border:1px solid var(--line);border-radius:9px;margin-top:4px;max-height:240px;overflow:auto;box-shadow:0 10px 28px rgba(0,0,0,.45);}
 .ft-combo-list button{display:flex;justify-content:space-between;align-items:center;width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--text);padding:10px 12px;cursor:pointer;text-align:left;font-size:13px;font-weight:600;}
@@ -303,7 +303,7 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-h3{font-family:'Archivo';font-weight:800;text-transform:uppercase;font-size:13px;color:var(--muted);letter-spacing:.04em;margin:0;}
 .ft-energy{display:flex;gap:6px;}
 .ft-energy button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:9px;cursor:pointer;font-weight:700;font-family:'IBM Plex Mono';}
-.ft-energy button.on{background:var(--accent);color:#0b0d0a;border-color:var(--accent);}
+.ft-energy button.on{background:var(--accent);color:#f3efe6;border-color:var(--accent);}
 .ft-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:14px;}
 .ft-photo{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;background:var(--panel2);}
 .ft-photo img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -313,6 +313,12 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
 .ft-lock-box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 24px;width:100%;max-width:340px;}
 .recharts-cartesian-axis-tick-value{font-family:'IBM Plex Mono';font-size:11px;}
+/* ---- brutalist re-skin: sharp corners + editorial chrome ---- */
+.ft-root .ft-card,.ft-root .ft-stat,.ft-root .ft-nav,.ft-root .ft-nav button,.ft-root .ft-btn,.ft-root .ft-iconbtn,.ft-root .ft-input,.ft-root .ft-select,.ft-root .ft-ex,.ft-root .ft-li,.ft-root .ft-lock-box,.ft-root .ft-combo-list,.ft-root .ft-combo-list button,.ft-root .ft-toggle,.ft-root .ft-toggle button,.ft-root .ft-mu,.ft-root .ft-chip,.ft-root .ft-prev,.ft-root .ft-secchip,.ft-root .ft-energy button,.ft-root .ft-photo,.ft-root .ft-alert,.ft-root .ft-set .si,.ft-root .ft-addset,.ft-root .ft-datebar .nav,.ft-root .ft-logo .mark,.ft-root .ft-trash,.ft-root .ft-photo-del{border-radius:0;}
+.ft-root .ft-logo h1{letter-spacing:-.045em;}
+.ft-root .ft-card h2,.ft-root .ft-h3{letter-spacing:-.01em;}
+.ft-root .ft-card{border-color:var(--line);}
+.ft-root .ft-nav button.active,.ft-root .ft-btn,.ft-root .ft-toggle button.on,.ft-root .ft-energy button.on,.ft-root .ft-logo .mark{color:#f3efe6;}
 `;
 
 /* ----------------------------- shared: food combo ----------------------------- */
@@ -785,7 +791,7 @@ function Body({ weights, setWeights, measurements, setMeasurements, wellness, se
               <CartesianGrid stroke="#262b2d" strokeDasharray="3 3" />
               <XAxis dataKey="date" stroke="#878d86" tick={{ fill: "#878d86" }} /><YAxis stroke="#878d86" tick={{ fill: "#878d86" }} domain={["auto", "auto"]} />
               <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} />
-              <Line type="monotone" dataKey="kg" stroke="#c5f82a" strokeWidth={2.5} dot={{ r: 3, fill: "#c5f82a" }} />
+              <Line type="monotone" dataKey="kg" stroke="#e7531c" strokeWidth={2.5} dot={{ r: 3, fill: "#e7531c" }} />
             </LineChart>
           </ResponsiveContainer>
         )}
@@ -1337,7 +1343,7 @@ function Dashboard({ workouts, weights, nutrition, measurements, periods, goals 
               <Legend wrapperStyle={{ fontSize: 12, fontFamily: "'IBM Plex Mono'" }} />
               <Line type="monotone" dataKey="real" stroke="#3a4042" strokeWidth={1} dot={{ r: 2, fill: "#3a4042" }} name="Real" />
               <Line type="monotone" dataKey="objetivo" stroke="#5ad1ff" strokeWidth={2} strokeDasharray="5 4" dot={false} name="Objetivo" />
-              <Line type="monotone" dataKey="media" stroke="#c5f82a" strokeWidth={2.8} dot={false} name="Media 7d" />
+              <Line type="monotone" dataKey="media" stroke="#e7531c" strokeWidth={2.8} dot={false} name="Media 7d" />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
@@ -1358,7 +1364,7 @@ function Dashboard({ workouts, weights, nutrition, measurements, periods, goals 
                 <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} />
                 <Legend wrapperStyle={{ fontSize: 12, fontFamily: "'IBM Plex Mono'" }} />
                 <Bar yAxisId="r" dataKey="volume" fill="rgba(90,209,255,.25)" name="Volumen (kg)" radius={[4, 4, 0, 0]} />
-                <Line yAxisId="l" type="monotone" dataKey="oneRM" stroke="#c5f82a" strokeWidth={2.8} dot={{ r: 3, fill: "#c5f82a" }} name="1RM est. (kg)" />
+                <Line yAxisId="l" type="monotone" dataKey="oneRM" stroke="#e7531c" strokeWidth={2.8} dot={{ r: 3, fill: "#e7531c" }} name="1RM est. (kg)" />
               </ComposedChart>
             </ResponsiveContainer>
           )}
@@ -1445,7 +1451,7 @@ function Goals({ goals, setGoals, weights, exportData, userEmail, signOut }) {
           <div className="ft-field"><label>Peso meta (kg)</label><input className="ft-input ft-mono" type="number" step="0.1" placeholder="0.0" value={goals.targetWeight} onChange={(e) => upd("targetWeight", e.target.value)} /></div>
         </div>
         <div className="ft-field" style={{ marginBottom: 12 }}><label>Ritmo objetivo: {goals.weeklyChange > 0 ? "+" : ""}{Number(goals.weeklyChange).toFixed(2)} kg/semana{goals.weeklyChange < 0 ? " (déficit)" : goals.weeklyChange > 0 ? " (volumen)" : " (mantenimiento)"}</label>
-          <input type="range" min="-1" max="1" step="0.05" value={goals.weeklyChange} onChange={(e) => upd("weeklyChange", Number(e.target.value))} style={{ accentColor: "#c5f82a", width: "100%" }} /></div>
+          <input type="range" min="-1" max="1" step="0.05" value={goals.weeklyChange} onChange={(e) => upd("weeklyChange", Number(e.target.value))} style={{ accentColor: "#e7531c", width: "100%" }} /></div>
         {dir && <div className="ft-prev" style={{ marginTop: 0 }}><span>Objetivo detectado:</span><b style={{ color: dir === "perder grasa" ? "var(--blue)" : dir === "ganar músculo" ? "var(--accent)" : "var(--text)" }}>{dir}</b></div>}
       </div>
 
@@ -1455,7 +1461,7 @@ function Goals({ goals, setGoals, weights, exportData, userEmail, signOut }) {
           <div className="ft-field"><label>Nivel de actividad</label><select className="ft-select" value={goals.activity} onChange={(e) => upd("activity", e.target.value)}>{ACTIVITY.map((a) => <option key={a.key} value={a.key}>{a.label}</option>)}</select></div>
         </div>
         <label style={{ display: "flex", alignItems: "center", gap: 9, cursor: "pointer", marginBottom: 14, fontSize: 14 }}>
-          <input type="checkbox" checked={goals.autoMacros} onChange={(e) => upd("autoMacros", e.target.checked)} style={{ accentColor: "#c5f82a", width: 18, height: 18 }} />
+          <input type="checkbox" checked={goals.autoMacros} onChange={(e) => upd("autoMacros", e.target.checked)} style={{ accentColor: "#e7531c", width: 18, height: 18 }} />
           Calcular calorías y proteína automáticamente desde mi objetivo
         </label>
         {goals.autoMacros && suggestion && (
