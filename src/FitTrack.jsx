@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { supabase } from "./supabase.js";
+import { ROUTINE_TEMPLATES, templateToAppRoutine, computeProteinTargets, distributeProtein, PROTEIN_CONFIG } from "./fase1Config.js";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, ReferenceLine, Legend, ComposedChart, Cell
@@ -169,7 +170,7 @@ async function saveKey(key, val) {
     );
   } catch (e) { console.error(e); }
 }
-const DEFAULT_GOALS = { startWeight: "", targetWeight: "", weeklyChange: -0.4, kcalTarget: 2200, proteinTarget: 150, autoMacros: false, activity: "moderado" };
+const DEFAULT_GOALS = { startWeight: "", targetWeight: "", weeklyChange: -0.4, kcalTarget: 2200, proteinTarget: 150, autoMacros: false, activity: "moderado", proteinPerKg: 2.0, proteinMeals: 4 };
 
 function migrateWorkouts(ws) {
   return ws.map((w) => ({
@@ -583,21 +584,21 @@ export function Train({ workouts, setWorkouts, routines }) {
   const applyPreset = (idx) => { if (idx === "") return; const p = EXERCISE_PRESETS[Number(idx)]; setName(p.name); setPrimary(p.primary); setSecondary(p.secondary); };
   const addExercise = () => {
     if (!name.trim()) return;
-    const ex = { id: uid(), name: name.trim(), primary, secondary: secondary.filter((m) => m !== primary), sets: [{ id: uid(), reps: "", kg: "" }] };
+    const ex = { id: uid(), name: name.trim(), primary, secondary: secondary.filter((m) => m !== primary), sets: [{ id: uid(), reps: "", kg: "", rpe: "" }] };
     writeSession({ exercises: [...exercises, ex] }); setName(""); setSecondary([]);
   };
   const loadRoutine = (idx) => {
     if (idx === "") return;
     const r = routines[Number(idx)];
     const newEx = r.exercises.map((e) => ({
-      id: uid(), name: e.name, primary: e.primary, secondary: e.secondary || [],
-      sets: Array.from({ length: Math.max(1, Number(e.targetSets) || 1) }, () => ({ id: uid(), reps: e.targetReps || "", kg: "" })),
+      id: uid(), name: e.name, primary: e.primary, secondary: e.secondary || [], targetRpe: e.targetRpe || "", notes: e.notes || "",
+      sets: Array.from({ length: Math.max(1, Number(e.targetSets) || 1) }, () => ({ id: uid(), reps: e.targetReps || "", kg: "", rpe: "" })),
     }));
     writeSession({ exercises: [...exercises, ...newEx] });
   };
   const upEx = (n) => writeSession({ exercises: n });
   const editSet = (exId, sId, f, v) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: e.sets.map((s) => s.id === sId ? { ...s, [f]: v } : s) }));
-  const addSet = (exId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: [...e.sets, { id: uid(), reps: "", kg: "" }] }));
+  const addSet = (exId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: [...e.sets, { id: uid(), reps: "", kg: "", rpe: "" }] }));
   const delSet = (exId, sId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: e.sets.length > 1 ? e.sets.filter((s) => s.id !== sId) : e.sets }));
   const delEx = (exId) => upEx(exercises.filter((e) => e.id !== exId));
   const addCardio = () => { if (!cardio.minutes) return; writeSession({ cardio: [...cardioList, { id: uid(), type: cardio.type, minutes: Number(cardio.minutes), kcal: Number(cardio.kcal) || 0 }] }); setCardio({ type: CARDIO_TYPES[0], minutes: "", kcal: "" }); };
@@ -680,6 +681,11 @@ export function Train({ workouts, setWorkouts, routines }) {
             <div className="ft-stat"><div className="k">Series</div><div className="v">{totalSets}</div></div>
             <div className="ft-stat"><div className="k">Volumen total</div><div className="v">{Math.round(totalVol).toLocaleString("es-ES")}<small>kg</small></div></div>
           </div>
+          {exercises.length > 0 && (
+            <div className="ft-prev" style={{ marginTop: 0, marginBottom: 12, display: "block", lineHeight: 1.55 }}>
+              <b style={{ color: "var(--accent)" }}>RPE</b> = esfuerzo percibido, opcional (1–10). Guía: <b>6</b> cómodo, te sobran ~4 reps · <b>8</b> exigente, ~2 en reserva · <b>10</b> máximo, no podías una más.
+            </div>
+          )}
           {exercises.map((ex) => {
             const best1rm = ex.sets.reduce((m, s) => Math.max(m, epley(Number(s.kg) || 0, Number(s.reps) || 0)), 0);
             return (
@@ -689,17 +695,20 @@ export function Train({ workouts, setWorkouts, routines }) {
                   <span className="nm">{ex.name}</span>
                   <span className="ft-mu">{ex.primary}</span>
                   {(ex.secondary || []).map((s) => <span key={s} className="ft-mu sec">+{s}</span>)}
+                  {ex.targetRpe && <span className="ft-mu" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}>RPE obj. {ex.targetRpe}</span>}
                   {best1rm > 0 && <span className="ft-1rm">1RM ~{Math.round(best1rm)} kg</span>}
                   <button className="ft-trash" onClick={() => delEx(ex.id)}><Trash2 size={16} /></button>
                 </div>
-                <div className="ft-set" style={{ color: "var(--muted)", fontSize: 11, fontFamily: "'IBM Plex Mono'", marginBottom: 4 }}>
-                  <span></span><span style={{ textAlign: "center" }}>REPS</span><span style={{ textAlign: "center" }}>KG</span><span></span>
+                {ex.notes && <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "'IBM Plex Mono'", marginBottom: 8, lineHeight: 1.45 }}>{ex.notes}</div>}
+                <div className="ft-set" style={{ gridTemplateColumns: "24px 1fr 1fr 1fr 30px", color: "var(--muted)", fontSize: 11, fontFamily: "'IBM Plex Mono'", marginBottom: 4 }}>
+                  <span></span><span style={{ textAlign: "center" }}>REPS</span><span style={{ textAlign: "center" }}>KG</span><span style={{ textAlign: "center" }}>RPE</span><span></span>
                 </div>
                 {ex.sets.map((s, i) => (
-                  <div className="ft-set" key={s.id}>
+                  <div className="ft-set" key={s.id} style={{ gridTemplateColumns: "24px 1fr 1fr 1fr 30px" }}>
                     <span className="ix">{i + 1}</span>
                     <input className="si" type="number" inputMode="numeric" value={s.reps} placeholder="0" onChange={(e) => editSet(ex.id, s.id, "reps", e.target.value)} />
                     <input className="si" type="number" inputMode="decimal" value={s.kg} placeholder="0" onChange={(e) => editSet(ex.id, s.id, "kg", e.target.value)} />
+                    <input className="si" type="text" inputMode="decimal" value={s.rpe || ""} placeholder={ex.targetRpe || "–"} title="Esfuerzo percibido 1–10 (opcional)" onChange={(e) => editSet(ex.id, s.id, "rpe", e.target.value)} />
                     <button className="ft-trash" onClick={() => delSet(ex.id, s.id)}><Trash2 size={14} /></button>
                   </div>
                 ))}
@@ -1153,6 +1162,13 @@ export function Routines({ routines, setRoutines }) {
   const delItem = (id) => setItems((p) => p.filter((x) => x.id !== id));
   const saveRoutine = () => { if (!name.trim() || items.length === 0) return; setRoutines((p) => [...p, { id: uid(), name: name.trim(), exercises: items }]); setName(""); setItems([]); };
   const delRoutine = (id) => setRoutines((p) => p.filter((r) => r.id !== id));
+  const loadTemplates = () => {
+    setRoutines((prev) => {
+      const have = new Set(prev.map((r) => r.name));
+      const add = ROUTINE_TEMPLATES.filter((t) => !have.has(t.name)).map((t) => templateToAppRoutine(t, uid));
+      return [...prev, ...add];
+    });
+  };
 
   return (
     <>
@@ -1180,8 +1196,18 @@ export function Routines({ routines, setRoutines }) {
       </div>
       <div className="ft-card">
         <h2><ListChecks size={16} /> Mis rutinas <span className="tag">{routines.length}</span></h2>
-        {routines.length === 0 ? <div className="ft-empty">Aún no has creado rutinas.</div> : (
-          <div className="ft-list">{routines.map((r) => (<div className="ft-li" key={r.id}><span className="li-main">{r.name}</span><span className="li-sub">{r.exercises.map((e) => e.name).join(", ")}</span><button className="ft-trash" onClick={() => delRoutine(r.id)}><Trash2 size={15} /></button></div>))}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
+          <button className="ft-btn ghost" onClick={loadTemplates}><Download size={15} /> Cargar plantillas Fase 1</button>
+          <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 11, color: "var(--muted)" }}>{ROUTINE_TEMPLATES.length} rutinas guía · Fuerza A/B/C + sesión amable</span>
+        </div>
+        {routines.length === 0 ? <div className="ft-empty">Aún no has creado rutinas. Usa “Cargar plantillas Fase 1” para empezar con las rutinas guía, o créalas a mano arriba.</div> : (
+          <div className="ft-list">{routines.map((r) => (
+            <div className="ft-li" key={r.id}>
+              <span className="li-main">{r.name}</span>
+              <span className="li-sub">{r.focus ? `${r.focus} · ` : ""}{r.exercises.length} ej.{r.estimatedMin ? ` · ~${r.estimatedMin} min` : ""}</span>
+              <button className="ft-trash" onClick={() => delRoutine(r.id)}><Trash2 size={15} /></button>
+            </div>
+          ))}</div>
         )}
       </div>
     </>
@@ -2002,14 +2028,16 @@ export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut
   const dir = (start && target) ? (target < start ? "perder grasa" : target > start ? "ganar músculo" : "mantener") : null;
   const factor = (ACTIVITY.find((a) => a.key === goals.activity) || ACTIVITY[2]).factor;
 
+  const gPerKg = goals.proteinPerKg ?? 2.0;
+  const proteinMeals = goals.proteinMeals ?? 4;
   const suggestion = useMemo(() => {
     if (!refW) return null;
     const maintenance = refW * factor;
     const kcal = Math.round((maintenance + (Number(goals.weeklyChange) * KCAL_PER_KG) / 7) / 10) * 10;
-    const proteinPerKg = dir === "perder grasa" ? 2.2 : dir === "ganar músculo" ? 2.0 : 1.8;
-    const protein = Math.round(proteinPerKg * refW);
-    return { maintenance: Math.round(maintenance), kcal, protein, proteinPerKg };
-  }, [refW, factor, goals.weeklyChange, dir]);
+    const pt = computeProteinTargets(refW, { gPerKg });
+    return { maintenance: Math.round(maintenance), kcal, protein: pt.dailyTarget, proteinPerKg: pt.gPerKg, lowEnd: pt.lowEnd, highEnd: pt.highEnd };
+  }, [refW, factor, goals.weeklyChange, gPerKg]);
+  const mealSplit = suggestion ? distributeProtein(suggestion.protein, proteinMeals) : [];
 
   // auto-aplicar cuando está activado y cambian los inputs
   useEffect(() => {
@@ -2041,13 +2069,38 @@ export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut
         </div>
         <label style={{ display: "flex", alignItems: "center", gap: 9, cursor: "pointer", marginBottom: 14, fontSize: 14 }}>
           <input type="checkbox" checked={goals.autoMacros} onChange={(e) => upd("autoMacros", e.target.checked)} style={{ accentColor: "#e7531c", width: 18, height: 18 }} />
-          Calcular calorías y proteína automáticamente desde mi objetivo
+          Calcular calorías y proteína automáticamente desde mi peso
         </label>
+        {goals.autoMacros && (
+          <div className="ft-field" style={{ marginBottom: 14 }}>
+            <label>Proteína por kg de peso: {gPerKg.toFixed(1)} g/kg{refW ? ` · ${Math.round(refW * gPerKg)} g/día para ${round1(refW)} kg` : ""}</label>
+            <input type="range" min={PROTEIN_CONFIG.minGPerKg} max={PROTEIN_CONFIG.maxGPerKg} step="0.1" value={gPerKg} onChange={(e) => upd("proteinPerKg", Number(e.target.value))} style={{ accentColor: "#e7531c", width: "100%" }} />
+            <div className="ft-mono" style={{ fontSize: 11, color: "var(--muted)" }}>1.6 conservador · 2.0 recomendado en déficit · 2.4 máximo. El objetivo se recalcula solo al cambiar tu peso.</div>
+          </div>
+        )}
         {goals.autoMacros && suggestion && (
           <div className="ft-prev" style={{ marginTop: 0, marginBottom: 14 }}>
             <span>Mantenimiento est. <b>{suggestion.maintenance}</b> kcal</span>
             <span>→ objetivo <b>{suggestion.kcal}</b> kcal</span>
-            <span>· proteína <b>{suggestion.protein}</b> g ({suggestion.proteinPerKg} g/kg)</span>
+            <span>· proteína <b>{suggestion.protein}</b> g ({suggestion.proteinPerKg} g/kg · rango {suggestion.lowEnd}–{suggestion.highEnd})</span>
+          </div>
+        )}
+        {goals.autoMacros && mealSplit.length > 0 && (
+          <div style={{ marginBottom: 14 }}>
+            <div className="ft-mono" style={{ fontSize: 11, color: "var(--muted)", marginBottom: 8, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span>Reparto sugerido por comida</span>
+              <span style={{ display: "inline-flex", gap: 4 }}>
+                {[4, 5].map((n) => <button key={n} className={"ft-secchip" + (proteinMeals === n ? " on" : "")} onClick={() => upd("proteinMeals", n)} style={{ cursor: "pointer" }}>{n} comidas</button>)}
+              </span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: `repeat(${mealSplit.length},1fr)`, gap: 8 }}>
+              {mealSplit.map((m, i) => (
+                <div key={i} style={{ border: "1px solid var(--line)", padding: "10px 8px", textAlign: "center" }}>
+                  <div className="ft-mono" style={{ fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: ".08em" }}>{m.label}</div>
+                  <div style={{ fontFamily: "'Archivo'", fontWeight: 800, fontSize: 22, letterSpacing: "-0.02em", marginTop: 4 }}>{m.grams}<span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'IBM Plex Mono'", marginLeft: 2 }}>g</span></div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
         <div className="ft-row">
