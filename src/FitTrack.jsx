@@ -31,7 +31,7 @@ const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádric
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
 const MUSCLE_COLOR = {
   Pecho: "#e7531c", Espalda: "#5ad1ff", Hombros: "#ff8a3d", Bíceps: "#ff6b9d", Tríceps: "#b388ff",
-  Cuádriceps: "#ffd23d", Femoral: "#3ddc97", Glúteos: "#ff6b4a", Gemelos: "#7ee787", Core: "#f2f0e6", Trapecio: "#9aa0a6", Antebrazo: "#c0a3ff",
+  Cuádriceps: "#d99000", Femoral: "#2f8f6a", Glúteos: "#e7531c", Gemelos: "#4a9d5e", Core: "#6a655a", Trapecio: "#7a7468", Antebrazo: "#8a6fc0",
 };
 const SECONDARY_FACTOR = 0.5;
 const CARDIO_TYPES = ["Caminar", "Correr", "Bici", "Elíptica", "Remo", "Natación", "HIIT", "Otro"];
@@ -207,7 +207,7 @@ const ACTIVITY = [
 ];
 
 /* ----------------------------- styles ----------------------------- */
-const CSS = `
+export const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 .ft-root *{box-sizing:border-box;}
 .ft-root{--bg:#f3efe6;--panel:#faf7f0;--panel2:#ece6da;--line:#dcd4c2;--text:#16140d;--muted:#6f6a5d;--accent:#e7531c;--accentdim:rgba(231,83,28,.12);--danger:#c0341a;--blue:#2f6f8f;--ok:#3a7d44;font-family:'Hanken Grotesk',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.4;background-image:none;}
@@ -319,6 +319,15 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-root .ft-card h2,.ft-root .ft-h3{letter-spacing:-.01em;}
 .ft-root .ft-card{border-color:var(--line);}
 .ft-root .ft-nav button.active,.ft-root .ft-btn,.ft-root .ft-toggle button.on,.ft-root .ft-energy button.on,.ft-root .ft-logo .mark{color:#f3efe6;}
+/* ---- editorial panels: hairline framing + section rules + big numerals ---- */
+.ft-root .ft-card{background:var(--bg);padding:22px 24px 24px;}
+.ft-root .ft-card h2{font-family:'Archivo';font-weight:800;font-size:23px;letter-spacing:-.02em;padding-bottom:13px;margin-bottom:18px;border-bottom:1px solid var(--line);}
+.ft-root .ft-card h2 .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;}
+.ft-root .ft-stat{background:var(--bg);padding:18px 20px 20px;}
+.ft-root .ft-stat .k{letter-spacing:.16em;}
+.ft-root .ft-stat .v{font-family:'Archivo';font-size:44px;letter-spacing:-.04em;font-variant-numeric:tabular-nums;}
+.ft-root .ft-stat .v small{font-size:14px;}
+.ft-root .ft-h3{font-size:14px;letter-spacing:.04em;}
 `;
 
 /* ----------------------------- shared: food combo ----------------------------- */
@@ -548,7 +557,7 @@ function DateBar({ date, setDate }) {
 }
 
 /* ----------------------------- TRAIN ----------------------------- */
-function Train({ workouts, setWorkouts, routines }) {
+export function Train({ workouts, setWorkouts, routines }) {
   const [date, setDate] = useState(todayISO());
   const [name, setName] = useState("");
   const [primary, setPrimary] = useState(MUSCLES[0]);
@@ -614,7 +623,8 @@ function Train({ workouts, setWorkouts, routines }) {
 
   return (
     <>
-      <DateBar date={date} setDate={setDate} />
+      <ScreenMast kicker="FITTRACK · ENTRENAR" title="Entrenar" right={<EDateNav date={date} setDate={setDate} />} />
+      <div style={{ height: 16 }} />
 
       <div className="ft-card">
         <h2><Timer size={16} /> Duración <span className="tag">{session.durationMin || 0} min · {cardioList.reduce((t, c) => t + c.minutes, 0)} min cardio</span></h2>
@@ -724,7 +734,7 @@ function Train({ workouts, setWorkouts, routines }) {
 }
 
 /* ----------------------------- BODY (peso + medidas + bienestar) ----------------------------- */
-function Body({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos }) {
+export function Body({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos }) {
   const [wDate, setWDate] = useState(todayISO()); const [kg, setKg] = useState("");
   const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
   const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
@@ -778,6 +788,8 @@ function Body({ weights, setWeights, measurements, setMeasurements, wellness, se
 
   return (
     <>
+      <ScreenMast kicker="FITTRACK · CUERPO" title="Cuerpo" />
+      <div style={{ height: 16 }} />
       <div className="ft-card">
         <h2><Scale size={16} /> Peso corporal</h2>
         <div className="ft-row">
@@ -788,9 +800,9 @@ function Body({ weights, setWeights, measurements, setMeasurements, wellness, se
         {wChart.length >= 2 && (
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={wChart} margin={{ top: 14, right: 10, left: -18, bottom: 0 }}>
-              <CartesianGrid stroke="#262b2d" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#878d86" tick={{ fill: "#878d86" }} /><YAxis stroke="#878d86" tick={{ fill: "#878d86" }} domain={["auto", "auto"]} />
-              <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} />
+              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} domain={["auto", "auto"]} />
+              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
               <Line type="monotone" dataKey="kg" stroke="#e7531c" strokeWidth={2.5} dot={{ r: 3, fill: "#e7531c" }} />
             </LineChart>
           </ResponsiveContainer>
@@ -850,9 +862,9 @@ function Body({ weights, setWeights, measurements, setMeasurements, wellness, se
         {cinturaChart.length >= 2 && (
           <ResponsiveContainer width="100%" height={180}>
             <LineChart data={cinturaChart} margin={{ top: 16, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid stroke="#262b2d" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#878d86" tick={{ fill: "#878d86" }} /><YAxis stroke="#878d86" tick={{ fill: "#878d86" }} domain={["auto", "auto"]} />
-              <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} />
+              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} domain={["auto", "auto"]} />
+              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
               <Line type="monotone" dataKey="cintura" stroke="#5ad1ff" strokeWidth={2.5} dot={{ r: 3, fill: "#5ad1ff" }} name="Cintura" />
             </LineChart>
           </ResponsiveContainer>
@@ -915,7 +927,7 @@ function Body({ weights, setWeights, measurements, setMeasurements, wellness, se
 }
 
 /* ----------------------------- NUTRITION ----------------------------- */
-function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setTab }) {
+export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setTab }) {
   const [date, setDate] = useState(todayISO());
   const [mode, setMode] = useState("biblioteca");
   const [sel, setSel] = useState(null); const [grams, setGrams] = useState("");
@@ -939,17 +951,16 @@ function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setTab }) {
   const protPct = goals.proteinTarget ? Math.round((sum.protein / goals.proteinTarget) * 100) : 0;
 
   return (
-    <>
-      <DateBar date={date} setDate={setDate} />
-      <div className="ft-stats">
-        <div className="ft-stat"><div className="k"><Flame size={13} /> Calorías</div><div className="v">{Math.round(sum.kcal)}<small>/{goals.kcalTarget}</small></div><div className="sub" style={{ color: kcalPct > 105 ? "var(--danger)" : "var(--ok)" }}>{kcalPct}% objetivo</div></div>
-        <div className="ft-stat"><div className="k">Proteína</div><div className="v">{Math.round(sum.protein)}<small>/{goals.proteinTarget} g</small></div><div className="sub" style={{ color: protPct >= 90 ? "var(--ok)" : "var(--muted)" }}>{protPct}% objetivo</div></div>
-        <div className="ft-stat"><div className="k">Carbos</div><div className="v">{Math.round(sum.carbs)}<small>g</small></div></div>
-        <div className="ft-stat"><div className="k">Grasa</div><div className="v">{Math.round(sum.fat)}<small>g</small></div></div>
-      </div>
+    <div style={{ fontFamily: A_DISP, color: A_INK }}>
+      <ScreenMast kicker="FITTRACK · HOY" title="Nutrición" right={<EDateNav date={date} setDate={setDate} />} />
+      <KpiStrip items={[
+        { k: "Calorías", v: Math.round(sum.kcal), u: `/ ${goals.kcalTarget || "—"}`, sub: `${kcalPct}% objetivo`, subColor: kcalPct > 105 ? A_DANGER : A_OK },
+        { k: "Proteína", v: Math.round(sum.protein), u: `/ ${goals.proteinTarget || "—"} g`, sub: `${protPct}% objetivo`, subColor: protPct >= 90 ? A_OK : A_INK2 },
+        { k: "Carbohidratos", v: Math.round(sum.carbs), u: "g" },
+        { k: "Grasa", v: Math.round(sum.fat), u: "g" },
+      ]} />
 
-      <div className="ft-card">
-        <h2><Plus size={16} /> Añadir comida</h2>
+      <EPanel title="Añadir comida" i={2}>
         <div className="ft-toggle">
           <button className={mode === "biblioteca" ? "on" : ""} onClick={() => setMode("biblioteca")}>Alimento</button>
           <button className={mode === "receta" ? "on" : ""} onClick={() => setMode("receta")}>Receta</button>
@@ -988,29 +999,30 @@ function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setTab }) {
             <button className="ft-btn" onClick={addManual}><Plus size={15} /></button>
           </div>
         </>)}
-      </div>
+      </EPanel>
 
-      <div className="ft-card">
-        <h2>Comidas del día</h2>
-        {dayItems.length === 0 ? <div className="ft-empty">Sin registros este día.</div> : (
-          <div className="ft-list">
-            {dayItems.map((n) => (
-              <div className="ft-li" key={n.id}>
-                <span className="li-main">{n.name}{n.grams ? <span className="li-sub" style={{ marginLeft: 8 }}>{n.grams} g</span> : null}</span>
-                <div className="ft-chips">{n.protein ? <span className="ft-chip">P {n.protein}</span> : null}{n.carbs ? <span className="ft-chip">C {n.carbs}</span> : null}{n.fat ? <span className="ft-chip">G {n.fat}</span> : null}</div>
-                <span className="li-v" style={{ color: "var(--accent)" }}>{Math.round(n.kcal)} kcal</span>
-                <button className="ft-trash" onClick={() => del(n.id)}><Trash2 size={15} /></button>
+      <EPanel title="Comidas del día" meta={`${dayItems.length} ${dayItems.length === 1 ? "registro" : "registros"}`} i={3}>
+        {dayItems.length === 0 ? <DNeed>Sin registros este día.</DNeed> : (
+          <div>
+            {dayItems.map((n, idx) => (
+              <div key={n.id} style={{ display: "grid", gridTemplateColumns: "1fr auto auto", alignItems: "center", gap: 14, padding: "12px 0", borderBottom: idx < dayItems.length - 1 ? `1px solid ${A_HAIR}` : "none" }}>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontWeight: 600, fontSize: 15 }}>{n.name}</div>
+                  <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, marginTop: 2 }}>{n.grams ? `${n.grams} g · ` : ""}P {Math.round(n.protein)} · C {Math.round(n.carbs)} · G {Math.round(n.fat)}</div>
+                </div>
+                <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 20, color: A_ACC, fontVariantNumeric: "tabular-nums" }}>{Math.round(n.kcal)}<span style={{ fontSize: 11, fontFamily: A_MONO, color: A_INK2, marginLeft: 3 }}>kcal</span></div>
+                <button className="ft-trash" onClick={() => del(n.id)}><Trash2 size={16} /></button>
               </div>
             ))}
           </div>
         )}
-      </div>
-    </>
+      </EPanel>
+    </div>
   );
 }
 
 /* ----------------------------- LIBRARY (alimentos + catálogo + recetas) ----------------------------- */
-function Library({ foods, setFoods, recipes, setRecipes }) {
+export function Library({ foods, setFoods, recipes, setRecipes }) {
   const [view, setView] = useState("mis");
   const [f, setF] = useState({ name: "", kcal: "", protein: "", carbs: "", fat: "" });
   const [editId, setEditId] = useState(null); const [q, setQ] = useState("");
@@ -1044,6 +1056,8 @@ function Library({ foods, setFoods, recipes, setRecipes }) {
 
   return (
     <>
+      <ScreenMast kicker="FITTRACK · BIBLIOTECA" title="Biblioteca" />
+      <div style={{ height: 16 }} />
       <div className="ft-toggle">
         <button className={view === "mis" ? "on" : ""} onClick={() => setView("mis")}>Mis alimentos ({foods.length})</button>
         <button className={view === "catalogo" ? "on" : ""} onClick={() => setView("catalogo")}>Catálogo</button>
@@ -1126,7 +1140,7 @@ function Library({ foods, setFoods, recipes, setRecipes }) {
 }
 
 /* ----------------------------- ROUTINES ----------------------------- */
-function Routines({ routines, setRoutines }) {
+export function Routines({ routines, setRoutines }) {
   const [name, setName] = useState("");
   const [items, setItems] = useState([]);
   const [exName, setExName] = useState(""); const [primary, setPrimary] = useState(MUSCLES[0]); const [secondary, setSecondary] = useState([]);
@@ -1141,6 +1155,8 @@ function Routines({ routines, setRoutines }) {
 
   return (
     <>
+      <ScreenMast kicker="FITTRACK · RUTINAS" title="Rutinas" />
+      <div style={{ height: 16 }} />
       <div className="ft-alert info"><ListChecks size={20} color="var(--blue)" /><div><div className="t">Plantillas de entrenamiento</div><div className="b">Define tus días (A / B / C, Push / Pull / Legs…) una vez. Después, en Entrenar las cargas con un toque: registrar pasa a ser editar, no escribir desde cero.</div></div></div>
       <div className="ft-card">
         <h2><Plus size={16} /> Nueva rutina</h2>
@@ -1366,6 +1382,72 @@ function BHeatmap({ days }) {
         <span style={{ marginLeft: 4 }}>más</span>
       </div>
     </div>
+  );
+}
+
+/* ---- reusable editorial screen primitives (shared across tabs) ---- */
+function ScreenMast({ kicker, title, right }) {
+  const show = useReveal(40);
+  return (
+    <Rise show={show} i={0}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderBottom: `2px solid ${A_INK}`, paddingBottom: 14 }}>
+        <div>
+          <DKicker>{kicker}</DKicker>
+          <h1 style={{ margin: "10px 0 0", fontFamily: A_DISP, fontWeight: 900, fontSize: 60, lineHeight: 0.85, letterSpacing: "-0.045em", textTransform: "uppercase", color: A_INK }}>{title}</h1>
+        </div>
+        {right}
+      </div>
+    </Rise>
+  );
+}
+function EDateNav({ date, setDate }) {
+  const shift = (n) => { const d = new Date(date + "T00:00:00"); d.setDate(d.getDate() + n); setDate(d.toISOString().slice(0, 10)); };
+  const d = new Date(date + "T00:00:00");
+  const lbl = date === todayISO() ? "Hoy" : d.toLocaleDateString("es-ES", { weekday: "long" });
+  const eb = { width: 34, height: 34, border: `1px solid ${A_LINE}`, background: "transparent", cursor: "pointer", display: "grid", placeItems: "center", color: A_INK };
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 4 }}>
+      <button onClick={() => shift(-1)} style={eb}><ChevronLeft size={18} /></button>
+      <div style={{ textAlign: "center", minWidth: 132 }}>
+        <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 16, textTransform: "capitalize" }}>{lbl}</div>
+        <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2 }}>{d.toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })}</div>
+      </div>
+      <button onClick={() => shift(1)} style={eb}><ChevronRight size={18} /></button>
+    </div>
+  );
+}
+function KpiStrip({ items }) {
+  const show = useReveal(80);
+  return (
+    <Rise show={show} i={1}>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${items.length},1fr)`, border: `1px solid ${A_LINE}`, borderTop: "none" }}>
+        {items.map((s, i) => (
+          <div key={i} style={{ padding: "18px 22px 20px", borderLeft: i ? `1px solid ${A_LINE}` : "none" }}>
+            <DKicker>{s.k}</DKicker>
+            <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 46, lineHeight: 0.95, letterSpacing: "-0.04em", marginTop: 10, fontVariantNumeric: "tabular-nums", color: s.color || A_INK }}>
+              {s.v}{s.u && <span style={{ fontSize: 15, fontFamily: A_MONO, fontWeight: 500, marginLeft: 5, color: A_INK2 }}>{s.u}</span>}
+            </div>
+            {s.sub && <div style={{ fontFamily: A_MONO, fontSize: 11, marginTop: 8, color: s.subColor || A_INK2 }}>{s.sub}</div>}
+          </div>
+        ))}
+      </div>
+    </Rise>
+  );
+}
+function EPanel({ title, meta, children, i = 2 }) {
+  const show = useReveal(60);
+  return (
+    <Rise show={show} i={i}>
+      <div style={{ border: `1px solid ${A_LINE}`, borderTop: "none", padding: "22px 24px 24px", background: A_PAPER }}>
+        {title && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderBottom: `1px solid ${A_HAIR}`, paddingBottom: 12, marginBottom: 18 }}>
+            <h2 style={dSecH}>{title}</h2>
+            {meta && <span style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, textTransform: "uppercase", letterSpacing: ".04em" }}>{meta}</span>}
+          </div>
+        )}
+        {children}
+      </div>
+    </Rise>
   );
 }
 
@@ -1831,9 +1913,9 @@ function DashboardLegacy({ workouts, weights, nutrition, measurements, periods, 
           <h2>Peso: real · media 7d · objetivo <span className="tag">kg</span></h2>
           <ResponsiveContainer width="100%" height={250}>
             <ComposedChart data={weightChart} margin={{ top: 5, right: 12, left: -18, bottom: 0 }}>
-              <CartesianGrid stroke="#262b2d" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#878d86" tick={{ fill: "#878d86" }} /><YAxis stroke="#878d86" tick={{ fill: "#878d86" }} domain={["auto", "auto"]} />
-              <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} />
+              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} domain={["auto", "auto"]} />
+              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
               <Legend wrapperStyle={{ fontSize: 12, fontFamily: "'IBM Plex Mono'" }} />
               <Line type="monotone" dataKey="real" stroke="#3a4042" strokeWidth={1} dot={{ r: 2, fill: "#3a4042" }} name="Real" />
               <Line type="monotone" dataKey="objetivo" stroke="#5ad1ff" strokeWidth={2} strokeDasharray="5 4" dot={false} name="Objetivo" />
@@ -1852,10 +1934,10 @@ function DashboardLegacy({ workouts, weights, nutrition, measurements, periods, 
           {exData && (
             <ResponsiveContainer width="100%" height={230}>
               <ComposedChart data={exData} margin={{ top: 5, right: 14, left: -14, bottom: 0 }}>
-                <CartesianGrid stroke="#262b2d" strokeDasharray="3 3" />
-                <XAxis dataKey="date" stroke="#878d86" tick={{ fill: "#878d86" }} />
-                <YAxis yAxisId="l" stroke="#878d86" tick={{ fill: "#878d86" }} /><YAxis yAxisId="r" orientation="right" stroke="#5ad1ff" tick={{ fill: "#5ad1ff" }} />
-                <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} />
+                <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
+                <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} />
+                <YAxis yAxisId="l" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis yAxisId="r" orientation="right" stroke="#5ad1ff" tick={{ fill: "#5ad1ff" }} />
+                <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
                 <Legend wrapperStyle={{ fontSize: 12, fontFamily: "'IBM Plex Mono'" }} />
                 <Bar yAxisId="r" dataKey="volume" fill="rgba(90,209,255,.25)" name="Volumen (kg)" radius={[4, 4, 0, 0]} />
                 <Line yAxisId="l" type="monotone" dataKey="oneRM" stroke="#e7531c" strokeWidth={2.8} dot={{ r: 3, fill: "#e7531c" }} name="1RM est. (kg)" />
@@ -1881,9 +1963,9 @@ function DashboardLegacy({ workouts, weights, nutrition, measurements, periods, 
           <h2>Volumen por grupo muscular <span className="tag">histórico · sec. {SECONDARY_FACTOR * 100}%</span></h2>
           <ResponsiveContainer width="100%" height={Math.max(180, muscleVolAll.length * 34)}>
             <BarChart data={muscleVolAll} layout="vertical" margin={{ top: 5, right: 14, left: 8, bottom: 0 }}>
-              <CartesianGrid stroke="#262b2d" strokeDasharray="3 3" horizontal={false} />
-              <XAxis type="number" stroke="#878d86" tick={{ fill: "#878d86" }} /><YAxis type="category" dataKey="muscle" stroke="#878d86" tick={{ fill: "#c9cdc4" }} width={78} />
-              <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} cursor={{ fill: "rgba(255,255,255,.04)" }} />
+              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" horizontal={false} />
+              <XAxis type="number" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis type="category" dataKey="muscle" stroke="#6a655a" tick={{ fill: "#6a655a" }} width={78} />
+              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} cursor={{ fill: "rgba(255,255,255,.04)" }} />
               <Bar dataKey="vol" radius={[0, 5, 5, 0]} name="Volumen">{muscleVolAll.map((m) => <Cell key={m.muscle} fill={MUSCLE_COLOR[m.muscle] || "#888"} />)}</Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -1895,9 +1977,9 @@ function DashboardLegacy({ workouts, weights, nutrition, measurements, periods, 
           <h2>Calorías últimos 14 días <span className="tag">vs objetivo / mantenimiento</span></h2>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={kcalChart} margin={{ top: 5, right: 14, left: -10, bottom: 0 }}>
-              <CartesianGrid stroke="#262b2d" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#878d86" tick={{ fill: "#878d86", fontSize: 10 }} /><YAxis stroke="#878d86" tick={{ fill: "#878d86" }} />
-              <Tooltip contentStyle={{ background: "#1b1f22", border: "1px solid #262b2d", borderRadius: 8 }} cursor={{ fill: "rgba(255,255,255,.04)" }} />
+              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a", fontSize: 10 }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} />
+              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} cursor={{ fill: "rgba(255,255,255,.04)" }} />
               {goals.kcalTarget ? <ReferenceLine y={Number(goals.kcalTarget)} stroke="#5ad1ff" strokeDasharray="5 4" label={{ value: "objetivo", fill: "#5ad1ff", fontSize: 11, position: "insideTopRight" }} /> : null}
               {maintenance ? <ReferenceLine y={maintenance.maint} stroke="#ff8a3d" strokeDasharray="5 4" label={{ value: "mantenimiento", fill: "#ff8a3d", fontSize: 11, position: "insideBottomRight" }} /> : null}
               <Bar dataKey="kcal" fill="#ff8a3d" radius={[5, 5, 0, 0]} name="kcal" />
@@ -1910,7 +1992,7 @@ function DashboardLegacy({ workouts, weights, nutrition, measurements, periods, 
 }
 
 /* ----------------------------- AJUSTES / GOALS ----------------------------- */
-function Goals({ goals, setGoals, weights, exportData, userEmail, signOut }) {
+export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut }) {
   const upd = (k, v) => setGoals((g) => ({ ...g, [k]: v }));
   const latestW = weights.length ? [...weights].sort((a, b) => a.date.localeCompare(b.date)).slice(-1)[0].kg : null;
   const refW = Number(goals.startWeight) || latestW || null;
@@ -1938,6 +2020,8 @@ function Goals({ goals, setGoals, weights, exportData, userEmail, signOut }) {
 
   return (
     <>
+      <ScreenMast kicker="FITTRACK · AJUSTES" title="Ajustes" />
+      <div style={{ height: 16 }} />
       <div className="ft-card">
         <h2><Target size={16} /> Objetivos de peso</h2>
         <div className="ft-row" style={{ marginBottom: 12 }}>
