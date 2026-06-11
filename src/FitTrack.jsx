@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { supabase } from "./supabase.js";
-import { ROUTINE_TEMPLATES, templateToAppRoutine, computeProteinTargets, distributeProtein, PROTEIN_CONFIG } from "./fase1Config.js";
+import { ROUTINE_TEMPLATES, templateToAppRoutine, computeProteinTargets, distributeProtein, PROTEIN_CONFIG, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, ReferenceLine, Legend, ComposedChart, Cell
@@ -160,15 +160,26 @@ async function loadKey(key, fb) {
     return data.value;
   } catch { return fb; }
 }
+/* ---- estado de guardado observable (para verificar persistencia) ---- */
+const saveBus = { status: "idle", error: null, at: null, listeners: new Set() };
+function emitSave(status, error = null) {
+  saveBus.status = status; saveBus.error = error; saveBus.at = Date.now();
+  saveBus.listeners.forEach((l) => l({ status, error }));
+}
+function onSaveStatus(cb) { saveBus.listeners.add(cb); return () => saveBus.listeners.delete(cb); }
+
 async function saveKey(key, val) {
   try {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-    await supabase.from("app_data").upsert(
+    if (!user) { emitSave("error", "Sin sesión activa"); return; }
+    emitSave("saving");
+    const { error } = await supabase.from("app_data").upsert(
       { user_id: user.id, key, value: val },
       { onConflict: "user_id,key" }
     );
-  } catch (e) { console.error(e); }
+    if (error) { console.error("saveKey", key, error); emitSave("error", error.message || "Error al guardar"); }
+    else { emitSave("saved"); }
+  } catch (e) { console.error(e); emitSave("error", String(e?.message || e)); }
 }
 const DEFAULT_GOALS = { startWeight: "", targetWeight: "", weeklyChange: -0.4, kcalTarget: 2200, proteinTarget: 150, autoMacros: false, activity: "moderado", proteinPerKg: 2.0, proteinMeals: 4 };
 
@@ -357,6 +368,26 @@ function FoodCombo({ foods, selected, onChange, label = "Alimento", flex = 2 }) 
   );
 }
 
+/* ----------------------------- save indicator ----------------------------- */
+function SaveIndicator() {
+  const [st, setSt] = useState({ status: "idle", error: null });
+  useEffect(() => onSaveStatus(setSt), []);
+  const map = {
+    idle: { t: "Sin cambios", c: "var(--muted)", dot: "var(--muted)" },
+    saving: { t: "Guardando…", c: "var(--muted)", dot: "var(--blue)" },
+    saved: { t: "Guardado", c: "var(--ok)", dot: "var(--ok)" },
+    error: { t: "Error al guardar", c: "var(--danger)", dot: "var(--danger)" },
+  };
+  const m = map[st.status] || map.idle;
+  return (
+    <div title={st.error || (st.status === "saved" ? "Tus datos se guardaron en Supabase" : "Estado de sincronización con Supabase")}
+      style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "'IBM Plex Mono'", fontSize: 11, color: m.c, padding: "0 8px", whiteSpace: "nowrap" }}>
+      <span style={{ width: 8, height: 8, borderRadius: 999, background: m.dot, flexShrink: 0 }} />
+      {m.t}
+    </div>
+  );
+}
+
 /* ----------------------------- APP ----------------------------- */
 export default function App() {
   const [tab, setTab] = useState("entrenar");
@@ -466,7 +497,8 @@ export default function App() {
               <div className="mark"><Dumbbell size={20} /></div>
               <div><h1>FitTrack</h1><span>tu progreso, medido</span></div>
             </div>
-            <div style={{ display: "flex", gap: 8 }}>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <SaveIndicator />
               <button className="ft-iconbtn" onClick={exportData}><Download size={14} /> Exportar</button>
               <button className="ft-iconbtn" onClick={() => fileRef.current.click()}><Upload size={14} /> Importar</button>
               <input ref={fileRef} type="file" accept="application/json" hidden onChange={importData} />
@@ -587,15 +619,24 @@ export function Train({ workouts, setWorkouts, routines }) {
     const ex = { id: uid(), name: name.trim(), primary, secondary: secondary.filter((m) => m !== primary), sets: [{ id: uid(), reps: "", kg: "", rpe: "" }] };
     writeSession({ exercises: [...exercises, ex] }); setName(""); setSecondary([]);
   };
-  const loadRoutine = (idx) => {
-    if (idx === "") return;
-    const r = routines[Number(idx)];
-    const newEx = r.exercises.map((e) => ({
-      id: uid(), name: e.name, primary: e.primary, secondary: e.secondary || [], targetRpe: e.targetRpe || "", notes: e.notes || "",
-      sets: Array.from({ length: Math.max(1, Number(e.targetSets) || 1) }, () => ({ id: uid(), reps: e.targetReps || "", kg: "", rpe: "" })),
+  const addExercisesFromList = (list, addMin = 0) => {
+    const newEx = list.map((e) => ({
+      id: uid(), name: e.name,
+      primary: e.primary || guessPrimaryMuscle(e.name), secondary: e.secondary || [],
+      targetRpe: e.targetRpe || "", targetReps: e.targetReps != null ? String(e.targetReps) : "", notes: e.notes || "",
+      sets: Array.from({ length: Math.max(1, Number(e.targetSets) || 1) }, () => ({ id: uid(), reps: "", kg: "", rpe: "" })),
     }));
-    writeSession({ exercises: [...exercises, ...newEx] });
+    setWorkouts((prev) => {
+      const cur = prev.find((w) => w.date === date) || { id: uid(), date, exercises: [], durationMin: 0, cardio: [] };
+      const next = { ...cur, exercises: [...cur.exercises, ...newEx], durationMin: (cur.durationMin || 0) + addMin };
+      const others = prev.filter((w) => w.date !== date);
+      return [...others, next];
+    });
   };
+  const loadRoutine = (idx) => { if (idx === "") return; addExercisesFromList(routines[Number(idx)].exercises); };
+  const loadMinimal = (idx) => { if (idx === "") return; const r = routines[Number(idx)]; if (r && r.minimal) addExercisesFromList(r.minimal.exercises); };
+  const loadWarmup = () => addExercisesFromList(WARMUP.exercises.map((w) => ({ name: w.name, targetReps: w.dose, targetSets: 1 })), WARMUP.durationMin);
+  const routinesWithMin = routines.map((r, i) => ({ r, i })).filter((x) => x.r.minimal);
   const upEx = (n) => writeSession({ exercises: n });
   const editSet = (exId, sId, f, v) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: e.sets.map((s) => s.id === sId ? { ...s, [f]: v } : s) }));
   const addSet = (exId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: [...e.sets, { id: uid(), reps: "", kg: "", rpe: "" }] }));
@@ -645,15 +686,24 @@ export function Train({ workouts, setWorkouts, routines }) {
 
       <div className="ft-card">
         <h2><Plus size={16} /> Añadir ejercicio</h2>
-        {routines.length > 0 && (
-          <div className="ft-row" style={{ marginBottom: 12 }}>
-            <div className="ft-field" style={{ maxWidth: 320 }}><label>Cargar una rutina completa</label>
+        <div className="ft-row" style={{ marginBottom: 12, alignItems: "flex-end" }}>
+          {routines.length > 0 && (
+            <div className="ft-field" style={{ maxWidth: 300 }}><label>Cargar una rutina completa</label>
               <select className="ft-select" value="" onChange={(e) => loadRoutine(e.target.value)}>
                 <option value="">Elegir rutina…</option>
                 {routines.map((r, i) => <option key={r.id} value={i}>{r.name} ({r.exercises.length} ej.)</option>)}
               </select></div>
-          </div>
-        )}
+          )}
+          {routinesWithMin.length > 0 && (
+            <div className="ft-field" style={{ maxWidth: 260 }}><label>Versión mínima (día difícil)</label>
+              <select className="ft-select" value="" onChange={(e) => loadMinimal(e.target.value)}>
+                <option value="">Elegir mínima…</option>
+                {routinesWithMin.map(({ r, i }) => <option key={r.id} value={i}>{r.name.split("—")[0].trim()} · {r.minimal.exercises.length} ej.{r.minimal.durationMin ? ` · ${r.minimal.durationMin} min` : ""}</option>)}
+              </select></div>
+          )}
+          <div className="ft-field" style={{ flex: "none" }}><label>Antes de empezar</label>
+            <button className="ft-btn ghost" onClick={loadWarmup} title="Añade los 7 ejercicios de movilidad y suma 10 min de duración"><Zap size={15} /> Calentamiento 10 min</button></div>
+        </div>
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field" style={{ flex: 2, minWidth: 150 }}><label>Ejercicio</label>
             <input className="ft-input" placeholder="Ej. Press banca" value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addExercise()} /></div>
@@ -706,7 +756,7 @@ export function Train({ workouts, setWorkouts, routines }) {
                 {ex.sets.map((s, i) => (
                   <div className="ft-set" key={s.id} style={{ gridTemplateColumns: "24px 1fr 1fr 1fr 30px" }}>
                     <span className="ix">{i + 1}</span>
-                    <input className="si" type="number" inputMode="numeric" value={s.reps} placeholder="0" onChange={(e) => editSet(ex.id, s.id, "reps", e.target.value)} />
+                    <input className="si" type="number" inputMode="numeric" value={s.reps} placeholder={ex.targetReps || "0"} title={ex.targetReps ? `Objetivo: ${ex.targetReps} reps` : undefined} onChange={(e) => editSet(ex.id, s.id, "reps", e.target.value)} />
                     <input className="si" type="number" inputMode="decimal" value={s.kg} placeholder="0" onChange={(e) => editSet(ex.id, s.id, "kg", e.target.value)} />
                     <input className="si" type="text" inputMode="decimal" value={s.rpe || ""} placeholder={ex.targetRpe || "–"} title="Esfuerzo percibido 1–10 (opcional)" onChange={(e) => editSet(ex.id, s.id, "rpe", e.target.value)} />
                     <button className="ft-trash" onClick={() => delSet(ex.id, s.id)}><Trash2 size={14} /></button>
@@ -970,7 +1020,7 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
         { k: "Grasa", v: Math.round(sum.fat), u: "g" },
       ]} />
 
-      <EPanel title="Añadir comida" i={2}>
+      <EPanel title="Añadir comida" i={2} raise>
         <div className="ft-toggle">
           <button className={mode === "biblioteca" ? "on" : ""} onClick={() => setMode("biblioteca")}>Alimento</button>
           <button className={mode === "receta" ? "on" : ""} onClick={() => setMode("receta")}>Receta</button>
@@ -1461,10 +1511,10 @@ function KpiStrip({ items }) {
     </Rise>
   );
 }
-function EPanel({ title, meta, children, i = 2 }) {
+function EPanel({ title, meta, children, i = 2, raise }) {
   const show = useReveal(60);
   return (
-    <Rise show={show} i={i}>
+    <Rise show={show} i={i} style={raise ? { position: "relative", zIndex: 20 } : undefined}>
       <div style={{ border: `1px solid ${A_LINE}`, borderTop: "none", padding: "22px 24px 24px", background: A_PAPER }}>
         {title && (
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderBottom: `1px solid ${A_HAIR}`, paddingBottom: 12, marginBottom: 18 }}>

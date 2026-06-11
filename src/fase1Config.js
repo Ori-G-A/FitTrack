@@ -296,6 +296,18 @@ export function guessPrimaryMuscle(name) {
  * @param {() => string} uid  Generador de id de la app.
  */
 export function templateToAppRoutine(tpl, uid) {
+  const mapEx = (e) => ({
+    id: uid(),
+    name: e.name,
+    primary: guessPrimaryMuscle(e.name),
+    secondary: [],
+    targetSets: typeof e.sets === "number" ? e.sets : 3,
+    targetReps: String(e.reps ?? ""),
+    targetRpe: e.rpe && e.rpe !== "—" ? String(e.rpe) : "",
+    restSec: e.restSec ?? null,
+    notes: e.notes || "",
+    isOptional: !!e.isOptional,
+  });
   return {
     id: uid(),
     name: tpl.name,
@@ -304,17 +316,13 @@ export function templateToAppRoutine(tpl, uid) {
     suggestedDay: tpl.suggestedDay,
     intensity: tpl.intensity,
     estimatedMin: tpl.estimatedMin,
-    exercises: tpl.exercises.map((e) => ({
-      id: uid(),
-      name: e.name,
-      primary: guessPrimaryMuscle(e.name),
-      secondary: [],
-      targetSets: typeof e.sets === "number" ? e.sets : 3,
-      targetReps: String(e.reps ?? ""),
-      targetRpe: e.rpe && e.rpe !== "—" ? String(e.rpe) : "",
-      restSec: e.restSec ?? null,
-      notes: e.notes || "",
-      isOptional: !!e.isOptional,
-    })),
+    hasWarmup: !!tpl.warmupId,
+    exercises: tpl.exercises.map(mapEx),
+    minimal: tpl.minimalVersion
+      ? {
+          durationMin: tpl.minimalVersion.durationMin || null,
+          exercises: tpl.minimalVersion.exercises.map(mapEx),
+        }
+      : null,
   };
 }
