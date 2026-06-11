@@ -319,6 +319,7 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-root .ft-card h2,.ft-root .ft-h3{letter-spacing:-.01em;}
 .ft-root .ft-card{border-color:var(--line);}
 .ft-root .ft-nav button.active,.ft-root .ft-btn,.ft-root .ft-toggle button.on,.ft-root .ft-energy button.on,.ft-root .ft-logo .mark{color:#f3efe6;}
+.ft-root .ft-btn.ghost{color:var(--text);}
 /* ---- editorial panels: hairline framing + section rules + big numerals ---- */
 .ft-root .ft-card{background:var(--bg);padding:22px 24px 24px;}
 .ft-root .ft-card h2{font-family:'Archivo';font-weight:800;font-size:23px;letter-spacing:-.02em;padding-bottom:13px;margin-bottom:18px;border-bottom:1px solid var(--line);}
