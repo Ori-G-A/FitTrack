@@ -1370,14 +1370,15 @@ function BWeightChart({ avg, tgt }) {
     </svg>
   );
 }
-function BStrength({ series }) {
+function BStrength({ series, isMobile }) {
   const show = useReveal(300);
-  const W = 720, H = 200, padT = 16, padB = 22, plotW = 560, labelX = 576;
+  const W = 720, H = isMobile ? 168 : 200, padT = 16, padB = 22;
+  const plotW = isMobile ? 700 : 560, labelX = 576;
   const hi = Math.max(1, Math.max(...series.flatMap((s) => s.pct))) * 1.1;
   const yOf = (v) => padT + ((hi - v) / hi) * (H - padT - padB);
   const grid = [hi, hi / 2, 0];
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", overflow: "visible" }}>
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", overflow: "hidden" }}>
       {grid.map((g, i) => (<g key={i}><line x1="0" y1={yOf(g)} x2={plotW} y2={yOf(g)} stroke={A_HAIR} strokeWidth="1" /><text x="0" y={yOf(g) - 5} fontFamily={A_MONO} fontSize="10" fill={A_INK2}>+{g.toFixed(0)}%</text></g>))}
       {series.map((s, si) => {
         const pts = s.pct.map((v, i) => ({ x: (i / (s.pct.length - 1 || 1)) * plotW, y: yOf(v) }));
@@ -1386,11 +1387,22 @@ function BStrength({ series }) {
           <g key={si}>
             <DrawLine d={smoothPath(pts, 0.6)} color={s.color} width={s.w} reveal={show} dur={1400} delay={150 + si * 130} />
             <circle cx={last.x} cy={last.y} r={show ? 4 : 0} fill={s.color} style={{ transition: `r .4s ease ${1.2 + si * 0.13}s` }} />
-            <text x={labelX} y={last.y + 3.5} fontFamily={A_MONO} fontSize="11" fill={A_INK2}>{s.label.toUpperCase()} <tspan fill={A_INK} fontWeight="600">{s.lastKg} kg</tspan></text>
+            {!isMobile && <text x={labelX} y={last.y + 3.5} fontFamily={A_MONO} fontSize="11" fill={A_INK2}>{s.label.toUpperCase()} <tspan fill={A_INK} fontWeight="600">{s.lastKg} kg</tspan></text>}
           </g>
         );
       })}
     </svg>
+  );
+}
+function BStrengthLegend({ series }) {
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px", marginTop: 10 }}>
+      {series.map((s, i) => (
+        <span key={i} style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, display: "inline-flex", alignItems: "center", gap: 5 }}>
+          <span style={{ width: 12, height: 3, background: s.color, flexShrink: 0 }} />{s.label.toUpperCase()} <b style={{ color: A_INK }}>{s.lastKg} kg</b>
+        </span>
+      ))}
+    </div>
   );
 }
 function BKcalBars({ data, target }) {
@@ -1457,14 +1469,16 @@ function BHeatmap({ days }) {
   return (
     <div>
       <div style={{ display: "flex", gap: GAP }}>
-        <div style={{ width: 16, display: "flex", flexDirection: "column", gap: GAP }}>
+        <div style={{ width: 16, flexShrink: 0, display: "flex", flexDirection: "column", gap: GAP }}>
           {Array.from({ length: 7 }, (_, r) => (<div key={r} style={{ height: CELL, display: "flex", alignItems: "center", fontFamily: A_MONO, fontSize: 9, color: A_INK2 }}>{dayLabels[r]}</div>))}
         </div>
-        {cols.map((col, ci) => (
-          <div key={ci} style={{ display: "flex", flexDirection: "column", gap: GAP }}>
-            {Array.from({ length: 7 }, (_, r) => { const d = col.find((x) => x.dw === r); if (!d) return <div key={r} style={{ width: CELL, height: CELL }} />; return <div key={r} title={d.iso} style={{ width: CELL, height: CELL, background: ramp[d.lvl], opacity: show ? 1 : 0, transform: show ? "scale(1)" : "scale(0.5)", transition: `opacity .45s ease ${ci * 14}ms, transform .45s ${ci * 14}ms` }} />; })}
-          </div>
-        ))}
+        <div style={{ display: "flex", gap: GAP, overflowX: "auto", paddingBottom: 4 }}>
+          {cols.map((col, ci) => (
+            <div key={ci} style={{ display: "flex", flexDirection: "column", gap: GAP, flexShrink: 0 }}>
+              {Array.from({ length: 7 }, (_, r) => { const d = col.find((x) => x.dw === r); if (!d) return <div key={r} style={{ width: CELL, height: CELL }} />; return <div key={r} title={d.iso} style={{ width: CELL, height: CELL, background: ramp[d.lvl], opacity: show ? 1 : 0, transform: show ? "scale(1)" : "scale(0.5)", transition: `opacity .45s ease ${ci * 14}ms, transform .45s ${ci * 14}ms` }} />; })}
+            </div>
+          ))}
+        </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 14, fontFamily: A_MONO, fontSize: 10, color: A_INK2, textTransform: "uppercase", letterSpacing: ".06em" }}>
         <span style={{ marginRight: 4 }}>menos</span>
@@ -1546,8 +1560,8 @@ function EPanel({ title, meta, children, i = 2, raise }) {
     <Rise show={show} i={i} style={raise ? { position: "relative", zIndex: 20 } : undefined}>
       <div style={{ border: `1px solid ${A_LINE}`, borderTop: "none", padding: isMobile ? "18px 15px 20px" : "22px 24px 24px", background: A_PAPER }}>
         {title && (
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderBottom: `1px solid ${A_HAIR}`, paddingBottom: 12, marginBottom: 18 }}>
-            <h2 style={dSecH}>{title}</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 6, borderBottom: `1px solid ${A_HAIR}`, paddingBottom: 12, marginBottom: 18 }}>
+            <h2 style={{ ...dSecH, fontSize: isMobile ? 19 : 24, whiteSpace: isMobile ? "normal" : "nowrap" }}>{title}</h2>
             {meta && <span style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, textTransform: "uppercase", letterSpacing: ".04em" }}>{meta}</span>}
           </div>
         )}
@@ -1709,7 +1723,8 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
   const rowGrid = { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.85fr 1fr", borderTop: `1px solid ${A_LINE}` };
   const cellL = { padding: isMobile ? "20px 18px 22px" : "22px 28px 26px", borderRight: isMobile ? "none" : `1px solid ${A_LINE}`, borderBottom: isMobile ? `1px solid ${A_LINE}` : "none" };
   const cellR = { padding: isMobile ? "20px 18px 22px" : "22px 28px 24px" };
-  const secHead = { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 16 };
+  const secHead = { display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 6, marginBottom: 16 };
+  const secTitle = { ...dSecH, fontSize: isMobile ? 19 : 24, whiteSpace: isMobile ? "normal" : "nowrap" };
   const meta = { fontFamily: A_MONO, fontSize: 11, color: A_INK2, textTransform: "uppercase", letterSpacing: ".04em" };
 
   return (
@@ -1771,13 +1786,13 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         <div style={{ ...rowGrid, borderTop: "none" }}>
           <Rise show={show} i={2} style={cellL}>
             <div style={secHead}>
-              <h2 style={dSecH}>Peso y tendencia</h2>
+              <h2 style={secTitle}>Peso y tendencia</h2>
               <div style={{ display: "flex", gap: 16 }}><DLegend color={A_ACC} label="Media 7d" /><DLegend color={A_INK2} label="Objetivo" dash /></div>
             </div>
             {weightChart.length >= 2 ? <BWeightChart avg={weightChart.map((p) => p.media)} tgt={weightChart.map((p) => p.objetivo)} /> : <DNeed>Registra tu peso al menos 2 días para ver la tendencia.</DNeed>}
           </Rise>
           <Rise show={show} i={3} style={cellR}>
-            <h2 style={{ ...dSecH, marginBottom: 16 }}>Récords</h2>
+            <h2 style={{ ...secTitle, marginBottom:16 }}>Récords</h2>
             {prs.length > 0 ? (
               <div>{prs.slice(0, 6).map((p, i) => (
                 <div key={p.name} style={{ display: "grid", gridTemplateColumns: "20px 1fr auto", alignItems: "baseline", gap: 10, padding: "9px 0", borderBottom: i < Math.min(prs.length, 6) - 1 ? `1px solid ${A_HAIR}` : "none" }}>
@@ -1793,11 +1808,11 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         {/* strength + macros */}
         <div style={rowGrid}>
           <Rise show={show} i={4} style={cellL}>
-            <div style={secHead}><h2 style={dSecH}>Progresión de fuerza</h2><span style={meta}>1RM est. · vs inicio</span></div>
-            {strengthSeries.length > 0 ? <BStrength series={strengthSeries} /> : <DNeed>Necesitas al menos 2 sesiones de un mismo ejercicio.</DNeed>}
+            <div style={secHead}><h2 style={secTitle}>Progresión de fuerza</h2><span style={meta}>1RM est. · vs inicio</span></div>
+            {strengthSeries.length > 0 ? <><BStrength series={strengthSeries} isMobile={isMobile} />{isMobile && <BStrengthLegend series={strengthSeries} />}</> : <DNeed>Necesitas al menos 2 sesiones de un mismo ejercicio.</DNeed>}
           </Rise>
           <Rise show={show} i={5} style={cellR}>
-            <div style={secHead}><h2 style={dSecH}>Macros</h2><span style={meta}>media 14d</span></div>
+            <div style={secHead}><h2 style={secTitle}>Macros</h2><span style={meta}>media 14d</span></div>
             {macro14 ? <BMacros rows={macroRows} footer={`media ${Math.round(macro14.k)} / ${goals.kcalTarget || "—"} kcal`} /> : <DNeed>Registra comidas para ver tus macros.</DNeed>}
           </Rise>
         </div>
@@ -1805,11 +1820,11 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         {/* calories + muscle */}
         <div style={{ ...rowGrid, gridTemplateColumns: isMobile ? "1fr" : "1fr 1.25fr" }}>
           <Rise show={show} i={6} style={cellL}>
-            <h2 style={{ ...dSecH, marginBottom: 18 }}>Calorías</h2>
+            <h2 style={{ ...secTitle, marginBottom:18 }}>Calorías</h2>
             {kcalChart.some((d) => d.kcal > 0) ? (<><BKcalBars data={kcalChart} target={Number(goals.kcalTarget) || null} /><div style={{ display: "flex", justifyContent: "space-between", ...meta, marginTop: 10 }}><span>últimos 14 días</span><span>media {kcalAvg || "—"} kcal</span></div></>) : <DNeed>Registra comidas para ver tus calorías diarias.</DNeed>}
           </Rise>
           <Rise show={show} i={7} style={cellR}>
-            <div style={secHead}><h2 style={dSecH}>Volumen muscular</h2><span style={meta}>{Object.keys(weeklyMuscle).length ? "esta semana" : "histórico"}</span></div>
+            <div style={secHead}><h2 style={secTitle}>Volumen muscular</h2><span style={meta}>{Object.keys(weeklyMuscle).length ? "esta semana" : "histórico"}</span></div>
             {muscleData.length > 0 ? <BMuscleBars data={muscleData} /> : <DNeed>Registra entrenamientos para ver el volumen por grupo.</DNeed>}
           </Rise>
         </div>
@@ -1817,11 +1832,11 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         {/* consistency + streak */}
         <div style={rowGrid}>
           <Rise show={show} i={8} style={cellL}>
-            <div style={secHead}><h2 style={dSecH}>Constancia</h2><span style={meta}>últimas 26 semanas</span></div>
+            <div style={secHead}><h2 style={secTitle}>Constancia</h2><span style={meta}>últimas 26 semanas</span></div>
             <BHeatmap days={heat.days} />
           </Rise>
           <Rise show={show} i={9} style={cellR}>
-            <h2 style={{ ...dSecH, marginBottom: 14 }}>Racha</h2>
+            <h2 style={{ ...secTitle, marginBottom:14 }}>Racha</h2>
             <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 60, lineHeight: 0.95, letterSpacing: "-0.04em", fontVariantNumeric: "tabular-nums", color: A_ACC }}>
               <CountUp value={heat.streak} delay={700} /><span style={{ fontSize: 15, fontFamily: A_MONO, fontWeight: 500, marginLeft: 8, letterSpacing: ".04em", color: A_INK2, textTransform: "uppercase" }}>días</span>
             </div>
