@@ -634,9 +634,22 @@ export function Train({ workouts, setWorkouts, routines }) {
     });
   };
   const loadRoutine = (idx) => { if (idx === "") return; addExercisesFromList(routines[Number(idx)].exercises); };
-  const loadMinimal = (idx) => { if (idx === "") return; const r = routines[Number(idx)]; if (r && r.minimal) addExercisesFromList(r.minimal.exercises); };
+  // Resuelve la versión mínima desde la rutina o, si no la tiene, desde la plantilla original.
+  const minimalFor = (r) => {
+    if (!r) return null;
+    if (r.minimal && r.minimal.exercises) return r.minimal.exercises;
+    const tpl = ROUTINE_TEMPLATES.find((t) => t.id === r.templateId || t.name === r.name);
+    if (tpl && tpl.minimalVersion) return tpl.minimalVersion.exercises.map((e) => ({ name: e.name, targetSets: e.sets, targetReps: e.reps }));
+    return null;
+  };
+  const minimalMin = (r) => {
+    if (r && r.minimal && r.minimal.durationMin) return r.minimal.durationMin;
+    const tpl = ROUTINE_TEMPLATES.find((t) => t.id === r.templateId || t.name === r.name);
+    return tpl && tpl.minimalVersion ? tpl.minimalVersion.durationMin : null;
+  };
+  const loadMinimal = (idx) => { if (idx === "") return; const list = minimalFor(routines[Number(idx)]); if (list) addExercisesFromList(list); };
   const loadWarmup = () => addExercisesFromList(WARMUP.exercises.map((w) => ({ name: w.name, targetReps: w.dose, targetSets: 1 })), WARMUP.durationMin);
-  const routinesWithMin = routines.map((r, i) => ({ r, i })).filter((x) => x.r.minimal);
+  const routinesWithMin = routines.map((r, i) => ({ r, i })).filter((x) => minimalFor(x.r));
   const upEx = (n) => writeSession({ exercises: n });
   const editSet = (exId, sId, f, v) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: e.sets.map((s) => s.id === sId ? { ...s, [f]: v } : s) }));
   const addSet = (exId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: [...e.sets, { id: uid(), reps: "", kg: "", rpe: "" }] }));
@@ -698,7 +711,7 @@ export function Train({ workouts, setWorkouts, routines }) {
             <div className="ft-field" style={{ maxWidth: 260 }}><label>Versión mínima (día difícil)</label>
               <select className="ft-select" value="" onChange={(e) => loadMinimal(e.target.value)}>
                 <option value="">Elegir mínima…</option>
-                {routinesWithMin.map(({ r, i }) => <option key={r.id} value={i}>{r.name.split("—")[0].trim()} · {r.minimal.exercises.length} ej.{r.minimal.durationMin ? ` · ${r.minimal.durationMin} min` : ""}</option>)}
+                {routinesWithMin.map(({ r, i }) => <option key={r.id} value={i}>{r.name.split("—")[0].trim()} · {minimalFor(r).length} ej.{minimalMin(r) ? ` · ${minimalMin(r)} min` : ""}</option>)}
               </select></div>
           )}
           <div className="ft-field" style={{ flex: "none" }}><label>Antes de empezar</label>
@@ -1463,14 +1476,24 @@ function BHeatmap({ days }) {
 }
 
 /* ---- reusable editorial screen primitives (shared across tabs) ---- */
+function useIsMobile(bp = 640) {
+  const [m, setM] = useState(typeof window !== "undefined" && window.innerWidth < bp);
+  useEffect(() => {
+    const on = () => setM(window.innerWidth < bp);
+    on(); window.addEventListener("resize", on);
+    return () => window.removeEventListener("resize", on);
+  }, [bp]);
+  return m;
+}
 function ScreenMast({ kicker, title, right }) {
   const show = useReveal(40);
+  const isMobile = useIsMobile();
   return (
     <Rise show={show} i={0}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderBottom: `2px solid ${A_INK}`, paddingBottom: 14 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12, borderBottom: `2px solid ${A_INK}`, paddingBottom: 14 }}>
         <div>
           <DKicker>{kicker}</DKicker>
-          <h1 style={{ margin: "10px 0 0", fontFamily: A_DISP, fontWeight: 900, fontSize: 60, lineHeight: 0.85, letterSpacing: "-0.045em", textTransform: "uppercase", color: A_INK }}>{title}</h1>
+          <h1 style={{ margin: "10px 0 0", fontFamily: A_DISP, fontWeight: 900, fontSize: isMobile ? 38 : 60, lineHeight: 0.85, letterSpacing: "-0.045em", textTransform: "uppercase", color: A_INK }}>{title}</h1>
         </div>
         {right}
       </div>
@@ -1495,14 +1518,19 @@ function EDateNav({ date, setDate }) {
 }
 function KpiStrip({ items }) {
   const show = useReveal(80);
+  const isMobile = useIsMobile();
   return (
     <Rise show={show} i={1}>
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${items.length},1fr)`, border: `1px solid ${A_LINE}`, borderTop: "none" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : `repeat(${items.length},1fr)`, border: `1px solid ${A_LINE}`, borderTop: "none" }}>
         {items.map((s, i) => (
-          <div key={i} style={{ padding: "18px 22px 20px", borderLeft: i ? `1px solid ${A_LINE}` : "none" }}>
+          <div key={i} style={{
+            padding: isMobile ? "14px 16px 16px" : "18px 22px 20px",
+            borderLeft: isMobile ? (i % 2 ? `1px solid ${A_LINE}` : "none") : (i ? `1px solid ${A_LINE}` : "none"),
+            borderTop: isMobile && i >= 2 ? `1px solid ${A_LINE}` : "none",
+          }}>
             <DKicker>{s.k}</DKicker>
-            <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 46, lineHeight: 0.95, letterSpacing: "-0.04em", marginTop: 10, fontVariantNumeric: "tabular-nums", color: s.color || A_INK }}>
-              {s.v}{s.u && <span style={{ fontSize: 15, fontFamily: A_MONO, fontWeight: 500, marginLeft: 5, color: A_INK2 }}>{s.u}</span>}
+            <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 32 : 46, lineHeight: 0.95, letterSpacing: "-0.04em", marginTop: 10, fontVariantNumeric: "tabular-nums", color: s.color || A_INK }}>
+              {s.v}{s.u && <span style={{ fontSize: isMobile ? 13 : 15, fontFamily: A_MONO, fontWeight: 500, marginLeft: 5, color: A_INK2 }}>{s.u}</span>}
             </div>
             {s.sub && <div style={{ fontFamily: A_MONO, fontSize: 11, marginTop: 8, color: s.subColor || A_INK2 }}>{s.sub}</div>}
           </div>
@@ -1513,9 +1541,10 @@ function KpiStrip({ items }) {
 }
 function EPanel({ title, meta, children, i = 2, raise }) {
   const show = useReveal(60);
+  const isMobile = useIsMobile();
   return (
     <Rise show={show} i={i} style={raise ? { position: "relative", zIndex: 20 } : undefined}>
-      <div style={{ border: `1px solid ${A_LINE}`, borderTop: "none", padding: "22px 24px 24px", background: A_PAPER }}>
+      <div style={{ border: `1px solid ${A_LINE}`, borderTop: "none", padding: isMobile ? "18px 15px 20px" : "22px 24px 24px", background: A_PAPER }}>
         {title && (
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderBottom: `1px solid ${A_HAIR}`, paddingBottom: 12, marginBottom: 18 }}>
             <h2 style={dSecH}>{title}</h2>
@@ -1530,6 +1559,7 @@ function EPanel({ title, meta, children, i = 2, raise }) {
 
 export function Dashboard({ workouts, weights, nutrition, measurements, periods, goals }) {
   const show = useReveal(60);
+  const isMobile = useIsMobile();
   const sortedW = useMemo(() => [...weights].sort((a, b) => a.date.localeCompare(b.date)), [weights]);
   const maSeries = useMemo(() => sortedW.map((w) => {
     const start = new Date(w.date + "T00:00:00"); start.setDate(start.getDate() - 6);
@@ -1676,9 +1706,9 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
   ] : [];
   const dateLabel = new Date().toLocaleDateString("es-ES", { weekday: "short", day: "2-digit", month: "short", year: "numeric" }).toUpperCase();
   const alColor = (ty) => ty === "warn" ? A_DANGER : ty === "ok" ? A_OK : ty === "pr" ? A_ACC : A_INK2;
-  const rowGrid = { display: "grid", gridTemplateColumns: "1.85fr 1fr", borderTop: `1px solid ${A_LINE}` };
-  const cellL = { padding: "22px 28px 26px", borderRight: `1px solid ${A_LINE}` };
-  const cellR = { padding: "22px 28px 24px" };
+  const rowGrid = { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.85fr 1fr", borderTop: `1px solid ${A_LINE}` };
+  const cellL = { padding: isMobile ? "20px 18px 22px" : "22px 28px 26px", borderRight: isMobile ? "none" : `1px solid ${A_LINE}`, borderBottom: isMobile ? `1px solid ${A_LINE}` : "none" };
+  const cellR = { padding: isMobile ? "20px 18px 22px" : "22px 28px 24px" };
   const secHead = { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 16 };
   const meta = { fontFamily: A_MONO, fontSize: 11, color: A_INK2, textTransform: "uppercase", letterSpacing: ".04em" };
 
@@ -1705,27 +1735,31 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
       <div style={{ border: `1px solid ${A_LINE}`, background: A_PAPER, color: A_INK, fontFamily: A_DISP }}>
         {/* masthead */}
         <Rise show={show} i={0}>
-          <div style={{ padding: "26px 28px 0" }}>
+          <div style={{ padding: isMobile ? "20px 18px 0" : "26px 28px 0" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".2em", color: A_INK2, paddingTop: 6 }}>FITTRACK&nbsp;—&nbsp;N°01</div>
               <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".12em", color: A_INK2 }}>{dateLabel}</div>
             </div>
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginTop: 8, borderBottom: `2px solid ${A_INK}`, paddingBottom: 12 }}>
-              <h1 style={{ margin: 0, fontFamily: A_DISP, fontWeight: 900, fontSize: 84, lineHeight: 0.82, letterSpacing: "-0.05em", textTransform: "uppercase" }}>Resumen</h1>
-              <div style={{ textAlign: "right", maxWidth: 260, fontFamily: A_MONO, fontSize: 11, lineHeight: 1.5, color: A_INK2, paddingBottom: 6 }}>Cuerpo · Fuerza · Nutrición. Una sola vista de tu progreso real.</div>
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 12, marginTop: 8, borderBottom: `2px solid ${A_INK}`, paddingBottom: 12 }}>
+              <h1 style={{ margin: 0, fontFamily: A_DISP, fontWeight: 900, fontSize: isMobile ? 44 : 84, lineHeight: 0.82, letterSpacing: "-0.05em", textTransform: "uppercase" }}>Resumen</h1>
+              {!isMobile && <div style={{ textAlign: "right", maxWidth: 260, fontFamily: A_MONO, fontSize: 11, lineHeight: 1.5, color: A_INK2, paddingBottom: 6 }}>Cuerpo · Fuerza · Nutrición. Una sola vista de tu progreso real.</div>}
             </div>
           </div>
         </Rise>
 
         {/* KPI strip */}
         <Rise show={show} i={1}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", borderBottom: `1px solid ${A_LINE}` }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", borderBottom: `1px solid ${A_LINE}` }}>
             {kpis.map((s, i) => (
-              <div key={i} style={{ padding: "20px 24px 22px", borderLeft: i ? `1px solid ${A_LINE}` : "none" }}>
+              <div key={i} style={{
+                padding: isMobile ? "14px 16px 16px" : "20px 24px 22px",
+                borderLeft: isMobile ? (i % 2 ? `1px solid ${A_LINE}` : "none") : (i ? `1px solid ${A_LINE}` : "none"),
+                borderTop: isMobile && i >= 2 ? `1px solid ${A_LINE}` : "none",
+              }}>
                 <DKicker>{s.k}</DKicker>
-                <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: s.big ? 60 : 52, lineHeight: 0.95, letterSpacing: "-0.04em", marginTop: 10, fontVariantNumeric: "tabular-nums", color: s.signed ? (s.v <= 0 ? A_OK : A_ACC) : A_INK }}>
+                <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 34 : (s.big ? 60 : 52), lineHeight: 0.95, letterSpacing: "-0.04em", marginTop: 10, fontVariantNumeric: "tabular-nums", color: s.signed ? (s.v <= 0 ? A_OK : A_ACC) : A_INK }}>
                   {s.v === null ? "—" : <>{s.signed && s.v > 0 ? "+" : ""}<CountUp value={s.v} decimals={s.dec} delay={300 + i * 90} /></>}
-                  <span style={{ fontSize: 18, fontFamily: A_MONO, fontWeight: 500, marginLeft: 6, color: A_INK2 }}>{s.u}</span>
+                  <span style={{ fontSize: isMobile ? 14 : 18, fontFamily: A_MONO, fontWeight: 500, marginLeft: 6, color: A_INK2 }}>{s.u}</span>
                 </div>
                 <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, marginTop: 9 }}>{s.sub}</div>
               </div>
@@ -1769,7 +1803,7 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         </div>
 
         {/* calories + muscle */}
-        <div style={{ ...rowGrid, gridTemplateColumns: "1fr 1.25fr" }}>
+        <div style={{ ...rowGrid, gridTemplateColumns: isMobile ? "1fr" : "1fr 1.25fr" }}>
           <Rise show={show} i={6} style={cellL}>
             <h2 style={{ ...dSecH, marginBottom: 18 }}>Calorías</h2>
             {kcalChart.some((d) => d.kcal > 0) ? (<><BKcalBars data={kcalChart} target={Number(goals.kcalTarget) || null} /><div style={{ display: "flex", justifyContent: "space-between", ...meta, marginTop: 10 }}><span>últimos 14 días</span><span>media {kcalAvg || "—"} kcal</span></div></>) : <DNeed>Registra comidas para ver tus calorías diarias.</DNeed>}
@@ -1804,15 +1838,15 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         {/* footer: projection + cycle */}
         {(projection && !projection.off || cyc) && (
           <Rise show={show} i={10}>
-            <div style={{ display: "grid", gridTemplateColumns: cyc && projection && !projection.off ? "1fr 1fr" : "1fr", borderTop: `2px solid ${A_INK}` }}>
+            <div style={{ display: "grid", gridTemplateColumns: !isMobile && cyc && projection && !projection.off ? "1fr 1fr" : "1fr", borderTop: `2px solid ${A_INK}` }}>
               {projection && !projection.off && (
-                <div style={{ padding: "18px 28px", borderRight: cyc ? `1px solid ${A_LINE}` : "none", display: "flex", gap: 14 }}>
+                <div style={{ padding: isMobile ? "16px 18px" : "18px 28px", borderRight: !isMobile && cyc ? `1px solid ${A_LINE}` : "none", borderBottom: isMobile && cyc ? `1px solid ${A_LINE}` : "none", display: "flex", gap: 14 }}>
                   <div style={{ fontFamily: A_DISP, fontWeight: 900, fontSize: 30, color: A_ACC, lineHeight: 1 }}>→</div>
                   <div><DKicker color={A_ACC}>Proyección a tu meta</DKicker><div style={{ fontSize: 13.5, lineHeight: 1.5, marginTop: 6, color: A_INK, maxWidth: 460 }}>A tu ritmo actual llegarías a {goals.targetWeight} kg alrededor del <b>{projection.date}</b> (~{Math.abs(projection.weeks)} semanas).</div></div>
                 </div>
               )}
               {cyc && (
-                <div style={{ padding: "18px 28px", display: "flex", gap: 14 }}>
+                <div style={{ padding: isMobile ? "16px 18px" : "18px 28px", display: "flex", gap: 14 }}>
                   <div style={{ width: 10, height: 10, borderRadius: 999, background: CYCLE_PHASES[cyc.phase].color, marginTop: 6, flexShrink: 0 }} />
                   <div><DKicker>Ciclo · fase {cyc.phase} · día {cyc.day}</DKicker><div style={{ fontSize: 13.5, lineHeight: 1.5, marginTop: 6, color: A_INK2, maxWidth: 460 }}>{CYCLE_PHASES[cyc.phase].note} {cyc.daysToNext >= 0 ? `Próximo periodo en ~${cyc.daysToNext} días.` : `Periodo con ~${Math.abs(cyc.daysToNext)} días de retraso.`}</div></div>
                 </div>
