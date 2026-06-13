@@ -913,9 +913,9 @@ export function Body({ weights, setWeights, measurements, setMeasurements, welln
         {pSorted.length > 0 && (
           <div className="ft-list" style={{ marginTop: 12 }}>
             {pSorted.slice(0, 6).map((p, i) => {
-              const prev = pSorted[i + 1];
-              const len = prev ? daysBetween(prev.date, p.date) : null;
-              return (<div className="ft-li" key={p.id}><span className="li-d">{fmtDate(p.date)}</span><span className="li-main">Inicio de periodo</span><span className="li-sub">{p.duration} días{len ? ` · ciclo ${len}d` : ""}</span><button className="ft-trash" onClick={() => delPeriod(p.id)}><Trash2 size={15} /></button></div>);
+              const next = pSorted[i - 1]; // el periodo siguiente (más reciente) en lista descendente
+              const len = next ? daysBetween(p.date, next.date) : null;
+              return (<div className="ft-li" key={p.id}><span className="li-d">{fmtDate(p.date)}</span><span className="li-main">Inicio de periodo</span><span className="li-sub">{p.duration} días{len ? ` · ciclo ${len}d` : i === 0 ? " · ciclo en curso" : ""}</span><button className="ft-trash" onClick={() => delPeriod(p.id)}><Trash2 size={15} /></button></div>);
             })}
           </div>
         )}
@@ -1463,7 +1463,7 @@ function BHeatmap({ days, isMobile }) {
   const show = useReveal(640);
   let cols = [];
   days.forEach((d) => { if (d.dw === 0 || cols.length === 0) cols.push([]); cols[cols.length - 1].push(d); });
-  if (isMobile) cols = cols.slice(-13); // últimas ~13 semanas para que entre sin desbordar
+  if (isMobile) cols = cols.slice(-12); // últimas ~12 semanas para que entre sin desbordar
   const CELL = isMobile ? 18 : 15, GAP = 4;
   const ramp = ["rgba(22,20,13,0.07)", "rgba(231,83,28,0.26)", "rgba(231,83,28,0.5)", "rgba(231,83,28,0.74)", "#e7531c"];
   const dayLabels = ["L", "", "X", "", "V", "", "D"];
@@ -1833,7 +1833,7 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         {/* consistency + streak */}
         <div style={rowGrid}>
           <Rise show={show} i={8} style={cellL}>
-            <div style={secHead}><h2 style={secTitle}>Constancia</h2><span style={meta}>{isMobile ? "últimas 13 semanas" : "últimas 26 semanas"}</span></div>
+            <div style={secHead}><h2 style={secTitle}>Constancia</h2><span style={meta}>{isMobile ? "últimas 12 semanas" : "últimas 26 semanas"}</span></div>
             <BHeatmap days={heat.days} isMobile={isMobile} />
           </Rise>
           <Rise show={show} i={9} style={cellR}>
