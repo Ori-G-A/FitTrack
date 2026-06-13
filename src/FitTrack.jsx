@@ -1459,11 +1459,12 @@ function BMacros({ rows, footer }) {
     </div>
   );
 }
-function BHeatmap({ days }) {
+function BHeatmap({ days, isMobile }) {
   const show = useReveal(640);
-  const cols = [];
+  let cols = [];
   days.forEach((d) => { if (d.dw === 0 || cols.length === 0) cols.push([]); cols[cols.length - 1].push(d); });
-  const CELL = 15, GAP = 4;
+  if (isMobile) cols = cols.slice(-13); // últimas ~13 semanas para que entre sin desbordar
+  const CELL = isMobile ? 18 : 15, GAP = 4;
   const ramp = ["rgba(22,20,13,0.07)", "rgba(231,83,28,0.26)", "rgba(231,83,28,0.5)", "rgba(231,83,28,0.74)", "#e7531c"];
   const dayLabels = ["L", "", "X", "", "V", "", "D"];
   return (
@@ -1472,7 +1473,7 @@ function BHeatmap({ days }) {
         <div style={{ width: 16, flexShrink: 0, display: "flex", flexDirection: "column", gap: GAP }}>
           {Array.from({ length: 7 }, (_, r) => (<div key={r} style={{ height: CELL, display: "flex", alignItems: "center", fontFamily: A_MONO, fontSize: 9, color: A_INK2 }}>{dayLabels[r]}</div>))}
         </div>
-        <div style={{ display: "flex", gap: GAP, overflowX: "auto", paddingBottom: 4 }}>
+        <div style={{ display: "flex", gap: GAP, flexWrap: "nowrap", flex: 1, justifyContent: isMobile ? "space-between" : "flex-start", overflow: "hidden" }}>
           {cols.map((col, ci) => (
             <div key={ci} style={{ display: "flex", flexDirection: "column", gap: GAP, flexShrink: 0 }}>
               {Array.from({ length: 7 }, (_, r) => { const d = col.find((x) => x.dw === r); if (!d) return <div key={r} style={{ width: CELL, height: CELL }} />; return <div key={r} title={d.iso} style={{ width: CELL, height: CELL, background: ramp[d.lvl], opacity: show ? 1 : 0, transform: show ? "scale(1)" : "scale(0.5)", transition: `opacity .45s ease ${ci * 14}ms, transform .45s ${ci * 14}ms` }} />; })}
@@ -1832,8 +1833,8 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         {/* consistency + streak */}
         <div style={rowGrid}>
           <Rise show={show} i={8} style={cellL}>
-            <div style={secHead}><h2 style={secTitle}>Constancia</h2><span style={meta}>últimas 26 semanas</span></div>
-            <BHeatmap days={heat.days} />
+            <div style={secHead}><h2 style={secTitle}>Constancia</h2><span style={meta}>{isMobile ? "últimas 13 semanas" : "últimas 26 semanas"}</span></div>
+            <BHeatmap days={heat.days} isMobile={isMobile} />
           </Rise>
           <Rise show={show} i={9} style={cellR}>
             <h2 style={{ ...secTitle, marginBottom:14 }}>Racha</h2>
