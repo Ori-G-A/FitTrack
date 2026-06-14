@@ -15,11 +15,17 @@ import {
 
 /* ----------------------------- helpers ----------------------------- */
 const uid = () => Math.random().toString(36).slice(2, 10);
-const todayISO = () => new Date().toISOString().slice(0, 10);
+const localISO = (date = new Date()) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+};
+const todayISO = () => localISO();
 const round1 = (x) => Math.round(x * 10) / 10;
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
 const daysBetween = (a, b) => Math.round((new Date(b + "T00:00:00") - new Date(a + "T00:00:00")) / 86400000);
-const isoMinus = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10); };
+const isoMinus = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return localISO(d); };
 const clock = (s) => {
   const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
   const p = (n) => String(n).padStart(2, "0");
@@ -27,6 +33,7 @@ const clock = (s) => {
 };
 const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
 const KCAL_PER_KG = 7700;
+const PHOTO_BUCKET = "progress-photos";
 
 const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Gemelos", "Core", "Trapecio", "Antebrazo"];
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
@@ -118,7 +125,7 @@ function slopePerDay(points) {
 }
 
 /* ---------- ciclo menstrual ---------- */
-const addDays = (iso, n) => { const d = new Date(iso + "T00:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+const addDays = (iso, n) => { const d = new Date(iso + "T00:00:00"); d.setDate(d.getDate() + n); return localISO(d); };
 const CYCLE_PHASES = {
   "Menstrual": { color: "#ff6b4a", note: "Energía variable y posibles molestias. Está bien bajar intensidad si lo necesitas; escucha a tu cuerpo." },
   "Folicular": { color: "#3ddc97", note: "Al subir el estrógeno, muchas personas reportan más energía y fuerza. Suele ser una buena ventana para intentar récords." },
@@ -157,7 +164,7 @@ async function loadKey(userId, key, fb) {
   return data?.value ?? fb;
 }
 /* ---- estado de guardado observable (para verificar persistencia) ---- */
-const saveBus = { status: "idle", error: null, at: null, listeners: new Set() };
+const saveBus = { status: "idle", error: null, at: null, pending: 0, listeners: new Set() };
 function emitSave(status, error = null) {
   saveBus.status = status; saveBus.error = error; saveBus.at = Date.now();
   saveBus.listeners.forEach((l) => l({ status, error }));
@@ -165,19 +172,28 @@ function emitSave(status, error = null) {
 function onSaveStatus(cb) { saveBus.listeners.add(cb); return () => saveBus.listeners.delete(cb); }
 
 const saveQueues = new Map();
+const suspendedUsers = new Set();
 async function persistKey(userId, key, val) {
+  if (saveBus.pending === 0) saveBus.error = null;
+  saveBus.pending += 1;
+  emitSave("saving");
   try {
-    emitSave("saving");
     const { error } = await supabase.from("app_data").upsert(
       { user_id: userId, key, value: val },
       { onConflict: "user_id,key" }
     );
-    if (error) { console.error("saveKey", key, error); emitSave("error", error.message || "Error al guardar"); }
-    else { emitSave("saved"); }
-  } catch (e) { console.error(e); emitSave("error", String(e?.message || e)); }
+    if (error) throw error;
+  } catch (error) {
+    console.error("saveKey", key, error);
+    saveBus.error = error.message || "Error al guardar";
+  } finally {
+    saveBus.pending = Math.max(0, saveBus.pending - 1);
+    if (saveBus.pending === 0) emitSave(saveBus.error ? "error" : "saved", saveBus.error);
+  }
 }
 function saveKey(userId, key, val) {
   if (!userId) { emitSave("error", "Sin sesión activa"); return Promise.resolve(); }
+  if (suspendedUsers.has(userId)) return Promise.resolve();
   const queueKey = `${userId}:${key}`;
   const previous = saveQueues.get(queueKey) || Promise.resolve();
   const next = previous.catch(() => {}).then(() => persistKey(userId, key, val));
@@ -185,7 +201,44 @@ function saveKey(userId, key, val) {
   next.finally(() => { if (saveQueues.get(queueKey) === next) saveQueues.delete(queueKey); });
   return next;
 }
+const waitForUserSaves = (userId) => Promise.allSettled(
+  [...saveQueues.entries()].filter(([key]) => key.startsWith(`${userId}:`)).map(([, pending]) => pending)
+);
+function useSyncedValue(userId, key, value, enabled, delay = 600) {
+  useEffect(() => {
+    if (!enabled || !userId) return undefined;
+    const timeout = setTimeout(() => saveKey(userId, key, value), delay);
+    return () => clearTimeout(timeout);
+  }, [userId, key, value, enabled, delay]);
+}
 const DEFAULT_GOALS = { startWeight: "", targetWeight: "", weeklyChange: -0.4, kcalTarget: 2200, proteinTarget: 150, autoMacros: false, activity: "moderado", proteinPerKg: 2.0, proteinMeals: 4 };
+const BACKUP_ARRAY_KEYS = ["workouts", "weights", "nutrition", "foods", "recipes", "routines", "measurements", "wellness", "periods", "photos"];
+const isPlainObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
+const isISODate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
+
+function validateBackup(value) {
+  if (!isPlainObject(value)) throw new Error("La copia debe contener un objeto JSON");
+  const backup = {};
+  let found = false;
+  BACKUP_ARRAY_KEYS.forEach((key) => {
+    if (!Object.prototype.hasOwnProperty.call(value, key)) return;
+    if (!Array.isArray(value[key]) || !value[key].every(isPlainObject)) throw new Error(`La colección ${key} no es válida`);
+    backup[key] = value[key];
+    found = true;
+  });
+  if (Object.prototype.hasOwnProperty.call(value, "goals")) {
+    if (!isPlainObject(value.goals)) throw new Error("Los objetivos no son válidos");
+    backup.goals = Object.fromEntries(Object.keys(DEFAULT_GOALS).map((key) => [key, value.goals[key] ?? DEFAULT_GOALS[key]]));
+    found = true;
+  }
+  if (!found) throw new Error("El archivo no contiene datos de FitTrack");
+  if (backup.workouts?.some((w) => !isISODate(w.date) || !Array.isArray(w.exercises) || w.exercises.some((e) => !isPlainObject(e) || !Array.isArray(e.sets)) || (w.cardio != null && !Array.isArray(w.cardio)))) throw new Error("El historial de entrenamientos no es válido");
+  ["weights", "nutrition", "measurements", "wellness", "periods"].forEach((key) => {
+    if (backup[key]?.some((item) => !isISODate(item.date))) throw new Error(`Las fechas de ${key} no son válidas`);
+  });
+  if (backup.photos?.some((photo) => !isISODate(photo.date) || typeof photo.dataUrl !== "string" || !/^data:image\/(jpeg|png|webp);base64,/i.test(photo.dataUrl))) throw new Error("Las fotos de la copia no son válidas");
+  return backup;
+}
 
 function migrateWorkouts(ws) {
   return ws.map((w) => ({
@@ -213,6 +266,69 @@ function compressImage(file, maxPx = 820, quality = 0.62) {
     img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("No se pudo leer la imagen")); };
     img.src = url;
   });
+}
+const dataUrlToBlob = async (dataUrl) => (await fetch(dataUrl)).blob();
+const blobToDataUrl = (blob) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = () => reject(reader.error || new Error("No se pudo leer la imagen"));
+  reader.readAsDataURL(blob);
+});
+const photoStoragePath = (userId, mimeType) => {
+  const extension = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
+  return `${userId}/${crypto.randomUUID?.() || uid()}.${extension}`;
+};
+const photoForStorage = ({ signedUrl, ...photo }) => photo;
+
+async function signedPhoto(photo) {
+  if (!photo.storagePath || photo.dataUrl) return photo;
+  const { data, error } = await supabase.storage.from(PHOTO_BUCKET).createSignedUrl(photo.storagePath, 60 * 60 * 24);
+  if (error) throw error;
+  return { ...photo, signedUrl: data.signedUrl };
+}
+
+async function uploadPhotoData(userId, photo) {
+  if (!photo.dataUrl) return signedPhoto(photo);
+  const blob = await dataUrlToBlob(photo.dataUrl);
+  const contentType = ["image/jpeg", "image/png", "image/webp"].includes(blob.type) ? blob.type : "image/jpeg";
+  const storagePath = photoStoragePath(userId, contentType);
+  const { error } = await supabase.storage.from(PHOTO_BUCKET).upload(storagePath, blob, { contentType, upsert: false });
+  if (error) throw error;
+  return signedPhoto({ id: photo.id || uid(), date: photo.date || todayISO(), storagePath });
+}
+
+async function hydratePhotos(userId, photos) {
+  if (!Array.isArray(photos) || photos.length === 0) return [];
+  const hydrated = [];
+  for (const photo of photos) {
+    try { hydrated.push(await (photo.dataUrl ? uploadPhotoData(userId, photo) : signedPhoto(photo))); }
+    catch (error) { console.error("hydratePhoto", error); hydrated.push(photo); }
+  }
+  return hydrated;
+}
+
+async function photosForBackup(photos) {
+  return Promise.all(photos.map(async (photo) => {
+    if (photo.dataUrl) return photoForStorage(photo);
+    const source = photo.signedUrl || (await signedPhoto(photo)).signedUrl;
+    const response = await fetch(source);
+    if (!response.ok) throw new Error("No se pudo incluir una foto en la copia");
+    return { id: photo.id, date: photo.date, dataUrl: await blobToDataUrl(await response.blob()) };
+  }));
+}
+
+async function deleteUserPhotos(userId) {
+  const paths = [];
+  for (let offset = 0; ; offset += 100) {
+    const { data, error } = await supabase.storage.from(PHOTO_BUCKET).list(userId, { limit: 100, offset, sortBy: { column: "name", order: "asc" } });
+    if (error) throw error;
+    paths.push(...data.filter((item) => item.name).map((item) => `${userId}/${item.name}`));
+    if (data.length < 100) break;
+  }
+  for (let i = 0; i < paths.length; i += 100) {
+    const { error } = await supabase.storage.from(PHOTO_BUCKET).remove(paths.slice(i, i + 100));
+    if (error) throw error;
+  }
 }
 const ACTIVITY = [
   { key: "sedentario", label: "Sedentario", factor: 28 },
@@ -426,6 +542,7 @@ export default function App() {
   useEffect(() => {
     const userId = session?.user?.id;
     if (!userId) { setLoaded(false); setLoadError(false); return; }
+    suspendedUsers.delete(userId);
     let cancelled = false;
     setLoaded(false);
     setLoadError(false);
@@ -445,6 +562,7 @@ export default function App() {
           loadKey(userId, "photos", []),
           loadKey(userId, "goals", DEFAULT_GOALS),
         ]);
+        const hydratedPhotos = await hydratePhotos(userId, nextPhotos);
         if (cancelled) return;
         setWorkouts(migrateWorkouts(nextWorkouts));
         setWeights(nextWeights);
@@ -455,7 +573,7 @@ export default function App() {
         setMeasurements(nextMeasurements);
         setWellness(nextWellness);
         setPeriods(nextPeriods);
-        setPhotos(nextPhotos);
+        setPhotos(hydratedPhotos);
         setGoals(nextGoals);
         setLoaded(true);
       } catch (error) {
@@ -467,31 +585,55 @@ export default function App() {
     return () => { cancelled = true; };
   }, [session?.user?.id, loadAttempt]);
   const userId = session?.user?.id;
-  useEffect(() => { if (loaded) saveKey(userId, "workouts", workouts); }, [workouts, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "weights", weights); }, [weights, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "nutrition", nutrition); }, [nutrition, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "foods", foods); }, [foods, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "recipes", recipes); }, [recipes, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "routines", routines); }, [routines, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "measurements", measurements); }, [measurements, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "wellness", wellness); }, [wellness, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "periods", periods); }, [periods, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "photos", photos); }, [photos, loaded, userId]);
-  useEffect(() => { if (loaded) saveKey(userId, "goals", goals); }, [goals, loaded, userId]);
+  useSyncedValue(userId, "workouts", workouts, loaded);
+  useSyncedValue(userId, "weights", weights, loaded);
+  useSyncedValue(userId, "nutrition", nutrition, loaded);
+  useSyncedValue(userId, "foods", foods, loaded);
+  useSyncedValue(userId, "recipes", recipes, loaded);
+  useSyncedValue(userId, "routines", routines, loaded);
+  useSyncedValue(userId, "measurements", measurements, loaded);
+  useSyncedValue(userId, "wellness", wellness, loaded);
+  useSyncedValue(userId, "periods", periods, loaded);
+  const storedPhotos = useMemo(() => photos.map(photoForStorage), [photos]);
+  useSyncedValue(userId, "photos", storedPhotos, loaded);
+  useSyncedValue(userId, "goals", goals, loaded);
 
   const signOut = () => supabase.auth.signOut();
+  const deleteAllData = async () => {
+    if (!userId) throw new Error("No hay una sesión activa");
+    suspendedUsers.add(userId);
+    setLoaded(false);
+    try {
+      await waitForUserSaves(userId);
+      await deleteUserPhotos(userId);
+      const { error } = await supabase.from("app_data").delete().eq("user_id", userId);
+      if (error) throw error;
+      await supabase.auth.signOut();
+    } catch (error) {
+      suspendedUsers.delete(userId);
+      setLoaded(true);
+      throw error;
+    }
+  };
 
-  const exportData = () => {
-    const blob = new Blob([JSON.stringify({ workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, photos, goals }, null, 2)], { type: "application/json" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `fittrack-${todayISO()}.json`; a.click();
+  const exportData = async () => {
+    try {
+      const backupPhotos = await photosForBackup(photos);
+      const blob = new Blob([JSON.stringify({ workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, photos: backupPhotos, goals }, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a"); a.href = url; a.download = `fittrack-${todayISO()}.json`; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (error) { alert(error?.message || "No se pudo crear la copia de seguridad"); }
   };
   const fileRef = useRef();
   const importData = (e) => {
     const f = e.target.files?.[0]; if (!f) return;
+    if (f.size > 50 * 1024 * 1024) { alert("La copia supera el límite de 50 MB"); e.target.value = ""; return; }
     const r = new FileReader();
-    r.onload = () => {
+    r.onload = async () => {
       try {
-        const d = JSON.parse(r.result);
+        const d = validateBackup(JSON.parse(r.result));
+        if (!window.confirm("Esta importación reemplazará las colecciones incluidas en la copia. ¿Continuar?")) return;
         if (d.workouts) setWorkouts(migrateWorkouts(d.workouts));
         if (d.weights) setWeights(d.weights);
         if (d.nutrition) setNutrition(d.nutrition);
@@ -501,10 +643,12 @@ export default function App() {
         if (d.measurements) setMeasurements(d.measurements);
         if (d.wellness) setWellness(d.wellness);
         if (d.periods) setPeriods(d.periods);
-        if (d.photos) setPhotos(d.photos);
+        if (d.photos) setPhotos(await hydratePhotos(userId, d.photos));
         if (d.goals) setGoals(d.goals);
-      } catch { alert("Archivo no válido"); }
+      } catch (error) { alert(error?.message || "Archivo no válido"); }
+      finally { e.target.value = ""; }
     };
+    r.onerror = () => { alert("No se pudo leer el archivo"); e.target.value = ""; };
     r.readAsText(f);
   };
 
@@ -556,13 +700,13 @@ export default function App() {
               <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Ic size={15} /> {label}</button>
             ))}
           </nav>
-          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} />}
-          {tab === "cuerpo" && <Body weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} photos={photos} setPhotos={setPhotos} />}
+          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} userId={userId} />}
+          {tab === "cuerpo" && <Body weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} photos={photos} setPhotos={setPhotos} userId={userId} />}
           {tab === "nutricion" && <Nutrition nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={setTab} />}
           {tab === "biblioteca" && <Library foods={foods} setFoods={setFoods} recipes={recipes} setRecipes={setRecipes} />}
           {tab === "rutinas" && <Routines routines={routines} setRoutines={setRoutines} />}
           {tab === "dashboard" && <Dashboard workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} goals={goals} />}
-          {tab === "ajustes" && <Goals goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} />}
+          {tab === "ajustes" && <Goals goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} />}
         </div>
       )}
     </div>
@@ -623,7 +767,7 @@ function AuthScreen() {
 
 /* ----------------------------- date bar ----------------------------- */
 function DateBar({ date, setDate }) {
-  const shift = (n) => { const d = new Date(date + "T00:00:00"); d.setDate(d.getDate() + n); setDate(d.toISOString().slice(0, 10)); };
+  const shift = (n) => { const d = new Date(date + "T00:00:00"); d.setDate(d.getDate() + n); setDate(localISO(d)); };
   const d = new Date(date + "T00:00:00");
   return (
     <div className="ft-datebar">
@@ -638,7 +782,7 @@ function DateBar({ date, setDate }) {
 }
 
 /* ----------------------------- TRAIN ----------------------------- */
-export function Train({ workouts, setWorkouts, routines }) {
+export function Train({ workouts, setWorkouts, routines, userId }) {
   const [date, setDate] = useState(todayISO());
   const [name, setName] = useState("");
   const [primary, setPrimary] = useState(MUSCLES[0]);
@@ -709,16 +853,18 @@ export function Train({ workouts, setWorkouts, routines }) {
   const [tSec, setTSec] = useState(0); const [tRun, setTRun] = useState(false); const tRef = useRef(null);
   useEffect(() => {
     (async () => {
-      const t = await loadKey("timer", { running: false, baseSec: 0, startedAt: null });
-      if (t.running && t.startedAt) { setTSec((t.baseSec || 0) + Math.floor((Date.now() - t.startedAt) / 1000)); setTRun(true); }
-      else setTSec(t.baseSec || 0);
+      try {
+        const t = await loadKey(userId, "timer", { running: false, baseSec: 0, startedAt: null });
+        if (t.running && t.startedAt) { setTSec((t.baseSec || 0) + Math.floor((Date.now() - t.startedAt) / 1000)); setTRun(true); }
+        else setTSec(t.baseSec || 0);
+      } catch (error) { console.error("loadTimer", error); }
     })();
     return () => clearInterval(tRef.current);
-  }, []);
+  }, [userId]);
   useEffect(() => { if (tRun) tRef.current = setInterval(() => setTSec((s) => s + 1), 1000); else clearInterval(tRef.current); return () => clearInterval(tRef.current); }, [tRun]);
-  const startT = () => { saveKey("timer", { running: true, startedAt: Date.now(), baseSec: tSec }); setTRun(true); };
-  const pauseT = () => { saveKey("timer", { running: false, startedAt: null, baseSec: tSec }); setTRun(false); };
-  const resetT = () => { saveKey("timer", { running: false, startedAt: null, baseSec: 0 }); setTRun(false); setTSec(0); };
+  const startT = () => { saveKey(userId, "timer", { running: true, startedAt: Date.now(), baseSec: tSec }); setTRun(true); };
+  const pauseT = () => { saveKey(userId, "timer", { running: false, startedAt: null, baseSec: tSec }); setTRun(false); };
+  const resetT = () => { saveKey(userId, "timer", { running: false, startedAt: null, baseSec: 0 }); setTRun(false); setTSec(0); };
   const commitT = () => { const min = Math.round(tSec / 60); if (min > 0) writeSession({ durationMin: (session.durationMin || 0) + min }); resetT(); };
 
   const totalVol = exercises.reduce((t, e) => t + e.sets.reduce((st, s) => st + (Number(s.reps) || 0) * (Number(s.kg) || 0), 0), 0);
@@ -854,7 +1000,7 @@ export function Train({ workouts, setWorkouts, routines }) {
 }
 
 /* ----------------------------- BODY (peso + medidas + bienestar) ----------------------------- */
-export function Body({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos }) {
+export function Body({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos, userId }) {
   const [wDate, setWDate] = useState(todayISO()); const [kg, setKg] = useState("");
   const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
   const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
@@ -899,11 +1045,19 @@ export function Body({ weights, setWeights, measurements, setMeasurements, welln
     setPhotoBusy(true); setPhotoErr("");
     try {
       const dataUrl = await compressImage(file);
-      setPhotos((p) => [{ id: uid(), date: todayISO(), dataUrl }, ...p]);
-    } catch { setPhotoErr("No se pudo procesar la imagen."); }
+      const photo = await uploadPhotoData(userId, { id: uid(), date: todayISO(), dataUrl });
+      setPhotos((p) => [photo, ...p]);
+    } catch (error) { console.error("addPhoto", error); setPhotoErr("No se pudo guardar la imagen de forma segura."); }
     setPhotoBusy(false); if (photoRef.current) photoRef.current.value = "";
   };
-  const delPhoto = (id) => setPhotos((p) => p.filter((x) => x.id !== id));
+  const delPhoto = async (photo) => {
+    setPhotoErr("");
+    if (photo.storagePath) {
+      const { error } = await supabase.storage.from(PHOTO_BUCKET).remove([photo.storagePath]);
+      if (error) { console.error("delPhoto", error); setPhotoErr("No se pudo eliminar la imagen."); return; }
+    }
+    setPhotos((p) => p.filter((x) => x.id !== photo.id));
+  };
   const pSortedPhotos = [...photos].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
@@ -1034,9 +1188,9 @@ export function Body({ weights, setWeights, measurements, setMeasurements, welln
           <div className="ft-photos">
             {pSortedPhotos.map((ph) => (
               <div className="ft-photo" key={ph.id}>
-                <img src={ph.dataUrl} alt={ph.date} />
+                <img src={ph.dataUrl || ph.signedUrl} alt={ph.date} />
                 <span className="cap">{fmtDate(ph.date)}</span>
-                <button className="ft-photo-del" onClick={() => delPhoto(ph.id)}><Trash2 size={14} /></button>
+                <button className="ft-photo-del" onClick={() => delPhoto(ph)}><Trash2 size={14} /></button>
               </div>
             ))}
           </div>
@@ -1563,7 +1717,7 @@ function ScreenMast({ kicker, title, right }) {
   );
 }
 function EDateNav({ date, setDate }) {
-  const shift = (n) => { const d = new Date(date + "T00:00:00"); d.setDate(d.getDate() + n); setDate(d.toISOString().slice(0, 10)); };
+  const shift = (n) => { const d = new Date(date + "T00:00:00"); d.setDate(d.getDate() + n); setDate(localISO(d)); };
   const d = new Date(date + "T00:00:00");
   const lbl = date === todayISO() ? "Hoy" : d.toLocaleDateString("es-ES", { weekday: "long" });
   const eb = { width: 34, height: 34, border: `1px solid ${A_LINE}`, background: "transparent", cursor: "pointer", display: "grid", placeItems: "center", color: A_INK };
@@ -2166,7 +2320,9 @@ function DashboardLegacy({ workouts, weights, nutrition, measurements, periods, 
 }
 
 /* ----------------------------- AJUSTES / GOALS ----------------------------- */
-export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut }) {
+export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData }) {
+  const [deleteBusy, setDeleteBusy] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
   const upd = (k, v) => setGoals((g) => ({ ...g, [k]: v }));
   const latestW = weights.length ? [...weights].sort((a, b) => a.date.localeCompare(b.date)).slice(-1)[0].kg : null;
   const refW = Number(goals.startWeight) || latestW || null;
@@ -2267,8 +2423,22 @@ export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut
 
       <div className="ft-card">
         <h2><Download size={16} /> Copia de seguridad</h2>
-        <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 0 }}>Tus datos (incluidas las fotos) viven solo en esta app. Exporta un JSON cada cierto tiempo; puedes reimportarlo desde la cabecera.</p>
+        <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 0 }}>Tus datos, incluidas las fotos, se sincronizan con tu cuenta en Supabase. Exporta un JSON periódicamente como copia adicional; puedes reimportarlo desde la cabecera.</p>
         <button className="ft-btn" onClick={exportData}><Download size={15} /> Exportar copia ahora</button>
+      </div>
+
+      <div className="ft-card">
+        <h2><AlertTriangle size={16} /> Privacidad y eliminación</h2>
+        <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 0 }}>FitTrack almacena en Supabase tus entrenamientos, nutrición, peso, medidas, bienestar, ciclo menstrual y fotos. Las fotos se guardan en un bucket privado y se muestran mediante enlaces temporales.</p>
+        <p style={{ color: "var(--muted)", fontSize: 13 }}>Esta acción elimina los datos y fotos de FitTrack, pero conserva tu usuario de acceso para que puedas volver a empezar.</p>
+        <button className="ft-btn ghost" disabled={deleteBusy} onClick={async () => {
+          const confirmation = window.prompt("Escribe ELIMINAR para borrar permanentemente todos tus datos de FitTrack.");
+          if (confirmation !== "ELIMINAR") return;
+          setDeleteBusy(true); setDeleteError("");
+          try { await deleteAllData(); }
+          catch (error) { setDeleteError(error?.message || "No se pudieron eliminar todos los datos"); setDeleteBusy(false); }
+        }}><Trash2 size={15} /> {deleteBusy ? "Eliminando…" : "Eliminar todos mis datos"}</button>
+        {deleteError && <div style={{ color: "var(--danger)", fontSize: 13, marginTop: 10 }}>{deleteError}</div>}
       </div>
 
       <div className="ft-alert ok"><Check size={20} color="var(--ok)" /><div><div className="t">Cómo se calculan tus macros y avisos</div><div className="b">El cálculo automático estima tu mantenimiento como peso × factor de actividad, le resta/suma el equivalente a tu ritmo objetivo (7700 kcal ≈ 1 kg), y fija más proteína en déficit (2,2 g/kg) que en volumen (2,0 g/kg). Es un punto de partida: el dashboard ajusta tu mantenimiento real con tus datos en ~2 semanas, y ahí puedes afinar.</div></div></div>
