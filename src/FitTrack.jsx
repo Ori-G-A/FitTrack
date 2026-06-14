@@ -2,6 +2,18 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { supabase } from "./supabase.js";
 import { ROUTINE_TEMPLATES, templateToAppRoutine, computeProteinTargets, distributeProtein, PROTEIN_CONFIG, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
 import {
+  addDays, cycleInfo, daysBetween, localISO, migrateWorkouts as migrateWorkoutData,
+  slopePerDay, validateBackup as validateBackupData,
+} from "./app-utils.js";
+import {
+  loadKey, onSaveStatus, resumeUserSaves, saveKey, suspendUserSaves,
+  useSyncedValue, waitForUserSaves,
+} from "./data-sync.js";
+import {
+  compressImage, deletePhotoFile, deleteUserPhotos, hydratePhotos, photoForStorage,
+  photosForBackup, uploadPhotoData, validatePhotoFile,
+} from "./photo-storage.js";
+import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, ReferenceLine, Legend, ComposedChart, Cell
 } from "recharts";
@@ -15,16 +27,9 @@ import {
 
 /* ----------------------------- helpers ----------------------------- */
 const uid = () => Math.random().toString(36).slice(2, 10);
-const localISO = (date = new Date()) => {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-};
 const todayISO = () => localISO();
 const round1 = (x) => Math.round(x * 10) / 10;
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
-const daysBetween = (a, b) => Math.round((new Date(b + "T00:00:00") - new Date(a + "T00:00:00")) / 86400000);
 const isoMinus = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return localISO(d); };
 const clock = (s) => {
   const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
@@ -33,7 +38,6 @@ const clock = (s) => {
 };
 const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
 const KCAL_PER_KG = 7700;
-const PHOTO_BUCKET = "progress-photos";
 
 const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Gemelos", "Core", "Trapecio", "Antebrazo"];
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
@@ -114,18 +118,7 @@ const CATALOG_RAW = [
 ];
 const CATALOG = CATALOG_RAW.map((r) => ({ cat: r[0], name: r[1], kcal: r[2], protein: r[3], carbs: r[4], fat: r[5] }));
 
-/* least-squares slope per day over [{x,y}] */
-function slopePerDay(points) {
-  const n = points.length;
-  if (n < 2) return null;
-  const sx = points.reduce((s, p) => s + p.x, 0), sy = points.reduce((s, p) => s + p.y, 0);
-  const sxx = points.reduce((s, p) => s + p.x * p.x, 0), sxy = points.reduce((s, p) => s + p.x * p.y, 0);
-  const d = n * sxx - sx * sx;
-  return d === 0 ? null : (n * sxy - sx * sy) / d;
-}
-
 /* ---------- ciclo menstrual ---------- */
-const addDays = (iso, n) => { const d = new Date(iso + "T00:00:00"); d.setDate(d.getDate() + n); return localISO(d); };
 const CYCLE_PHASES = {
   "Menstrual": { color: "#ff6b4a", note: "Energía variable y posibles molestias. Está bien bajar intensidad si lo necesitas; escucha a tu cuerpo." },
   "Folicular": { color: "#3ddc97", note: "Al subir el estrógeno, muchas personas reportan más energía y fuerza. Suele ser una buena ventana para intentar récords." },
@@ -133,202 +126,15 @@ const CYCLE_PHASES = {
   "Lútea": { color: "#b388ff", note: "En la fase lútea tardía algunas reportan más fatiga, antojos y peor recuperación. Que el rendimiento fluctúe aquí es normal." },
   "Por confirmar": { color: "#878d86", note: "Tu periodo podría ir retrasado respecto a tu media. Registra el inicio cuando llegue para afinar las predicciones." },
 };
-function cycleInfo(periods) {
-  if (!periods || !periods.length) return null;
-  const starts = periods.map((p) => p.date).sort();
-  const last = starts[starts.length - 1];
-  const lens = [];
-  for (let i = 1; i < starts.length; i++) lens.push(daysBetween(starts[i - 1], starts[i]));
-  const valid = lens.filter((l) => l >= 18 && l <= 45);
-  const avgCycle = valid.length ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : 28;
-  const durs = periods.map((p) => Number(p.duration) || 5);
-  const avgPeriod = Math.max(1, Math.round(durs.reduce((a, b) => a + b, 0) / durs.length));
-  const day = daysBetween(last, todayISO()) + 1;
-  const nextDate = addDays(last, avgCycle);
-  const daysToNext = daysBetween(todayISO(), nextDate);
-  const ovulation = avgCycle - 14;
-  let phase;
-  if (day > avgCycle + 2) phase = "Por confirmar";
-  else if (day <= avgPeriod) phase = "Menstrual";
-  else if (day < ovulation - 1) phase = "Folicular";
-  else if (day <= ovulation + 1) phase = "Ovulatoria";
-  else phase = "Lútea";
-  return { avgCycle, avgPeriod, day, phase, nextDate, daysToNext, samples: valid.length };
-}
 
-/* ----------------------------- storage ----------------------------- */
-async function loadKey(userId, key, fb) {
-  const { data, error } = await supabase
-    .from("app_data").select("value").eq("user_id", userId).eq("key", key).maybeSingle();
-  if (error) throw error;
-  return data?.value ?? fb;
-}
-/* ---- estado de guardado observable (para verificar persistencia) ---- */
-const saveBus = { status: "idle", error: null, at: null, pending: 0, listeners: new Set() };
-function emitSave(status, error = null) {
-  saveBus.status = status; saveBus.error = error; saveBus.at = Date.now();
-  saveBus.listeners.forEach((l) => l({ status, error }));
-}
-function onSaveStatus(cb) { saveBus.listeners.add(cb); return () => saveBus.listeners.delete(cb); }
-
-const saveQueues = new Map();
-const suspendedUsers = new Set();
-async function persistKey(userId, key, val) {
-  if (saveBus.pending === 0) saveBus.error = null;
-  saveBus.pending += 1;
-  emitSave("saving");
-  try {
-    const { error } = await supabase.from("app_data").upsert(
-      { user_id: userId, key, value: val },
-      { onConflict: "user_id,key" }
-    );
-    if (error) throw error;
-  } catch (error) {
-    console.error("saveKey", key, error);
-    saveBus.error = error.message || "Error al guardar";
-  } finally {
-    saveBus.pending = Math.max(0, saveBus.pending - 1);
-    if (saveBus.pending === 0) emitSave(saveBus.error ? "error" : "saved", saveBus.error);
-  }
-}
-function saveKey(userId, key, val) {
-  if (!userId) { emitSave("error", "Sin sesión activa"); return Promise.resolve(); }
-  if (suspendedUsers.has(userId)) return Promise.resolve();
-  const queueKey = `${userId}:${key}`;
-  const previous = saveQueues.get(queueKey) || Promise.resolve();
-  const next = previous.catch(() => {}).then(() => persistKey(userId, key, val));
-  saveQueues.set(queueKey, next);
-  next.finally(() => { if (saveQueues.get(queueKey) === next) saveQueues.delete(queueKey); });
-  return next;
-}
-const waitForUserSaves = (userId) => Promise.allSettled(
-  [...saveQueues.entries()].filter(([key]) => key.startsWith(`${userId}:`)).map(([, pending]) => pending)
-);
-function useSyncedValue(userId, key, value, enabled, delay = 600) {
-  useEffect(() => {
-    if (!enabled || !userId) return undefined;
-    const timeout = setTimeout(() => saveKey(userId, key, value), delay);
-    return () => clearTimeout(timeout);
-  }, [userId, key, value, enabled, delay]);
-}
 const DEFAULT_GOALS = { startWeight: "", targetWeight: "", weeklyChange: -0.4, kcalTarget: 2200, proteinTarget: 150, autoMacros: false, activity: "moderado", proteinPerKg: 2.0, proteinMeals: 4 };
-const BACKUP_ARRAY_KEYS = ["workouts", "weights", "nutrition", "foods", "recipes", "routines", "measurements", "wellness", "periods", "photos"];
-const isPlainObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
-const isISODate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
-
-function validateBackup(value) {
-  if (!isPlainObject(value)) throw new Error("La copia debe contener un objeto JSON");
-  const backup = {};
-  let found = false;
-  BACKUP_ARRAY_KEYS.forEach((key) => {
-    if (!Object.prototype.hasOwnProperty.call(value, key)) return;
-    if (!Array.isArray(value[key]) || !value[key].every(isPlainObject)) throw new Error(`La colección ${key} no es válida`);
-    backup[key] = value[key];
-    found = true;
-  });
-  if (Object.prototype.hasOwnProperty.call(value, "goals")) {
-    if (!isPlainObject(value.goals)) throw new Error("Los objetivos no son válidos");
-    backup.goals = Object.fromEntries(Object.keys(DEFAULT_GOALS).map((key) => [key, value.goals[key] ?? DEFAULT_GOALS[key]]));
-    found = true;
-  }
-  if (!found) throw new Error("El archivo no contiene datos de FitTrack");
-  if (backup.workouts?.some((w) => !isISODate(w.date) || !Array.isArray(w.exercises) || w.exercises.some((e) => !isPlainObject(e) || !Array.isArray(e.sets)) || (w.cardio != null && !Array.isArray(w.cardio)))) throw new Error("El historial de entrenamientos no es válido");
-  ["weights", "nutrition", "measurements", "wellness", "periods"].forEach((key) => {
-    if (backup[key]?.some((item) => !isISODate(item.date))) throw new Error(`Las fechas de ${key} no son válidas`);
-  });
-  if (backup.photos?.some((photo) => !isISODate(photo.date) || typeof photo.dataUrl !== "string" || !/^data:image\/(jpeg|png|webp);base64,/i.test(photo.dataUrl))) throw new Error("Las fotos de la copia no son válidas");
-  return backup;
-}
-
-function migrateWorkouts(ws) {
-  return ws.map((w) => ({
-    ...w, durationMin: w.durationMin || 0, cardio: w.cardio || [],
-    exercises: (w.exercises || []).map((e) => ({ ...e, primary: e.primary || e.muscle || MUSCLES[0], secondary: e.secondary || [] })),
-  }));
-}
+const validateBackup = (value) => validateBackupData(value, DEFAULT_GOALS);
+const migrateWorkouts = (workouts) => migrateWorkoutData(workouts, MUSCLES[0]);
 const scaleFood = (food, g) => { const k = (Number(g) || 0) / 100; return { kcal: food.kcal * k, protein: food.protein * k, carbs: food.carbs * k, fat: food.fat * k }; };
 
 async function sha256(s) {
   try { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)); return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join(""); }
   catch { return "plain:" + s; }
-}
-function compressImage(file, maxPx = 820, quality = 0.62) {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file); const img = new Image();
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      const scale = Math.min(1, maxPx / Math.max(img.width, img.height));
-      const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
-      const c = document.createElement("canvas"); c.width = w; c.height = h;
-      c.getContext("2d").drawImage(img, 0, 0, w, h);
-      resolve(c.toDataURL("image/jpeg", quality));
-    };
-    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("No se pudo leer la imagen")); };
-    img.src = url;
-  });
-}
-const dataUrlToBlob = async (dataUrl) => (await fetch(dataUrl)).blob();
-const blobToDataUrl = (blob) => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.onload = () => resolve(reader.result);
-  reader.onerror = () => reject(reader.error || new Error("No se pudo leer la imagen"));
-  reader.readAsDataURL(blob);
-});
-const photoStoragePath = (userId, mimeType) => {
-  const extension = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
-  return `${userId}/${crypto.randomUUID?.() || uid()}.${extension}`;
-};
-const photoForStorage = ({ signedUrl, ...photo }) => photo;
-
-async function signedPhoto(photo) {
-  if (!photo.storagePath || photo.dataUrl) return photo;
-  const { data, error } = await supabase.storage.from(PHOTO_BUCKET).createSignedUrl(photo.storagePath, 60 * 60 * 24);
-  if (error) throw error;
-  return { ...photo, signedUrl: data.signedUrl };
-}
-
-async function uploadPhotoData(userId, photo) {
-  if (!photo.dataUrl) return signedPhoto(photo);
-  const blob = await dataUrlToBlob(photo.dataUrl);
-  const contentType = ["image/jpeg", "image/png", "image/webp"].includes(blob.type) ? blob.type : "image/jpeg";
-  const storagePath = photoStoragePath(userId, contentType);
-  const { error } = await supabase.storage.from(PHOTO_BUCKET).upload(storagePath, blob, { contentType, upsert: false });
-  if (error) throw error;
-  return signedPhoto({ id: photo.id || uid(), date: photo.date || todayISO(), storagePath });
-}
-
-async function hydratePhotos(userId, photos) {
-  if (!Array.isArray(photos) || photos.length === 0) return [];
-  const hydrated = [];
-  for (const photo of photos) {
-    try { hydrated.push(await (photo.dataUrl ? uploadPhotoData(userId, photo) : signedPhoto(photo))); }
-    catch (error) { console.error("hydratePhoto", error); hydrated.push(photo); }
-  }
-  return hydrated;
-}
-
-async function photosForBackup(photos) {
-  return Promise.all(photos.map(async (photo) => {
-    if (photo.dataUrl) return photoForStorage(photo);
-    const source = photo.signedUrl || (await signedPhoto(photo)).signedUrl;
-    const response = await fetch(source);
-    if (!response.ok) throw new Error("No se pudo incluir una foto en la copia");
-    return { id: photo.id, date: photo.date, dataUrl: await blobToDataUrl(await response.blob()) };
-  }));
-}
-
-async function deleteUserPhotos(userId) {
-  const paths = [];
-  for (let offset = 0; ; offset += 100) {
-    const { data, error } = await supabase.storage.from(PHOTO_BUCKET).list(userId, { limit: 100, offset, sortBy: { column: "name", order: "asc" } });
-    if (error) throw error;
-    paths.push(...data.filter((item) => item.name).map((item) => `${userId}/${item.name}`));
-    if (data.length < 100) break;
-  }
-  for (let i = 0; i < paths.length; i += 100) {
-    const { error } = await supabase.storage.from(PHOTO_BUCKET).remove(paths.slice(i, i + 100));
-    if (error) throw error;
-  }
 }
 const ACTIVITY = [
   { key: "sedentario", label: "Sedentario", factor: 28 },
@@ -512,6 +318,8 @@ function SaveIndicator() {
 export default function App() {
   const [tab, setTab] = useState("entrenar");
   const [session, setSession] = useState(undefined); // undefined = cargando, null = sin sesión
+  const [sessionError, setSessionError] = useState("");
+  const [sessionAttempt, setSessionAttempt] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [loadAttempt, setLoadAttempt] = useState(0);
@@ -529,20 +337,29 @@ export default function App() {
 
   // Escucha cambios de sesión de Supabase
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => setSession(session ?? null));
+    let active = true;
+    setSessionError("");
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (error) throw error;
+      if (active) setSession(data.session ?? null);
+    }).catch((error) => {
+      console.error("getSession", error);
+      if (active) setSessionError("No se pudo verificar tu sesión.");
+    });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
       setLoaded(false);
       setLoadError(false);
+      setSessionError("");
       setSession(s ?? null);
     });
-    return () => subscription.unsubscribe();
-  }, []);
+    return () => { active = false; subscription.unsubscribe(); };
+  }, [sessionAttempt]);
 
   // Carga datos cuando hay sesión activa
   useEffect(() => {
     const userId = session?.user?.id;
     if (!userId) { setLoaded(false); setLoadError(false); return; }
-    suspendedUsers.delete(userId);
+    resumeUserSaves(userId);
     let cancelled = false;
     setLoaded(false);
     setLoadError(false);
@@ -601,7 +418,7 @@ export default function App() {
   const signOut = () => supabase.auth.signOut();
   const deleteAllData = async () => {
     if (!userId) throw new Error("No hay una sesión activa");
-    suspendedUsers.add(userId);
+    suspendUserSaves(userId);
     setLoaded(false);
     try {
       await waitForUserSaves(userId);
@@ -610,7 +427,7 @@ export default function App() {
       if (error) throw error;
       await supabase.auth.signOut();
     } catch (error) {
-      suspendedUsers.delete(userId);
+      resumeUserSaves(userId);
       setLoaded(true);
       throw error;
     }
@@ -666,7 +483,17 @@ export default function App() {
     <div className="ft-root">
       <style>{CSS}</style>
       {session === undefined ? (
-        <div className="ft-wrap"><div className="ft-empty">Cargando…</div></div>
+        <div className="ft-wrap"><div className="ft-empty">
+          {sessionError ? (
+            <>
+              <AlertTriangle size={30} style={{ marginBottom: 12 }} />
+              <div>{sessionError}</div>
+              <button className="ft-btn" onClick={() => setSessionAttempt((attempt) => attempt + 1)} style={{ marginTop: 16 }}>
+                <RotateCcw size={15} /> Reintentar
+              </button>
+            </>
+          ) : "Cargando…"}
+        </div></div>
       ) : !session ? (
         <AuthScreen />
       ) : !loaded ? (
@@ -723,16 +550,25 @@ function AuthScreen() {
 
   const submit = async () => {
     if (!email || !password) return;
-    setBusy(true); setMsg({ text: "", ok: false });
-    if (mode === "login") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) setMsg({ text: error.message, ok: false });
-    } else {
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) setMsg({ text: error.message, ok: false });
-      else setMsg({ text: "Revisa tu correo para confirmar el registro.", ok: true });
+    if (mode === "register" && password.length < 8) {
+      setMsg({ text: "La contraseña debe tener al menos 8 caracteres.", ok: false });
+      return;
     }
-    setBusy(false);
+    setBusy(true); setMsg({ text: "", ok: false });
+    const normalizedEmail = email.trim().toLowerCase();
+    try {
+      if (mode === "login") {
+        const { error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.auth.signUp({ email: normalizedEmail, password });
+        if (error) throw error;
+        setMsg({ text: "Revisa tu correo para confirmar el registro.", ok: true });
+      }
+    } catch (error) {
+      const text = error?.code === "invalid_credentials" ? "Correo o contraseña incorrectos." : (error?.message || "No se pudo completar la solicitud.");
+      setMsg({ text, ok: false });
+    } finally { setBusy(false); }
   };
 
   return (
@@ -748,12 +584,12 @@ function AuthScreen() {
         </div>
         <div className="ft-field" style={{ marginBottom: 12 }}>
           <label>Correo electrónico</label>
-          <input className="ft-input" type="email" autoFocus value={email} placeholder="tu@email.com"
+          <input className="ft-input" type="email" autoComplete="email" autoFocus disabled={busy} value={email} placeholder="tu@email.com"
             onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
         </div>
         <div className="ft-field" style={{ marginBottom: 16 }}>
           <label>Contraseña</label>
-          <input className="ft-input" type="password" value={password} placeholder="••••••••"
+          <input className="ft-input" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} disabled={busy} value={password} placeholder="••••••••"
             onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
         </div>
         {msg.text && <div style={{ color: msg.ok ? "var(--ok)" : "var(--danger)", fontSize: 13, marginBottom: 12 }}>{msg.text}</div>}
@@ -1044,17 +880,18 @@ export function Body({ weights, setWeights, measurements, setMeasurements, welln
     const file = e.target.files?.[0]; if (!file) return;
     setPhotoBusy(true); setPhotoErr("");
     try {
+      validatePhotoFile(file);
       const dataUrl = await compressImage(file);
       const photo = await uploadPhotoData(userId, { id: uid(), date: todayISO(), dataUrl });
       setPhotos((p) => [photo, ...p]);
-    } catch (error) { console.error("addPhoto", error); setPhotoErr("No se pudo guardar la imagen de forma segura."); }
+    } catch (error) { console.error("addPhoto", error); setPhotoErr(error?.message || "No se pudo guardar la imagen de forma segura."); }
     setPhotoBusy(false); if (photoRef.current) photoRef.current.value = "";
   };
   const delPhoto = async (photo) => {
     setPhotoErr("");
     if (photo.storagePath) {
-      const { error } = await supabase.storage.from(PHOTO_BUCKET).remove([photo.storagePath]);
-      if (error) { console.error("delPhoto", error); setPhotoErr("No se pudo eliminar la imagen."); return; }
+      try { await deletePhotoFile(photo); }
+      catch (error) { console.error("delPhoto", error); setPhotoErr("No se pudo eliminar la imagen."); return; }
     }
     setPhotos((p) => p.filter((x) => x.id !== photo.id));
   };
@@ -1180,10 +1017,10 @@ export function Body({ weights, setWeights, measurements, setMeasurements, welln
 
       <div className="ft-card">
         <h2><Camera size={16} /> Fotos de progreso <span className="tag">{photos.length}</span></h2>
-        <input ref={photoRef} type="file" accept="image/*" hidden onChange={addPhoto} />
+        <input ref={photoRef} type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden onChange={addPhoto} />
         <button className="ft-btn" onClick={() => photoRef.current.click()} disabled={photoBusy}><Camera size={15} /> {photoBusy ? "Procesando…" : "Subir foto de hoy"}</button>
         {photoErr && <div style={{ color: "var(--danger)", fontSize: 13, marginTop: 10 }}>{photoErr}</div>}
-        <p style={{ color: "var(--muted)", fontSize: 12.5, marginTop: 10, marginBottom: 0 }}>Las fotos se comprimen y se guardan en tu app. Por el límite de almacenamiento, manténlas en unas pocas decenas; quedan incluidas en tu copia de seguridad (Exportar).</p>
+        <p style={{ color: "var(--muted)", fontSize: 12.5, marginTop: 10, marginBottom: 0 }}>Las fotos se comprimen y se guardan en un espacio privado de Supabase. Se incluyen también en tu copia de seguridad al exportar.</p>
         {pSortedPhotos.length > 0 && (
           <div className="ft-photos">
             {pSortedPhotos.map((ph) => (

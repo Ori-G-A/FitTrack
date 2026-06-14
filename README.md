@@ -45,5 +45,6 @@ GitHub Pages no forma parte del despliegue.
 
 ```bash
 pnpm run build
+pnpm test
 pnpm audit --prod
 ```
