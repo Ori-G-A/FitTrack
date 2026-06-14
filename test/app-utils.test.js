@@ -1,11 +1,17 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, cycleInfo, daysBetween, localISO, migrateWorkouts, slopePerDay, validateBackup } from "../src/app-utils.js";
+import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, migrateWorkouts, slopePerDay, validateBackup } from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
 test("localISO uses local calendar fields", () => {
   assert.equal(localISO(new Date(2026, 5, 14, 23, 30)), "2026-06-14");
+});
+
+test("authUserChanged ignores token refreshes for the same user", () => {
+  assert.equal(authUserChanged("user-1", "user-1"), false);
+  assert.equal(authUserChanged("user-1", "user-2"), true);
+  assert.equal(authUserChanged("user-1", null), true);
 });
 
 test("date helpers handle month boundaries", () => {

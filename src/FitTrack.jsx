@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { supabase } from "./supabase.js";
 import { ROUTINE_TEMPLATES, templateToAppRoutine, computeProteinTargets, distributeProtein, PROTEIN_CONFIG, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
 import {
-  addDays, cycleInfo, daysBetween, localISO, migrateWorkouts as migrateWorkoutData,
+  addDays, authUserChanged, cycleInfo, daysBetween, localISO, migrateWorkouts as migrateWorkoutData,
   slopePerDay, validateBackup as validateBackupData,
 } from "./app-utils.js";
 import {
@@ -334,6 +334,7 @@ export default function App() {
   const [periods, setPeriods] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [goals, setGoals] = useState(DEFAULT_GOALS);
+  const authUserIdRef = useRef(null);
 
   // Escucha cambios de sesión de Supabase
   useEffect(() => {
@@ -341,16 +342,23 @@ export default function App() {
     setSessionError("");
     supabase.auth.getSession().then(({ data, error }) => {
       if (error) throw error;
-      if (active) setSession(data.session ?? null);
+      if (active) {
+        authUserIdRef.current = data.session?.user?.id ?? null;
+        setSession(data.session ?? null);
+      }
     }).catch((error) => {
       console.error("getSession", error);
       if (active) setSessionError("No se pudo verificar tu sesión.");
     });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
-      setLoaded(false);
-      setLoadError(false);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      const nextUserId = nextSession?.user?.id ?? null;
+      if (authUserChanged(authUserIdRef.current, nextUserId)) {
+        authUserIdRef.current = nextUserId;
+        setLoaded(false);
+        setLoadError(false);
+      }
       setSessionError("");
-      setSession(s ?? null);
+      setSession(nextSession ?? null);
     });
     return () => { active = false; subscription.unsubscribe(); };
   }, [sessionAttempt]);
@@ -401,6 +409,19 @@ export default function App() {
     })();
     return () => { cancelled = true; };
   }, [session?.user?.id, loadAttempt]);
+
+  // Si el navegador suspendió una carga al quedar en segundo plano, reintenta
+  // al volver sin obligar a recargar toda la aplicación.
+  useEffect(() => {
+    const retryIncompleteLoad = () => {
+      if (document.visibilityState === "visible" && session?.user?.id && !loaded) {
+        setLoadAttempt((attempt) => attempt + 1);
+      }
+    };
+    document.addEventListener("visibilitychange", retryIncompleteLoad);
+    return () => document.removeEventListener("visibilitychange", retryIncompleteLoad);
+  }, [session?.user?.id, loaded]);
+
   const userId = session?.user?.id;
   useSyncedValue(userId, "workouts", workouts, loaded);
   useSyncedValue(userId, "weights", weights, loaded);

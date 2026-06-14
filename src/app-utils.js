@@ -5,6 +5,9 @@ export const localISO = (date = new Date()) => {
   return `${year}-${month}-${day}`;
 };
 
+export const authUserChanged = (previousUserId, nextUserId) =>
+  (previousUserId ?? null) !== (nextUserId ?? null);
+
 export const daysBetween = (start, end) => Math.round(
   (new Date(`${end}T00:00:00`) - new Date(`${start}T00:00:00`)) / 86400000
 );
