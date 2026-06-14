@@ -7,9 +7,10 @@ import {
   slopePerDay, validateBackup as validateBackupData,
 } from "./app-utils.js";
 import {
-  loadKey, onSaveStatus, resumeUserSaves, saveKey, suspendUserSaves,
+  loadKey, resumeUserSaves, saveKey, suspendUserSaves,
   useSyncedValue, waitForUserSaves,
 } from "./data-sync.js";
+import { AuthScreen, SaveIndicator } from "./AuthUI.jsx";
 import {
   compressImage, deletePhotoFile, deleteUserPhotos, hydratePhotos, photoForStorage,
   photosForBackup, refreshPhotoUrls, uploadPhotoData, validatePhotoFile,
@@ -295,26 +296,6 @@ function FoodCombo({ foods, selected, onChange, label = "Alimento", flex = 2 }) 
   );
 }
 
-/* ----------------------------- save indicator ----------------------------- */
-function SaveIndicator() {
-  const [st, setSt] = useState({ status: "idle", error: null });
-  useEffect(() => onSaveStatus(setSt), []);
-  const map = {
-    idle: { t: "Sin cambios", c: "var(--muted)", dot: "var(--muted)" },
-    saving: { t: "Guardando…", c: "var(--muted)", dot: "var(--blue)" },
-    saved: { t: "Guardado", c: "var(--ok)", dot: "var(--ok)" },
-    error: { t: "Error al guardar", c: "var(--danger)", dot: "var(--danger)" },
-  };
-  const m = map[st.status] || map.idle;
-  return (
-    <div title={st.error || (st.status === "saved" ? "Tus datos se guardaron en Supabase" : "Estado de sincronización con Supabase")}
-      style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "'IBM Plex Mono'", fontSize: 11, color: m.c, padding: "0 8px", whiteSpace: "nowrap" }}>
-      <span style={{ width: 8, height: 8, borderRadius: 999, background: m.dot, flexShrink: 0 }} />
-      {m.t}
-    </div>
-  );
-}
-
 /* ----------------------------- APP ----------------------------- */
 export default function App() {
   const [tab, setTab] = useState("entrenar");
@@ -573,67 +554,6 @@ export default function App() {
           {tab === "ajustes" && <Goals goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} />}
         </div>
       )}
-    </div>
-  );
-}
-
-/* ----------------------------- AUTH SCREEN ----------------------------- */
-function AuthScreen() {
-  const [mode, setMode] = useState("login"); // "login" | "register"
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState({ text: "", ok: false });
-  const [busy, setBusy] = useState(false);
-
-  const submit = async () => {
-    if (!email || !password) return;
-    if (mode === "register" && password.length < 8) {
-      setMsg({ text: "La contraseña debe tener al menos 8 caracteres.", ok: false });
-      return;
-    }
-    setBusy(true); setMsg({ text: "", ok: false });
-    const normalizedEmail = email.trim().toLowerCase();
-    try {
-      if (mode === "login") {
-        const { error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.auth.signUp({ email: normalizedEmail, password });
-        if (error) throw error;
-        setMsg({ text: "Revisa tu correo para confirmar el registro.", ok: true });
-      }
-    } catch (error) {
-      const text = error?.code === "invalid_credentials" ? "Correo o contraseña incorrectos." : (error?.message || "No se pudo completar la solicitud.");
-      setMsg({ text, ok: false });
-    } finally { setBusy(false); }
-  };
-
-  return (
-    <div className="ft-lock">
-      <div className="ft-lock-box">
-        <div className="ft-logo" style={{ justifyContent: "center", marginBottom: 20 }}>
-          <div className="mark"><Dumbbell size={20} /></div>
-          <div><h1>FitTrack</h1><span>tu progreso, medido</span></div>
-        </div>
-        <div className="ft-toggle" style={{ marginBottom: 18 }}>
-          <button className={mode === "login" ? "on" : ""} onClick={() => { setMode("login"); setMsg({ text: "", ok: false }); }}>Entrar</button>
-          <button className={mode === "register" ? "on" : ""} onClick={() => { setMode("register"); setMsg({ text: "", ok: false }); }}>Registrarse</button>
-        </div>
-        <div className="ft-field" style={{ marginBottom: 12 }}>
-          <label>Correo electrónico</label>
-          <input className="ft-input" type="email" autoComplete="email" autoFocus disabled={busy} value={email} placeholder="tu@email.com"
-            onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
-        </div>
-        <div className="ft-field" style={{ marginBottom: 16 }}>
-          <label>Contraseña</label>
-          <input className="ft-input" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} disabled={busy} value={password} placeholder="••••••••"
-            onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
-        </div>
-        {msg.text && <div style={{ color: msg.ok ? "var(--ok)" : "var(--danger)", fontSize: 13, marginBottom: 12 }}>{msg.text}</div>}
-        <button className="ft-btn" onClick={submit} disabled={busy} style={{ width: "100%", justifyContent: "center" }}>
-          <Lock size={15} /> {busy ? "…" : mode === "login" ? "Entrar" : "Crear cuenta"}
-        </button>
-      </div>
     </div>
   );
 }
