@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { supabase } from "./supabase.js";
-import { ROUTINE_TEMPLATES, templateToAppRoutine, computeProteinTargets, distributeProtein, PROTEIN_CONFIG, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
+import { ROUTINE_TEMPLATES, templateToAppRoutine, distributeProtein, PROTEIN_CONFIG, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
+import { ACTIVITY_LEVELS, DEFAULT_GOALS, KCAL_PER_KG } from "./app-config.js";
 import {
   addDays, authUserChanged, cycleInfo, daysBetween, localISO, mergePhotoUrls,
   migrateWorkouts as migrateWorkoutData,
@@ -11,17 +12,17 @@ import {
   useSyncedValue, waitForUserSaves,
 } from "./data-sync.js";
 import { AuthScreen, SaveIndicator } from "./AuthUI.jsx";
+import { goalDirection, goalSuggestion, latestWeight } from "./settings-utils.js";
 import {
   compressImage, deletePhotoFile, deleteUserPhotos, hydratePhotos, photoForStorage,
   photosForBackup, refreshPhotoUrls, uploadPhotoData, validatePhotoFile,
 } from "./photo-storage.js";
 import {
-  LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, ReferenceLine, Legend, ComposedChart, Cell
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 import {
   Dumbbell, Scale, Utensils, LayoutDashboard, Plus, Trash2,
-  Download, Upload, Target, TrendingUp, TrendingDown, AlertTriangle,
+  Download, Upload, Target, AlertTriangle,
   Check, ChevronLeft, ChevronRight, Flame, Timer, Play, Pause, RotateCcw,
   Apple, Pencil, X, Clock, Activity, Ruler, Moon, ListChecks, Bell, Trophy,
   Settings, Zap, BookOpen, Droplet, Lock, Camera
@@ -39,8 +40,6 @@ const clock = (s) => {
   return h > 0 ? `${h}:${p(m)}:${p(ss)}` : `${p(m)}:${p(ss)}`;
 };
 const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
-const KCAL_PER_KG = 7700;
-
 const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Gemelos", "Core", "Trapecio", "Antebrazo"];
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
 const MUSCLE_COLOR = {
@@ -129,7 +128,6 @@ const CYCLE_PHASES = {
   "Por confirmar": { color: "#878d86", note: "Tu periodo podría ir retrasado respecto a tu media. Registra el inicio cuando llegue para afinar las predicciones." },
 };
 
-const DEFAULT_GOALS = { startWeight: "", targetWeight: "", weeklyChange: -0.4, kcalTarget: 2200, proteinTarget: 150, autoMacros: false, activity: "moderado", proteinPerKg: 2.0, proteinMeals: 4 };
 const validateBackup = (value) => validateBackupData(value, DEFAULT_GOALS);
 const migrateWorkouts = (workouts) => migrateWorkoutData(workouts, MUSCLES[0]);
 const scaleFood = (food, g) => { const k = (Number(g) || 0) / 100; return { kcal: food.kcal * k, protein: food.protein * k, carbs: food.carbs * k, fat: food.fat * k }; };
@@ -138,14 +136,6 @@ async function sha256(s) {
   try { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)); return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join(""); }
   catch { return "plain:" + s; }
 }
-const ACTIVITY = [
-  { key: "sedentario", label: "Sedentario", factor: 28 },
-  { key: "ligero", label: "Ligero (1-2 entrenos/sem)", factor: 30 },
-  { key: "moderado", label: "Moderado (3-4/sem)", factor: 32 },
-  { key: "activo", label: "Activo (5-6/sem)", factor: 35 },
-  { key: "muy_activo", label: "Muy activo (físico + diario)", factor: 38 },
-];
-
 /* ----------------------------- styles ----------------------------- */
 export const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
@@ -1870,270 +1860,23 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
   );
 }
 
-function DashboardLegacy({ workouts, weights, nutrition, measurements, periods, goals }) {
-  const sortedW = useMemo(() => [...weights].sort((a, b) => a.date.localeCompare(b.date)), [weights]);
-
-  // moving average (7-day trailing)
-  const maSeries = useMemo(() => sortedW.map((w) => {
-    const start = new Date(w.date + "T00:00:00"); start.setDate(start.getDate() - 6);
-    const win = sortedW.filter((x) => x.date <= w.date && new Date(x.date + "T00:00:00") >= start);
-    return { iso: w.date, date: fmtDate(w.date), real: w.kg, media: round1(win.reduce((s, x) => s + x.kg, 0) / win.length) };
-  }), [sortedW]);
-
-  // weight chart with objetivo
-  const weightChart = useMemo(() => {
-    if (!maSeries.length) return [];
-    const start = maSeries[0]; const startKg = goals.startWeight ? Number(goals.startWeight) : start.real;
-    return maSeries.map((p) => ({ ...p, objetivo: Number((startKg + goals.weeklyChange * (daysBetween(start.iso, p.iso) / 7)).toFixed(2)) }));
-  }, [maSeries, goals]);
-
-  // smoothed weekly trend (last 14 days of MA)
-  const trend = useMemo(() => {
-    const recent = maSeries.filter((p) => daysBetween(p.iso, todayISO()) <= 21);
-    const pts = (recent.length >= 2 ? recent : maSeries.slice(-6)).map((p) => ({ x: daysBetween(maSeries[0]?.iso || p.iso, p.iso), y: p.media }));
-    const sp = slopePerDay(pts); return sp === null ? null : sp * 7;
-  }, [maSeries]);
-
-  const currentMA = maSeries.length ? maSeries[maSeries.length - 1].media : null;
-  const currentW = sortedW.length ? sortedW[sortedW.length - 1].kg : null;
-  const change7 = useMemo(() => { if (sortedW.length < 2) return null; const last = sortedW[sortedW.length - 1]; const ref = [...sortedW].reverse().find((w) => daysBetween(w.date, last.date) >= 7); return ref ? last.kg - ref.kg : null; }, [sortedW]);
-
-  // per-exercise history
-  const exHistory = useMemo(() => {
-    const map = {};
-    [...workouts].sort((a, b) => a.date.localeCompare(b.date)).forEach((w) => w.exercises.forEach((e) => {
-      let best = 0, vol = 0; e.sets.forEach((s) => { const r = +s.reps || 0, kg = +s.kg || 0; if (r > 0 && kg > 0) { best = Math.max(best, epley(kg, r)); vol += r * kg; } });
-      if (best > 0) (map[e.name] = map[e.name] || []).push({ iso: w.date, date: fmtDate(w.date), oneRM: Math.round(best), volume: Math.round(vol) });
-    }));
-    return map;
-  }, [workouts]);
-  const exNames = useMemo(() => Object.keys(exHistory).filter((n) => exHistory[n].length >= 2).sort(), [exHistory]);
-  const [selEx, setSelEx] = useState("");
-  useEffect(() => { if (!selEx && exNames.length) setSelEx(exNames[0]); }, [exNames]); // eslint-disable-line
-
-  // PRs (current best per exercise + recent)
-  const prs = useMemo(() => Object.entries(exHistory).map(([name, h]) => {
-    const best = h.reduce((m, x) => x.oneRM > m.oneRM ? x : m, h[0]);
-    const latest = h[h.length - 1];
-    const isRecent = h.length >= 2 && best.iso === latest.iso && daysBetween(best.iso, todayISO()) <= 7;
-    return { name, best: best.oneRM, date: best.iso, isRecent };
-  }).sort((a, b) => b.best - a.best), [exHistory]);
-  const recentPRs = prs.filter((p) => p.isRecent);
-
-  // weekly muscle volume (last 7 days) with secondary factor
-  const weeklyMuscle = useMemo(() => {
-    const m = {}; const since = isoMinus(7);
-    workouts.filter((w) => w.date >= since).forEach((w) => w.exercises.forEach((e) => {
-      const v = e.sets.reduce((t, s) => t + (+s.reps || 0) * (+s.kg || 0), 0);
-      m[e.primary || e.muscle] = (m[e.primary || e.muscle] || 0) + v;
-      (e.secondary || []).forEach((sm) => { m[sm] = (m[sm] || 0) + v * SECONDARY_FACTOR; });
-    }));
-    return m;
-  }, [workouts]);
-  const muscleVolAll = useMemo(() => {
-    const m = {};
-    workouts.forEach((w) => w.exercises.forEach((e) => { const v = e.sets.reduce((t, s) => t + (+s.reps || 0) * (+s.kg || 0), 0); m[e.primary || e.muscle] = (m[e.primary || e.muscle] || 0) + v; (e.secondary || []).forEach((sm) => { m[sm] = (m[sm] || 0) + v * SECONDARY_FACTOR; }); }));
-    return Object.entries(m).map(([muscle, vol]) => ({ muscle, vol: Math.round(vol) })).sort((a, b) => b.vol - a.vol);
-  }, [workouts]);
-
-  // calories chart + averages
-  const kcalChart = useMemo(() => { const days = []; for (let i = 13; i >= 0; i--) { const iso = isoMinus(i); const kcal = nutrition.filter((n) => n.date === iso).reduce((t, n) => t + (+n.kcal || 0), 0); days.push({ date: fmtDate(iso), kcal: Math.round(kcal) }); } return days; }, [nutrition]);
-
-  // maintenance calories from data
-  const maintenance = useMemo(() => {
-    const since = isoMinus(28);
-    const byDay = {}; nutrition.filter((n) => n.date >= since).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.kcal || 0); });
-    const loggedDays = Object.values(byDay).filter((v) => v > 50);
-    if (loggedDays.length < 10 || trend === null) return null;
-    const avgKcal = loggedDays.reduce((s, v) => s + v, 0) / loggedDays.length;
-    const maint = avgKcal - (trend / 7) * KCAL_PER_KG;
-    return { maint: Math.round(maint), avgKcal: Math.round(avgKcal), days: loggedDays.length };
-  }, [nutrition, trend]);
-
-  // adherence
-  const trainingDays7 = useMemo(() => new Set(workouts.filter((w) => w.date >= isoMinus(7) && (w.exercises.length || (w.cardio || []).length)).map((w) => w.date)).size, [workouts]);
-  const lastTrain = useMemo(() => { const ds = workouts.filter((w) => w.exercises.length || (w.cardio || []).length).map((w) => w.date).sort(); return ds.length ? ds[ds.length - 1] : null; }, [workouts]);
-  const nutDays7 = useMemo(() => new Set(nutrition.filter((n) => n.date >= isoMinus(7)).map((n) => n.date)).size, [nutrition]);
-
-  // protein avg last 7 days (only logged days)
-  const protAvg7 = useMemo(() => { const byDay = {}; nutrition.filter((n) => n.date >= isoMinus(7)).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.protein || 0); }); const vals = Object.values(byDay); return vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : null; }, [nutrition]);
-
-  // projection to goal weight
-  const projection = useMemo(() => {
-    if (!goals.targetWeight || currentMA === null || trend === null || Math.abs(trend) < 0.02) return null;
-    const remaining = Number(goals.targetWeight) - currentMA;
-    if (Math.sign(remaining) !== Math.sign(trend)) return { off: true };
-    const weeks = remaining / trend; const d = new Date(); d.setDate(d.getDate() + Math.round(weeks * 7));
-    return { weeks: Math.round(weeks), date: d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" }) };
-  }, [goals, currentMA, trend]);
-
-  // ALERTS
-  const alerts = useMemo(() => {
-    const a = [];
-    recentPRs.forEach((p) => a.push({ type: "pr", title: `¡Nuevo récord en ${p.name}!`, body: `Tu 1RM estimado subió a ${p.best} kg. La sobrecarga progresiva está funcionando.` }));
-    if (trend !== null) {
-      const diff = trend - goals.weeklyChange;
-      if (Math.abs(diff) > 0.25) a.push({ type: "warn", title: "Desvío en tu tendencia de peso", body: `Tendencia real (suavizada) ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem vs objetivo ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}. ${diff > 0 ? "Vas más hacia arriba de lo previsto — recorta calorías." : "Bajas más rápido de lo previsto — sube calorías para proteger músculo."}${maintenance ? ` Tu mantenimiento estimado es ~${maintenance.maint} kcal.` : ""}` });
-      else a.push({ type: "ok", title: "Peso en línea con tu objetivo", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem, dentro de ±0,25 de tu meta.` });
-    }
-    if (protAvg7 !== null && goals.proteinTarget && protAvg7 < 0.85 * goals.proteinTarget) a.push({ type: "warn", title: "Proteína por debajo del objetivo", body: `Media de ${Math.round(protAvg7)} g/día en los días registrados de la última semana, frente a tu meta de ${goals.proteinTarget} g. Importante si buscas ganar o mantener músculo.` });
-    // imbalance
-    const vols = MAJOR_MUSCLES.map((m) => weeklyMuscle[m] || 0); const maxV = Math.max(...vols);
-    if (maxV > 0) { const neglected = MAJOR_MUSCLES.filter((m) => (weeklyMuscle[m] || 0) < 0.15 * maxV); if (neglected.length) a.push({ type: "warn", title: "Posible descompensación muscular", body: `Esta semana apenas trabajaste: ${neglected.join(", ")}. Equilibrar el volumen reduce riesgo de lesión y mejora la estética.` }); }
-    if (lastTrain && daysBetween(lastTrain, todayISO()) >= 4) a.push({ type: "info", title: "Racha de entreno en pausa", body: `Llevas ${daysBetween(lastTrain, todayISO())} días sin registrar entrenamiento. La consistencia es lo que más predice resultados.` });
-    if (projection && projection.off) a.push({ type: "info", title: "No avanzas hacia tu peso meta", body: "A tu ritmo actual no te acercas a la meta fijada. Revisa objetivo o calorías." });
-    return a;
-  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection]);
-
-  const totalMin = workouts.reduce((t, w) => t + (w.durationMin || 0), 0);
-  const timed = workouts.filter((w) => w.durationMin > 0).length;
-  const avgMin = timed ? Math.round(totalMin / timed) : 0;
-  const cyc = cycleInfo(periods);
-
-  const noData = weights.length === 0 && workouts.length === 0 && nutrition.length === 0;
-  if (noData) return <div className="ft-card"><div className="ft-empty"><div className="ic"><LayoutDashboard size={34} /></div>Aún no hay datos. Registra entrenamientos, peso o comidas y aquí verás tu evolución, récords y alertas.</div></div>;
-
-  const exData = selEx ? exHistory[selEx] : null;
-
-  return (
-    <>
-      {alerts.length > 0 && (
-        <div className="ft-card">
-          <h2><Bell size={16} /> Alertas y avisos <span className="tag">{alerts.length}</span></h2>
-          {alerts.map((al, i) => (
-            <div className={`ft-alert ${al.type}`} key={i} style={i === alerts.length - 1 ? { marginBottom: 0 } : {}}>
-              {al.type === "warn" ? <AlertTriangle size={20} color="var(--danger)" /> : al.type === "pr" ? <Trophy size={20} color="var(--accent)" /> : al.type === "ok" ? <Check size={20} color="var(--ok)" /> : <Bell size={20} color="var(--blue)" />}
-              <div><div className="t">{al.title}</div><div className="b">{al.body}</div></div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="ft-stats">
-        <div className="ft-stat"><div className="k"><Scale size={13} /> Peso (media 7d)</div><div className="v">{currentMA !== null ? currentMA.toFixed(1) : "—"}<small>kg</small></div>{currentW !== null && <div className="sub">hoy {currentW.toFixed(1)} kg</div>}</div>
-        <div className="ft-stat"><div className="k">Cambio 7 días</div><div className="v" style={{ color: change7 === null ? "var(--text)" : change7 <= 0 ? "var(--ok)" : "var(--danger)" }}>{change7 === null ? "—" : `${change7 > 0 ? "+" : ""}${change7.toFixed(1)}`}<small>kg</small></div><div className="sub">{change7 !== null && (change7 <= 0 ? <TrendingDown size={13} /> : <TrendingUp size={13} />)} tendencia real</div></div>
-        <div className="ft-stat"><div className="k"><Flame size={13} /> Mantenimiento</div><div className="v">{maintenance ? maintenance.maint : "—"}<small>kcal</small></div><div className="sub">{maintenance ? `de ${maintenance.days} días de datos` : "necesito ~2 sem."}</div></div>
-        <div className="ft-stat"><div className="k"><Clock size={13} /> Constancia</div><div className="v">{trainingDays7}<small>/sem</small></div><div className="sub">{nutDays7} días con dieta · {avgMin} min/sesión</div></div>
-      </div>
-
-      {projection && !projection.off && (
-        <div className="ft-alert info"><Target size={20} color="var(--blue)" /><div><div className="t">Proyección a tu meta</div><div className="b">A tu ritmo actual llegarías a {goals.targetWeight} kg alrededor del <b style={{ color: "var(--text)" }}>{projection.date}</b> (~{Math.abs(projection.weeks)} semanas).</div></div></div>
-      )}
-
-      {cyc && (
-        <div className="ft-alert" style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${CYCLE_PHASES[cyc.phase].color}55` }}>
-          <Droplet size={20} color={CYCLE_PHASES[cyc.phase].color} />
-          <div>
-            <div className="t">Ciclo: fase {cyc.phase} · día {cyc.day}</div>
-            <div className="b">{CYCLE_PHASES[cyc.phase].note} {cyc.daysToNext >= 0 ? `Próximo periodo estimado en ~${cyc.daysToNext} días.` : `Periodo con ~${Math.abs(cyc.daysToNext)} días de retraso.`} Cruza esta fase con tu energía y tus 1RM para descubrir tu patrón personal.</div>
-          </div>
-        </div>
-      )}
-
-      {weightChart.length >= 2 && (
-        <div className="ft-card">
-          <h2>Peso: real · media 7d · objetivo <span className="tag">kg</span></h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <ComposedChart data={weightChart} margin={{ top: 5, right: 12, left: -18, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} domain={["auto", "auto"]} />
-              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
-              <Legend wrapperStyle={{ fontSize: 12, fontFamily: "'IBM Plex Mono'" }} />
-              <Line type="monotone" dataKey="real" stroke="#3a4042" strokeWidth={1} dot={{ r: 2, fill: "#3a4042" }} name="Real" />
-              <Line type="monotone" dataKey="objetivo" stroke="#5ad1ff" strokeWidth={2} strokeDasharray="5 4" dot={false} name="Objetivo" />
-              <Line type="monotone" dataKey="media" stroke="#e7531c" strokeWidth={2.8} dot={false} name="Media 7d" />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      {exNames.length > 0 && (
-        <div className="ft-card">
-          <h2><TrendingUp size={16} /> Progresión por ejercicio</h2>
-          <div className="ft-row" style={{ marginBottom: 12 }}>
-            <div className="ft-field" style={{ maxWidth: 320 }}><label>Ejercicio</label><select className="ft-select" value={selEx} onChange={(e) => setSelEx(e.target.value)}>{exNames.map((n) => <option key={n}>{n}</option>)}</select></div>
-          </div>
-          {exData && (
-            <ResponsiveContainer width="100%" height={230}>
-              <ComposedChart data={exData} margin={{ top: 5, right: 14, left: -14, bottom: 0 }}>
-                <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
-                <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} />
-                <YAxis yAxisId="l" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis yAxisId="r" orientation="right" stroke="#5ad1ff" tick={{ fill: "#5ad1ff" }} />
-                <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
-                <Legend wrapperStyle={{ fontSize: 12, fontFamily: "'IBM Plex Mono'" }} />
-                <Bar yAxisId="r" dataKey="volume" fill="rgba(90,209,255,.25)" name="Volumen (kg)" radius={[4, 4, 0, 0]} />
-                <Line yAxisId="l" type="monotone" dataKey="oneRM" stroke="#e7531c" strokeWidth={2.8} dot={{ r: 3, fill: "#e7531c" }} name="1RM est. (kg)" />
-              </ComposedChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-      )}
-
-      {prs.length > 0 && (
-        <div className="ft-card">
-          <h2><Trophy size={16} /> Récords personales <span className="tag">1RM estimado</span></h2>
-          <div className="ft-list">
-            {prs.slice(0, 10).map((p) => (
-              <div className="ft-li" key={p.name}><span className="li-main">{p.name} {p.isRecent && <Zap size={14} color="var(--accent)" style={{ verticalAlign: "middle" }} />}</span><span className="li-d">{fmtDate(p.date)}</span><span className="li-v" style={{ color: "var(--accent)" }}>{p.best} kg</span></div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {muscleVolAll.length > 0 && (
-        <div className="ft-card">
-          <h2>Volumen por grupo muscular <span className="tag">histórico · sec. {SECONDARY_FACTOR * 100}%</span></h2>
-          <ResponsiveContainer width="100%" height={Math.max(180, muscleVolAll.length * 34)}>
-            <BarChart data={muscleVolAll} layout="vertical" margin={{ top: 5, right: 14, left: 8, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" horizontal={false} />
-              <XAxis type="number" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis type="category" dataKey="muscle" stroke="#6a655a" tick={{ fill: "#6a655a" }} width={78} />
-              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} cursor={{ fill: "rgba(255,255,255,.04)" }} />
-              <Bar dataKey="vol" radius={[0, 5, 5, 0]} name="Volumen">{muscleVolAll.map((m) => <Cell key={m.muscle} fill={MUSCLE_COLOR[m.muscle] || "#888"} />)}</Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      {kcalChart.some((d) => d.kcal > 0) && (
-        <div className="ft-card">
-          <h2>Calorías últimos 14 días <span className="tag">vs objetivo / mantenimiento</span></h2>
-          <ResponsiveContainer width="100%" height={220}>
-            <BarChart data={kcalChart} margin={{ top: 5, right: 14, left: -10, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a", fontSize: 10 }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} />
-              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} cursor={{ fill: "rgba(255,255,255,.04)" }} />
-              {goals.kcalTarget ? <ReferenceLine y={Number(goals.kcalTarget)} stroke="#5ad1ff" strokeDasharray="5 4" label={{ value: "objetivo", fill: "#5ad1ff", fontSize: 11, position: "insideTopRight" }} /> : null}
-              {maintenance ? <ReferenceLine y={maintenance.maint} stroke="#ff8a3d" strokeDasharray="5 4" label={{ value: "mantenimiento", fill: "#ff8a3d", fontSize: 11, position: "insideBottomRight" }} /> : null}
-              <Bar dataKey="kcal" fill="#ff8a3d" radius={[5, 5, 0, 0]} name="kcal" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-    </>
-  );
-}
-
 /* ----------------------------- AJUSTES / GOALS ----------------------------- */
 export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData }) {
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const upd = (k, v) => setGoals((g) => ({ ...g, [k]: v }));
-  const latestW = weights.length ? [...weights].sort((a, b) => a.date.localeCompare(b.date)).slice(-1)[0].kg : null;
+  const latestW = latestWeight(weights);
   const refW = Number(goals.startWeight) || latestW || null;
   const start = Number(goals.startWeight) || latestW;
   const target = Number(goals.targetWeight);
-  const dir = (start && target) ? (target < start ? "perder grasa" : target > start ? "ganar músculo" : "mantener") : null;
-  const factor = (ACTIVITY.find((a) => a.key === goals.activity) || ACTIVITY[2]).factor;
+  const dir = goalDirection(start, target);
 
   const gPerKg = goals.proteinPerKg ?? 2.0;
   const proteinMeals = goals.proteinMeals ?? 4;
   const suggestion = useMemo(() => {
     if (!refW) return null;
-    const maintenance = refW * factor;
-    const kcal = Math.round((maintenance + (Number(goals.weeklyChange) * KCAL_PER_KG) / 7) / 10) * 10;
-    const pt = computeProteinTargets(refW, { gPerKg });
-    return { maintenance: Math.round(maintenance), kcal, protein: pt.dailyTarget, proteinPerKg: pt.gPerKg, lowEnd: pt.lowEnd, highEnd: pt.highEnd };
-  }, [refW, factor, goals.weeklyChange, gPerKg]);
+    return goalSuggestion(refW, { ...goals, proteinPerKg: gPerKg });
+  }, [refW, goals, gPerKg]);
   const mealSplit = suggestion ? distributeProtein(suggestion.protein, proteinMeals) : [];
 
   // auto-aplicar cuando está activado y cambian los inputs
@@ -2162,7 +1905,7 @@ export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut
       <div className="ft-card">
         <h2><Flame size={16} /> Objetivos de nutrición</h2>
         <div className="ft-row" style={{ marginBottom: 12 }}>
-          <div className="ft-field"><label>Nivel de actividad</label><select className="ft-select" value={goals.activity} onChange={(e) => upd("activity", e.target.value)}>{ACTIVITY.map((a) => <option key={a.key} value={a.key}>{a.label}</option>)}</select></div>
+          <div className="ft-field"><label>Nivel de actividad</label><select className="ft-select" value={goals.activity} onChange={(e) => upd("activity", e.target.value)}>{ACTIVITY_LEVELS.map((a) => <option key={a.key} value={a.key}>{a.label}</option>)}</select></div>
         </div>
         <label style={{ display: "flex", alignItems: "center", gap: 9, cursor: "pointer", marginBottom: 14, fontSize: 14 }}>
           <input type="checkbox" checked={goals.autoMacros} onChange={(e) => upd("autoMacros", e.target.checked)} style={{ accentColor: "#e7531c", width: 18, height: 18 }} />
