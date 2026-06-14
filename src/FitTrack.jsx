@@ -150,15 +150,11 @@ function cycleInfo(periods) {
 }
 
 /* ----------------------------- storage ----------------------------- */
-async function loadKey(key, fb) {
-  try {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return fb;
-    const { data, error } = await supabase
-      .from("app_data").select("value").eq("user_id", user.id).eq("key", key).single();
-    if (error || !data) return fb;
-    return data.value;
-  } catch { return fb; }
+async function loadKey(userId, key, fb) {
+  const { data, error } = await supabase
+    .from("app_data").select("value").eq("user_id", userId).eq("key", key).maybeSingle();
+  if (error) throw error;
+  return data?.value ?? fb;
 }
 /* ---- estado de guardado observable (para verificar persistencia) ---- */
 const saveBus = { status: "idle", error: null, at: null, listeners: new Set() };
@@ -168,18 +164,26 @@ function emitSave(status, error = null) {
 }
 function onSaveStatus(cb) { saveBus.listeners.add(cb); return () => saveBus.listeners.delete(cb); }
 
-async function saveKey(key, val) {
+const saveQueues = new Map();
+async function persistKey(userId, key, val) {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { emitSave("error", "Sin sesión activa"); return; }
     emitSave("saving");
     const { error } = await supabase.from("app_data").upsert(
-      { user_id: user.id, key, value: val },
+      { user_id: userId, key, value: val },
       { onConflict: "user_id,key" }
     );
     if (error) { console.error("saveKey", key, error); emitSave("error", error.message || "Error al guardar"); }
     else { emitSave("saved"); }
   } catch (e) { console.error(e); emitSave("error", String(e?.message || e)); }
+}
+function saveKey(userId, key, val) {
+  if (!userId) { emitSave("error", "Sin sesión activa"); return Promise.resolve(); }
+  const queueKey = `${userId}:${key}`;
+  const previous = saveQueues.get(queueKey) || Promise.resolve();
+  const next = previous.catch(() => {}).then(() => persistKey(userId, key, val));
+  saveQueues.set(queueKey, next);
+  next.finally(() => { if (saveQueues.get(queueKey) === next) saveQueues.delete(queueKey); });
+  return next;
 }
 const DEFAULT_GOALS = { startWeight: "", targetWeight: "", weeklyChange: -0.4, kcalTarget: 2200, proteinTarget: 150, autoMacros: false, activity: "moderado", proteinPerKg: 2.0, proteinMeals: 4 };
 
@@ -393,6 +397,8 @@ export default function App() {
   const [tab, setTab] = useState("entrenar");
   const [session, setSession] = useState(undefined); // undefined = cargando, null = sin sesión
   const [loaded, setLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const [workouts, setWorkouts] = useState([]);
   const [weights, setWeights] = useState([]);
   const [nutrition, setNutrition] = useState([]);
@@ -408,39 +414,70 @@ export default function App() {
   // Escucha cambios de sesión de Supabase
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => setSession(session ?? null));
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setSession(s ?? null));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
+      setLoaded(false);
+      setLoadError(false);
+      setSession(s ?? null);
+    });
     return () => subscription.unsubscribe();
   }, []);
 
   // Carga datos cuando hay sesión activa
   useEffect(() => {
-    if (!session) { setLoaded(false); return; }
+    const userId = session?.user?.id;
+    if (!userId) { setLoaded(false); setLoadError(false); return; }
+    let cancelled = false;
+    setLoaded(false);
+    setLoadError(false);
     (async () => {
-      setWorkouts(migrateWorkouts(await loadKey("workouts", [])));
-      setWeights(await loadKey("weights", []));
-      setNutrition(await loadKey("nutrition", []));
-      setFoods(await loadKey("foods", []));
-      setRecipes(await loadKey("recipes", []));
-      setRoutines(await loadKey("routines", []));
-      setMeasurements(await loadKey("measurements", []));
-      setWellness(await loadKey("wellness", []));
-      setPeriods(await loadKey("periods", []));
-      setPhotos(await loadKey("photos", []));
-      setGoals(await loadKey("goals", DEFAULT_GOALS));
-      setLoaded(true);
+      try {
+        const [nextWorkouts, nextWeights, nextNutrition, nextFoods, nextRecipes, nextRoutines,
+          nextMeasurements, nextWellness, nextPeriods, nextPhotos, nextGoals] = await Promise.all([
+          loadKey(userId, "workouts", []),
+          loadKey(userId, "weights", []),
+          loadKey(userId, "nutrition", []),
+          loadKey(userId, "foods", []),
+          loadKey(userId, "recipes", []),
+          loadKey(userId, "routines", []),
+          loadKey(userId, "measurements", []),
+          loadKey(userId, "wellness", []),
+          loadKey(userId, "periods", []),
+          loadKey(userId, "photos", []),
+          loadKey(userId, "goals", DEFAULT_GOALS),
+        ]);
+        if (cancelled) return;
+        setWorkouts(migrateWorkouts(nextWorkouts));
+        setWeights(nextWeights);
+        setNutrition(nextNutrition);
+        setFoods(nextFoods);
+        setRecipes(nextRecipes);
+        setRoutines(nextRoutines);
+        setMeasurements(nextMeasurements);
+        setWellness(nextWellness);
+        setPeriods(nextPeriods);
+        setPhotos(nextPhotos);
+        setGoals(nextGoals);
+        setLoaded(true);
+      } catch (error) {
+        if (cancelled) return;
+        console.error("loadAppData", error);
+        setLoadError(true);
+      }
     })();
-  }, [session?.user?.id]); // eslint-disable-line
-  useEffect(() => { if (loaded) saveKey("workouts", workouts); }, [workouts, loaded]);
-  useEffect(() => { if (loaded) saveKey("weights", weights); }, [weights, loaded]);
-  useEffect(() => { if (loaded) saveKey("nutrition", nutrition); }, [nutrition, loaded]);
-  useEffect(() => { if (loaded) saveKey("foods", foods); }, [foods, loaded]);
-  useEffect(() => { if (loaded) saveKey("recipes", recipes); }, [recipes, loaded]);
-  useEffect(() => { if (loaded) saveKey("routines", routines); }, [routines, loaded]);
-  useEffect(() => { if (loaded) saveKey("measurements", measurements); }, [measurements, loaded]);
-  useEffect(() => { if (loaded) saveKey("wellness", wellness); }, [wellness, loaded]);
-  useEffect(() => { if (loaded) saveKey("periods", periods); }, [periods, loaded]);
-  useEffect(() => { if (loaded) saveKey("photos", photos); }, [photos, loaded]);
-  useEffect(() => { if (loaded) saveKey("goals", goals); }, [goals, loaded]);
+    return () => { cancelled = true; };
+  }, [session?.user?.id, loadAttempt]);
+  const userId = session?.user?.id;
+  useEffect(() => { if (loaded) saveKey(userId, "workouts", workouts); }, [workouts, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "weights", weights); }, [weights, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "nutrition", nutrition); }, [nutrition, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "foods", foods); }, [foods, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "recipes", recipes); }, [recipes, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "routines", routines); }, [routines, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "measurements", measurements); }, [measurements, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "wellness", wellness); }, [wellness, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "periods", periods); }, [periods, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "photos", photos); }, [photos, loaded, userId]);
+  useEffect(() => { if (loaded) saveKey(userId, "goals", goals); }, [goals, loaded, userId]);
 
   const signOut = () => supabase.auth.signOut();
 
@@ -489,7 +526,17 @@ export default function App() {
       ) : !session ? (
         <AuthScreen />
       ) : !loaded ? (
-        <div className="ft-wrap"><div className="ft-empty">Cargando tus datos…</div></div>
+        <div className="ft-wrap"><div className="ft-empty">
+          {loadError ? (
+            <>
+              <AlertTriangle size={30} style={{ marginBottom: 12 }} />
+              <div>No pudimos cargar tus datos. No se ha sobrescrito ninguna información.</div>
+              <button className="ft-btn" onClick={() => setLoadAttempt((n) => n + 1)} style={{ marginTop: 16 }}>
+                <RotateCcw size={15} /> Reintentar
+              </button>
+            </>
+          ) : "Cargando tus datos…"}
+        </div></div>
       ) : (
         <div className="ft-wrap">
           <div className="ft-topbar">
