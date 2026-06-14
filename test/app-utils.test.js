@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, migrateWorkouts, slopePerDay, validateBackup } from "../src/app-utils.js";
+import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, mergePhotoUrls, migrateWorkouts, slopePerDay, validateBackup } from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -12,6 +12,18 @@ test("authUserChanged ignores token refreshes for the same user", () => {
   assert.equal(authUserChanged("user-1", "user-1"), false);
   assert.equal(authUserChanged("user-1", "user-2"), true);
   assert.equal(authUserChanged("user-1", null), true);
+});
+
+test("mergePhotoUrls updates existing photos without restoring deleted ones", () => {
+  const current = [{ id: "kept", storagePath: "user/kept.jpg", signedUrl: "old" }];
+  const refreshed = [
+    { id: "kept", storagePath: "user/kept.jpg", signedUrl: "new" },
+    { id: "deleted", storagePath: "user/deleted.jpg", signedUrl: "new-deleted" },
+  ];
+  assert.deepEqual(mergePhotoUrls(current, refreshed), [
+    { id: "kept", storagePath: "user/kept.jpg", signedUrl: "new" },
+  ]);
+  assert.equal(mergePhotoUrls(current, [{ ...current[0] }]), current);
 });
 
 test("date helpers handle month boundaries", () => {

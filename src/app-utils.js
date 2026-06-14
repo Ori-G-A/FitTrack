@@ -8,6 +8,22 @@ export const localISO = (date = new Date()) => {
 export const authUserChanged = (previousUserId, nextUserId) =>
   (previousUserId ?? null) !== (nextUserId ?? null);
 
+export function mergePhotoUrls(currentPhotos, refreshedPhotos) {
+  const signedUrls = new Map(
+    refreshedPhotos
+      .filter((photo) => photo.storagePath && photo.signedUrl)
+      .map((photo) => [photo.storagePath, photo.signedUrl]),
+  );
+  let changed = false;
+  const nextPhotos = currentPhotos.map((photo) => {
+    const signedUrl = signedUrls.get(photo.storagePath);
+    if (!signedUrl || signedUrl === photo.signedUrl) return photo;
+    changed = true;
+    return { ...photo, signedUrl };
+  });
+  return changed ? nextPhotos : currentPhotos;
+}
+
 export const daysBetween = (start, end) => Math.round(
   (new Date(`${end}T00:00:00`) - new Date(`${start}T00:00:00`)) / 86400000
 );

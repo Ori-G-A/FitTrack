@@ -83,6 +83,19 @@ export async function hydratePhotos(userId, photos) {
   return hydrated;
 }
 
+export async function refreshPhotoUrls(photos) {
+  if (!Array.isArray(photos) || photos.length === 0) return [];
+  return Promise.all(photos.map(async (photo) => {
+    if (!photo.storagePath || photo.dataUrl) return photo;
+    try {
+      return await signedPhoto(photo);
+    } catch (error) {
+      console.error("refreshPhotoUrl", error);
+      return photo;
+    }
+  }));
+}
+
 export async function photosForBackup(photos) {
   return Promise.all(photos.map(async (photo) => {
     if (photo.dataUrl) return photoForStorage(photo);

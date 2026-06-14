@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { supabase } from "./supabase.js";
 import { ROUTINE_TEMPLATES, templateToAppRoutine, computeProteinTargets, distributeProtein, PROTEIN_CONFIG, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
 import {
-  addDays, authUserChanged, cycleInfo, daysBetween, localISO, migrateWorkouts as migrateWorkoutData,
+  addDays, authUserChanged, cycleInfo, daysBetween, localISO, mergePhotoUrls,
+  migrateWorkouts as migrateWorkoutData,
   slopePerDay, validateBackup as validateBackupData,
 } from "./app-utils.js";
 import {
@@ -11,7 +12,7 @@ import {
 } from "./data-sync.js";
 import {
   compressImage, deletePhotoFile, deleteUserPhotos, hydratePhotos, photoForStorage,
-  photosForBackup, uploadPhotoData, validatePhotoFile,
+  photosForBackup, refreshPhotoUrls, uploadPhotoData, validatePhotoFile,
 } from "./photo-storage.js";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -335,6 +336,9 @@ export default function App() {
   const [photos, setPhotos] = useState([]);
   const [goals, setGoals] = useState(DEFAULT_GOALS);
   const authUserIdRef = useRef(null);
+  const photosRef = useRef([]);
+
+  useEffect(() => { photosRef.current = photos; }, [photos]);
 
   // Escucha cambios de sesión de Supabase
   useEffect(() => {
@@ -410,16 +414,27 @@ export default function App() {
     return () => { cancelled = true; };
   }, [session?.user?.id, loadAttempt]);
 
-  // Si el navegador suspendió una carga al quedar en segundo plano, reintenta
-  // al volver sin obligar a recargar toda la aplicación.
+  // Recupera cargas suspendidas y renueva las URLs privadas al volver a la app.
   useEffect(() => {
-    const retryIncompleteLoad = () => {
-      if (document.visibilityState === "visible" && session?.user?.id && !loaded) {
+    let active = true;
+    const recoverVisibleApp = async () => {
+      if (document.visibilityState !== "visible" || !session?.user?.id) return;
+      if (!loaded) {
         setLoadAttempt((attempt) => attempt + 1);
+        return;
       }
+      const currentPhotos = photosRef.current;
+      if (!currentPhotos.some((photo) => photo.storagePath)) return;
+      const refreshed = await refreshPhotoUrls(currentPhotos);
+      if (active) setPhotos((current) => mergePhotoUrls(current, refreshed));
     };
-    document.addEventListener("visibilitychange", retryIncompleteLoad);
-    return () => document.removeEventListener("visibilitychange", retryIncompleteLoad);
+    document.addEventListener("visibilitychange", recoverVisibleApp);
+    const interval = setInterval(recoverVisibleApp, 12 * 60 * 60 * 1000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", recoverVisibleApp);
+    };
   }, [session?.user?.id, loaded]);
 
   const userId = session?.user?.id;
@@ -432,7 +447,8 @@ export default function App() {
   useSyncedValue(userId, "measurements", measurements, loaded);
   useSyncedValue(userId, "wellness", wellness, loaded);
   useSyncedValue(userId, "periods", periods, loaded);
-  const storedPhotos = useMemo(() => photos.map(photoForStorage), [photos]);
+  const storedPhotosJson = useMemo(() => JSON.stringify(photos.map(photoForStorage)), [photos]);
+  const storedPhotos = useMemo(() => JSON.parse(storedPhotosJson), [storedPhotosJson]);
   useSyncedValue(userId, "photos", storedPhotos, loaded);
   useSyncedValue(userId, "goals", goals, loaded);
 
