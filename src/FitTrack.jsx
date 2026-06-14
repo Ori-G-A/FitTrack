@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { supabase } from "./supabase.js";
-import { ROUTINE_TEMPLATES, templateToAppRoutine, distributeProtein, PROTEIN_CONFIG, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
-import { ACTIVITY_LEVELS, DEFAULT_GOALS, KCAL_PER_KG } from "./app-config.js";
+import { ROUTINE_TEMPLATES, templateToAppRoutine, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
+import { DEFAULT_GOALS, KCAL_PER_KG } from "./app-config.js";
 import {
   addDays, authUserChanged, cycleInfo, daysBetween, localISO, mergePhotoUrls,
   migrateWorkouts as migrateWorkoutData,
@@ -12,7 +12,11 @@ import {
   useSyncedValue, waitForUserSaves,
 } from "./data-sync.js";
 import { AuthScreen, SaveIndicator } from "./AuthUI.jsx";
-import { goalDirection, goalSuggestion, latestWeight } from "./settings-utils.js";
+import {
+  A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, ScreenMast,
+  useIsMobile, useReveal,
+} from "./EditorialUI.jsx";
+import SettingsScreen from "./SettingsScreen.jsx";
 import {
   compressImage, deletePhotoFile, deleteUserPhotos, hydratePhotos, photoForStorage,
   photosForBackup, refreshPhotoUrls, uploadPhotoData, validatePhotoFile,
@@ -22,10 +26,10 @@ import {
 } from "recharts";
 import {
   Dumbbell, Scale, Utensils, LayoutDashboard, Plus, Trash2,
-  Download, Upload, Target, AlertTriangle,
-  Check, ChevronLeft, ChevronRight, Flame, Timer, Play, Pause, RotateCcw,
+  Download, Upload, AlertTriangle,
+  Check, ChevronLeft, ChevronRight, Timer, Play, Pause, RotateCcw,
   Apple, Pencil, X, Clock, Activity, Ruler, Moon, ListChecks, Bell, Trophy,
-  Settings, Zap, BookOpen, Droplet, Lock, Camera
+  Settings, Zap, BookOpen, Droplet, Camera
 } from "lucide-react";
 
 /* ----------------------------- helpers ----------------------------- */
@@ -541,7 +545,7 @@ export default function App() {
           {tab === "biblioteca" && <Library foods={foods} setFoods={setFoods} recipes={recipes} setRecipes={setRecipes} />}
           {tab === "rutinas" && <Routines routines={routines} setRoutines={setRoutines} />}
           {tab === "dashboard" && <Dashboard workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} goals={goals} />}
-          {tab === "ajustes" && <Goals goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} />}
+          {tab === "ajustes" && <SettingsScreen goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} />}
         </div>
       )}
     </div>
@@ -1267,16 +1271,9 @@ export function Routines({ routines, setRoutines }) {
    BRUTALIST DASHBOARD — editorial layout fed by real data.
    Inlined animation/SVG primitives (bone/ink/tangerine).
    ============================================================ */
-const A_INK = "#16140d", A_INK2 = "#6a655a", A_PAPER = "#f3efe6", A_PANEL = "#faf7f0",
+const A_PAPER = "#f3efe6", A_PANEL = "#faf7f0",
   A_ACC = "#e7531c", A_OK = "#3f7d4e", A_DANGER = "#c0341a",
   A_LINE = "rgba(22,20,13,0.16)", A_HAIR = "rgba(22,20,13,0.10)";
-const A_DISP = "'Archivo', sans-serif", A_MONO = "'IBM Plex Mono', monospace";
-
-function useReveal(delay = 0) {
-  const [on, setOn] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setOn(true), delay); return () => clearTimeout(t); }, [delay]);
-  return on;
-}
 function useCountUp(value, { dur = 1100, decimals = 0, delay = 0 } = {}) {
   const [n, setN] = useState(0);
   const ref = useRef({ from: 0 });
@@ -1316,14 +1313,6 @@ function DrawLine({ d, color, width = 2.5, reveal, dur = 1400, delay = 0, dash, 
     <path ref={ref} d={d} fill="none" stroke={color} strokeWidth={width} strokeLinecap={cap} strokeLinejoin="round" opacity={opacity}
       style={dash ? { strokeDasharray: dash } : (len ? { strokeDasharray: len, strokeDashoffset: reveal ? 0 : len, transition: `stroke-dashoffset ${dur}ms cubic-bezier(.22,.61,.36,1) ${delay}ms` } : undefined)} />
   );
-}
-function Rise({ show, i = 0, step = 70, y = 16, dur = 620, children, style = {} }) {
-  return (
-    <div style={{ opacity: show ? 1 : 0, transform: show ? "translateY(0)" : `translateY(${y}px)`, transition: `opacity ${dur}ms ease, transform ${dur}ms cubic-bezier(.22,.61,.36,1)`, transitionDelay: `${i * step}ms`, ...style }}>{children}</div>
-  );
-}
-function DKicker({ children, color }) {
-  return <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: color || A_INK2, fontWeight: 500 }}>{children}</div>;
 }
 function DLegend({ color, label, dash }) {
   return (
@@ -1476,30 +1465,6 @@ function BHeatmap({ days, isMobile }) {
 }
 
 /* ---- reusable editorial screen primitives (shared across tabs) ---- */
-function useIsMobile(bp = 640) {
-  const [m, setM] = useState(typeof window !== "undefined" && window.innerWidth < bp);
-  useEffect(() => {
-    const on = () => setM(window.innerWidth < bp);
-    on(); window.addEventListener("resize", on);
-    return () => window.removeEventListener("resize", on);
-  }, [bp]);
-  return m;
-}
-function ScreenMast({ kicker, title, right }) {
-  const show = useReveal(40);
-  const isMobile = useIsMobile();
-  return (
-    <Rise show={show} i={0}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12, borderBottom: `2px solid ${A_INK}`, paddingBottom: 14 }}>
-        <div>
-          <DKicker>{kicker}</DKicker>
-          <h1 style={{ margin: "10px 0 0", fontFamily: A_DISP, fontWeight: 900, fontSize: isMobile ? 38 : 60, lineHeight: 0.85, letterSpacing: "-0.045em", textTransform: "uppercase", color: A_INK }}>{title}</h1>
-        </div>
-        {right}
-      </div>
-    </Rise>
-  );
-}
 function EDateNav({ date, setDate }) {
   const shift = (n) => { const d = new Date(date + "T00:00:00"); d.setDate(d.getDate() + n); setDate(localISO(d)); };
   const d = new Date(date + "T00:00:00");
@@ -1857,128 +1822,5 @@ export function Dashboard({ workouts, weights, nutrition, measurements, periods,
         )}
       </div>
     </div>
-  );
-}
-
-/* ----------------------------- AJUSTES / GOALS ----------------------------- */
-export function Goals({ goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData }) {
-  const [deleteBusy, setDeleteBusy] = useState(false);
-  const [deleteError, setDeleteError] = useState("");
-  const upd = (k, v) => setGoals((g) => ({ ...g, [k]: v }));
-  const latestW = latestWeight(weights);
-  const refW = Number(goals.startWeight) || latestW || null;
-  const start = Number(goals.startWeight) || latestW;
-  const target = Number(goals.targetWeight);
-  const dir = goalDirection(start, target);
-
-  const gPerKg = goals.proteinPerKg ?? 2.0;
-  const proteinMeals = goals.proteinMeals ?? 4;
-  const suggestion = useMemo(() => {
-    if (!refW) return null;
-    return goalSuggestion(refW, { ...goals, proteinPerKg: gPerKg });
-  }, [refW, goals, gPerKg]);
-  const mealSplit = suggestion ? distributeProtein(suggestion.protein, proteinMeals) : [];
-
-  // auto-aplicar cuando está activado y cambian los inputs
-  useEffect(() => {
-    if (goals.autoMacros && suggestion) {
-      if (Number(goals.kcalTarget) !== suggestion.kcal || Number(goals.proteinTarget) !== suggestion.protein)
-        setGoals((g) => ({ ...g, kcalTarget: suggestion.kcal, proteinTarget: suggestion.protein }));
-    }
-  }, [goals.autoMacros, suggestion]); // eslint-disable-line
-
-  return (
-    <>
-      <ScreenMast kicker="FITTRACK · AJUSTES" title="Ajustes" />
-      <div style={{ height: 16 }} />
-      <div className="ft-card">
-        <h2><Target size={16} /> Objetivos de peso</h2>
-        <div className="ft-row" style={{ marginBottom: 12 }}>
-          <div className="ft-field"><label>Peso inicial (kg)</label><input className="ft-input ft-mono" type="number" step="0.1" placeholder={latestW ? `${latestW} (último)` : "auto"} value={goals.startWeight} onChange={(e) => upd("startWeight", e.target.value)} /></div>
-          <div className="ft-field"><label>Peso meta (kg)</label><input className="ft-input ft-mono" type="number" step="0.1" placeholder="0.0" value={goals.targetWeight} onChange={(e) => upd("targetWeight", e.target.value)} /></div>
-        </div>
-        <div className="ft-field" style={{ marginBottom: 12 }}><label>Ritmo objetivo: {goals.weeklyChange > 0 ? "+" : ""}{Number(goals.weeklyChange).toFixed(2)} kg/semana{goals.weeklyChange < 0 ? " (déficit)" : goals.weeklyChange > 0 ? " (volumen)" : " (mantenimiento)"}</label>
-          <input type="range" min="-1" max="1" step="0.05" value={goals.weeklyChange} onChange={(e) => upd("weeklyChange", Number(e.target.value))} style={{ accentColor: "#e7531c", width: "100%" }} /></div>
-        {dir && <div className="ft-prev" style={{ marginTop: 0 }}><span>Objetivo detectado:</span><b style={{ color: dir === "perder grasa" ? "var(--blue)" : dir === "ganar músculo" ? "var(--accent)" : "var(--text)" }}>{dir}</b></div>}
-      </div>
-
-      <div className="ft-card">
-        <h2><Flame size={16} /> Objetivos de nutrición</h2>
-        <div className="ft-row" style={{ marginBottom: 12 }}>
-          <div className="ft-field"><label>Nivel de actividad</label><select className="ft-select" value={goals.activity} onChange={(e) => upd("activity", e.target.value)}>{ACTIVITY_LEVELS.map((a) => <option key={a.key} value={a.key}>{a.label}</option>)}</select></div>
-        </div>
-        <label style={{ display: "flex", alignItems: "center", gap: 9, cursor: "pointer", marginBottom: 14, fontSize: 14 }}>
-          <input type="checkbox" checked={goals.autoMacros} onChange={(e) => upd("autoMacros", e.target.checked)} style={{ accentColor: "#e7531c", width: 18, height: 18 }} />
-          Calcular calorías y proteína automáticamente desde mi peso
-        </label>
-        {goals.autoMacros && (
-          <div className="ft-field" style={{ marginBottom: 14 }}>
-            <label>Proteína por kg de peso: {gPerKg.toFixed(1)} g/kg{refW ? ` · ${Math.round(refW * gPerKg)} g/día para ${round1(refW)} kg` : ""}</label>
-            <input type="range" min={PROTEIN_CONFIG.minGPerKg} max={PROTEIN_CONFIG.maxGPerKg} step="0.1" value={gPerKg} onChange={(e) => upd("proteinPerKg", Number(e.target.value))} style={{ accentColor: "#e7531c", width: "100%" }} />
-            <div className="ft-mono" style={{ fontSize: 11, color: "var(--muted)" }}>1.6 conservador · 2.0 recomendado en déficit · 2.4 máximo. El objetivo se recalcula solo al cambiar tu peso.</div>
-          </div>
-        )}
-        {goals.autoMacros && suggestion && (
-          <div className="ft-prev" style={{ marginTop: 0, marginBottom: 14 }}>
-            <span>Mantenimiento est. <b>{suggestion.maintenance}</b> kcal</span>
-            <span>→ objetivo <b>{suggestion.kcal}</b> kcal</span>
-            <span>· proteína <b>{suggestion.protein}</b> g ({suggestion.proteinPerKg} g/kg · rango {suggestion.lowEnd}–{suggestion.highEnd})</span>
-          </div>
-        )}
-        {goals.autoMacros && mealSplit.length > 0 && (
-          <div style={{ marginBottom: 14 }}>
-            <div className="ft-mono" style={{ fontSize: 11, color: "var(--muted)", marginBottom: 8, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span>Reparto sugerido por comida</span>
-              <span style={{ display: "inline-flex", gap: 4 }}>
-                {[4, 5].map((n) => <button key={n} className={"ft-secchip" + (proteinMeals === n ? " on" : "")} onClick={() => upd("proteinMeals", n)} style={{ cursor: "pointer" }}>{n} comidas</button>)}
-              </span>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: `repeat(${mealSplit.length},1fr)`, gap: 8 }}>
-              {mealSplit.map((m, i) => (
-                <div key={i} style={{ border: "1px solid var(--line)", padding: "10px 8px", textAlign: "center" }}>
-                  <div className="ft-mono" style={{ fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: ".08em" }}>{m.label}</div>
-                  <div style={{ fontFamily: "'Archivo'", fontWeight: 800, fontSize: 22, letterSpacing: "-0.02em", marginTop: 4 }}>{m.grams}<span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'IBM Plex Mono'", marginLeft: 2 }}>g</span></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        <div className="ft-row">
-          <div className="ft-field"><label>Calorías diarias</label><input className="ft-input ft-mono" type="number" placeholder="2200" value={goals.kcalTarget} disabled={goals.autoMacros} onChange={(e) => upd("kcalTarget", e.target.value)} /></div>
-          <div className="ft-field"><label>Proteína diaria (g)</label><input className="ft-input ft-mono" type="number" placeholder="150" value={goals.proteinTarget} disabled={goals.autoMacros} onChange={(e) => upd("proteinTarget", e.target.value)} /></div>
-        </div>
-        {goals.autoMacros && !refW && <div style={{ color: "var(--danger)", fontSize: 13, marginTop: 10 }}>Introduce tu peso inicial (o registra un peso en Cuerpo) para poder calcular.</div>}
-      </div>
-
-      <div className="ft-card">
-        <h2><Lock size={16} /> Cuenta</h2>
-        <p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 0 }}>
-          Sesión activa: <strong style={{ color: "var(--text)" }}>{userEmail}</strong>
-        </p>
-        <button className="ft-btn ghost" onClick={signOut}><X size={15} /> Cerrar sesión</button>
-      </div>
-
-      <div className="ft-card">
-        <h2><Download size={16} /> Copia de seguridad</h2>
-        <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 0 }}>Tus datos, incluidas las fotos, se sincronizan con tu cuenta en Supabase. Exporta un JSON periódicamente como copia adicional; puedes reimportarlo desde la cabecera.</p>
-        <button className="ft-btn" onClick={exportData}><Download size={15} /> Exportar copia ahora</button>
-      </div>
-
-      <div className="ft-card">
-        <h2><AlertTriangle size={16} /> Privacidad y eliminación</h2>
-        <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 0 }}>FitTrack almacena en Supabase tus entrenamientos, nutrición, peso, medidas, bienestar, ciclo menstrual y fotos. Las fotos se guardan en un bucket privado y se muestran mediante enlaces temporales.</p>
-        <p style={{ color: "var(--muted)", fontSize: 13 }}>Esta acción elimina los datos y fotos de FitTrack, pero conserva tu usuario de acceso para que puedas volver a empezar.</p>
-        <button className="ft-btn ghost" disabled={deleteBusy} onClick={async () => {
-          const confirmation = window.prompt("Escribe ELIMINAR para borrar permanentemente todos tus datos de FitTrack.");
-          if (confirmation !== "ELIMINAR") return;
-          setDeleteBusy(true); setDeleteError("");
-          try { await deleteAllData(); }
-          catch (error) { setDeleteError(error?.message || "No se pudieron eliminar todos los datos"); setDeleteBusy(false); }
-        }}><Trash2 size={15} /> {deleteBusy ? "Eliminando…" : "Eliminar todos mis datos"}</button>
-        {deleteError && <div style={{ color: "var(--danger)", fontSize: 13, marginTop: 10 }}>{deleteError}</div>}
-      </div>
-
-      <div className="ft-alert ok"><Check size={20} color="var(--ok)" /><div><div className="t">Cómo se calculan tus macros y avisos</div><div className="b">El cálculo automático estima tu mantenimiento como peso × factor de actividad, le resta/suma el equivalente a tu ritmo objetivo (7700 kcal ≈ 1 kg), y fija más proteína en déficit (2,2 g/kg) que en volumen (2,0 g/kg). Es un punto de partida: el dashboard ajusta tu mantenimiento real con tus datos en ~2 semanas, y ahí puedes afinar.</div></div></div>
-    </>
   );
 }
