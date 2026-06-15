@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CYCLE_PHASES } from "./app-config.js";
 import { cycleInfo, daysBetween, localISO } from "./app-utils.js";
 import { ScreenMast } from "./EditorialUI.jsx";
 import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
@@ -8,14 +9,6 @@ import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } fr
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
-const CYCLE_PHASES = {
-  Menstrual: { color: "#ff6b4a", note: "Energía variable y posibles molestias. Está bien bajar intensidad si lo necesitas; escucha a tu cuerpo." },
-  Folicular: { color: "#3ddc97", note: "Al subir el estrógeno, muchas personas reportan más energía y fuerza. Suele ser una buena ventana para intentar récords." },
-  Ovulatoria: { color: "#e7531c", note: "Pico de energía frecuente. Algunas notan más laxitud articular: cuida especialmente la técnica con cargas altas." },
-  Lútea: { color: "#b388ff", note: "En la fase lútea tardía algunas reportan más fatiga, antojos y peor recuperación. Que el rendimiento fluctúe aquí es normal." },
-  "Por confirmar": { color: "#878d86", note: "Tu periodo podría ir retrasado respecto a tu media. Registra el inicio cuando llegue para afinar las predicciones." },
-};
-
 export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos, userId }) {
   const [wDate, setWDate] = useState(todayISO()); const [kg, setKg] = useState("");
   const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
@@ -216,4 +209,3 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
     </>
   );
 }
-
