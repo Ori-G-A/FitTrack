@@ -4,6 +4,9 @@ import { localISO } from "./app-utils.js";
 
 export const A_INK = "#16140d";
 export const A_INK2 = "#6a655a";
+export const A_ACC = "#e7531c";
+export const A_OK = "#3a7d44";
+export const A_DANGER = "#c0341a";
 export const A_DISP = "'Archivo', sans-serif";
 export const A_MONO = "'IBM Plex Mono', monospace";
 export const A_PAPER = "#f3efe6";

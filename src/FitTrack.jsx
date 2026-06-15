@@ -13,7 +13,8 @@ import {
 } from "./data-sync.js";
 import { AuthScreen, SaveIndicator } from "./AuthUI.jsx";
 import {
-  A_DISP, A_INK, A_INK2, A_MONO, DKicker, EDateNav, EPanel, KpiStrip, Rise, ScreenMast,
+  A_ACC, A_DANGER, A_DISP, A_HAIR, A_INK, A_INK2, A_MONO, A_OK,
+  DKicker, EDateNav, EPanel, KpiStrip, Rise, ScreenMast,
   useIsMobile, useReveal,
 } from "./EditorialUI.jsx";
 import SettingsScreen from "./SettingsScreen.jsx";
@@ -861,7 +862,7 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
       </EPanel>
 
       <EPanel title="Comidas del día" meta={`${dayItems.length} ${dayItems.length === 1 ? "registro" : "registros"}`} i={3}>
-        {dayItems.length === 0 ? <DNeed>Sin registros este día.</DNeed> : (
+        {dayItems.length === 0 ? <div className="ft-empty">Sin registros este día.</div> : (
           <div>
             {dayItems.map((n, idx) => (
               <div key={n.id} style={{ display: "grid", gridTemplateColumns: "1fr auto auto", alignItems: "center", gap: 14, padding: "12px 0", borderBottom: idx < dayItems.length - 1 ? `1px solid ${A_HAIR}` : "none" }}>
