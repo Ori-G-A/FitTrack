@@ -1,7 +1,9 @@
 import { localISO } from "./app-utils.js";
+import { withTimeout } from "./async-utils.js";
 import { supabase } from "./supabase.js";
 
 const PHOTO_BUCKET = "progress-photos";
+const STORAGE_REQUEST_TIMEOUT_MS = 20000;
 const newId = () => crypto.randomUUID?.() || Math.random().toString(36).slice(2, 10);
 const SOURCE_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]);
 const MAX_SOURCE_BYTES = 25 * 1024 * 1024;
@@ -53,7 +55,11 @@ export const photoForStorage = ({ signedUrl, ...photo }) => photo;
 
 async function signedPhoto(photo) {
   if (!photo.storagePath || photo.dataUrl) return photo;
-  const { data, error } = await supabase.storage.from(PHOTO_BUCKET).createSignedUrl(photo.storagePath, 60 * 60 * 24);
+  const { data, error } = await withTimeout(
+    supabase.storage.from(PHOTO_BUCKET).createSignedUrl(photo.storagePath, 60 * 60 * 24),
+    STORAGE_REQUEST_TIMEOUT_MS,
+    "La carga de una foto tardo demasiado.",
+  );
   if (error) throw error;
   return { ...photo, signedUrl: data.signedUrl };
 }
@@ -64,23 +70,25 @@ export async function uploadPhotoData(userId, photo) {
   const contentType = ["image/jpeg", "image/png", "image/webp"].includes(blob.type) ? blob.type : "image/jpeg";
   const id = photo.id || newId();
   const storagePath = photoStoragePath(userId, contentType, id);
-  const { error } = await supabase.storage.from(PHOTO_BUCKET).upload(storagePath, blob, { contentType, upsert: true });
+  const { error } = await withTimeout(
+    supabase.storage.from(PHOTO_BUCKET).upload(storagePath, blob, { contentType, upsert: true }),
+    STORAGE_REQUEST_TIMEOUT_MS,
+    "La subida de la foto tardo demasiado.",
+  );
   if (error) throw error;
   return signedPhoto({ id, date: photo.date || localISO(), storagePath });
 }
 
 export async function hydratePhotos(userId, photos) {
   if (!Array.isArray(photos) || photos.length === 0) return [];
-  const hydrated = [];
-  for (const photo of photos) {
+  return Promise.all(photos.map(async (photo) => {
     try {
-      hydrated.push(await (photo.dataUrl ? uploadPhotoData(userId, photo) : signedPhoto(photo)));
+      return await (photo.dataUrl ? uploadPhotoData(userId, photo) : signedPhoto(photo));
     } catch (error) {
       console.error("hydratePhoto", error);
-      hydrated.push(photo);
+      return photo;
     }
-  }
-  return hydrated;
+  }));
 }
 
 export async function refreshPhotoUrls(photos) {
@@ -100,7 +108,11 @@ export async function photosForBackup(photos) {
   return Promise.all(photos.map(async (photo) => {
     if (photo.dataUrl) return photoForStorage(photo);
     const source = photo.signedUrl || (await signedPhoto(photo)).signedUrl;
-    const response = await fetch(source);
+    const response = await withTimeout(
+      fetch(source),
+      STORAGE_REQUEST_TIMEOUT_MS,
+      "La descarga de una foto tardo demasiado.",
+    );
     if (!response.ok) throw new Error("No se pudo incluir una foto en la copia");
     return { id: photo.id, date: photo.date, dataUrl: await blobToDataUrl(await response.blob()) };
   }));
@@ -108,24 +120,36 @@ export async function photosForBackup(photos) {
 
 export async function deletePhotoFile(photo) {
   if (!photo.storagePath) return;
-  const { error } = await supabase.storage.from(PHOTO_BUCKET).remove([photo.storagePath]);
+  const { error } = await withTimeout(
+    supabase.storage.from(PHOTO_BUCKET).remove([photo.storagePath]),
+    STORAGE_REQUEST_TIMEOUT_MS,
+    "La eliminacion de la foto tardo demasiado.",
+  );
   if (error) throw error;
 }
 
 export async function deleteUserPhotos(userId) {
   const paths = [];
   for (let offset = 0; ; offset += 100) {
-    const { data, error } = await supabase.storage.from(PHOTO_BUCKET).list(userId, {
-      limit: 100,
-      offset,
-      sortBy: { column: "name", order: "asc" },
-    });
+    const { data, error } = await withTimeout(
+      supabase.storage.from(PHOTO_BUCKET).list(userId, {
+        limit: 100,
+        offset,
+        sortBy: { column: "name", order: "asc" },
+      }),
+      STORAGE_REQUEST_TIMEOUT_MS,
+      "La consulta de fotos tardo demasiado.",
+    );
     if (error) throw error;
     paths.push(...data.filter((item) => item.name).map((item) => `${userId}/${item.name}`));
     if (data.length < 100) break;
   }
   for (let index = 0; index < paths.length; index += 100) {
-    const { error } = await supabase.storage.from(PHOTO_BUCKET).remove(paths.slice(index, index + 100));
+    const { error } = await withTimeout(
+      supabase.storage.from(PHOTO_BUCKET).remove(paths.slice(index, index + 100)),
+      STORAGE_REQUEST_TIMEOUT_MS,
+      "La eliminacion de fotos tardo demasiado.",
+    );
     if (error) throw error;
   }
 }

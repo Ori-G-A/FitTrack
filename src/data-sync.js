@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { withTimeout } from "./async-utils.js";
 import { supabase } from "./supabase.js";
 
+const DATA_REQUEST_TIMEOUT_MS = 15000;
 const saveBus = { status: "idle", error: null, at: null, pending: 0, listeners: new Set() };
 const saveQueues = new Map();
 const suspendedUsers = new Set();
@@ -18,12 +20,17 @@ export function onSaveStatus(callback) {
 }
 
 export async function loadKey(userId, key, fallback) {
-  const { data, error } = await supabase
+  const request = supabase
     .from("app_data")
     .select("value")
     .eq("user_id", userId)
     .eq("key", key)
     .maybeSingle();
+  const { data, error } = await withTimeout(
+    request,
+    DATA_REQUEST_TIMEOUT_MS,
+    "La carga de datos tardo demasiado.",
+  );
   if (error) throw error;
   return data?.value ?? fallback;
 }
@@ -33,9 +40,13 @@ async function persistKey(userId, key, value) {
   saveBus.pending += 1;
   emitSave("saving");
   try {
-    const { error } = await supabase.from("app_data").upsert(
-      { user_id: userId, key, value },
-      { onConflict: "user_id,key" },
+    const { error } = await withTimeout(
+      supabase.from("app_data").upsert(
+        { user_id: userId, key, value },
+        { onConflict: "user_id,key" },
+      ),
+      DATA_REQUEST_TIMEOUT_MS,
+      "El guardado tardo demasiado.",
     );
     if (error) throw error;
   } catch (error) {
