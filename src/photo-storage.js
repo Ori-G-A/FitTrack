@@ -1,10 +1,8 @@
-import { localISO } from "./app-utils.js";
 import { withTimeout } from "./async-utils.js";
+import { createSignedPhoto, PHOTO_BUCKET, photoStoragePath, uploadPhotoWithClient } from "./photo-operations.js";
 import { supabase } from "./supabase.js";
 
-const PHOTO_BUCKET = "progress-photos";
 const STORAGE_REQUEST_TIMEOUT_MS = 20000;
-const newId = () => crypto.randomUUID?.() || Math.random().toString(36).slice(2, 10);
 const SOURCE_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]);
 const MAX_SOURCE_BYTES = 25 * 1024 * 1024;
 
@@ -37,7 +35,6 @@ export function compressImage(file, maxPx = 820, quality = 0.62) {
   });
 }
 
-const dataUrlToBlob = async (dataUrl) => (await fetch(dataUrl)).blob();
 const blobToDataUrl = (blob) => new Promise((resolve, reject) => {
   const reader = new FileReader();
   reader.onload = () => resolve(reader.result);
@@ -45,45 +42,23 @@ const blobToDataUrl = (blob) => new Promise((resolve, reject) => {
   reader.readAsDataURL(blob);
 });
 
-const photoStoragePath = (userId, mimeType, photoId) => {
-  const extension = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
-  const safeId = String(photoId || newId()).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 80) || newId();
-  return `${userId}/${safeId}.${extension}`;
-};
+export { photoStoragePath };
 
 export const photoForStorage = ({ signedUrl, ...photo }) => photo;
 
-async function signedPhoto(photo) {
-  if (!photo.storagePath || photo.dataUrl) return photo;
-  const { data, error } = await withTimeout(
-    supabase.storage.from(PHOTO_BUCKET).createSignedUrl(photo.storagePath, 60 * 60 * 24),
-    STORAGE_REQUEST_TIMEOUT_MS,
-    "La carga de una foto tardo demasiado.",
-  );
-  if (error) throw error;
-  return { ...photo, signedUrl: data.signedUrl };
+async function signedPhoto(photo, client = supabase) {
+  return createSignedPhoto(client, photo);
 }
 
-export async function uploadPhotoData(userId, photo) {
-  if (!photo.dataUrl) return signedPhoto(photo);
-  const blob = await dataUrlToBlob(photo.dataUrl);
-  const contentType = ["image/jpeg", "image/png", "image/webp"].includes(blob.type) ? blob.type : "image/jpeg";
-  const id = photo.id || newId();
-  const storagePath = photoStoragePath(userId, contentType, id);
-  const { error } = await withTimeout(
-    supabase.storage.from(PHOTO_BUCKET).upload(storagePath, blob, { contentType, upsert: true }),
-    STORAGE_REQUEST_TIMEOUT_MS,
-    "La subida de la foto tardo demasiado.",
-  );
-  if (error) throw error;
-  return signedPhoto({ id, date: photo.date || localISO(), storagePath });
+export async function uploadPhotoData(userId, photo, client = supabase) {
+  return uploadPhotoWithClient(client, userId, photo);
 }
 
-export async function hydratePhotos(userId, photos) {
+export async function hydratePhotos(userId, photos, client = supabase) {
   if (!Array.isArray(photos) || photos.length === 0) return [];
   return Promise.all(photos.map(async (photo) => {
     try {
-      return await (photo.dataUrl ? uploadPhotoData(userId, photo) : signedPhoto(photo));
+      return await (photo.dataUrl ? uploadPhotoData(userId, photo, client) : signedPhoto(photo, client));
     } catch (error) {
       console.error("hydratePhoto", error);
       return photo;
@@ -91,12 +66,12 @@ export async function hydratePhotos(userId, photos) {
   }));
 }
 
-export async function refreshPhotoUrls(photos) {
+export async function refreshPhotoUrls(photos, client = supabase) {
   if (!Array.isArray(photos) || photos.length === 0) return [];
   return Promise.all(photos.map(async (photo) => {
     if (!photo.storagePath || photo.dataUrl) return photo;
     try {
-      return await signedPhoto(photo);
+      return await signedPhoto(photo, client);
     } catch (error) {
       console.error("refreshPhotoUrl", error);
       return photo;
@@ -118,10 +93,10 @@ export async function photosForBackup(photos) {
   }));
 }
 
-export async function deletePhotoFile(photo) {
+export async function deletePhotoFile(photo, client = supabase) {
   if (!photo.storagePath) return;
   const { error } = await withTimeout(
-    supabase.storage.from(PHOTO_BUCKET).remove([photo.storagePath]),
+    client.storage.from(PHOTO_BUCKET).remove([photo.storagePath]),
     STORAGE_REQUEST_TIMEOUT_MS,
     "La eliminacion de la foto tardo demasiado.",
   );

@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
+import { withTimeout } from "./async-utils.js";
 import { supabase } from "./supabase.js";
 import { ROUTINE_TEMPLATES, templateToAppRoutine, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
 import { DEFAULT_GOALS } from "./app-config.js";
@@ -304,7 +305,11 @@ export default function App() {
   useEffect(() => {
     let active = true;
     setSessionError("");
-    supabase.auth.getSession().then(({ data, error }) => {
+    withTimeout(
+      supabase.auth.getSession(),
+      15000,
+      "La verificacion de sesion tardo demasiado.",
+    ).then(({ data, error }) => {
       if (error) throw error;
       if (active) {
         authUserIdRef.current = data.session?.user?.id ?? null;

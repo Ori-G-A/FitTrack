@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Dumbbell, Lock } from "lucide-react";
+import { authenticate } from "./auth-service.js";
 import { onSaveStatus } from "./data-sync.js";
 import { supabase } from "./supabase.js";
 
@@ -48,15 +49,9 @@ export function AuthScreen() {
 
     setBusy(true);
     setMessage({ text: "", ok: false });
-    const normalizedEmail = email.trim().toLowerCase();
-
     try {
-      if (mode === "login") {
-        const { error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.auth.signUp({ email: normalizedEmail, password });
-        if (error) throw error;
+      await authenticate(supabase, mode, email, password);
+      if (mode === "register") {
         setMessage({ text: "Revisa tu correo para confirmar el registro.", ok: true });
       }
     } catch (error) {
