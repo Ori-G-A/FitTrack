@@ -95,3 +95,14 @@ test("RLS migrations keep app data and progress photos owner-only", async () => 
   assert.match(photosSql, /'progress-photos'[\s\S]*false/i);
   assert.equal((photosSql.match(/\(storage\.foldername\(name\)\)\[1\] = \(select auth\.uid\(\)\)::text/g) || []).length, 5);
 });
+
+test("error reports are insert-only and scoped to the authenticated owner", async () => {
+  const sql = await readFile(new URL("../supabase/migrations/20260615000000_client_error_reports.sql", import.meta.url), "utf8");
+  assert.match(sql, /enable row level security/i);
+  assert.match(sql, /id uuid primary key default gen_random_uuid\(\)/i);
+  assert.match(sql, /client_error_reports \(created_at desc\)/i);
+  assert.match(sql, /revoke all on table public\.client_error_reports from anon, authenticated/i);
+  assert.match(sql, /grant insert on table public\.client_error_reports to authenticated/i);
+  assert.doesNotMatch(sql, /grant select/i);
+  assert.match(sql, /with check \(\(select auth\.uid\(\)\) = user_id\)/i);
+});

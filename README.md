@@ -18,6 +18,7 @@ Crear `.env.local` con:
 ```text
 VITE_SUPABASE_URL=...
 VITE_SUPABASE_ANON_KEY=...
+VITE_ERROR_REPORTING_ENABLED=false
 ```
 
 La clave anónima es pública por diseño. La seguridad depende de las políticas RLS de Supabase. Nunca incluir una `service_role` en variables `VITE_*`.
@@ -28,8 +29,14 @@ Aplicar las migraciones de `supabase/migrations/` en orden:
 
 1. `20260614000000_secure_app_data_rls.sql`
 2. `20260614010000_private_progress_photos.sql`
+3. `20260615000000_client_error_reports.sql`
 
 La primera restringe `app_data` al usuario autenticado. La segunda crea un bucket privado para fotos de progreso y limita cada ruta al UUID propietario.
+
+La tercera crea reportes de errores de solo insercion. Tras aplicarla, establecer
+`VITE_ERROR_REPORTING_ENABLED=true` en Vercel activa diagnosticos sin correos,
+tokens ni parametros de URL. Los usuarios de la app no tienen permiso de lectura;
+los reportes se consultan desde el panel de Supabase.
 
 ## Despliegue
 
