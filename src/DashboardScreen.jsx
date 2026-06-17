@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { CYCLE_PHASES, KCAL_PER_KG } from "./app-config.js";
-import { cycleInfo, daysBetween, localISO, slopePerDay } from "./app-utils.js";
+import { canonExercise, cycleInfo, daysBetween, localISO, slopePerDay } from "./app-utils.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
@@ -237,7 +237,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const map = {};
     [...workouts].sort((a, b) => a.date.localeCompare(b.date)).forEach((w) => w.exercises.forEach((e) => {
       let best = 0; e.sets.forEach((s) => { const r = +s.reps || 0, kg = +s.kg || 0; if (r > 0 && kg > 0) best = Math.max(best, epley(kg, r)); });
-      if (best > 0) (map[e.name] = map[e.name] || []).push({ iso: w.date, oneRM: Math.round(best) });
+      if (best > 0) { const key = canonExercise(e.name); (map[key] = map[key] || []).push({ iso: w.date, oneRM: Math.round(best) }); }
     }));
     return map;
   }, [workouts]);

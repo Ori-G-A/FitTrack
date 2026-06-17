@@ -8,6 +8,37 @@ export const localISO = (date = new Date()) => {
 export const authUserChanged = (previousUserId, nextUserId) =>
   (previousUserId ?? null) !== (nextUserId ?? null);
 
+// Nombre canónico de ejercicio: une variantes que solo difieren por herramienta
+// (goblet / barra / mancuerna / TRX…) pero conserva lo que sí distingue el
+// movimiento (inclinado, rumano, femoral, lateral…).
+// ponytail: strip-list, no diccionario de sinónimos. "Press banca" y "Press de
+// pecho" NO se fusionan; añadir un alias map si hace falta.
+const CANON_DROP = new Set([
+  "con", "o", "y", "u", "en", "del", "la", "el", "los", "las",
+  "barra", "mancuerna", "mancuernas", "goblet", "disco", "discos", "banda",
+  "minibanda", "polea", "trx", "toalla", "kettlebell", "máquina", "maquina",
+  "cable", "smith", "pesada", "pesado", "ligera", "ligero", "sentado",
+  "sentada", "pie", "apoyada", "apoyado", "piso", "escalera", "banco",
+]);
+export function canonExercise(name) {
+  const words = (name || "")
+    .toLowerCase()
+    .replace(/\(.*?\)/g, " ")     // quita paréntesis (herramientas/aclaraciones)
+    .replace(/[\d./%]+/g, " ")    // quita números y unidades sueltas
+    .split(/[\s,]+/)
+    .filter((w) => w && !CANON_DROP.has(w));
+  const s = words.join(" ").trim();
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : (name || "");
+}
+
+if (import.meta.env?.DEV) {
+  console.assert(canonExercise("Sentadilla goblet (mancuerna o disco)") === "Sentadilla", "canon goblet");
+  console.assert(canonExercise("Sentadilla con barra ligera o goblet pesada") === "Sentadilla", "canon barra");
+  console.assert(canonExercise("Press de pecho con mancuernas (banco plano)") === "Press de pecho", "canon press plano");
+  console.assert(canonExercise("Press inclinado con mancuernas") === "Press inclinado", "canon inclinado distinto");
+  console.assert(canonExercise("Curl femoral con toalla") === "Curl femoral", "canon curl femoral");
+}
+
 export function mergePhotoUrls(currentPhotos, refreshedPhotos) {
   const signedUrls = new Map(
     refreshedPhotos

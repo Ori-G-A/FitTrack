@@ -42,29 +42,62 @@ const clock = (s) => {
   return h > 0 ? `${h}:${p(m)}:${p(ss)}` : `${p(m)}:${p(ss)}`;
 };
 const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
-const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Gemelos", "Core", "Trapecio", "Antebrazo"];
+const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Aductores", "Gemelos", "Core", "Trapecio", "Antebrazo"];
 const MUSCLE_COLOR = {
   Pecho: "#e7531c", Espalda: "#5ad1ff", Hombros: "#ff8a3d", Bíceps: "#ff6b9d", Tríceps: "#b388ff",
-  Cuádriceps: "#d99000", Femoral: "#2f8f6a", Glúteos: "#e7531c", Gemelos: "#4a9d5e", Core: "#6a655a", Trapecio: "#7a7468", Antebrazo: "#8a6fc0",
+  Cuádriceps: "#d99000", Femoral: "#2f8f6a", Glúteos: "#e7531c", Aductores: "#c06fa0", Gemelos: "#4a9d5e", Core: "#6a655a", Trapecio: "#7a7468", Antebrazo: "#8a6fc0",
 };
 const CARDIO_TYPES = ["Caminar", "Correr", "Bici", "Elíptica", "Remo", "Natación", "HIIT", "Otro"];
 
 const EXERCISE_PRESETS = [
+  // Pecho
   { name: "Press banca", primary: "Pecho", secondary: ["Tríceps", "Hombros"] },
   { name: "Press inclinado", primary: "Pecho", secondary: ["Hombros", "Tríceps"] },
-  { name: "Fondos", primary: "Tríceps", secondary: ["Pecho", "Hombros"] },
+  { name: "Aperturas", primary: "Pecho", secondary: [] },
+  { name: "Fondos en paralelas", primary: "Pecho", secondary: ["Tríceps", "Hombros"] },
+  // Espalda
+  { name: "Dominadas", primary: "Espalda", secondary: ["Bíceps", "Antebrazo"] },
+  { name: "Jalón al pecho", primary: "Espalda", secondary: ["Bíceps"] },
+  { name: "Remo", primary: "Espalda", secondary: ["Bíceps", "Trapecio"] },
+  { name: "Peso muerto", primary: "Espalda", secondary: ["Femoral", "Glúteos", "Trapecio", "Core"] },
+  { name: "Pull-over", primary: "Espalda", secondary: ["Pecho"] },
+  // Hombros
+  { name: "Press militar", primary: "Hombros", secondary: ["Tríceps"] },
+  { name: "Elevaciones laterales", primary: "Hombros", secondary: [] },
+  { name: "Pájaros (deltoide posterior)", primary: "Hombros", secondary: ["Espalda"] },
+  { name: "Face pull", primary: "Hombros", secondary: ["Espalda"] },
+  // Bíceps / Tríceps / Antebrazo
+  { name: "Curl bíceps", primary: "Bíceps", secondary: ["Antebrazo"] },
+  { name: "Curl martillo", primary: "Bíceps", secondary: ["Antebrazo"] },
+  { name: "Extensión tríceps", primary: "Tríceps", secondary: [] },
+  { name: "Fondos en banco", primary: "Tríceps", secondary: ["Pecho"] },
+  { name: "Curl de muñeca", primary: "Antebrazo", secondary: [] },
+  // Cuádriceps
   { name: "Sentadilla", primary: "Cuádriceps", secondary: ["Glúteos", "Femoral", "Core"] },
   { name: "Prensa", primary: "Cuádriceps", secondary: ["Glúteos", "Femoral"] },
   { name: "Zancadas", primary: "Cuádriceps", secondary: ["Glúteos", "Femoral"] },
-  { name: "Peso muerto", primary: "Femoral", secondary: ["Glúteos", "Espalda", "Trapecio", "Core"] },
+  { name: "Extensión de cuádriceps", primary: "Cuádriceps", secondary: [] },
+  { name: "Step-up", primary: "Cuádriceps", secondary: ["Glúteos"] },
+  // Femoral
+  { name: "Peso muerto rumano", primary: "Femoral", secondary: ["Glúteos", "Espalda", "Core"] },
+  { name: "Curl femoral", primary: "Femoral", secondary: [] },
+  { name: "Buenos días", primary: "Femoral", secondary: ["Glúteos", "Espalda"] },
+  // Glúteos
   { name: "Hip thrust", primary: "Glúteos", secondary: ["Femoral"] },
-  { name: "Dominadas", primary: "Espalda", secondary: ["Bíceps", "Antebrazo"] },
-  { name: "Jalón al pecho", primary: "Espalda", secondary: ["Bíceps"] },
-  { name: "Remo con barra", primary: "Espalda", secondary: ["Bíceps", "Trapecio"] },
-  { name: "Press militar", primary: "Hombros", secondary: ["Tríceps"] },
-  { name: "Elevaciones laterales", primary: "Hombros", secondary: [] },
-  { name: "Curl bíceps", primary: "Bíceps", secondary: ["Antebrazo"] },
-  { name: "Extensión tríceps", primary: "Tríceps", secondary: [] },
+  { name: "Puente de glúteo", primary: "Glúteos", secondary: ["Femoral"] },
+  { name: "Patada de glúteo", primary: "Glúteos", secondary: [] },
+  { name: "Abducción de cadera", primary: "Glúteos", secondary: [] },
+  // Aductores
+  { name: "Aducción de cadera", primary: "Aductores", secondary: [] },
+  { name: "Sentadilla sumo", primary: "Aductores", secondary: ["Cuádriceps", "Glúteos"] },
+  { name: "Zancada lateral", primary: "Aductores", secondary: ["Cuádriceps", "Glúteos"] },
+  // Gemelos / Core / Trapecio
+  { name: "Elevación de gemelos", primary: "Gemelos", secondary: [] },
+  { name: "Plancha", primary: "Core", secondary: [] },
+  { name: "Crunch", primary: "Core", secondary: [] },
+  { name: "Elevación de piernas", primary: "Core", secondary: [] },
+  { name: "Rueda abdominal", primary: "Core", secondary: ["Espalda"] },
+  { name: "Encogimientos (shrugs)", primary: "Trapecio", secondary: ["Antebrazo"] },
 ];
 
 /* ---------- catálogo nutricional (por 100 g; carnes/pescados crudo, granos/legumbres cocido, harinas seco) ---------- */
@@ -530,7 +563,7 @@ export default function App() {
               <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Ic size={15} /> {label}</button>
             ))}
           </nav>
-          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} userId={userId} />}
+          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} />}
           {tab === "cuerpo" && (
             <Suspense fallback={<div className="ft-empty">Cargando Cuerpo…</div>}>
               <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} photos={photos} setPhotos={setPhotos} userId={userId} />
@@ -568,7 +601,7 @@ function DateBar({ date, setDate }) {
 }
 
 /* ----------------------------- TRAIN ----------------------------- */
-export function Train({ workouts, setWorkouts, routines, userId }) {
+export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) {
   const [date, setDate] = useState(todayISO());
   const [name, setName] = useState("");
   const [primary, setPrimary] = useState(MUSCLES[0]);
@@ -655,6 +688,15 @@ export function Train({ workouts, setWorkouts, routines, userId }) {
 
   const totalVol = exercises.reduce((t, e) => t + e.sets.reduce((st, s) => st + (Number(s.reps) || 0) * (Number(s.kg) || 0), 0), 0);
   const totalSets = exercises.reduce((t, e) => t + e.sets.length, 0);
+  const rpeVals = exercises.flatMap((e) => e.sets.map((s) => parseFloat(s.rpe)).filter((v) => v > 0));
+  const avgRpe = rpeVals.length ? rpeVals.reduce((a, b) => a + b, 0) / rpeVals.length : null;
+  const saveDayAsRoutine = () => {
+    if (!exercises.length) return;
+    const nm = window.prompt("Nombre de la rutina:", `Rutina ${date}`);
+    if (!nm || !nm.trim()) return;
+    const items = exercises.map((e) => ({ id: uid(), name: e.name, primary: e.primary, secondary: e.secondary || [], targetSets: e.sets.length, targetReps: String(e.sets[0]?.reps || e.targetReps || ""), targetRpe: e.targetRpe || "" }));
+    setRoutines((prev) => [...prev, { id: uid(), name: nm.trim(), exercises: items }]);
+  };
 
   return (
     <>
@@ -699,10 +741,10 @@ export function Train({ workouts, setWorkouts, routines, userId }) {
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field" style={{ flex: 2, minWidth: 150 }}><label>Ejercicio</label>
             <input className="ft-input" placeholder="Ej. Press banca" value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addExercise()} /></div>
-          <div className="ft-field"><label>Plantilla rápida</label>
+          <div className="ft-field"><label>Sugerencias · {primary}</label>
             <select className="ft-select" value="" onChange={(e) => applyPreset(e.target.value)}>
-              <option value="">Ejercicio común…</option>
-              {EXERCISE_PRESETS.map((p, i) => <option key={p.name} value={i}>{p.name}</option>)}
+              <option value="">Elegir ejercicio…</option>
+              {EXERCISE_PRESETS.map((p, i) => p.primary === primary ? <option key={p.name} value={i}>{p.name}</option> : null)}
             </select></div>
           <div className="ft-field"><label>Músculo primario</label>
             <select className="ft-select" value={primary} onChange={(e) => setPrimary(e.target.value)}>{MUSCLES.map((m) => <option key={m}>{m}</option>)}</select></div>
@@ -722,7 +764,9 @@ export function Train({ workouts, setWorkouts, routines, userId }) {
             <div className="ft-stat"><div className="k"><Dumbbell size={13} /> Ejercicios</div><div className="v">{exercises.length}</div></div>
             <div className="ft-stat"><div className="k">Series</div><div className="v">{totalSets}</div></div>
             <div className="ft-stat"><div className="k">Volumen total</div><div className="v">{Math.round(totalVol).toLocaleString("es-ES")}<small>kg</small></div></div>
+            <div className="ft-stat"><div className="k"><Zap size={13} /> RPE medio</div><div className="v">{avgRpe != null ? avgRpe.toFixed(1) : "—"}</div></div>
           </div>
+          <div style={{ marginBottom: 12 }}><button className="ft-btn ghost" onClick={saveDayAsRoutine}><ListChecks size={15} /> Guardar día como rutina</button></div>
           {exercises.length > 0 && (
             <div className="ft-prev" style={{ marginTop: 0, marginBottom: 12, display: "block", lineHeight: 1.55 }}>
               <b style={{ color: "var(--accent)" }}>RPE</b> = esfuerzo percibido, opcional (1–10). Guía: <b>6</b> cómodo, te sobran ~4 reps · <b>8</b> exigente, ~2 en reserva · <b>10</b> máximo, no podías una más.
@@ -1030,7 +1074,7 @@ export function Routines({ routines, setRoutines }) {
         <div className="ft-row" style={{ marginBottom: 12 }}><div className="ft-field" style={{ flex: 2 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Día A · Empuje" value={name} onChange={(e) => setName(e.target.value)} /></div></div>
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field" style={{ flex: 2, minWidth: 140 }}><label>Ejercicio</label><input className="ft-input" placeholder="Ej. Press banca" value={exName} onChange={(e) => setExName(e.target.value)} /></div>
-          <div className="ft-field"><label>Plantilla</label><select className="ft-select" value="" onChange={(e) => applyPreset(e.target.value)}><option value="">Común…</option>{EXERCISE_PRESETS.map((p, i) => <option key={p.name} value={i}>{p.name}</option>)}</select></div>
+          <div className="ft-field"><label>Sugerencias · {primary}</label><select className="ft-select" value="" onChange={(e) => applyPreset(e.target.value)}><option value="">Elegir…</option>{EXERCISE_PRESETS.map((p, i) => p.primary === primary ? <option key={p.name} value={i}>{p.name}</option> : null)}</select></div>
           <div className="ft-field"><label>Primario</label><select className="ft-select" value={primary} onChange={(e) => setPrimary(e.target.value)}>{MUSCLES.map((m) => <option key={m}>{m}</option>)}</select></div>
           <div className="ft-field" style={{ maxWidth: 90 }}><label>Series</label><input className="ft-input ft-mono" type="number" value={sets} onChange={(e) => setSets(e.target.value)} /></div>
           <div className="ft-field" style={{ maxWidth: 90 }}><label>Reps</label><input className="ft-input ft-mono" value={reps} onChange={(e) => setReps(e.target.value)} /></div>

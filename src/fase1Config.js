@@ -273,6 +273,7 @@ export function suggestRoutineForDay(date = new Date()) {
 // ============================================================================
 
 const MUSCLE_KEYWORDS = [
+  [/aducci[oó]n|aductor|sumo/i, "Aductores"],
   [/sentadilla|goblet|step-?up|prensa|zancad|cu[aá]driceps/i, "Cuádriceps"],
   [/peso muerto|rumano|bisagra|isquio|femoral/i, "Femoral"],
   [/hip thrust|puente|gl[uú]teo|abducci[oó]n|caminata lateral/i, "Glúteos"],
