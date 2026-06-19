@@ -2,14 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES } from "./app-config.js";
-import { cycleInfo, daysBetween, localISO } from "./app-utils.js";
+import { addDays, cycleInfo, daysBetween, localISO } from "./app-utils.js";
 import { ScreenMast } from "./EditorialUI.jsx";
 import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
-export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos, userId }) {
+export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos, goals, setGoals, userId }) {
+  // ponytail: saturación de creatina modelada, no medida. τ=7d → ~98% a 28d;
+  // +1.5 kg agua a plena carga (rango típico 1-2 kg). Ajusta si tu báscula dice otra cosa.
+  const creatineStart = goals?.creatineStart || "";
+  const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
+  const creaSat = creaDays == null ? null : Math.min(100, Math.round(100 * (1 - Math.exp(-creaDays / 7))));
+  const creaWater = creaSat == null ? null : (creaSat / 100 * 1.5).toFixed(1);
+  const creaFull = creatineStart ? addDays(creatineStart, 28) : null;
   const [wDate, setWDate] = useState(todayISO()); const [kg, setKg] = useState("");
   const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
   const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
@@ -99,6 +106,20 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
                 {diff !== null && <span className="li-sub" style={{ color: diff <= 0 ? "var(--ok)" : "var(--danger)" }}>{diff > 0 ? "+" : ""}{diff.toFixed(1)}</span>}
                 <button className="ft-trash" onClick={() => delW(w.id)}><Trash2 size={15} /></button></div>);
             })}
+          </div>
+        )}
+      </div>
+
+      <div className="ft-card">
+        <h2><Droplet size={16} /> Creatina <span className="tag">5 g/día</span></h2>
+        <div className="ft-row" style={{ marginBottom: creaSat == null ? 0 : 12 }}>
+          <div className="ft-field"><label>Inicio suplementación</label><input className="ft-input ft-mono" type="date" max={todayISO()} value={creatineStart} onChange={(e) => setGoals((g) => ({ ...g, creatineStart: e.target.value }))} /></div>
+        </div>
+        {creaSat != null && (
+          <div className="ft-stats" style={{ marginBottom: 0 }}>
+            <div className="ft-stat"><div className="k">Reservas (est.)</div><div className="v">{creaSat}<small>%</small></div><div className="sub">día {creaDays} de carga</div></div>
+            <div className="ft-stat"><div className="k">Peso por agua (est.)</div><div className="v">+{creaWater}<small>kg</small></div><div className="sub">retención intramuscular</div></div>
+            <div className="ft-stat"><div className="k">Carga completa</div><div className="v" style={{ fontSize: 20 }}>{creaSat >= 98 ? "Lograda" : fmtDate(creaFull)}</div><div className="sub">~28 días a 5 g/día</div></div>
           </div>
         )}
       </div>

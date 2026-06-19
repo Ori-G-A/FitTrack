@@ -566,7 +566,7 @@ export default function App() {
           {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} />}
           {tab === "cuerpo" && (
             <Suspense fallback={<div className="ft-empty">Cargando Cuerpo…</div>}>
-              <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} photos={photos} setPhotos={setPhotos} userId={userId} />
+              <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} />
             </Suspense>
           )}
           {tab === "nutricion" && <Nutrition nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={setTab} />}

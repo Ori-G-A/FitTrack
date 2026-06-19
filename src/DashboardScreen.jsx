@@ -275,6 +275,10 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
 
   const kcalChart = useMemo(() => { const days = []; for (let i = 13; i >= 0; i--) { const iso = isoMinus(i); const kcal = nutrition.filter((n) => n.date === iso).reduce((t, n) => t + (+n.kcal || 0), 0); days.push({ date: fmtDate(iso), kcal: Math.round(kcal) }); } return days; }, [nutrition]);
   const kcalAvg = useMemo(() => { const vals = kcalChart.map((d) => d.kcal).filter((v) => v > 0); return vals.length ? Math.round(vals.reduce((s, v) => s + v, 0) / vals.length) : null; }, [kcalChart]);
+  const rpeSeries = useMemo(() => [...workouts].sort((a, b) => a.date.localeCompare(b.date)).map((w) => {
+    const vals = w.exercises.flatMap((e) => e.sets.map((s) => parseFloat(s.rpe)).filter((v) => v > 0));
+    return vals.length ? { iso: w.date, rpe: vals.reduce((s, v) => s + v, 0) / vals.length } : null;
+  }).filter(Boolean).slice(-12), [workouts]);
   const maintenance = useMemo(() => {
     const since = isoMinus(28);
     const byDay = {}; nutrition.filter((n) => n.date >= since).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.kcal || 0); });
@@ -455,6 +459,15 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
             {macro14 ? <BMacros rows={macroRows} footer={`media ${Math.round(macro14.k)} / ${goals.kcalTarget || "—"} kcal`} /> : <DNeed>Registra comidas para ver tus macros.</DNeed>}
           </Rise>
         </div>
+
+        {rpeSeries.length >= 2 && (
+          <div style={{ borderTop: `1px solid ${A_LINE}` }}>
+            <Rise show={show} i={6} style={{ padding: isMobile ? "20px 18px 22px" : "22px 28px 26px" }}>
+              <div style={secHead}><h2 style={secTitle}>Esfuerzo (RPE)</h2><span style={meta}>{rpeSeries.length} sesiones · ahora {rpeSeries[rpeSeries.length - 1].rpe.toFixed(1)}</span></div>
+              <BWeightChart avg={rpeSeries.map((p) => p.rpe)} tgt={[]} />
+            </Rise>
+          </div>
+        )}
 
         {/* calories + muscle */}
         <div style={{ ...rowGrid, gridTemplateColumns: isMobile ? "1fr" : "1fr 1.25fr" }}>
