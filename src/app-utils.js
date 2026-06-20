@@ -20,6 +20,9 @@ const CANON_DROP = new Set([
   "cable", "smith", "pesada", "pesado", "ligera", "ligero", "sentado",
   "sentada", "pie", "apoyada", "apoyado", "piso", "escalera", "banco",
 ]);
+// Sinónimos del mismo movimiento (mismo nombre base tras quitar herramientas).
+// ponytail: lista a mano; añade pares aquí cuando aparezcan.
+const CANON_ALIAS = { "Press de pecho": "Press banca" }; // plano == banca; inclinado queda aparte
 export function canonExercise(name) {
   const words = (name || "")
     .toLowerCase()
@@ -28,13 +31,15 @@ export function canonExercise(name) {
     .split(/[\s,]+/)
     .filter((w) => w && !CANON_DROP.has(w));
   const s = words.join(" ").trim();
-  return s ? s.charAt(0).toUpperCase() + s.slice(1) : (name || "");
+  const titled = s ? s.charAt(0).toUpperCase() + s.slice(1) : (name || "");
+  return CANON_ALIAS[titled] || titled;
 }
 
 if (import.meta.env?.DEV) {
   console.assert(canonExercise("Sentadilla goblet (mancuerna o disco)") === "Sentadilla", "canon goblet");
   console.assert(canonExercise("Sentadilla con barra ligera o goblet pesada") === "Sentadilla", "canon barra");
-  console.assert(canonExercise("Press de pecho con mancuernas (banco plano)") === "Press de pecho", "canon press plano");
+  console.assert(canonExercise("Press de pecho con mancuernas (banco plano)") === "Press banca", "canon press de pecho == banca");
+  console.assert(canonExercise("Press banca") === "Press banca", "canon banca");
   console.assert(canonExercise("Press inclinado con mancuernas") === "Press inclinado", "canon inclinado distinto");
   console.assert(canonExercise("Curl femoral con toalla") === "Curl femoral", "canon curl femoral");
 }

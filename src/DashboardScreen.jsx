@@ -279,6 +279,10 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const vals = w.exercises.flatMap((e) => e.sets.map((s) => parseFloat(s.rpe)).filter((v) => v > 0));
     return vals.length ? { iso: w.date, rpe: vals.reduce((s, v) => s + v, 0) / vals.length } : null;
   }).filter(Boolean).slice(-12), [workouts]);
+  const measSorted = useMemo(() => [...measurements].sort((a, b) => a.date.localeCompare(b.date)), [measurements]);
+  const measLatest = measSorted[measSorted.length - 1] || null;
+  const MEAS_FIELDS = [["cintura", "Cintura"], ["cadera", "Cadera"], ["pecho", "Pecho"], ["brazo", "Brazo"], ["muslo", "Muslo"]];
+  const measDelta = (k) => { const s = measSorted.filter((m) => m[k] != null); return s.length >= 2 ? s[s.length - 1][k] - s[0][k] : null; };
   const maintenance = useMemo(() => {
     const since = isoMinus(28);
     const byDay = {}; nutrition.filter((n) => n.date >= since).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.kcal || 0); });
@@ -465,6 +469,26 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
             <Rise show={show} i={6} style={{ padding: isMobile ? "20px 18px 22px" : "22px 28px 26px" }}>
               <div style={secHead}><h2 style={secTitle}>Esfuerzo (RPE)</h2><span style={meta}>{rpeSeries.length} sesiones · ahora {rpeSeries[rpeSeries.length - 1].rpe.toFixed(1)}</span></div>
               <BWeightChart avg={rpeSeries.map((p) => p.rpe)} tgt={[]} />
+            </Rise>
+          </div>
+        )}
+
+        {measLatest && (
+          <div style={{ borderTop: `1px solid ${A_LINE}` }}>
+            <Rise show={show} i={6} style={{ padding: isMobile ? "20px 18px 22px" : "22px 28px 26px" }}>
+              <div style={secHead}><h2 style={secTitle}>Medidas</h2><span style={meta}>última {fmtDate(measLatest.date)}</span></div>
+              <div style={{ display: "grid", gridTemplateColumns: `repeat(${isMobile ? 3 : 5}, 1fr)`, gap: 1, background: A_LINE, border: `1px solid ${A_LINE}` }}>
+                {MEAS_FIELDS.filter(([k]) => measLatest[k] != null).map(([k, label]) => {
+                  const d = measDelta(k);
+                  return (
+                    <div key={k} style={{ background: A_PAPER, padding: "12px 14px" }}>
+                      <DKicker>{label}</DKicker>
+                      <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 24 : 30, letterSpacing: "-0.03em", marginTop: 6 }}>{measLatest[k]}<span style={{ fontSize: 13, fontFamily: A_MONO, fontWeight: 500, color: A_INK2, marginLeft: 3 }}>cm</span></div>
+                      {d != null && <div style={{ fontFamily: A_MONO, fontSize: 11, marginTop: 4, color: d <= 0 ? A_OK : A_INK2 }}>{d > 0 ? "+" : ""}{d.toFixed(1)} cm</div>}
+                    </div>
+                  );
+                })}
+              </div>
             </Rise>
           </div>
         )}
