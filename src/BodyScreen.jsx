@@ -1,15 +1,62 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Camera, Check, Droplet, Moon, Ruler, Scale, Trash2 } from "lucide-react";
+import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES } from "./app-config.js";
 import { addDays, cycleInfo, daysBetween, localISO } from "./app-utils.js";
+import { CLEAR_BLEEDING_LEVELS, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog } from "./cycle-inference.js";
 import { ScreenMast } from "./EditorialUI.jsx";
 import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
-export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, photos, setPhotos, goals, setGoals, userId }) {
+const BLEEDING_OPTIONS = [
+  ["not_logged", "Sin registrar"],
+  ["none", "No hubo"],
+  ["spotting", "Manchado"],
+  ["light", "Leve"],
+  ["medium", "Medio"],
+  ["heavy", "Abundante"],
+];
+const FLUID_OPTIONS = [
+  ["not_checked", "No revise"],
+  ["dry", "Seco"],
+  ["sticky", "Pegajoso"],
+  ["creamy", "Cremoso"],
+  ["watery", "Acuoso"],
+  ["slippery_eggwhite", "Elastico / resbaladizo"],
+  ["unknown", "No se"],
+];
+const APPETITE_OPTIONS = [
+  ["not_logged", "Sin registrar"],
+  ["normal", "Normal"],
+  ["increased", "Mas hambre"],
+  ["decreased", "Menos hambre"],
+  ["sweet_cravings", "Antojos dulces"],
+  ["salty_cravings", "Antojos salados"],
+];
+const PAIN_OPTIONS = [
+  ["not_logged", "Sin registrar"],
+  ["none", "No"],
+  ["left", "Izquierdo"],
+  ["right", "Derecho"],
+  ["center", "Centro"],
+  ["general", "General"],
+];
+const PHASE_NAMES = {
+  menstruation: "menstruacion",
+  follicular_early: "folicular temprana",
+  follicular_mid_late: "folicular media/tardia",
+  fertile_window_probable: "ventana fertil probable",
+  ovulation_probable: "ovulacion probable",
+  luteal_early: "lutea temprana",
+  luteal_mid: "lutea media",
+  luteal_late: "lutea tardia",
+  unknown: "por estimar",
+};
+const CONFIDENCE_NAMES = { low: "baja", medium: "media", high: "alta" };
+
+export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId }) {
   // ponytail: saturación de creatina modelada, no medida. τ=7d → ~98% a 28d;
   // +1.5 kg agua a plena carga (rango típico 1-2 kg). Ajusta si tu báscula dice otra cosa.
   const creatineStart = goals?.creatineStart || "";
@@ -52,6 +99,24 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   const cyc = cycleInfo(periods);
   const pSorted = [...periods].sort((a, b) => b.date.localeCompare(a.date));
   const fmtNext = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long" });
+  const [cycleDate, setCycleDate] = useState(todayISO());
+  const existingCycleLog = menstrualLogs.find((log) => log.date === cycleDate);
+  const [cycleLog, setCycleLog] = useState(emptyMenstrualLog(cycleDate));
+  useEffect(() => { setCycleLog(existingCycleLog ? normalizeMenstrualLog(existingCycleLog) : emptyMenstrualLog(cycleDate)); }, [cycleDate, existingCycleLog?.updatedAt]); // eslint-disable-line
+  const phaseEstimate = inferCyclePhase({ date: cycleDate, menstrualLogs, periods, wellness });
+  const cycleInsights = getCycleInsights({ menstrualLogs, periods, wellness });
+  const menstrualSorted = [...menstrualLogs].sort((a, b) => b.date.localeCompare(a.date));
+  const saveCycleLog = () => {
+    const now = new Date();
+    const normalized = normalizeMenstrualLog({ ...cycleLog, id: existingCycleLog?.id || cycleLog.id || uid(), date: cycleDate, createdAt: existingCycleLog?.createdAt }, now);
+    setMenstrualLogs((prev) => [...prev.filter((item) => item.date !== cycleDate), normalized].sort((a, b) => a.date.localeCompare(b.date)));
+    const previousClearBleeding = menstrualLogs.some((item) => CLEAR_BLEEDING_LEVELS.includes(item.bleedingLevel) && daysBetween(item.date, cycleDate) > 0 && daysBetween(item.date, cycleDate) <= 2);
+    const coveredByPeriod = periods.some((period) => cycleDate >= period.date && cycleDate <= addDays(period.date, (Number(period.duration) || 5) - 1));
+    if (CLEAR_BLEEDING_LEVELS.includes(normalized.bleedingLevel) && !previousClearBleeding && !coveredByPeriod) {
+      setPeriods((prev) => [...prev.filter((item) => item.date !== cycleDate), { id: uid(), date: cycleDate, duration: Number(pDur) || 5 }].sort((a, b) => a.date.localeCompare(b.date)));
+    }
+  };
+  const delCycleLog = (id) => setMenstrualLogs((prev) => prev.filter((item) => item.id !== id));
 
   const photoRef = useRef();
   const [photoBusy, setPhotoBusy] = useState(false);
@@ -142,6 +207,50 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
         ) : (
           <div className="ft-empty" style={{ padding: "18px 8px" }}>Registra el inicio de tu periodo para ver tu fase actual y la predicción del siguiente. Con 2-3 ciclos las estimaciones se ajustan a ti.</div>
         )}
+        <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--line)" }}>
+          <div className="ft-alert info" style={{ marginBottom: 12 }}>
+            <Sparkles size={20} color="var(--blue)" />
+            <div>
+              <div className="t">Las fases son estimaciones</div>
+              <div className="b">Esta herramienta sirve para autoconocimiento y seguimiento personal; no es diagnostico medico ni metodo anticonceptivo.</div>
+            </div>
+          </div>
+          <h3 className="ft-h3" style={{ marginBottom: 10 }}>Check-in menstrual</h3>
+          <div className="ft-row" style={{ marginBottom: 10 }}>
+            <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={cycleDate} onChange={(e) => setCycleDate(e.target.value)} /></div>
+            <div className="ft-field"><label>Sangrado</label><select className="ft-select" value={cycleLog.bleedingLevel} onChange={(e) => setCycleLog({ ...cycleLog, bleedingLevel: e.target.value, hasSpotting: e.target.value === "spotting" })}>{BLEEDING_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <div className="ft-field"><label>Como estuvo tu flujo</label><select className="ft-select" value={cycleLog.cervicalFluid} onChange={(e) => setCycleLog({ ...cycleLog, cervicalFluid: e.target.value })}>{FLUID_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <button className="ft-btn" onClick={saveCycleLog}><Check size={15} /> Guardar ciclo</button>
+          </div>
+          <div className="ft-row" style={{ marginBottom: 10 }}>
+            <div className="ft-field"><label>Colicos 0-10</label><input className="ft-input ft-mono" type="number" min="0" max="10" inputMode="numeric" value={cycleLog.crampsLevel} onChange={(e) => setCycleLog({ ...cycleLog, crampsLevel: e.target.value })} /></div>
+            <div className="ft-field"><label>Sensibilidad senos</label><select className="ft-select" value={cycleLog.breastSensitivity} onChange={(e) => setCycleLog({ ...cycleLog, breastSensitivity: e.target.value })}>{[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+            <div className="ft-field"><label>Hinchazon</label><select className="ft-select" value={cycleLog.bloatingLevel} onChange={(e) => setCycleLog({ ...cycleLog, bloatingLevel: e.target.value })}>{[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+            <div className="ft-field"><label>Acne</label><select className="ft-select" value={cycleLog.acneLevel} onChange={(e) => setCycleLog({ ...cycleLog, acneLevel: e.target.value })}>{[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+          </div>
+          <div className="ft-row" style={{ marginBottom: 10 }}>
+            <div className="ft-field"><label>Apetito</label><select className="ft-select" value={cycleLog.appetiteChange} onChange={(e) => setCycleLog({ ...cycleLog, appetiteChange: e.target.value })}>{APPETITE_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <div className="ft-field"><label>Dolor pelvico</label><select className="ft-select" value={cycleLog.pelvicPain} onChange={(e) => setCycleLog({ ...cycleLog, pelvicPain: e.target.value })}>{PAIN_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <div className="ft-field" style={{ flex: 2 }}><label>Notas</label><input className="ft-input" placeholder="Opcional" value={cycleLog.notes} onChange={(e) => setCycleLog({ ...cycleLog, notes: e.target.value })} /></div>
+          </div>
+          <div className="ft-alert" style={{ background: "rgba(255,255,255,.03)", border: "1px solid rgba(22,20,13,.16)", marginBottom: 12 }}>
+            <Droplet size={20} color="var(--accent)" />
+            <div>
+              <div className="t">Fase estimada: {PHASE_NAMES[phaseEstimate.phase]} · confianza {CONFIDENCE_NAMES[phaseEstimate.confidence]}</div>
+              <div className="b">{phaseEstimate.reason}</div>
+            </div>
+          </div>
+          {cycleInsights.length > 0 && (
+            <div className="ft-list" style={{ marginTop: 12 }}>
+              {cycleInsights.slice(0, 2).map((insight) => (
+                <div className="ft-li" key={insight.type}>
+                  <span className="li-main">{insight.message}</span>
+                  <span className="li-sub">confianza {CONFIDENCE_NAMES[insight.confidence]}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         {pSorted.length > 0 && (
           <div className="ft-list" style={{ marginTop: 12 }}>
             {pSorted.slice(0, 6).map((p, i) => {
@@ -149,6 +258,18 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
               const len = next ? daysBetween(p.date, next.date) : null;
               return (<div className="ft-li" key={p.id}><span className="li-d">{fmtDate(p.date)}</span><span className="li-main">Inicio de periodo</span><span className="li-sub">{p.duration} días{len ? ` · ciclo ${len}d` : i === 0 ? " · ciclo en curso" : ""}</span><button className="ft-trash" onClick={() => delPeriod(p.id)}><Trash2 size={15} /></button></div>);
             })}
+          </div>
+        )}
+        {menstrualSorted.length > 0 && (
+          <div className="ft-list" style={{ marginTop: 12 }}>
+            {menstrualSorted.slice(0, 6).map((log) => (
+              <div className="ft-li" key={log.id}>
+                <span className="li-d">{fmtDate(log.date)}</span>
+                <span className="li-main">Sangrado: {BLEEDING_OPTIONS.find(([value]) => value === log.bleedingLevel)?.[1] || log.bleedingLevel}</span>
+                <span className="li-sub">flujo {FLUID_OPTIONS.find(([value]) => value === log.cervicalFluid)?.[1] || log.cervicalFluid}</span>
+                <button className="ft-trash" onClick={() => delCycleLog(log.id)}><Trash2 size={15} /></button>
+              </div>
+            ))}
           </div>
         )}
       </div>

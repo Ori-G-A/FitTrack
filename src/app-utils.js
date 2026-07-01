@@ -108,7 +108,7 @@ export function cycleInfo(periods, currentDate = localISO()) {
   return { avgCycle, avgPeriod, day, phase, nextDate, daysToNext, samples: validLengths.length };
 }
 
-const BACKUP_ARRAY_KEYS = ["workouts", "weights", "nutrition", "foods", "recipes", "routines", "measurements", "wellness", "periods", "photos"];
+const BACKUP_ARRAY_KEYS = ["workouts", "weights", "nutrition", "foods", "recipes", "routines", "measurements", "wellness", "periods", "menstrualLogs", "photos"];
 const isPlainObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const isISODate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 
@@ -134,7 +134,7 @@ export function validateBackup(value, defaultGoals) {
     || (workout.cardio != null && !Array.isArray(workout.cardio)))) {
     throw new Error("El historial de entrenamientos no es valido");
   }
-  ["weights", "nutrition", "measurements", "wellness", "periods"].forEach((key) => {
+  ["weights", "nutrition", "measurements", "wellness", "periods", "menstrualLogs"].forEach((key) => {
     if (backup[key]?.some((item) => !isISODate(item.date))) throw new Error(`Las fechas de ${key} no son validas`);
   });
   if (backup.photos?.some((photo) => !isISODate(photo.date)

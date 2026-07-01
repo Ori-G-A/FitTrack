@@ -57,9 +57,11 @@ test("validateBackup rejects malformed collections and fills goal defaults", () 
 test("validateBackup accepts image data and workout structure", () => {
   const backup = validateBackup({
     workouts: [{ date: "2026-06-14", exercises: [{ sets: [] }] }],
+    menstrualLogs: [{ date: "2026-06-14", bleedingLevel: "none" }],
     photos: [{ date: "2026-06-14", dataUrl: "data:image/jpeg;base64,AA==" }],
   }, DEFAULT_GOALS);
   assert.equal(backup.workouts.length, 1);
+  assert.equal(backup.menstrualLogs.length, 1);
   assert.equal(backup.photos.length, 1);
 });
 

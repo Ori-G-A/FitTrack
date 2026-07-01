@@ -328,6 +328,7 @@ export default function App() {
   const [measurements, setMeasurements] = useState([]);
   const [wellness, setWellness] = useState([]);
   const [periods, setPeriods] = useState([]);
+  const [menstrualLogs, setMenstrualLogs] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [goals, setGoals] = useState(DEFAULT_GOALS);
   const authUserIdRef = useRef(null);
@@ -377,7 +378,7 @@ export default function App() {
     (async () => {
       try {
         const [nextWorkouts, nextWeights, nextNutrition, nextFoods, nextRecipes, nextRoutines,
-          nextMeasurements, nextWellness, nextPeriods, nextPhotos, nextGoals] = await Promise.all([
+          nextMeasurements, nextWellness, nextPeriods, nextMenstrualLogs, nextPhotos, nextGoals] = await Promise.all([
           loadKey(userId, "workouts", []),
           loadKey(userId, "weights", []),
           loadKey(userId, "nutrition", []),
@@ -387,6 +388,7 @@ export default function App() {
           loadKey(userId, "measurements", []),
           loadKey(userId, "wellness", []),
           loadKey(userId, "periods", []),
+          loadKey(userId, "menstrualLogs", []),
           loadKey(userId, "photos", []),
           loadKey(userId, "goals", DEFAULT_GOALS),
         ]);
@@ -401,6 +403,7 @@ export default function App() {
         setMeasurements(nextMeasurements);
         setWellness(nextWellness);
         setPeriods(nextPeriods);
+        setMenstrualLogs(nextMenstrualLogs);
         setPhotos(hydratedPhotos);
         setGoals(nextGoals);
         setLoaded(true);
@@ -446,6 +449,7 @@ export default function App() {
   useSyncedValue(userId, "measurements", measurements, loaded);
   useSyncedValue(userId, "wellness", wellness, loaded);
   useSyncedValue(userId, "periods", periods, loaded);
+  useSyncedValue(userId, "menstrualLogs", menstrualLogs, loaded);
   const storedPhotosJson = useMemo(() => JSON.stringify(photos.map(photoForStorage)), [photos]);
   const storedPhotos = useMemo(() => JSON.parse(storedPhotosJson), [storedPhotosJson]);
   useSyncedValue(userId, "photos", storedPhotos, loaded);
@@ -472,7 +476,7 @@ export default function App() {
   const exportData = async () => {
     try {
       const backupPhotos = await photosForBackup(photos);
-      const blob = new Blob([JSON.stringify({ workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, photos: backupPhotos, goals }, null, 2)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify({ workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, menstrualLogs, photos: backupPhotos, goals }, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a"); a.href = url; a.download = `fittrack-${todayISO()}.json`; a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -496,6 +500,7 @@ export default function App() {
         if (d.measurements) setMeasurements(d.measurements);
         if (d.wellness) setWellness(d.wellness);
         if (d.periods) setPeriods(d.periods);
+        if (d.menstrualLogs) setMenstrualLogs(d.menstrualLogs);
         if (d.photos) setPhotos(await hydratePhotos(userId, d.photos));
         if (d.goals) setGoals(d.goals);
       } catch (error) { alert(error?.message || "Archivo no válido"); }
@@ -566,7 +571,7 @@ export default function App() {
           {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} />}
           {tab === "cuerpo" && (
             <Suspense fallback={<div className="ft-empty">Cargando Cuerpo…</div>}>
-              <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} />
+              <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} menstrualLogs={menstrualLogs} setMenstrualLogs={setMenstrualLogs} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} />
             </Suspense>
           )}
           {tab === "nutricion" && <Nutrition nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={setTab} />}
@@ -574,7 +579,7 @@ export default function App() {
           {tab === "rutinas" && <Routines routines={routines} setRoutines={setRoutines} />}
           {tab === "dashboard" && (
             <Suspense fallback={<div className="ft-empty">Cargando Dashboard…</div>}>
-              <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} goals={goals} />
+              <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} />
             </Suspense>
           )}
           {tab === "ajustes" && <SettingsScreen goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} />}
