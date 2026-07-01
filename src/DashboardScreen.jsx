@@ -237,7 +237,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const map = {};
     [...workouts].sort((a, b) => a.date.localeCompare(b.date)).forEach((w) => w.exercises.forEach((e) => {
       let best = 0; e.sets.forEach((s) => { const r = +s.reps || 0, kg = +s.kg || 0; if (r > 0 && kg > 0) best = Math.max(best, epley(kg, r)); });
-      if (best > 0) { const key = canonExercise(e.name); (map[key] = map[key] || []).push({ iso: w.date, oneRM: Math.round(best) }); }
+      if (best > 0) { const key = canonExercise(e.name); (map[key] = map[key] || []).push({ iso: w.date, oneRM: Math.round(best), muscle: e.primary || e.muscle || "Core" }); }
     }));
     return map;
   }, [workouts]);
@@ -248,11 +248,18 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     return { name, best: best.oneRM, date: best.iso, isRecent };
   }).sort((a, b) => b.best - a.best), [exHistory]);
   const recentPRs = prs.filter((p) => p.isRecent);
+  const trackable = useMemo(() => Object.keys(exHistory).filter((n) => exHistory[n].length >= 2), [exHistory]);
+  const muscleOptions = useMemo(() => [...new Set(trackable.map((n) => exHistory[n][0].muscle))].sort(), [trackable, exHistory]);
+  const [muscleFilter, setMuscleFilter] = useState("all");
+  const [exFilter, setExFilter] = useState("all");
+  const exOptions = useMemo(() => trackable.filter((n) => muscleFilter === "all" || exHistory[n][0].muscle === muscleFilter).sort(), [trackable, exHistory, muscleFilter]);
+  // exFilter puede quedar obsoleto al cambiar de músculo; lo tratamos como "all" si ya no aplica
+  const activeEx = exOptions.includes(exFilter) ? exFilter : "all";
   const strengthSeries = useMemo(() => {
     const colors = [A_ACC, A_INK, "rgba(22,20,13,0.45)", A_OK];
-    const picked = Object.keys(exHistory).filter((n) => exHistory[n].length >= 2).sort((a, b) => exHistory[b].length - exHistory[a].length).slice(0, 4);
+    const picked = (activeEx !== "all" ? [activeEx] : [...exOptions].sort((a, b) => exHistory[b].length - exHistory[a].length)).slice(0, 4);
     return picked.map((n, idx) => { const h = exHistory[n]; const first = h[0].oneRM || 1; return { label: n.length > 11 ? n.slice(0, 11) : n, color: colors[idx % colors.length], w: idx === 0 ? 3 : 2.25, pct: h.map((x) => (x.oneRM / first - 1) * 100), lastKg: h[h.length - 1].oneRM }; });
-  }, [exHistory]);
+  }, [exHistory, exOptions, activeEx]);
 
   const weeklyMuscle = useMemo(() => {
     const m = {}; const since = isoMinus(7);
@@ -373,6 +380,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
   const secHead = { display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 6, marginBottom: 16 };
   const secTitle = { ...dSecH, fontSize: isMobile ? 19 : 24, whiteSpace: isMobile ? "normal" : "nowrap" };
   const meta = { fontFamily: A_MONO, fontSize: 11, color: A_INK2, textTransform: "uppercase", letterSpacing: ".04em" };
+  const selStyle = { fontFamily: A_MONO, fontSize: 11, color: A_INK, background: A_PANEL, border: `1px solid ${A_LINE}`, padding: "5px 8px", textTransform: "uppercase", letterSpacing: ".04em", cursor: "pointer" };
 
   return (
     <div style={{ marginBottom: 8 }}>
@@ -456,6 +464,18 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
         <div style={rowGrid}>
           <Rise show={show} i={4} style={cellL}>
             <div style={secHead}><h2 style={secTitle}>Progresión de fuerza</h2><span style={meta}>1RM est. · vs inicio</span></div>
+            {trackable.length > 0 && (
+              <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+                <select value={muscleFilter} onChange={(e) => { setMuscleFilter(e.target.value); setExFilter("all"); }} style={selStyle}>
+                  <option value="all">Todos los músculos</option>
+                  {muscleOptions.map((m) => <option key={m} value={m}>{m}</option>)}
+                </select>
+                <select value={activeEx} onChange={(e) => setExFilter(e.target.value)} style={selStyle}>
+                  <option value="all">Todos los ejercicios</option>
+                  {exOptions.map((n) => <option key={n} value={n}>{n}</option>)}
+                </select>
+              </div>
+            )}
             {strengthSeries.length > 0 ? <><BStrength series={strengthSeries} isMobile={isMobile} />{isMobile && <BStrengthLegend series={strengthSeries} />}</> : <DNeed>Necesitas al menos 2 sesiones de un mismo ejercicio.</DNeed>}
           </Rise>
           <Rise show={show} i={5} style={cellR}>
