@@ -162,7 +162,7 @@ function confidenceFromContext(context, hasUsefulFluid, hasOvulationPattern) {
   return "low";
 }
 
-function symptomScore(log) {
+export function symptomScore(log) {
   if (!log) return 0;
   const appetite = ["increased", "sweet_cravings", "salty_cravings"].includes(log.appetiteChange) ? 1 : 0;
   return asNumber(log.breastSensitivity) + asNumber(log.bloatingLevel) + asNumber(log.acneLevel) + appetite;

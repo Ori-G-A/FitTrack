@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES } from "./app-config.js";
-import { addDays, cycleInfo, daysBetween, localISO } from "./app-utils.js";
+import { addDays, creatineWaterKg, cycleInfo, daysBetween, localISO } from "./app-utils.js";
 import { CLEAR_BLEEDING_LEVELS, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog } from "./cycle-inference.js";
 import { ScreenMast } from "./EditorialUI.jsx";
 import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
@@ -57,12 +57,11 @@ const PHASE_NAMES = {
 const CONFIDENCE_NAMES = { low: "baja", medium: "media", high: "alta" };
 
 export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId }) {
-  // ponytail: saturación de creatina modelada, no medida. τ=7d → ~98% a 28d;
-  // +1.5 kg agua a plena carga (rango típico 1-2 kg). Ajusta si tu báscula dice otra cosa.
   const creatineStart = goals?.creatineStart || "";
   const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
-  const creaSat = creaDays == null ? null : Math.min(100, Math.round(100 * (1 - Math.exp(-creaDays / 7))));
-  const creaWater = creaSat == null ? null : (creaSat / 100 * 1.5).toFixed(1);
+  const creaWaterKg = creatineStart ? creatineWaterKg(creatineStart, todayISO()) : null;
+  const creaSat = creaWaterKg == null ? null : Math.min(100, Math.round((creaWaterKg / 1.5) * 100));
+  const creaWater = creaWaterKg == null ? null : creaWaterKg.toFixed(1);
   const creaFull = creatineStart ? addDays(creatineStart, 28) : null;
   const [wDate, setWDate] = useState(todayISO()); const [kg, setKg] = useState("");
   const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };

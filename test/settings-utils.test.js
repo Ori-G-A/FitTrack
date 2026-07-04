@@ -27,7 +27,7 @@ test("goalSuggestion uses activity, weekly change and protein settings", () => {
     kcal: 1480,
     protein: 120,
     proteinPerKg: 2,
-    lowEnd: 108,
-    highEnd: 132,
+    lowEnd: 96,
+    highEnd: 144,
   });
 });

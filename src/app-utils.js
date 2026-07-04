@@ -70,6 +70,16 @@ export const addDays = (iso, amount) => {
   return localISO(date);
 };
 
+// ponytail: saturación de creatina modelada, no medida. tau=7d -> ~98% a 28d;
+// 1.5kg agua a plena carga (rango tipico 1-2kg). Compartido entre BodyScreen
+// (muestra el estado actual) y DashboardScreen (para no leer esa agua como
+// grasa perdida/ganada en la tendencia de peso).
+export const creatineWaterKg = (creatineStart, date, tauDays = 7, fullKg = 1.5) => {
+  if (!creatineStart || !date || date < creatineStart) return 0;
+  const days = daysBetween(creatineStart, date);
+  return (1 - Math.exp(-days / tauDays)) * fullKg;
+};
+
 export function slopePerDay(points) {
   const count = points.length;
   if (count < 2) return null;

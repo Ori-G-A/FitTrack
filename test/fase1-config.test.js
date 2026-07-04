@@ -11,11 +11,19 @@ test("computeProteinTargets calculates and clamps grams per kilogram", () => {
     gPerKg: 2,
     weightKg: 61,
     dailyTarget: 122,
-    lowEnd: 110,
-    highEnd: 134,
+    lowEnd: Math.round(61 * PROTEIN_CONFIG.minGPerKg),
+    highEnd: Math.round(61 * PROTEIN_CONFIG.maxGPerKg),
   });
   assert.equal(computeProteinTargets(61, { gPerKg: 99 }).gPerKg, PROTEIN_CONFIG.maxGPerKg);
   assert.equal(computeProteinTargets(61, { gPerKg: 0.5 }).gPerKg, PROTEIN_CONFIG.minGPerKg);
+  // lowEnd/highEnd deben seguir el min/max configurado, no un rango fijo distinto
+  assert.deepEqual(computeProteinTargets(61, { minGPerKg: 1.8, maxGPerKg: 2.2 }), {
+    gPerKg: 2,
+    weightKg: 61,
+    dailyTarget: 122,
+    lowEnd: 110,
+    highEnd: 134,
+  });
 });
 
 test("distributeProtein supports four and five meals", () => {

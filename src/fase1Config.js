@@ -46,18 +46,16 @@ export const PROTEIN_CONFIG = {
  *             lowEnd:number, highEnd:number }}
  */
 export function computeProteinTargets(weightKg, cfg = {}) {
-  const gPerKg = clamp(
-    cfg.gPerKg ?? PROTEIN_CONFIG.gPerKg,
-    PROTEIN_CONFIG.minGPerKg,
-    PROTEIN_CONFIG.maxGPerKg
-  );
+  const minG = cfg.minGPerKg ?? PROTEIN_CONFIG.minGPerKg;
+  const maxG = cfg.maxGPerKg ?? PROTEIN_CONFIG.maxGPerKg;
+  const gPerKg = clamp(cfg.gPerKg ?? PROTEIN_CONFIG.gPerKg, minG, maxG);
   const w = Number(weightKg) || 0;
   return {
     gPerKg,
     weightKg: w,
     dailyTarget: Math.round(w * gPerKg),
-    lowEnd: Math.round(w * 1.8), // mínimo recomendado en déficit
-    highEnd: Math.round(w * 2.2), // techo práctico
+    lowEnd: Math.round(w * minG),
+    highEnd: Math.round(w * maxG),
   };
 }
 
@@ -289,6 +287,15 @@ const MUSCLE_KEYWORDS = [
 export function guessPrimaryMuscle(name) {
   for (const [re, muscle] of MUSCLE_KEYWORDS) if (re.test(name)) return muscle;
   return "Core";
+}
+
+// Patrones de rodilla (sentadilla/valgo) y cadera-lumbar (bisagra, hip thrust) bajo
+// carga axial — los que más se benefician de cuidar técnica/rango en fases de mayor
+// laxitud articular (ovulatoria/ventana fértil probable).
+const JOINT_LAXITY_RISK = /sentadilla|goblet|step-?up|prensa|zancad|peso muerto|rumano|bisagra|hip thrust/i;
+
+export function isJointLaxityRisk(name) {
+  return JOINT_LAXITY_RISK.test(name);
 }
 
 /**

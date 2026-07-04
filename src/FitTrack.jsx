@@ -1,12 +1,13 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
 import { supabase } from "./supabase.js";
-import { ROUTINE_TEMPLATES, templateToAppRoutine, WARMUP, guessPrimaryMuscle } from "./fase1Config.js";
+import { ROUTINE_TEMPLATES, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS } from "./app-config.js";
 import {
-  authUserChanged, localISO, mergePhotoUrls, migrateWorkouts as migrateWorkoutData,
+  authUserChanged, canonExercise, localISO, mergePhotoUrls, migrateWorkouts as migrateWorkoutData,
   validateBackup as validateBackupData,
 } from "./app-utils.js";
+import { inferCyclePhase } from "./cycle-inference.js";
 import {
   loadKey, resumeUserSaves, saveKey, suspendUserSaves,
   useSyncedValue, waitForUserSaves,
@@ -36,6 +37,7 @@ const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
 const round1 = (x) => Math.round(x * 10) / 10;
+const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
 const clock = (s) => {
   const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
   const p = (n) => String(n).padStart(2, "0");
@@ -568,7 +570,7 @@ export default function App() {
               <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Ic size={15} /> {label}</button>
             ))}
           </nav>
-          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} />}
+          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} />}
           {tab === "cuerpo" && (
             <Suspense fallback={<div className="ft-empty">Cargando Cuerpo…</div>}>
               <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} menstrualLogs={menstrualLogs} setMenstrualLogs={setMenstrualLogs} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} />
@@ -606,8 +608,17 @@ function DateBar({ date, setDate }) {
 }
 
 /* ----------------------------- TRAIN ----------------------------- */
-export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) {
+export function Train({ workouts, setWorkouts, routines, setRoutines, userId, periods = [], menstrualLogs = [], wellness = [] }) {
   const [date, setDate] = useState(todayISO());
+  // Fase ovulatoria/ventana fértil probable: mayor laxitud articular es común (no es
+  // sobreentrenamiento ni requiere bajar volumen, es cuidado de técnica/rango en
+  // patrones de rodilla y cadera-lumbar bajo carga). Solo se muestra con confianza
+  // media/alta del modelo — no se prescribe con datos insuficientes.
+  const phaseCaution = useMemo(() => {
+    const estimate = inferCyclePhase({ date, periods, menstrualLogs, wellness });
+    if (!["ovulation_probable", "fertile_window_probable"].includes(estimate.phase)) return null;
+    return estimate.confidence === "low" ? null : estimate;
+  }, [date, periods, menstrualLogs, wellness]);
   const [name, setName] = useState("");
   const [primary, setPrimary] = useState(MUSCLES[0]);
   const [secondary, setSecondary] = useState([]);
@@ -616,6 +627,26 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) 
   const session = workouts.find((w) => w.date === date) || { exercises: [], durationMin: 0, cardio: [] };
   const exercises = session.exercises;
   const cardioList = session.cardio || [];
+  // Referencia "última vez": el set más pesado logueado para este ejercicio (por
+  // nombre canónico) en la sesión previa más reciente antes de esta fecha. Da el
+  // punto de comparación para decidir repetir o subir carga a propósito, y de paso
+  // deja un dato más comparable sesión a sesión para el seguimiento de RPE.
+  const lastPerformance = useMemo(() => {
+    const map = {};
+    [...workouts].filter((w) => w.date < date).sort((a, b) => a.date.localeCompare(b.date)).forEach((w) => {
+      w.exercises.forEach((e) => {
+        const best = e.sets.reduce((m, s) => {
+          const kg = Number(s.kg) || 0, reps = Number(s.reps) || 0;
+          return kg > 0 && kg >= (m?.kg || 0) ? { kg, reps, rpe: s.rpe || "" } : m;
+        }, null);
+        if (best) map[canonExercise(e.name)] = { ...best, date: w.date };
+      });
+    });
+    return map;
+  }, [workouts, date]);
+  const [durInput, setDurInput] = useState(session.durationMin ? String(session.durationMin) : "");
+  useEffect(() => { setDurInput(session.durationMin ? String(session.durationMin) : ""); }, [date, session.durationMin]);
+  const commitDuration = () => writeSession({ durationMin: Number(durInput) || 0 });
 
   const writeSession = (patch) => {
     setWorkouts((prev) => {
@@ -675,20 +706,33 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) 
 
   // timer
   const [tSec, setTSec] = useState(0); const [tRun, setTRun] = useState(false); const tRef = useRef(null);
+  // ponytail: el conteo se recalcula del reloj real (Date.now()-startedAt) en cada tick,
+  // no se acumula tick a tick — así un tab en background/pantalla bloqueada (donde el
+  // navegador pausa setInterval) no hace que el tiempo registrado quede por detrás.
+  const runRef = useRef({ startedAt: null, baseSec: 0 });
   useEffect(() => {
     (async () => {
       try {
         const t = await loadKey(userId, "timer", { running: false, baseSec: 0, startedAt: null });
-        if (t.running && t.startedAt) { setTSec((t.baseSec || 0) + Math.floor((Date.now() - t.startedAt) / 1000)); setTRun(true); }
-        else setTSec(t.baseSec || 0);
+        if (t.running && t.startedAt) {
+          runRef.current = { startedAt: t.startedAt, baseSec: t.baseSec || 0 };
+          setTSec(runRef.current.baseSec + Math.floor((Date.now() - runRef.current.startedAt) / 1000));
+          setTRun(true);
+        } else { runRef.current = { startedAt: null, baseSec: t.baseSec || 0 }; setTSec(t.baseSec || 0); }
       } catch (error) { console.error("loadTimer", error); }
     })();
     return () => clearInterval(tRef.current);
   }, [userId]);
-  useEffect(() => { if (tRun) tRef.current = setInterval(() => setTSec((s) => s + 1), 1000); else clearInterval(tRef.current); return () => clearInterval(tRef.current); }, [tRun]);
-  const startT = () => { saveKey(userId, "timer", { running: true, startedAt: Date.now(), baseSec: tSec }); setTRun(true); };
-  const pauseT = () => { saveKey(userId, "timer", { running: false, startedAt: null, baseSec: tSec }); setTRun(false); };
-  const resetT = () => { saveKey(userId, "timer", { running: false, startedAt: null, baseSec: 0 }); setTRun(false); setTSec(0); };
+  useEffect(() => {
+    if (!tRun) { clearInterval(tRef.current); return; }
+    const tick = () => setTSec(runRef.current.startedAt ? runRef.current.baseSec + Math.floor((Date.now() - runRef.current.startedAt) / 1000) : runRef.current.baseSec);
+    tick();
+    tRef.current = setInterval(tick, 1000);
+    return () => clearInterval(tRef.current);
+  }, [tRun]);
+  const startT = () => { runRef.current = { startedAt: Date.now(), baseSec: tSec }; saveKey(userId, "timer", { running: true, startedAt: runRef.current.startedAt, baseSec: tSec }); setTRun(true); };
+  const pauseT = () => { runRef.current = { startedAt: null, baseSec: tSec }; saveKey(userId, "timer", { running: false, startedAt: null, baseSec: tSec }); setTRun(false); };
+  const resetT = () => { runRef.current = { startedAt: null, baseSec: 0 }; saveKey(userId, "timer", { running: false, startedAt: null, baseSec: 0 }); setTRun(false); setTSec(0); };
   const commitT = () => { const min = Math.round(tSec / 60); if (min > 0) writeSession({ durationMin: (session.durationMin || 0) + min }); resetT(); };
 
   const totalVol = exercises.reduce((t, e) => t + e.sets.reduce((st, s) => st + (Number(s.reps) || 0) * (Number(s.kg) || 0), 0), 0);
@@ -708,6 +752,15 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) 
       <ScreenMast kicker="FITTRACK · ENTRENAR" title="Entrenar" right={<EDateNav date={date} setDate={setDate} />} />
       <div style={{ height: 16 }} />
 
+      {phaseCaution && (
+        <div className="ft-card" style={{ display: "flex", gap: 10, alignItems: "flex-start", borderColor: "var(--accent)" }}>
+          <AlertTriangle size={18} style={{ color: "var(--accent)", flexShrink: 0, marginTop: 1 }} />
+          <div style={{ fontSize: 13, lineHeight: 1.5 }}>
+            <b>Fase ovulatoria/ventana fértil probable.</b> Mayor laxitud articular es frecuente en esta fase — no es motivo para bajar volumen, pero conviene cuidar técnica y rango en sentadilla, peso muerto/bisagra e hip thrust. Marcados abajo con <AlertTriangle size={12} style={{ verticalAlign: "-1px", color: "var(--accent)" }} /> si ya cargaste peso.
+          </div>
+        </div>
+      )}
+
       <div className="ft-card">
         <h2><Timer size={16} /> Duración <span className="tag">{session.durationMin || 0} min · {cardioList.reduce((t, c) => t + c.minutes, 0)} min cardio</span></h2>
         <div className="ft-timer">
@@ -719,7 +772,10 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) 
         </div>
         <div className="ft-row" style={{ marginTop: 12 }}>
           <div className="ft-field" style={{ maxWidth: 200 }}><label>Minutos (editar a mano)</label>
-            <input className="ft-input ft-mono" type="number" inputMode="numeric" value={session.durationMin || ""} placeholder="0" onChange={(e) => writeSession({ durationMin: Number(e.target.value) || 0 })} /></div>
+            <input className="ft-input ft-mono" type="number" inputMode="numeric" value={durInput} placeholder="0"
+              onChange={(e) => setDurInput(e.target.value)}
+              onBlur={commitDuration}
+              onKeyDown={(e) => e.key === "Enter" && commitDuration()} /></div>
         </div>
       </div>
 
@@ -779,6 +835,7 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) 
           )}
           {exercises.map((ex) => {
             const best1rm = ex.sets.reduce((m, s) => Math.max(m, epley(Number(s.kg) || 0, Number(s.reps) || 0)), 0);
+            const last = lastPerformance[canonExercise(ex.name)];
             return (
               <div className="ft-ex" key={ex.id}>
                 <div className="ft-ex-head">
@@ -788,8 +845,18 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId }) 
                   {(ex.secondary || []).map((s) => <span key={s} className="ft-mu sec">+{s}</span>)}
                   {ex.targetRpe && <span className="ft-mu" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}>RPE obj. {ex.targetRpe}</span>}
                   {best1rm > 0 && <span className="ft-1rm">1RM ~{Math.round(best1rm)} kg</span>}
+                  {phaseCaution && isJointLaxityRisk(ex.name) && ex.sets.some((s) => Number(s.kg) > 0) && (
+                    <span title="Fase de mayor laxitud articular: cuidá técnica y rango con carga" style={{ display: "inline-flex", alignItems: "center" }}>
+                      <AlertTriangle size={14} style={{ color: "var(--accent)" }} />
+                    </span>
+                  )}
                   <button className="ft-trash" onClick={() => delEx(ex.id)}><Trash2 size={16} /></button>
                 </div>
+                {last && (
+                  <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "'IBM Plex Mono'", marginBottom: 8 }}>
+                    Última vez ({fmtDate(last.date)}): <b style={{ color: "var(--text)" }}>{last.kg} kg × {last.reps}</b>{last.rpe ? ` @ RPE ${last.rpe}` : ""}
+                  </div>
+                )}
                 {ex.notes && <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "'IBM Plex Mono'", marginBottom: 8, lineHeight: 1.45 }}>{ex.notes}</div>}
                 <div className="ft-set" style={{ gridTemplateColumns: "24px 1fr 1fr 1fr 30px", color: "var(--muted)", fontSize: 11, fontFamily: "'IBM Plex Mono'", marginBottom: 4 }}>
                   <span></span><span style={{ textAlign: "center" }}>REPS</span><span style={{ textAlign: "center" }}>KG</span><span style={{ textAlign: "center" }}>RPE</span><span></span>

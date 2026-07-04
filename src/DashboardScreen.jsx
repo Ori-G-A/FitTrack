@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { CYCLE_PHASES, KCAL_PER_KG } from "./app-config.js";
-import { canonExercise, cycleInfo, daysBetween, localISO, slopePerDay } from "./app-utils.js";
+import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, slopePerDay } from "./app-utils.js";
+import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
@@ -94,12 +95,14 @@ function BStrength({ series, isMobile }) {
   const show = useReveal(300);
   const W = 720, H = isMobile ? 168 : 200, padT = 16, padB = 22;
   const plotW = isMobile ? 700 : 560, labelX = 576;
-  const hi = Math.max(1, Math.max(...series.flatMap((s) => s.pct))) * 1.1;
-  const yOf = (v) => padT + ((hi - v) / hi) * (H - padT - padB);
-  const grid = [hi, hi / 2, 0];
+  const allPct = series.flatMap((s) => s.pct);
+  const hi = Math.max(1, Math.max(...allPct)) * 1.1;
+  const lo = Math.min(0, Math.min(...allPct)) * 1.1;
+  const yOf = (v) => padT + ((hi - v) / (hi - lo)) * (H - padT - padB);
+  const grid = [hi, (hi + lo) / 2, lo];
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", overflow: "hidden" }}>
-      {grid.map((g, i) => (<g key={i}><line x1="0" y1={yOf(g)} x2={plotW} y2={yOf(g)} stroke={A_HAIR} strokeWidth="1" /><text x="0" y={yOf(g) - 5} fontFamily={A_MONO} fontSize="10" fill={A_INK2}>+{g.toFixed(0)}%</text></g>))}
+      {grid.map((g, i) => (<g key={i}><line x1="0" y1={yOf(g)} x2={plotW} y2={yOf(g)} stroke={A_HAIR} strokeWidth="1" /><text x="0" y={yOf(g) - 5} fontFamily={A_MONO} fontSize="10" fill={A_INK2}>{g >= 0 ? "+" : ""}{g.toFixed(0)}%</text></g>))}
       {series.map((s, si) => {
         const pts = s.pct.map((v, i) => ({ x: (i / (s.pct.length - 1 || 1)) * plotW, y: yOf(v) }));
         const last = pts[pts.length - 1];
@@ -145,10 +148,13 @@ function BMuscleBars({ data }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
       {data.map((d, i) => (
-        <div key={d.label} style={{ display: "grid", gridTemplateColumns: "100px 1fr 54px", alignItems: "center", gap: 10 }}>
+        <div key={d.label} style={{ display: "grid", gridTemplateColumns: "100px 1fr 54px 58px", alignItems: "center", gap: 10 }}>
           <div style={{ fontFamily: A_MONO, fontSize: 11, textTransform: "uppercase", letterSpacing: ".04em", color: A_INK2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.label}</div>
           <div style={{ height: 14, background: A_HAIR, position: "relative", overflow: "hidden" }}><div style={{ position: "absolute", inset: 0, transformOrigin: "left", width: `${(d.vol / max) * 100}%`, background: i === 0 ? A_ACC : A_INK, transform: show ? "scaleX(1)" : "scaleX(0)", transition: `transform .9s cubic-bezier(.22,.61,.36,1) ${i * 60}ms` }} /></div>
           <div style={{ fontFamily: A_MONO, fontSize: 11, textAlign: "right", color: A_INK, fontWeight: 500 }}>{(d.vol / 1000).toFixed(1)}t</div>
+          <div style={{ fontFamily: A_MONO, fontSize: 10.5, textAlign: "right", color: d.effPct == null ? A_INK2 : d.effPct >= 90 ? A_OK : A_INK2 }} title="Sets a RPE>=8, % vs. tu propia media semanal">
+            {d.effPct == null ? "—" : `${d.effPct}% ef.`}
+          </div>
         </div>
       ))}
     </div>
@@ -210,7 +216,7 @@ function BHeatmap({ days, isMobile }) {
   );
 }
 
-export default function DashboardScreen({ workouts, weights, nutrition, measurements, periods, goals }) {
+export default function DashboardScreen({ workouts, weights, nutrition, measurements, periods, goals, menstrualLogs = [], wellness = [] }) {
   const show = useReveal(60);
   const isMobile = useIsMobile();
   const sortedW = useMemo(() => [...weights].sort((a, b) => a.date.localeCompare(b.date)), [weights]);
@@ -224,11 +230,58 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const start = maSeries[0]; const startKg = goals.startWeight ? Number(goals.startWeight) : start.real;
     return maSeries.map((p) => ({ ...p, objetivo: Number((startKg + goals.weeklyChange * (daysBetween(start.iso, p.iso) / 7)).toFixed(2)) }));
   }, [maSeries, goals]);
+  // Para inferir tendencia/mantenimiento (no para lo que se muestra como peso real)
+  // restamos el agua de creatina modelada: si no se descuenta, una carga de creatina
+  // se lee como "subiste de grasa" cuando en realidad es agua intramuscular.
+  const maSeriesForTrend = useMemo(() => {
+    if (!goals.creatineStart) return maSeries;
+    return sortedW.map((w) => {
+      const start = new Date(w.date + "T00:00:00"); start.setDate(start.getDate() - 6);
+      const win = sortedW.filter((x) => x.date <= w.date && new Date(x.date + "T00:00:00") >= start);
+      const adjKg = (x) => x.kg - creatineWaterKg(goals.creatineStart, x.date);
+      return { iso: w.date, media: round1(win.reduce((s, x) => s + adjKg(x), 0) / win.length) };
+    });
+  }, [sortedW, maSeries, goals.creatineStart]);
   const trend = useMemo(() => {
-    const recent = maSeries.filter((p) => daysBetween(p.iso, todayISO()) <= 21);
-    const pts = (recent.length >= 2 ? recent : maSeries.slice(-6)).map((p) => ({ x: daysBetween(maSeries[0]?.iso || p.iso, p.iso), y: p.media }));
+    const recent = maSeriesForTrend.filter((p) => daysBetween(p.iso, todayISO()) <= 21);
+    const pts = (recent.length >= 2 ? recent : maSeriesForTrend.slice(-6)).map((p) => ({ x: daysBetween(maSeriesForTrend[0]?.iso || p.iso, p.iso), y: p.media }));
     const sp = slopePerDay(pts); return sp === null ? null : sp * 7;
-  }, [maSeries]);
+  }, [maSeriesForTrend]);
+  const completeCyclesCount = useMemo(() => {
+    const starts = buildCycleStarts(periods, menstrualLogs);
+    return starts.length > 1 ? starts.length - 1 : 0;
+  }, [periods, menstrualLogs]);
+  // ponytail: la retención por fase de ciclo hoy solo agrega una advertencia de texto,
+  // no una corrección numérica (a diferencia de la creatina, no hay un modelo de kg de
+  // agua confiable — la magnitud varía demasiado entre personas/ciclos). Con 3+ ciclos
+  // completos registrados, se podría derivar un offset empírico propio (peso medio en
+  // lútea tardía vs. línea base folicular, controlando por tendencia) y restarlo igual
+  // que se hace con creatineWaterKg. Revisar cuando haya ese historial (ver contador
+  // "Progreso hacia seguimiento más robusto" en alerts).
+  const cycleConfound = useMemo(() => {
+    if (completeCyclesCount < 2) return false;
+    const today = todayISO();
+    const estimate = inferCyclePhase({ date: today, menstrualLogs, periods, wellness });
+    if (estimate.phase !== "luteal_late") return false;
+    return symptomScore(menstrualLogs.find((log) => log.date === today)) >= 3;
+  }, [completeCyclesCount, menstrualLogs, periods, wellness]);
+  // Cuenta, por combinación (ejercicio canónico, kg, reps), en cuántas sesiones
+  // distintas se repitió exactamente igual — la racha más larga es la mejor pista de
+  // qué tan lista está la data para comparar RPE a igual carga (no un simple average).
+  const matchedLoadStreak = useMemo(() => {
+    const byKey = {};
+    workouts.forEach((w) => w.exercises.forEach((e) => e.sets.forEach((s) => {
+      const kg = Number(s.kg) || 0, reps = Number(s.reps) || 0;
+      if (kg <= 0 || reps <= 0) return;
+      const key = `${canonExercise(e.name)}|${kg}|${reps}`;
+      (byKey[key] = byKey[key] || new Set()).add(w.date);
+    })));
+    let best = { exercise: null, count: 0 };
+    Object.entries(byKey).forEach(([key, dates]) => {
+      if (dates.size > best.count) best = { exercise: key.split("|")[0], count: dates.size };
+    });
+    return best;
+  }, [workouts]);
   const currentMA = maSeries.length ? maSeries[maSeries.length - 1].media : null;
   const currentW = sortedW.length ? sortedW[sortedW.length - 1].kg : null;
   const change7 = useMemo(() => { if (sortedW.length < 2) return null; const last = sortedW[sortedW.length - 1]; const ref = [...sortedW].reverse().find((w) => daysBetween(w.date, last.date) >= 7); return ref ? round1(last.kg - ref.kg) : null; }, [sortedW]);
@@ -275,10 +328,35 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     workouts.forEach((w) => w.exercises.forEach((e) => { const v = e.sets.reduce((t, s) => t + (+s.reps || 0) * (+s.kg || 0), 0); m[e.primary || e.muscle] = (m[e.primary || e.muscle] || 0) + v; (e.secondary || []).forEach((sm) => { m[sm] = (m[sm] || 0) + v * SECONDARY_FACTOR; }); }));
     return m;
   }, [workouts]);
+  // Series efectivas: sets a RPE>=8 (el estímulo que de verdad compara entre músculos
+  // de tamaño/palanca distinta, a diferencia del tonelaje bruto). % relativo a la media
+  // semanal propia de ESE músculo desde el primer registro, no contra otros músculos.
+  const muscleRelative = useMemo(() => {
+    if (!workouts.length) return {};
+    const firstDate = [...workouts].map((w) => w.date).sort()[0];
+    const weeksElapsed = Math.max(1, daysBetween(firstDate, todayISO()) / 7);
+    const since = isoMinus(7);
+    const allTime = {}, weekly = {};
+    workouts.forEach((w) => w.exercises.forEach((e) => e.sets.forEach((s) => {
+      if ((Number(s.rpe) || 0) < 8) return;
+      const bump = (m, factor) => {
+        allTime[m] = (allTime[m] || 0) + factor;
+        if (w.date >= since) weekly[m] = (weekly[m] || 0) + factor;
+      };
+      bump(e.primary || e.muscle, 1);
+      (e.secondary || []).forEach((sm) => bump(sm, SECONDARY_FACTOR));
+    })));
+    const out = {};
+    Object.keys(allTime).forEach((m) => {
+      const baseline = allTime[m] / weeksElapsed;
+      out[m] = baseline > 0 ? Math.round(((weekly[m] || 0) / baseline) * 100) : null;
+    });
+    return out;
+  }, [workouts]);
   const muscleData = useMemo(() => {
     const src = Object.keys(weeklyMuscle).length ? weeklyMuscle : muscleVolAll;
-    return Object.entries(src).map(([label, vol]) => ({ label, vol: Math.round(vol) })).sort((a, b) => b.vol - a.vol).slice(0, 8);
-  }, [weeklyMuscle, muscleVolAll]);
+    return Object.entries(src).map(([label, vol]) => ({ label, vol: Math.round(vol), effPct: muscleRelative[label] ?? null })).sort((a, b) => b.vol - a.vol).slice(0, 8);
+  }, [weeklyMuscle, muscleVolAll, muscleRelative]);
 
   const kcalChart = useMemo(() => { const days = []; for (let i = 13; i >= 0; i--) { const iso = isoMinus(i); const kcal = nutrition.filter((n) => n.date === iso).reduce((t, n) => t + (+n.kcal || 0), 0); days.push({ date: fmtDate(iso), kcal: Math.round(kcal) }); } return days; }, [nutrition]);
   const kcalAvg = useMemo(() => { const vals = kcalChart.map((d) => d.kcal).filter((v) => v > 0); return vals.length ? Math.round(vals.reduce((s, v) => s + v, 0) / vals.length) : null; }, [kcalChart]);
@@ -286,6 +364,16 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const vals = w.exercises.flatMap((e) => e.sets.map((s) => parseFloat(s.rpe)).filter((v) => v > 0));
     return vals.length ? { iso: w.date, rpe: vals.reduce((s, v) => s + v, 0) / vals.length } : null;
   }).filter(Boolean).slice(-12), [workouts]);
+  // Señal de deload: RPE medio subiendo 3 sesiones seguidas (no compara misma carga
+  // exacta, es un proxy — no un diagnóstico). Salto total >=1 punto para no marcar
+  // ruido normal de semana a semana.
+  const deloadSignal = useMemo(() => {
+    const recent = rpeSeries.slice(-3);
+    if (recent.length < 3) return null;
+    const rising = recent[0].rpe < recent[1].rpe && recent[1].rpe < recent[2].rpe;
+    const jump = recent[2].rpe - recent[0].rpe;
+    return rising && jump >= 1 ? { from: recent[0].rpe, to: recent[2].rpe } : null;
+  }, [rpeSeries]);
   const measSorted = useMemo(() => [...measurements].sort((a, b) => a.date.localeCompare(b.date)), [measurements]);
   const measLatest = measSorted[measSorted.length - 1] || null;
   const MEAS_FIELDS = [["cintura", "Cintura"], ["cadera", "Cadera"], ["pecho", "Pecho"], ["brazo", "Brazo"], ["muslo", "Muslo"]];
@@ -305,14 +393,21 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const avg = (k) => ds.reduce((s, d) => s + d[k], 0) / ds.length;
     return { p: avg("p"), c: avg("c"), f: avg("f"), k: avg("k"), days: ds.length };
   }, [nutrition]);
+  const trainingDays7 = useMemo(() => new Set(workouts.filter((w) => w.date >= isoMinus(7) && (w.exercises.length || (w.cardio || []).length)).map((w) => w.date)).size, [workouts]);
+  // Periodizado: más carbo en días de entreno (glucógeno/rendimiento), más grasa en
+  // descanso, mismo total de kcal/proteína. Como el objetivo se compara contra un
+  // PROMEDIO de 14 días (no un día puntual), se pondera por tu frecuencia real de
+  // entreno en vez de asumir un día concreto.
   const macroTargets = useMemo(() => {
     const pt = Number(goals.proteinTarget) || null, kt = Number(goals.kcalTarget) || null;
     if (!kt) return { p: pt, c: null, f: null };
     const rem = Math.max(0, kt - (pt || 0) * 4);
-    return { p: pt, c: rem * 0.55 / 4, f: rem * 0.45 / 9 };
-  }, [goals]);
+    const CARB_RATIO_TRAIN = 0.60, CARB_RATIO_REST = 0.45;
+    const trainFrac = Math.min(1, trainingDays7 / 7);
+    const carbRatio = CARB_RATIO_REST + (CARB_RATIO_TRAIN - CARB_RATIO_REST) * trainFrac;
+    return { p: pt, c: rem * carbRatio / 4, f: rem * (1 - carbRatio) / 9 };
+  }, [goals, trainingDays7]);
 
-  const trainingDays7 = useMemo(() => new Set(workouts.filter((w) => w.date >= isoMinus(7) && (w.exercises.length || (w.cardio || []).length)).map((w) => w.date)).size, [workouts]);
   const lastTrain = useMemo(() => { const ds = workouts.filter((w) => w.exercises.length || (w.cardio || []).length).map((w) => w.date).sort(); return ds.length ? ds[ds.length - 1] : null; }, [workouts]);
   const nutDays7 = useMemo(() => new Set(nutrition.filter((n) => n.date >= isoMinus(7)).map((n) => n.date)).size, [nutrition]);
   const protAvg7 = useMemo(() => { const byDay = {}; nutrition.filter((n) => n.date >= isoMinus(7)).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.protein || 0); }); const vals = Object.values(byDay); return vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : null; }, [nutrition]);
@@ -347,7 +442,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     recentPRs.forEach((p) => a.push({ type: "pr", title: `¡Nuevo récord en ${p.name}!`, body: `Tu 1RM estimado subió a ${p.best} kg. La sobrecarga progresiva está funcionando.` }));
     if (trend !== null) {
       const diff = trend - goals.weeklyChange;
-      if (Math.abs(diff) > 0.25) a.push({ type: "warn", title: "Desvío en tu tendencia de peso", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem vs objetivo ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}. ${diff > 0 ? "Vas más hacia arriba de lo previsto — recorta calorías." : "Bajas más rápido de lo previsto — sube calorías para proteger músculo."}${maintenance ? ` Mantenimiento estimado ~${maintenance.maint} kcal.` : ""}` });
+      if (Math.abs(diff) > 0.25) a.push({ type: "warn", title: "Desvío en tu tendencia de peso", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem vs objetivo ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}. ${diff > 0 ? "Vas más hacia arriba de lo previsto — recorta calorías." : "Bajas más rápido de lo previsto — sube calorías para proteger músculo."}${maintenance ? ` Mantenimiento estimado ~${maintenance.maint} kcal.` : ""}${cycleConfound ? " Estás en fase lútea tardía con síntomas compatibles con retención de líquidos — parte de este desvío puede ser agua, no grasa. Esperá unos días antes de ajustar calorías." : ""}` });
       else a.push({ type: "ok", title: "Peso en línea con tu objetivo", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem, dentro de ±0,25 de tu meta.` });
     }
     if (protAvg7 !== null && goals.proteinTarget && protAvg7 < 0.85 * goals.proteinTarget) a.push({ type: "warn", title: "Proteína por debajo del objetivo", body: `Media de ${Math.round(protAvg7)} g/día la última semana frente a tu meta de ${goals.proteinTarget} g.` });
@@ -355,8 +450,26 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     if (maxV > 0) { const neglected = MAJOR_MUSCLES.filter((m) => (weeklyMuscle[m] || 0) < 0.15 * maxV); if (neglected.length) a.push({ type: "warn", title: "Posible descompensación muscular", body: `Esta semana apenas trabajaste: ${neglected.join(", ")}. Equilibrar el volumen reduce riesgo de lesión.` }); }
     if (lastTrain && daysBetween(lastTrain, todayISO()) >= 4) a.push({ type: "info", title: "Racha de entreno en pausa", body: `Llevas ${daysBetween(lastTrain, todayISO())} días sin registrar entrenamiento.` });
     if (projection && projection.off) a.push({ type: "info", title: "No avanzas hacia tu peso meta", body: "A tu ritmo actual no te acercas a la meta fijada. Revisa objetivo o calorías." });
+    if (deloadSignal || cycleConfound) {
+      const reasons = [];
+      if (deloadSignal) reasons.push(`tu RPE medio por sesión viene subiendo (${deloadSignal.from.toFixed(1)} → ${deloadSignal.to.toFixed(1)} en las últimas 3)`);
+      if (cycleConfound) reasons.push("estás en fase lútea tardía con síntomas altos");
+      a.push({ type: "info", title: "Señal de deload", body: `${reasons.join(" y ")}. Es razonable considerar la versión reducida de tu próxima rutina en vez de la completa.` });
+    }
+    // Recordatorio para volver a ajustar dos temas que hoy quedaron con heurísticas
+    // (no modelos numéricos): retención por ciclo y RPE a igual carga. Umbrales
+    // elegidos consistentes con los ya usados en el resto del dashboard (3 ciclos
+    // completos, 3 sesiones repitiendo la misma combinación kg×reps).
+    const CYCLE_TARGET = 3, LOAD_TARGET = 3;
+    const cycleReady = completeCyclesCount >= CYCLE_TARGET;
+    const loadReady = matchedLoadStreak.count >= LOAD_TARGET;
+    if (!cycleReady || !loadReady) {
+      a.push({ type: "info", title: "Progreso hacia seguimiento más robusto", body: `Ciclos completos registrados: ${completeCyclesCount}/${CYCLE_TARGET}. Sesiones con la misma carga repetida (mejor racha${matchedLoadStreak.exercise ? `, ${matchedLoadStreak.exercise}` : ""}): ${matchedLoadStreak.count}/${LOAD_TARGET}. Cuando ambos lleguen a la meta, volvé a pedir el ajuste de retención por ciclo y de RPE a igual carga.` });
+    } else {
+      a.push({ type: "ok", title: "Listo para un seguimiento más robusto", body: `Ya tenés ${completeCyclesCount} ciclos completos y una racha de ${matchedLoadStreak.count} sesiones con la misma carga en ${matchedLoadStreak.exercise}. Pedime que ajuste el modelo de retención por ciclo y el de RPE a igual carga con este historial.` });
+    }
     return a;
-  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection]);
+  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection, cycleConfound, deloadSignal, completeCyclesCount, matchedLoadStreak]);
 
   const noData = weights.length === 0 && workouts.length === 0 && nutrition.length === 0;
   if (noData) return <div className="ft-card"><div className="ft-empty"><div className="ic"><LayoutDashboard size={34} /></div>Aún no hay datos. Registra entrenamientos, peso o comidas y aquí verás tu evolución, récords y alertas.</div></div>;
@@ -479,7 +592,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
             {strengthSeries.length > 0 ? <><BStrength series={strengthSeries} isMobile={isMobile} />{isMobile && <BStrengthLegend series={strengthSeries} />}</> : <DNeed>Necesitas al menos 2 sesiones de un mismo ejercicio.</DNeed>}
           </Rise>
           <Rise show={show} i={5} style={cellR}>
-            <div style={secHead}><h2 style={secTitle}>Macros</h2><span style={meta}>media 14d</span></div>
+            <div style={secHead}><h2 style={secTitle}>Macros</h2><span style={meta}>media 14d · carbo/grasa según frec. de entreno</span></div>
             {macro14 ? <BMacros rows={macroRows} footer={`media ${Math.round(macro14.k)} / ${goals.kcalTarget || "—"} kcal`} /> : <DNeed>Registra comidas para ver tus macros.</DNeed>}
           </Rise>
         </div>
@@ -520,7 +633,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
             {kcalChart.some((d) => d.kcal > 0) ? (<><BKcalBars data={kcalChart} target={Number(goals.kcalTarget) || null} /><div style={{ display: "flex", justifyContent: "space-between", ...meta, marginTop: 10 }}><span>últimos 14 días</span><span>media {kcalAvg || "—"} kcal</span></div></>) : <DNeed>Registra comidas para ver tus calorías diarias.</DNeed>}
           </Rise>
           <Rise show={show} i={7} style={cellR}>
-            <div style={secHead}><h2 style={secTitle}>Volumen muscular</h2><span style={meta}>{Object.keys(weeklyMuscle).length ? "esta semana" : "histórico"}</span></div>
+            <div style={secHead}><h2 style={secTitle}>Volumen muscular</h2><span style={meta}>{Object.keys(weeklyMuscle).length ? "esta semana" : "histórico"} · tonelaje + % ef. vs tu media</span></div>
             {muscleData.length > 0 ? <BMuscleBars data={muscleData} /> : <DNeed>Registra entrenamientos para ver el volumen por grupo.</DNeed>}
           </Rise>
         </div>
