@@ -117,13 +117,13 @@ const CATALOG_RAW = [
   ["Frutas", "Sandía", 30, 0.6, 8, 0.2], ["Frutas", "Melón", 34, 0.8, 8, 0.2], ["Frutas", "Kiwi", 61, 1.1, 15, 0.5],
   ["Frutas", "Aguacate", 160, 2, 9, 15], ["Frutas", "Papaya", 43, 0.5, 11, 0.3], ["Frutas", "Durazno / melocotón", 39, 0.9, 10, 0.3],
   ["Frutas", "Cereza", 63, 1.1, 16, 0.2], ["Frutas", "Limón", 29, 1.1, 9, 0.3], ["Frutas", "Granada", 83, 1.7, 19, 1.2],
-  ["Lácteos y huevos", "Leche entera", 61, 3.2, 4.8, 3.3], ["Lácteos y huevos", "Leche desnatada", 34, 3.4, 5, 0.1],
+  ["Lácteos y huevos", "Leche entera", 61, 3.2, 4.8, 3.3, "ml"], ["Lácteos y huevos", "Leche desnatada", 34, 3.4, 5, 0.1, "ml"],
   ["Lácteos y huevos", "Yogur griego (0%)", 59, 10, 3.6, 0.4], ["Lácteos y huevos", "Yogur griego (entero)", 97, 9, 4, 5],
   ["Lácteos y huevos", "Yogur natural", 61, 3.5, 4.7, 3.3], ["Lácteos y huevos", "Requesón / cottage", 98, 11, 3.4, 4.3],
   ["Lácteos y huevos", "Queso cheddar", 403, 25, 1.3, 33], ["Lácteos y huevos", "Queso mozzarella", 300, 22, 2.2, 22],
   ["Lácteos y huevos", "Queso parmesano", 392, 36, 3.2, 26], ["Lácteos y huevos", "Queso fresco", 264, 18, 4, 20],
   ["Lácteos y huevos", "Huevo entero", 143, 13, 0.7, 9.5], ["Lácteos y huevos", "Clara de huevo", 52, 11, 0.7, 0.2],
-  ["Lácteos y huevos", "Mantequilla", 717, 0.9, 0.1, 81], ["Lácteos y huevos", "Nata / crema de leche", 340, 2, 3, 36], ["Lácteos y huevos", "Leche de almendra (sin azúcar)", 15, 0.6, 0.6, 1.2],
+  ["Lácteos y huevos", "Mantequilla", 717, 0.9, 0.1, 81], ["Lácteos y huevos", "Nata / crema de leche", 340, 2, 3, 36, "ml"], ["Lácteos y huevos", "Leche de almendra (sin azúcar)", 15, 0.6, 0.6, 1.2, "ml"],
   ["Carne de res", "Lomo ancho / ribeye", 291, 19, 0, 24], ["Carne de res", "Solomillo / filete (tenderloin)", 170, 21, 0, 9],
   ["Carne de res", "Lomo / sirloin", 150, 21, 0, 7], ["Carne de res", "Falda / flank", 165, 21, 0, 8], ["Carne de res", "Costilla de res", 290, 17, 0, 25],
   ["Carne de res", "Carne molida 80/20", 254, 17, 0, 20], ["Carne de res", "Carne molida 90/10", 176, 20, 0, 10], ["Carne de res", "Hígado de res", 135, 20, 3.9, 3.6], ["Carne de res", "Lengua de res", 224, 15, 3.7, 17],
@@ -149,10 +149,12 @@ const CATALOG_RAW = [
   ["Frutos secos y semillas", "Pistachos", 560, 20, 28, 45], ["Frutos secos y semillas", "Cacahuetes / maní", 567, 26, 16, 49], ["Frutos secos y semillas", "Avellanas", 628, 15, 17, 61],
   ["Frutos secos y semillas", "Nueces de Brasil", 659, 14, 12, 67], ["Frutos secos y semillas", "Semillas de chía", 486, 17, 42, 31], ["Frutos secos y semillas", "Semillas de lino / linaza", 534, 18, 29, 42],
   ["Frutos secos y semillas", "Semillas de girasol", 584, 21, 20, 51], ["Frutos secos y semillas", "Semillas de calabaza", 559, 30, 11, 49], ["Frutos secos y semillas", "Mantequilla de maní", 588, 25, 20, 50], ["Frutos secos y semillas", "Tahini", 595, 17, 21, 54],
-  ["Aceites y grasas", "Aceite de oliva", 884, 0, 0, 100], ["Aceites y grasas", "Aceite de coco", 862, 0, 0, 100], ["Aceites y grasas", "Aceite de girasol", 884, 0, 0, 100],
-  ["Aceites y grasas", "Aceite de aguacate", 884, 0, 0, 100], ["Aceites y grasas", "Aceite de canola", 884, 0, 0, 100], ["Aceites y grasas", "Manteca de cerdo", 902, 0, 0, 100],
+  ["Aceites y grasas", "Aceite de oliva", 884, 0, 0, 100, "ml"], ["Aceites y grasas", "Aceite de coco", 862, 0, 0, 100, "ml"], ["Aceites y grasas", "Aceite de girasol", 884, 0, 0, 100, "ml"],
+  ["Aceites y grasas", "Aceite de aguacate", 884, 0, 0, 100, "ml"], ["Aceites y grasas", "Aceite de canola", 884, 0, 0, 100, "ml"], ["Aceites y grasas", "Manteca de cerdo", 902, 0, 0, 100],
 ];
-const CATALOG = CATALOG_RAW.map((r) => ({ cat: r[0], name: r[1], kcal: r[2], protein: r[3], carbs: r[4], fat: r[5] }));
+const CATALOG = CATALOG_RAW.map((r) => ({ cat: r[0], name: r[1], kcal: r[2], protein: r[3], carbs: r[4], fat: r[5], unit: r[6] || "g" }));
+// tazas/cucharas -> ml, para medir líquidos sin báscula
+const LIQUID_MEASURES = [["1 cdta", 5], ["1 cda", 15], ["¼ taza", 60], ["½ taza", 120], ["1 taza", 240]];
 
 const validateBackup = (value) => validateBackupData(value, DEFAULT_GOALS);
 const migrateWorkouts = (workouts) => migrateWorkoutData(workouts, MUSCLES[0]);
@@ -186,6 +188,9 @@ export const CSS = `
 .ft-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
 .ft-field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:90px;}
 .ft-field label{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:600;}
+.ft-measures{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
+.ft-measures button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:4px 8px;font-size:11px;font-weight:600;cursor:pointer;}
+.ft-measures button:hover{border-color:var(--accent);color:var(--text);}
 .ft-input,.ft-select{background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--text);padding:10px 11px;font-size:14px;font-family:inherit;width:100%;}
 .ft-input:focus,.ft-select:focus{outline:none;border-color:var(--accent);}
 .ft-mono.ft-input{font-family:'IBM Plex Mono';}
@@ -303,9 +308,26 @@ function FoodCombo({ foods, selected, onChange, label = "Alimento", flex = 2 }) 
         <div className="ft-combo-list">
           {filtered.map((x) => (
             <button key={x.id} onMouseDown={() => { onChange(x); setShow(false); setQ(""); }}>
-              <span>{x.name}</span><span className="sub">{x.kcal} kcal/100g</span>
+              <span>{x.name}</span><span className="sub">{x.kcal} kcal/100{x.unit || "g"}</span>
             </button>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ----------------------------- shared: cantidad (g o ml según el alimento) ----------------------------- */
+function AmountField({ food, value, onChange, onEnter, label = "Cantidad" }) {
+  const isLiquid = food?.unit === "ml";
+  return (
+    <div className="ft-field" style={{ maxWidth: isLiquid ? 220 : 130 }}>
+      <label>{food ? (isLiquid ? "ml" : "Gramos") : label}</label>
+      <input className="ft-input ft-mono" type="number" inputMode="decimal" placeholder="0" value={value}
+        onChange={(e) => onChange(e.target.value)} onKeyDown={(e) => e.key === "Enter" && onEnter?.()} />
+      {isLiquid && (
+        <div className="ft-measures">
+          {LIQUID_MEASURES.map(([lbl, ml]) => <button type="button" key={lbl} onClick={() => onChange(String(ml))}>{lbl}</button>)}
         </div>
       )}
     </div>
@@ -918,7 +940,7 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
   const selRec = recipes.find((r) => r.id === recId);
   const recPreview = selRec ? (() => { const tot = recTotals(selRec); const f = (Number(servings) || 0) / (selRec.servings || 1); return { kcal: tot.kcal * f, protein: tot.protein * f, carbs: tot.carbs * f, fat: tot.fat * f }; })() : null;
 
-  const addFromLib = () => { if (!sel || !grams) return; const c = scaleFood(sel, grams); setNutrition((p) => [...p, { id: uid(), date, name: sel.name, grams: Number(grams), kcal: round1(c.kcal), protein: round1(c.protein), carbs: round1(c.carbs), fat: round1(c.fat) }]); setSel(null); setGrams(""); };
+  const addFromLib = () => { if (!sel || !grams) return; const c = scaleFood(sel, grams); setNutrition((p) => [...p, { id: uid(), date, name: sel.name, grams: Number(grams), unit: sel.unit || "g", kcal: round1(c.kcal), protein: round1(c.protein), carbs: round1(c.carbs), fat: round1(c.fat) }]); setSel(null); setGrams(""); };
   const addRecipe = () => { if (!selRec || !recPreview) return; setNutrition((p) => [...p, { id: uid(), date, name: `${selRec.name} (${servings} porc.)`, grams: null, kcal: round1(recPreview.kcal), protein: round1(recPreview.protein), carbs: round1(recPreview.carbs), fat: round1(recPreview.fat) }]); setRecId(""); setServings("1"); };
   const addManual = () => { if (!m.name.trim()) return; setNutrition((p) => [...p, { id: uid(), date, name: m.name.trim(), grams: null, kcal: +m.kcal || 0, protein: +m.protein || 0, carbs: +m.carbs || 0, fat: +m.fat || 0 }]); setM({ name: "", kcal: "", protein: "", carbs: "", fat: "" }); };
   const del = (id) => setNutrition((p) => p.filter((n) => n.id !== id));
@@ -948,10 +970,10 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
         ) : (<>
           <div className="ft-row">
             <FoodCombo foods={foods} selected={sel} onChange={setSel} />
-            <div className="ft-field" style={{ maxWidth: 130 }}><label>Gramos</label><input className="ft-input ft-mono" type="number" inputMode="decimal" placeholder="0" value={grams} onChange={(e) => setGrams(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addFromLib()} /></div>
+            <AmountField food={sel} value={grams} onChange={setGrams} onEnter={addFromLib} />
             <button className="ft-btn" onClick={addFromLib} disabled={!sel || !grams}><Plus size={15} /> Añadir</button>
           </div>
-          {computed && <div className="ft-prev"><span><b>{Math.round(computed.kcal)}</b> kcal</span><span>P <b>{round1(computed.protein)}</b></span><span>C <b>{round1(computed.carbs)}</b></span><span>G <b>{round1(computed.fat)}</b></span><span style={{ opacity: .7 }}>· {sel.name} · {grams} g</span></div>}
+          {computed && <div className="ft-prev"><span><b>{Math.round(computed.kcal)}</b> kcal</span><span>P <b>{round1(computed.protein)}</b></span><span>C <b>{round1(computed.carbs)}</b></span><span>G <b>{round1(computed.fat)}</b></span><span style={{ opacity: .7 }}>· {sel.name} · {grams} {sel.unit || "g"}</span></div>}
         </>))}
 
         {mode === "receta" && (recipes.length === 0 ? (
@@ -984,7 +1006,7 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
               <div key={n.id} style={{ display: "grid", gridTemplateColumns: "1fr auto auto", alignItems: "center", gap: 14, padding: "12px 0", borderBottom: idx < dayItems.length - 1 ? `1px solid ${A_HAIR}` : "none" }}>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontWeight: 600, fontSize: 15 }}>{n.name}</div>
-                  <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, marginTop: 2 }}>{n.grams ? `${n.grams} g · ` : ""}P {Math.round(n.protein)} · C {Math.round(n.carbs)} · G {Math.round(n.fat)}</div>
+                  <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, marginTop: 2 }}>{n.grams ? `${n.grams} ${n.unit || "g"} · ` : ""}P {Math.round(n.protein)} · C {Math.round(n.carbs)} · G {Math.round(n.fat)}</div>
                 </div>
                 <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 20, color: A_ACC, fontVariantNumeric: "tabular-nums" }}>{Math.round(n.kcal)}<span style={{ fontSize: 11, fontFamily: A_MONO, color: A_INK2, marginLeft: 3 }}>kcal</span></div>
                 <button className="ft-trash" onClick={() => del(n.id)}><Trash2 size={16} /></button>
@@ -1000,7 +1022,7 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
 /* ----------------------------- LIBRARY (alimentos + catálogo + recetas) ----------------------------- */
 export function Library({ foods, setFoods, recipes, setRecipes }) {
   const [view, setView] = useState("mis");
-  const [f, setF] = useState({ name: "", kcal: "", protein: "", carbs: "", fat: "" });
+  const [f, setF] = useState({ name: "", kcal: "", protein: "", carbs: "", fat: "", unit: "g" });
   const [editId, setEditId] = useState(null); const [q, setQ] = useState("");
   const [catFilter, setCatFilter] = useState("Todas"); const [catQ, setCatQ] = useState("");
   // recetas
@@ -1010,21 +1032,21 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
   const existing = useMemo(() => new Set(foods.map((x) => x.name.toLowerCase())), [foods]);
   const save = () => {
     if (!f.name.trim()) return;
-    const data = { name: f.name.trim(), kcal: +f.kcal || 0, protein: +f.protein || 0, carbs: +f.carbs || 0, fat: +f.fat || 0 };
+    const data = { name: f.name.trim(), kcal: +f.kcal || 0, protein: +f.protein || 0, carbs: +f.carbs || 0, fat: +f.fat || 0, unit: f.unit || "g" };
     setFoods((p) => (editId ? p.map((x) => x.id === editId ? { ...x, ...data } : x) : [...p, { id: uid(), ...data }]).sort((a, b) => a.name.localeCompare(b.name)));
-    setF({ name: "", kcal: "", protein: "", carbs: "", fat: "" }); setEditId(null);
+    setF({ name: "", kcal: "", protein: "", carbs: "", fat: "", unit: "g" }); setEditId(null);
   };
-  const edit = (food) => { setView("mis"); setEditId(food.id); setF({ name: food.name, kcal: food.kcal, protein: food.protein, carbs: food.carbs, fat: food.fat }); };
+  const edit = (food) => { setView("mis"); setEditId(food.id); setF({ name: food.name, kcal: food.kcal, protein: food.protein, carbs: food.carbs, fat: food.fat, unit: food.unit || "g" }); };
   const del = (id) => { setFoods((p) => p.filter((x) => x.id !== id)); if (editId === id) setEditId(null); };
   const addCat = (item) => { if (existing.has(item.name.toLowerCase())) return; setFoods((p) => [...p, { id: uid(), ...item }].sort((a, b) => a.name.localeCompare(b.name))); };
-  const addCategory = (cat) => { const add = CATALOG.filter((i) => i.cat === cat && !existing.has(i.name.toLowerCase())).map((i) => ({ id: uid(), name: i.name, kcal: i.kcal, protein: i.protein, carbs: i.carbs, fat: i.fat })); if (add.length) setFoods((p) => [...p, ...add].sort((a, b) => a.name.localeCompare(b.name))); };
+  const addCategory = (cat) => { const add = CATALOG.filter((i) => i.cat === cat && !existing.has(i.name.toLowerCase())).map((i) => ({ id: uid(), name: i.name, kcal: i.kcal, protein: i.protein, carbs: i.carbs, fat: i.fat, unit: i.unit || "g" })); if (add.length) setFoods((p) => [...p, ...add].sort((a, b) => a.name.localeCompare(b.name))); };
 
   const myList = foods.filter((x) => x.name.toLowerCase().includes(q.toLowerCase()));
   const catItems = CATALOG.filter((i) => (catFilter === "Todas" || i.cat === catFilter) && i.name.toLowerCase().includes(catQ.toLowerCase()));
   const catsToShow = catFilter === "Todas" ? CATALOG_CATS : [catFilter];
 
   // recetas
-  const addRItem = () => { if (!rSel || !rGrams) return; const c = scaleFood(rSel, rGrams); setRItems((p) => [...p, { id: uid(), name: rSel.name, grams: Number(rGrams), kcal: round1(c.kcal), protein: round1(c.protein), carbs: round1(c.carbs), fat: round1(c.fat) }]); setRSel(null); setRGrams(""); };
+  const addRItem = () => { if (!rSel || !rGrams) return; const c = scaleFood(rSel, rGrams); setRItems((p) => [...p, { id: uid(), name: rSel.name, grams: Number(rGrams), unit: rSel.unit || "g", kcal: round1(c.kcal), protein: round1(c.protein), carbs: round1(c.carbs), fat: round1(c.fat) }]); setRSel(null); setRGrams(""); };
   const delRItem = (id) => setRItems((p) => p.filter((x) => x.id !== id));
   const rTotal = rItems.reduce((t, i) => ({ kcal: t.kcal + i.kcal, protein: t.protein + i.protein, carbs: t.carbs + i.carbs, fat: t.fat + i.fat }), { kcal: 0, protein: 0, carbs: 0, fat: 0 });
   const saveRecipe = () => { if (!rName.trim() || rItems.length === 0) return; setRecipes((p) => [...p, { id: uid(), name: rName.trim(), servings: Number(rServings) || 1, items: rItems }]); setRName(""); setRServings("1"); setRItems([]); };
@@ -1042,22 +1064,25 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
 
       {view === "mis" && (<>
         <div className="ft-card">
-          <h2><Plus size={16} /> {editId ? "Editar alimento" : "Añadir alimento"} <span className="tag">por 100 g</span></h2>
-          <div className="ft-row" style={{ marginBottom: 10 }}><div className="ft-field" style={{ flex: 3, minWidth: 150 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Pechuga de pollo (cruda)" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></div></div>
+          <h2><Plus size={16} /> {editId ? "Editar alimento" : "Añadir alimento"} <span className="tag">por 100 {f.unit}</span></h2>
+          <div className="ft-row" style={{ marginBottom: 10 }}>
+            <div className="ft-field" style={{ flex: 3, minWidth: 150 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Pechuga de pollo (cruda)" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></div>
+            <div className="ft-field" style={{ maxWidth: 130 }}><label>Se mide en</label><select className="ft-select" value={f.unit} onChange={(e) => setF({ ...f, unit: e.target.value })}><option value="g">Sólido (g)</option><option value="ml">Líquido (ml)</option></select></div>
+          </div>
           <div className="ft-row">
-            <div className="ft-field"><label>Kcal/100g</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.kcal} onChange={(e) => setF({ ...f, kcal: e.target.value })} /></div>
-            <div className="ft-field"><label>Prot/100g</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.protein} onChange={(e) => setF({ ...f, protein: e.target.value })} /></div>
-            <div className="ft-field"><label>Carb/100g</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.carbs} onChange={(e) => setF({ ...f, carbs: e.target.value })} /></div>
-            <div className="ft-field"><label>Grasa/100g</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.fat} onChange={(e) => setF({ ...f, fat: e.target.value })} onKeyDown={(e) => e.key === "Enter" && save()} /></div>
+            <div className="ft-field"><label>Kcal/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.kcal} onChange={(e) => setF({ ...f, kcal: e.target.value })} /></div>
+            <div className="ft-field"><label>Prot/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.protein} onChange={(e) => setF({ ...f, protein: e.target.value })} /></div>
+            <div className="ft-field"><label>Carb/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.carbs} onChange={(e) => setF({ ...f, carbs: e.target.value })} /></div>
+            <div className="ft-field"><label>Grasa/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.fat} onChange={(e) => setF({ ...f, fat: e.target.value })} onKeyDown={(e) => e.key === "Enter" && save()} /></div>
             <button className="ft-btn" onClick={save}>{editId ? <Check size={15} /> : <Plus size={15} />} {editId ? "Guardar" : "Añadir"}</button>
-            {editId && <button className="ft-btn ghost" onClick={() => { setEditId(null); setF({ name: "", kcal: "", protein: "", carbs: "", fat: "" }); }}><X size={15} /></button>}
+            {editId && <button className="ft-btn ghost" onClick={() => { setEditId(null); setF({ name: "", kcal: "", protein: "", carbs: "", fat: "", unit: "g" }); }}><X size={15} /></button>}
           </div>
         </div>
         <div className="ft-card">
           <h2><Apple size={16} /> Mis alimentos <span className="tag">{foods.length}</span></h2>
           {foods.length === 0 ? <div className="ft-empty">Aún no has guardado alimentos.<div style={{ marginTop: 12 }}><button className="ft-btn" onClick={() => setView("catalogo")}><Apple size={15} /> Cargar desde el catálogo</button></div></div> : (<>
             {foods.length > 6 && <input className="ft-input" placeholder="Buscar…" value={q} onChange={(e) => setQ(e.target.value)} style={{ marginBottom: 12 }} />}
-            <div className="ft-list">{myList.map((x) => (<div className="ft-li" key={x.id}><span className="li-main">{x.name}</span><span className="li-sub">{x.kcal} kcal · P {x.protein} · C {x.carbs} · G {x.fat} <span style={{ opacity: .6 }}>/100g</span></span><button className="ft-trash" onClick={() => edit(x)}><Pencil size={15} /></button><button className="ft-trash" onClick={() => del(x.id)}><Trash2 size={15} /></button></div>))}</div>
+            <div className="ft-list">{myList.map((x) => (<div className="ft-li" key={x.id}><span className="li-main">{x.name}</span><span className="li-sub">{x.kcal} kcal · P {x.protein} · C {x.carbs} · G {x.fat} <span style={{ opacity: .6 }}>/100{x.unit || "g"}</span></span><button className="ft-trash" onClick={() => edit(x)}><Pencil size={15} /></button><button className="ft-trash" onClick={() => del(x.id)}><Trash2 size={15} /></button></div>))}</div>
           </>)}
         </div>
       </>)}
@@ -1074,7 +1099,7 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
             const remaining = items.filter((i) => !existing.has(i.name.toLowerCase())).length;
             return (<div key={cat} style={{ marginBottom: 18 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}><h3 className="ft-h3">{cat}</h3>{remaining > 0 && <button className="ft-iconbtn" style={{ marginLeft: "auto" }} onClick={() => addCategory(cat)}><Plus size={13} /> Añadir todos ({remaining})</button>}</div>
-              <div className="ft-list">{items.map((i) => { const added = existing.has(i.name.toLowerCase()); return (<div className="ft-li" key={i.name}><span className="li-main">{i.name}</span><span className="li-sub">{i.kcal} kcal · P {i.protein} · C {i.carbs} · G {i.fat}</span><button className={"ft-btn" + (added ? " ghost" : "")} style={{ padding: "7px 12px" }} onClick={() => addCat(i)} disabled={added}>{added ? <><Check size={14} /> Añadido</> : <Plus size={14} />}</button></div>); })}</div>
+              <div className="ft-list">{items.map((i) => { const added = existing.has(i.name.toLowerCase()); return (<div className="ft-li" key={i.name}><span className="li-main">{i.name}</span><span className="li-sub">{i.kcal} kcal · P {i.protein} · C {i.carbs} · G {i.fat} <span style={{ opacity: .6 }}>/100{i.unit}</span></span><button className={"ft-btn" + (added ? " ghost" : "")} style={{ padding: "7px 12px" }} onClick={() => addCat(i)} disabled={added}>{added ? <><Check size={14} /> Añadido</> : <Plus size={14} />}</button></div>); })}</div>
             </div>);
           })}
           {catItems.length === 0 && <div className="ft-empty">Sin resultados.</div>}
@@ -1092,12 +1117,12 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
             </div>
             <div className="ft-row">
               <FoodCombo foods={foods} selected={rSel} onChange={setRSel} label="Ingrediente" />
-              <div className="ft-field" style={{ maxWidth: 120 }}><label>Gramos</label><input className="ft-input ft-mono" type="number" inputMode="decimal" placeholder="0" value={rGrams} onChange={(e) => setRGrams(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addRItem()} /></div>
+              <AmountField food={rSel} value={rGrams} onChange={setRGrams} onEnter={addRItem} />
               <button className="ft-btn ghost" onClick={addRItem} disabled={!rSel || !rGrams}><Plus size={15} /> Ingrediente</button>
             </div>
             {rItems.length > 0 && (<>
               <div className="ft-list" style={{ marginTop: 12 }}>
-                {rItems.map((i) => (<div className="ft-li" key={i.id}><span className="li-main">{i.name}<span className="li-sub" style={{ marginLeft: 8 }}>{i.grams} g</span></span><span className="li-v" style={{ color: "var(--accent)" }}>{Math.round(i.kcal)} kcal</span><button className="ft-trash" onClick={() => delRItem(i.id)}><Trash2 size={15} /></button></div>))}
+                {rItems.map((i) => (<div className="ft-li" key={i.id}><span className="li-main">{i.name}<span className="li-sub" style={{ marginLeft: 8 }}>{i.grams} {i.unit || "g"}</span></span><span className="li-v" style={{ color: "var(--accent)" }}>{Math.round(i.kcal)} kcal</span><button className="ft-trash" onClick={() => delRItem(i.id)}><Trash2 size={15} /></button></div>))}
               </div>
               <div className="ft-prev"><span style={{ opacity: .7 }}>Total:</span><span><b>{Math.round(rTotal.kcal)}</b> kcal</span><span>P <b>{round1(rTotal.protein)}</b></span><span>C <b>{round1(rTotal.carbs)}</b></span><span>G <b>{round1(rTotal.fat)}</b></span><span style={{ opacity: .7 }}>· {Math.round(rTotal.kcal / (Number(rServings) || 1))} kcal/porción</span></div>
               <div style={{ marginTop: 12 }}><button className="ft-btn" onClick={saveRecipe}><Check size={15} /> Guardar receta</button></div>
