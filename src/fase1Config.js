@@ -113,8 +113,13 @@ export const WARMUP = {
 // pista (lunes=1 … domingo=0). No restringe.
 // Esquema de ejercicio:
 //   { name, sets, reps, rpe, restSec, notes?, isOptional?, alternatives? }
-// Techo de RPE ~7 en esta fase (readaptación + déficit): las series de tope no
-// deberían superar RPE 7 aunque el historial muestre sesiones a RPE 9–10.
+// Readaptación completada (sin dolor, entrenamiento normal): cada sesión tiene
+// UN ejercicio ancla (el primero de la lista) cuya serie más pesada puede
+// llegar a RPE 8. El resto de los ejercicios de esa misma sesión se quedan en
+// RPE 6–7 (o 5–6 si son un "back-off" del mismo patrón, ej. segundo press
+// horizontal o segundo tirón vertical) para no acumular fatiga doble sobre el
+// mismo tejido. RPE 9–10 sigue evitándose como objetivo de rutina — es fallo
+// técnico, no autoregulación.
 // ============================================================================
 
 export const ROUTINE_TEMPLATES = [
@@ -129,17 +134,19 @@ export const ROUTINE_TEMPLATES = [
     estimatedMin: 45,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Press inclinado con mancuernas", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90,
-        notes: "Series de acercamiento antes del peso de trabajo; la última serie no debería superar RPE 7 en esta fase.",
-        alternatives: ["Press banca con mancuernas o barra ligera (alternar semana a semana en vez de hacer ambos el mismo día)"] },
-      { name: "Press militar sentado con mancuernas", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
-      { name: "Elevaciones laterales con mancuernas", sets: 3, reps: "12–15", rpe: "6–7", restSec: 60 },
-      { name: "Pájaros (deltoide posterior) con mancuernas", sets: 2, reps: "12–15", rpe: "6–7", restSec: 60 },
+      { name: "Press banca", sets: 3, reps: "8–10", rpe: "7–8", restSec: 120,
+        notes: "Ejercicio ancla del día: hacelo primero, con la cabeza fresca, y es el único que podés llevar a RPE 8. Series de acercamiento antes del peso de trabajo." },
+      { name: "Press inclinado", sets: 2, reps: "8–10", rpe: "5–6", restSec: 90,
+        notes: "Segundo press horizontal del día: dejá más reserva que en la banca plana para no acumular demasiada fatiga de pecho/hombro en el mismo patrón.",
+        alternatives: ["Press militar de pie si el hombro molesta al presionar en banco inclinado"] },
+      { name: "Press militar", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
+      { name: "Elevaciones laterales", sets: 3, reps: "12–15", rpe: "6–7", restSec: 60 },
+      { name: "Pájaros (deltoide posterior)", sets: 2, reps: "12–15", rpe: "6–7", restSec: 60 },
     ],
     minimalVersion: {
       durationMin: "18–20",
       exercises: [
-        { name: "Press inclinado", sets: 2, reps: "10" },
+        { name: "Press banca", sets: 2, reps: "10" },
         { name: "Press militar", sets: 2, reps: "10" },
         { name: "Elevaciones laterales", sets: 2, reps: "12" },
       ],
@@ -157,12 +164,13 @@ export const ROUTINE_TEMPLATES = [
     estimatedMin: 45,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Dominadas (con lastre solo si podés dejar reserva)", sets: 3, reps: "5–6", rpe: "6–7", restSec: 120,
-        notes: "Si las últimas series terminan en RPE 9–10 con muy pocas repeticiones, es señal de bajar el lastre en la próxima sesión: el objetivo es dejar 2–3 repeticiones en reserva, no llegar al fallo. Subir peso o reps solo después de 2 sesiones seguidas cerrando cómoda en RPE 6–7.",
-        alternatives: ["Jalón al pecho en polea (misma pauta de RPE) si el hombro se siente inestable colgando lastre"] },
-      { name: "Remo (polea, TRX o mancuerna apoyada)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
-      { name: "Jalón al pecho en polea", sets: 2, reps: "10–12", rpe: "6–7", restSec: 75 },
-      { name: "Curl bíceps con mancuernas", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60 },
+      { name: "Dominadas", sets: 3, reps: "5–6", rpe: "6–8", restSec: 120,
+        notes: "Ejercicio ancla del día: la serie más pesada puede llegar a RPE 8. Usá lastre solo si podés mantener esa reserva; si termina en RPE 9–10 con muy pocas repeticiones, bajá el lastre la próxima sesión. Subir peso o reps solo después de 2 sesiones seguidas cerrando cómoda en el RPE objetivo.",
+        alternatives: ["Jalón al pecho (misma pauta de RPE) si el hombro se siente inestable colgando lastre"] },
+      { name: "Remo", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
+      { name: "Jalón al pecho", sets: 2, reps: "10–12", rpe: "5–6", restSec: 75,
+        notes: "Segundo tirón vertical del día (después de dominadas): dejá más reserva para no acumular demasiada fatiga de dorsal/bíceps en el mismo patrón." },
+      { name: "Curl bíceps", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60 },
     ],
     minimalVersion: {
       durationMin: "18–20",
@@ -182,17 +190,21 @@ export const ROUTINE_TEMPLATES = [
     suggestedDay: 1,        // pista: lunes
     mandatory: false,
     intensity: "Moderada",
-    estimatedMin: 50,
+    estimatedMin: 55,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Peso muerto rumano (mancuernas o barra ligera)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90,
-        notes: "Mantené la rampa que ya usás: 1–2 series de acercamiento livianas antes del peso de trabajo. La serie más pesada no debería superar RPE 7 en esta fase.",
+      { name: "Peso muerto rumano", sets: 3, reps: "8–10", rpe: "7–8", restSec: 120,
+        notes: "Ejercicio ancla del día: mantené la rampa que ya usás (1–2 series de acercamiento livianas antes del peso de trabajo); la serie más pesada puede llegar a RPE 8.",
         alternatives: ["Bisagra de cadera sin peso o con banda (3×12) si aparece molestia lumbar al bajar"] },
-      { name: "Step-up (escalón bajo o mediano)", sets: 3, reps: "8–10 por pierna", rpe: "6–7", restSec: 75,
+      { name: "Sentadilla búlgara", sets: 3, reps: "8–10 por lado", rpe: "6–7", restSec: 75,
+        notes: "Va segunda en el orden, con equilibrio y técnica todavía frescos. Es unilateral y carga más cuádriceps/glúteo de la pierna de atrás — no es lo mismo que la sentadilla sumo (bilateral, más aductor/glúteo). Si el objetivo del día es más aductor/bilateral, reemplazala por sentadilla sumo (3×10); es una elección según qué querés priorizar, no un sustituto genérico.",
+        alternatives: ["Puente de glúteo con disco (3×12) si hay molestia de rodilla en búlgara o en sumo"] },
+      { name: "Step-up", sets: 3, reps: "8–10 por pierna", rpe: "6–7", restSec: 75,
         notes: "Subí la altura del escalón solo después de 2 sesiones seguidas en RPE 6–7 con la altura actual.",
         alternatives: ["Hip thrust (3×10–12) si la rodilla de apoyo molesta al subir con carga"] },
-      { name: "Sentadilla búlgara o sumo (alternar)", sets: 3, reps: "8–10 por lado / 10", rpe: "6–7", restSec: 75,
-        alternatives: ["Puente de glúteo con disco (3×12) si hay molestia de rodilla en la variante cargada"] },
+      { name: "Curl femoral (máquina)", sets: 2, reps: "10–12", rpe: "6", restSec: 60,
+        notes: "Cierre para isquiotibiales en flexión de rodilla — un ángulo que el peso muerto rumano no cubre (ese trabaja isquio en extensión de cadera). Es complementario, no busques RPE alto acá.",
+        alternatives: ["Puente de glúteo a una pierna (2×12 por lado) si la rodilla molesta al flexionar contra resistencia"] },
       { name: "Rueda abdominal", sets: 2, reps: "8–12", rpe: "6–7", restSec: 45, isOptional: true,
         alternatives: ["Plancha frontal (3×20–30 s) si aparece molestia lumbar al extender con la rueda"] },
     ],
@@ -217,10 +229,10 @@ export const ROUTINE_TEMPLATES = [
     estimatedMin: 35,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Sentadilla (barra ligera, goblet o con disco)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90,
-        notes: "Rampa de acercamiento antes del peso de trabajo; la última serie no debería superar RPE 7 en esta fase — evitá repetir el patrón de llegar a RPE 10 en la última serie.",
-        alternatives: ["Sentadilla goblet (mancuerna o disco) si la barra genera molestia lumbar o de rodilla"] },
-      { name: "Extensión de cuádriceps (banda o polea)", sets: 2, reps: "10–12", rpe: "5–6", restSec: 60,
+      { name: "Sentadilla", sets: 3, reps: "8–10", rpe: "7–8", restSec: 120,
+        notes: "Ejercicio ancla del día: rampa de acercamiento antes del peso de trabajo; la serie más pesada puede llegar a RPE 8 — evitá seguir empujando hasta RPE 10, ahí ya no queda reserva real.",
+        alternatives: ["Sentadilla goblet si la barra genera molestia lumbar o de rodilla"] },
+      { name: "Extensión de cuádriceps", sets: 2, reps: "10–12", rpe: "5–6", restSec: 60,
         notes: "Es un ejercicio de cierre, no una segunda serie máxima: dejá buena reserva porque la sentadilla ya fue el esfuerzo principal del día." },
     ],
     minimalVersion: {
@@ -243,11 +255,12 @@ export const ROUTINE_TEMPLATES = [
     estimatedMin: 25,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Curl bíceps con mancuernas", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60,
-        notes: "Si este día se suma después de tracción o empuje, quedate en 2 series para no acumular fatiga extra sobre el mismo tejido." },
-      { name: "Extensión tríceps (mancuerna o banda)", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60 },
+      { name: "Pallof press", sets: 2, reps: "15–20", rpe: "6", restSec: 45,
+        notes: "Va primero: necesita hombro/agarre estable para resistir la rotación, algo que se pierde si ya hiciste curl/extensión antes." },
       { name: "Reverse crunch", sets: 2, reps: "10–12", rpe: "6–7", restSec: 45 },
-      { name: "Pallof press (banda)", sets: 2, reps: "15–20", rpe: "6", restSec: 45 },
+      { name: "Curl bíceps", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60,
+        notes: "Si este día se suma después de tracción o empuje, quedate en 2 series para no acumular fatiga extra sobre el mismo tejido." },
+      { name: "Extensión tríceps", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60 },
     ],
     minimalVersion: null,   // ya es una sesión corta
   },
