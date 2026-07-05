@@ -158,6 +158,8 @@ const LIQUID_MEASURES = [["1 cdta", 5], ["1 cda", 15], ["¼ taza", 60], ["½ taz
 
 const validateBackup = (value) => validateBackupData(value, DEFAULT_GOALS);
 const migrateWorkouts = (workouts) => migrateWorkoutData(workouts, MUSCLES[0]);
+const CATALOG_UNIT_BY_NAME = new Map(CATALOG.map((c) => [c.name.toLowerCase(), c.unit]));
+const migrateFoodUnits = (foods) => foods.map((f) => (f.unit ? f : { ...f, unit: CATALOG_UNIT_BY_NAME.get(f.name.toLowerCase()) || "g" }));
 const scaleFood = (food, g) => { const k = (Number(g) || 0) / 100; return { kcal: food.kcal * k, protein: food.protein * k, carbs: food.carbs * k, fat: food.fat * k }; };
 
 async function sha256(s) {
@@ -421,7 +423,7 @@ export default function App() {
         setWorkouts(migrateWorkouts(nextWorkouts));
         setWeights(nextWeights);
         setNutrition(nextNutrition);
-        setFoods(nextFoods);
+        setFoods(migrateFoodUnits(nextFoods));
         setRecipes(nextRecipes);
         setRoutines(nextRoutines);
         setMeasurements(nextMeasurements);
@@ -518,7 +520,7 @@ export default function App() {
         if (d.workouts) setWorkouts(migrateWorkouts(d.workouts));
         if (d.weights) setWeights(d.weights);
         if (d.nutrition) setNutrition(d.nutrition);
-        if (d.foods) setFoods(d.foods);
+        if (d.foods) setFoods(migrateFoodUnits(d.foods));
         if (d.recipes) setRecipes(d.recipes);
         if (d.routines) setRoutines(d.routines);
         if (d.measurements) setMeasurements(d.measurements);
