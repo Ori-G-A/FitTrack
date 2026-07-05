@@ -107,108 +107,149 @@ export const WARMUP = {
 // ============================================================================
 // 3. PLANTILLAS DE RUTINA (seleccionables, NO obligatorias por día)
 // ----------------------------------------------------------------------------
-// `suggestedDay` es SOLO una pista (lunes=1 … domingo=0). No restringe.
+// Split real de la usuaria (derivado de su historial de entrenamientos, no de
+// un programa genérico): Empuje / Tracción / Pierna-cadera / Pierna-cuádriceps
+// + un día accesorio opcional de core y brazos. `suggestedDay` es SOLO una
+// pista (lunes=1 … domingo=0). No restringe.
 // Esquema de ejercicio:
 //   { name, sets, reps, rpe, restSec, notes?, isOptional?, alternatives? }
+// Techo de RPE ~7 en esta fase (readaptación + déficit): las series de tope no
+// deberían superar RPE 7 aunque el historial muestre sesiones a RPE 9–10.
 // ============================================================================
 
 export const ROUTINE_TEMPLATES = [
-  // ---------------------------------------------------------------- Fuerza A
+  // ---------------------------------------------------------------- Empuje
   {
-    id: "fuerza-a",
-    name: "Fuerza A — Sentadilla + empuje + espalda",
-    focus: "Cuerpo completo (moderada)",
+    id: "empuje",
+    name: "Empuje — Press horizontal/inclinado + hombro",
+    focus: "Empuje (pecho, hombro, tríceps)",
     suggestedDay: 2,        // pista: martes
+    mandatory: false,
+    intensity: "Moderada",
+    estimatedMin: 45,
+    warmupId: "warmup-fase1",
+    exercises: [
+      { name: "Press inclinado con mancuernas", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90,
+        notes: "Series de acercamiento antes del peso de trabajo; la última serie no debería superar RPE 7 en esta fase.",
+        alternatives: ["Press banca con mancuernas o barra ligera (alternar semana a semana en vez de hacer ambos el mismo día)"] },
+      { name: "Press militar sentado con mancuernas", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
+      { name: "Elevaciones laterales con mancuernas", sets: 3, reps: "12–15", rpe: "6–7", restSec: 60 },
+      { name: "Pájaros (deltoide posterior) con mancuernas", sets: 2, reps: "12–15", rpe: "6–7", restSec: 60 },
+    ],
+    minimalVersion: {
+      durationMin: "18–20",
+      exercises: [
+        { name: "Press inclinado", sets: 2, reps: "10" },
+        { name: "Press militar", sets: 2, reps: "10" },
+        { name: "Elevaciones laterales", sets: 2, reps: "12" },
+      ],
+    },
+  },
+
+  // ---------------------------------------------------------------- Tracción
+  {
+    id: "traccion",
+    name: "Tracción — Dominadas, remo y bíceps",
+    focus: "Tracción (espalda, bíceps)",
+    suggestedDay: 4,        // pista: jueves
+    mandatory: false,
+    intensity: "Moderada",
+    estimatedMin: 45,
+    warmupId: "warmup-fase1",
+    exercises: [
+      { name: "Dominadas (con lastre solo si podés dejar reserva)", sets: 3, reps: "5–6", rpe: "6–7", restSec: 120,
+        notes: "Si las últimas series terminan en RPE 9–10 con muy pocas repeticiones, es señal de bajar el lastre en la próxima sesión: el objetivo es dejar 2–3 repeticiones en reserva, no llegar al fallo. Subir peso o reps solo después de 2 sesiones seguidas cerrando cómoda en RPE 6–7.",
+        alternatives: ["Jalón al pecho en polea (misma pauta de RPE) si el hombro se siente inestable colgando lastre"] },
+      { name: "Remo (polea, TRX o mancuerna apoyada)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
+      { name: "Jalón al pecho en polea", sets: 2, reps: "10–12", rpe: "6–7", restSec: 75 },
+      { name: "Curl bíceps con mancuernas", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60 },
+    ],
+    minimalVersion: {
+      durationMin: "18–20",
+      exercises: [
+        { name: "Remo", sets: 2, reps: "10" },
+        { name: "Jalón al pecho", sets: 2, reps: "10" },
+        { name: "Curl bíceps", sets: 2, reps: "10" },
+      ],
+    },
+  },
+
+  // ---------------------------------------------------------- Pierna (cadera)
+  {
+    id: "pierna-cadera",
+    name: "Pierna — Cadera, glúteo e isquios",
+    focus: "Pierna (cadena posterior)",
+    suggestedDay: 1,        // pista: lunes
     mandatory: false,
     intensity: "Moderada",
     estimatedMin: 50,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Sentadilla goblet (mancuerna o disco)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
-      { name: "Press de pecho con mancuernas (banco plano)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
-      { name: "Remo en TRX", sets: 3, reps: "8–12", rpe: "6–7", restSec: 90 },
-      { name: "Step-up bajo en escalera", sets: 2, reps: "8 por pierna", rpe: "6", restSec: 60,
-        notes: "Escalón bajo y controlado, sin buscar altura.",
-        alternatives: ["Puente de glúteo en piso con disco (2×12) si molesta la cadera"] },
-      { name: "Press militar sentado con mancuernas", sets: 2, reps: "8–10", rpe: "6", restSec: 60 },
-      { name: "Plancha frontal", sets: 3, reps: "20–35 s", rpe: "6–7", restSec: 45 },
-      { name: "Estiramiento flexor de cadera + espalda alta", sets: 1, reps: "2 min", rpe: "—", restSec: 0 },
+      { name: "Peso muerto rumano (mancuernas o barra ligera)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90,
+        notes: "Mantené la rampa que ya usás: 1–2 series de acercamiento livianas antes del peso de trabajo. La serie más pesada no debería superar RPE 7 en esta fase.",
+        alternatives: ["Bisagra de cadera sin peso o con banda (3×12) si aparece molestia lumbar al bajar"] },
+      { name: "Step-up (escalón bajo o mediano)", sets: 3, reps: "8–10 por pierna", rpe: "6–7", restSec: 75,
+        notes: "Subí la altura del escalón solo después de 2 sesiones seguidas en RPE 6–7 con la altura actual.",
+        alternatives: ["Hip thrust (3×10–12) si la rodilla de apoyo molesta al subir con carga"] },
+      { name: "Sentadilla búlgara o sumo (alternar)", sets: 3, reps: "8–10 por lado / 10", rpe: "6–7", restSec: 75,
+        alternatives: ["Puente de glúteo con disco (3×12) si hay molestia de rodilla en la variante cargada"] },
+      { name: "Rueda abdominal", sets: 2, reps: "8–12", rpe: "6–7", restSec: 45, isOptional: true,
+        alternatives: ["Plancha frontal (3×20–30 s) si aparece molestia lumbar al extender con la rueda"] },
     ],
     minimalVersion: {
-      durationMin: "18–22",
+      durationMin: "20–22",
       exercises: [
-        { name: "Sentadilla goblet", sets: 2, reps: "10" },
-        { name: "Press de pecho", sets: 2, reps: "10" },
-        { name: "Remo TRX", sets: 2, reps: "10" },
+        { name: "Peso muerto rumano", sets: 2, reps: "8" },
+        { name: "Step-up", sets: 2, reps: "8 por pierna" },
         { name: "Plancha", sets: 2, reps: "25 s" },
       ],
     },
   },
 
-  // ---------------------------------------------------------------- Fuerza B
+  // ------------------------------------------------------- Pierna (cuádriceps)
   {
-    id: "fuerza-b",
-    name: "Fuerza B — Bisagra + espalda + estabilidad",
-    focus: "Cadena posterior (moderada)",
-    suggestedDay: 4,        // pista: jueves
+    id: "pierna-cuadriceps",
+    name: "Pierna — Cuádriceps",
+    focus: "Pierna (cuádriceps)",
+    suggestedDay: 5,        // pista: viernes
     mandatory: false,
     intensity: "Moderada",
-    estimatedMin: 50,
+    estimatedMin: 35,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Peso muerto rumano (mancuernas o barra ligera)", sets: 3, reps: "8", rpe: "6", restSec: 90,
-        notes: "Bajar solo hasta mantener columna neutra; no hace falta tocar el piso. Si se siente más en lumbar que en isquios/glúteo, reducir carga o rango." },
-      { name: "Jalón en polea o remo TRX más vertical", sets: 3, reps: "10–12", rpe: "6–7", restSec: 90 },
-      { name: "Press inclinado con mancuernas", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
-      { name: "Curl femoral con toalla", sets: 2, reps: "10–12", rpe: "6", restSec: 60,
-        alternatives: ["Puente de glúteo (2×12)"] },
-      { name: "Face pull con banda o polea", sets: 2, reps: "12–15", rpe: "6", restSec: 60 },
-      { name: "Bird dog lento", sets: 3, reps: "6 por lado", rpe: "6", restSec: 45 },
-      { name: "Rotación torácica en piso", sets: 1, reps: "8 por lado", rpe: "—", restSec: 0 },
+      { name: "Sentadilla (barra ligera, goblet o con disco)", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90,
+        notes: "Rampa de acercamiento antes del peso de trabajo; la última serie no debería superar RPE 7 en esta fase — evitá repetir el patrón de llegar a RPE 10 en la última serie.",
+        alternatives: ["Sentadilla goblet (mancuerna o disco) si la barra genera molestia lumbar o de rodilla"] },
+      { name: "Extensión de cuádriceps (banda o polea)", sets: 2, reps: "10–12", rpe: "5–6", restSec: 60,
+        notes: "Es un ejercicio de cierre, no una segunda serie máxima: dejá buena reserva porque la sentadilla ya fue el esfuerzo principal del día." },
     ],
     minimalVersion: {
-      durationMin: "18–22",
+      durationMin: "15–18",
       exercises: [
-        { name: "Peso muerto rumano", sets: 2, reps: "8" },
-        { name: "Jalón o remo TRX", sets: 2, reps: "10" },
-        { name: "Press inclinado", sets: 2, reps: "10" },
-        { name: "Bird dog", sets: 2, reps: "6 por lado" },
+        { name: "Sentadilla", sets: 2, reps: "8" },
+        { name: "Extensión de cuádriceps", sets: 2, reps: "10" },
       ],
     },
   },
 
-  // ---------------------------------------------------------------- Fuerza C
+  // ------------------------------------------------------- Accesorio (opcional)
   {
-    id: "fuerza-c",
-    name: "Fuerza C — Sesión principal",
-    focus: "Cuerpo completo (principal)",
+    id: "accesorio-core-brazos",
+    name: "Accesorio — Core y brazos (opcional)",
+    focus: "Accesorio (core, bíceps, tríceps)",
     suggestedDay: 6,        // pista: sábado
     mandatory: false,
-    intensity: "Principal",
-    estimatedMin: 55,
+    intensity: "Amable",
+    estimatedMin: 25,
     warmupId: "warmup-fase1",
     exercises: [
-      { name: "Sentadilla con barra ligera o goblet pesada", sets: 4, reps: "6–8", rpe: "6–7", restSec: 90,
-        notes: "Si hay cansancio fuerte o SPM intenso, cambiar por goblet squat.",
-        alternatives: ["Goblet squat (4×8)"] },
-      { name: "Press de pecho con mancuernas o barra", sets: 3, reps: "8", rpe: "7", restSec: 90 },
-      { name: "Remo en polea/TRX o con mancuerna apoyada", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
-      { name: "Hip thrust", sets: 3, reps: "10–12", rpe: "7", restSec: 60, isOptional: true,
-        notes: "Solo si el banco se siente estable y la posición no genera molestias.",
-        alternatives: ["Puente de glúteo con disco (3×12)"] },
-      { name: "Elevaciones laterales con mancuernas", sets: 2, reps: "12–15", rpe: "6–7", restSec: 60 },
-      { name: "Curl bíceps + extensión tríceps (polea o banda)", sets: 2, reps: "10–12 c/u", rpe: "6–7", restSec: 60 },
-      { name: "Plancha lateral (rodilla apoyada o completa)", sets: 2, reps: "20–30 s por lado", rpe: "6", restSec: 45 },
+      { name: "Curl bíceps con mancuernas", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60,
+        notes: "Si este día se suma después de tracción o empuje, quedate en 2 series para no acumular fatiga extra sobre el mismo tejido." },
+      { name: "Extensión tríceps (mancuerna o banda)", sets: 2, reps: "10–12", rpe: "6–7", restSec: 60 },
+      { name: "Reverse crunch", sets: 2, reps: "10–12", rpe: "6–7", restSec: 45 },
+      { name: "Pallof press (banda)", sets: 2, reps: "15–20", rpe: "6", restSec: 45 },
     ],
-    minimalVersion: {
-      durationMin: "20–24",
-      exercises: [
-        { name: "Sentadilla", sets: 2, reps: "8" },
-        { name: "Press pecho", sets: 2, reps: "8" },
-        { name: "Remo", sets: 2, reps: "10" },
-        { name: "Puente de glúteo", sets: 2, reps: "12" },
-      ],
-    },
+    minimalVersion: null,   // ya es una sesión corta
   },
 
   // ----------------------------------------------------------- Domingo amable
@@ -271,13 +312,17 @@ export function suggestRoutineForDay(date = new Date()) {
 // ============================================================================
 
 const MUSCLE_KEYWORDS = [
+  // Orden importa: los patrones más específicos van antes que los que se
+  // solapan (ej. "jalón al pecho" debe caer en Espalda, no en Pecho por
+  // contener "pecho"; "sentadilla búlgara" debe caer en Glúteos, no en
+  // Cuádriceps por contener "sentadilla").
   [/aducci[oó]n|aductor|sumo/i, "Aductores"],
+  [/hip thrust|puente|gl[uú]teo|abducci[oó]n|caminata lateral|b[uú]lgara/i, "Glúteos"],
   [/sentadilla|goblet|step-?up|prensa|zancad|cu[aá]driceps/i, "Cuádriceps"],
   [/peso muerto|rumano|bisagra|isquio|femoral/i, "Femoral"],
-  [/hip thrust|puente|gl[uú]teo|abducci[oó]n|caminata lateral/i, "Glúteos"],
-  [/press de pecho|press inclinado|press banca|pecho/i, "Pecho"],
-  [/press militar|elevaciones laterales|face pull|hombro/i, "Hombros"],
   [/remo|jal[oó]n|dominad|espalda|bird dog/i, "Espalda"],
+  [/press de pecho|press inclinado|press banca|pecho/i, "Pecho"],
+  [/press militar|elevaciones laterales|face pull|hombro|p[aá]jaros|deltoide/i, "Hombros"],
   [/curl b[ií]ceps|b[ií]ceps/i, "Bíceps"],
   [/tr[ií]ceps|fondos|extensi[oó]n tr/i, "Tríceps"],
   [/plancha|cat-?cow|rotaci[oó]n|respiraci[oó]n|core|abdom/i, "Core"],

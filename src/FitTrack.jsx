@@ -1189,7 +1189,7 @@ export function Routines({ routines, setRoutines }) {
         <h2><ListChecks size={16} /> Mis rutinas <span className="tag">{routines.length}</span></h2>
         <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
           <button className="ft-btn ghost" onClick={loadTemplates}><Download size={15} /> Cargar plantillas Fase 1</button>
-          <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 11, color: "var(--muted)" }}>{ROUTINE_TEMPLATES.length} rutinas guía · Fuerza A/B/C + sesión amable</span>
+          <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 11, color: "var(--muted)" }}>{ROUTINE_TEMPLATES.length} rutinas guía · Empuje/Tracción/Pierna + accesorio + amable</span>
         </div>
         {routines.length === 0 ? <div className="ft-empty">Aún no has creado rutinas. Usa “Cargar plantillas Fase 1” para empezar con las rutinas guía, o créalas a mano arriba.</div> : (
           <div className="ft-list">{routines.map((r) => (
