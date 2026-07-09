@@ -138,7 +138,7 @@ export const ROUTINE_TEMPLATES = [
         notes: "Ejercicio ancla del día: hacelo primero, con la cabeza fresca, y es el único que podés llevar a RPE 8. Series de acercamiento antes del peso de trabajo." },
       { name: "Press inclinado", sets: 2, reps: "8–10", rpe: "5–6", restSec: 90,
         notes: "Segundo press horizontal del día: dejá más reserva que en la banca plana para no acumular demasiada fatiga de pecho/hombro en el mismo patrón.",
-        alternatives: ["Press militar de pie si el hombro molesta al presionar en banco inclinado"] },
+        alternatives: ["Press plano con mancuernas en agarre neutro si el hombro molesta en el ángulo inclinado (bajá el ángulo, no lo subas: el press vertical exige más al hombro). Si aun así molesta, salteá este segundo press del día — el militar ya cubre el empuje vertical."] },
       { name: "Press militar", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
       { name: "Elevaciones laterales", sets: 3, reps: "12–15", rpe: "6–7", restSec: 60 },
       { name: "Pájaros (deltoide posterior)", sets: 2, reps: "12–15", rpe: "6–7", restSec: 60 },
@@ -166,7 +166,7 @@ export const ROUTINE_TEMPLATES = [
     exercises: [
       { name: "Dominadas", sets: 3, reps: "5–6", rpe: "6–8", restSec: 120,
         notes: "Ejercicio ancla del día: la serie más pesada puede llegar a RPE 8. Usá lastre solo si podés mantener esa reserva; si termina en RPE 9–10 con muy pocas repeticiones, bajá el lastre la próxima sesión. Subir peso o reps solo después de 2 sesiones seguidas cerrando cómoda en el RPE objetivo.",
-        alternatives: ["Jalón al pecho (misma pauta de RPE) si el hombro se siente inestable colgando lastre"] },
+        alternatives: ["Jalón al pecho (misma pauta de RPE) si el hombro se siente inestable colgando lastre. Ese día el jalón queda dos veces (pesado acá + back-off más abajo): es intencional — pesado y back-off del mismo ejercicio, no un descuido."] },
       { name: "Remo", sets: 3, reps: "8–10", rpe: "6–7", restSec: 90 },
       { name: "Jalón al pecho", sets: 2, reps: "10–12", rpe: "5–6", restSec: 75,
         notes: "Segundo tirón vertical del día (después de dominadas): dejá más reserva para no acumular demasiada fatiga de dorsal/bíceps en el mismo patrón." },
