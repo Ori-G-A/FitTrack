@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, mergePhotoUrls, migrateWorkouts, slopePerDay, validateBackup } from "../src/app-utils.js";
+import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, slopePerDay, validateBackup } from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -63,6 +63,78 @@ test("validateBackup accepts image data and workout structure", () => {
   assert.equal(backup.workouts.length, 1);
   assert.equal(backup.menstrualLogs.length, 1);
   assert.equal(backup.photos.length, 1);
+});
+
+const workoutAt = (date, rpe, kg = 20, reps = 10, name = "Sentadilla goblet") => ({
+  date,
+  exercises: [{ name, sets: [{ kg, reps, rpe }] }],
+});
+
+test("matchedLoadRpeTrend detects rising RPE at equal load as fatigue", () => {
+  const result = matchedLoadRpeTrend([
+    workoutAt("2026-07-01", 7),
+    workoutAt("2026-07-03", 7.5),
+    workoutAt("2026-07-06", 8.5),
+  ]);
+  assert.deepEqual(result.fatigue, { name: "Sentadilla", kg: 20, reps: 10, from: 7, to: 8.5 });
+  assert.equal(result.fatigueCount, 1);
+  assert.equal(result.progress, null);
+});
+
+test("matchedLoadRpeTrend counts distinct fatigued exercises, not combos", () => {
+  const twoLifts = (date, rpeSquat, rpeRow) => ({
+    date,
+    exercises: [
+      { name: "Sentadilla goblet", sets: [{ kg: 20, reps: 10, rpe: rpeSquat }, { kg: 24, reps: 8, rpe: rpeSquat }] },
+      { name: "Remo con mancuerna", sets: [{ kg: 12, reps: 12, rpe: rpeRow }] },
+    ],
+  });
+  const result = matchedLoadRpeTrend([
+    twoLifts("2026-07-01", 7, 7),
+    twoLifts("2026-07-03", 7.5, 7.5),
+    twoLifts("2026-07-06", 8.5, 8.5),
+  ]);
+  // la sentadilla dispara en dos combos (20×10 y 24×8) pero cuenta una sola vez
+  assert.equal(result.fatigueCount, 2);
+});
+
+test("matchedLoadRpeTrend detects falling RPE at equal load as progress", () => {
+  const result = matchedLoadRpeTrend([
+    workoutAt("2026-07-01", 8.5),
+    workoutAt("2026-07-03", 8),
+    workoutAt("2026-07-06", 7),
+  ]);
+  assert.equal(result.fatigue, null);
+  assert.deepEqual(result.progress, { name: "Sentadilla", kg: 20, reps: 10, from: 8.5, to: 7 });
+});
+
+test("matchedLoadRpeTrend ignores noise, short streaks and mismatched loads", () => {
+  const NONE = { fatigue: null, fatigueCount: 0, progress: null };
+  // salto total <1 punto = ruido
+  assert.deepEqual(matchedLoadRpeTrend([
+    workoutAt("2026-07-01", 7), workoutAt("2026-07-03", 7.2), workoutAt("2026-07-06", 7.5),
+  ]), NONE);
+  // solo 2 sesiones a igual carga (la tercera cambia el kg)
+  assert.deepEqual(matchedLoadRpeTrend([
+    workoutAt("2026-07-01", 7), workoutAt("2026-07-03", 8), workoutAt("2026-07-06", 8.5, 22.5),
+  ]), NONE);
+  // bajada que termina arriba de RPE 8 no sugiere subir carga
+  assert.deepEqual(matchedLoadRpeTrend([
+    workoutAt("2026-07-01", 10), workoutAt("2026-07-03", 9.5), workoutAt("2026-07-06", 8.5),
+  ]), NONE);
+  // sets sin RPE no cuentan
+  assert.deepEqual(matchedLoadRpeTrend([
+    workoutAt("2026-07-01", 0), workoutAt("2026-07-03", 7), workoutAt("2026-07-06", 8.5),
+  ]), NONE);
+});
+
+test("matchedLoadRpeTrend merges tool variants via canonExercise and averages sets per day", () => {
+  const result = matchedLoadRpeTrend([
+    { date: "2026-07-01", exercises: [{ name: "Sentadilla goblet (mancuerna)", sets: [{ kg: 20, reps: 10, rpe: 6.5 }, { kg: 20, reps: 10, rpe: 7.5 }] }] },
+    workoutAt("2026-07-03", 8, 20, 10, "Sentadilla con barra ligera"),
+    workoutAt("2026-07-06", 9),
+  ]);
+  assert.deepEqual(result.fatigue, { name: "Sentadilla", kg: 20, reps: 10, from: 7, to: 9 });
 });
 
 test("migrateWorkouts supplies legacy defaults", () => {

@@ -44,6 +44,42 @@ if (import.meta.env?.DEV) {
   console.assert(canonExercise("Curl femoral con toalla") === "Curl femoral", "canon curl femoral");
 }
 
+// RPE a igual carga: para cada combinación (ejercicio canónico, kg, reps) con 3+
+// sesiones con RPE registrado, compara el RPE medio de las últimas 3 sesiones.
+// Subida sostenida >=1 punto = fatiga acumulada real (mejor señal de deload que
+// el RPE medio global, que mezcla cargas distintas). Bajada sostenida >=1 punto
+// terminando en RPE <=8 = adaptación: lista para subir carga o reps.
+// fatigueCount cuenta en cuántos ejercicios DISTINTOS aparece la fatiga: 1 puede
+// ser ese movimiento estancado; 2+ apunta a fatiga sistémica (semana de descarga).
+// ponytail: fatigue/progress guardan la primera coincidencia, no un ranking; con
+// el volumen de datos de una sola usuaria alcanza.
+export function matchedLoadRpeTrend(workouts) {
+  const byKey = {};
+  workouts.forEach((w) => (w.exercises || []).forEach((e) => (e.sets || []).forEach((s) => {
+    const kg = Number(s.kg) || 0, reps = Number(s.reps) || 0, rpe = parseFloat(s.rpe) || 0;
+    if (kg <= 0 || reps <= 0 || rpe <= 0) return;
+    const key = `${canonExercise(e.name)}|${kg}|${reps}`;
+    const days = byKey[key] = byKey[key] || {};
+    (days[w.date] = days[w.date] || []).push(rpe);
+  })));
+  const result = { fatigue: null, fatigueCount: 0, progress: null };
+  const fatigued = new Set();
+  Object.entries(byKey).forEach(([key, days]) => {
+    const dates = Object.keys(days).sort();
+    if (dates.length < 3) return;
+    const [a, b, c] = dates.slice(-3).map((d) => days[d].reduce((sum, v) => sum + v, 0) / days[d].length);
+    const [name, kg, reps] = key.split("|");
+    const info = { name, kg: Number(kg), reps: Number(reps), from: a, to: c };
+    if (a < b && b < c && c - a >= 1) {
+      if (!result.fatigue) result.fatigue = info;
+      fatigued.add(name);
+    }
+    if (!result.progress && a > b && b > c && a - c >= 1 && c <= 8) result.progress = info;
+  });
+  result.fatigueCount = fatigued.size;
+  return result;
+}
+
 export function mergePhotoUrls(currentPhotos, refreshedPhotos) {
   const signedUrls = new Map(
     refreshedPhotos

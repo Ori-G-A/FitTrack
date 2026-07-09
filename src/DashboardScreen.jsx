@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { CYCLE_PHASES, KCAL_PER_KG } from "./app-config.js";
-import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, slopePerDay } from "./app-utils.js";
+import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, slopePerDay } from "./app-utils.js";
 import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
@@ -265,23 +265,15 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     if (estimate.phase !== "luteal_late") return false;
     return symptomScore(menstrualLogs.find((log) => log.date === today)) >= 3;
   }, [completeCyclesCount, menstrualLogs, periods, wellness]);
-  // Cuenta, por combinación (ejercicio canónico, kg, reps), en cuántas sesiones
-  // distintas se repitió exactamente igual — la racha más larga es la mejor pista de
-  // qué tan lista está la data para comparar RPE a igual carga (no un simple average).
-  const matchedLoadStreak = useMemo(() => {
-    const byKey = {};
-    workouts.forEach((w) => w.exercises.forEach((e) => e.sets.forEach((s) => {
-      const kg = Number(s.kg) || 0, reps = Number(s.reps) || 0;
-      if (kg <= 0 || reps <= 0) return;
-      const key = `${canonExercise(e.name)}|${kg}|${reps}`;
-      (byKey[key] = byKey[key] || new Set()).add(w.date);
-    })));
-    let best = { exercise: null, count: 0 };
-    Object.entries(byKey).forEach(([key, dates]) => {
-      if (dates.size > best.count) best = { exercise: key.split("|")[0], count: dates.size };
-    });
-    return best;
-  }, [workouts]);
+  // RPE a igual carga (mismo ejercicio, kg y reps repetidos en 3+ sesiones):
+  // fatigue = RPE subiendo sostenido, progress = RPE bajando (lista para cargar más).
+  const loadRpe = useMemo(() => matchedLoadRpeTrend(workouts), [workouts]);
+  // Energía baja (<=2/5) reportada 3+ días en la última semana: combinada con una
+  // señal de RPE apunta a fatiga sistémica, no a un ejercicio estancado.
+  const lowEnergyDays = useMemo(
+    () => wellness.filter((w) => w.date >= isoMinus(7) && w.energy != null && w.energy <= 2).length,
+    [wellness],
+  );
   const currentMA = maSeries.length ? maSeries[maSeries.length - 1].media : null;
   const currentW = sortedW.length ? sortedW[sortedW.length - 1].kg : null;
   const change7 = useMemo(() => { if (sortedW.length < 2) return null; const last = sortedW[sortedW.length - 1]; const ref = [...sortedW].reverse().find((w) => daysBetween(w.date, last.date) >= 7); return ref ? round1(last.kg - ref.kg) : null; }, [sortedW]);
@@ -364,9 +356,9 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const vals = w.exercises.flatMap((e) => e.sets.map((s) => parseFloat(s.rpe)).filter((v) => v > 0));
     return vals.length ? { iso: w.date, rpe: vals.reduce((s, v) => s + v, 0) / vals.length } : null;
   }).filter(Boolean).slice(-12), [workouts]);
-  // Señal de deload: RPE medio subiendo 3 sesiones seguidas (no compara misma carga
-  // exacta, es un proxy — no un diagnóstico). Salto total >=1 punto para no marcar
-  // ruido normal de semana a semana.
+  // Señal de deload por RPE medio subiendo 3 sesiones seguidas — proxy que mezcla
+  // cargas distintas; loadRpe.fatigue (misma carga exacta) tiene prioridad cuando
+  // existe. Salto total >=1 punto para no marcar ruido normal de semana a semana.
   const deloadSignal = useMemo(() => {
     const recent = rpeSeries.slice(-3);
     if (recent.length < 3) return null;
@@ -450,26 +442,36 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     if (maxV > 0) { const neglected = MAJOR_MUSCLES.filter((m) => (weeklyMuscle[m] || 0) < 0.15 * maxV); if (neglected.length) a.push({ type: "warn", title: "Posible descompensación muscular", body: `Esta semana apenas trabajaste: ${neglected.join(", ")}. Equilibrar el volumen reduce riesgo de lesión.` }); }
     if (lastTrain && daysBetween(lastTrain, todayISO()) >= 4) a.push({ type: "info", title: "Racha de entreno en pausa", body: `Llevas ${daysBetween(lastTrain, todayISO())} días sin registrar entrenamiento.` });
     if (projection && projection.off) a.push({ type: "info", title: "No avanzas hacia tu peso meta", body: "A tu ritmo actual no te acercas a la meta fijada. Revisa objetivo o calorías." });
-    if (deloadSignal || cycleConfound) {
+    // Dos niveles: señal aislada = versión reducida de la próxima sesión; fatiga en
+    // 2+ ejercicios distintos, o señal de RPE + energía baja reportada 3+ días de la
+    // semana = semana de descarga completa. Si coincide con lútea tardía sintomática,
+    // no se escala a semana: lo esperable es que remita al arrancar la folicular.
+    const rpeFatigue = loadRpe.fatigue || deloadSignal;
+    const deloadWeek = !cycleConfound && (loadRpe.fatigueCount >= 2 || (rpeFatigue && lowEnergyDays >= 3));
+    if (rpeFatigue || cycleConfound) {
       const reasons = [];
-      if (deloadSignal) reasons.push(`tu RPE medio por sesión viene subiendo (${deloadSignal.from.toFixed(1)} → ${deloadSignal.to.toFixed(1)} en las últimas 3)`);
+      if (loadRpe.fatigue) reasons.push(`a igual carga (${loadRpe.fatigue.name} ${loadRpe.fatigue.kg} kg × ${loadRpe.fatigue.reps}) tu RPE subió ${loadRpe.fatigue.from.toFixed(1)} → ${loadRpe.fatigue.to.toFixed(1)} en las últimas 3 sesiones${loadRpe.fatigueCount >= 2 ? ` — y pasa en ${loadRpe.fatigueCount} ejercicios distintos` : ""}`);
+      else if (deloadSignal) reasons.push(`tu RPE medio por sesión viene subiendo (${deloadSignal.from.toFixed(1)} → ${deloadSignal.to.toFixed(1)} en las últimas 3)`);
+      if (lowEnergyDays >= 3) reasons.push(`reportaste energía baja ${lowEnergyDays} días esta semana`);
       if (cycleConfound) reasons.push("estás en fase lútea tardía con síntomas altos");
-      a.push({ type: "info", title: "Señal de deload", body: `${reasons.join(" y ")}. Es razonable considerar la versión reducida de tu próxima rutina en vez de la completa.` });
+      if (deloadWeek) {
+        a.push({ type: "warn", title: "Programá una semana de descarga", body: `${reasons.join(" y ")}. Esto ya no parece un ejercicio estancado sino fatiga acumulada: hacé toda la semana con la versión reducida de tus rutinas (menos series, mismo patrón) y retomá la progresión la semana siguiente.` });
+      } else {
+        a.push({ type: "info", title: "Señal de deload", body: `${reasons.join(" y ")}. Es razonable considerar la versión reducida de tu próxima rutina en vez de la completa${cycleConfound ? " — si la causa es la fase del ciclo, debería remitir al arrancar la folicular; si persiste después, pensá en una semana de descarga" : ""}.` });
+      }
     }
-    // Recordatorio para volver a ajustar dos temas que hoy quedaron con heurísticas
-    // (no modelos numéricos): retención por ciclo y RPE a igual carga. Umbrales
-    // elegidos consistentes con los ya usados en el resto del dashboard (3 ciclos
-    // completos, 3 sesiones repitiendo la misma combinación kg×reps).
-    const CYCLE_TARGET = 3, LOAD_TARGET = 3;
-    const cycleReady = completeCyclesCount >= CYCLE_TARGET;
-    const loadReady = matchedLoadStreak.count >= LOAD_TARGET;
-    if (!cycleReady || !loadReady) {
-      a.push({ type: "info", title: "Progreso hacia seguimiento más robusto", body: `Ciclos completos registrados: ${completeCyclesCount}/${CYCLE_TARGET}. Sesiones con la misma carga repetida (mejor racha${matchedLoadStreak.exercise ? `, ${matchedLoadStreak.exercise}` : ""}): ${matchedLoadStreak.count}/${LOAD_TARGET}. Cuando ambos lleguen a la meta, volvé a pedir el ajuste de retención por ciclo y de RPE a igual carga.` });
+    if (loadRpe.progress) a.push({ type: "ok", title: `Lista para subir carga en ${loadRpe.progress.name}`, body: `${loadRpe.progress.kg} kg × ${loadRpe.progress.reps} te costó cada vez menos (RPE ${loadRpe.progress.from.toFixed(1)} → ${loadRpe.progress.to.toFixed(1)} en las últimas 3 sesiones). Subí al siguiente escalón de peso o sumá 1-2 reps manteniendo el RPE objetivo.` });
+    // Recordatorio para volver a ajustar la retención por ciclo (hoy solo advertencia
+    // de texto, no corrección numérica). El ajuste de RPE a igual carga ya está
+    // implementado (loadRpe). Umbral: 3 ciclos completos.
+    const CYCLE_TARGET = 3;
+    if (completeCyclesCount < CYCLE_TARGET) {
+      a.push({ type: "info", title: "Progreso hacia seguimiento más robusto", body: `Ciclos completos registrados: ${completeCyclesCount}/${CYCLE_TARGET}. Cuando llegues a la meta, volvé a pedir el ajuste de retención por ciclo.` });
     } else {
-      a.push({ type: "ok", title: "Listo para un seguimiento más robusto", body: `Ya tenés ${completeCyclesCount} ciclos completos y una racha de ${matchedLoadStreak.count} sesiones con la misma carga en ${matchedLoadStreak.exercise}. Pedime que ajuste el modelo de retención por ciclo y el de RPE a igual carga con este historial.` });
+      a.push({ type: "ok", title: "Listo para ajustar retención por ciclo", body: `Ya tenés ${completeCyclesCount} ciclos completos registrados. Pedime que derive el offset de retención por ciclo con este historial.` });
     }
     return a;
-  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection, cycleConfound, deloadSignal, completeCyclesCount, matchedLoadStreak]);
+  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection, cycleConfound, deloadSignal, completeCyclesCount, loadRpe, lowEnergyDays]);
 
   const noData = weights.length === 0 && workouts.length === 0 && nutrition.length === 0;
   if (noData) return <div className="ft-card"><div className="ft-empty"><div className="ic"><LayoutDashboard size={34} /></div>Aún no hay datos. Registra entrenamientos, peso o comidas y aquí verás tu evolución, récords y alertas.</div></div>;
