@@ -25,7 +25,7 @@ import {
 import {
   Dumbbell, Scale, Utensils, LayoutDashboard, Plus, Trash2,
   Download, Upload, AlertTriangle,
-  Check, ChevronLeft, ChevronRight, Timer, Play, Pause, RotateCcw,
+  Check, ChevronDown, ChevronLeft, ChevronRight, Timer, Play, Pause, RotateCcw,
   Apple, Pencil, X, Clock, Activity, ListChecks,
   Settings, Zap, BookOpen
 } from "lucide-react";
@@ -244,6 +244,14 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-li .li-main{flex:1;font-weight:600;min-width:120px;}
 .ft-li .li-sub{font-size:12px;color:var(--muted);font-family:'IBM Plex Mono';}
 .ft-li .li-v{font-family:'IBM Plex Mono';font-weight:600;}
+.ft-li-group{background:var(--panel2);border:1px solid var(--line);}
+.ft-li-group>.ft-li{background:transparent;border:0;}
+.ft-li-detail{border-top:1px solid var(--line);padding:4px 13px 12px;}
+.ft-li-detail .ft-li{padding:9px 0;border:0;border-bottom:1px solid var(--line);background:transparent;}
+.ft-li-detail .ft-li:last-child{border-bottom:0;}
+.ft-detail-toggle{color:var(--text);}
+.ft-detail-toggle svg{transition:transform .18s ease;}
+.ft-detail-toggle[aria-expanded="true"] svg{transform:rotate(180deg);}
 .ft-chips{display:flex;gap:6px;flex-wrap:wrap;}
 .ft-chip{font-size:11px;font-family:'IBM Plex Mono';color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 7px;}
 .ft-timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
@@ -1030,6 +1038,7 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
   // recetas
   const [rName, setRName] = useState(""); const [rServings, setRServings] = useState("1");
   const [rItems, setRItems] = useState([]); const [rSel, setRSel] = useState(null); const [rGrams, setRGrams] = useState("");
+  const [rEditId, setREditId] = useState(null); const [openRecipeId, setOpenRecipeId] = useState(null);
 
   const existing = useMemo(() => new Set(foods.map((x) => x.name.toLowerCase())), [foods]);
   const save = () => {
@@ -1051,8 +1060,15 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
   const addRItem = () => { if (!rSel || !rGrams) return; const c = scaleFood(rSel, rGrams); setRItems((p) => [...p, { id: uid(), name: rSel.name, grams: Number(rGrams), unit: rSel.unit || "g", kcal: round1(c.kcal), protein: round1(c.protein), carbs: round1(c.carbs), fat: round1(c.fat) }]); setRSel(null); setRGrams(""); };
   const delRItem = (id) => setRItems((p) => p.filter((x) => x.id !== id));
   const rTotal = rItems.reduce((t, i) => ({ kcal: t.kcal + i.kcal, protein: t.protein + i.protein, carbs: t.carbs + i.carbs, fat: t.fat + i.fat }), { kcal: 0, protein: 0, carbs: 0, fat: 0 });
-  const saveRecipe = () => { if (!rName.trim() || rItems.length === 0) return; setRecipes((p) => [...p, { id: uid(), name: rName.trim(), servings: Number(rServings) || 1, items: rItems }]); setRName(""); setRServings("1"); setRItems([]); };
-  const delRecipe = (id) => setRecipes((p) => p.filter((r) => r.id !== id));
+  const resetRecipeForm = () => { setRName(""); setRServings("1"); setRItems([]); setRSel(null); setRGrams(""); setREditId(null); };
+  const saveRecipe = () => {
+    if (!rName.trim() || rItems.length === 0) return;
+    const data = { name: rName.trim(), servings: Number(rServings) || 1, items: rItems };
+    setRecipes((p) => rEditId ? p.map((r) => r.id === rEditId ? { ...r, ...data } : r) : [...p, { id: uid(), ...data }]);
+    resetRecipeForm();
+  };
+  const editRecipe = (recipe) => { setRName(recipe.name); setRServings(String(recipe.servings || 1)); setRItems(recipe.items.map((item) => ({ ...item }))); setREditId(recipe.id); };
+  const delRecipe = (id) => { setRecipes((p) => p.filter((r) => r.id !== id)); if (rEditId === id) resetRecipeForm(); if (openRecipeId === id) setOpenRecipeId(null); };
 
   return (
     <>
@@ -1111,7 +1127,7 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
       {view === "recetas" && (<>
         <div className="ft-alert info"><BookOpen size={20} color="var(--blue)" /><div><div className="t">Recetas y platos combinados</div><div className="b">Junta varios alimentos de tu biblioteca en una receta (ej. "mi desayuno"). FitTrack suma los macros totales y por porción; luego la registras de un toque en Nutrición.</div></div></div>
         <div className="ft-card">
-          <h2><Plus size={16} /> Nueva receta</h2>
+          <h2>{rEditId ? <Pencil size={16} /> : <Plus size={16} />} {rEditId ? "Editar receta" : "Nueva receta"}</h2>
           {foods.length === 0 ? <div className="ft-empty">Primero añade alimentos a tu biblioteca.</div> : (<>
             <div className="ft-row" style={{ marginBottom: 12 }}>
               <div className="ft-field" style={{ flex: 2 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Bowl de yogur griego" value={rName} onChange={(e) => setRName(e.target.value)} /></div>
@@ -1127,14 +1143,14 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
                 {rItems.map((i) => (<div className="ft-li" key={i.id}><span className="li-main">{i.name}<span className="li-sub" style={{ marginLeft: 8 }}>{i.grams} {i.unit || "g"}</span></span><span className="li-v" style={{ color: "var(--accent)" }}>{Math.round(i.kcal)} kcal</span><button className="ft-trash" onClick={() => delRItem(i.id)}><Trash2 size={15} /></button></div>))}
               </div>
               <div className="ft-prev"><span style={{ opacity: .7 }}>Total:</span><span><b>{Math.round(rTotal.kcal)}</b> kcal</span><span>P <b>{round1(rTotal.protein)}</b></span><span>C <b>{round1(rTotal.carbs)}</b></span><span>G <b>{round1(rTotal.fat)}</b></span><span style={{ opacity: .7 }}>· {Math.round(rTotal.kcal / (Number(rServings) || 1))} kcal/porción</span></div>
-              <div style={{ marginTop: 12 }}><button className="ft-btn" onClick={saveRecipe}><Check size={15} /> Guardar receta</button></div>
+              <div style={{ marginTop: 12, display: "flex", gap: 8 }}><button className="ft-btn" onClick={saveRecipe}><Check size={15} /> {rEditId ? "Guardar cambios" : "Guardar receta"}</button>{rEditId && <button className="ft-btn ghost" onClick={resetRecipeForm}><X size={15} /> Cancelar</button>}</div>
             </>)}
           </>)}
         </div>
         <div className="ft-card">
           <h2><BookOpen size={16} /> Mis recetas <span className="tag">{recipes.length}</span></h2>
           {recipes.length === 0 ? <div className="ft-empty">Aún no has guardado recetas.</div> : (
-            <div className="ft-list">{recipes.map((r) => { const t = r.items.reduce((a, i) => ({ kcal: a.kcal + i.kcal, protein: a.protein + i.protein }), { kcal: 0, protein: 0 }); return (<div className="ft-li" key={r.id}><span className="li-main">{r.name}<span className="li-sub" style={{ marginLeft: 8 }}>{r.items.length} ingr · {r.servings} porc.</span></span><span className="li-sub">{Math.round(t.kcal)} kcal · {round1(t.protein)}g P total</span><button className="ft-trash" onClick={() => delRecipe(r.id)}><Trash2 size={15} /></button></div>); })}</div>
+            <div className="ft-list">{recipes.map((r) => { const t = r.items.reduce((a, i) => ({ kcal: a.kcal + i.kcal, protein: a.protein + i.protein }), { kcal: 0, protein: 0 }); const open = openRecipeId === r.id; return (<div className="ft-li-group" key={r.id}><div className="ft-li"><span className="li-main">{r.name}<span className="li-sub" style={{ marginLeft: 8 }}>{r.items.length} ingr · {r.servings} porc.</span></span><span className="li-sub">{Math.round(t.kcal)} kcal · {round1(t.protein)}g P total</span><button className="ft-btn ghost ft-detail-toggle" style={{ padding: "7px 10px" }} aria-expanded={open} onClick={() => setOpenRecipeId(open ? null : r.id)}><ChevronDown size={14} /> {open ? "Ocultar" : "Ver ingredientes"}</button><button className="ft-trash" aria-label={`Editar ${r.name}`} title="Editar receta" onClick={() => editRecipe(r)}><Pencil size={15} /></button><button className="ft-trash" aria-label={`Eliminar ${r.name}`} title="Eliminar receta" onClick={() => delRecipe(r.id)}><Trash2 size={15} /></button></div>{open && <div className="ft-li-detail">{r.items.map((i) => <div className="ft-li" key={i.id}><span className="li-main">{i.name}</span><span className="li-sub">{i.grams} {i.unit || "g"}</span><span className="li-v">{Math.round(i.kcal)} kcal</span></div>)}</div>}</div>); })}</div>
           )}
         </div>
       </>)}
@@ -1146,6 +1162,7 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
 export function Routines({ routines, setRoutines }) {
   const [name, setName] = useState("");
   const [items, setItems] = useState([]);
+  const [editRoutineId, setEditRoutineId] = useState(null); const [openRoutineId, setOpenRoutineId] = useState(null);
   const [exName, setExName] = useState(""); const [primary, setPrimary] = useState(MUSCLES[0]); const [secondary, setSecondary] = useState([]);
   const [sets, setSets] = useState("3"); const [reps, setReps] = useState("8");
 
@@ -1153,8 +1170,15 @@ export function Routines({ routines, setRoutines }) {
   const toggleSec = (m) => setSecondary((s) => s.includes(m) ? s.filter((x) => x !== m) : [...s, m]);
   const addItem = () => { if (!exName.trim()) return; setItems((p) => [...p, { id: uid(), name: exName.trim(), primary, secondary: secondary.filter((m) => m !== primary), targetSets: Number(sets) || 3, targetReps: reps }]); setExName(""); setSecondary([]); };
   const delItem = (id) => setItems((p) => p.filter((x) => x.id !== id));
-  const saveRoutine = () => { if (!name.trim() || items.length === 0) return; setRoutines((p) => [...p, { id: uid(), name: name.trim(), exercises: items }]); setName(""); setItems([]); };
-  const delRoutine = (id) => setRoutines((p) => p.filter((r) => r.id !== id));
+  const resetRoutineForm = () => { setName(""); setItems([]); setEditRoutineId(null); setExName(""); setSecondary([]); };
+  const saveRoutine = () => {
+    if (!name.trim() || items.length === 0) return;
+    const data = { name: name.trim(), exercises: items };
+    setRoutines((p) => editRoutineId ? p.map((r) => r.id === editRoutineId ? { ...r, ...data } : r) : [...p, { id: uid(), ...data }]);
+    resetRoutineForm();
+  };
+  const editRoutine = (routine) => { setName(routine.name); setItems(routine.exercises.map((exercise) => ({ ...exercise, secondary: [...(exercise.secondary || [])] }))); setEditRoutineId(routine.id); };
+  const delRoutine = (id) => { setRoutines((p) => p.filter((r) => r.id !== id)); if (editRoutineId === id) resetRoutineForm(); if (openRoutineId === id) setOpenRoutineId(null); };
   const loadTemplates = () => {
     setRoutines((prev) => {
       const have = new Set(prev.map((r) => r.name));
@@ -1169,7 +1193,7 @@ export function Routines({ routines, setRoutines }) {
       <div style={{ height: 16 }} />
       <div className="ft-alert info"><ListChecks size={20} color="var(--blue)" /><div><div className="t">Plantillas de entrenamiento</div><div className="b">Define tus días (A / B / C, Push / Pull / Legs…) una vez. Después, en Entrenar las cargas con un toque: registrar pasa a ser editar, no escribir desde cero.</div></div></div>
       <div className="ft-card">
-        <h2><Plus size={16} /> Nueva rutina</h2>
+        <h2>{editRoutineId ? <Pencil size={16} /> : <Plus size={16} />} {editRoutineId ? "Editar rutina" : "Nueva rutina"}</h2>
         <div className="ft-row" style={{ marginBottom: 12 }}><div className="ft-field" style={{ flex: 2 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Día A · Empuje" value={name} onChange={(e) => setName(e.target.value)} /></div></div>
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field" style={{ flex: 2, minWidth: 140 }}><label>Ejercicio</label><input className="ft-input" placeholder="Ej. Press banca" value={exName} onChange={(e) => setExName(e.target.value)} /></div>
@@ -1184,7 +1208,7 @@ export function Routines({ routines, setRoutines }) {
           <div className="ft-list" style={{ marginTop: 14 }}>
             {items.map((i) => (<div className="ft-li" key={i.id}><span className="dot" style={{ width: 10, height: 10, borderRadius: "50%", background: MUSCLE_COLOR[i.primary] || "#888" }} /><span className="li-main">{i.name}</span><span className="li-sub">{i.primary} · {i.targetSets}×{i.targetReps}</span><button className="ft-trash" onClick={() => delItem(i.id)}><Trash2 size={15} /></button></div>))}
           </div>
-          <div style={{ marginTop: 12 }}><button className="ft-btn" onClick={saveRoutine}><Check size={15} /> Guardar rutina</button></div>
+          <div style={{ marginTop: 12, display: "flex", gap: 8 }}><button className="ft-btn" onClick={saveRoutine}><Check size={15} /> {editRoutineId ? "Guardar cambios" : "Guardar rutina"}</button>{editRoutineId && <button className="ft-btn ghost" onClick={resetRoutineForm}><X size={15} /> Cancelar</button>}</div>
         </>)}
       </div>
       <div className="ft-card">
@@ -1194,13 +1218,18 @@ export function Routines({ routines, setRoutines }) {
           <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 11, color: "var(--muted)" }}>{ROUTINE_TEMPLATES.length} rutinas guía · Empuje/Tracción/Pierna + accesorio + amable</span>
         </div>
         {routines.length === 0 ? <div className="ft-empty">Aún no has creado rutinas. Usa “Cargar plantillas Fase 1” para empezar con las rutinas guía, o créalas a mano arriba.</div> : (
-          <div className="ft-list">{routines.map((r) => (
-            <div className="ft-li" key={r.id}>
-              <span className="li-main">{r.name}</span>
-              <span className="li-sub">{r.focus ? `${r.focus} · ` : ""}{r.exercises.length} ej.{r.estimatedMin ? ` · ~${r.estimatedMin} min` : ""}</span>
-              <button className="ft-trash" onClick={() => delRoutine(r.id)}><Trash2 size={15} /></button>
+          <div className="ft-list">{routines.map((r) => { const open = openRoutineId === r.id; return (
+            <div className="ft-li-group" key={r.id}>
+              <div className="ft-li">
+                <span className="li-main">{r.name}</span>
+                <span className="li-sub">{r.focus ? `${r.focus} · ` : ""}{r.exercises.length} ej.{r.estimatedMin ? ` · ~${r.estimatedMin} min` : ""}</span>
+                <button className="ft-btn ghost ft-detail-toggle" style={{ padding: "7px 10px" }} aria-expanded={open} onClick={() => setOpenRoutineId(open ? null : r.id)}><ChevronDown size={14} /> {open ? "Ocultar" : "Ver ejercicios"}</button>
+                <button className="ft-trash" aria-label={`Editar ${r.name}`} title="Editar rutina" onClick={() => editRoutine(r)}><Pencil size={15} /></button>
+                <button className="ft-trash" aria-label={`Eliminar ${r.name}`} title="Eliminar rutina" onClick={() => delRoutine(r.id)}><Trash2 size={15} /></button>
+              </div>
+              {open && <div className="ft-li-detail">{r.exercises.map((exercise) => <div className="ft-li" key={exercise.id}><span className="li-main">{exercise.name}</span><span className="li-sub">{exercise.primary || "Sin grupo"}{exercise.secondary?.length ? ` · ${exercise.secondary.join(", ")}` : ""}</span><span className="li-v">{exercise.targetSets || 3}×{exercise.targetReps || "8"}</span></div>)}</div>}
             </div>
-          ))}</div>
+          ); })}</div>
         )}
       </div>
     </>
