@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES, KCAL_PER_KG } from "./app-config.js";
 import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
 import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
@@ -23,6 +24,7 @@ const PR_ALERT_MAX_ITEMS = 3;
 const A_PAPER = "#f3efe6", A_PANEL = "#faf7f0",
   A_ACC = "#e7531c", A_OK = "#3f7d4e", A_DANGER = "#c0341a",
   A_LINE = "rgba(22,20,13,0.16)", A_HAIR = "rgba(22,20,13,0.10)";
+const CHART_TOOLTIP = { background: A_PANEL, border: `1px solid ${A_LINE}`, borderRadius: 0, fontFamily: A_MONO, fontSize: 12 };
 function useCountUp(value, { dur = 1100, decimals = 0, delay = 0 } = {}) {
   const [n, setN] = useState(0);
   const ref = useRef({ from: 0 });
@@ -43,26 +45,6 @@ function useCountUp(value, { dur = 1100, decimals = 0, delay = 0 } = {}) {
 function CountUp({ value, decimals = 0, dur = 1100, delay = 0 }) {
   return <span>{useCountUp(value, { dur, decimals, delay })}</span>;
 }
-function smoothPath(pts, tension = 0.5) {
-  if (pts.length < 2) return "";
-  const d = [`M ${pts[0].x} ${pts[0].y}`];
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
-    const c1x = p1.x + ((p2.x - p0.x) / 6) * tension * 2, c1y = p1.y + ((p2.y - p0.y) / 6) * tension * 2;
-    const c2x = p2.x - ((p3.x - p1.x) / 6) * tension * 2, c2y = p2.y - ((p3.y - p1.y) / 6) * tension * 2;
-    d.push(`C ${c1x} ${c1y} ${c2x} ${c2y} ${p2.x} ${p2.y}`);
-  }
-  return d.join(" ");
-}
-function DrawLine({ d, color, width = 2.5, reveal, dur = 1400, delay = 0, dash, opacity = 1, cap = "round" }) {
-  const ref = useRef(null);
-  const [len, setLen] = useState(0);
-  useEffect(() => { if (ref.current) setLen(ref.current.getTotalLength()); }, [d]);
-  return (
-    <path ref={ref} d={d} fill="none" stroke={color} strokeWidth={width} strokeLinecap={cap} strokeLinejoin="round" opacity={opacity}
-      style={dash ? { strokeDasharray: dash } : (len ? { strokeDasharray: len, strokeDashoffset: reveal ? 0 : len, transition: `stroke-dashoffset ${dur}ms cubic-bezier(.22,.61,.36,1) ${delay}ms` } : undefined)} />
-  );
-}
 function DLegend({ color, label, dash }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -74,49 +56,36 @@ function DLegend({ color, label, dash }) {
 const dSecH = { margin: 0, fontFamily: A_DISP, fontWeight: 800, fontSize: 24, textTransform: "uppercase", letterSpacing: "-0.02em", whiteSpace: "nowrap" };
 function DNeed({ children }) { return <div style={{ fontFamily: A_MONO, fontSize: 12, color: A_INK2, padding: "26px 0", lineHeight: 1.5 }}>{children}</div>; }
 
-function BWeightChart({ avg, tgt }) {
-  const show = useReveal(200);
-  const W = 720, H = 230, padT = 22, padB = 28;
-  const all = [...avg, ...tgt];
-  const lo = Math.min(...all) - 0.5, hi = Math.max(...all) + 0.5;
-  const mapY = (v) => padT + ((hi - v) / (hi - lo)) * (H - padT - padB);
-  const ptsAvg = avg.map((v, i) => ({ x: (i / (avg.length - 1 || 1)) * W, y: mapY(v) }));
-  const ptsTgt = tgt.map((v, i) => ({ x: (i / (tgt.length - 1 || 1)) * W, y: mapY(v) }));
-  const last = ptsAvg[ptsAvg.length - 1];
-  const gridY = [hi, (hi + lo) / 2, lo];
+function BWeightChart({ data, valueKey = "media", valueLabel = "Media 7d", targetKey = null, targetLabel = "Objetivo", unit = "kg" }) {
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", overflow: "visible" }}>
-      {gridY.map((g, i) => { const y = mapY(g); return (<g key={i}><line x1="0" y1={y} x2={W} y2={y} stroke={A_HAIR} strokeWidth="1" /><text x="0" y={y - 5} fontFamily={A_MONO} fontSize="10" fill={A_INK2}>{g.toFixed(1)}</text></g>); })}
-      <DrawLine d={smoothPath(ptsTgt, 0.6)} color={A_INK2} width="1.5" reveal={show} dash="2 5" opacity={0.55} />
-      <DrawLine d={smoothPath(ptsAvg, 0.6)} color={A_ACC} width="3" reveal={show} dur={1600} delay={200} />
-      <circle cx={last.x} cy={last.y} r={show ? 5 : 0} fill={A_ACC} style={{ transition: "r .4s ease 1.7s" }} />
-    </svg>
+    <ResponsiveContainer width="100%" height={230}>
+      <LineChart data={data} margin={{ top: 14, right: 12, left: -18, bottom: 0 }}>
+        <CartesianGrid stroke={A_HAIR} strokeDasharray="3 3" />
+        <XAxis dataKey="date" stroke={A_INK2} tick={{ fill: A_INK2, fontFamily: A_MONO, fontSize: 10 }} minTickGap={28} />
+        <YAxis stroke={A_INK2} tick={{ fill: A_INK2, fontFamily: A_MONO, fontSize: 10 }} domain={["auto", "auto"]} />
+        <Tooltip contentStyle={CHART_TOOLTIP} labelStyle={{ color: A_INK }} formatter={(value, name) => [`${Number(value).toFixed(1)} ${unit}`, name]} />
+        {targetKey && <Line type="monotone" dataKey={targetKey} name={targetLabel} stroke={A_INK2} strokeWidth={1.5} strokeDasharray="3 5" dot={false} activeDot={{ r: 4 }} />}
+        <Line type="monotone" dataKey={valueKey} name={valueLabel} stroke={A_ACC} strokeWidth={3} dot={{ r: 3, fill: A_ACC }} activeDot={{ r: 6 }} />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }
 function BStrength({ series, isMobile }) {
-  const show = useReveal(300);
-  const W = 720, H = isMobile ? 168 : 200, padT = 16, padB = 22;
-  const plotW = isMobile ? 700 : 560, labelX = 576;
-  const allPct = series.flatMap((s) => s.pct);
-  const hi = Math.max(1, Math.max(...allPct)) * 1.1;
-  const lo = Math.min(0, Math.min(...allPct)) * 1.1;
-  const yOf = (v) => padT + ((hi - v) / (hi - lo)) * (H - padT - padB);
-  const grid = [hi, (hi + lo) / 2, lo];
+  const dates = [...new Set(series.flatMap((item) => item.points.map((point) => point.date)))].sort();
+  const data = dates.map((date) => Object.fromEntries([
+    ["date", fmtDate(date)],
+    ...series.map((item, index) => [String(index), item.points.find((point) => point.date === date)?.pct ?? null]),
+  ]));
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", overflow: "hidden" }}>
-      {grid.map((g, i) => (<g key={i}><line x1="0" y1={yOf(g)} x2={plotW} y2={yOf(g)} stroke={A_HAIR} strokeWidth="1" /><text x="0" y={yOf(g) - 5} fontFamily={A_MONO} fontSize="10" fill={A_INK2}>{g >= 0 ? "+" : ""}{g.toFixed(0)}%</text></g>))}
-      {series.map((s, si) => {
-        const pts = s.pct.map((v, i) => ({ x: (i / (s.pct.length - 1 || 1)) * plotW, y: yOf(v) }));
-        const last = pts[pts.length - 1];
-        return (
-          <g key={si}>
-            <DrawLine d={smoothPath(pts, 0.6)} color={s.color} width={s.w} reveal={show} dur={1400} delay={150 + si * 130} />
-            <circle cx={last.x} cy={last.y} r={show ? 4 : 0} fill={s.color} style={{ transition: `r .4s ease ${1.2 + si * 0.13}s` }} />
-            {!isMobile && <text x={labelX} y={last.y + 3.5} fontFamily={A_MONO} fontSize="11" fill={A_INK2}>{s.label.toUpperCase()} <tspan fill={A_INK} fontWeight="600">{s.lastKg} kg</tspan></text>}
-          </g>
-        );
-      })}
-    </svg>
+    <ResponsiveContainer width="100%" height={isMobile ? 190 : 220}>
+      <LineChart data={data} margin={{ top: 14, right: 12, left: -18, bottom: 0 }}>
+        <CartesianGrid stroke={A_HAIR} strokeDasharray="3 3" />
+        <XAxis dataKey="date" stroke={A_INK2} tick={{ fill: A_INK2, fontFamily: A_MONO, fontSize: 10 }} minTickGap={24} />
+        <YAxis stroke={A_INK2} tick={{ fill: A_INK2, fontFamily: A_MONO, fontSize: 10 }} tickFormatter={(value) => `${value > 0 ? "+" : ""}${Math.round(value)}%`} domain={["auto", "auto"]} />
+        <Tooltip contentStyle={CHART_TOOLTIP} labelStyle={{ color: A_INK }} formatter={(value, key) => [`${Number(value).toFixed(1)}%`, series[Number(key)]?.label || key]} />
+        {series.map((item, index) => <Line key={item.label} type="monotone" connectNulls dataKey={String(index)} name={item.label} stroke={item.color} strokeWidth={item.w} dot={{ r: 2.5, fill: item.color }} activeDot={{ r: 5 }} />)}
+      </LineChart>
+    </ResponsiveContainer>
   );
 }
 function BStrengthLegend({ series }) {
@@ -131,17 +100,17 @@ function BStrengthLegend({ series }) {
   );
 }
 function BKcalBars({ data, target }) {
-  const show = useReveal(420);
-  const max = (Math.max(...data.map((d) => d.kcal), target || 0) * 1.08) || 1;
   return (
-    <div style={{ display: "flex", alignItems: "flex-end", gap: 5, height: 150, position: "relative" }}>
-      {target ? (
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: `${(target / max) * 100}%`, borderTop: `1.5px dashed ${A_INK}`, opacity: 0.5 }}>
-          <span style={{ position: "absolute", right: 0, top: -16, fontFamily: A_MONO, fontSize: 10, color: A_INK2 }}>obj {target}</span>
-        </div>
-      ) : null}
-      {data.map((d, i) => { const over = target && d.kcal > target; return (<div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", height: "100%" }}><div style={{ height: show ? `${(d.kcal / max) * 100}%` : "0%", background: over ? A_ACC : A_INK, transition: `height .8s cubic-bezier(.22,.61,.36,1) ${i * 45}ms` }} /></div>); })}
-    </div>
+    <ResponsiveContainer width="100%" height={170}>
+      <BarChart data={data} margin={{ top: 14, right: 8, left: -24, bottom: 0 }}>
+        <CartesianGrid stroke={A_HAIR} strokeDasharray="3 3" vertical={false} />
+        <XAxis dataKey="date" stroke={A_INK2} tick={{ fill: A_INK2, fontFamily: A_MONO, fontSize: 9 }} minTickGap={15} />
+        <YAxis stroke={A_INK2} tick={{ fill: A_INK2, fontFamily: A_MONO, fontSize: 9 }} />
+        <Tooltip contentStyle={CHART_TOOLTIP} labelStyle={{ color: A_INK }} formatter={(value) => [`${Math.round(value)} kcal`, "Calorías"]} />
+        {target && <ReferenceLine y={target} stroke={A_INK} strokeDasharray="4 4" label={{ value: `obj ${target}`, position: "insideTopRight", fill: A_INK2, fontFamily: A_MONO, fontSize: 10 }} />}
+        <Bar dataKey="kcal" name="Calorías" fill={A_INK} activeBar={{ fill: A_ACC }} />
+      </BarChart>
+    </ResponsiveContainer>
   );
 }
 function BMuscleBars({ data }) {
@@ -150,7 +119,7 @@ function BMuscleBars({ data }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
       {data.map((d, i) => (
-        <div key={d.label} style={{ display: "grid", gridTemplateColumns: "100px 1fr 54px 58px", alignItems: "center", gap: 10 }}>
+        <div key={d.label} title={`${d.label}: ${(d.vol / 1000).toFixed(1)} toneladas${d.effPct == null ? "" : ` · ${d.effPct}% de sets efectivos vs. tu media`}`} style={{ display: "grid", gridTemplateColumns: "100px 1fr 54px 58px", alignItems: "center", gap: 10, cursor: "help" }}>
           <div style={{ fontFamily: A_MONO, fontSize: 11, textTransform: "uppercase", letterSpacing: ".04em", color: A_INK2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.label}</div>
           <div style={{ height: 14, background: A_HAIR, position: "relative", overflow: "hidden" }}><div style={{ position: "absolute", inset: 0, transformOrigin: "left", width: `${(d.vol / max) * 100}%`, background: i === 0 ? A_ACC : A_INK, transform: show ? "scaleX(1)" : "scaleX(0)", transition: `transform .9s cubic-bezier(.22,.61,.36,1) ${i * 60}ms` }} /></div>
           <div style={{ fontFamily: A_MONO, fontSize: 11, textAlign: "right", color: A_INK, fontWeight: 500 }}>{(d.vol / 1000).toFixed(1)}t</div>
@@ -204,7 +173,7 @@ function BHeatmap({ days, isMobile }) {
         <div style={{ display: "flex", gap: GAP, flexWrap: "nowrap", flex: 1, justifyContent: isMobile ? "space-between" : "flex-start", overflow: "hidden" }}>
           {cols.map((col, ci) => (
             <div key={ci} style={{ display: "flex", flexDirection: "column", gap: GAP, flexShrink: 0 }}>
-              {Array.from({ length: 7 }, (_, r) => { const d = col.find((x) => x.dw === r); if (!d) return <div key={r} style={{ width: CELL, height: CELL }} />; return <div key={r} title={d.iso} style={{ width: CELL, height: CELL, background: ramp[d.lvl], opacity: show ? 1 : 0, transform: show ? "scale(1)" : "scale(0.5)", transition: `opacity .45s ease ${ci * 14}ms, transform .45s ${ci * 14}ms` }} />; })}
+              {Array.from({ length: 7 }, (_, r) => { const d = col.find((x) => x.dw === r); if (!d) return <div key={r} style={{ width: CELL, height: CELL }} />; return <div key={r} title={`${fmtDate(d.iso)} · ${d.score ? `${d.score} bloques registrados` : "sin entrenamiento"}`} style={{ width: CELL, height: CELL, background: ramp[d.lvl], opacity: show ? 1 : 0, transform: show ? "scale(1)" : "scale(0.5)", transition: `opacity .45s ease ${ci * 14}ms, transform .45s ${ci * 14}ms`, cursor: "help" }} />; })}
             </div>
           ))}
         </div>
@@ -309,7 +278,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
   const strengthSeries = useMemo(() => {
     const colors = [A_ACC, A_INK, "rgba(22,20,13,0.45)", A_OK];
     const picked = (activeEx !== "all" ? [activeEx] : [...exOptions].sort((a, b) => exHistory[b].length - exHistory[a].length)).slice(0, 4);
-    return picked.map((n, idx) => { const h = exHistory[n]; const first = h[0].oneRM || 1; return { label: n.length > 11 ? n.slice(0, 11) : n, color: colors[idx % colors.length], w: idx === 0 ? 3 : 2.25, pct: h.map((x) => (x.oneRM / first - 1) * 100), lastKg: h[h.length - 1].oneRM }; });
+    return picked.map((n, idx) => { const h = exHistory[n]; const first = h[0].oneRM || 1; return { label: n.length > 11 ? n.slice(0, 11) : n, color: colors[idx % colors.length], w: idx === 0 ? 3 : 2.25, points: h.map((x) => ({ date: x.iso, pct: (x.oneRM / first - 1) * 100, kg: x.oneRM })), lastKg: h[h.length - 1].oneRM }; });
   }, [exHistory, exOptions, activeEx]);
 
   const weeklyMuscle = useMemo(() => {
@@ -417,7 +386,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const trained = {};
     workouts.forEach((w) => { const s = w.exercises.reduce((t, e) => t + e.sets.length, 0) + ((w.cardio || []).length); if (s > 0) trained[w.date] = s; });
     const days = [];
-    for (let i = 181; i >= 0; i--) { const iso = isoMinus(i); const score = trained[iso] || 0; const lvl = score === 0 ? 0 : score <= 3 ? 1 : score <= 6 ? 2 : score <= 10 ? 3 : 4; const dw = (new Date(iso + "T00:00:00").getDay() + 6) % 7; days.push({ iso, dw, lvl }); }
+    for (let i = 181; i >= 0; i--) { const iso = isoMinus(i); const score = trained[iso] || 0; const lvl = score === 0 ? 0 : score <= 3 ? 1 : score <= 6 ? 2 : score <= 10 ? 3 : 4; const dw = (new Date(iso + "T00:00:00").getDay() + 6) % 7; days.push({ iso, dw, lvl, score }); }
     let streak = 0; for (let i = 0; ; i++) { if (trained[isoMinus(i)]) streak++; else break; }
     const total = Object.keys(trained).length;
     const wk = (iso) => { const d = new Date(iso + "T00:00:00"); const j = new Date(d.getFullYear(), 0, 1); return d.getFullYear() + "-" + Math.ceil(((d - j) / 86400000 + j.getDay() + 1) / 7); };
@@ -565,7 +534,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
               <h2 style={secTitle}>Peso y tendencia</h2>
               <div style={{ display: "flex", gap: 16 }}><DLegend color={A_ACC} label="Media 7d" /><DLegend color={A_INK2} label="Objetivo" dash /></div>
             </div>
-            {weightChart.length >= 2 ? <BWeightChart avg={weightChart.map((p) => p.media)} tgt={weightChart.map((p) => p.objetivo)} /> : <DNeed>Registra tu peso al menos 2 días para ver la tendencia.</DNeed>}
+            {weightChart.length >= 2 ? <BWeightChart data={weightChart.map((point) => ({ ...point, date: fmtDate(point.iso) }))} targetKey="objetivo" /> : <DNeed>Registra tu peso al menos 2 días para ver la tendencia.</DNeed>}
           </Rise>
           <Rise show={show} i={3} style={cellR}>
             <h2 style={{ ...secTitle, marginBottom:16 }}>Récords</h2>
@@ -609,7 +578,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
           <div style={{ borderTop: `1px solid ${A_LINE}` }}>
             <Rise show={show} i={6} style={{ padding: isMobile ? "20px 18px 22px" : "22px 28px 26px" }}>
               <div style={secHead}><h2 style={secTitle}>Esfuerzo (RPE)</h2><span style={meta}>{rpeSeries.length} sesiones · ahora {rpeSeries[rpeSeries.length - 1].rpe.toFixed(1)}</span></div>
-              <BWeightChart avg={rpeSeries.map((p) => p.rpe)} tgt={[]} />
+              <BWeightChart data={rpeSeries.map((point) => ({ ...point, date: fmtDate(point.iso) }))} valueKey="rpe" valueLabel="RPE medio" unit="RPE" />
             </Rise>
           </div>
         )}
