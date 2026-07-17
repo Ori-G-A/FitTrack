@@ -100,6 +100,16 @@ export const daysBetween = (start, end) => Math.round(
   (new Date(`${end}T00:00:00`) - new Date(`${start}T00:00:00`)) / 86400000
 );
 
+export function selectFreshRecords(records, today, { maxAgeDays = 3, maxItems = 3 } = {}) {
+  return records
+    .filter((record) => {
+      const age = daysBetween(record.date, today);
+      return age >= 0 && age <= maxAgeDays;
+    })
+    .sort((a, b) => b.date.localeCompare(a.date) || b.best - a.best)
+    .slice(0, maxItems);
+}
+
 export const addDays = (iso, amount) => {
   const date = new Date(`${iso}T00:00:00`);
   date.setDate(date.getDate() + amount);

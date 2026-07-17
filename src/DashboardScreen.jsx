@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { CYCLE_PHASES, KCAL_PER_KG } from "./app-config.js";
-import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, slopePerDay } from "./app-utils.js";
+import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
 import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
@@ -12,6 +12,8 @@ const round1 = (value) => Math.round(value * 10) / 10;
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
 const isoMinus = (days) => { const date = new Date(); date.setDate(date.getDate() - days); return localISO(date); };
 const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
+const PR_ALERT_MAX_AGE_DAYS = 3;
+const PR_ALERT_MAX_ITEMS = 3;
 
 /* ----------------------------- DASHBOARD ----------------------------- */
 /* ============================================================
@@ -289,10 +291,14 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
   const prs = useMemo(() => Object.entries(exHistory).map(([name, h]) => {
     const best = h.reduce((m, x) => x.oneRM > m.oneRM ? x : m, h[0]);
     const latest = h[h.length - 1];
-    const isRecent = h.length >= 2 && best.iso === latest.iso && daysBetween(best.iso, todayISO()) <= 7;
+    const recordAge = daysBetween(best.iso, todayISO());
+    const isRecent = h.length >= 2 && best.iso === latest.iso && recordAge >= 0 && recordAge <= PR_ALERT_MAX_AGE_DAYS;
     return { name, best: best.oneRM, date: best.iso, isRecent };
   }).sort((a, b) => b.best - a.best), [exHistory]);
-  const recentPRs = prs.filter((p) => p.isRecent);
+  const recentPRs = useMemo(
+    () => selectFreshRecords(prs.filter((p) => p.isRecent), todayISO(), { maxAgeDays: PR_ALERT_MAX_AGE_DAYS, maxItems: PR_ALERT_MAX_ITEMS }),
+    [prs],
+  );
   const trackable = useMemo(() => Object.keys(exHistory).filter((n) => exHistory[n].length >= 2), [exHistory]);
   const muscleOptions = useMemo(() => [...new Set(trackable.map((n) => exHistory[n][0].muscle))].sort(), [trackable, exHistory]);
   const [muscleFilter, setMuscleFilter] = useState("all");

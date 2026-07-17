@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, slopePerDay, validateBackup } from "../src/app-utils.js";
+import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -12,6 +12,21 @@ test("authUserChanged ignores token refreshes for the same user", () => {
   assert.equal(authUserChanged("user-1", "user-1"), false);
   assert.equal(authUserChanged("user-1", "user-2"), true);
   assert.equal(authUserChanged("user-1", null), true);
+});
+
+test("fresh record alerts expire after three days and are capped", () => {
+  const records = [
+    { name: "old", date: "2026-07-13", best: 90 },
+    { name: "today-low", date: "2026-07-17", best: 40 },
+    { name: "three-days", date: "2026-07-14", best: 60 },
+    { name: "today-high", date: "2026-07-17", best: 80 },
+    { name: "yesterday", date: "2026-07-16", best: 70 },
+  ];
+
+  assert.deepEqual(
+    selectFreshRecords(records, "2026-07-17").map((record) => record.name),
+    ["today-high", "today-low", "yesterday"],
+  );
 });
 
 test("mergePhotoUrls updates existing photos without restoring deleted ones", () => {
