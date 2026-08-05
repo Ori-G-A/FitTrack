@@ -679,6 +679,15 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
   const [durInput, setDurInput] = useState(session.durationMin ? String(session.durationMin) : "");
   useEffect(() => { setDurInput(session.durationMin ? String(session.durationMin) : ""); }, [date, session.durationMin]);
   const commitDuration = () => writeSession({ durationMin: Number(durInput) || 0 });
+  // Autoguardado: el teclado numérico del móvil no trae tecla Enter, así que el
+  // valor se guarda solo al a segundo de dejar de escribir. Enter y salir del campo
+  // lo siguen guardando al instante. La guarda evita reescribir (y borrar la sesión)
+  // cuando el input ya coincide con lo guardado, ej. al montar el componente.
+  useEffect(() => {
+    if (durInput === (session.durationMin ? String(session.durationMin) : "")) return;
+    const timer = setTimeout(commitDuration, 1000);
+    return () => clearTimeout(timer);
+  }, [durInput]); // eslint-disable-line
 
   const writeSession = (patch) => {
     setWorkouts((prev) => {
@@ -804,10 +813,10 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
         </div>
         <div className="ft-row" style={{ marginTop: 12 }}>
           <div className="ft-field" style={{ maxWidth: 200 }}><label>Minutos (editar a mano)</label>
-            <input className="ft-input ft-mono" type="number" inputMode="numeric" value={durInput} placeholder="0"
+            <input className="ft-input ft-mono" type="number" inputMode="numeric" enterKeyHint="done" value={durInput} placeholder="0"
               onChange={(e) => setDurInput(e.target.value)}
               onBlur={commitDuration}
-              onKeyDown={(e) => e.key === "Enter" && commitDuration()} /></div>
+              onKeyDown={(e) => { if (e.key === "Enter") { commitDuration(); e.currentTarget.blur(); } }} /></div>
         </div>
       </div>
 
