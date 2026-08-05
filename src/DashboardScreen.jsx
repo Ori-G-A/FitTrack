@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES, KCAL_PER_KG } from "./app-config.js";
-import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
+import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
 import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
@@ -201,34 +201,47 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const start = maSeries[0]; const startKg = goals.startWeight ? Number(goals.startWeight) : start.real;
     return maSeries.map((p) => ({ ...p, objetivo: Number((startKg + goals.weeklyChange * (daysBetween(start.iso, p.iso) / 7)).toFixed(2)) }));
   }, [maSeries, goals]);
+  const completeCyclesCount = useMemo(() => {
+    const starts = buildCycleStarts(periods, menstrualLogs);
+    return starts.length > 1 ? starts.length - 1 : 0;
+  }, [periods, menstrualLogs]);
+  // Fase estimada de cada día pesado, una sola vez: la usan el offset de retención
+  // y la corrección de la serie de tendencia.
+  const phaseByDate = useMemo(() => {
+    const map = new Map();
+    sortedW.forEach((w) => map.set(w.date, inferCyclePhase({ date: w.date, menstrualLogs, periods, wellness }).phase));
+    return map;
+  }, [sortedW, menstrualLogs, periods, wellness]);
+  // Offset propio de retención lútea, derivado del historial (no un modelo genérico:
+  // la magnitud varía demasiado entre personas). Pide 3 ciclos completos — mismo
+  // umbral que ya anunciaba la alerta de "seguimiento más robusto".
+  const lutealOffset = useMemo(
+    () => (completeCyclesCount >= 3 ? lutealRetentionKg(sortedW, (date) => phaseByDate.get(date)) : null),
+    [completeCyclesCount, sortedW, phaseByDate],
+  );
   // Para inferir tendencia/mantenimiento (no para lo que se muestra como peso real)
-  // restamos el agua de creatina modelada: si no se descuenta, una carga de creatina
-  // se lee como "subiste de grasa" cuando en realidad es agua intramuscular.
+  // restamos el agua de creatina modelada y la retención lútea estimada: si no se
+  // descuentan, una carga de creatina o una fase lútea se leen como "subiste de
+  // grasa" cuando en realidad es agua.
   const maSeriesForTrend = useMemo(() => {
-    if (!goals.creatineStart) return maSeries;
+    if (!goals.creatineStart && !lutealOffset) return maSeries;
     return sortedW.map((w) => {
       const start = new Date(w.date + "T00:00:00"); start.setDate(start.getDate() - 6);
       const win = sortedW.filter((x) => x.date <= w.date && new Date(x.date + "T00:00:00") >= start);
-      const adjKg = (x) => x.kg - creatineWaterKg(goals.creatineStart, x.date);
+      const adjKg = (x) => x.kg
+        - creatineWaterKg(goals.creatineStart, x.date)
+        - (lutealOffset && phaseByDate.get(x.date) === "luteal_late" ? lutealOffset.kg : 0);
       return { iso: w.date, media: round1(win.reduce((s, x) => s + adjKg(x), 0) / win.length) };
     });
-  }, [sortedW, maSeries, goals.creatineStart]);
+  }, [sortedW, maSeries, goals.creatineStart, lutealOffset, phaseByDate]);
   const trend = useMemo(() => {
     const recent = maSeriesForTrend.filter((p) => daysBetween(p.iso, todayISO()) <= 21);
     const pts = (recent.length >= 2 ? recent : maSeriesForTrend.slice(-6)).map((p) => ({ x: daysBetween(maSeriesForTrend[0]?.iso || p.iso, p.iso), y: p.media }));
     const sp = slopePerDay(pts); return sp === null ? null : sp * 7;
   }, [maSeriesForTrend]);
-  const completeCyclesCount = useMemo(() => {
-    const starts = buildCycleStarts(periods, menstrualLogs);
-    return starts.length > 1 ? starts.length - 1 : 0;
-  }, [periods, menstrualLogs]);
-  // ponytail: la retención por fase de ciclo hoy solo agrega una advertencia de texto,
-  // no una corrección numérica (a diferencia de la creatina, no hay un modelo de kg de
-  // agua confiable — la magnitud varía demasiado entre personas/ciclos). Con 3+ ciclos
-  // completos registrados, se podría derivar un offset empírico propio (peso medio en
-  // lútea tardía vs. línea base folicular, controlando por tendencia) y restarlo igual
-  // que se hace con creatineWaterKg. Revisar cuando haya ese historial (ver contador
-  // "Progreso hacia seguimiento más robusto" en alerts).
+  // Hoy es lútea tardía con síntomas altos. Con lutealOffset ya activo la tendencia
+  // viene corregida, así que esto solo matiza el texto; sin offset (menos de 3 ciclos)
+  // sigue siendo la única advertencia de retención que damos.
   const cycleConfound = useMemo(() => {
     if (completeCyclesCount < 2) return false;
     const today = todayISO();
@@ -409,7 +422,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     recentPRs.forEach((p) => a.push({ type: "pr", title: `¡Nuevo récord en ${p.name}!`, body: `Tu 1RM estimado subió a ${p.best} kg. La sobrecarga progresiva está funcionando.` }));
     if (trend !== null) {
       const diff = trend - goals.weeklyChange;
-      if (Math.abs(diff) > 0.25) a.push({ type: "warn", title: "Desvío en tu tendencia de peso", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem vs objetivo ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}. ${diff > 0 ? "Vas más hacia arriba de lo previsto — recorta calorías." : "Bajas más rápido de lo previsto — sube calorías para proteger músculo."}${maintenance ? ` Mantenimiento estimado ~${maintenance.maint} kcal.` : ""}${cycleConfound ? " Estás en fase lútea tardía con síntomas compatibles con retención de líquidos — parte de este desvío puede ser agua, no grasa. Esperá unos días antes de ajustar calorías." : ""}` });
+      if (Math.abs(diff) > 0.25) a.push({ type: "warn", title: "Desvío en tu tendencia de peso", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem vs objetivo ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}. ${diff > 0 ? "Vas más hacia arriba de lo previsto — recorta calorías." : "Bajas más rápido de lo previsto — sube calorías para proteger músculo."}${maintenance ? ` Mantenimiento estimado ~${maintenance.maint} kcal.` : ""}${cycleConfound ? (lutealOffset ? ` Estás en fase lútea tardía: la tendencia ya descuenta tus ${lutealOffset.kg} kg de retención habituales, así que este desvío es real y podés ajustar calorías sin esperar.` : " Estás en fase lútea tardía con síntomas compatibles con retención de líquidos — parte de este desvío puede ser agua, no grasa. Esperá unos días antes de ajustar calorías.") : ""}` });
       else a.push({ type: "ok", title: "Peso en línea con tu objetivo", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem, dentro de ±0,25 de tu meta.` });
     }
     if (protAvg7 !== null && goals.proteinTarget && protAvg7 < 0.85 * goals.proteinTarget) a.push({ type: "warn", title: "Proteína por debajo del objetivo", body: `Media de ${Math.round(protAvg7)} g/día la última semana frente a tu meta de ${goals.proteinTarget} g.` });
@@ -436,17 +449,16 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
       }
     }
     if (loadRpe.progress) a.push({ type: "ok", title: `Lista para subir carga en ${loadRpe.progress.name}`, body: `${loadRpe.progress.kg} kg × ${loadRpe.progress.reps} te costó cada vez menos (RPE ${loadRpe.progress.from.toFixed(1)} → ${loadRpe.progress.to.toFixed(1)} en las últimas 3 sesiones). Subí al siguiente escalón de peso o sumá 1-2 reps manteniendo el RPE objetivo.` });
-    // Recordatorio para volver a ajustar la retención por ciclo (hoy solo advertencia
-    // de texto, no corrección numérica). El ajuste de RPE a igual carga ya está
-    // implementado (loadRpe). Umbral: 3 ciclos completos.
     const CYCLE_TARGET = 3;
     if (completeCyclesCount < CYCLE_TARGET) {
-      a.push({ type: "info", title: "Progreso hacia seguimiento más robusto", body: `Ciclos completos registrados: ${completeCyclesCount}/${CYCLE_TARGET}. Cuando llegues a la meta, volvé a pedir el ajuste de retención por ciclo.` });
+      a.push({ type: "info", title: "Progreso hacia seguimiento más robusto", body: `Ciclos completos registrados: ${completeCyclesCount}/${CYCLE_TARGET}. Cuando llegues a la meta, la tendencia de peso va a descontar sola la retención de la fase lútea.` });
+    } else if (lutealOffset) {
+      a.push({ type: "ok", title: "Retención por ciclo ya descontada", body: `Con ${completeCyclesCount} ciclos registrados, en fase lútea tardía pesás ${lutealOffset.kg} kg más que en tu línea base folicular (${lutealOffset.lutealDays} pesadas en lútea vs ${lutealOffset.follicularDays} en folicular). La tendencia y el mantenimiento ya descuentan ese peso, así que no lo leas como grasa.${lutealOffset.capped ? " El valor venía más alto y se recortó a 2,5 kg: por encima de eso suele ser pocas pesadas, no retención." : ""}` });
     } else {
-      a.push({ type: "ok", title: "Listo para ajustar retención por ciclo", body: `Ya tenés ${completeCyclesCount} ciclos completos registrados. Pedime que derive el offset de retención por ciclo con este historial.` });
+      a.push({ type: "info", title: "Sin retención lútea medible", body: `Ya tenés ${completeCyclesCount} ciclos completos, pero tus pesadas no muestran una diferencia clara entre fase lútea tardía y folicular (hace falta al menos 3 pesadas en cada fase y una diferencia mayor a 0,2 kg). No hay nada que descontar: pesate también en los días previos al periodo y se recalcula solo.` });
     }
     return a;
-  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection, cycleConfound, deloadSignal, completeCyclesCount, loadRpe, lowEnergyDays]);
+  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection, cycleConfound, deloadSignal, completeCyclesCount, loadRpe, lowEnergyDays, lutealOffset]);
 
   const noData = weights.length === 0 && workouts.length === 0 && nutrition.length === 0;
   if (noData) return <div className="ft-card"><div className="ft-empty"><div className="ic"><LayoutDashboard size={34} /></div>Aún no hay datos. Registra entrenamientos, peso o comidas y aquí verás tu evolución, récords y alertas.</div></div>;

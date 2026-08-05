@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
+import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -78,6 +78,48 @@ test("validateBackup accepts image data and workout structure", () => {
   assert.equal(backup.workouts.length, 1);
   assert.equal(backup.menstrualLogs.length, 1);
   assert.equal(backup.photos.length, 1);
+});
+
+// Serie sintética: peso base constante, +bump kg los días marcados como lútea tardía.
+const cycleWeights = ({ days = 24, base = 60, bump = 1, slopePerDay: drift = 0 } = {}) => {
+  const phases = [], weights = [];
+  for (let i = 0; i < days; i += 1) {
+    const isLuteal = i % 6 >= 4;                       // 2 de cada 6 días
+    const date = addDays("2026-01-01", i);
+    phases.push([date, isLuteal ? "luteal_late" : "follicular_mid_late"]);
+    weights.push({ date, kg: base + drift * i + (isLuteal ? bump : 0) });
+  }
+  return { weights, phaseOf: (date) => new Map(phases).get(date) };
+};
+
+test("lutealRetentionKg recovers the retention offset", () => {
+  const { weights, phaseOf } = cycleWeights({ bump: 1.2 });
+  const result = lutealRetentionKg(weights, phaseOf);
+  assert.equal(result.kg, 1.2);
+  assert.equal(result.capped, false);
+  assert.equal(result.lutealDays, 8);
+  assert.equal(result.follicularDays, 16);
+});
+
+test("lutealRetentionKg detrends so a cut is not read as less retention", () => {
+  // bajando 100 g/día: sin detrendar, la fase que cae más tarde arrastra la media
+  const { weights, phaseOf } = cycleWeights({ bump: 1.2, slopePerDay: -0.1 });
+  assert.equal(lutealRetentionKg(weights, phaseOf).kg, 1.2);
+});
+
+test("lutealRetentionKg ignores noise, thin phases and caps implausible values", () => {
+  assert.equal(lutealRetentionKg(cycleWeights({ bump: 0.1 }).weights, cycleWeights({ bump: 0.1 }).phaseOf), null);
+  const thin = cycleWeights({ days: 8, bump: 1 });      // solo 2 días de lútea
+  assert.equal(lutealRetentionKg(thin.weights, thin.phaseOf), null);
+  const wild = cycleWeights({ bump: 4 });
+  const capped = lutealRetentionKg(wild.weights, wild.phaseOf);
+  assert.equal(capped.kg, 2.5);
+  assert.equal(capped.capped, true);
+});
+
+test("lutealRetentionKg returns null when weight loss looks like the luteal phase is lighter", () => {
+  const { weights, phaseOf } = cycleWeights({ bump: -1 });
+  assert.equal(lutealRetentionKg(weights, phaseOf), null);
 });
 
 const workoutAt = (date, rpe, kg = 20, reps = 10, name = "Sentadilla goblet") => ({
