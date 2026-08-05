@@ -1,2 +1,8 @@
 allowBuilds:
   esbuild: true
+
+# postcss entra solo como dependencia transitiva de vite, que lo acota a una
+# versión vulnerable. GHSA-r28c-9q8g-f849 (alta) y GHSA-fxqj-rqcc-2cmp (media):
+# un sourceMappingURL controlado por el atacante lee archivos .map arbitrarios.
+overrides:
+  postcss: ">=8.5.23"
