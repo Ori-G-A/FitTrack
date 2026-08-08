@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { CYCLE_PHASES, KCAL_PER_KG } from "./app-config.js";
-import { canonExercise, creatineWaterKg, cycleInfo, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
-import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
+import { CYCLE_PHASES, KCAL_PER_KG, PHASE_GROUPS } from "./app-config.js";
+import { canonExercise, creatineWaterKg, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
+import { buildCycleStarts, cycleContext, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
@@ -415,7 +415,13 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const weeks = remaining / trend; const d = new Date(); d.setDate(d.getDate() + Math.round(weeks * 7));
     return { weeks: Math.round(weeks), date: d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" }) };
   }, [goals, currentMA, trend]);
-  const cyc = cycleInfo(periods);
+  const cyc = useMemo(() => {
+    const date = todayISO();
+    const ctx = cycleContext(date, periods, menstrualLogs);
+    if (!ctx.currentStart) return null;
+    const phase = PHASE_GROUPS[inferCyclePhase({ date, menstrualLogs, periods, wellness }).phase];
+    return { phase, day: ctx.cycleDay, daysToNext: ctx.daysToNext };
+  }, [periods, menstrualLogs, wellness]);
 
   const alerts = useMemo(() => {
     const a = [];

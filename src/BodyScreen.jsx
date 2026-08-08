@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { CYCLE_PHASES } from "./app-config.js";
-import { addDays, creatineWaterKg, cycleInfo, daysBetween, localISO } from "./app-utils.js";
-import { CLEAR_BLEEDING_LEVELS, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog } from "./cycle-inference.js";
+import { CYCLE_PHASES, PHASE_GROUPS } from "./app-config.js";
+import { addDays, creatineWaterKg, daysBetween, localISO } from "./app-utils.js";
+import { cycleContext, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog } from "./cycle-inference.js";
 import { ScreenMast } from "./EditorialUI.jsx";
 import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
 
@@ -91,11 +91,7 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   };
   const welSorted = [...wellness].sort((a, b) => b.date.localeCompare(a.date));
 
-  const [pDate, setPDate] = useState(todayISO());
-  const [pDur, setPDur] = useState("5");
-  const addPeriod = () => { setPeriods((p) => [...p.filter((x) => x.date !== pDate), { id: uid(), date: pDate, duration: Number(pDur) || 5 }].sort((a, b) => a.date.localeCompare(b.date))); };
   const delPeriod = (id) => setPeriods((p) => p.filter((x) => x.id !== id));
-  const cyc = cycleInfo(periods);
   const pSorted = [...periods].sort((a, b) => b.date.localeCompare(a.date));
   const fmtNext = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long" });
   const [cycleDate, setCycleDate] = useState(todayISO());
@@ -103,17 +99,16 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   const [cycleLog, setCycleLog] = useState(emptyMenstrualLog(cycleDate));
   useEffect(() => { setCycleLog(existingCycleLog ? normalizeMenstrualLog(existingCycleLog) : emptyMenstrualLog(cycleDate)); }, [cycleDate, existingCycleLog?.updatedAt]); // eslint-disable-line
   const phaseEstimate = inferCyclePhase({ date: cycleDate, menstrualLogs, periods, wellness });
+  const ctx = cycleContext(cycleDate, periods, menstrualLogs);
+  const phaseStyle = CYCLE_PHASES[PHASE_GROUPS[phaseEstimate.phase]];
   const cycleInsights = getCycleInsights({ menstrualLogs, periods, wellness });
   const menstrualSorted = [...menstrualLogs].sort((a, b) => b.date.localeCompare(a.date));
+  // El check-in es la unica entrada: buildCycleStarts deriva los inicios de ciclo del
+  // sangrado registrado, sin duplicar el registro en `periods`.
   const saveCycleLog = () => {
     const now = new Date();
     const normalized = normalizeMenstrualLog({ ...cycleLog, id: existingCycleLog?.id || cycleLog.id || uid(), date: cycleDate, createdAt: existingCycleLog?.createdAt }, now);
     setMenstrualLogs((prev) => [...prev.filter((item) => item.date !== cycleDate), normalized].sort((a, b) => a.date.localeCompare(b.date)));
-    const previousClearBleeding = menstrualLogs.some((item) => CLEAR_BLEEDING_LEVELS.includes(item.bleedingLevel) && daysBetween(item.date, cycleDate) > 0 && daysBetween(item.date, cycleDate) <= 2);
-    const coveredByPeriod = periods.some((period) => cycleDate >= period.date && cycleDate <= addDays(period.date, (Number(period.duration) || 5) - 1));
-    if (CLEAR_BLEEDING_LEVELS.includes(normalized.bleedingLevel) && !previousClearBleeding && !coveredByPeriod) {
-      setPeriods((prev) => [...prev.filter((item) => item.date !== cycleDate), { id: uid(), date: cycleDate, duration: Number(pDur) || 5 }].sort((a, b) => a.date.localeCompare(b.date)));
-    }
   };
   const delCycleLog = (id) => setMenstrualLogs((prev) => prev.filter((item) => item.id !== id));
 
@@ -189,24 +184,8 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
       </div>
 
       <div className="ft-card">
-        <h2><Droplet size={16} /> Ciclo menstrual {cyc && <span className="tag">día {cyc.day} · ciclo ~{cyc.avgCycle}d</span>}</h2>
-        <div className="ft-row" style={{ marginBottom: 10 }}>
-          <div className="ft-field"><label>Inicio del periodo</label><input className="ft-input ft-mono" type="date" value={pDate} onChange={(e) => setPDate(e.target.value)} /></div>
-          <div className="ft-field" style={{ maxWidth: 150 }}><label>Días de sangrado</label><input className="ft-input ft-mono" type="number" inputMode="numeric" value={pDur} onChange={(e) => setPDur(e.target.value)} /></div>
-          <button className="ft-btn" onClick={addPeriod}><Check size={15} /> Registrar inicio</button>
-        </div>
-        {cyc ? (
-          <div className="ft-alert" style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${CYCLE_PHASES[cyc.phase].color}55`, marginBottom: 0 }}>
-            <Droplet size={20} color={CYCLE_PHASES[cyc.phase].color} />
-            <div>
-              <div className="t">Fase actual: {cyc.phase}{cyc.samples === 0 ? " (estimada sobre 28 días)" : ""}</div>
-              <div className="b">{CYCLE_PHASES[cyc.phase].note} {cyc.daysToNext >= 0 ? `Próximo periodo estimado: ${fmtNext(cyc.nextDate)} (~${cyc.daysToNext} días).` : `Tu periodo lleva ~${Math.abs(cyc.daysToNext)} días de retraso respecto a tu media.`}</div>
-            </div>
-          </div>
-        ) : (
-          <div className="ft-empty" style={{ padding: "18px 8px" }}>Registra el inicio de tu periodo para ver tu fase actual y la predicción del siguiente. Con 2-3 ciclos las estimaciones se ajustan a ti.</div>
-        )}
-        <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--line)" }}>
+        <h2><Droplet size={16} /> Ciclo menstrual {ctx.currentStart && <span className="tag">día {ctx.cycleDay} · ciclo ~{ctx.avgCycle}d</span>}</h2>
+        <div>
           <div className="ft-alert info" style={{ marginBottom: 12 }}>
             <Sparkles size={20} color="var(--blue)" />
             <div>
@@ -232,11 +211,11 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
             <div className="ft-field"><label>Dolor pelvico</label><select className="ft-select" value={cycleLog.pelvicPain} onChange={(e) => setCycleLog({ ...cycleLog, pelvicPain: e.target.value })}>{PAIN_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
             <div className="ft-field" style={{ flex: 2 }}><label>Notas</label><input className="ft-input" placeholder="Opcional" value={cycleLog.notes} onChange={(e) => setCycleLog({ ...cycleLog, notes: e.target.value })} /></div>
           </div>
-          <div className="ft-alert" style={{ background: "rgba(255,255,255,.03)", border: "1px solid rgba(22,20,13,.16)", marginBottom: 12 }}>
-            <Droplet size={20} color="var(--accent)" />
+          <div className="ft-alert" style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${phaseStyle.color}55`, marginBottom: 12 }}>
+            <Droplet size={20} color={phaseStyle.color} />
             <div>
               <div className="t">Fase estimada: {PHASE_NAMES[phaseEstimate.phase]} · confianza {CONFIDENCE_NAMES[phaseEstimate.confidence]}</div>
-              <div className="b">{phaseEstimate.reason}</div>
+              <div className="b">{phaseEstimate.reason} {phaseStyle.note} {ctx.daysToNext == null ? "" : ctx.daysToNext >= 0 ? `Próximo periodo estimado: ${fmtNext(ctx.nextPeriod)} (~${ctx.daysToNext} días).` : `Tu periodo lleva ~${Math.abs(ctx.daysToNext)} días de retraso respecto a tu media.`}</div>
             </div>
           </div>
           {cycleInsights.length > 0 && (
@@ -255,7 +234,7 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
             {pSorted.slice(0, 6).map((p, i) => {
               const next = pSorted[i - 1]; // el periodo siguiente (más reciente) en lista descendente
               const len = next ? daysBetween(p.date, next.date) : null;
-              return (<div className="ft-li" key={p.id}><span className="li-d">{fmtDate(p.date)}</span><span className="li-main">Inicio de periodo</span><span className="li-sub">{p.duration} días{len ? ` · ciclo ${len}d` : i === 0 ? " · ciclo en curso" : ""}</span><button className="ft-trash" onClick={() => delPeriod(p.id)}><Trash2 size={15} /></button></div>);
+              return (<div className="ft-li" key={p.id}><span className="li-d">{fmtDate(p.date)}</span><span className="li-main">Inicio de periodo (registro antiguo)</span><span className="li-sub">{p.duration} días{len ? ` · ciclo ${len}d` : i === 0 ? " · ciclo en curso" : ""}</span><button className="ft-trash" onClick={() => delPeriod(p.id)}><Trash2 size={15} /></button></div>);
             })}
           </div>
         )}

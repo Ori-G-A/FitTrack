@@ -110,7 +110,7 @@ export function buildCycleStarts(periods = [], menstrualLogs = []) {
   return [...starts].sort();
 }
 
-function cycleContext(date, periods, menstrualLogs) {
+export function cycleContext(date, periods, menstrualLogs) {
   const starts = buildCycleStarts(periods, menstrualLogs);
   const { avgCycle, samples } = averageCycleLength(starts);
   const currentStart = [...starts].reverse().find((start) => start <= date) || null;
@@ -182,7 +182,10 @@ export function inferCyclePhase({ date = localISO(), menstrualLogs = [], periods
   const log = logs.find((item) => item.date === date) || null;
   const wellnessLog = wellness.find((item) => item.date === date) || null;
   const context = cycleContext(date, periods, logs);
-  const periodEvent = periods.find((period) => periodContains(period, date));
+  // El check-in del dia manda sobre la duracion asumida del periodo: si registraste
+  // "no hubo" o "manchado", no estas menstruando aunque el periodo dure 5 dias en papel.
+  const loggedNoBleeding = Boolean(log) && log.bleedingLevel !== "not_logged" && !isClearBleeding(log.bleedingLevel);
+  const periodEvent = loggedNoBleeding ? null : periods.find((period) => periodContains(period, date));
   const ovulations = detectOvulationProbableDates(logs);
   const ovulation = ovulations.get(date);
   const lastOvulation = [...ovulations.keys()].filter((itemDate) => itemDate < date).sort().pop();

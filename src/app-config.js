@@ -27,3 +27,16 @@ export const CYCLE_PHASES = {
   Lútea: { color: "#b388ff", note: "En la fase lútea tardía algunas reportan más fatiga, antojos y peor recuperación. Que el rendimiento fluctúe aquí es normal." },
   "Por confirmar": { color: "#878d86", note: "Tu periodo podría ir retrasado respecto a tu media. Registra el inicio cuando llegue para afinar las predicciones." },
 };
+
+// Fases finas de cycle-inference agrupadas en las 4 fases con color y nota.
+export const PHASE_GROUPS = {
+  menstruation: "Menstrual",
+  follicular_early: "Folicular",
+  follicular_mid_late: "Folicular",
+  fertile_window_probable: "Ovulatoria",
+  ovulation_probable: "Ovulatoria",
+  luteal_early: "Lútea",
+  luteal_mid: "Lútea",
+  luteal_late: "Lútea",
+  unknown: "Por confirmar",
+};

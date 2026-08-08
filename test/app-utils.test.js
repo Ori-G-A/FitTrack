@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, authUserChanged, cycleInfo, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
+import { addDays, authUserChanged, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -49,18 +49,6 @@ test("date helpers handle month boundaries", () => {
 test("slopePerDay computes a linear trend", () => {
   assert.equal(slopePerDay([{ x: 0, y: 10 }, { x: 2, y: 14 }, { x: 4, y: 18 }]), 2);
   assert.equal(slopePerDay([{ x: 1, y: 5 }]), null);
-});
-
-test("cycleInfo calculates cycle length and phase from a fixed date", () => {
-  const result = cycleInfo([
-    { date: "2026-04-01", duration: 5 },
-    { date: "2026-04-29", duration: 5 },
-    { date: "2026-05-27", duration: 4 },
-  ], "2026-06-14");
-  assert.equal(result.avgCycle, 28);
-  assert.equal(result.day, 19);
-  assert.equal(result.phase, "L\u00fatea");
-  assert.equal(result.nextDate, "2026-06-24");
 });
 
 test("validateBackup rejects malformed collections and fills goal defaults", () => {

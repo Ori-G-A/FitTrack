@@ -108,3 +108,15 @@ test("insights read sleep and energy from wellness records", () => {
   assert.equal(insights.some((item) => item.type === "energy_by_phase"), true);
   assert.equal(insights.some((item) => item.message.includes("sueno")), true);
 });
+
+test("un check-in sin sangrado gana a la duracion asumida del periodo", () => {
+  const periods = [{ date: "2026-06-01", duration: 5 }];
+  const sinLog = inferCyclePhase({ date: "2026-06-04", periods });
+  assert.equal(sinLog.phase, "menstruation");
+  const conLog = inferCyclePhase({
+    date: "2026-06-04",
+    periods,
+    menstrualLogs: [{ date: "2026-06-04", bleedingLevel: "none", cervicalFluid: "dry" }],
+  });
+  assert.notEqual(conLog.phase, "menstruation");
+});

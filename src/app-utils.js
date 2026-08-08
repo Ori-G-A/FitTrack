@@ -175,33 +175,6 @@ export function slopePerDay(points) {
   return denominator === 0 ? null : (count * sumXY - sumX * sumY) / denominator;
 }
 
-export function cycleInfo(periods, currentDate = localISO()) {
-  if (!Array.isArray(periods) || periods.length === 0) return null;
-  const starts = periods.map((period) => period.date).sort();
-  const last = starts[starts.length - 1];
-  const lengths = [];
-  for (let index = 1; index < starts.length; index += 1) {
-    lengths.push(daysBetween(starts[index - 1], starts[index]));
-  }
-  const validLengths = lengths.filter((length) => length >= 18 && length <= 45);
-  const avgCycle = validLengths.length
-    ? Math.round(validLengths.reduce((sum, length) => sum + length, 0) / validLengths.length)
-    : 28;
-  const durations = periods.map((period) => Number(period.duration) || 5);
-  const avgPeriod = Math.max(1, Math.round(durations.reduce((sum, duration) => sum + duration, 0) / durations.length));
-  const day = daysBetween(last, currentDate) + 1;
-  const nextDate = addDays(last, avgCycle);
-  const daysToNext = daysBetween(currentDate, nextDate);
-  const ovulation = avgCycle - 14;
-  let phase;
-  if (day > avgCycle + 2) phase = "Por confirmar";
-  else if (day <= avgPeriod) phase = "Menstrual";
-  else if (day < ovulation - 1) phase = "Folicular";
-  else if (day <= ovulation + 1) phase = "Ovulatoria";
-  else phase = "L\u00fatea";
-  return { avgCycle, avgPeriod, day, phase, nextDate, daysToNext, samples: validLengths.length };
-}
-
 const BACKUP_ARRAY_KEYS = ["workouts", "weights", "nutrition", "foods", "recipes", "routines", "measurements", "wellness", "periods", "menstrualLogs", "photos"];
 const isPlainObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const isISODate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
