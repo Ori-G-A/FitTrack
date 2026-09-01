@@ -239,6 +239,11 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-alert .t{font-weight:700;margin-bottom:3px;}
 .ft-alert .b{color:var(--muted);line-height:1.5;}
 .ft-list{display:flex;flex-direction:column;gap:8px;}
+.ft-acc{margin-top:12px;}
+.ft-acc>summary{cursor:pointer;list-style:none;font-family:'IBM Plex Mono';font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.ft-acc>summary::-webkit-details-marker{display:none;}
+.ft-acc>summary::before{content:'+';font-weight:700;}
+.ft-acc[open]>summary::before{content:'–';}
 .ft-li{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;flex-wrap:wrap;}
 .ft-li .li-d{font-family:'IBM Plex Mono';font-size:12px;color:var(--muted);min-width:54px;}
 .ft-li .li-main{flex:1;font-weight:600;min-width:120px;}

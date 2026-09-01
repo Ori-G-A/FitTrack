@@ -110,6 +110,110 @@ export function buildCycleStarts(periods = [], menstrualLogs = []) {
   return [...starts].sort();
 }
 
+const BLEEDING_WEIGHT = { spotting: 0.25, light: 0.5, medium: 0.75, heavy: 1 };
+
+// Pistas de la vista compacta: cada una lee un sintoma y lo normaliza a 0-1.
+export const SYMPTOM_TRACKS = [
+  { key: "bleeding", label: "sangrado", value: (log) => BLEEDING_WEIGHT[log.bleedingLevel] || 0 },
+  { key: "cramps", label: "colicos", value: (log) => clamp(log.crampsLevel, 0, 10) / 10 },
+  { key: "bloating", label: "hinchazon", value: (log) => clamp(log.bloatingLevel, 0, 3) / 3 },
+  { key: "breast", label: "senos", value: (log) => clamp(log.breastSensitivity, 0, 3) / 3 },
+  { key: "acne", label: "acne", value: (log) => clamp(log.acneLevel, 0, 3) / 3 },
+];
+
+// Tramos consecutivos de una misma fase dentro de un ciclo, para dibujarlo segmentado.
+// ponytail: recorre dia por dia; con anos de registros conviene memorizar inferCyclePhase.
+export function phaseSegments(start, end, periods = [], menstrualLogs = []) {
+  if (!start || !end || end < start) return [];
+  const segments = [];
+  buildCycleTimeline({ startDate: start, endDate: end, periods, menstrualLogs }).forEach((item) => {
+    const last = segments[segments.length - 1];
+    if (last && last.phase === item.phase) {
+      last.days += 1;
+      return;
+    }
+    segments.push({ phase: item.phase, label: item.phaseLabel, startDay: daysBetween(start, item.date) + 1, days: 1 });
+  });
+  return segments;
+}
+
+// Un ciclo por fila, no un dia por fila: largo real y dias de sangrado medidos,
+// nunca una duracion asumida el dia uno.
+export function summarizeCycles(periods = [], menstrualLogs = [], today = localISO()) {
+  const starts = buildCycleStarts(periods, menstrualLogs);
+  const logByDate = new Map(sortByDate(menstrualLogs).map((log) => [log.date, log]));
+  const periodByDate = new Map(sortByDate(periods).map((period) => [period.date, period]));
+  const cycles = starts.map((start, index) => {
+    const nextStart = starts[index + 1] || null;
+    let bleedDays = 0;
+    // ponytail: tope de 15 dias, un sangrado mas largo que eso es tema de consulta, no de UI
+    for (let date = start; bleedDays < 15 && (!nextStart || date < nextStart); date = addDays(date, 1)) {
+      if (!isClearBleeding(logByDate.get(date)?.bleedingLevel)) break;
+      bleedDays += 1;
+    }
+    const period = periodByDate.get(start);
+    return {
+      start,
+      nextStart,
+      segments: phaseSegments(start, nextStart ? addDays(nextStart, -1) : today, periods, menstrualLogs),
+      ovulation: ovulationEstimate({ date: start, periods, menstrualLogs }),
+      length: nextStart ? daysBetween(start, nextStart) : null,
+      bleedDays: bleedDays || asNumber(period?.duration, 0) || null,
+      periodId: period?.id || null,
+      logId: logByDate.get(start)?.id || null,
+    };
+  });
+  const mean = (values) => values.reduce((sum, value) => sum + value, 0) / values.length;
+  const lengths = cycles.map((cycle) => cycle.length).filter((length) => length >= 18 && length <= 45);
+  const bleeds = cycles.map((cycle) => cycle.bleedDays).filter((days) => days > 0);
+  return {
+    cycles: [...cycles].reverse(),
+    avgCycle: lengths.length ? Math.round(mean(lengths)) : 28,
+    samples: lengths.length,
+    spread: lengths.length > 1 ? Math.max(...lengths) - Math.min(...lengths) : null,
+    avgBleed: bleeds.length ? Math.round(mean(bleeds) * 10) / 10 : null,
+    outliers: cycles.filter((cycle) => cycle.length != null && (cycle.length < 18 || cycle.length > 45)).length,
+  };
+}
+
+// Distribucion: donde cae cada sintoma dentro del ciclo, en `bins` tramos iguales.
+export function symptomDistribution({ periods = [], menstrualLogs = [], bins = 6 } = {}) {
+  const { cycles, avgCycle } = summarizeCycles(periods, menstrualLogs);
+  const byStart = new Map(cycles.map((cycle) => [cycle.start, cycle]));
+  const starts = [...byStart.keys()].sort().reverse();
+  const points = [];
+  sortByDate(menstrualLogs).forEach((log) => {
+    const start = starts.find((item) => item <= log.date);
+    if (!start) return;
+    const length = byStart.get(start).length || avgCycle;
+    const cycleDay = daysBetween(start, log.date) + 1;
+    points.push({ log, cycleDay, bin: Math.min(bins - 1, Math.floor(((cycleDay - 1) / length) * bins)) });
+  });
+  return SYMPTOM_TRACKS.map((track) => {
+    const buckets = Array.from({ length: bins }, () => ({ sum: 0, count: 0 }));
+    const byDay = new Map();
+    let days = 0;
+    points.forEach(({ log, cycleDay, bin }) => {
+      const value = track.value(log);
+      buckets[bin].sum += value;
+      buckets[bin].count += 1;
+      const day = byDay.get(cycleDay) || { sum: 0, count: 0 };
+      byDay.set(cycleDay, { sum: day.sum + value, count: day.count + 1 });
+      if (value > 0) days += 1;
+    });
+    const peak = [...byDay.entries()]
+      .filter(([, day]) => day.sum > 0)
+      .sort((a, b) => b[1].sum / b[1].count - a[1].sum / a[1].count)[0];
+    return {
+      key: track.key,
+      label: track.label,
+      bins: buckets.map((bucket) => (bucket.count ? bucket.sum / bucket.count : 0)),
+      days,
+      peakDay: peak ? peak[0] : null,
+    };
+  }).filter((track) => track.days > 0);
+}
+
 export function cycleContext(date, periods, menstrualLogs) {
   const starts = buildCycleStarts(periods, menstrualLogs);
   const { avgCycle, samples } = averageCycleLength(starts);
@@ -126,6 +230,27 @@ export function cycleContext(date, periods, menstrualLogs) {
     nextPeriod,
     cycleDay: currentStart ? daysBetween(currentStart, date) + 1 : null,
     daysToNext: nextPeriod ? daysBetween(date, nextPeriod) : null,
+  };
+}
+
+// Dia probable de ovulacion del ciclo que contiene `date`: si el flujo lo delata se
+// usa ese dia; si no, se estima restando la fase lutea al proximo periodo.
+// ponytail: lutea fija de 14 dias, el estandar; con temperatura basal se afinaria.
+export const LUTEAL_LENGTH = 14;
+
+export function ovulationEstimate({ date = localISO(), periods = [], menstrualLogs = [] } = {}) {
+  const context = cycleContext(date, periods, menstrualLogs);
+  if (!context.currentStart) return null;
+  const detected = [...detectOvulationProbableDates(menstrualLogs).values()]
+    .filter((item) => item.date >= context.currentStart && (!context.nextStart || item.date < context.nextStart))
+    .pop();
+  const day = detected?.date || (context.nextPeriod ? addDays(context.nextPeriod, -LUTEAL_LENGTH) : null);
+  if (!day || day < context.currentStart) return null;
+  return {
+    date: day,
+    cycleDay: daysBetween(context.currentStart, day) + 1,
+    source: detected ? "flujo" : "calendario",
+    confidence: detected ? detected.confidence : context.samples >= 3 ? "medium" : "low",
   };
 }
 
@@ -288,6 +413,83 @@ export function inferCyclePhase({ date = localISO(), menstrualLogs = [], periods
   };
 }
 
+// Que esta pasando hormonalmente, que es esperable y que hacer hoy. Las pautas de
+// carga siguen la autoregulacion por RPE de la app; las de comida dan rango, no cifra.
+export const PHASE_GUIDANCE = {
+  menstruation: {
+    hormones: "Estrogeno y progesterona en su punto mas bajo: el sangrado empieza justo cuando caen.",
+    expected: "Colicos los primeros dias, energia variable y algo mas de peso por agua. Que la fuerza se sienta igual que siempre tambien es normal.",
+    training: "Entrena tu sesion habitual si te sientes bien; el calentamiento no se salta. Con colicos o energia baja usa la version minima de la plantilla, no la suspendas.",
+    nutrition: "Sosten la proteina en el extremo alto de tu rango (1.6-2.2 g/kg, alto por el deficit) y sube liquidos mientras sangras.",
+  },
+  follicular_early: {
+    hormones: "Estrogeno empezando a subir desde el minimo, progesterona baja.",
+    expected: "La energia suele ir en recuperacion y los sintomas del sangrado se apagan.",
+    training: "Buena ventana para volver a tu carga habitual. Sube algo solo si ya completaste 2+ sesiones al RPE objetivo.",
+    nutrition: "Sin ajustes especiales: manten kcal y proteina en tu objetivo del dia.",
+  },
+  follicular_mid_late: {
+    hormones: "Estrogeno en ascenso hacia su pico.",
+    expected: "Suele ser cuando mejor se tolera el trabajo duro y mejor se recupera entre series.",
+    training: "Ventana para los top sets exigentes (RPE 8-9 en el principal) con backoff despues; el resto de series no van al fallo.",
+    nutrition: "Aprovecha para cubrir bien los carbohidratos alrededor de la sesion; la proteina sigue en su rango.",
+  },
+  fertile_window_probable: {
+    hormones: "Estrogeno alto y moco cervical fertil; el pico de LH esta cerca.",
+    expected: "Energia alta y, en algunas personas, mas laxitud articular.",
+    training: "Puedes empujar carga, pero cuida especialmente la tecnica en los ejercicios pesados.",
+    nutrition: "Sin cambios: kcal y proteina en tu objetivo.",
+  },
+  ovulation_probable: {
+    hormones: "Pico de LH y estrogeno; despues ambos caen y empieza a subir la progesterona.",
+    expected: "Pico frecuente de energia, a veces dolor pelvico de un lado que dura horas.",
+    training: "Dia valido para intensidad alta. Si hay dolor pelvico agudo, baja rango antes que carga.",
+    nutrition: "Sin cambios: kcal y proteina en tu objetivo.",
+  },
+  luteal_early: {
+    hormones: "Progesterona subiendo, con un rebote de estrogeno detras.",
+    expected: "Temperatura basal algo mas alta y percepcion de esfuerzo que puede subir con el mismo peso.",
+    training: "Manten la carga y autoregula por RPE: si el mismo peso se siente mas pesado, esa es la lectura, no un retroceso.",
+    nutrition: "El gasto en reposo sube un poco; si aparece mas hambre, cubrela con proteina y volumen antes que con extras.",
+  },
+  luteal_mid: {
+    hormones: "Progesterona en meseta alta, estrogeno intermedio.",
+    expected: "Apetito mas alto, sueno algo mas ligero y retencion de agua incipiente.",
+    training: "Sesion normal. Si el sueno cae por debajo de 6 h varios dias, cuenta como fatiga acumulada, no como falta de ganas.",
+    nutrition: "Proteina en el extremo alto del rango: ayuda a la saciedad sin tocar el deficit.",
+  },
+  luteal_late: {
+    hormones: "Progesterona y estrogeno cayendo juntos: es la caida que dispara el sindrome premenstrual.",
+    expected: "Hinchazon, antojos, peor recuperacion y peso mas alto por agua. Que el rendimiento fluctue aqui es normal.",
+    training: "Con sintomas marcados o energia baja, la version minima de la plantilla es la opcion correcta; no intentes un top set nuevo.",
+    nutrition: "Los antojos dulces o salados son esperables y no son un fallo del deficit. El peso de estos dias es agua: leelo en la tendencia, no en el dato suelto.",
+  },
+  unknown: {
+    hormones: "Faltan registros para ubicar la fase hormonal del dia.",
+    expected: "Con unos dias de check-in seguidos la estimacion se afina sola.",
+    training: "Entrena por sensaciones y RPE, como cualquier dia sin dato.",
+    nutrition: "Manten kcal y proteina en tu objetivo del dia.",
+  },
+};
+
+export function dailyGuidance({ date = localISO(), menstrualLogs = [], periods = [], wellness = [] } = {}) {
+  const estimate = inferCyclePhase({ date, menstrualLogs, periods, wellness });
+  const base = PHASE_GUIDANCE[estimate.phase] || PHASE_GUIDANCE.unknown;
+  const log = menstrualLogs.find((item) => item.date === date) || null;
+  const wellnessLog = wellness.find((item) => item.date === date) || null;
+  const notes = [];
+  if (log && isClearBleeding(log.bleedingLevel)) notes.push("Registraste sangrado claro hoy: el peso de estos dias carga agua, no lo leas como tendencia.");
+  if (asNumber(log?.crampsLevel) >= 5) notes.push("Colicos 5+: hoy toca la version minima de la sesion, no una progresion de carga.");
+  if (log && isFertileFluid(log.cervicalFluid)) notes.push("Flujo acuoso o elastico: compatible con estrogeno alto, la ventana donde mejor se tolera el trabajo duro.");
+  if (log && isLowFertilityFluid(log.cervicalFluid) && estimate.phase.startsWith("luteal")) notes.push("Flujo seco, pegajoso o cremoso: compatible con progesterona dominante despues de ovular.");
+  if (symptomScore(log) >= 3) notes.push("Sintomas acumulados: si el mismo peso se siente mas pesado, autoregula por RPE en vez de forzar la carga.");
+  if (wellnessLog && Number(wellnessLog.energy) > 0 && Number(wellnessLog.energy) <= 2) notes.push("Energia " + wellnessLog.energy + "/5 hoy: version minima de la plantilla antes que saltarte la sesion.");
+  if (Number(wellnessLog?.sleep) > 0 && Number(wellnessLog.sleep) < 6) notes.push("Menos de 6 h de sueno: parte del bajon de hoy puede ser descanso, no fase del ciclo.");
+  // Mismo umbral que getCycleInsights: sin dos ciclos completos esto es orientativo.
+  const provisional = buildCycleStarts(periods, menstrualLogs).length < 3;
+  return { ...base, phase: estimate.phase, confidence: estimate.confidence, notes, provisional };
+}
+
 export function recalculateCycleEstimates(userId, startDate, endDate, data = {}) {
   const estimates = [];
   for (let date = startDate; date <= endDate; date = addDays(date, 1)) {
@@ -343,14 +545,17 @@ export function getCycleInsights({ menstrualLogs = [], periods = [], wellness = 
   });
   const avg = (values) => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
   const insights = [];
-  const lutealLate = byPhase.get("luteal_late");
-  if (lutealLate && lutealLate.energy.length >= 2) {
+  // Una lectura por fase: la pantalla muestra solo la de la fase estimada de hoy,
+  // asi no aparece la lutea tardia mientras estas menstruando.
+  byPhase.forEach((bucket, phase) => {
+    if (bucket.energy.length < 2) return;
     insights.push({
       type: "energy_by_phase",
-      message: `En tus registros, la fase lutea tardia suele coincidir con energia promedio ${avg(lutealLate.energy).toFixed(1)}/5.`,
-      confidence: lutealLate.energy.length >= 5 ? "medium" : "low",
+      phase,
+      message: `En tus registros, la fase ${PHASE_LABELS[phase]} suele coincidir con energia promedio ${avg(bucket.energy).toFixed(1)}/5.`,
+      confidence: bucket.energy.length >= 5 ? "medium" : "low",
     });
-  }
+  });
   const lowSleepDates = wellness.filter((item) => Number(item.sleep) > 0 && Number(item.sleep) < 6).map((item) => item.date);
   const lowSleepSymptoms = menstrualLogs.filter((item) => lowSleepDates.includes(item.date)).map(symptomScore);
   if (lowSleepSymptoms.length >= 2) {
