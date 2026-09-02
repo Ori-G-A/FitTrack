@@ -61,6 +61,56 @@ export function ScreenMast({ kicker, title, right }) {
   );
 }
 
+// Sparkline sin libreria: una polilinea normalizada, suficiente para "va subiendo".
+export function Spark({ values = [], width = 190, height = 46, color = A_ACC }) {
+  if (values.length < 2) return null;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const span = max - min || 1;
+  const points = values.map((value, index) => {
+    const x = (index / (values.length - 1)) * (width - 6) + 3;
+    const y = height - 4 - ((value - min) / span) * (height - 8);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const [lastX, lastY] = points[points.length - 1].split(",");
+  return (
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" style={{ display: "block" }}>
+      <polyline points={points.join(" ")} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx={lastX} cy={lastY} r="3.5" fill={color} />
+    </svg>
+  );
+}
+
+// Lo que importa ahora: una sola frase por pantalla, con su cifra al lado.
+export function Headline({ kicker, sub, value, unit, valueSub, spark, children }) {
+  const show = useReveal(60);
+  const isMobile = useIsMobile();
+  return (
+    <Rise show={show} i={1}>
+      <div style={{ display: "flex", gap: isMobile ? 14 : 26, alignItems: "center", flexWrap: "wrap", borderLeft: `4px solid ${A_ACC}`, borderBottom: `1px solid ${A_LINE}`, background: A_PAPER, padding: isMobile ? "16px 15px" : "20px 24px" }}>
+        <div style={{ flex: "1 1 320px", minWidth: 0 }}>
+          <DKicker color={A_ACC}>{kicker}</DKicker>
+          <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 20 : 26, lineHeight: 1.15, letterSpacing: "-0.02em", margin: "10px 0 0", color: A_INK }}>{children}</div>
+          {sub && <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase", color: A_INK2, marginTop: 9 }}>{sub}</div>}
+        </div>
+        {(value != null || spark) && (
+          <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 14 : 22 }}>
+            {spark && <Spark values={spark} width={isMobile ? 110 : 190} height={isMobile ? 34 : 46} />}
+            {value != null && (
+              <div style={{ textAlign: "right", borderLeft: isMobile ? "none" : `1px solid ${A_LINE}`, paddingLeft: isMobile ? 0 : 22 }}>
+                <div style={{ fontFamily: A_DISP, fontWeight: 900, fontSize: isMobile ? 34 : 46, lineHeight: 0.9, letterSpacing: "-0.04em", color: A_ACC, fontVariantNumeric: "tabular-nums" }}>
+                  {value}{unit && <span style={{ fontSize: isMobile ? 14 : 18, fontFamily: A_MONO, fontWeight: 500, marginLeft: 3, color: A_INK2 }}>{unit}</span>}
+                </div>
+                {valueSub && <div style={{ fontFamily: A_MONO, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: A_INK2, marginTop: 8 }}>{valueSub}</div>}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </Rise>
+  );
+}
+
 export function EDateNav({ date, setDate }) {
   const shift = (days) => {
     const next = new Date(`${date}T00:00:00`);

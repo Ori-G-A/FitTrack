@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES, PHASE_GROUPS } from "./app-config.js";
-import { addDays, creatineWaterKg, daysBetween, localISO } from "./app-utils.js";
+import { addDays, creatineWaterKg, daysBetween, localISO, weightTrendHighlight } from "./app-utils.js";
 import { LUTEAL_LENGTH, cycleContext, dailyGuidance, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog, ovulationEstimate, summarizeCycles, symptomDistribution } from "./cycle-inference.js";
-import { ScreenMast } from "./EditorialUI.jsx";
+import { Headline, ScreenMast } from "./EditorialUI.jsx";
 import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
 
 const uid = () => Math.random().toString(36).slice(2, 10);
@@ -78,6 +78,7 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
   const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
   const wSorted = [...weights].sort((a, b) => b.date.localeCompare(a.date));
+  const trend = weightTrendHighlight(weights, todayISO());
   const wChart = [...weights].sort((a, b) => a.date.localeCompare(b.date)).map((w) => ({ date: fmtDate(w.date), kg: w.kg }));
 
   const [mDate, setMDate] = useState(todayISO());
@@ -156,6 +157,20 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   return (
     <>
       <ScreenMast kicker="FITTRACK · CUERPO" title="Cuerpo" />
+      {trend && (
+        <Headline
+          kicker="Lo que importa ahora · Peso"
+          sub={`De ${trend.from} a ${trend.to} kg · fase estimada: ${PHASE_NAMES[phaseEstimate.phase]}`}
+          value={`${trend.perWeek > 0 ? "+" : ""}${trend.perWeek}`}
+          unit="kg/sem"
+          valueSub="tendencia"
+          spark={trend.series}
+        >
+          {Math.abs(trend.perWeek) < 0.05
+            ? `Tu peso lleva ${trend.days} días estable.`
+            : `Tu peso ${trend.perWeek < 0 ? "baja" : "sube"} ${Math.abs(trend.perWeek)} kg por semana en los últimos ${trend.days} días.`}
+        </Headline>
+      )}
       <div style={{ height: 16 }} />
       <div className="ft-card">
         <h2><Scale size={16} /> Peso corporal</h2>

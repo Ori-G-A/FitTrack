@@ -4,8 +4,8 @@ import { supabase } from "./supabase.js";
 import { ROUTINE_TEMPLATES, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS } from "./app-config.js";
 import {
-  authUserChanged, canonExercise, localISO, mergePhotoUrls, migrateWorkouts as migrateWorkoutData,
-  validateBackup as validateBackupData,
+  authUserChanged, canonExercise, epley, loadProgressHighlight, localISO, mergePhotoUrls,
+  migrateWorkouts as migrateWorkoutData, proteinAdherence, validateBackup as validateBackupData,
 } from "./app-utils.js";
 import { inferCyclePhase } from "./cycle-inference.js";
 import { latestWeight } from "./settings-utils.js";
@@ -16,7 +16,7 @@ import {
 import { AuthScreen, SaveIndicator } from "./AuthUI.jsx";
 import {
   A_ACC, A_DANGER, A_DISP, A_HAIR, A_INK, A_INK2, A_MONO, A_OK,
-  DKicker, EDateNav, EPanel, KpiStrip, Rise, ScreenMast,
+  DKicker, EDateNav, EPanel, Headline, KpiStrip, Rise, ScreenMast,
   useIsMobile, useReveal,
 } from "./EditorialUI.jsx";
 import SettingsScreen from "./SettingsScreen.jsx";
@@ -44,7 +44,6 @@ const clock = (s) => {
   const p = (n) => String(n).padStart(2, "0");
   return h > 0 ? `${h}:${p(m)}:${p(ss)}` : `${p(m)}:${p(ss)}`;
 };
-const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
 const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Aductores", "Gemelos", "Core", "Trapecio", "Antebrazo"];
 const MUSCLE_COLOR = {
   Pecho: "#e7531c", Espalda: "#5ad1ff", Hombros: "#ff8a3d", Bíceps: "#ff6b9d", Tríceps: "#b388ff",
@@ -203,6 +202,12 @@ export const CSS = `
 .ft-side svg{flex:0 0 auto;}
 .ft-nav button:not(.active):hover{color:var(--text);background:var(--panel2);}
 .ft-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;}
+.ft-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+@media (max-width:900px){.ft-cols{grid-template-columns:1fr;}}
+.ft-profile{display:flex;align-items:center;gap:14px;margin:18px 0;}
+.ft-profile .avatar{width:56px;height:56px;border-radius:50%;background:var(--text);color:var(--bg);display:grid;place-items:center;font-family:'Archivo';font-weight:900;font-size:22px;}
+.ft-profile b{display:block;font-family:'Archivo';font-weight:900;font-size:26px;letter-spacing:-.03em;text-transform:uppercase;line-height:1;}
+.ft-profile small{font-family:'IBM Plex Mono';font-size:11px;color:var(--muted);letter-spacing:.08em;}
 .ft-card h2{font-family:'Archivo';font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:15px;margin:0 0 14px;display:flex;align-items:center;gap:9px;}
 .ft-card h2 .tag{margin-left:auto;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.1em;font-family:'IBM Plex Mono';text-transform:none;}
 .ft-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
@@ -693,6 +698,8 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
     if (!["ovulation_probable", "fertile_window_probable"].includes(estimate.phase)) return null;
     return estimate.confidence === "low" ? null : estimate;
   }, [date, periods, menstrualLogs, wellness]);
+  // El unico titular de la pantalla: donde mejor esta progresando la carga.
+  const strengthHighlight = useMemo(() => loadProgressHighlight(workouts, date), [workouts, date]);
   const [name, setName] = useState("");
   const [primary, setPrimary] = useState(MUSCLES[0]);
   const [secondary, setSecondary] = useState([]);
@@ -833,6 +840,18 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
   return (
     <>
       <ScreenMast kicker="FITTRACK · ENTRENAR" title="Entrenar" right={<EDateNav date={date} setDate={setDate} />} />
+      {strengthHighlight && (
+        <Headline
+          kicker="Lo que importa ahora · Fuerza"
+          sub={`+${strengthHighlight.to - strengthHighlight.from} kg estimados · ${strengthHighlight.sessions} sesiones registradas`}
+          value={`+${strengthHighlight.pct}`}
+          unit="%"
+          valueSub="1RM est. vs inicio"
+          spark={strengthHighlight.series}
+        >
+          {strengthHighlight.name}: de {strengthHighlight.from} a {strengthHighlight.to} kg de 1RM estimado en estas ocho semanas.
+        </Headline>
+      )}
       <div style={{ height: 16 }} />
 
       {phaseCaution && (
@@ -1006,12 +1025,27 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
   const addManual = () => { if (!m.name.trim()) return; setNutrition((p) => [...p, { id: uid(), date, name: m.name.trim(), grams: null, kcal: +m.kcal || 0, protein: +m.protein || 0, carbs: +m.carbs || 0, fat: +m.fat || 0 }]); setM({ name: "", kcal: "", protein: "", carbs: "", fat: "" }); };
   const del = (id) => setNutrition((p) => p.filter((n) => n.id !== id));
 
+  const adherence = useMemo(() => proteinAdherence(nutrition, goals.proteinTarget, date), [nutrition, goals.proteinTarget, date]);
   const kcalPct = goals.kcalTarget ? Math.round((sum.kcal / goals.kcalTarget) * 100) : 0;
   const protPct = goals.proteinTarget ? Math.round((sum.protein / goals.proteinTarget) * 100) : 0;
 
   return (
     <div style={{ fontFamily: A_DISP, color: A_INK }}>
       <ScreenMast kicker="FITTRACK · HOY" title="Nutrición" right={<EDateNav date={date} setDate={setDate} />} />
+      {adherence && (
+        <Headline
+          kicker="Lo que importa ahora · Proteína"
+          sub={`Media ${adherence.avg} g en los días registrados · objetivo ${adherence.target} g`}
+          value={adherence.onTarget}
+          unit={`/ ${adherence.logged}`}
+          valueSub="días en objetivo"
+          spark={adherence.series}
+        >
+          {adherence.onTarget === adherence.logged
+            ? `Llegaste al objetivo de proteína los ${adherence.logged} días que registraste.`
+            : `Llegaste al objetivo de proteína ${adherence.onTarget} de los ${adherence.logged} días que registraste esta semana.`}
+        </Headline>
+      )}
       <KpiStrip items={[
         { k: "Calorías", v: Math.round(sum.kcal), u: `/ ${goals.kcalTarget || "—"}`, sub: `${kcalPct}% objetivo`, subColor: kcalPct > 105 ? A_DANGER : A_OK },
         { k: "Proteína", v: Math.round(sum.protein), u: `/ ${goals.proteinTarget || "—"} g`, sub: `${protPct}% objetivo`, subColor: protPct >= 90 ? A_OK : A_INK2 },

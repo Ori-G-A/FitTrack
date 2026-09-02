@@ -179,6 +179,81 @@ const BACKUP_ARRAY_KEYS = ["workouts", "weights", "nutrition", "foods", "recipes
 const isPlainObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const isISODate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 
+// Destacados de cabecera: cada uno resume, con los datos que ya hay, lo unico que
+// merece leerse antes de entrar a la pantalla. Devuelven null cuando no hay
+// suficiente para afirmar nada, y la cabecera entonces no se dibuja.
+
+// 1RM estimado por Epley, la misma referencia que ya usan Entrenar y el dashboard.
+export const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
+
+export function loadProgressHighlight(workouts = [], today = localISO(), windowDays = 56) {
+  const since = addDays(today, -windowDays);
+  const byExercise = new Map();
+  [...workouts]
+    .filter((workout) => workout.date >= since && workout.date <= today)
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .forEach((workout) => (workout.exercises || []).forEach((exercise) => {
+      const top = Math.round((exercise.sets || []).reduce((max, set) => Math.max(max, epley(Number(set.kg) || 0, Number(set.reps) || 0)), 0));
+      if (top <= 0) return;
+      const key = canonExercise(exercise.name);
+      const entry = byExercise.get(key) || { label: exercise.name, points: [] };
+      entry.label = exercise.name;
+      entry.points.push({ date: workout.date, kg: top });
+      byExercise.set(key, entry);
+    }));
+  let best = null;
+  byExercise.forEach((entry) => {
+    if (entry.points.length < 3) return;
+    const from = entry.points[0].kg;
+    const to = entry.points[entry.points.length - 1].kg;
+    if (from <= 0 || to <= from) return;
+    const pct = Math.round(((to - from) / from) * 100);
+    if (!best || pct > best.pct) {
+      best = { name: entry.label, from, to, pct, sessions: entry.points.length, series: entry.points.map((point) => point.kg) };
+    }
+  });
+  return best;
+}
+
+export function weightTrendHighlight(weights = [], today = localISO(), windowDays = 21) {
+  const since = addDays(today, -windowDays);
+  const points = [...weights]
+    .filter((weight) => weight.date >= since && weight.date <= today && Number(weight.kg) > 0)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  if (points.length < 3) return null;
+  const slope = slopePerDay(points.map((point) => ({ x: daysBetween(points[0].date, point.date), y: Number(point.kg) })));
+  if (slope == null) return null;
+  const last = points[points.length - 1];
+  return {
+    perWeek: Math.round(slope * 7 * 100) / 100,
+    from: Number(points[0].kg),
+    to: Number(last.kg),
+    days: daysBetween(points[0].date, last.date),
+    series: points.map((point) => Number(point.kg)),
+  };
+}
+
+export function proteinAdherence(nutrition = [], target, today = localISO(), days = 7) {
+  const goal = Number(target) || 0;
+  if (!goal) return null;
+  const since = addDays(today, -(days - 1));
+  const byDate = new Map();
+  nutrition
+    .filter((item) => item.date >= since && item.date <= today)
+    .forEach((item) => byDate.set(item.date, (byDate.get(item.date) || 0) + (Number(item.protein) || 0)));
+  if (byDate.size === 0) return null;
+  const logged = [...byDate.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([, grams]) => Math.round(grams));
+  // 90% del objetivo cuenta como dia cumplido: el pesaje de comida no da para mas precision.
+  return {
+    onTarget: logged.filter((grams) => grams >= goal * 0.9).length,
+    logged: logged.length,
+    days,
+    target: goal,
+    avg: Math.round(logged.reduce((sum, grams) => sum + grams, 0) / logged.length),
+    series: logged,
+  };
+}
+
 export function validateBackup(value, defaultGoals) {
   if (!isPlainObject(value)) throw new Error("La copia debe contener un objeto JSON");
   const backup = {};

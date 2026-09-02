@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES, KCAL_PER_KG, PHASE_GROUPS } from "./app-config.js";
-import { canonExercise, creatineWaterKg, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
+import { canonExercise, creatineWaterKg, daysBetween, epley, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
 import { buildCycleStarts, cycleContext, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
@@ -12,7 +12,6 @@ const todayISO = () => localISO();
 const round1 = (value) => Math.round(value * 10) / 10;
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
 const isoMinus = (days) => { const date = new Date(); date.setDate(date.getDate() - days); return localISO(date); };
-const epley = (kg, reps) => (kg > 0 && reps > 0 ? kg * (1 + reps / 30) : 0);
 const PR_ALERT_MAX_AGE_DAYS = 3;
 const PR_ALERT_MAX_ITEMS = 3;
 

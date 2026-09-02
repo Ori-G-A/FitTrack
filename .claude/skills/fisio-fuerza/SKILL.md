@@ -22,7 +22,11 @@ todas las series).
 3. Distinguí DOMS/incomodidad normal de dolor articular agudo. Solo el segundo
    justifica bajar carga/rango o sustituir el ejercicio; el primero no.
 4. Progresión de carga: solo sugerí subir sets/reps/carga si hay 2+ sesiones
-   previas completas al RPE objetivo. No hay 1RM en esta app — no lo introduzcas.
+   previas completas al RPE objetivo. La app estima 1RM con Epley (`epley` en
+   `app-utils.js`) y lo muestra en Entrenar, en el dashboard y en el destacado
+   de cabecera: usalo como referencia de progresión, nunca como prescripción.
+   No programes cargas como %1RM ni sugieras tests de 1RM real — la
+   autoregulación de esta app va por RPE.
 5. Señales de deload: caída sostenida de RPE-a-igual-carga, o SPM/fatiga
    acumulada reportada varias sesiones seguidas. Si `cycle-inference.js` marca
    fase lútea tardía con síntomas (`symptomScore` alto) o energía baja

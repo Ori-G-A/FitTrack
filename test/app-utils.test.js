@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, authUserChanged, daysBetween, localISO, lutealRetentionKg, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
+import { addDays, authUserChanged, daysBetween, loadProgressHighlight, proteinAdherence, weightTrendHighlight, localISO, lutealRetentionKg, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -188,4 +188,49 @@ test("migrateWorkouts supplies legacy defaults", () => {
   assert.deepEqual(result[0].cardio, []);
   assert.equal(result[0].exercises[0].primary, "Pecho");
   assert.deepEqual(result[0].exercises[0].secondary, []);
+});
+
+test("el destacado de fuerza usa el 1RM estimado de la sesion", () => {
+  const workouts = [
+    { date: "2026-08-01", exercises: [{ name: "Peso muerto", sets: [{ kg: 60, reps: 5 }, { kg: 50, reps: 8 }] }] },
+    { date: "2026-08-15", exercises: [{ name: "peso muerto", sets: [{ kg: 65, reps: 5 }] }] },
+    { date: "2026-08-29", exercises: [{ name: "Peso muerto", sets: [{ kg: 70, reps: 4 }] }] },
+    { date: "2026-08-29", exercises: [{ name: "Press banca", sets: [{ kg: 40, reps: 6 }] }] },
+  ];
+  const best = loadProgressHighlight(workouts, "2026-09-01");
+  // 1RM estimado con Epley por sesion: 60x5 -> 70, 65x5 -> 76, 70x4 -> 79
+  assert.deepEqual([best.name, best.from, best.to, best.pct, best.sessions], ["Peso muerto", 70, 79, 13, 3]);
+  assert.deepEqual(best.series, [70, 76, 79]);
+  // con menos de tres sesiones del mismo ejercicio no se afirma nada
+  assert.equal(loadProgressHighlight(workouts.slice(0, 2), "2026-09-01"), null);
+});
+
+test("la tendencia de peso se mide por semana sobre la ventana pedida", () => {
+  const weights = [
+    { date: "2026-08-11", kg: 73.0 },
+    { date: "2026-08-18", kg: 72.6 },
+    { date: "2026-08-25", kg: 72.3 },
+    { date: "2026-09-01", kg: 72.0 },
+  ];
+  const trend = weightTrendHighlight(weights, "2026-09-01");
+  assert.equal(trend.perWeek, -0.33);
+  assert.deepEqual([trend.from, trend.to, trend.days], [73, 72, 21]);
+  // dos pesos no son una tendencia
+  assert.equal(weightTrendHighlight(weights.slice(0, 2), "2026-09-01"), null);
+});
+
+test("la adherencia de proteina solo cuenta los dias registrados", () => {
+  const nutrition = [
+    { date: "2026-08-30", protein: 80 },
+    { date: "2026-08-30", protein: 70 },
+    { date: "2026-08-31", protein: 100 },
+    { date: "2026-09-01", protein: 155 },
+    { date: "2026-07-01", protein: 200 },
+  ];
+  const adherence = proteinAdherence(nutrition, 150, "2026-09-01");
+  assert.deepEqual([adherence.onTarget, adherence.logged, adherence.days], [2, 3, 7]);
+  assert.deepEqual(adherence.series, [150, 100, 155]);
+  assert.equal(adherence.avg, 135);
+  // sin objetivo no hay nada que comparar
+  assert.equal(proteinAdherence(nutrition, 0, "2026-09-01"), null);
 });
