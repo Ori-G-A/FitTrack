@@ -8,6 +8,7 @@ import {
   validateBackup as validateBackupData,
 } from "./app-utils.js";
 import { inferCyclePhase } from "./cycle-inference.js";
+import { latestWeight } from "./settings-utils.js";
 import {
   loadKey, resumeUserSaves, saveKey, suspendUserSaves,
   useSyncedValue, waitForUserSaves,
@@ -173,16 +174,33 @@ export const CSS = `
 .ft-root{--bg:#f3efe6;--panel:#faf7f0;--panel2:#ece6da;--line:#dcd4c2;--text:#16140d;--muted:#6f6a5d;--accent:#e7531c;--accentdim:rgba(231,83,28,.12);--danger:#c0341a;--blue:#2f6f8f;--ok:#3a7d44;font-family:'Hanken Grotesk',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.4;background-image:none;}
 .ft-mono{font-family:'IBM Plex Mono',monospace;}
 .ft-wrap{max-width:1120px;margin:0 auto;padding:20px 18px 90px;}
-.ft-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+.ft-wrap.with-side{padding-left:74px;}
+.ft-side{position:fixed;top:0;left:0;bottom:0;z-index:40;width:56px;display:flex;flex-direction:column;gap:16px;padding:14px 8px;background:var(--panel);border-right:1px solid var(--line);overflow:hidden;transition:width .18s ease;}
+.ft-side.open,.ft-side:focus-within{width:232px;}
+@media (hover:hover){.ft-side:hover{width:232px;}}
+.ft-side .label{opacity:0;white-space:nowrap;transition:opacity .12s ease;}
+.ft-side.open .label,.ft-side:focus-within .label{opacity:1;}
+@media (hover:hover){.ft-side:hover .label{opacity:1;}}
+.ft-side-logo{display:flex;align-items:center;gap:10px;background:transparent;border:none;padding:0;cursor:pointer;color:var(--text);text-align:left;}
+.ft-side-logo .mark{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;color:#f3efe6;}
+.ft-side-logo b{display:block;font-family:'Archivo';font-weight:900;letter-spacing:-.04em;text-transform:uppercase;font-size:19px;line-height:1;}
+.ft-side-logo small{color:var(--muted);font-size:10px;letter-spacing:.16em;text-transform:uppercase;}
+.ft-side-foot{margin-top:auto;display:flex;flex-direction:column;gap:6px;}
+.ft-user{display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--line);}
+.ft-user .avatar{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--text);color:var(--bg);display:grid;place-items:center;font-family:'Archivo';font-weight:800;font-size:13px;}
+.ft-user b{display:block;font-size:12.5px;line-height:1.25;text-transform:capitalize;}
+.ft-user small{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono';}
 .ft-logo{display:flex;align-items:center;gap:10px;}
 .ft-logo .mark{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;color:#f3efe6;}
 .ft-logo h1{font-family:'Archivo';font-weight:900;letter-spacing:-.04em;text-transform:uppercase;font-size:22px;line-height:1;margin:0;}
 .ft-logo span{color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase;}
 .ft-iconbtn{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:9px;padding:8px 10px;display:inline-flex;gap:6px;align-items:center;cursor:pointer;font-size:12px;font-weight:600;}
 .ft-iconbtn:hover{border-color:var(--accent);color:var(--text);}
-.ft-nav{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:24px;overflow-x:auto;}
-.ft-nav button{flex:1;min-width:78px;border:none;background:transparent;color:var(--muted);padding:11px 8px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12.5px;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;transition:.15s;}
+.ft-nav{display:flex;flex-direction:column;gap:4px;}
+.ft-nav button{border:none;background:transparent;color:var(--muted);padding:11px 9px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:12px;white-space:nowrap;transition:.15s;}
 .ft-nav button.active{background:var(--accent);color:#f3efe6;}
+.ft-side .ft-iconbtn{justify-content:flex-start;gap:12px;padding:9px;border:none;background:transparent;}
+.ft-side svg{flex:0 0 auto;}
 .ft-nav button:not(.active):hover{color:var(--text);background:var(--panel2);}
 .ft-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;}
 .ft-card h2{font-family:'Archivo';font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:15px;margin:0 0 14px;display:flex;align-items:center;gap:9px;}
@@ -287,6 +305,7 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-photo-del{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.55);border:none;color:#fff;border-radius:7px;padding:5px;cursor:pointer;display:grid;place-items:center;}
 .ft-photo-del:hover{background:var(--danger);}
 .ft-lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.ft-side .label{text-align:left;}
 .ft-lock-box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 24px;width:100%;max-width:340px;}
 .recharts-cartesian-axis-tick-value{font-family:'IBM Plex Mono';font-size:11px;}
 /* ---- brutalist re-skin: sharp corners + editorial chrome ---- */
@@ -549,6 +568,15 @@ export default function App() {
     r.readAsText(f);
   };
 
+  // Misma lectura que usa Ajustes: direccion del objetivo + ultimo peso registrado.
+  const currentWeight = latestWeight(weights);
+  const profileLine = [
+    Number(goals.weeklyChange) < 0 ? "Déficit" : Number(goals.weeklyChange) > 0 ? "Superávit" : "Mantenimiento",
+    currentWeight ? `${currentWeight}kg` : null,
+  ].filter(Boolean).join(" · ");
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const NAV = [
     { id: "entrenar", label: "Entrenar", icon: Dumbbell },
     { id: "cuerpo", label: "Cuerpo", icon: Scale },
@@ -589,24 +617,33 @@ export default function App() {
           ) : "Cargando tus datos…"}
         </div></div>
       ) : (
-        <div className="ft-wrap">
-          <div className="ft-topbar">
-            <div className="ft-logo">
-              <div className="mark"><Dumbbell size={20} /></div>
-              <div><h1>FitTrack</h1><span>tu progreso, medido</span></div>
-            </div>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div className="ft-wrap with-side">
+          <aside className={menuOpen ? "ft-side open" : "ft-side"} onMouseLeave={() => setMenuOpen(false)}>
+            <button className="ft-side-logo" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-label="Menú">
+              <span className="mark"><Dumbbell size={20} /></span>
+              <span className="label"><b>FitTrack</b><small>tu progreso, medido</small></span>
+            </button>
+            <nav className="ft-nav">
+              {NAV.map(({ id, label, icon: Ic }) => (
+                <button key={id} className={tab === id ? "active" : ""} onClick={() => { setTab(id); setMenuOpen(false); }} title={label}>
+                  <Ic size={17} /><span className="label">{label}</span>
+                </button>
+              ))}
+            </nav>
+            <div className="ft-side-foot">
               <SaveIndicator />
-              <button className="ft-iconbtn" onClick={exportData}><Download size={14} /> Exportar</button>
-              <button className="ft-iconbtn" onClick={() => fileRef.current.click()}><Upload size={14} /> Importar</button>
+              <button className="ft-iconbtn" onClick={exportData} title="Exportar" aria-label="Exportar"><Download size={15} /><span className="label">Exportar</span></button>
+              <button className="ft-iconbtn" onClick={() => fileRef.current.click()} title="Importar" aria-label="Importar"><Upload size={15} /><span className="label">Importar</span></button>
               <input ref={fileRef} type="file" accept="application/json" hidden onChange={importData} />
+              <div className="ft-user" title={profileLine}>
+                <span className="avatar">{(session.user.email || "?")[0].toUpperCase()}</span>
+                <span className="label">
+                  <b>{(session.user.email || "").split("@")[0]}</b>
+                  <small>{profileLine}</small>
+                </span>
+              </div>
             </div>
-          </div>
-          <nav className="ft-nav">
-            {NAV.map(({ id, label, icon: Ic }) => (
-              <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Ic size={15} /> {label}</button>
-            ))}
-          </nav>
+          </aside>
           {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} />}
           {tab === "cuerpo" && (
             <Suspense fallback={<div className="ft-empty">Cargando Cuerpo…</div>}>

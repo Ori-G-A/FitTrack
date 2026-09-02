@@ -9,6 +9,13 @@
       "autoPort": true
     },
     {
+      "name": "Maqueta",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--port", "5199", "--strictPort"],
+      "port": 5199,
+      "autoPort": false
+    },
+    {
       "name": "FitTrackDesktop",
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "4180", "--directory", "desktop"],
