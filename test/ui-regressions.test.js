@@ -211,3 +211,29 @@ test("sin ciclo no salen avisos de ciclo ni corrección por fase", async () => {
   assert.match(alerts, /const starts = cycle \? buildCycleStarts/);
   assert.match(alerts, /if \(!cycle\) return a;/);
 });
+
+test("guardar confirma: hay toast en las cuatro pantallas que escriben", async () => {
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  // Un solo <Toast /> montado en App; las pantallas solo emiten.
+  assert.match(app, /<Toast \/>/);
+  assert.match(app, /\.ft-toast\{position:fixed;right:18px;bottom:18px/);
+
+  for (const file of ["BodyScreen.jsx", "NutritionScreen.jsx", "LibraryScreen.jsx"]) {
+    const source = await readFile(new URL(`../src/${file}`, import.meta.url), "utf8");
+    assert.match(source, /import \{ toast \} from "\.\/toast\.jsx"/, `${file} no importa toast`);
+    assert.ok(source.includes("toast(`"), `${file} no confirma ningún guardado`);
+  }
+
+  // JSX en .js no lo transforma Vite: el archivo tiene que seguir siendo .jsx.
+  const toastFile = await readFile(new URL("../src/toast.jsx", import.meta.url), "utf8");
+  assert.match(toastFile, /export function Toast/);
+});
+
+test("la rejilla de Métricas es fluida y no parte los gráficos", async () => {
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  // auto-fill en vez del salto seco a dos columnas en 860 px.
+  assert.match(app, /\.ft-dc-grid\{display:grid;grid-template-columns:repeat\(auto-fill,minmax\(380px,1fr\)\)/);
+  assert.doesNotMatch(app, /@media \(min-width:860px\)\{\.ft-dc-grid/);
+  // 380 y no 240: a 315 px las etiquetas de eje se salen del área del gráfico.
+  assert.doesNotMatch(app, /\.ft-dc-grid\{[^}]*minmax\(240px/);
+});

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { CATALOG, round1, uid } from "./FitTrack.jsx";
 import { localISO, addDays, proteinAdherence } from "./app-utils.js";
 import { PROTEIN_CONFIG } from "./fase1Config.js";
+import { toast } from "./toast.jsx";
 
 // Registrar una comida: primero se elige qué, después cuánto. El paso de cantidad
 // es obligatorio y no se salta — sin él se registran raciones inventadas y los
@@ -158,6 +159,7 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
       grams: pick.unit === "porción" || pick.unit === "ración" ? null : qty,
       unit: pick.unit, kcal: round1(kcal), protein: round1(protein), carbs: round1(carbs), fat: round1(fat),
     }]);
+    toast(`${pick.name} · ${kcalFmt(kcal)} kcal en ${meal.toLowerCase()}`);
     setPick(null); setAdding(false); setQuery("");
   };
 

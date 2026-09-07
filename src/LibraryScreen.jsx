@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { CATALOG, CATALOG_CATS, EXERCISE_PRESETS, MUSCLES, round1, scaleFood, uid } from "./FitTrack.jsx";
 import { PLACES, ROUTINE_TEMPLATES, WARMUP, routinePlace, templateToAppRoutine } from "./fase1Config.js";
+import { toast } from "./toast.jsx";
 
 // Biblioteca: lista a la izquierda, ficha a la derecha.
 //
@@ -302,6 +303,7 @@ export default function LibraryScreen({ foods, setFoods, recipes, setRecipes, ro
     setFoods((current) => (draft.id
       ? current.map((food) => food.id === draft.id ? { ...food, ...data } : food)
       : [...current, { id: uid(), ...data }]).sort((a, b) => a.name.localeCompare(b.name)));
+    toast(`${data.name} guardado`);
     setOpen(null);
   };
   const addFromCatalog = (item) => {
@@ -312,12 +314,14 @@ export default function LibraryScreen({ foods, setFoods, recipes, setRecipes, ro
     setRecipes((current) => open && open !== "nuevo"
       ? current.map((recipe) => recipe.id === open ? { ...recipe, ...data } : recipe)
       : [...current, { id: uid(), ...data }]);
+    toast(`Receta «${data.name}» guardada`);
     setOpen(null);
   };
   const saveRoutine = (data) => {
     setRoutines((current) => open && open !== "nuevo"
       ? current.map((routine) => routine.id === open ? { ...routine, ...data } : routine)
       : [...current, { id: uid(), ...data }]);
+    toast(`Rutina «${data.name}» guardada`);
     setOpen(null);
   };
   const loadTemplates = () => setRoutines((current) => {

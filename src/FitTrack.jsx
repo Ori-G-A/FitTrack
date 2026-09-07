@@ -3,6 +3,7 @@ import { withTimeout } from "./async-utils.js";
 import { supabase } from "./supabase.js";
 import { PLACES, ROUTINE_TEMPLATES, routinePlace, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
+import { Toast } from "./toast.jsx";
 import {
   authUserChanged, canonExercise, epley, loadProgressHighlight, localISO, mergePhotoUrls,
   migrateWorkouts as migrateWorkoutData, proteinAdherence, readThemePref, resolveTheme,
@@ -336,9 +337,13 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-head .sub{display:block;font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.1em;}
 /* Escritorio: las mismas secciones del prototipo repartidas en dos columnas,
    no una columna de movil estirada. */
-.ft-dc-grid{display:grid;grid-template-columns:1fr;gap:12px;align-items:start;margin-top:12px;}
+/* Rejilla fluida en vez de un salto seco a dos columnas en 860 px. El minimo es
+   380 y no los 240 del handoff: aqui las tarjetas llevan graficos, no los tiles
+   numericos del prototipo, y a 315 px las etiquetas de eje se salen del area. */
+.ft-dc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:12px;align-items:start;margin-top:12px;}
 .ft-dc-grid>.ft-dc-card,.ft-dc-grid>*>.ft-dc-card{margin-top:0;}
-@media (min-width:860px){.ft-dc-grid{grid-template-columns:1fr 1fr;}.ft-dc-grid .span2{grid-column:1 / -1;}}
+.ft-dc-grid .span2{grid-column:1 / -1;}
+@media (max-width:420px){.ft-dc-grid{grid-template-columns:1fr;}}
 .ft-dc-chips{display:flex;gap:6px;flex-wrap:wrap;padding:14px 0 0;}
 .ft-dc-chips button{font-family:'IBM Plex Mono';font-weight:600;font-size:10.5px;padding:7px 11px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;}
 .ft-dc-chips button:hover{color:var(--text);}
@@ -445,6 +450,10 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-rpe{flex:1;min-width:0;text-align:center;font-family:'IBM Plex Mono';font-weight:600;font-size:11px;padding:9px 0;border-radius:6px;background:transparent;border:1px solid var(--line);color:var(--muted);cursor:pointer;}
 .ft-dc-rpe:hover{color:var(--text);}
 /* ---- movil: barra inferior de 5 destinos (Diario · Metricas · + · Plan · Mas) ---- */
+.ft-toast{position:fixed;right:18px;bottom:18px;z-index:60;max-width:min(360px,calc(100vw - 36px));background:var(--text);color:var(--bg);border-radius:10px;padding:12px 15px;font-weight:600;font-size:12.5px;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.28);animation:ft-toast-in .18s ease;}
+@keyframes ft-toast-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){.ft-toast{animation:none;}}
+@media (max-width:720px){.ft-toast{left:12px;right:12px;max-width:none;bottom:calc(84px + env(safe-area-inset-bottom));}}
 .ft-tabbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:45;align-items:flex-end;gap:4px;padding:8px 12px calc(10px + env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--line);}
 .ft-tabbar button{flex:1;background:none;border:none;color:var(--muted);cursor:pointer;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:5px;font-family:'IBM Plex Mono';font-weight:600;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;}
 .ft-tabbar button.active{color:var(--accent);}
@@ -931,6 +940,8 @@ export default function App() {
             <button className={tab === "plan" ? "active" : ""} onClick={() => goTo("plan")}><CalendarDays size={18} />Plan</button>
             <button className={MORE_TABS.includes(tab) ? "active" : ""} onClick={() => goTo("mas")}><Menu size={18} />Más</button>
           </nav>
+
+          <Toast />
 
           {sheet && (
             <div className="ft-sheet" onClick={() => setSheet(null)}>

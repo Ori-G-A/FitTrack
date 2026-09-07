@@ -6,6 +6,7 @@ import { addDays, creatineWaterKg, daysBetween, localISO, weightTrendHighlight }
 import { LUTEAL_LENGTH, cycleContext, dailyGuidance, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog, ovulationEstimate, summarizeCycles, symptomDistribution } from "./cycle-inference.js";
 import { Headline, ScreenMast } from "./EditorialUI.jsx";
 import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
+import { toast } from "./toast.jsx";
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
@@ -78,7 +79,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   // La coma decimal es la convencion de la app: escribirla no puede invalidar
   // el pesaje.
   const parseKg = (value) => Number(String(value).replace(",", "."));
-  const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: value }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
+  const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: value }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); toast(`Peso guardado: ${kg1(value)} kg el ${fmtDate(wDate)}`); };
   const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
   const wSorted = [...weights].sort((a, b) => b.date.localeCompare(a.date));
   const trend = weightTrendHighlight(weights, todayISO());
@@ -94,6 +95,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
     if (Object.values(vals).every((v) => v === null)) return;
     setMeasurements((p) => [...p.filter((x) => x.date !== mDate), { id: uid(), date: mDate, ...vals }].sort((a, b) => a.date.localeCompare(b.date)));
     setMeas({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
+    toast(`Medidas guardadas del ${fmtDate(mDate)}`);
   };
   const delM = (id) => setMeasurements((p) => p.filter((x) => x.id !== id));
   const mSorted = [...measurements].sort((a, b) => b.date.localeCompare(a.date));
@@ -108,6 +110,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   useEffect(() => { setWel(existingWel ? { sleep: existingWel.sleep ?? "", restingHr: existingWel.restingHr ?? "", steps: existingWel.steps ?? "", energy: existingWel.energy ?? 0, notes: existingWel.notes ?? "" } : { sleep: "", restingHr: "", steps: "", energy: 0, notes: "" }); }, [welDate]); // eslint-disable-line
   const saveWel = () => {
     if (wel.sleep === "" && wel.restingHr === "" && wel.steps === "" && !wel.energy && !wel.notes.trim()) return;
+    toast(`Nota del ${fmtDate(welDate)} guardada`);
     setWellness((p) => [...p.filter((x) => x.date !== welDate), { id: uid(), date: welDate, sleep: wel.sleep === "" ? null : Number(wel.sleep), restingHr: wel.restingHr === "" ? null : Number(wel.restingHr), steps: wel.steps === "" ? null : Number(wel.steps), energy: wel.energy || null, notes: wel.notes.trim() }].sort((a, b) => a.date.localeCompare(b.date)));
   };
   const welSorted = [...wellness].sort((a, b) => b.date.localeCompare(a.date));
@@ -136,6 +139,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
     const now = new Date();
     const normalized = normalizeMenstrualLog({ ...cycleLog, id: existingCycleLog?.id || cycleLog.id || uid(), date: cycleDate, createdAt: existingCycleLog?.createdAt }, now);
     setMenstrualLogs((prev) => [...prev.filter((item) => item.date !== cycleDate), normalized].sort((a, b) => a.date.localeCompare(b.date)));
+    toast(`Check-in del ${fmtDate(cycleDate)} guardado`);
   };
   const delCycleLog = (id) => setMenstrualLogs((prev) => prev.filter((item) => item.id !== id));
 

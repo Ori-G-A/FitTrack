@@ -1,8 +1,18 @@
-// TEMPORAL — banco de pruebas visual. Monta las pantallas reales con datos de
-// ejemplo para poder verlas sin pasar por el login. Borrar junto con preview.html.
+// Banco de pruebas visual: monta las pantallas reales con datos de ejemplo para
+// poder verlas sin pasar por el login ni tocar datos de verdad.
+//
+// No viaja a produccion: Vite solo compila index.html, asi que ni preview.html ni
+// este archivo entran en el bundle (comprobado en dist/). Se queda porque es la
+// unica forma de recorrer las nueve pantallas de un tiron, y porque los datos de
+// ejemplo cubren casos que en la cuenta real tardan meses en aparecer: un dia sin
+// pesaje, una rutina sin registrar, tres ciclos completos.
+//
+// Si cambia la firma de una pantalla, cambiarla tambien aqui. Un banco que no
+// arranca es peor que no tenerlo.
 import React, { Suspense, lazy, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { CSS, Train } from "./FitTrack.jsx";
+import { Toast } from "./toast.jsx";
 import { ROUTINE_TEMPLATES, templateToAppRoutine } from "./fase1Config.js";
 import { addDays, localISO } from "./app-utils.js";
 import { DEFAULT_GOALS } from "./app-config.js";
@@ -21,6 +31,9 @@ const today = localISO();
 const day = (n) => addDays(today, n);
 let seq = 0;
 const uid = () => `f${++seq}`;
+// Supabase valida el formato del id de usuario: con "preview" cada arranque
+// escupia dos 400 en consola y ese ruido tapa los errores de verdad.
+const PREVIEW_USER = "00000000-0000-4000-8000-000000000000";
 
 // Peso: 90 días bajando ~0,62 kg/sem contra un objetivo de -0,30, que es justo
 // la desviación que dispara el aviso de ritmo del Diario.
@@ -171,6 +184,7 @@ function Preview() {
   return (
     <div className="ft-root" data-theme={theme}>
       <style>{CSS}</style>
+      <Toast />
       <div className="ft-wrap">
         <div style={{ display: "flex", gap: 8, marginBottom: 18, flexWrap: "wrap" }}>
           {SCREENS.map((s) => (
@@ -188,7 +202,7 @@ function Preview() {
           )}
           {screen === "Entrenar" && (
             <Train key={focus || "hoy"} workouts={trainWorkouts} setWorkouts={setTrainWorkouts} routines={libRoutines} setRoutines={setLibRoutines}
-              userId="preview" periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} initialDate={focus} />
+              userId={PREVIEW_USER} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} initialDate={focus} />
           )}
           {screen === "Nutrición" && (
             <NutritionScreen key={focus || "hoy"} nutrition={feedNutrition} setNutrition={setFeedNutrition} foods={libFoods} recipes={libRecipes}
@@ -198,7 +212,7 @@ function Preview() {
             <BodyScreen key={(bodySection || "peso") + (focus || "hoy")} section={bodySection || "peso"} weights={feedWeights} setWeights={setFeedWeights} measurements={feedMeas} setMeasurements={setFeedMeas}
               wellness={feedWellness} setWellness={setFeedWellness} periods={feedPeriods} setPeriods={setFeedPeriods}
               menstrualLogs={feedLogs} setMenstrualLogs={setFeedLogs} photos={[]} setPhotos={() => {}}
-              goals={goals} setGoals={setGoals} userId="preview" initialDate={focus} />
+              goals={goals} setGoals={setGoals} userId={PREVIEW_USER} initialDate={focus} />
           )}
           {screen === "Más" && (
             <MoreScreen userEmail="ana@correo.com" goals={goals} weights={feedWeights} periods={feedPeriods} menstrualLogs={feedLogs}
