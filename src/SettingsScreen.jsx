@@ -15,7 +15,7 @@ const modeOf = (weeklyChange) => (Number(weeklyChange) < 0 ? "deficit" : Number(
 
 const THEME_MODES = [["auto", "Sistema"], ["light", "Claro"], ["dark", "Oscuro"]];
 
-export default function SettingsScreen({ goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData, themePref = "auto", setThemePref, theme = "light" }) {
+export default function SettingsScreen({ section = "todo", goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData, themePref = "auto", setThemePref, theme = "light" }) {
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const updateGoal = (key, value) => setGoals((current) => ({ ...current, [key]: value }));
@@ -60,10 +60,16 @@ export default function SettingsScreen({ goals, setGoals, weights, exportData, u
         ? { text: `Todo listo: ${goals.kcalTarget} kcal y ${goals.proteinTarget} g de proteína, recalculados solos con tu peso.` }
         : { text: "Cálculo automático apagado: tus calorías y proteína no se actualizan cuando cambia tu peso." };
 
+  // La pantalla se parte en dos: objetivos —lo que define el plan— y datos, que
+  // es cuenta, copia y borrado. Cuenta las compone en pestanas; "todo" queda
+  // para montarla entera si alguna vez hace falta.
+  const showGoals = section !== "datos";
+  const showData = section !== "objetivos";
+
   return (
     <>
-      <ScreenMast kicker="FITTRACK · AJUSTES" title="Ajustes" />
-      <Headline
+      {section === "todo" && <ScreenMast kicker="FITTRACK · AJUSTES" title="Ajustes" />}
+      {showGoals && <Headline
         kicker="Lo que importa ahora · Configuración"
         sub={`Objetivo ${direction || "sin definir"} · ritmo ${Number(goals.weeklyChange) > 0 ? "+" : ""}${Number(goals.weeklyChange).toFixed(2)} kg/semana`}
         value={ready}
@@ -71,17 +77,18 @@ export default function SettingsScreen({ goals, setGoals, weights, exportData, u
         valueSub="ajustes completos"
       >
         {status.text}
-      </Headline>
+      </Headline>}
 
-      <div className="ft-profile">
+      {section === "todo" && <div className="ft-profile">
         <span className="avatar">{(userEmail || "?")[0].toUpperCase()}</span>
         <div>
           <b>{(userEmail || "").split("@")[0] || "Tu cuenta"}</b>
           <small>{latest ? `${latest} kg` : "sin peso registrado"}{Number(goals.targetWeight) ? ` · meta ${goals.targetWeight} kg` : ""}</small>
         </div>
-      </div>
+      </div>}
 
-      <div className="ft-cols">
+      <div className={section === "todo" ? "ft-cols" : ""}>
+        {showGoals && (
         <div>
           <div className="ft-card">
             <h2><Target size={16} /> Objetivos de peso</h2>
@@ -142,7 +149,9 @@ export default function SettingsScreen({ goals, setGoals, weights, exportData, u
             {goals.autoMacros && !referenceWeight && <div style={{ color: "var(--danger)", fontSize: 13, marginTop: 10 }}>Introduce tu peso inicial (o registra un peso en Cuerpo) para poder calcular.</div>}
           </div>
         </div>
+        )}
 
+        {showData && (
         <div>
           <div className="ft-card">
             <h2><Moon size={16} /> Apariencia</h2>
@@ -166,6 +175,7 @@ export default function SettingsScreen({ goals, setGoals, weights, exportData, u
           </div>
           <div className="ft-alert ok"><Check size={20} color="var(--ok)" /><div><div className="t">Cómo se calculan tus macros y avisos</div><div className="b">El cálculo automático estima tu mantenimiento como peso × factor de actividad, le resta o suma el equivalente a tu ritmo objetivo (7700 kcal ≈ 1 kg) y calcula la proteína usando el valor por kg que configures. Es un punto de partida: el dashboard ajusta tu mantenimiento real con tus datos en unas dos semanas.</div></div></div>
         </div>
+        )}
       </div>
     </>
   );

@@ -36,8 +36,7 @@ import {
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
 const DiarioScreen = lazy(() => import("./DiarioScreen.jsx"));
 const SessionScreen = lazy(() => import("./SessionScreen.jsx"));
-const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
-const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
+const AccountScreen = lazy(() => import("./AccountScreen.jsx"));
 const LibraryScreen = lazy(() => import("./LibraryScreen.jsx"));
 const NutritionScreen = lazy(() => import("./NutritionScreen.jsx"));
 const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
@@ -199,7 +198,9 @@ html[data-theme="light"]{background:#f3efe6;color-scheme:light;}
 .ft-side-logo b{display:block;font-family:'Archivo';font-weight:900;letter-spacing:-.04em;text-transform:uppercase;font-size:19px;line-height:1;}
 .ft-side-logo small{color:var(--muted);font-size:10px;letter-spacing:.16em;text-transform:uppercase;}
 .ft-side-foot{margin-top:auto;display:flex;flex-direction:column;gap:6px;}
-.ft-user{display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--line);}
+.ft-user{display:flex;align-items:center;gap:10px;padding:10px 4px 4px;border:none;border-top:1px solid var(--line);background:transparent;color:var(--text);text-align:left;width:100%;cursor:pointer;border-radius:0 0 9px 9px;}
+.ft-user:hover{background:var(--panel2);}
+.ft-user.active{background:var(--accentdim);}
 .ft-user .avatar{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--text);color:var(--bg);display:grid;place-items:center;font-family:'Archivo';font-weight:800;font-size:13px;}
 .ft-user b{display:block;font-size:12.5px;line-height:1.25;text-transform:capitalize;}
 .ft-user small{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono';}
@@ -483,6 +484,8 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-tabbar button{flex:1;background:none;border:none;color:var(--muted);cursor:pointer;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:5px;font-family:'IBM Plex Mono';font-weight:600;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;}
 .ft-tabbar button.active{color:var(--accent);}
 .ft-tabbar button.add{color:var(--muted);}
+.ft-tab-avatar{width:20px;height:20px;border-radius:50%;background:var(--muted);color:var(--bg);display:grid;place-items:center;font-family:'Archivo';font-weight:800;font-size:10px;}
+.ft-tabbar button.active .ft-tab-avatar{background:var(--accent);color:#f3efe6;}
 .ft-tabbar button.add .circle{width:52px;height:52px;border-radius:50%;background:var(--ok);color:var(--bg);display:grid;place-items:center;box-shadow:0 6px 18px var(--accentdim);}
 .ft-sheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;}
 .ft-sheet-panel{width:100%;max-width:560px;margin:0 auto;border-radius:16px 16px 0 0;max-height:80vh;overflow:auto;background:var(--panel);border-top:1px solid var(--line);padding:16px 16px calc(20px + env(safe-area-inset-bottom));animation:ft-up .18s ease;}
@@ -826,7 +829,7 @@ export default function App() {
 
   // La barra inferior lleva 5 destinos; lo que no cabe vive en la pantalla "Mas",
   // que ademas es la unica que muestra de quien es la cuenta.
-  const MORE_TABS = ["mas", "perfil", "entrenar", "peso", "medidas", "nota", "checkin", "nutricion", "biblioteca", "rutinas", "ajustes"];
+  const ACCOUNT_TABS = ["cuenta", "perfil", "ajustes"];
   const ADD_ROWS = [
     { id: "entrenar", label: "Entreno", sub: "series y RPE", icon: Dumbbell },
     { id: "nutricion", label: "Comida", sub: "kcal y macros", icon: Utensils },
@@ -846,7 +849,8 @@ export default function App() {
   // Anadir para registrar, tres raices para consultar, y Mas para el resto. Es
   // exactamente la barra inferior del movil, asi que no hay dos modelos que
   // mantener ni nada que aparezca en dos sitios: Biblioteca vive en Mas, como en
-  // el prototipo, porque se configura de vez en cuando y no se consulta a diario.
+  // Y lo de configurar dejo de ser una pestana: es la cuenta, y se entra por el
+  // nombre al pie del rail, que es donde se busca en cualquier app.
   //
   // Entrenar, Cuerpo y Nutricion salen de la lista pero no se pierden: se llega
   // por Anadir, por las filas del Diario, por el dia del Plan y por los huecos
@@ -855,8 +859,7 @@ export default function App() {
     { id: "diario", label: "Diario", icon: Newspaper },
     { id: "plan", label: "Plan", icon: CalendarDays },
     { id: "dashboard", label: "Métricas", icon: LayoutDashboard },
-    { sep: true },
-    { id: "mas", label: "Más", icon: Menu },
+    { id: "biblioteca", label: "Biblioteca", icon: Apple },
   ];
 
   return (
@@ -911,19 +914,20 @@ export default function App() {
             </nav>
             <div className="ft-side-foot">
               <SaveIndicator />
-              <button className="ft-iconbtn" onClick={() => setThemePref(theme === "dark" ? "light" : "dark")} title="Tema" aria-label="Cambiar tema">
-                {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}<span className="label">Tema {theme === "dark" ? "oscuro" : "claro"}</span>
-              </button>
-              <button className="ft-iconbtn" onClick={exportData} title="Exportar" aria-label="Exportar"><Download size={15} /><span className="label">Exportar</span></button>
-              <button className="ft-iconbtn" onClick={() => fileRef.current.click()} title="Importar" aria-label="Importar"><Upload size={15} /><span className="label">Importar</span></button>
               <input ref={fileRef} type="file" accept="application/json" hidden onChange={importData} />
-              <div className="ft-user" title={profileLine}>
+              {/* Tema, exportar e importar se fueron a la pestana de Datos: el
+                  pie del rail es la cuenta, no un cajon de acciones sueltas. */}
+              <button
+                className={ACCOUNT_TABS.includes(tab) ? "ft-user active" : "ft-user"}
+                onClick={() => { goTo("cuenta"); setMenuOpen(false); }}
+                title={`Tu cuenta · ${profileLine}`}
+              >
                 <span className="avatar">{(session.user.email || "?")[0].toUpperCase()}</span>
                 <span className="label">
                   <b>{(session.user.email || "").split("@")[0]}</b>
                   <small>{profileLine}</small>
                 </span>
-              </div>
+              </button>
             </div>
           </aside>
           {tab === "diario" && (
@@ -958,27 +962,30 @@ export default function App() {
               <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={routines} focusCard={focusCard} onFocused={() => setFocusCard(null)} />
             </Suspense>
           )}
-          {tab === "mas" && (
-            <Suspense fallback={<div className="ft-empty">Cargando…</div>}>
-              <MoreScreen userEmail={session.user.email} goals={goals} weights={weights} periods={periods} menstrualLogs={menstrualLogs}
-                foods={foods} recipes={recipes} routines={routines} theme={theme} setThemePref={setThemePref}
-                exportData={exportData} importData={() => fileRef.current.click()} setTab={goTo} />
+          {/* Las tres puertas viejas —Mas, Perfil y Ajustes— son la misma
+              pantalla con la pestana correspondiente. Los enlaces existentes a
+              "perfil" y "ajustes" siguen funcionando y aterrizan donde tocaba. */}
+          {ACCOUNT_TABS.includes(tab) && (
+            <Suspense fallback={<div className="ft-empty">Cargando tu cuenta…</div>}>
+              <AccountScreen
+                section={tab === "ajustes" ? "datos" : "perfil"}
+                userEmail={session.user.email}
+                goals={goals} setGoals={setGoals} weights={weights}
+                periods={periods} menstrualLogs={menstrualLogs} wellness={wellness}
+                setTab={goTo}
+                exportData={exportData} importData={() => fileRef.current.click()}
+                signOut={signOut} deleteAllData={deleteAllData}
+                themePref={themePref} setThemePref={setThemePref} theme={theme}
+              />
             </Suspense>
           )}
-          {tab === "perfil" && (
-            <Suspense fallback={<div className="ft-empty">Cargando Perfil…</div>}>
-              <PerfilScreen userEmail={session.user.email} goals={goals} setGoals={setGoals}
-                periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} setTab={goTo} />
-            </Suspense>
-          )}
-          {tab === "ajustes" && <SettingsScreen goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} themePref={themePref} setThemePref={setThemePref} theme={theme} />}
 
           <nav className="ft-tabbar">
             <button className={tab === "diario" ? "active" : ""} onClick={() => goTo("diario")}><Newspaper size={18} />Diario</button>
             <button className={tab === "dashboard" ? "active" : ""} onClick={() => goTo("dashboard")}><LayoutDashboard size={18} />Métricas</button>
             <button className="add" onClick={() => setSheet("add")} aria-label="Registrar"><span className="circle"><Plus size={26} /></span>Añadir</button>
             <button className={tab === "plan" ? "active" : ""} onClick={() => goTo("plan")}><CalendarDays size={18} />Plan</button>
-            <button className={MORE_TABS.includes(tab) ? "active" : ""} onClick={() => goTo("mas")}><Menu size={18} />Más</button>
+            <button className={ACCOUNT_TABS.includes(tab) ? "active" : ""} onClick={() => goTo("cuenta")}><span className="ft-tab-avatar">{(session.user.email || "?")[0].toUpperCase()}</span>Cuenta</button>
           </nav>
 
           <Toast />

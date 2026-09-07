@@ -22,8 +22,7 @@ const SessionScreen = lazy(() => import("./SessionScreen.jsx"));
 const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
 const PlanScreen = lazy(() => import("./PlanScreen.jsx"));
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
-const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
-const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
+const AccountScreen = lazy(() => import("./AccountScreen.jsx"));
 const LibraryScreen = lazy(() => import("./LibraryScreen.jsx"));
 const NutritionScreen = lazy(() => import("./NutritionScreen.jsx"));
 
@@ -138,7 +137,7 @@ const PLAN_ROUTINES = [
 // Rutinas reales de las plantillas: traen calentamiento, notas y version minima.
 const TEMPLATE_ROUTINES = ROUTINE_TEMPLATES.map((t) => templateToAppRoutine(t, uid));
 
-const SCREENS = ["Diario", "Entrenar", "Nutrición", "Cuerpo", "Plan", "Biblioteca", "Métricas", "Más", "Perfil", "Sesión"];
+const SCREENS = ["Diario", "Entrenar", "Nutrición", "Cuerpo", "Plan", "Biblioteca", "Métricas", "Cuenta", "Sesión"];
 
 function Preview() {
   const [screen, setScreen] = useState("Diario");
@@ -214,14 +213,11 @@ function Preview() {
               menstrualLogs={feedLogs} setMenstrualLogs={setFeedLogs} photos={[]} setPhotos={() => {}}
               goals={goals} setGoals={setGoals} userId={PREVIEW_USER} initialDate={focus} />
           )}
-          {screen === "Más" && (
-            <MoreScreen userEmail="ana@correo.com" goals={goals} weights={feedWeights} periods={feedPeriods} menstrualLogs={feedLogs}
-              foods={[]} recipes={[]} routines={libRoutines} theme={theme} setThemePref={setTheme}
-              exportData={() => {}} importData={() => {}} setTab={goTo} />
-          )}
-          {screen === "Perfil" && (
-            <PerfilScreen userEmail="ana@correo.com" goals={goals} setGoals={setGoals}
-              periods={feedPeriods} menstrualLogs={feedLogs} wellness={feedWellness} setTab={goTo} />
+          {screen === "Cuenta" && (
+            <AccountScreen userEmail="ana@correo.com" goals={goals} setGoals={setGoals} weights={feedWeights}
+              periods={feedPeriods} menstrualLogs={feedLogs} wellness={feedWellness} setTab={goTo}
+              exportData={() => {}} importData={() => {}} signOut={() => {}} deleteAllData={async () => {}}
+              themePref={theme} setThemePref={setTheme} theme={theme} />
           )}
           {screen === "Sesión" && (
             <SessionScreen exercises={exercises} writeExercises={setExercises} onExit={() => setScreen("Entrenar")}

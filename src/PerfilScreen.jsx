@@ -26,7 +26,7 @@ function PhaseBar({ segments }) {
   );
 }
 
-export default function PerfilScreen({ userEmail = "", goals = {}, setGoals, periods = [], menstrualLogs = [], wellness = [], setTab }) {
+export default function PerfilScreen({ embedded = false, userEmail = "", goals = {}, setGoals, periods = [], menstrualLogs = [], wellness = [], setTab }) {
   const today = localISO();
   const sex = goals.sex || "";
   const hasCycleData = periods.length > 0 || menstrualLogs.length > 0;
@@ -39,15 +39,21 @@ export default function PerfilScreen({ userEmail = "", goals = {}, setGoals, per
   const group = PHASE_GROUPS[guide.phase] || "Por confirmar";
   const phaseColor = (CYCLE_PHASES[group] || CYCLE_PHASES["Por confirmar"]).color;
 
+  // Embebida dentro de Cuenta no repite cabecera ni el enlace a objetivos: los
+  // objetivos estan justo debajo, en la misma pestana.
+  const Marco = embedded ? React.Fragment : "div";
+  const marcoProps = embedded ? {} : { className: "ft-dc" };
+
   return (
-    <div className="ft-dc">
-      <div className="ft-dc-head">
-        <div>
-          <h1>Perfil</h1>
-          <span className="sub">{userEmail || "sin cuenta"}</span>
+    <Marco {...marcoProps}>
+      {!embedded && (
+        <div className="ft-dc-head">
+          <div>
+            <h1>Perfil</h1>
+            <span className="sub">{userEmail || "sin cuenta"}</span>
+          </div>
         </div>
-        <button className="ft-dc-btn ghost" onClick={() => setTab("ajustes")}>Objetivos y cuenta</button>
-      </div>
+      )}
 
       <div className="ft-dc-card">
         <div className="h"><span>Sexo</span><span>define qué se sigue</span></div>
@@ -163,6 +169,6 @@ export default function PerfilScreen({ userEmail = "", goals = {}, setGoals, per
           </div>
         </>
       )}
-    </div>
+    </Marco>
   );
 }

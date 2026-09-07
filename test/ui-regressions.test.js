@@ -107,25 +107,23 @@ test("los avisos se leen en el Diario y saltan a su tarjeta de Métricas", async
   assert.doesNotMatch(dash, /const trend = useMemo/);
 });
 
-test("Más es una pantalla con la cuenta, no una hoja de atajos", async () => {
+test("la cuenta es una pantalla con dos pestañas y se entra por el nombre", async () => {
   const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
-  const more = await readFile(new URL("../src/MoreScreen.jsx", import.meta.url), "utf8");
+  const account = await readFile(new URL("../src/AccountScreen.jsx", import.meta.url), "utf8");
 
-  // La hoja "more" se fue entera: si vuelve, hay dos Más con contenidos distintos.
-  assert.doesNotMatch(app, /setSheet\("more"\)/);
-  assert.doesNotMatch(app, /const MORE_ROWS/);
-  assert.match(app, /goTo\("mas"\)/);
-  assert.match(app, /tab === "mas"/);
-  assert.match(app, /tab === "perfil"/);
+  // Más era un cajón: repetía entradas del rail y mezclaba navegación con
+  // configuración. Ya no existe; lo suyo es la cuenta, en dos pestañas.
+  assert.deepEqual([...account.matchAll(/\["(\w+)", "[^"]+"\]/g)].map((m) => m[1]), ["perfil", "datos"]);
+  assert.match(app, /const ACCOUNT_TABS = \["cuenta", "perfil", "ajustes"\]/);
 
-  // Lo que faltaba del mockup: de quién es la cuenta.
-  assert.match(more, /ft-more-user/);
-  assert.match(more, /\{userEmail\}/);
+  // Se entra por el nombre, al pie del rail, como en cualquier app.
+  assert.match(app, /className=\{ACCOUNT_TABS\.includes\(tab\) \? "ft-user active" : "ft-user"\}/);
+  assert.match(app, /onClick=\{\(\) => \{ goTo\("cuenta"\); setMenuOpen\(false\); \}\}/);
 
-  // Nada de filas que no llevan a ningún sitio.
-  assert.doesNotMatch(more, /disabled/);
+  // Las tres puertas viejas siguen llevando a su pestaña, así que los enlaces
+  // que ya existían no se rompen.
+  assert.match(app, /section=\{tab === "ajustes" \? "datos" : "perfil"\}/);
 });
-
 test("Biblioteca abre con la lista y la ficha vive en el panel derecho", async () => {
   const lib = await readFile(new URL("../src/LibraryScreen.jsx", import.meta.url), "utf8");
   const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
@@ -278,7 +276,7 @@ test("el rail y la barra móvil llevan a lo mismo, y nada queda huérfano", asyn
 
   // El rail dejó de listar en plano tres tipos de destino. Si vuelve a crecer,
   // Más vuelve a duplicar: era la causa, no el síntoma.
-  assert.deepEqual(railIds, ["diario", "plan", "dashboard", "mas"]);
+  assert.deepEqual(railIds, ["diario", "plan", "dashboard", "biblioteca"]);
   assert.match(app, /className="ft-nav-add" onClick=\{\(\) => \{ setSheet\("add"\)/);
 
   // Lo que sale del rail tiene que seguir teniendo camino. Registrar va por
@@ -287,10 +285,9 @@ test("el rail y la barra móvil llevan a lo mismo, y nada queda huérfano", asyn
   for (const id of ["entrenar", "nutricion", "peso", "nota", "medidas"]) {
     assert.ok(addIds.includes(id), `${id} salió del rail y no está en Añadir`);
   }
-  const more = await readFile(new URL("../src/MoreScreen.jsx", import.meta.url), "utf8");
-  assert.match(more, /setTab\("biblioteca"\)/, "Biblioteca no tiene camino en móvil");
-  // Y no vuelve a estar en dos sitios: registrar el cuerpo se hace desde Añadir.
-  assert.doesNotMatch(more, /setTab\("cuerpo"\)/);
+  // Biblioteca vuelve al rail y sale de la cuenta: no está en dos sitios.
+  const account = await readFile(new URL("../src/AccountScreen.jsx", import.meta.url), "utf8");
+  assert.doesNotMatch(account, /setTab\("biblioteca"\)/);
 });
 
 test("planificar otro día no son ocho flechas", async () => {
