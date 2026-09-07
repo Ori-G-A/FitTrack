@@ -42,19 +42,22 @@ test("cada fila del diario aterriza en la pantalla de su tipo", async () => {
   const destinos = [...new Set([...feed.matchAll(/tab: "([a-z]+)"/g)].map((m) => m[1]))];
   // Si dayFeed inventa un destino nuevo, esto avisa antes de que la fila caiga
   // en el `|| "Diario"` de turno y el usuario acabe en otra pantalla.
-  assert.deepEqual(destinos.sort(), ["cuerpo", "entrenar", "nutricion"]);
+  assert.deepEqual(destinos.sort(), ["entrenar", "medidas", "nota", "nutricion", "peso"]);
 
   // La app tiene que renderizar los tres, y el banco de pruebas tiene que
   // enrutarlos por separado: colapsarlos mandaba toda fila a Entrenar.
   const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
   const bench = await readFile(new URL("../src/preview-main.jsx", import.meta.url), "utf8");
   const mapa = bench.match(/const TAB_TO_SCREEN = \{[^}]*\}/)?.[0] || "";
+  // Los cuatro de Cuerpo son la misma pantalla con una sección activa.
+  const cuerpo = app.match(/const BODY_TABS = \[[^\]]*\]/)?.[0] || "";
   for (const destino of destinos) {
-    assert.match(app, new RegExp(`tab === "${destino}"`), `la app no renderiza ${destino}`);
+    const renderiza = app.includes(`tab === "${destino}"`) || cuerpo.includes(`"${destino}"`);
+    assert.ok(renderiza, `la app no renderiza ${destino}`);
     assert.match(mapa, new RegExp(`${destino}: "([^"]+)"`), `el banco no enruta ${destino}`);
   }
-  const pantallas = [...mapa.matchAll(/(cuerpo|entrenar|nutricion): "([^"]+)"/g)].map((m) => m[2]);
-  assert.equal(new Set(pantallas).size, 3, "el banco colapsa dos destinos en la misma pantalla");
+  const pantallas = [...mapa.matchAll(/(peso|medidas|nota|entrenar|nutricion): "([^"]+)"/g)].map((m) => m[2]);
+  assert.equal(new Set(pantallas).size, 5, "el banco colapsa dos destinos en la misma pantalla");
 });
 
 test("el día del Plan recibe todo el día, no solo el entreno", async () => {
@@ -160,4 +163,23 @@ test("registrar comida no se puede sin cantidad", async () => {
   // La versión vieja se borró: dos pantallas de nutrición divergen enseguida.
   assert.doesNotMatch(app, /export function Nutrition\(/);
   assert.match(app, /<NutritionScreen/);
+});
+
+test("Cuerpo se registra en cuatro pantallas, no en una pila de formularios", async () => {
+  const body = await readFile(new URL("../src/BodyScreen.jsx", import.meta.url), "utf8");
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+
+  // Una sección activa por vez: seis tarjetas apiladas hacían el trabajo de
+  // cuatro pantallas del prototipo.
+  for (const section of ["peso", "medidas", "nota", "checkin"]) {
+    assert.match(body, new RegExp(`section === "${section}"`), `falta la sección ${section}`);
+  }
+  assert.match(app, /const BODY_TABS = \["peso", "medidas", "nota", "checkin"\]/);
+  assert.match(app, /<BodyScreen key=\{tab\} section=\{tab\}/);
+
+  // El peso se registra con stepper y atajos, no con un campo suelto, y la coma
+  // decimal es la de la app: escribirla no puede invalidar el pesaje.
+  assert.match(body, /aria-label="Subir 0,1 kg"/);
+  assert.match(body, /const parseKg = \(value\) => Number\(String\(value\)\.replace\(",", "\."\)\)/);
+  assert.doesNotMatch(body, /setKg\([^)]*toFixed\(1\)\)/);
 });

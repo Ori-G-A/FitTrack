@@ -67,7 +67,7 @@ const PHASE_NAMES = {
 };
 const CONFIDENCE_NAMES = { low: "baja", medium: "media", high: "alta" };
 
-export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
+export default function BodyScreen({ section = "peso", weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
   const creatineStart = goals?.creatineStart || "";
   const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
   const creaWaterKg = creatineStart ? creatineWaterKg(creatineStart, todayISO()) : null;
@@ -75,11 +75,17 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   const creaWater = creaWaterKg == null ? null : creaWaterKg.toFixed(1);
   const creaFull = creatineStart ? addDays(creatineStart, 28) : null;
   const [wDate, setWDate] = useState(initialDate || todayISO()); const [kg, setKg] = useState("");
-  const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
+  // La coma decimal es la convencion de la app: escribirla no puede invalidar
+  // el pesaje.
+  const parseKg = (value) => Number(String(value).replace(",", "."));
+  const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: value }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
   const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
   const wSorted = [...weights].sort((a, b) => b.date.localeCompare(a.date));
   const trend = weightTrendHighlight(weights, todayISO());
   const wChart = [...weights].sort((a, b) => a.date.localeCompare(b.date)).map((w) => ({ date: fmtDate(w.date), kg: w.kg }));
+  const lastKg = wSorted[0]?.kg ?? null;
+  const kg1 = (value) => value.toFixed(1).replace(".", ",");
+  const bumpKg = (delta) => setKg(kg1(Math.round(((parseKg(kg) || lastKg || 0) + delta) * 10) / 10));
 
   const [mDate, setMDate] = useState(initialDate || todayISO());
   const [meas, setMeas] = useState({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
@@ -157,30 +163,73 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   };
   const pSortedPhotos = [...photos].sort((a, b) => b.date.localeCompare(a.date));
 
+  const HEAD = {
+    peso: ["Peso", "báscula · tendencia · creatina"],
+    medidas: ["Medidas", "cintura · cadera · pecho · brazo · muslo · fotos"],
+    nota: ["Nota del día", "sueño · pulso · pasos · energía"],
+    checkin: ["Check-in de ciclo", "sangrado · flujo · síntomas"],
+  }[section] || ["Cuerpo", ""];
+
   return (
-    <>
-      <ScreenMast kicker="FITTRACK · CUERPO" title="Cuerpo" />
-      {trend && (
-        <Headline
-          kicker="Lo que importa ahora · Peso"
-          sub={`De ${trend.from} a ${trend.to} kg · fase estimada: ${PHASE_NAMES[phaseEstimate.phase]}`}
-          value={`${trend.perWeek > 0 ? "+" : ""}${trend.perWeek}`}
-          unit="kg/sem"
-          valueSub="tendencia"
-          spark={trend.series}
-        >
-          {Math.abs(trend.perWeek) < 0.05
-            ? `Tu peso lleva ${trend.days} días estable.`
-            : `Tu peso ${trend.perWeek < 0 ? "baja" : "sube"} ${Math.abs(trend.perWeek)} kg por semana en los últimos ${trend.days} días.`}
-        </Headline>
+    <div className="ft-dc">
+      <div className="ft-dc-head">
+        <div>
+          <h1>{HEAD[0]}</h1>
+          <span className="sub">{HEAD[1]}</span>
+        </div>
+      </div>
+
+      {section === "peso" && trend && (
+        <div className="ft-dc-strip" style={{ "--cols": 3 }}>
+          <div>
+            <span className="k">ÚLTIMO PESO</span>
+            <span className="v">{wSorted[0] ? wSorted[0].kg.toFixed(1).replace(".", ",") : "—"}<small>kg</small></span>
+            <span className="d">{wSorted[0] ? fmtDate(wSorted[0].date) : "sin pesajes"}</span>
+          </div>
+          <div>
+            <span className="k">TENDENCIA</span>
+            <span className="v">{trend.perWeek > 0 ? "+" : ""}{String(trend.perWeek).replace(".", ",")}<small>kg/sem</small></span>
+            <span className="d">últimos {trend.days} días</span>
+          </div>
+          <div>
+            <span className="k">FASE ESTIMADA</span>
+            <span className="v" style={{ fontSize: 19 }}>{PHASE_GROUPS[phaseEstimate.phase] || "—"}</span>
+            <span className="d">confianza {CONFIDENCE_NAMES[phaseEstimate.confidence] || phaseEstimate.confidence}</span>
+          </div>
+        </div>
       )}
+
       <div style={{ height: 16 }} />
-      <div className="ft-card">
-        <h2><Scale size={16} /> Peso corporal</h2>
-        <div className="ft-row">
-          <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={wDate} onChange={(e) => setWDate(e.target.value)} /></div>
-          <div className="ft-field"><label>Peso (kg)</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.1" placeholder="0.0" value={kg} onChange={(e) => setKg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addW()} /></div>
-          <button className="ft-btn" onClick={addW}><Check size={15} /> Guardar</button>
+      {section === "peso" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Peso corporal</span></div>
+        <div className="ft-lib-nums">
+          <label className="ft-lib-field"><span>Fecha</span>
+            <input className="ft-input ft-mono" type="date" value={wDate} onChange={(e) => setWDate(e.target.value)} />
+          </label>
+          <label className="ft-lib-field" style={{ gridColumn: "span 2" }}><span>Peso en kg</span>
+            {/* Stepper de 0,1 kg: es el salto real entre dos pesajes, y escribir
+                el numero sigue disponible para cuando la bascula da otra cosa. */}
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <button className="ft-dc-step" aria-label="Bajar 0,1 kg" onClick={() => bumpKg(-0.1)}>−</button>
+              <input className="ft-input ft-mono" style={{ textAlign: "center" }} inputMode="decimal" placeholder={lastKg ? kg1(lastKg) : "0,0"}
+                value={kg} onChange={(e) => setKg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addW()} />
+              <button className="ft-dc-step" aria-label="Subir 0,1 kg" onClick={() => bumpKg(0.1)}>+</button>
+            </div>
+          </label>
+        </div>
+        {lastKg != null && (
+          <div className="ft-dc-chips" style={{ paddingTop: 0 }}>
+            {[-0.4, -0.2, 0, 0.2, 0.4].map((delta) => {
+              const value = Math.round((lastKg + delta) * 10) / 10;
+              return (
+                <button key={delta} className={parseKg(kg) === value ? "on" : ""} onClick={() => setKg(kg1(value))}>{kg1(value)}</button>
+              );
+            })}
+          </div>
+        )}
+        <div className="ft-dc-acts">
+          <button className="ft-dc-btn" disabled={!kg} onClick={addW}>Guardar pesaje</button>
         </div>
         {wChart.length >= 2 && (
           <ResponsiveContainer width="100%" height={200}>
@@ -206,9 +255,11 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
           </details>
         )}
       </div>
+      )}
 
-      <div className="ft-card">
-        <h2><Droplet size={16} /> Creatina <span className="tag">5 g/día</span></h2>
+      {section === "peso" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Creatina</span><span>5 g/día</span></div>
         <div className="ft-row" style={{ marginBottom: creaSat == null ? 0 : 12 }}>
           <div className="ft-field"><label>Inicio suplementación</label><input className="ft-input ft-mono" type="date" max={todayISO()} value={creatineStart} onChange={(e) => setGoals((g) => ({ ...g, creatineStart: e.target.value }))} /></div>
         </div>
@@ -220,9 +271,11 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
           </div>
         )}
       </div>
+      )}
 
-      <div className="ft-card">
-        <h2><Droplet size={16} /> Ciclo menstrual {ctx.currentStart && <span className="tag">día {ctx.cycleDay} · ciclo ~{ctx.avgCycle}d</span>}</h2>
+      {section === "checkin" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Ciclo menstrual</span>{ctx.currentStart && <span>día {ctx.cycleDay} · ciclo ~{ctx.avgCycle} d</span>}</div>
         <div>
           <div className="ft-alert info" style={{ marginBottom: 12 }}>
             <Sparkles size={20} color="var(--blue)" />
@@ -363,9 +416,11 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
           </div>
         )}
       </div>
+      )}
 
-      <div className="ft-card">
-        <h2><Ruler size={16} /> Medidas corporales <span className="tag">cm</span></h2>
+      {section === "medidas" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Medidas corporales</span><span>en cm</span></div>
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={mDate} onChange={(e) => setMDate(e.target.value)} /></div>
         </div>
@@ -398,9 +453,11 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
           </details>
         )}
       </div>
+      )}
 
-      <div className="ft-card">
-        <h2><Moon size={16} /> Bienestar diario</h2>
+      {section === "nota" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Bienestar diario</span></div>
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={welDate} onChange={(e) => setWelDate(e.target.value)} /></div>
           <div className="ft-field"><label>Horas de sueño</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.5" placeholder="0" value={wel.sleep} onChange={(e) => setWel({ ...wel, sleep: e.target.value })} /></div>
@@ -427,9 +484,11 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
           </details>
         )}
       </div>
+      )}
 
-      <div className="ft-card">
-        <h2><Camera size={16} /> Fotos de progreso <span className="tag">{photos.length}</span></h2>
+      {section === "medidas" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Fotos de progreso</span><span>{photos.length}</span></div>
         <input ref={photoRef} type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden onChange={addPhoto} />
         <button className="ft-btn" onClick={() => photoRef.current.click()} disabled={photoBusy}><Camera size={15} /> {photoBusy ? "Procesando…" : "Subir foto de hoy"}</button>
         {photoErr && <div style={{ color: "var(--danger)", fontSize: 13, marginTop: 10 }}>{photoErr}</div>}
@@ -446,6 +505,7 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
           </div>
         )}
       </div>
-    </>
+      )}
+    </div>
   );
 }

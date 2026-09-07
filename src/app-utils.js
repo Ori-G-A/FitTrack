@@ -359,14 +359,14 @@ export function dayFeed(date, { workouts = [], nutrition = [], weights = [], mea
   }));
 
   const weight = weights.find((w) => w.date === date);
-  if (weight) entries.push({ id: `p-${weight.id || date}`, kind: "peso", title: `${String(weight.kg).replace(".", ",")} kg`, meta: "peso corporal", tab: "cuerpo", done: true });
+  if (weight) entries.push({ id: `p-${weight.id || date}`, kind: "peso", title: `${String(weight.kg).replace(".", ",")} kg`, meta: "peso corporal", tab: "peso", done: true });
 
   const measure = measurements.find((m) => m.date === date);
   if (measure) {
     const parts = ["cintura", "cadera", "pecho", "brazo", "muslo"]
       .filter((key) => Number(measure[key]) > 0)
       .map((key) => `${key} ${String(measure[key]).replace(".", ",")}`);
-    if (parts.length) entries.push({ id: `m-${measure.id || date}`, kind: "medidas", title: "Medidas", meta: `${parts.join(" · ")} cm`, tab: "cuerpo", done: true });
+    if (parts.length) entries.push({ id: `m-${measure.id || date}`, kind: "medidas", title: "Medidas", meta: `${parts.join(" · ")} cm`, tab: "medidas", done: true });
   }
 
   const note = wellness.find((w) => w.date === date);
@@ -377,7 +377,7 @@ export function dayFeed(date, { workouts = [], nutrition = [], weights = [], mea
       note.energy ? `energía ${note.energy}` : null,
       (note.notes || "").trim() || null,
     ].filter(Boolean).join(" · ");
-    entries.push({ id: `s-${note.id || date}`, kind: "nota", title: "Nota del día", meta, tab: "cuerpo", done: true, search: note.notes || "" });
+    entries.push({ id: `s-${note.id || date}`, kind: "nota", title: "Nota del día", meta, tab: "nota", done: true, search: note.notes || "" });
   }
 
   // Todo lo que se pinta es buscable; `search` solo anade lo que no se ve.

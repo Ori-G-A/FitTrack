@@ -29,7 +29,7 @@ import {
   Download, Upload, AlertTriangle,
   Check, ChevronDown, ChevronLeft, ChevronRight, Timer, Play, Pause, RotateCcw,
   Apple, Pencil, X, Clock, Activity, ListChecks, CalendarDays,
-  Settings, Zap, BookOpen, Menu, Sun, Moon, Newspaper
+  Settings, Zap, BookOpen, Menu, Sun, Moon, Newspaper, Droplet, Ruler
 } from "lucide-react";
 
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
@@ -792,17 +792,23 @@ export default function App() {
 
   // La barra inferior lleva 5 destinos; lo que no cabe vive en la pantalla "Mas",
   // que ademas es la unica que muestra de quien es la cuenta.
-  const MORE_TABS = ["mas", "perfil", "entrenar", "cuerpo", "nutricion", "biblioteca", "rutinas", "ajustes"];
+  const MORE_TABS = ["mas", "perfil", "entrenar", "peso", "medidas", "nota", "checkin", "nutricion", "biblioteca", "rutinas", "ajustes"];
   const ADD_ROWS = [
     { id: "entrenar", label: "Entreno", sub: "series y RPE", icon: Dumbbell },
     { id: "nutricion", label: "Comida", sub: "kcal y macros", icon: Utensils },
-    { id: "cuerpo", label: "Peso, medidas y nota", sub: "y ciclo", icon: Scale },
+    { id: "peso", label: "Peso", sub: "báscula del día", icon: Scale },
+    { id: "nota", label: "Nota del día", sub: "sueño · pasos · energía", icon: Moon },
+    { id: "medidas", label: "Medidas", sub: "cintura · cadera · fotos", icon: Ruler },
+    { id: "checkin", label: "Check-in de ciclo", sub: "sangrado y síntomas", icon: Droplet },
   ];
 
+  // Cuerpo se registra en cuatro sitios distintos; los cuatro son la misma
+  // pantalla con una seccion activa, y el rail solo lleva al primero.
+  const BODY_TABS = ["peso", "medidas", "nota", "checkin"];
   const NAV = [
     { id: "diario", label: "Diario", icon: Newspaper },
     { id: "entrenar", label: "Entrenar", icon: Dumbbell },
-    { id: "cuerpo", label: "Cuerpo", icon: Scale },
+    { id: "peso", label: "Cuerpo", icon: Scale },
     { id: "nutricion", label: "Nutrición", icon: Utensils },
     { id: "biblioteca", label: "Biblioteca", icon: Apple },
     { id: "plan", label: "Plan", icon: CalendarDays },
@@ -876,9 +882,9 @@ export default function App() {
             </Suspense>
           )}
           {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} initialDate={focusDate} />}
-          {tab === "cuerpo" && (
-            <Suspense fallback={<div className="ft-empty">Cargando Cuerpo…</div>}>
-              <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} menstrualLogs={menstrualLogs} setMenstrualLogs={setMenstrualLogs} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} initialDate={focusDate} />
+          {BODY_TABS.includes(tab) && (
+            <Suspense fallback={<div className="ft-empty">Cargando…</div>}>
+              <BodyScreen key={tab} section={tab} weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} menstrualLogs={menstrualLogs} setMenstrualLogs={setMenstrualLogs} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} initialDate={focusDate} />
             </Suspense>
           )}
           {tab === "nutricion" && (

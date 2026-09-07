@@ -495,7 +495,9 @@ test("un día de descanso sigue teniendo contenido: el Plan lo lee con dayFeed",
   // mostraba nada y su unico boton mandaba a Entrenar.
   const resto = dayFeed("2026-09-01", datos).filter((e) => e.kind !== "entreno");
   assert.deepEqual(resto.map((e) => e.kind), ["comida", "peso", "nota"]);
-  assert.deepEqual(resto.map((e) => e.tab), ["nutricion", "cuerpo", "cuerpo"]);
+  // Cada tipo abre su propia pantalla: peso, medidas y nota dejaron de ser la
+  // misma pila de formularios.
+  assert.deepEqual(resto.map((e) => e.tab), ["nutricion", "peso", "nota"]);
 });
 
 test("los pasos de hoy se leen contra la media de los 7 días anteriores", () => {

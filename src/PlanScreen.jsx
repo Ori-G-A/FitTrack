@@ -15,8 +15,8 @@ const KIND_LABEL = { cardio: "CARDIO", comida: "COMIDA", peso: "PESO", medidas: 
 // mismo que usa el Diario, asi que un dia se abre igual desde los dos sitios.
 const REGISTRABLE = [
   { kind: "comida", label: "Añadir comida", tab: "nutricion" },
-  { kind: "peso", label: "Registrar peso", tab: "cuerpo" },
-  { kind: "nota", label: "Escribir nota", tab: "cuerpo" },
+  { kind: "peso", label: "Registrar peso", tab: "peso" },
+  { kind: "nota", label: "Escribir nota", tab: "nota" },
 ];
 const shortDate = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString("es-ES", { day: "numeric", month: "short" });
 const num = (value) => String(Math.round(Number(value) * 10) / 10).replace(".", ",");

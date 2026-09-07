@@ -263,7 +263,7 @@ export default function DiarioScreen({ workouts = [], nutrition = [], weights = 
           <span className="v">{kcalFmt(todaySum.kcal)}</span>
           <span className="d">{kcalTarget ? `de ${kcalFmt(kcalTarget)}` : "sin objetivo"}</span>
         </div>
-        <button className="ft-kpi" onClick={() => setTab("cuerpo", today)} aria-label="Registrar los pasos de hoy">
+        <button className="ft-kpi" onClick={() => setTab("nota", today)} aria-label="Registrar los pasos de hoy">
           <span className="k">PASOS</span>
           <span className="v">{steps.today == null ? "—" : steps.today.toLocaleString("es-ES")}</span>
           <span className="d">
