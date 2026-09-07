@@ -11,7 +11,7 @@
 // arranca es peor que no tenerlo.
 import React, { Suspense, lazy, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { CSS, Train } from "./FitTrack.jsx";
+import { CATALOG, CSS, Train } from "./FitTrack.jsx";
 import { Toast } from "./toast.jsx";
 import { ROUTINE_TEMPLATES, templateToAppRoutine } from "./fase1Config.js";
 import { addDays, localISO } from "./app-utils.js";
@@ -163,11 +163,12 @@ function Preview() {
   const [exercises, setExercises] = useState(todaySets);
   const [planRoutines, setPlanRoutines] = useState(PLAN_ROUTINES);
   const [libRoutines, setLibRoutines] = useState(TEMPLATE_ROUTINES);
-  const [libFoods, setLibFoods] = useState([
-    { id: "f1", name: "Yogur griego 0%", kcal: 59, protein: 10, carbs: 3.6, fat: 0.4, unit: "g" },
-    { id: "f2", name: "Pechuga de pollo (cruda)", kcal: 120, protein: 22.5, carbs: 0, fat: 2.6, unit: "g" },
-    { id: "f3", name: "Avena en hojuelas", kcal: 389, protein: 16.9, carbs: 66, fat: 6.9, unit: "g" },
-  ]);
+  // Biblioteca entera, no tres alimentos: una lista larga es donde aparecen los
+  // problemas de alcance —el boton de alta se va de la vista al desplazarse— y
+  // con tres elementos la pagina ni siquiera llega a desplazarse.
+  const [libFoods, setLibFoods] = useState(
+    CATALOG.map((item, index) => ({ id: `cat${index}`, ...item })).sort((a, b) => a.name.localeCompare(b.name)),
+  );
   const [libRecipes, setLibRecipes] = useState([
     { id: "r1", name: "Bowl de yogur y avena", servings: 1, items: [
       { id: "i1", name: "Yogur griego 0%", grams: 200, unit: "g", kcal: 118, protein: 20, carbs: 7.2, fat: 0.8 },

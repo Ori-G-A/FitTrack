@@ -318,3 +318,18 @@ test("en móvil los controles se pueden tocar con el dedo", async () => {
   assert.match(dash, /<select className="ft-select" value=\{muscleFilter\}/);
   assert.match(dash, /<select className="ft-select" value=\{activeEx\}/);
 });
+
+test("la acción principal de cada pantalla no se va al desplazarse", async () => {
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  // La cabecera lleva la acción principal —Nuevo alimento, Registrar, Añadir
+  // comida—. Con 136 alimentos la página mide 7500 px: sin sticky había que
+  // volver arriba del todo para crear algo.
+  assert.match(app, /\.ft-dc-head\{position:sticky;top:0;z-index:20;/);
+  // Y con fondo propio, o el contenido se lee por debajo al pasar.
+  assert.match(app, /\.ft-dc-head\{[^}]*background:var\(--bg\);\}/);
+
+  // El banco carga la biblioteca entera: con tres alimentos la página ni se
+  // desplaza y el fallo no aparece.
+  const bench = await readFile(new URL("../src/preview-main.jsx", import.meta.url), "utf8");
+  assert.match(bench, /useState\(\s*\n?\s*CATALOG\.map/);
+});

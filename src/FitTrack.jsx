@@ -337,7 +337,7 @@ textarea.ft-input{resize:vertical;min-height:60px;}
    el color como semantica: teal = va bien / accion principal, naranja = pide
    atencion, azul = ajuste sugerido. --------------------------------------- */
 .ft-dc{max-width:1120px;margin:0 auto;}
-.ft-dc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:0 2px 13px;border-bottom:1px solid var(--line);}
+.ft-dc-head{position:sticky;top:0;z-index:20;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:10px 2px 13px;border-bottom:1px solid var(--line);background:var(--bg);}
 .ft-dc-head h1{margin:0;font-family:'Archivo';font-weight:700;font-size:24px;line-height:1;letter-spacing:-.03em;}
 .ft-dc-head .sub{display:block;font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.1em;}
 /* Escritorio: las mismas secciones del prototipo repartidas en dos columnas,
