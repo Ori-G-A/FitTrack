@@ -132,6 +132,7 @@ function Preview() {
   // aterrizara en Entrenar, que no es lo que hace la app.
   const TAB_TO_SCREEN = { entrenar: "Entrenar", nutricion: "Nutrición", cuerpo: "Cuerpo", rutinas: "Biblioteca", biblioteca: "Biblioteca" };
   const goTo = (tab, date = null) => { setFocus(date); setScreen(TAB_TO_SCREEN[tab] || "Diario"); };
+  const [card, setCard] = useState(null);
   const [theme, setTheme] = useState("dark");
   const [goals, setGoals] = useState({ ...DEFAULT_GOALS, kcalTarget: 1850, proteinTarget: 150, weeklyChange: -0.3, targetWeight: "68", startWeight: "" });
   const [exercises, setExercises] = useState(todaySets);
@@ -162,7 +163,8 @@ function Preview() {
         <Suspense fallback={<div className="ft-empty">Cargando…</div>}>
           {screen === "Diario" && (
             <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements}
-              wellness={wellness} goals={goals} setGoals={setGoals} setTab={goTo} />
+              wellness={wellness} periods={periods} menstrualLogs={menstrualLogs} goals={goals} setGoals={setGoals}
+              setTab={goTo} openCard={(card) => { setCard(card); setScreen("Métricas"); }} />
           )}
           {screen === "Entrenar" && (
             <Train key={focus || "hoy"} workouts={trainWorkouts} setWorkouts={setTrainWorkouts} routines={libRoutines} setRoutines={setLibRoutines}
@@ -189,7 +191,8 @@ function Preview() {
           {screen === "Biblioteca" && <Library foods={[]} setFoods={() => {}} recipes={[]} setRecipes={() => {}} routines={libRoutines} setRoutines={setLibRoutines} initialView="rutinas" />}
           {screen === "Métricas" && (
             <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements}
-              periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={planRoutines} />
+              periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={planRoutines}
+              focusCard={card} onFocused={() => setCard(null)} />
           )}
         </Suspense>
       </div>

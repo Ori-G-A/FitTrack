@@ -28,6 +28,7 @@ import {
   weekNumber,
   weightTrendHighlight,
 } from "../src/app-utils.js";
+import { alertMetrics, buildAlerts } from "../src/alerts.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -508,4 +509,25 @@ test("los pasos de hoy se leen contra la media de los 7 días anteriores", () =>
   assert.equal(hoy.days, 2);
   // Un día sin dato no es un día de cero pasos.
   assert.equal(stepsToday(wellness, "2026-09-05").today, null);
+});
+
+test("cada aviso sabe a qué tarjeta de Métricas lleva y respeta la coma decimal", () => {
+  const hoy = localISO();
+  const dias = (n) => addDays(hoy, -n);
+  // Baja mucho más rápido que el objetivo y come poca proteína: dos avisos seguros.
+  const weights = Array.from({ length: 25 }, (_, i) => ({ id: `w${i}`, date: dias(24 - i), kg: +(70 - i * 0.12).toFixed(1) }));
+  const nutrition = Array.from({ length: 14 }, (_, i) => ({ id: `n${i}`, date: dias(13 - i), kcal: 1800, protein: 70 }));
+  const goals = { weeklyChange: -0.3, proteinTarget: 150, targetWeight: "65" };
+  const avisos = buildAlerts(alertMetrics({ workouts: [], nutrition, weights, wellness: [], periods: [], menstrualLogs: [], goals }), goals);
+
+  // Sin `card` el aviso no puede llevar a ningún sitio, que es justo lo que se pide.
+  const cards = ["peso", "macros", "records", "volumen", "constancia", "proyeccion", "rpe", "ciclo"];
+  assert.ok(avisos.length > 0);
+  avisos.forEach((aviso) => assert.ok(cards.includes(aviso.card), `card inválida: ${aviso.card}`));
+
+  const peso = avisos.find((a) => a.card === "peso");
+  assert.ok(peso, "falta el aviso de tendencia de peso");
+  assert.match(peso.body, /-\d+,\d\d kg\/sem/);
+  assert.doesNotMatch(peso.body, /\d\.\d/);
+  assert.equal(avisos.find((a) => a.title.includes("Proteína"))?.card, "macros");
 });

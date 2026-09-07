@@ -2,21 +2,19 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES, KCAL_PER_KG, PHASE_GROUPS } from "./app-config.js";
-import { canonExercise, creatineWaterKg, daysBetween, epley, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
-import { CLEAR_BLEEDING_LEVELS, buildCycleStarts, cycleContext, inferCyclePhase, ovulationEstimate, phaseSegments, symptomScore } from "./cycle-inference.js";
+import { alertMetrics } from "./alerts.js";
+import { daysBetween, localISO } from "./app-utils.js";
+import { CLEAR_BLEEDING_LEVELS, cycleContext, inferCyclePhase, ovulationEstimate, phaseSegments, symptomScore } from "./cycle-inference.js";
 import { planCompliance } from "./app-utils.js";
 import DetailSheet from "./DetailSheet.jsx";
 import { weightVsExpected } from "./settings-utils.js";
 import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
-const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
 const SECONDARY_FACTOR = 0.5;
 const todayISO = () => localISO();
 const round1 = (value) => Math.round(value * 10) / 10;
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
 const isoMinus = (days) => { const date = new Date(); date.setDate(date.getDate() - days); return localISO(date); };
-const PR_ALERT_MAX_AGE_DAYS = 3;
-const PR_ALERT_MAX_ITEMS = 3;
 
 /* ----------------------------- DASHBOARD ----------------------------- */
 /* ============================================================
@@ -196,9 +194,9 @@ function BHeatmap({ days, isMobile }) {
    largo hasta la cuadricula. La matematica esta en weightVsExpected.
    ---------------------------------------------------------------------------- */
 // Tarjeta de seccion del prototipo: cabecera en mono, contenido dentro.
-function DCard({ title, meta, span, children }) {
+function DCard({ id, title, meta, span, children }) {
   return (
-    <div className={span ? "ft-dc-card span2" : "ft-dc-card"}>
+    <div id={id ? `card-${id}` : undefined} className={span ? "ft-dc-card span2" : "ft-dc-card"}>
       <div className="h"><span>{title}</span>{meta && <span>{meta}</span>}</div>
       {children}
     </div>
@@ -265,100 +263,29 @@ function BRows({ rows }) {
   );
 }
 
-export default function DashboardScreen({ workouts, weights, nutrition, measurements, periods, goals, menstrualLogs = [], wellness = [], routines = [] }) {
+export default function DashboardScreen({ workouts, weights, nutrition, measurements, periods, goals, menstrualLogs = [], wellness = [], routines = [], focusCard = null, onFocused }) {
   const isMobile = useIsMobile();
-  const sortedW = useMemo(() => [...weights].sort((a, b) => a.date.localeCompare(b.date)), [weights]);
+  // Tendencia, records, RPE, retencion lutea: la cadena entera vive en alerts.js
+  // porque el Diario necesita los mismos numeros para pintar los avisos, y
+  // calcularlos dos veces era pedir que un dia dejaran de coincidir.
+  const m = useMemo(
+    () => alertMetrics({ workouts, nutrition, weights, wellness, periods, menstrualLogs, goals }),
+    [workouts, nutrition, weights, wellness, periods, menstrualLogs, goals],
+  );
+  const {
+    sortedW, maSeries, maSeriesForTrend, currentMA, lutealOffset, completeCyclesCount,
+    trend, cycleConfound, loadRpe, exHistory, prs, recentPRs, weeklyMuscle,
+    rpeSeries, deloadSignal, maintenance, protAvg7, lastTrain, projection,
+  } = m;
   const vsExpected = useMemo(() => weightVsExpected(weights, goals), [weights, goals]);
-  const maSeries = useMemo(() => sortedW.map((w) => {
-    const start = new Date(w.date + "T00:00:00"); start.setDate(start.getDate() - 6);
-    const win = sortedW.filter((x) => x.date <= w.date && new Date(x.date + "T00:00:00") >= start);
-    return { iso: w.date, real: w.kg, media: round1(win.reduce((s, x) => s + x.kg, 0) / win.length) };
-  }), [sortedW]);
   const weightChart = useMemo(() => {
     if (!maSeries.length) return [];
     const start = maSeries[0]; const startKg = goals.startWeight ? Number(goals.startWeight) : start.real;
     return maSeries.map((p) => ({ ...p, objetivo: Number((startKg + goals.weeklyChange * (daysBetween(start.iso, p.iso) / 7)).toFixed(2)) }));
   }, [maSeries, goals]);
-  const completeCyclesCount = useMemo(() => {
-    const starts = buildCycleStarts(periods, menstrualLogs);
-    return starts.length > 1 ? starts.length - 1 : 0;
-  }, [periods, menstrualLogs]);
-  // Fase estimada de cada día pesado, una sola vez: la usan el offset de retención
-  // y la corrección de la serie de tendencia.
-  const phaseByDate = useMemo(() => {
-    const map = new Map();
-    sortedW.forEach((w) => map.set(w.date, inferCyclePhase({ date: w.date, menstrualLogs, periods, wellness }).phase));
-    return map;
-  }, [sortedW, menstrualLogs, periods, wellness]);
-  // Offset propio de retención lútea, derivado del historial (no un modelo genérico:
-  // la magnitud varía demasiado entre personas). Pide 3 ciclos completos — mismo
-  // umbral que ya anunciaba la alerta de "seguimiento más robusto".
-  const lutealOffset = useMemo(
-    () => (completeCyclesCount >= 3 ? lutealRetentionKg(sortedW, (date) => phaseByDate.get(date)) : null),
-    [completeCyclesCount, sortedW, phaseByDate],
-  );
-  // Para inferir tendencia/mantenimiento (no para lo que se muestra como peso real)
-  // restamos el agua de creatina modelada y la retención lútea estimada: si no se
-  // descuentan, una carga de creatina o una fase lútea se leen como "subiste de
-  // grasa" cuando en realidad es agua.
-  const maSeriesForTrend = useMemo(() => {
-    if (!goals.creatineStart && !lutealOffset) return maSeries;
-    return sortedW.map((w) => {
-      const start = new Date(w.date + "T00:00:00"); start.setDate(start.getDate() - 6);
-      const win = sortedW.filter((x) => x.date <= w.date && new Date(x.date + "T00:00:00") >= start);
-      const adjKg = (x) => x.kg
-        - creatineWaterKg(goals.creatineStart, x.date)
-        - (lutealOffset && phaseByDate.get(x.date) === "luteal_late" ? lutealOffset.kg : 0);
-      return { iso: w.date, media: round1(win.reduce((s, x) => s + adjKg(x), 0) / win.length) };
-    });
-  }, [sortedW, maSeries, goals.creatineStart, lutealOffset, phaseByDate]);
-  const trend = useMemo(() => {
-    const recent = maSeriesForTrend.filter((p) => daysBetween(p.iso, todayISO()) <= 21);
-    const pts = (recent.length >= 2 ? recent : maSeriesForTrend.slice(-6)).map((p) => ({ x: daysBetween(maSeriesForTrend[0]?.iso || p.iso, p.iso), y: p.media }));
-    const sp = slopePerDay(pts); return sp === null ? null : sp * 7;
-  }, [maSeriesForTrend]);
-  // Hoy es lútea tardía con síntomas altos. Con lutealOffset ya activo la tendencia
-  // viene corregida, así que esto solo matiza el texto; sin offset (menos de 3 ciclos)
-  // sigue siendo la única advertencia de retención que damos.
-  const cycleConfound = useMemo(() => {
-    if (completeCyclesCount < 2) return false;
-    const today = todayISO();
-    const estimate = inferCyclePhase({ date: today, menstrualLogs, periods, wellness });
-    if (estimate.phase !== "luteal_late") return false;
-    return symptomScore(menstrualLogs.find((log) => log.date === today)) >= 3;
-  }, [completeCyclesCount, menstrualLogs, periods, wellness]);
-  // RPE a igual carga (mismo ejercicio, kg y reps repetidos en 3+ sesiones):
-  // fatigue = RPE subiendo sostenido, progress = RPE bajando (lista para cargar más).
-  const loadRpe = useMemo(() => matchedLoadRpeTrend(workouts), [workouts]);
-  // Energía baja (<=2/5) reportada 3+ días en la última semana: combinada con una
-  // señal de RPE apunta a fatiga sistémica, no a un ejercicio estancado.
-  const lowEnergyDays = useMemo(
-    () => wellness.filter((w) => w.date >= isoMinus(7) && w.energy != null && w.energy <= 2).length,
-    [wellness],
-  );
-  const currentMA = maSeries.length ? maSeries[maSeries.length - 1].media : null;
   const currentW = sortedW.length ? sortedW[sortedW.length - 1].kg : null;
   const change7 = useMemo(() => { if (sortedW.length < 2) return null; const last = sortedW[sortedW.length - 1]; const ref = [...sortedW].reverse().find((w) => daysBetween(w.date, last.date) >= 7); return ref ? round1(last.kg - ref.kg) : null; }, [sortedW]);
 
-  const exHistory = useMemo(() => {
-    const map = {};
-    [...workouts].sort((a, b) => a.date.localeCompare(b.date)).forEach((w) => w.exercises.forEach((e) => {
-      let best = 0; e.sets.forEach((s) => { const r = +s.reps || 0, kg = +s.kg || 0; if (r > 0 && kg > 0) best = Math.max(best, epley(kg, r)); });
-      if (best > 0) { const key = canonExercise(e.name); (map[key] = map[key] || []).push({ iso: w.date, oneRM: Math.round(best), muscle: e.primary || e.muscle || "Core" }); }
-    }));
-    return map;
-  }, [workouts]);
-  const prs = useMemo(() => Object.entries(exHistory).map(([name, h]) => {
-    const best = h.reduce((m, x) => x.oneRM > m.oneRM ? x : m, h[0]);
-    const latest = h[h.length - 1];
-    const recordAge = daysBetween(best.iso, todayISO());
-    const isRecent = h.length >= 2 && best.iso === latest.iso && recordAge >= 0 && recordAge <= PR_ALERT_MAX_AGE_DAYS;
-    return { name, best: best.oneRM, date: best.iso, isRecent };
-  }).sort((a, b) => b.best - a.best), [exHistory]);
-  const recentPRs = useMemo(
-    () => selectFreshRecords(prs.filter((p) => p.isRecent), todayISO(), { maxAgeDays: PR_ALERT_MAX_AGE_DAYS, maxItems: PR_ALERT_MAX_ITEMS }),
-    [prs],
-  );
   const trackable = useMemo(() => Object.keys(exHistory).filter((n) => exHistory[n].length >= 2), [exHistory]);
   const muscleOptions = useMemo(() => [...new Set(trackable.map((n) => exHistory[n][0].muscle))].sort(), [trackable, exHistory]);
   const [filter, setFilter] = useState("all");
@@ -374,15 +301,6 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     return picked.map((n, idx) => { const h = exHistory[n]; const first = h[0].oneRM || 1; return { label: n.length > 11 ? n.slice(0, 11) : n, color: colors[idx % colors.length], w: idx === 0 ? 3 : 2.25, points: h.map((x) => ({ date: x.iso, pct: (x.oneRM / first - 1) * 100, kg: x.oneRM })), lastKg: h[h.length - 1].oneRM }; });
   }, [exHistory, exOptions, activeEx]);
 
-  const weeklyMuscle = useMemo(() => {
-    const m = {}; const since = isoMinus(7);
-    workouts.filter((w) => w.date >= since).forEach((w) => w.exercises.forEach((e) => {
-      const v = e.sets.reduce((t, s) => t + (+s.reps || 0) * (+s.kg || 0), 0);
-      m[e.primary || e.muscle] = (m[e.primary || e.muscle] || 0) + v;
-      (e.secondary || []).forEach((sm) => { m[sm] = (m[sm] || 0) + v * SECONDARY_FACTOR; });
-    }));
-    return m;
-  }, [workouts]);
   const muscleVolAll = useMemo(() => {
     const m = {};
     workouts.forEach((w) => w.exercises.forEach((e) => { const v = e.sets.reduce((t, s) => t + (+s.reps || 0) * (+s.kg || 0), 0); m[e.primary || e.muscle] = (m[e.primary || e.muscle] || 0) + v; (e.secondary || []).forEach((sm) => { m[sm] = (m[sm] || 0) + v * SECONDARY_FACTOR; }); }));
@@ -420,32 +338,10 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
 
   const kcalChart = useMemo(() => { const days = []; for (let i = 13; i >= 0; i--) { const iso = isoMinus(i); const kcal = nutrition.filter((n) => n.date === iso).reduce((t, n) => t + (+n.kcal || 0), 0); days.push({ date: fmtDate(iso), kcal: Math.round(kcal) }); } return days; }, [nutrition]);
   const kcalAvg = useMemo(() => { const vals = kcalChart.map((d) => d.kcal).filter((v) => v > 0); return vals.length ? Math.round(vals.reduce((s, v) => s + v, 0) / vals.length) : null; }, [kcalChart]);
-  const rpeSeries = useMemo(() => [...workouts].sort((a, b) => a.date.localeCompare(b.date)).map((w) => {
-    const vals = w.exercises.flatMap((e) => e.sets.map((s) => parseFloat(s.rpe)).filter((v) => v > 0));
-    return vals.length ? { iso: w.date, rpe: vals.reduce((s, v) => s + v, 0) / vals.length } : null;
-  }).filter(Boolean).slice(-12), [workouts]);
-  // Señal de deload por RPE medio subiendo 3 sesiones seguidas — proxy que mezcla
-  // cargas distintas; loadRpe.fatigue (misma carga exacta) tiene prioridad cuando
-  // existe. Salto total >=1 punto para no marcar ruido normal de semana a semana.
-  const deloadSignal = useMemo(() => {
-    const recent = rpeSeries.slice(-3);
-    if (recent.length < 3) return null;
-    const rising = recent[0].rpe < recent[1].rpe && recent[1].rpe < recent[2].rpe;
-    const jump = recent[2].rpe - recent[0].rpe;
-    return rising && jump >= 1 ? { from: recent[0].rpe, to: recent[2].rpe } : null;
-  }, [rpeSeries]);
   const measSorted = useMemo(() => [...measurements].sort((a, b) => a.date.localeCompare(b.date)), [measurements]);
   const measLatest = measSorted[measSorted.length - 1] || null;
   const MEAS_FIELDS = [["cintura", "Cintura"], ["cadera", "Cadera"], ["pecho", "Pecho"], ["brazo", "Brazo"], ["muslo", "Muslo"]];
   const measDelta = (k) => { const s = measSorted.filter((m) => m[k] != null); return s.length >= 2 ? s[s.length - 1][k] - s[0][k] : null; };
-  const maintenance = useMemo(() => {
-    const since = isoMinus(28);
-    const byDay = {}; nutrition.filter((n) => n.date >= since).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.kcal || 0); });
-    const loggedDays = Object.values(byDay).filter((v) => v > 50);
-    if (loggedDays.length < 10 || trend === null) return null;
-    const avgKcal = loggedDays.reduce((s, v) => s + v, 0) / loggedDays.length;
-    return { maint: Math.round(avgKcal - (trend / 7) * KCAL_PER_KG), days: loggedDays.length, avgKcal: Math.round(avgKcal) };
-  }, [nutrition, trend]);
   const macro14 = useMemo(() => {
     const since = isoMinus(13); const byDay = {};
     nutrition.filter((n) => n.date >= since).forEach((n) => { const d = byDay[n.date] || (byDay[n.date] = { p: 0, c: 0, f: 0, k: 0 }); d.p += +n.protein || 0; d.c += +n.carbs || 0; d.f += +n.fat || 0; d.k += +n.kcal || 0; });
@@ -468,9 +364,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     return { p: pt, c: rem * carbRatio / 4, f: rem * (1 - carbRatio) / 9 };
   }, [goals, trainingDays7]);
 
-  const lastTrain = useMemo(() => { const ds = workouts.filter((w) => w.exercises.length || (w.cardio || []).length).map((w) => w.date).sort(); return ds.length ? ds[ds.length - 1] : null; }, [workouts]);
   const nutDays7 = useMemo(() => new Set(nutrition.filter((n) => n.date >= isoMinus(7)).map((n) => n.date)).size, [nutrition]);
-  const protAvg7 = useMemo(() => { const byDay = {}; nutrition.filter((n) => n.date >= isoMinus(7)).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.protein || 0); }); const vals = Object.values(byDay); return vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : null; }, [nutrition]);
   const totalMin = workouts.reduce((t, w) => t + (w.durationMin || 0), 0);
   const timed = workouts.filter((w) => w.durationMin > 0).length;
   const avgMin = timed ? Math.round(totalMin / timed) : 0;
@@ -492,13 +386,6 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     return { days, streak, total, weeksOn: Object.keys(weeks).length, bestWeek };
   }, [workouts]);
 
-  const projection = useMemo(() => {
-    if (!goals.targetWeight || currentMA === null || trend === null || Math.abs(trend) < 0.02) return null;
-    const remaining = Number(goals.targetWeight) - currentMA;
-    if (Math.sign(remaining) !== Math.sign(trend)) return { off: true };
-    const weeks = remaining / trend; const d = new Date(); d.setDate(d.getDate() + Math.round(weeks * 7));
-    return { weeks: Math.round(weeks), date: d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" }) };
-  }, [goals, currentMA, trend]);
   // Resumen del ciclo EN MARCHA, no solo la fase de hoy: cuanto llevas, que
   // fases han pasado, cuanto sangrado y cuantos dias con sintomas altos. Es lo
   // que Cuerpo ya sabe del historico, contado del ciclo que estas viviendo.
@@ -570,72 +457,20 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     };
   }, [workouts]);
 
-  const alerts = useMemo(() => {
-    const a = [];
-    recentPRs.forEach((p) => a.push({ type: "pr", title: `¡Nuevo récord en ${p.name}!`, body: `Tu 1RM estimado subió a ${p.best} kg. La sobrecarga progresiva está funcionando.` }));
-    // El estado de la tendencia se dice aqui aunque la tarjeta "real vs esperado"
-    // muestre el hueco: son dos preguntas distintas. La tarjeta compara contra la
-    // recta acumulada del objetivo; esto compara el ritmo de las ultimas semanas
-    // contra el ritmo objetivo, y es lo unico que confirma "vas bien". La accion
-    // (cuantas kcal mover) no se repite: vive en el Diario.
-    if (trend !== null) {
-      const diff = trend - goals.weeklyChange;
-      const real = `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem frente a tu objetivo de ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}`;
-      if (Math.abs(diff) > 0.25) {
-        a.push({
-          type: "warn",
-          title: "Desvío en tu tendencia de peso",
-          body: `${real}. ${diff > 0 ? "Vas más hacia arriba de lo previsto." : "Bajas más rápido de lo previsto."}${maintenance ? ` Mantenimiento estimado ~${maintenance.maint} kcal.` : ""} El Diario propone el ajuste de calorías en cuanto haya tres semanas de pesajes.`,
-        });
-      } else {
-        a.push({ type: "ok", title: "Peso en línea con tu objetivo", body: `${real}, dentro de ±0,25.` });
-      }
-    }
-    // Lo que ni la tarjeta ni el Diario saben: que hoy es lutea tardia y parte
-    // del desvio puede ser agua.
-    if (trend !== null && cycleConfound && Math.abs(trend - goals.weeklyChange) > 0.25) {
-      a.push({
-        type: "warn",
-        title: "Estás en fase lútea tardía",
-        body: lutealOffset
-          ? `La tendencia ya descuenta tus ${lutealOffset.kg} kg de retención habituales, así que el desvío que ves es real y puedes ajustar calorías sin esperar.`
-          : "Los síntomas de hoy son compatibles con retención de líquidos: parte del desvío puede ser agua, no grasa. Espera unos días antes de ajustar calorías.",
-      });
-    }
-    if (protAvg7 !== null && goals.proteinTarget && protAvg7 < 0.85 * goals.proteinTarget) a.push({ type: "warn", title: "Proteína por debajo del objetivo", body: `Media de ${Math.round(protAvg7)} g/día la última semana frente a tu meta de ${goals.proteinTarget} g.` });
-    const vols = MAJOR_MUSCLES.map((m) => weeklyMuscle[m] || 0); const maxV = Math.max(...vols);
-    if (maxV > 0) { const neglected = MAJOR_MUSCLES.filter((m) => (weeklyMuscle[m] || 0) < 0.15 * maxV); if (neglected.length) a.push({ type: "warn", title: "Posible descompensación muscular", body: `Esta semana apenas trabajaste: ${neglected.join(", ")}. Equilibrar el volumen reduce riesgo de lesión.` }); }
-    if (lastTrain && daysBetween(lastTrain, todayISO()) >= 4) a.push({ type: "info", title: "Racha de entreno en pausa", body: `Llevas ${daysBetween(lastTrain, todayISO())} días sin registrar entrenamiento.` });
-    if (projection && projection.off) a.push({ type: "info", title: "No avanzas hacia tu peso meta", body: "A tu ritmo actual no te acercas a la meta fijada. Revisa objetivo o calorías." });
-    // Dos niveles: señal aislada = versión reducida de la próxima sesión; fatiga en
-    // 2+ ejercicios distintos, o señal de RPE + energía baja reportada 3+ días de la
-    // semana = semana de descarga completa. Si coincide con lútea tardía sintomática,
-    // no se escala a semana: lo esperable es que remita al arrancar la folicular.
-    const rpeFatigue = loadRpe.fatigue || deloadSignal;
-    const deloadWeek = !cycleConfound && (loadRpe.fatigueCount >= 2 || (rpeFatigue && lowEnergyDays >= 3));
-    if (rpeFatigue || cycleConfound) {
-      const reasons = [];
-      if (loadRpe.fatigue) reasons.push(`a igual carga (${loadRpe.fatigue.name} ${loadRpe.fatigue.kg} kg × ${loadRpe.fatigue.reps}) tu RPE subió ${loadRpe.fatigue.from.toFixed(1)} → ${loadRpe.fatigue.to.toFixed(1)} en las últimas 3 sesiones${loadRpe.fatigueCount >= 2 ? ` — y pasa en ${loadRpe.fatigueCount} ejercicios distintos` : ""}`);
-      else if (deloadSignal) reasons.push(`tu RPE medio por sesión viene subiendo (${deloadSignal.from.toFixed(1)} → ${deloadSignal.to.toFixed(1)} en las últimas 3)`);
-      if (lowEnergyDays >= 3) reasons.push(`reportaste energía baja ${lowEnergyDays} días esta semana`);
-      if (cycleConfound) reasons.push("estás en fase lútea tardía con síntomas altos");
-      if (deloadWeek) {
-        a.push({ type: "warn", title: "Programá una semana de descarga", body: `${reasons.join(" y ")}. Esto ya no parece un ejercicio estancado sino fatiga acumulada: hacé toda la semana con la versión reducida de tus rutinas (menos series, mismo patrón) y retomá la progresión la semana siguiente.` });
-      } else {
-        a.push({ type: "info", title: "Señal de deload", body: `${reasons.join(" y ")}. Es razonable considerar la versión reducida de tu próxima rutina en vez de la completa${cycleConfound ? " — si la causa es la fase del ciclo, debería remitir al arrancar la folicular; si persiste después, pensá en una semana de descarga" : ""}.` });
-      }
-    }
-    if (loadRpe.progress) a.push({ type: "ok", title: `Lista para subir carga en ${loadRpe.progress.name}`, body: `${loadRpe.progress.kg} kg × ${loadRpe.progress.reps} te costó cada vez menos (RPE ${loadRpe.progress.from.toFixed(1)} → ${loadRpe.progress.to.toFixed(1)} en las últimas 3 sesiones). Subí al siguiente escalón de peso o sumá 1-2 reps manteniendo el RPE objetivo.` });
-    const CYCLE_TARGET = 3;
-    if (completeCyclesCount < CYCLE_TARGET) {
-      a.push({ type: "info", title: "Progreso hacia seguimiento más robusto", body: `Ciclos completos registrados: ${completeCyclesCount}/${CYCLE_TARGET}. Cuando llegues a la meta, la tendencia de peso va a descontar sola la retención de la fase lútea.` });
-    } else if (lutealOffset) {
-      a.push({ type: "ok", title: "Retención por ciclo ya descontada", body: `Con ${completeCyclesCount} ciclos registrados, en fase lútea tardía pesás ${lutealOffset.kg} kg más que en tu línea base folicular (${lutealOffset.lutealDays} pesadas en lútea vs ${lutealOffset.follicularDays} en folicular). La tendencia y el mantenimiento ya descuentan ese peso, así que no lo leas como grasa.${lutealOffset.capped ? " El valor venía más alto y se recortó a 2,5 kg: por encima de eso suele ser pocas pesadas, no retención." : ""}` });
-    } else {
-      a.push({ type: "info", title: "Sin retención lútea medible", body: `Ya tenés ${completeCyclesCount} ciclos completos, pero tus pesadas no muestran una diferencia clara entre fase lútea tardía y folicular (hace falta al menos 3 pesadas en cada fase y una diferencia mayor a 0,2 kg). No hay nada que descontar: pesate también en los días previos al periodo y se recalcula solo.` });
-    }
-    return a;
-  }, [recentPRs, trend, goals, maintenance, protAvg7, weeklyMuscle, lastTrain, projection, cycleConfound, deloadSignal, completeCyclesCount, loadRpe, lowEnergyDays, lutealOffset]);
+
+  // Un aviso del Diario apunta a la tarjeta que lo disparo. Si el filtro activo
+  // la esconde no hay nada a lo que desplazarse, asi que primero se quita.
+  useEffect(() => {
+    if (!focusCard) return;
+    setFilter("all");
+    const node = document.getElementById(`card-${focusCard}`);
+    if (!node) return;
+    node.scrollIntoView({ behavior: "smooth", block: "center" });
+    node.classList.add("ft-dc-focus");
+    const clear = setTimeout(() => node.classList.remove("ft-dc-focus"), 2200);
+    onFocused?.();
+    return () => clearTimeout(clear);
+  }, [focusCard, onFocused]);
 
   const noData = weights.length === 0 && workouts.length === 0 && nutrition.length === 0;
   if (noData) return <div className="ft-card"><div className="ft-empty"><div className="ic"><LayoutDashboard size={34} /></div>Aún no hay datos. Registra entrenamientos, peso o comidas y aquí verás tu evolución, récords y alertas.</div></div>;
@@ -711,7 +546,6 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     { label: "Grasa", avg: macro14.f, target: macroTargets.f },
   ] : [];
   const dateLabel = new Date().toLocaleDateString("es-ES", { weekday: "short", day: "2-digit", month: "short", year: "numeric" });
-  const alColor = (ty) => ty === "warn" ? "var(--attn)" : ty === "ok" ? A_OK : ty === "pr" ? A_ACC : A_INK2;
   const selStyle = { fontFamily: A_MONO, fontSize: 11, color: A_INK, background: A_PANEL, border: "1px solid var(--line)", borderRadius: 7, padding: "6px 9px", cursor: "pointer" };
 
   // Las secciones del prototipo con su grupo: los chips filtran la cuadricula.
@@ -721,7 +555,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
 
   const cards = [
     on("cuerpo") && (
-      <DCard key="peso" span title="Peso y tendencia" meta="media 7 d vs objetivo · 12 sem">
+      <DCard key="peso" id="peso" span title="Peso y tendencia" meta="media 7 d vs objetivo · 12 sem">
         {vsExpected && <VsExpectedHead vs={vsExpected} />}
         {weightChart.length >= 2 ? (
           <>
@@ -733,7 +567,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     ),
 
     on("nutricion") && (
-      <DCard key="macros" title="Macros · media 14 d vs objetivo" meta="carbo/grasa según frecuencia">
+      <DCard key="macros" id="macros" title="Macros · media 14 d vs objetivo" meta="carbo/grasa según frecuencia">
         {macro14 ? <BMacros rows={macroRows} footer={"media " + Math.round(macro14.k) + " / " + (goals.kcalTarget || "-") + " kcal"} /> : <DNeed>Registra comidas para ver tus macros.</DNeed>}
       </DCard>
     ),
@@ -745,7 +579,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     ),
 
     on("fuerza") && (
-      <DCard key="fuerza" title="Progresión de fuerza" meta="1RM est. · vs inicio">
+      <DCard key="fuerza" id="fuerza" title="Progresión de fuerza" meta="1RM est. · vs inicio">
         {trackable.length > 0 && (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <select value={muscleFilter} onChange={(e) => { setMuscleFilter(e.target.value); setExFilter("all"); }} style={selStyle}>
@@ -768,19 +602,19 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     ),
 
     on("fuerza") && (
-      <DCard key="volumen" title="Volumen muscular" meta={(Object.keys(weeklyMuscle).length ? "esta semana" : "histórico") + " · tonelaje + % ef."}>
+      <DCard key="volumen" id="volumen" title="Volumen muscular" meta={(Object.keys(weeklyMuscle).length ? "esta semana" : "histórico") + " · tonelaje + % ef."}>
         {muscleData.length > 0 ? <BMuscleBars data={muscleData} /> : <DNeed>Registra entrenamientos para ver el volumen por grupo.</DNeed>}
       </DCard>
     ),
 
     on("fuerza") && rpeSeries.length >= 2 && (
-      <DCard key="rpe" title="Esfuerzo · RPE" meta={rpeSeries.length + " sesiones · ahora " + rpeSeries[rpeSeries.length - 1].rpe.toFixed(1)}>
+      <DCard key="rpe" id="rpe" title="Esfuerzo · RPE" meta={rpeSeries.length + " sesiones · ahora " + rpeSeries[rpeSeries.length - 1].rpe.toFixed(1)}>
         <BWeightChart data={rpeSeries.map((point) => ({ ...point, date: fmtDate(point.iso) }))} valueKey="rpe" valueLabel="RPE medio" unit="RPE" />
       </DCard>
     ),
 
     on("fuerza") && (
-      <DCard key="records" title="Récords" meta="1RM estimado">
+      <DCard key="records" id="records" title="Récords" meta="1RM estimado">
         {prs.length > 0 ? prs.slice(0, 6).map((p, i) => (
           <div key={p.name} style={{ display: "grid", gridTemplateColumns: "22px 1fr auto", alignItems: "baseline", gap: 10, padding: "9px 0", borderBottom: i < Math.min(prs.length, 6) - 1 ? "1px solid var(--hair)" : "none" }}>
             <span style={{ fontFamily: A_MONO, fontSize: 10.5, color: A_INK2 }}>{String(i + 1).padStart(2, "0")}</span>
@@ -812,7 +646,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     ),
 
     on("fuerza") && (
-      <DCard key="constancia" span title="Constancia" meta={"racha " + heat.streak + " d · " + heat.total + " sesiones · mejor semana " + heat.bestWeek}>
+      <DCard key="constancia" id="constancia" span title="Constancia" meta={"racha " + heat.streak + " d · " + heat.total + " sesiones · mejor semana " + heat.bestWeek}>
         <BHeatmap days={heat.days} isMobile={isMobile} />
         {compliance.adherence != null && (
           <div className="ft-dc-foot">
@@ -827,7 +661,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     ),
 
     on("cuerpo") && projection && !projection.off && (
-      <DCard key="proyeccion" title="Proyección a tu meta">
+      <DCard key="proyeccion" id="proyeccion" title="Proyección a tu meta">
         <div style={{ fontSize: 13, lineHeight: 1.5, color: A_INK2 }}>
           A tu ritmo actual llegarías a <b style={{ color: A_INK }}>{goals.targetWeight} kg</b> alrededor del <b style={{ color: A_INK }}>{projection.date}</b> (~{Math.abs(projection.weeks)} semanas).
         </div>
@@ -835,7 +669,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     ),
 
     on("cuerpo") && cyc && (
-      <DCard key="ciclo" title={"Ciclo en curso · " + cyc.phase} meta={cyc.daysToNext >= 0 ? "próximo en ~" + cyc.daysToNext + " d" : Math.abs(cyc.daysToNext) + " d de retraso"}>
+      <DCard key="ciclo" id="ciclo" title={"Ciclo en curso · " + cyc.phase} meta={cyc.daysToNext >= 0 ? "próximo en ~" + cyc.daysToNext + " d" : Math.abs(cyc.daysToNext) + " d de retraso"}>
         <span className="ft-dc-big">{cyc.day}<small>día de ~{cyc.avgCycle} d</small></span>
         {cyc.segments.length > 0 && <BCycleStrip segments={cyc.segments} />}
         <BRows rows={[
@@ -937,24 +771,6 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
           </button>
         ))}
       </div>
-
-      {alerts.length > 0 && (
-        <div className="ft-dc-card attn">
-          <div className="ft-dc-kicker">Avisos · {alerts.length}<span>{dateLabel}</span></div>
-          <div className="t">{alerts[0].title}.</div>
-          <div className="b">{alerts[0].body}</div>
-          {alerts.length > 1 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 7, borderTop: "1px solid var(--hair)", paddingTop: 10, marginTop: 2 }}>
-              {alerts.slice(1).map((al, i) => (
-                <div key={i} style={{ display: "flex", gap: 9, fontSize: 12, color: A_INK2, lineHeight: 1.45 }}>
-                  <span style={{ width: 6, height: 6, borderRadius: 999, marginTop: 5, flexShrink: 0, background: alColor(al.type) }} />
-                  <span><b style={{ color: A_INK }}>{al.title}.</b> {al.body}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
 
       {openKpi && (() => {
         const kpi = kpis.find((x) => x.k === openKpi);

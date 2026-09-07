@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import DetailSheet from "./DetailSheet.jsx";
+import { alertMetrics, buildAlerts } from "./alerts.js";
 import { addDays, dayFeed, localISO, proteinAdherence, searchFeed, stepsToday, weightTrendHighlight } from "./app-utils.js";
 import { latestWeight, weightPaceAlert } from "./settings-utils.js";
 
@@ -142,7 +143,31 @@ function PaceDone({ done, undo }) {
   );
 }
 
-export default function DiarioScreen({ workouts = [], nutrition = [], weights = [], measurements = [], wellness = [], goals, setGoals, setTab }) {
+// Los avisos son lo que hay que mirar hoy, asi que se leen aqui. El calculo vive
+// en alerts.js con el resto de metricas de Metricas; pulsar uno abre la tarjeta
+// que lo disparo, que es donde se ve el dato entero.
+const ALERT_COLOR = { warn: "var(--attn)", ok: "var(--ok)", pr: "var(--accent)", info: "var(--muted)" };
+
+function Alerts({ alerts, openCard }) {
+  const urgent = alerts.filter((alert) => alert.type === "warn").length;
+  return (
+    <div className="ft-dc-card attn">
+      <div className="ft-dc-kicker">
+        Para hoy
+        <span>{urgent ? `${urgent} por revisar de ${alerts.length}` : `${alerts.length} al día`}</span>
+      </div>
+      {alerts.map((alert, index) => (
+        <button key={`${alert.card}-${index}`} className="ft-dc-alert" onClick={() => openCard(alert.card)}>
+          <span className="dot" style={{ background: ALERT_COLOR[alert.type] }} />
+          <span className="tx"><b>{alert.title}.</b> {alert.body}</span>
+          <span className="go">›</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export default function DiarioScreen({ workouts = [], nutrition = [], weights = [], measurements = [], wellness = [], periods = [], menstrualLogs = [], goals, setGoals, setTab, openCard = () => {} }) {
   const today = localISO();
   const yesterday = addDays(today, -1);
   const data = { workouts, nutrition, weights, measurements, wellness };
@@ -164,6 +189,10 @@ export default function DiarioScreen({ workouts = [], nutrition = [], weights = 
   // La proteina del dia se lee en su aviso, no en la tira: repetirla aqui dejaba
   // fuera lo unico que la tira no contaba, que es cuanto te has movido.
   const steps = useMemo(() => stepsToday(wellness, today), [wellness, today]);
+  const alerts = useMemo(
+    () => buildAlerts(alertMetrics({ workouts, nutrition, weights, wellness, periods, menstrualLogs, goals }), goals),
+    [workouts, nutrition, weights, wellness, periods, menstrualLogs, goals],
+  );
 
   const sumDay = (date) => nutrition.filter((n) => n.date === date)
     .reduce((total, n) => ({ kcal: total.kcal + (Number(n.kcal) || 0), protein: total.protein + (Number(n.protein) || 0) }), { kcal: 0, protein: 0 });
@@ -250,6 +279,8 @@ export default function DiarioScreen({ workouts = [], nutrition = [], weights = 
       {paceDone
         ? <PaceDone done={paceDone} undo={undoPace} />
         : alert && <PaceAlert alert={alert} goals={goals} onApply={applyPace} onDismiss={dismissPace} />}
+
+      {alerts.length > 0 && <Alerts alerts={alerts} openCard={openCard} />}
 
       {protein && protein.onTarget < protein.logged && (
         <button className="ft-dc-quiet" onClick={() => setTab("nutricion")}>

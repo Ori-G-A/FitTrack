@@ -93,3 +93,26 @@ test("el día del Plan recibe todo el día, no solo el entreno", async () => {
   // reaparece en el día que se miró hace tres navegaciones.
   assert.doesNotMatch(app, /onClick=\{\(\) => setTab\("(diario|dashboard|plan)"\)\}/);
 });
+
+test("los avisos se leen en el Diario y saltan a su tarjeta de Métricas", async () => {
+  const diario = await readFile(new URL("../src/DiarioScreen.jsx", import.meta.url), "utf8");
+  const dash = await readFile(new URL("../src/DashboardScreen.jsx", import.meta.url), "utf8");
+
+  // El Diario los pinta; Métricas ya no. Si vuelven a los dos sitios, son dos
+  // respuestas a la misma pregunta y una acabará desactualizada.
+  assert.match(diario, /buildAlerts\(alertMetrics\(/);
+  assert.match(diario, /onClick=\{\(\) => openCard\(alert\.card\)\}/);
+  assert.doesNotMatch(dash, /buildAlerts/);
+  assert.doesNotMatch(dash, /Avisos · \{alerts\.length\}/);
+
+  // El destino solo existe si la tarjeta lleva ancla, y solo se ve si el filtro
+  // activo no la esconde.
+  assert.match(dash, /<div id=\{id \? `card-\$\{id\}` : undefined\}/);
+  assert.match(dash, /document\.getElementById\(`card-\$\{focusCard\}`\)/);
+  assert.match(dash, /if \(!focusCard\) return;\s*\n\s*setFilter\("all"\);/);
+
+  // La cadena de métricas vive en un solo sitio: Métricas y Diario la comparten.
+  const alerts = await readFile(new URL("../src/alerts.js", import.meta.url), "utf8");
+  assert.match(alerts, /export function alertMetrics/);
+  assert.doesNotMatch(dash, /const trend = useMemo/);
+});

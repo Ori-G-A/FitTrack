@@ -372,6 +372,15 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-kpi:hover .why,.ft-kpi:focus-visible .why{opacity:1;}
 .ft-dc-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-top:12px;display:flex;flex-direction:column;gap:7px;}
 .ft-dc-card.attn{border-left:3px solid var(--accent);}
+.ft-dc-card.ft-dc-focus{outline:2px solid var(--accent);outline-offset:3px;transition:outline-color .4s;}
+@media (prefers-reduced-motion:reduce){.ft-dc-card.ft-dc-focus{transition:none;}}
+.ft-dc-alert{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:transparent;border:none;border-top:1px solid var(--hair);padding:9px 0 0;margin-top:2px;color:inherit;cursor:pointer;font-family:inherit;}
+.ft-dc-alert:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+.ft-dc-alert .dot{width:6px;height:6px;border-radius:50%;margin-top:6px;flex:none;}
+.ft-dc-alert .tx{flex:1;min-width:0;font-size:12.5px;line-height:1.45;color:var(--muted);}
+.ft-dc-alert .tx b{color:var(--text);font-weight:700;}
+.ft-dc-alert:hover .tx{color:var(--text);}
+.ft-dc-alert .go{font-family:'IBM Plex Mono';font-size:12px;color:var(--muted);}
 .ft-dc-card .t{font-weight:700;font-size:15px;line-height:1.35;}
 .ft-dc-card .b{font-size:12.5px;line-height:1.45;color:var(--muted);}
 /* Nota al pie: misma voz en cualquier contenedor, no solo dentro de tarjeta. */
@@ -530,6 +539,9 @@ export default function App() {
   // Diario); las llamadas normales a setTab la dejan en null = hoy.
   const [focusDate, setFocusDate] = useState(null);
   const goTo = (next, date = null) => { setFocusDate(date); setTab(next); };
+  // Un aviso del Diario abre Metricas ya desplazado a la tarjeta que lo disparo.
+  const [focusCard, setFocusCard] = useState(null);
+  const openCard = (card) => { setFocusCard(card); setFocusDate(null); setTab("dashboard"); };
   // Tema: oscuro por defecto, que es el aspecto del prototipo. "auto" sigue al
   // sistema (y reacciona si el sistema cambia); "light" y "dark" son eleccion
   // explicita y mandan sobre el sistema.
@@ -842,7 +854,7 @@ export default function App() {
           </aside>
           {tab === "diario" && (
             <Suspense fallback={<div className="ft-empty">Cargando Diario…</div>}>
-              <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements} wellness={wellness} goals={goals} setGoals={setGoals} setTab={goTo} />
+              <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements} wellness={wellness} periods={periods} menstrualLogs={menstrualLogs} goals={goals} setGoals={setGoals} setTab={goTo} openCard={openCard} />
             </Suspense>
           )}
           {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} initialDate={focusDate} />}
@@ -863,7 +875,7 @@ export default function App() {
           )}
           {tab === "dashboard" && (
             <Suspense fallback={<div className="ft-empty">Cargando Dashboard…</div>}>
-              <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={routines} />
+              <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={routines} focusCard={focusCard} onFocused={() => setFocusCard(null)} />
             </Suspense>
           )}
           {tab === "ajustes" && <SettingsScreen goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} themePref={themePref} setThemePref={setThemePref} theme={theme} />}
