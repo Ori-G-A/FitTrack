@@ -26,6 +26,16 @@ export default function SessionScreen({ exercises, writeExercises, onExit, lastP
     const pending = exercises.findIndex((e) => (e.sets || []).some((s) => !isLogged(s)));
     return pending === -1 ? 0 : pending;
   });
+  // La sesion es la unica pantalla que se usa de pie, con el movil en la mano:
+  // va a pantalla completa, sin rail ni barra inferior compitiendo con el
+  // cronometro. Se marca en la raiz y la clase se limpia sola al salir, asi que
+  // no hace falta subir el estado de la sesion hasta App.
+  useEffect(() => {
+    const root = document.querySelector(".ft-root");
+    root?.classList.add("ft-focus");
+    return () => root?.classList.remove("ft-focus");
+  }, []);
+
   const [editingSetId, setEditingSetId] = useState(null);
   const [draft, setDraft] = useState(null);
   const [elapsed, setElapsed] = useState(0);
@@ -90,7 +100,7 @@ export default function SessionScreen({ exercises, writeExercises, onExit, lastP
   ].filter(Boolean).join(" · ");
 
   return (
-    <div className="ft-dc">
+    <div className="ft-dc ft-session">
       <div className="ft-dc-head">
         <div>
           <h1>Sesión</h1>

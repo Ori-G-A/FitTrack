@@ -138,7 +138,7 @@ const PLAN_ROUTINES = [
 // Rutinas reales de las plantillas: traen calentamiento, notas y version minima.
 const TEMPLATE_ROUTINES = ROUTINE_TEMPLATES.map((t) => templateToAppRoutine(t, uid));
 
-const SCREENS = ["Diario", "Entrenar", "Nutrición", "Cuerpo", "Plan", "Biblioteca", "Métricas", "Más", "Perfil"];
+const SCREENS = ["Diario", "Entrenar", "Nutrición", "Cuerpo", "Plan", "Biblioteca", "Métricas", "Más", "Perfil", "Sesión"];
 
 function Preview() {
   const [screen, setScreen] = useState("Diario");
@@ -224,7 +224,7 @@ function Preview() {
               periods={feedPeriods} menstrualLogs={feedLogs} wellness={feedWellness} setTab={goTo} />
           )}
           {screen === "Sesión" && (
-            <SessionScreen exercises={exercises} writeExercises={setExercises} onExit={() => {}}
+            <SessionScreen exercises={exercises} writeExercises={setExercises} onExit={() => setScreen("Entrenar")}
               lastPerformance={{ "press banca": { reps: 6, kg: 57.5 } }} />
           )}
           {screen === "Plan" && (

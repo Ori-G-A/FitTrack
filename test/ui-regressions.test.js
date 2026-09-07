@@ -237,3 +237,18 @@ test("la rejilla de Métricas es fluida y no parte los gráficos", async () => {
   // 380 y no 240: a 315 px las etiquetas de eje se salen del área del gráfico.
   assert.doesNotMatch(app, /\.ft-dc-grid\{[^}]*minmax\(240px/);
 });
+
+test("el modo sesión va a pantalla completa, sin rail ni barra inferior", async () => {
+  const session = await readFile(new URL("../src/SessionScreen.jsx", import.meta.url), "utf8");
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+
+  // Es la única pantalla que se usa de pie, con el móvil en la mano: el handoff
+  // la marca como intocable y se había perdido al montarla dentro del marco.
+  assert.match(session, /root\?\.classList\.add\("ft-focus"\)/);
+  // Y se limpia sola al salir: sin el return, la app se queda sin navegación.
+  assert.match(session, /return \(\) => root\?\.classList\.remove\("ft-focus"\)/);
+
+  assert.match(app, /\.ft-root\.ft-focus \.ft-side,\.ft-root\.ft-focus \.ft-tabbar\{display:none;\}/);
+  // Fondo propio del modo sesión, el del prototipo.
+  assert.match(app, /\.ft-root\.ft-focus\{--bg:#141209;\}/);
+});

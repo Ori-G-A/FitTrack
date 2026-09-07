@@ -450,6 +450,13 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-rpe{flex:1;min-width:0;text-align:center;font-family:'IBM Plex Mono';font-weight:600;font-size:11px;padding:9px 0;border-radius:6px;background:transparent;border:1px solid var(--line);color:var(--muted);cursor:pointer;}
 .ft-dc-rpe:hover{color:var(--text);}
 /* ---- movil: barra inferior de 5 destinos (Diario · Metricas · + · Plan · Mas) ---- */
+/* Modo sesion: fondo propio y nada de navegacion alrededor. El handoff lo marca
+   como intocable y era lo unico de la lista que se habia perdido al montar la
+   sesion dentro del marco de la app. */
+.ft-root.ft-focus{--bg:#141209;}
+.ft-root.ft-focus .ft-side,.ft-root.ft-focus .ft-tabbar{display:none;}
+.ft-root.ft-focus .ft-wrap,.ft-root.ft-focus .ft-wrap.with-side{max-width:760px;padding:18px 18px calc(28px + env(safe-area-inset-bottom));}
+.ft-session{min-height:100vh;}
 .ft-toast{position:fixed;right:18px;bottom:18px;z-index:60;max-width:min(360px,calc(100vw - 36px));background:var(--text);color:var(--bg);border-radius:10px;padding:12px 15px;font-weight:600;font-size:12.5px;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.28);animation:ft-toast-in .18s ease;}
 @keyframes ft-toast-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 @media (prefers-reduced-motion:reduce){.ft-toast{animation:none;}}
