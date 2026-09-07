@@ -106,3 +106,21 @@ test("las plantillas reales se reparten como es su programa", () => {
   // Ninguna es "sin material": el calentamiento obligatorio pide minibanda.
   assert.equal(Math.max(...WARMUP.exercises.map((e) => guessEquipmentLevel(e.name))), 1);
 });
+
+test("el reparto de proteína suma el objetivo y ninguna toma se queda corta", () => {
+  for (const meals of [4, 5]) {
+    const split = distributeProtein(150, meals);
+    // Lo que se muestra por comida tiene que sumar lo que se pide al día: con
+    // redondeo por tramo, 5 comidas daban 152 g.
+    assert.equal(split.reduce((sum, meal) => sum + meal.grams, 0), 150);
+    // 0,4 g/kg por toma es el umbral para disparar la señal anabólica; a 65 kg
+    // son ~26 g. Por debajo, sumar comidas reparte peor en vez de mejor.
+    split.forEach((meal) => assert.ok(meal.grams >= 25, `${meals} comidas: ${meal.label} se queda en ${meal.grams} g`));
+  }
+  // Las comidas principales no pueden llevar menos que las medias comidas.
+  const cinco = distributeProtein(150, 5);
+  const [desayuno, mediaManana, almuerzo, merienda, cena] = cinco.map((meal) => meal.grams);
+  assert.ok(almuerzo > mediaManana && almuerzo > merienda, "el almuerzo lleva menos que una media comida");
+  assert.ok(cena > mediaManana && cena > merienda, "la cena lleva menos que una media comida");
+  assert.ok(desayuno >= 25);
+});

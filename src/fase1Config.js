@@ -26,10 +26,21 @@ export const PROTEIN_CONFIG = {
 
   mealsPerDay: 4, // o 5
 
-  // Distribución NO uniforme (apetito matutino bajo). Cada array suma 1.0.
+  // Reparto por comida. Cada array suma 1.0.
+  //
+  // Criterio: dosis por comida de 0.4-0.55 g/kg y reparto lo más parejo posible
+  // (Areta 2013, Mamerow 2014: cuatro tomas parejas rinden más en síntesis
+  // proteica a 24 h que el patrón desayuno-pequeño / cena-grande). El extremo
+  // alto del rango aplica por estar en déficit.
+  //
+  // Se baja un punto el desayuno por apetito matutino bajo, no más: por debajo
+  // de ~25 g la toma deja de disparar bien la señal anabólica.
+  //
+  // Aviso de suelo: con 5 comidas y un objetivo por debajo de ~110 g las dos
+  // medias comidas caen bajo 20 g. En ese caso el reparto de 4 es el correcto.
   distribution: {
-    4: [0.15, 0.32, 0.30, 0.23], // desayuno, almuerzo, merienda/snack, cena
-    5: [0.13, 0.27, 0.18, 0.27, 0.15],
+    4: [0.20, 0.28, 0.24, 0.28], // desayuno, almuerzo, merienda, cena
+    5: [0.18, 0.17, 0.25, 0.17, 0.23], // desayuno, media mañana, almuerzo, merienda, cena
   },
 
   mealLabels: {
@@ -70,11 +81,17 @@ export function distributeProtein(dailyTarget, meals = PROTEIN_CONFIG.mealsPerDa
   const dist = (cfg.distribution ?? PROTEIN_CONFIG.distribution)[meals];
   const labels = (cfg.mealLabels ?? PROTEIN_CONFIG.mealLabels)[meals];
   if (!dist) return [];
-  return dist.map((pct, i) => ({
+  // Redondear cada tramo por separado desviaba la suma del objetivo (150 g
+  // repartidos en 5 daban 152). La ultima comida absorbe el resto, asi que lo
+  // que se muestra por comida siempre suma lo que se pide al dia.
+  const split = dist.map((pct, i) => ({
     label: labels?.[i] ?? `Comida ${i + 1}`,
     grams: Math.round(dailyTarget * pct),
     pct,
   }));
+  const drift = Math.round(dailyTarget) - split.reduce((sum, meal) => sum + meal.grams, 0);
+  if (drift !== 0) split[split.length - 1].grams += drift;
+  return split;
 }
 
 function clamp(n, lo, hi) {
