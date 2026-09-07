@@ -456,6 +456,9 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-empty{font-family:'IBM Plex Mono';font-size:11.5px;line-height:1.5;color:var(--muted);padding:14px;}
 .ft-dc-step{width:32px;height:32px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--text);font-family:'IBM Plex Mono';font-weight:600;font-size:15px;cursor:pointer;}
 .ft-dc-step:hover{border-color:var(--muted);}
+/* Solo en movil: en escritorio la cuenta esta al pie del rail y esto sobraria. */
+.ft-dc-avatar{display:none;width:36px;height:36px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--text);font-family:'Archivo';font-weight:800;font-size:14px;cursor:pointer;}
+@media (max-width:720px){.ft-dc-avatar{display:grid;place-items:center;}}
 .ft-dc-step.sm{width:26px;height:26px;font-size:13px;}
 /* Dedo, no raton: la app se usa entrenando. 40 px es el minimo comodo y por
    debajo de 32 se falla el toque con la mano ocupada. */
@@ -932,7 +935,7 @@ export default function App() {
           </aside>
           {tab === "diario" && (
             <Suspense fallback={<div className="ft-empty">Cargando Diario…</div>}>
-              <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements} wellness={wellness} periods={periods} menstrualLogs={menstrualLogs} goals={goals} setGoals={setGoals} setTab={goTo} openCard={openCard} />
+              <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements} wellness={wellness} periods={periods} menstrualLogs={menstrualLogs} goals={goals} setGoals={setGoals} setTab={goTo} openCard={openCard} userEmail={session.user.email} />
             </Suspense>
           )}
           {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} initialDate={focusDate} />}
@@ -985,7 +988,7 @@ export default function App() {
             <button className={tab === "dashboard" ? "active" : ""} onClick={() => goTo("dashboard")}><LayoutDashboard size={18} />Métricas</button>
             <button className="add" onClick={() => setSheet("add")} aria-label="Registrar"><span className="circle"><Plus size={26} /></span>Añadir</button>
             <button className={tab === "plan" ? "active" : ""} onClick={() => goTo("plan")}><CalendarDays size={18} />Plan</button>
-            <button className={ACCOUNT_TABS.includes(tab) ? "active" : ""} onClick={() => goTo("cuenta")}><span className="ft-tab-avatar">{(session.user.email || "?")[0].toUpperCase()}</span>Cuenta</button>
+            <button className={tab === "biblioteca" || tab === "rutinas" ? "active" : ""} onClick={() => goTo("biblioteca")}><Apple size={18} />Biblioteca</button>
           </nav>
 
           <Toast />

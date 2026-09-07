@@ -167,7 +167,7 @@ function Alerts({ alerts, openCard }) {
   );
 }
 
-export default function DiarioScreen({ workouts = [], nutrition = [], weights = [], measurements = [], wellness = [], periods = [], menstrualLogs = [], goals, setGoals, setTab, openCard = () => {} }) {
+export default function DiarioScreen({ workouts = [], nutrition = [], weights = [], measurements = [], wellness = [], periods = [], menstrualLogs = [], goals, setGoals, setTab, openCard = () => {}, userEmail = "" }) {
   const today = localISO();
   const yesterday = addDays(today, -1);
   const data = { workouts, nutrition, weights, measurements, wellness };
@@ -222,7 +222,12 @@ export default function DiarioScreen({ workouts = [], nutrition = [], weights = 
           <h1>Diario</h1>
           <span className="sub">{capitalize(new Date(`${today}T00:00:00`).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" }))}</span>
         </div>
-        <button className="ft-dc-btn" onClick={() => setTab("entrenar")}>Registrar</button>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <button className="ft-dc-btn" onClick={() => setTab("entrenar")}>Registrar</button>
+          <button className="ft-dc-avatar" onClick={() => setTab("cuenta")} title="Tu cuenta" aria-label="Tu cuenta">
+            {(userEmail || "?")[0].toUpperCase()}
+          </button>
+        </div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 9, marginTop: 12, padding: "10px 13px", borderRadius: 10, background: "color-mix(in srgb,var(--text) 5%,transparent)" }}>

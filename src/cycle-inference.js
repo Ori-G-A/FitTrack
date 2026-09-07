@@ -352,13 +352,25 @@ export function inferCyclePhase({ date = localISO(), menstrualLogs = [], periods
   }
   if (context.daysToNext != null && context.daysToNext >= 0 && context.daysToNext <= 6 && context.cycleDay > 8) {
     const score = symptomScore(log);
+    // Aqui la unica evidencia puede ser el calendario: "faltan pocos dias para el
+    // periodo esperado" y "el periodo ya vino y no lo registraste" producen los
+    // mismos datos. Sin un registro reciente que confirme que el ciclo sigue
+    // corriendo, esto es una suposicion y no puede venderse como estimacion firme.
+    // Los dias de sangrado del propio ciclo no valen como confirmacion: son de
+    // hace tres semanas. Lo que descarta un periodo no registrado es un check-in
+    // RECIENTE, hecho despues de que el periodo pudiera haber llegado.
+    const lastCheckIn = [...logs].reverse().find((item) => item.date <= date);
+    const sinRegistroReciente = !lastCheckIn || daysBetween(lastCheckIn.date, date) > 10;
+    const sinConfirmar = !context.nextStart && score < 3 && sinRegistroReciente;
     const base = context.nextStart
       ? `Estas a ${context.daysToNext} dias de un periodo registrado.`
-      : `Estas cerca del periodo esperado segun tus ciclos registrados.`;
+      : sinConfirmar
+        ? `Estas cerca del periodo esperado, pero no hay registros de este ciclo: si tu periodo ya llego, registralo en el check-in y la fase se recalcula.`
+        : `Estas cerca del periodo esperado segun tus ciclos registrados.`;
     return {
       date,
-      phase: "luteal_late",
-      confidence: score >= 3 || context.nextStart ? confidenceFromContext(context, hasUsefulFluid, true) : confidence,
+      phase: sinConfirmar ? "unknown" : "luteal_late",
+      confidence: sinConfirmar ? "low" : (score >= 3 || context.nextStart ? confidenceFromContext(context, hasUsefulFluid, true) : confidence),
       reason: reasonWithWellness(
         `${base}${score >= 3 ? " Ademas registraste sintomas compatibles con fase premenstrual." : ""}`,
         wellnessLog,

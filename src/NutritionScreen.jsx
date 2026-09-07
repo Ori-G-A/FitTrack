@@ -227,6 +227,11 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
               {TABS.map(([key, label]) => (
                 <button key={key} className={tab === key ? "on" : ""} onClick={() => { setTab_(key); setPick(null); }}>{label}</button>
               ))}
+              {(tab === "mios" || tab === "recetas") && (
+                <button className="ft-dc-chip" onClick={() => setTab("biblioteca")}>
+                  {tab === "mios" ? "CREAR ALIMENTO" : "CREAR RECETA"}
+                </button>
+              )}
               <button className="ft-dc-chip" style={{ marginLeft: "auto" }} onClick={() => { setAdding(false); setPick(null); setQuery(""); }}>CERRAR</button>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "10px 13px", borderRadius: 10, background: "color-mix(in srgb,var(--text) 5%,transparent)" }}>

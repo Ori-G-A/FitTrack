@@ -13,6 +13,7 @@ import {
   summarizeCycles,
   symptomDistribution,
 } from "../src/cycle-inference.js";
+import { addDays, localISO } from "../src/app-utils.js";
 
 test("menstrual logs do not duplicate sleep or energy fields", () => {
   assert.equal(MENSTRUAL_DAILY_LOG_FIELDS.includes("sleep"), false);
@@ -260,4 +261,31 @@ test("la ovulacion se estima por calendario y el flujo la corrige", () => {
 
 test("sin ciclos registrados no se inventa una ovulacion", () => {
   assert.equal(ovulationEstimate({ date: "2026-06-10" }), null);
+});
+
+test("no afirma lútea tardía cuando el periodo pudo llegar sin registrarse", () => {
+  const hoy = localISO();
+  const d = (n) => addDays(hoy, -n);
+  // Dos periodos registrados; el último inicio conocido hace 24 días. A los 28
+  // de media, el calendario dice "falta poco para el periodo". Pero exactamente
+  // los mismos datos los produce un periodo que ya vino y no se registró.
+  const base = [52, 51, 50, 24, 23, 22].map((n) => ({ id: `l${n}`, date: d(n), bleedingLevel: "medium" }));
+
+  const aCiegas = inferCyclePhase({ date: hoy, menstrualLogs: base, periods: [], wellness: [] });
+  assert.equal(aCiegas.phase, "unknown", "afirma una fase con el calendario como única evidencia");
+  assert.equal(aCiegas.confidence, "low");
+  assert.match(aCiegas.reason, /registralo en el check-in/);
+
+  // Con un check-in reciente sí se puede afirmar: alguien que registra a diario y
+  // no ha sangrado está de verdad en lútea tardía.
+  const conRegistro = [...base, { id: "ayer", date: d(1), bleedingLevel: "none", cervicalFluid: "sticky" }];
+  assert.equal(inferCyclePhase({ date: hoy, menstrualLogs: conRegistro, periods: [], wellness: [] }).phase, "luteal_late");
+
+  // Y con síntomas altos hoy, también: el dato del día manda sobre el calendario.
+  const conSintomas = [...base, { id: "hoy", date: hoy, bleedingLevel: "none", crampsLevel: 6, bloatingLevel: 3 }];
+  assert.equal(inferCyclePhase({ date: hoy, menstrualLogs: conSintomas, periods: [], wellness: [] }).phase, "luteal_late");
+
+  // Registrar el periodo lo resuelve: pasa a folicular temprana.
+  const registrado = [...base, ...[3, 2, 1].map((n) => ({ id: `n${n}`, date: d(n), bleedingLevel: "medium" }))];
+  assert.equal(inferCyclePhase({ date: hoy, menstrualLogs: registrado, periods: [], wellness: [] }).phase, "follicular_early");
 });

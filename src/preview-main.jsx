@@ -148,9 +148,13 @@ function Preview() {
   // aterrizara en Entrenar, que no es lo que hace la app.
   const TAB_TO_SCREEN = { entrenar: "Entrenar", nutricion: "Nutrición", cuerpo: "Cuerpo", peso: "Cuerpo", medidas: "Cuerpo", nota: "Cuerpo", checkin: "Cuerpo", rutinas: "Biblioteca", biblioteca: "Biblioteca", mas: "Más", perfil: "Perfil", ajustes: "Más" };
   const [bodySection, setBodySection] = useState(null);
+  // La app abre Biblioteca en alimentos salvo que vengas por "rutinas"; el banco
+  // la abria siempre en rutinas y ocultaba el camino real.
+  const [libView, setLibView] = useState("mis");
   const goTo = (tab, date = null) => {
     setFocus(date);
     setBodySection(["peso", "medidas", "nota", "checkin"].includes(tab) ? tab : null);
+    if (tab === "biblioteca" || tab === "rutinas") setLibView(tab === "rutinas" ? "rutinas" : "mis");
     setScreen(TAB_TO_SCREEN[tab] || "Diario");
   };
   const [card, setCard] = useState(null);
@@ -197,7 +201,7 @@ function Preview() {
           {screen === "Diario" && (
             <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements}
               wellness={wellness} periods={periods} menstrualLogs={menstrualLogs} goals={goals} setGoals={setGoals}
-              setTab={goTo} openCard={(card) => { setCard(card); setScreen("Métricas"); }} />
+              userEmail="ana@correo.com" setTab={goTo} openCard={(card) => { setCard(card); setScreen("Métricas"); }} />
           )}
           {screen === "Entrenar" && (
             <Train key={focus || "hoy"} workouts={trainWorkouts} setWorkouts={setTrainWorkouts} routines={libRoutines} setRoutines={setLibRoutines}
@@ -227,7 +231,7 @@ function Preview() {
             <PlanScreen routines={planRoutines} setRoutines={setPlanRoutines} workouts={workouts}
               nutrition={feedNutrition} weights={feedWeights} measurements={feedMeas} wellness={feedWellness} setTab={goTo} />
           )}
-          {screen === "Biblioteca" && <LibraryScreen foods={libFoods} setFoods={setLibFoods} recipes={libRecipes} setRecipes={setLibRecipes} routines={libRoutines} setRoutines={setLibRoutines} initialView="rutinas" />}
+          {screen === "Biblioteca" && <LibraryScreen foods={libFoods} setFoods={setLibFoods} recipes={libRecipes} setRecipes={setLibRecipes} routines={libRoutines} setRoutines={setLibRoutines} initialView={libView} key={libView} />}
           {screen === "Métricas" && (
             <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements}
               periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={planRoutines}
