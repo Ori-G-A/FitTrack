@@ -37,27 +37,28 @@ const DiarioScreen = lazy(() => import("./DiarioScreen.jsx"));
 const SessionScreen = lazy(() => import("./SessionScreen.jsx"));
 const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
 const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
+const LibraryScreen = lazy(() => import("./LibraryScreen.jsx"));
 const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
 const PlanScreen = lazy(() => import("./PlanScreen.jsx"));
 
 /* ----------------------------- helpers ----------------------------- */
-const uid = () => Math.random().toString(36).slice(2, 10);
+export const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
-const round1 = (x) => Math.round(x * 10) / 10;
+export const round1 = (x) => Math.round(x * 10) / 10;
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
 const clock = (s) => {
   const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
   const p = (n) => String(n).padStart(2, "0");
   return h > 0 ? `${h}:${p(m)}:${p(ss)}` : `${p(m)}:${p(ss)}`;
 };
-const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Aductores", "Gemelos", "Core", "Trapecio", "Antebrazo"];
+export const MUSCLES = ["Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Cuádriceps", "Femoral", "Glúteos", "Aductores", "Gemelos", "Core", "Trapecio", "Antebrazo"];
 const MUSCLE_COLOR = {
   Pecho: "#e7531c", Espalda: "#5ad1ff", Hombros: "#ff8a3d", Bíceps: "#ff6b9d", Tríceps: "#b388ff",
   Cuádriceps: "#d99000", Femoral: "#2f8f6a", Glúteos: "#e7531c", Aductores: "#c06fa0", Gemelos: "#4a9d5e", Core: "#6a655a", Trapecio: "#7a7468", Antebrazo: "#8a6fc0",
 };
 const CARDIO_TYPES = ["Caminar", "Correr", "Bici", "Elíptica", "Remo", "Natación", "HIIT", "Otro"];
 
-const EXERCISE_PRESETS = [
+export const EXERCISE_PRESETS = [
   // Pecho
   { name: "Press banca", primary: "Pecho", secondary: ["Tríceps", "Hombros"] },
   { name: "Press inclinado", primary: "Pecho", secondary: ["Hombros", "Tríceps"] },
@@ -109,7 +110,7 @@ const EXERCISE_PRESETS = [
 ];
 
 /* ---------- catálogo nutricional (por 100 g; carnes/pescados crudo, granos/legumbres cocido, harinas seco) ---------- */
-const CATALOG_CATS = ["Verduras", "Frutas", "Lácteos y huevos", "Carne de res", "Carne de cerdo", "Aves", "Pescados y mariscos", "Legumbres", "Cereales y granos", "Harinas y panes", "Frutos secos y semillas", "Aceites y grasas"];
+export const CATALOG_CATS = ["Verduras", "Frutas", "Lácteos y huevos", "Carne de res", "Carne de cerdo", "Aves", "Pescados y mariscos", "Legumbres", "Cereales y granos", "Harinas y panes", "Frutos secos y semillas", "Aceites y grasas"];
 const CATALOG_RAW = [
   ["Verduras", "Brócoli", 34, 2.8, 7, 0.4], ["Verduras", "Espinaca", 23, 2.9, 3.6, 0.4], ["Verduras", "Lechuga", 15, 1.4, 2.9, 0.2],
   ["Verduras", "Tomate", 18, 0.9, 3.9, 0.2], ["Verduras", "Zanahoria", 41, 0.9, 10, 0.2], ["Verduras", "Pepino", 15, 0.7, 3.6, 0.1],
@@ -158,7 +159,7 @@ const CATALOG_RAW = [
   ["Aceites y grasas", "Aceite de oliva", 884, 0, 0, 100, "ml"], ["Aceites y grasas", "Aceite de coco", 862, 0, 0, 100, "ml"], ["Aceites y grasas", "Aceite de girasol", 884, 0, 0, 100, "ml"],
   ["Aceites y grasas", "Aceite de aguacate", 884, 0, 0, 100, "ml"], ["Aceites y grasas", "Aceite de canola", 884, 0, 0, 100, "ml"], ["Aceites y grasas", "Manteca de cerdo", 902, 0, 0, 100],
 ];
-const CATALOG = CATALOG_RAW.map((r) => ({ cat: r[0], name: r[1], kcal: r[2], protein: r[3], carbs: r[4], fat: r[5], unit: r[6] || "g" }));
+export const CATALOG = CATALOG_RAW.map((r) => ({ cat: r[0], name: r[1], kcal: r[2], protein: r[3], carbs: r[4], fat: r[5], unit: r[6] || "g" }));
 // tazas/cucharas -> ml, para medir líquidos sin báscula
 const LIQUID_MEASURES = [["1 cdta", 5], ["1 cda", 15], ["¼ taza", 60], ["½ taza", 120], ["1 taza", 240]];
 
@@ -166,7 +167,7 @@ const validateBackup = (value) => validateBackupData(value, DEFAULT_GOALS);
 const migrateWorkouts = (workouts) => migrateWorkoutData(workouts, MUSCLES[0]);
 const CATALOG_UNIT_BY_NAME = new Map(CATALOG.map((c) => [c.name.toLowerCase(), c.unit]));
 const migrateFoodUnits = (foods) => foods.map((f) => (f.unit ? f : { ...f, unit: CATALOG_UNIT_BY_NAME.get(f.name.toLowerCase()) || "g" }));
-const scaleFood = (food, g) => { const k = (Number(g) || 0) / 100; return { kcal: food.kcal * k, protein: food.protein * k, carbs: food.carbs * k, fat: food.fat * k }; };
+export const scaleFood = (food, g) => { const k = (Number(g) || 0) / 100; return { kcal: food.kcal * k, protein: food.protein * k, carbs: food.carbs * k, fat: food.fat * k }; };
 
 async function sha256(s) {
   try { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)); return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join(""); }
@@ -417,6 +418,18 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-row .nm{font-weight:700;font-size:13.5px;}
 .ft-dc-row .mt{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);margin-top:2px;}
 .ft-dc-row .go{font-family:'IBM Plex Mono';font-size:13px;color:var(--muted);}
+.ft-lib{display:grid;grid-template-columns:1fr;gap:16px;align-items:start;margin-top:4px;}
+@media (min-width:960px){.ft-lib.open{grid-template-columns:minmax(0,1fr) minmax(0,420px);}}
+.ft-lib-list{min-width:0;display:flex;flex-direction:column;}
+.ft-lib-detail{min-width:0;}
+@media (min-width:960px){.ft-lib-detail{position:sticky;top:14px;}}
+.ft-lib-field{display:flex;flex-direction:column;gap:5px;}
+.ft-lib-field>span{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.ft-lib-nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:9px;}
+.ft-lib-add{display:grid;grid-template-columns:1fr 92px auto;gap:8px;align-items:center;}
+@media (max-width:520px){.ft-lib-add{grid-template-columns:1fr;}}
+.ft-root .ft-dc-row.sel{background:var(--accentdim);box-shadow:inset 2px 0 0 var(--accent);}
+.ft-root .ft-dc-chip:disabled{cursor:default;}
 .ft-more-user{display:flex;align-items:center;gap:13px;padding:16px 2px 4px;}
 .ft-more-user .avatar{flex:0 0 auto;width:46px;height:46px;border-radius:50%;background:var(--text);color:var(--bg);display:grid;place-items:center;font-family:'Archivo';font-weight:900;font-size:19px;}
 .ft-more-user b{display:block;font-family:'Archivo';font-weight:700;font-size:20px;letter-spacing:-.03em;text-transform:capitalize;line-height:1.1;}
@@ -869,8 +882,10 @@ export default function App() {
           )}
           {tab === "nutricion" && <Nutrition nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={setTab} initialDate={focusDate} />}
           {(tab === "biblioteca" || tab === "rutinas") && (
-            <Library key={tab} foods={foods} setFoods={setFoods} recipes={recipes} setRecipes={setRecipes}
-              routines={routines} setRoutines={setRoutines} initialView={tab === "rutinas" ? "rutinas" : "mis"} />
+            <Suspense fallback={<div className="ft-empty">Cargando Biblioteca…</div>}>
+              <LibraryScreen key={tab} foods={foods} setFoods={setFoods} recipes={recipes} setRecipes={setRecipes}
+                routines={routines} setRoutines={setRoutines} initialView={tab === "rutinas" ? "rutinas" : "mis"} />
+            </Suspense>
           )}
           {tab === "plan" && (
             <Suspense fallback={<div className="ft-empty">Cargando Plan…</div>}>
@@ -1444,140 +1459,6 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
   );
 }
 
-/* ----------------------------- LIBRARY (alimentos + catálogo + recetas) ----------------------------- */
-// Una sola biblioteca: alimentos, recetas y rutinas. Son tres catalogos de lo
-// mismo -- cosas guardadas que luego se cargan en un registro -- y tenerlos en
-// destinos distintos obligaba a saber de antemano en cual habias guardado algo.
-export function Library({ foods, setFoods, recipes, setRecipes, routines = [], setRoutines = () => {}, initialView = "mis" }) {
-  const [view, setView] = useState(initialView);
-  const [f, setF] = useState({ name: "", kcal: "", protein: "", carbs: "", fat: "", unit: "g" });
-  const [editId, setEditId] = useState(null); const [q, setQ] = useState("");
-  const [catFilter, setCatFilter] = useState("Todas"); const [catQ, setCatQ] = useState("");
-  // recetas
-  const [rName, setRName] = useState(""); const [rServings, setRServings] = useState("1");
-  const [rItems, setRItems] = useState([]); const [rSel, setRSel] = useState(null); const [rGrams, setRGrams] = useState("");
-  const [rEditId, setREditId] = useState(null); const [openRecipeId, setOpenRecipeId] = useState(null);
-
-  const existing = useMemo(() => new Set(foods.map((x) => x.name.toLowerCase())), [foods]);
-  const save = () => {
-    if (!f.name.trim()) return;
-    const data = { name: f.name.trim(), kcal: +f.kcal || 0, protein: +f.protein || 0, carbs: +f.carbs || 0, fat: +f.fat || 0, unit: f.unit || "g" };
-    setFoods((p) => (editId ? p.map((x) => x.id === editId ? { ...x, ...data } : x) : [...p, { id: uid(), ...data }]).sort((a, b) => a.name.localeCompare(b.name)));
-    setF({ name: "", kcal: "", protein: "", carbs: "", fat: "", unit: "g" }); setEditId(null);
-  };
-  const edit = (food) => { setView("mis"); setEditId(food.id); setF({ name: food.name, kcal: food.kcal, protein: food.protein, carbs: food.carbs, fat: food.fat, unit: food.unit || "g" }); };
-  const del = (id) => { setFoods((p) => p.filter((x) => x.id !== id)); if (editId === id) setEditId(null); };
-  const addCat = (item) => { if (existing.has(item.name.toLowerCase())) return; setFoods((p) => [...p, { id: uid(), ...item }].sort((a, b) => a.name.localeCompare(b.name))); };
-  const addCategory = (cat) => { const add = CATALOG.filter((i) => i.cat === cat && !existing.has(i.name.toLowerCase())).map((i) => ({ id: uid(), name: i.name, kcal: i.kcal, protein: i.protein, carbs: i.carbs, fat: i.fat, unit: i.unit || "g" })); if (add.length) setFoods((p) => [...p, ...add].sort((a, b) => a.name.localeCompare(b.name))); };
-
-  const myList = foods.filter((x) => x.name.toLowerCase().includes(q.toLowerCase()));
-  const catItems = CATALOG.filter((i) => (catFilter === "Todas" || i.cat === catFilter) && i.name.toLowerCase().includes(catQ.toLowerCase()));
-  const catsToShow = catFilter === "Todas" ? CATALOG_CATS : [catFilter];
-
-  // recetas
-  const addRItem = () => { if (!rSel || !rGrams) return; const c = scaleFood(rSel, rGrams); setRItems((p) => [...p, { id: uid(), name: rSel.name, grams: Number(rGrams), unit: rSel.unit || "g", kcal: round1(c.kcal), protein: round1(c.protein), carbs: round1(c.carbs), fat: round1(c.fat) }]); setRSel(null); setRGrams(""); };
-  const delRItem = (id) => setRItems((p) => p.filter((x) => x.id !== id));
-  const rTotal = rItems.reduce((t, i) => ({ kcal: t.kcal + i.kcal, protein: t.protein + i.protein, carbs: t.carbs + i.carbs, fat: t.fat + i.fat }), { kcal: 0, protein: 0, carbs: 0, fat: 0 });
-  const resetRecipeForm = () => { setRName(""); setRServings("1"); setRItems([]); setRSel(null); setRGrams(""); setREditId(null); };
-  const saveRecipe = () => {
-    if (!rName.trim() || rItems.length === 0) return;
-    const data = { name: rName.trim(), servings: Number(rServings) || 1, items: rItems };
-    setRecipes((p) => rEditId ? p.map((r) => r.id === rEditId ? { ...r, ...data } : r) : [...p, { id: uid(), ...data }]);
-    resetRecipeForm();
-  };
-  const editRecipe = (recipe) => { setRName(recipe.name); setRServings(String(recipe.servings || 1)); setRItems(recipe.items.map((item) => ({ ...item }))); setREditId(recipe.id); };
-  const delRecipe = (id) => { setRecipes((p) => p.filter((r) => r.id !== id)); if (rEditId === id) resetRecipeForm(); if (openRecipeId === id) setOpenRecipeId(null); };
-
-  return (
-    <>
-      <ScreenMast kicker="FITTRACK · BIBLIOTECA" title="Biblioteca" />
-      <div style={{ height: 16 }} />
-      <div className="ft-toggle">
-        <button className={view === "mis" ? "on" : ""} onClick={() => setView("mis")}>Mis alimentos ({foods.length})</button>
-        <button className={view === "catalogo" ? "on" : ""} onClick={() => setView("catalogo")}>Catálogo</button>
-        <button className={view === "recetas" ? "on" : ""} onClick={() => setView("recetas")}>Recetas ({recipes.length})</button>
-        <button className={view === "rutinas" ? "on" : ""} onClick={() => setView("rutinas")}>Rutinas ({routines.length})</button>
-      </div>
-
-      {view === "rutinas" && <Routines routines={routines} setRoutines={setRoutines} embedded />}
-
-      {view === "mis" && (<>
-        <div className="ft-card">
-          <h2><Plus size={16} /> {editId ? "Editar alimento" : "Añadir alimento"} <span className="tag">por 100 {f.unit}</span></h2>
-          <div className="ft-row" style={{ marginBottom: 10 }}>
-            <div className="ft-field" style={{ flex: 3, minWidth: 150 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Pechuga de pollo (cruda)" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></div>
-            <div className="ft-field" style={{ maxWidth: 130 }}><label>Se mide en</label><select className="ft-select" value={f.unit} onChange={(e) => setF({ ...f, unit: e.target.value })}><option value="g">Sólido (g)</option><option value="ml">Líquido (ml)</option></select></div>
-          </div>
-          <div className="ft-row">
-            <div className="ft-field"><label>Kcal/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.kcal} onChange={(e) => setF({ ...f, kcal: e.target.value })} /></div>
-            <div className="ft-field"><label>Prot/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.protein} onChange={(e) => setF({ ...f, protein: e.target.value })} /></div>
-            <div className="ft-field"><label>Carb/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.carbs} onChange={(e) => setF({ ...f, carbs: e.target.value })} /></div>
-            <div className="ft-field"><label>Grasa/100{f.unit}</label><input className="ft-input ft-mono" type="number" placeholder="0" value={f.fat} onChange={(e) => setF({ ...f, fat: e.target.value })} onKeyDown={(e) => e.key === "Enter" && save()} /></div>
-            <button className="ft-btn" onClick={save}>{editId ? <Check size={15} /> : <Plus size={15} />} {editId ? "Guardar" : "Añadir"}</button>
-            {editId && <button className="ft-btn ghost" onClick={() => { setEditId(null); setF({ name: "", kcal: "", protein: "", carbs: "", fat: "", unit: "g" }); }}><X size={15} /></button>}
-          </div>
-        </div>
-        <div className="ft-card">
-          <h2><Apple size={16} /> Mis alimentos <span className="tag">{foods.length}</span></h2>
-          {foods.length === 0 ? <div className="ft-empty">Aún no has guardado alimentos.<div style={{ marginTop: 12 }}><button className="ft-btn" onClick={() => setView("catalogo")}><Apple size={15} /> Cargar desde el catálogo</button></div></div> : (<>
-            {foods.length > 6 && <input className="ft-input" placeholder="Buscar…" value={q} onChange={(e) => setQ(e.target.value)} style={{ marginBottom: 12 }} />}
-            <div className="ft-list">{myList.map((x) => (<div className="ft-li" key={x.id}><span className="li-main">{x.name}</span><span className="li-sub">{x.kcal} kcal · P {x.protein} · C {x.carbs} · G {x.fat} <span style={{ opacity: .6 }}>/100{x.unit || "g"}</span></span><button className="ft-trash" onClick={() => edit(x)}><Pencil size={15} /></button><button className="ft-trash" onClick={() => del(x.id)}><Trash2 size={15} /></button></div>))}</div>
-          </>)}
-        </div>
-      </>)}
-
-      {view === "catalogo" && (<>
-        <div className="ft-alert info"><Apple size={20} color="var(--blue)" /><div><div className="t">Catálogo de referencia · {CATALOG.length} alimentos</div><div className="b">Valores por 100 g (USDA y guías estándar). <b style={{ color: "var(--text)" }}>Carnes y pescados en crudo</b>, granos y legumbres cocidos, harinas en seco. Toca + para añadir; luego edítalo si tu etiqueta difiere.</div></div></div>
-        <div className="ft-card">
-          <div className="ft-row" style={{ marginBottom: 14 }}>
-            <div className="ft-field"><label>Categoría</label><select className="ft-select" value={catFilter} onChange={(e) => setCatFilter(e.target.value)}><option>Todas</option>{CATALOG_CATS.map((c) => <option key={c}>{c}</option>)}</select></div>
-            <div className="ft-field" style={{ flex: 2 }}><label>Buscar</label><input className="ft-input" placeholder="Ej. salmón, ribeye, lentejas…" value={catQ} onChange={(e) => setCatQ(e.target.value)} /></div>
-          </div>
-          {catsToShow.map((cat) => {
-            const items = catItems.filter((i) => i.cat === cat); if (!items.length) return null;
-            const remaining = items.filter((i) => !existing.has(i.name.toLowerCase())).length;
-            return (<div key={cat} style={{ marginBottom: 18 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}><h3 className="ft-h3">{cat}</h3>{remaining > 0 && <button className="ft-iconbtn" style={{ marginLeft: "auto" }} onClick={() => addCategory(cat)}><Plus size={13} /> Añadir todos ({remaining})</button>}</div>
-              <div className="ft-list">{items.map((i) => { const added = existing.has(i.name.toLowerCase()); return (<div className="ft-li" key={i.name}><span className="li-main">{i.name}</span><span className="li-sub">{i.kcal} kcal · P {i.protein} · C {i.carbs} · G {i.fat} <span style={{ opacity: .6 }}>/100{i.unit}</span></span><button className={"ft-btn" + (added ? " ghost" : "")} style={{ padding: "7px 12px" }} onClick={() => addCat(i)} disabled={added}>{added ? <><Check size={14} /> Añadido</> : <Plus size={14} />}</button></div>); })}</div>
-            </div>);
-          })}
-          {catItems.length === 0 && <div className="ft-empty">Sin resultados.</div>}
-        </div>
-      </>)}
-
-      {view === "recetas" && (<>
-        <div className="ft-alert info"><BookOpen size={20} color="var(--blue)" /><div><div className="t">Recetas y platos combinados</div><div className="b">Junta varios alimentos de tu biblioteca en una receta (ej. "mi desayuno"). FitTrack suma los macros totales y por porción; luego la registras de un toque en Nutrición.</div></div></div>
-        <div className="ft-card">
-          <h2>{rEditId ? <Pencil size={16} /> : <Plus size={16} />} {rEditId ? "Editar receta" : "Nueva receta"}</h2>
-          {foods.length === 0 ? <div className="ft-empty">Primero añade alimentos a tu biblioteca.</div> : (<>
-            <div className="ft-row" style={{ marginBottom: 12 }}>
-              <div className="ft-field" style={{ flex: 2 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Bowl de yogur griego" value={rName} onChange={(e) => setRName(e.target.value)} /></div>
-              <div className="ft-field" style={{ maxWidth: 120 }}><label>Porciones</label><input className="ft-input ft-mono" type="number" inputMode="numeric" value={rServings} onChange={(e) => setRServings(e.target.value)} /></div>
-            </div>
-            <div className="ft-row">
-              <FoodCombo foods={foods} selected={rSel} onChange={setRSel} label="Ingrediente" />
-              <AmountField food={rSel} value={rGrams} onChange={setRGrams} onEnter={addRItem} />
-              <button className="ft-btn ghost" onClick={addRItem} disabled={!rSel || !rGrams}><Plus size={15} /> Ingrediente</button>
-            </div>
-            {rItems.length > 0 && (<>
-              <div className="ft-list" style={{ marginTop: 12 }}>
-                {rItems.map((i) => (<div className="ft-li" key={i.id}><span className="li-main">{i.name}<span className="li-sub" style={{ marginLeft: 8 }}>{i.grams} {i.unit || "g"}</span></span><span className="li-v" style={{ color: "var(--accent)" }}>{Math.round(i.kcal)} kcal</span><button className="ft-trash" onClick={() => delRItem(i.id)}><Trash2 size={15} /></button></div>))}
-              </div>
-              <div className="ft-prev"><span style={{ opacity: .7 }}>Total:</span><span><b>{Math.round(rTotal.kcal)}</b> kcal</span><span>P <b>{round1(rTotal.protein)}</b></span><span>C <b>{round1(rTotal.carbs)}</b></span><span>G <b>{round1(rTotal.fat)}</b></span><span style={{ opacity: .7 }}>· {Math.round(rTotal.kcal / (Number(rServings) || 1))} kcal/porción</span></div>
-              <div style={{ marginTop: 12, display: "flex", gap: 8 }}><button className="ft-btn" onClick={saveRecipe}><Check size={15} /> {rEditId ? "Guardar cambios" : "Guardar receta"}</button>{rEditId && <button className="ft-btn ghost" onClick={resetRecipeForm}><X size={15} /> Cancelar</button>}</div>
-            </>)}
-          </>)}
-        </div>
-        <div className="ft-card">
-          <h2><BookOpen size={16} /> Mis recetas <span className="tag">{recipes.length}</span></h2>
-          {recipes.length === 0 ? <div className="ft-empty">Aún no has guardado recetas.</div> : (
-            <div className="ft-list">{recipes.map((r) => { const t = r.items.reduce((a, i) => ({ kcal: a.kcal + i.kcal, protein: a.protein + i.protein }), { kcal: 0, protein: 0 }); const open = openRecipeId === r.id; return (<div className="ft-li-group" key={r.id}><div className="ft-li"><span className="li-main">{r.name}<span className="li-sub" style={{ marginLeft: 8 }}>{r.items.length} ingr · {r.servings} porc.</span></span><span className="li-sub">{Math.round(t.kcal)} kcal · {round1(t.protein)}g P total</span><button className="ft-btn ghost ft-detail-toggle" style={{ padding: "7px 10px" }} aria-expanded={open} onClick={() => setOpenRecipeId(open ? null : r.id)}><ChevronDown size={14} /> {open ? "Ocultar" : "Ver ingredientes"}</button><button className="ft-trash" aria-label={`Editar ${r.name}`} title="Editar receta" onClick={() => editRecipe(r)}><Pencil size={15} /></button><button className="ft-trash" aria-label={`Eliminar ${r.name}`} title="Eliminar receta" onClick={() => delRecipe(r.id)}><Trash2 size={15} /></button></div>{open && <div className="ft-li-detail">{r.items.map((i) => <div className="ft-li" key={i.id}><span className="li-main">{i.name}</span><span className="li-sub">{i.grams} {i.unit || "g"}</span><span className="li-v">{Math.round(i.kcal)} kcal</span></div>)}</div>}</div>); })}</div>
-          )}
-        </div>
-      </>)}
-    </>
-  );
-}
 
 /* ----------------------------- ROUTINES ----------------------------- */
 // El dia que le toca a una rutina vive en la propia rutina (suggestedDay), asi
@@ -1594,184 +1475,4 @@ const exLine = (exercise) => [
   exercise.restSec ? `${exercise.restSec}s` : null,
 ].filter(Boolean).join(" · ");
 
-// El calentamiento y la version minima ya estaban en fase1Config pero solo se
-// podian cargar desde Entrenar: aqui se ven antes de decidir.
-function RoutineDetail({ routine }) {
-  const minimal = routine.minimal?.exercises || null;
-  return (
-    <div className="ft-li-detail">
-      {routine.hasWarmup && (
-        <>
-          <div className="ft-h3" style={{ marginBottom: 8 }}>Bloque 0 · Calentamiento</div>
-          <div className="ft-dc-card" style={{ marginTop: 0, marginBottom: 14, gap: 6 }}>
-            <div className="n">{WARMUP.durationMin} min · obligatorio antes de cualquier sesión de fuerza</div>
-            <div className="n" style={{ color: "var(--text)" }}>{WARMUP.exercises.map((w) => w.name).join(" · ")}</div>
-            {WARMUP.note && <div className="n">{WARMUP.note}</div>}
-          </div>
-        </>
-      )}
 
-      <div className="ft-h3" style={{ marginBottom: 8 }}>{routine.hasWarmup ? "Bloque 1 · Principal" : "Ejercicios"}</div>
-      {routine.exercises.map((exercise, index) => (
-        <div className="ft-li" key={exercise.id || index}>
-          <span className="li-main">
-            {exercise.name}
-            {exercise.isOptional && <span className="ft-dc-tag late" style={{ marginLeft: 8 }}>OPCIONAL</span>}
-          </span>
-          <span className="li-sub">{exLine(exercise)}</span>
-        </div>
-      ))}
-      {routine.exercises.some((e) => e.notes) && (
-        <div className="n" style={{ marginTop: 10 }}>
-          {routine.exercises.filter((e) => e.notes).map((e) => `${e.name}: ${e.notes}`).join(" · ")}
-        </div>
-      )}
-
-      {minimal && (
-        <>
-          <div className="ft-h3" style={{ margin: "16px 0 8px" }}>Versión mínima</div>
-          <div className="ft-dc-card" style={{ marginTop: 0, gap: 6 }}>
-            <div className="n">
-              {routine.minimal.durationMin ? `${routine.minimal.durationMin} min · ` : ""}
-              Para días de cólicos, energía baja o RPE al alza: mantiene el estímulo en una fracción del tiempo.
-            </div>
-            <div className="n" style={{ color: "var(--text)" }}>
-              {minimal.map((e) => `${e.name} ${e.targetSets || 2}×${e.targetReps || ""}`.trim()).join(" · ")}
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
-export function Routines({ routines, setRoutines, embedded = false }) {
-  const [name, setName] = useState("");
-  const [items, setItems] = useState([]);
-  const [editRoutineId, setEditRoutineId] = useState(null); const [openRoutineId, setOpenRoutineId] = useState(null);
-  // Filtro por grupo muscular: sale de los propios ejercicios, no de una lista
-  // fija, asi que solo aparecen los grupos que alguna rutina trabaja de verdad.
-  const [muscleFilter, setMuscleFilter] = useState("todos");
-  // Lugar: se deduce de los ejercicios, no de una etiqueta escrita a mano, asi
-  // que sigue siendo cierto cuando editas la rutina.
-  const [placeFilter, setPlaceFilter] = useState("todos");
-  const placeOf = useMemo(() => new Map(routines.map((r) => [r.id, routinePlace(r)])), [routines]);
-  const placeTabs = useMemo(
-    () => ["todos", ...PLACES.filter((place) => [...placeOf.values()].includes(place))],
-    [placeOf],
-  );
-  const muscleTabs = useMemo(
-    () => ["todos", ...[...new Set(routines.flatMap((r) => (r.exercises || []).map((e) => e.primary).filter(Boolean)))].sort()],
-    [routines],
-  );
-  const shownRoutines = routines
-    .filter((r) => muscleFilter === "todos" || (r.exercises || []).some((e) => e.primary === muscleFilter))
-    .filter((r) => placeFilter === "todos" || placeOf.get(r.id) === placeFilter);
-  const [exName, setExName] = useState(""); const [primary, setPrimary] = useState(MUSCLES[0]); const [secondary, setSecondary] = useState([]);
-  const [sets, setSets] = useState("3"); const [reps, setReps] = useState("8");
-
-  const applyPreset = (idx) => { if (idx === "") return; const p = EXERCISE_PRESETS[Number(idx)]; setExName(p.name); setPrimary(p.primary); setSecondary(p.secondary); };
-  const toggleSec = (m) => setSecondary((s) => s.includes(m) ? s.filter((x) => x !== m) : [...s, m]);
-  const addItem = () => { if (!exName.trim()) return; setItems((p) => [...p, { id: uid(), name: exName.trim(), primary, secondary: secondary.filter((m) => m !== primary), targetSets: Number(sets) || 3, targetReps: reps }]); setExName(""); setSecondary([]); };
-  const delItem = (id) => setItems((p) => p.filter((x) => x.id !== id));
-  const resetRoutineForm = () => { setName(""); setItems([]); setEditRoutineId(null); setExName(""); setSecondary([]); };
-  const saveRoutine = () => {
-    if (!name.trim() || items.length === 0) return;
-    const data = { name: name.trim(), exercises: items };
-    setRoutines((p) => editRoutineId ? p.map((r) => r.id === editRoutineId ? { ...r, ...data } : r) : [...p, { id: uid(), ...data }]);
-    resetRoutineForm();
-  };
-  const editRoutine = (routine) => { setName(routine.name); setItems(routine.exercises.map((exercise) => ({ ...exercise, secondary: [...(exercise.secondary || [])] }))); setEditRoutineId(routine.id); };
-  const delRoutine = (id) => { setRoutines((p) => p.filter((r) => r.id !== id)); if (editRoutineId === id) resetRoutineForm(); if (openRoutineId === id) setOpenRoutineId(null); };
-  const loadTemplates = () => {
-    setRoutines((prev) => {
-      const have = new Set(prev.map((r) => r.name));
-      const add = ROUTINE_TEMPLATES.filter((t) => !have.has(t.name)).map((t) => templateToAppRoutine(t, uid));
-      return [...prev, ...add];
-    });
-  };
-
-  return (
-    <>
-      {!embedded && <><ScreenMast kicker="FITTRACK · RUTINAS" title="Rutinas" /><div style={{ height: 16 }} /></>}
-      <div className="ft-alert info"><ListChecks size={20} color="var(--blue)" /><div><div className="t">Plantillas de entrenamiento</div><div className="b">Define tus días (A / B / C, Push / Pull / Legs…) una vez. Después, en Entrenar las cargas con un toque: registrar pasa a ser editar, no escribir desde cero.</div></div></div>
-      <div className="ft-card">
-        <h2>{editRoutineId ? <Pencil size={16} /> : <Plus size={16} />} {editRoutineId ? "Editar rutina" : "Nueva rutina"}</h2>
-        <div className="ft-row" style={{ marginBottom: 12 }}><div className="ft-field" style={{ flex: 2 }}><label>Nombre</label><input className="ft-input" placeholder="Ej. Día A · Empuje" value={name} onChange={(e) => setName(e.target.value)} /></div></div>
-        <div className="ft-row" style={{ marginBottom: 10 }}>
-          <div className="ft-field" style={{ flex: 2, minWidth: 140 }}><label>Ejercicio</label><input className="ft-input" placeholder="Ej. Press banca" value={exName} onChange={(e) => setExName(e.target.value)} /></div>
-          <div className="ft-field"><label>Sugerencias · {primary}</label><select className="ft-select" value="" onChange={(e) => applyPreset(e.target.value)}><option value="">Elegir…</option>{EXERCISE_PRESETS.map((p, i) => p.primary === primary ? <option key={p.name} value={i}>{p.name}</option> : null)}</select></div>
-          <div className="ft-field"><label>Primario</label><select className="ft-select" value={primary} onChange={(e) => setPrimary(e.target.value)}>{MUSCLES.map((m) => <option key={m}>{m}</option>)}</select></div>
-          <div className="ft-field" style={{ maxWidth: 90 }}><label>Series</label><input className="ft-input ft-mono" type="number" value={sets} onChange={(e) => setSets(e.target.value)} /></div>
-          <div className="ft-field" style={{ maxWidth: 90 }}><label>Reps</label><input className="ft-input ft-mono" value={reps} onChange={(e) => setReps(e.target.value)} /></div>
-        </div>
-        <div className="ft-secchips">{MUSCLES.filter((m) => m !== primary).map((m) => <span key={m} className={"ft-secchip" + (secondary.includes(m) ? " on" : "")} onClick={() => toggleSec(m)}>{m}</span>)}</div>
-        <div style={{ marginTop: 12 }}><button className="ft-btn ghost" onClick={addItem}><Plus size={15} /> Añadir ejercicio</button></div>
-        {items.length > 0 && (<>
-          <div className="ft-list" style={{ marginTop: 14 }}>
-            {items.map((i) => (<div className="ft-li" key={i.id}><span className="dot" style={{ width: 10, height: 10, borderRadius: "50%", background: MUSCLE_COLOR[i.primary] || "#888" }} /><span className="li-main">{i.name}</span><span className="li-sub">{i.primary} · {i.targetSets}×{i.targetReps}</span><button className="ft-trash" onClick={() => delItem(i.id)}><Trash2 size={15} /></button></div>))}
-          </div>
-          <div style={{ marginTop: 12, display: "flex", gap: 8 }}><button className="ft-btn" onClick={saveRoutine}><Check size={15} /> {editRoutineId ? "Guardar cambios" : "Guardar rutina"}</button>{editRoutineId && <button className="ft-btn ghost" onClick={resetRoutineForm}><X size={15} /> Cancelar</button>}</div>
-        </>)}
-      </div>
-      <div className="ft-card">
-        <h2><ListChecks size={16} /> Mis rutinas <span className="tag">{routines.length}</span></h2>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12 }}>
-          <button className="ft-btn ghost" onClick={loadTemplates}><Download size={15} /> Cargar plantillas Fase 1</button>
-          <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 11, color: "var(--muted)" }}>{ROUTINE_TEMPLATES.length} rutinas guía · Empuje/Tracción/Pierna + accesorio + amable</span>
-        </div>
-        {placeTabs.length > 2 && (
-          <>
-            <div className="ft-h3" style={{ marginBottom: 6 }}>Lugar</div>
-            <div className="ft-dc-chips" style={{ paddingTop: 0, marginBottom: 6 }}>
-              {placeTabs.map((place) => (
-                <button key={place} className={placeFilter === place ? "on" : ""} onClick={() => setPlaceFilter(place)}>
-                  {place.toUpperCase()}
-                </button>
-              ))}
-            </div>
-            <div className="n" style={{ marginBottom: 14 }}>
-              Se deduce de los ejercicios: una rutina vale para el sitio que pide su movimiento más exigente.
-              El calentamiento obligatorio usa minibanda, así que ninguna sesión de fuerza es del todo sin material.
-            </div>
-          </>
-        )}
-        {muscleTabs.length > 1 && (
-          <div className="ft-dc-chips" style={{ paddingTop: 0, marginBottom: 14 }}>
-            {muscleTabs.map((m) => (
-              <button key={m} className={muscleFilter === m ? "on" : ""} onClick={() => setMuscleFilter(m)}>
-                {m === "todos" ? "TODOS" : m.toUpperCase()}
-              </button>
-            ))}
-          </div>
-        )}
-        {routines.length === 0 ? <div className="ft-empty">Aún no has creado rutinas. Usa “Cargar plantillas Fase 1” para empezar con las rutinas guía, o créalas a mano arriba.</div> : shownRoutines.length === 0 ? (
-          <div className="ft-empty">
-            {placeFilter !== "todos" && muscleFilter !== "todos"
-              ? `Ninguna rutina de ${placeFilter} trabaja ${muscleFilter} como grupo principal.`
-              : placeFilter !== "todos"
-                ? `Ninguna rutina se puede hacer en ${placeFilter}.`
-                : `Ninguna rutina trabaja ${muscleFilter} como grupo principal.`}
-          </div>
-        ) : (
-          <div className="ft-list">{shownRoutines.map((r) => { const open = openRoutineId === r.id; return (
-            <div className="ft-li-group" key={r.id}>
-              <div className="ft-li">
-                <span className="li-main">{r.name}</span>
-                <span className="li-sub">
-                  {r.focus ? `${r.focus} · ` : ""}{r.exercises.length} ej.{r.estimatedMin ? ` · ~${r.estimatedMin} min` : ""}
-                  {dayNameOf(r) && <span className="ft-dc-tag" style={{ marginLeft: 8 }}>{dayNameOf(r).toUpperCase()}</span>}
-                  <span className="ft-mu" style={{ marginLeft: 6 }}>{placeOf.get(r.id)}</span>
-                </span>
-                <button className="ft-btn ghost ft-detail-toggle" style={{ padding: "7px 10px" }} aria-expanded={open} onClick={() => setOpenRoutineId(open ? null : r.id)}><ChevronDown size={14} /> {open ? "Ocultar" : "Ver ejercicios"}</button>
-                <button className="ft-trash" aria-label={`Editar ${r.name}`} title="Editar rutina" onClick={() => editRoutine(r)}><Pencil size={15} /></button>
-                <button className="ft-trash" aria-label={`Eliminar ${r.name}`} title="Eliminar rutina" onClick={() => delRoutine(r.id)}><Trash2 size={15} /></button>
-              </div>
-              {open && <RoutineDetail routine={r} />}
-            </div>
-          ); })}</div>
-        )}
-      </div>
-    </>
-  );
-}

@@ -135,3 +135,23 @@ test("Más es una pantalla con la cuenta, no una hoja de atajos", async () => {
   // Nada de filas que no llevan a ningún sitio.
   assert.doesNotMatch(more, /disabled/);
 });
+
+test("Biblioteca abre con la lista y la ficha vive en el panel derecho", async () => {
+  const lib = await readFile(new URL("../src/LibraryScreen.jsx", import.meta.url), "utf8");
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+
+  // Lo que se repintaba: el formulario de alta era lo primero de la pantalla.
+  // Ahora el alta es un botón y la ficha solo existe cuando hay algo abierto.
+  assert.match(lib, /const \[open, setOpen\] = useState\(null\)/);
+  assert.match(lib, /\{detail && <div className="ft-lib-detail">/);
+  assert.match(lib, /onClick=\{\(\) => setOpen\("nuevo"\)\}/);
+
+  // Filtros de lugar y músculo, deducidos de los ejercicios y no de una etiqueta.
+  assert.match(lib, /routinePlace\(r\)/);
+  assert.match(lib, /e\.primary/);
+
+  // La versión vieja se borró: dos bibliotecas divergen a la primera edición.
+  assert.doesNotMatch(app, /export function Library\(/);
+  assert.doesNotMatch(app, /export function Routines\(/);
+  assert.match(app, /<LibraryScreen/);
+});

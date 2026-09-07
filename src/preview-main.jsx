@@ -2,7 +2,7 @@
 // ejemplo para poder verlas sin pasar por el login. Borrar junto con preview.html.
 import React, { Suspense, lazy, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { CSS, Library, Nutrition, Train } from "./FitTrack.jsx";
+import { CSS, Nutrition, Train } from "./FitTrack.jsx";
 import { ROUTINE_TEMPLATES, templateToAppRoutine } from "./fase1Config.js";
 import { addDays, localISO } from "./app-utils.js";
 import { DEFAULT_GOALS } from "./app-config.js";
@@ -14,6 +14,7 @@ const PlanScreen = lazy(() => import("./PlanScreen.jsx"));
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
 const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
 const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
+const LibraryScreen = lazy(() => import("./LibraryScreen.jsx"));
 
 const today = localISO();
 const day = (n) => addDays(today, n);
@@ -140,6 +141,17 @@ function Preview() {
   const [exercises, setExercises] = useState(todaySets);
   const [planRoutines, setPlanRoutines] = useState(PLAN_ROUTINES);
   const [libRoutines, setLibRoutines] = useState(TEMPLATE_ROUTINES);
+  const [libFoods, setLibFoods] = useState([
+    { id: "f1", name: "Yogur griego 0%", kcal: 59, protein: 10, carbs: 3.6, fat: 0.4, unit: "g" },
+    { id: "f2", name: "Pechuga de pollo (cruda)", kcal: 120, protein: 22.5, carbs: 0, fat: 2.6, unit: "g" },
+    { id: "f3", name: "Avena en hojuelas", kcal: 389, protein: 16.9, carbs: 66, fat: 6.9, unit: "g" },
+  ]);
+  const [libRecipes, setLibRecipes] = useState([
+    { id: "r1", name: "Bowl de yogur y avena", servings: 1, items: [
+      { id: "i1", name: "Yogur griego 0%", grams: 200, unit: "g", kcal: 118, protein: 20, carbs: 7.2, fat: 0.8 },
+      { id: "i2", name: "Avena en hojuelas", grams: 60, unit: "g", kcal: 233, protein: 10.1, carbs: 39.6, fat: 4.1 },
+    ] },
+  ]);
   const [trainWorkouts, setTrainWorkouts] = useState(workouts);
   const [feedNutrition, setFeedNutrition] = useState(nutrition);
   const [feedWeights, setFeedWeights] = useState(weights);
@@ -199,7 +211,7 @@ function Preview() {
             <PlanScreen routines={planRoutines} setRoutines={setPlanRoutines} workouts={workouts}
               nutrition={feedNutrition} weights={feedWeights} measurements={feedMeas} wellness={feedWellness} setTab={goTo} />
           )}
-          {screen === "Biblioteca" && <Library foods={[]} setFoods={() => {}} recipes={[]} setRecipes={() => {}} routines={libRoutines} setRoutines={setLibRoutines} initialView="rutinas" />}
+          {screen === "Biblioteca" && <LibraryScreen foods={libFoods} setFoods={setLibFoods} recipes={libRecipes} setRecipes={setLibRecipes} routines={libRoutines} setRoutines={setLibRoutines} initialView="rutinas" />}
           {screen === "Métricas" && (
             <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements}
               periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={planRoutines}
