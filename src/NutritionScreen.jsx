@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { CATALOG, round1, uid } from "./FitTrack.jsx";
 import { localISO, addDays, proteinAdherence } from "./app-utils.js";
+import { PROTEIN_CONFIG } from "./fase1Config.js";
 
 // Registrar una comida: primero se elige qué, después cuánto. El paso de cantidad
 // es obligatorio y no se salta — sin él se registran raciones inventadas y los
@@ -10,7 +11,11 @@ import { localISO, addDays, proteinAdherence } from "./app-utils.js";
 // se queda a la izquierda y la cantidad ocupa el panel derecho, así que se ve de
 // dónde salen los gramos que estás escribiendo.
 
-const MEALS = ["Desayuno", "Almuerzo", "Cena", "Snack"];
+// Las comidas del dia salen de cuantas hayas elegido en Ajustes, no de una lista
+// fija: los nombres y el reparto de proteina ya viven juntos en PROTEIN_CONFIG y
+// tenerlos dos veces era garantizar que un dia dejaran de coincidir.
+const mealsFor = (goals) => PROTEIN_CONFIG.mealLabels[goals?.proteinMeals ?? PROTEIN_CONFIG.mealsPerDay]
+  || PROTEIN_CONFIG.mealLabels[PROTEIN_CONFIG.mealsPerDay];
 const TABS = [["buscar", "BUSCAR"], ["mios", "MÍOS"], ["recetas", "RECETAS"], ["recientes", "RECIENTES"]];
 const num = (value) => String(Math.round(Number(value) * 10) / 10).replace(".", ",");
 const kcalFmt = (value) => Math.round(value).toLocaleString("es-ES");
@@ -60,9 +65,9 @@ const fromEntry = (entry) => {
   };
 };
 
-function AmountPanel({ pick, date, onSave, onClose }) {
+function AmountPanel({ pick, date, meals, onSave, onClose }) {
   const [qty, setQty] = useState(String(pick.lastQty ?? pick.base));
-  const [meal, setMeal] = useState(MEALS[0]);
+  const [meal, setMeal] = useState(meals[0]);
   const amount = Number(String(qty).replace(",", "."));
   const valid = amount > 0;
   const macros = valid ? times(pick.per, amount / 100) : null;
@@ -94,7 +99,7 @@ function AmountPanel({ pick, date, onSave, onClose }) {
       <label className="ft-lib-field">
         <span>Comida del día</span>
         <div className="ft-dc-chips" style={{ paddingTop: 0 }}>
-          {MEALS.map((option) => (
+          {meals.map((option) => (
             <button key={option} className={meal === option ? "on" : ""} onClick={() => setMeal(option)}>{option.toUpperCase()}</button>
           ))}
         </div>
@@ -125,6 +130,7 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
   const [query, setQuery] = useState("");
   const [pick, setPick] = useState(null);
 
+  const meals = mealsFor(goals);
   const dayItems = nutrition.filter((entry) => entry.date === date);
   const sum = dayItems.reduce(add, empty());
   const adherence = useMemo(() => proteinAdherence(nutrition, goals.proteinTarget, date), [nutrition, goals.proteinTarget, date]);
@@ -159,9 +165,10 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
   const proteinTarget = Number(goals.proteinTarget) || 0;
   const shift = (days) => { setDate(addDays(date, days)); setPick(null); };
 
-  // Agrupado por comida del dia: las entradas viejas no la tienen y caen juntas
-  // al final, que es mejor que inventarles un desayuno.
-  const groups = [...MEALS, null].map((meal) => ({
+  // Agrupado por comida del dia. Lo que se registro con otro reparto (o antes de
+  // que hubiera reparto) no desaparece: sale detras, con su etiqueta o sin ella.
+  const extras = [...new Set(dayItems.map((entry) => entry.meal).filter((meal) => meal && !meals.includes(meal)))];
+  const groups = [...meals, ...extras, null].map((meal) => ({
     meal, items: dayItems.filter((entry) => (entry.meal || null) === meal),
   })).filter((group) => group.items.length > 0);
 
@@ -241,7 +248,7 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
 
           {pick && (
             <div className="ft-lib-detail">
-              <AmountPanel key={pick.key} pick={pick} date={date} onSave={save} onClose={() => setPick(null)} />
+              <AmountPanel key={pick.key} pick={pick} date={date} meals={meals} onSave={save} onClose={() => setPick(null)} />
             </div>
           )}
         </div>

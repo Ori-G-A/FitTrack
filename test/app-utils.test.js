@@ -29,6 +29,7 @@ import {
   weightTrendHighlight,
 } from "../src/app-utils.js";
 import { alertMetrics, buildAlerts } from "../src/alerts.js";
+import { PROTEIN_CONFIG, distributeProtein } from "../src/fase1Config.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -530,4 +531,16 @@ test("cada aviso sabe a qué tarjeta de Métricas lleva y respeta la coma decima
   assert.match(peso.body, /-\d+,\d\d kg\/sem/);
   assert.doesNotMatch(peso.body, /\d\.\d/);
   assert.equal(avisos.find((a) => a.title.includes("Proteína"))?.card, "macros");
+});
+
+test("las comidas del día salen del reparto elegido, no de una lista fija", () => {
+  // 4 y 5 son las dos opciones que ofrece Ajustes; los nombres y el reparto de
+  // proteína viven juntos, así que la pantalla de nutrición no puede inventarlos.
+  assert.deepEqual(PROTEIN_CONFIG.mealLabels[4], ["Desayuno", "Almuerzo", "Merienda", "Cena"]);
+  assert.deepEqual(PROTEIN_CONFIG.mealLabels[5], ["Desayuno", "Media mañana", "Almuerzo", "Merienda", "Cena"]);
+  for (const count of [4, 5]) {
+    const split = distributeProtein(150, count);
+    assert.equal(split.length, count, `el reparto de ${count} comidas no tiene ${count} tramos`);
+    assert.deepEqual(split.map((meal) => meal.label), PROTEIN_CONFIG.mealLabels[count]);
+  }
 });
