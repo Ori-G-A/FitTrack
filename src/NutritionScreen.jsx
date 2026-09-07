@@ -187,6 +187,10 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <button className="ft-dc-step" aria-label="Día anterior" onClick={() => shift(-1)}>‹</button>
+          {/* Planificar el jueves eran ocho flechas. El selector nativo del
+              navegador ya sabe hacer esto: un calendario, cero dependencias. */}
+          <input className="ft-input ft-mono ft-dc-date" type="date" value={date} aria-label="Ir a otro día"
+            onChange={(event) => { if (event.target.value) { setDate(event.target.value); setPick(null); } }} />
           <button className="ft-dc-step" aria-label="Día siguiente" onClick={() => shift(1)}>›</button>
           <button className="ft-dc-btn" onClick={() => { setAdding(true); setPick(null); }}>Añadir comida</button>
         </div>

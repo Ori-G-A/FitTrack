@@ -270,3 +270,35 @@ test("en móvil la ficha reemplaza la lista y las cifras no se aprietan", async 
   assert.match(nutrition, /"--cols": isMobile \? 2 : 4/);
   assert.doesNotMatch(nutrition, /"--cols": 4/);
 });
+
+test("el rail y la barra móvil llevan a lo mismo, y nada queda huérfano", async () => {
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const nav = app.match(/const NAV = \[[\s\S]*?\];/)?.[0] || "";
+  const railIds = [...nav.matchAll(/id: "([a-z]+)"/g)].map((m) => m[1]);
+
+  // El rail dejó de listar en plano tres tipos de destino. Si vuelve a crecer,
+  // Más vuelve a duplicar: era la causa, no el síntoma.
+  assert.deepEqual(railIds, ["diario", "plan", "dashboard", "mas"]);
+  assert.match(app, /className="ft-nav-add" onClick=\{\(\) => \{ setSheet\("add"\)/);
+
+  // Lo que sale del rail tiene que seguir teniendo camino. Registrar va por
+  // Añadir; el resto, por las pantallas que ya enlazaban.
+  const addIds = [...(app.match(/const ADD_ROWS = \[[\s\S]*?\];/)?.[0] || "").matchAll(/id: "([a-z]+)"/g)].map((m) => m[1]);
+  for (const id of ["entrenar", "nutricion", "peso", "nota", "medidas"]) {
+    assert.ok(addIds.includes(id), `${id} salió del rail y no está en Añadir`);
+  }
+  const more = await readFile(new URL("../src/MoreScreen.jsx", import.meta.url), "utf8");
+  assert.match(more, /setTab\("biblioteca"\)/, "Biblioteca no tiene camino en móvil");
+  // Y no vuelve a estar en dos sitios: registrar el cuerpo se hace desde Añadir.
+  assert.doesNotMatch(more, /setTab\("cuerpo"\)/);
+});
+
+test("planificar otro día no son ocho flechas", async () => {
+  const nutrition = await readFile(new URL("../src/NutritionScreen.jsx", import.meta.url), "utf8");
+  // Selector nativo: el navegador ya trae el calendario. Sin él, planificar el
+  // jueves o copiar de un día pasado se paga a un clic por día.
+  assert.match(nutrition, /className="ft-input ft-mono ft-dc-date" type="date"/);
+  assert.match(nutrition, /aria-label="Ir a otro día"/);
+  // Las flechas se quedan para moverse de día en día.
+  assert.match(nutrition, /aria-label="Día anterior"/);
+});

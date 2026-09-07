@@ -212,6 +212,10 @@ html[data-theme="light"]{background:#f3efe6;color-scheme:light;}
 .ft-nav{display:flex;flex-direction:column;gap:4px;}
 .ft-nav button{border:none;background:transparent;color:var(--muted);padding:11px 9px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:12px;white-space:nowrap;transition:.15s;}
 .ft-nav button.active{background:var(--accent);color:#f3efe6;}
+.ft-nav-add{border:none;background:transparent;padding:0 0 6px;margin-bottom:2px;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:12px;font-weight:700;font-size:12.5px;white-space:nowrap;}
+.ft-nav-add .mark{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:var(--ok);color:var(--bg);display:grid;place-items:center;}
+.ft-nav-add:hover .mark{filter:brightness(1.08);}
+.ft-nav-sep{height:1px;background:var(--line);margin:8px 2px;}
 .ft-side .ft-iconbtn{justify-content:flex-start;gap:12px;padding:9px;border:none;background:transparent;}
 .ft-side svg{flex:0 0 auto;}
 .ft-nav button:not(.active):hover{color:var(--text);background:var(--panel2);}
@@ -451,6 +455,7 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-empty{font-family:'IBM Plex Mono';font-size:11.5px;line-height:1.5;color:var(--muted);padding:14px;}
 .ft-dc-step{width:32px;height:32px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--text);font-family:'IBM Plex Mono';font-weight:600;font-size:15px;cursor:pointer;}
 .ft-dc-step:hover{border-color:var(--muted);}
+.ft-dc-date{width:auto;min-width:132px;padding:7px 9px;font-size:12px;}
 .ft-dc-rpe{flex:1;min-width:0;text-align:center;font-family:'IBM Plex Mono';font-weight:600;font-size:11px;padding:9px 0;border-radius:6px;background:transparent;border:1px solid var(--line);color:var(--muted);cursor:pointer;}
 .ft-dc-rpe:hover{color:var(--text);}
 /* ---- movil: barra inferior de 5 destinos (Diario · Metricas · + · Plan · Mas) ---- */
@@ -826,14 +831,22 @@ export default function App() {
   // Cuerpo se registra en cuatro sitios distintos; los cuatro son la misma
   // pantalla con una seccion activa, y el rail solo lleva al primero.
   const BODY_TABS = ["cuerpo", "peso", "medidas", "nota", "checkin"];
+  // El rail listaba en plano tres cosas distintas —consultar, registrar y
+  // configurar— y por eso Mas duplicaba: no habia donde poner lo de configurar
+  // que no estuviera ya arriba. Ahora sigue el mismo modelo que la barra movil:
+  // Anadir para registrar, tres raices para consultar, y Mas para el resto. Es
+  // exactamente la barra inferior del movil, asi que no hay dos modelos que
+  // mantener ni nada que aparezca en dos sitios: Biblioteca vive en Mas, como en
+  // el prototipo, porque se configura de vez en cuando y no se consulta a diario.
+  //
+  // Entrenar, Cuerpo y Nutricion salen de la lista pero no se pierden: se llega
+  // por Anadir, por las filas del Diario, por el dia del Plan y por los huecos
+  // por llenar, que es de donde se llega de verdad.
   const NAV = [
     { id: "diario", label: "Diario", icon: Newspaper },
-    { id: "entrenar", label: "Entrenar", icon: Dumbbell },
-    { id: "cuerpo", label: "Cuerpo", icon: Scale },
-    { id: "nutricion", label: "Nutrición", icon: Utensils },
-    { id: "biblioteca", label: "Biblioteca", icon: Apple },
     { id: "plan", label: "Plan", icon: CalendarDays },
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "dashboard", label: "Métricas", icon: LayoutDashboard },
+    { sep: true },
     { id: "mas", label: "Más", icon: Menu },
   ];
 
@@ -874,10 +887,17 @@ export default function App() {
               <span className="label"><b>FitTrack</b><small>tu progreso, medido</small></span>
             </button>
             <nav className="ft-nav">
-              {NAV.map(({ id, label, icon: Ic }) => (
-                <button key={id} className={tab === id ? "active" : ""} onClick={() => { goTo(id); setMenuOpen(false); }} title={label}>
-                  <Ic size={17} /><span className="label">{label}</span>
-                </button>
+              <button className="ft-nav-add" onClick={() => { setSheet("add"); setMenuOpen(false); }} title="Registrar">
+                <span className="mark"><Plus size={19} /></span><span className="label">Añadir</span>
+              </button>
+              {NAV.map(({ id, label, icon: Ic, sep }) => (
+                sep
+                  ? <span key="sep" className="ft-nav-sep" />
+                  : (
+                    <button key={id} className={tab === id ? "active" : ""} onClick={() => { goTo(id); setMenuOpen(false); }} title={label}>
+                      <Ic size={17} /><span className="label">{label}</span>
+                    </button>
+                  )
               ))}
             </nav>
             <div className="ft-side-foot">

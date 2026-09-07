@@ -78,11 +78,6 @@ export default function MoreScreen({
           onClick={() => setTab("ajustes")}
         />
         <Row
-          title="Registro del cuerpo"
-          sub="peso · medidas · nota · check-in de ciclo"
-          onClick={() => setTab("cuerpo")}
-        />
-        <Row
           title="Exportar datos"
           sub="copia completa en json, incluidas las fotos"
           onClick={exportData}
