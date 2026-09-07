@@ -2,8 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   PROTEIN_CONFIG, ROUTINE_TEMPLATES, computeProteinTargets, distributeProtein,
-  getAllRoutines, getRoutineById, guessPrimaryMuscle, suggestRoutineForDay,
-  templateToAppRoutine,
+  getAllRoutines, getRoutineById, guessEquipmentLevel, guessPrimaryMuscle,
+  routinePlace, suggestRoutineForDay, templateToAppRoutine, WARMUP,
 } from "../src/fase1Config.js";
 
 test("computeProteinTargets calculates and clamps grams per kilogram", () => {
@@ -62,4 +62,47 @@ test("templateToAppRoutine preserves routine and minimal-version targets", () =>
     assert.equal(routine.minimal.exercises.length, template.minimalVersion.exercises.length);
     assert.equal(routine.minimal.durationMin, template.minimalVersion.durationMin || null);
   }
+});
+
+// --- dónde se puede hacer cada rutina ---------------------------------------
+test("el equipo se infiere del nombre, y lo explícito gana a lo mencionado de paso", () => {
+  // "sin peso" manda aunque el nombre nombre una banda o un disco como opción.
+  assert.equal(guessEquipmentLevel("Bisagra de cadera sin peso o con banda (3×12)"), 0);
+  assert.equal(guessEquipmentLevel("Sentadilla lenta sin peso o disco liviano"), 0);
+  // Máquina, polea y barra de dominadas son gimnasio sí o sí.
+  assert.equal(guessEquipmentLevel("Curl femoral (máquina)"), 2);
+  assert.equal(guessEquipmentLevel("Jalón al pecho"), 2);
+  assert.equal(guessEquipmentLevel("Dominadas"), 2);
+  // "Remo" a secas se lee como remo con barra; en TRX, no.
+  assert.equal(guessEquipmentLevel("Remo"), 2);
+  assert.equal(guessEquipmentLevel("Remo suave en TRX"), 1);
+  // Igual con la sentadilla: desnuda es con barra, con apellido no.
+  assert.equal(guessEquipmentLevel("Sentadilla"), 2);
+  assert.equal(guessEquipmentLevel("Sentadilla búlgara"), 1);
+  assert.equal(guessEquipmentLevel("Sentadilla goblet"), 1);
+  // Peso corporal puro.
+  assert.equal(guessEquipmentLevel("Plancha"), 0);
+  assert.equal(guessEquipmentLevel("Puente de glúteo en piso"), 0);
+  // Sin pistas, lo prudente es asumir que hace falta algo.
+  assert.equal(guessEquipmentLevel("Ejercicio raro"), 1);
+});
+
+test("una rutina vale para el nivel de su ejercicio más exigente", () => {
+  assert.equal(routinePlace({ exercises: [{ name: "Plancha" }, { name: "Bird dog" }] }), "casa sin equipo");
+  assert.equal(routinePlace({ exercises: [{ name: "Plancha" }, { name: "Curl bíceps" }] }), "casa con equipo");
+  // Un solo movimiento de polea arrastra la sesión entera al gimnasio.
+  assert.equal(routinePlace({ exercises: [{ name: "Plancha" }, { name: "Jalón al pecho" }] }), "gimnasio");
+  assert.equal(routinePlace({ exercises: [] }), "casa sin equipo");
+});
+
+test("las plantillas reales se reparten como es su programa", () => {
+  const place = Object.fromEntries(ROUTINE_TEMPLATES.map((t) => [t.id, routinePlace(t)]));
+  // Su split de fuerza es de gimnasio: banca, dominadas, peso muerto, máquinas.
+  assert.equal(place.empuje, "gimnasio");
+  assert.equal(place.traccion, "gimnasio");
+  // El accesorio y la sesión amable salen de casa.
+  assert.equal(place["accesorio-core-brazos"], "casa con equipo");
+  assert.equal(place.amable, "casa con equipo");
+  // Ninguna es "sin material": el calentamiento obligatorio pide minibanda.
+  assert.equal(Math.max(...WARMUP.exercises.map((e) => guessEquipmentLevel(e.name))), 1);
 });

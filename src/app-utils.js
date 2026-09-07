@@ -299,3 +299,287 @@ export function migrateWorkouts(workouts, defaultMuscle) {
     })),
   }));
 }
+
+// Entradas de un dia para el Diario: entreno, cardio, comidas, peso, medidas y
+// nota, en una sola lista.
+// ponytail: el orden es fijo (entreno -> comidas -> cuerpo) porque el modelo de
+// datos no guarda hora de registro. Si algun dia se anade `time`, ordenar por
+// ella y borrar este comentario.
+// Pasos de un dia y la media de los 7 anteriores, que es contra lo que se lee
+// si el dia va bien o flojo. Sin dato de hoy devuelve `today: null`, no un cero:
+// no haber registrado no es haberse quedado quieta.
+export function stepsToday(wellness = [], date = localISO()) {
+  const day = wellness.find((w) => w.date === date);
+  const from = addDays(date, -7);
+  const week = wellness.filter((w) => w.date >= from && w.date < date && Number(w.steps) > 0).map((w) => Number(w.steps));
+  return {
+    today: Number(day?.steps) > 0 ? Number(day.steps) : null,
+    avg: week.length ? Math.round(week.reduce((sum, n) => sum + n, 0) / week.length) : null,
+    days: week.length,
+  };
+}
+
+export function dayFeed(date, { workouts = [], nutrition = [], weights = [], measurements = [], wellness = [] } = {}) {
+  const entries = [];
+
+  const workout = workouts.find((w) => w.date === date);
+  if (workout) {
+    const exercises = workout.exercises || [];
+    const sets = exercises.reduce((total, e) => total + (e.sets || []).filter((s) => Number(s.reps) > 0).length, 0);
+    const rpes = exercises.flatMap((e) => (e.sets || []).map((s) => parseFloat(s.rpe)).filter((r) => r > 0));
+    const volume = exercises.reduce((total, e) => total + (e.sets || []).reduce((sum, s) => sum + (Number(s.kg) || 0) * (Number(s.reps) || 0), 0), 0);
+    if (exercises.length) {
+      const meta = [
+        workout.durationMin ? `${workout.durationMin} min` : null,
+        sets ? `${sets} series` : null,
+        volume ? `${Math.round(volume).toLocaleString("es-ES")} kg` : null,
+        rpes.length ? `RPE ${(Math.round((rpes.reduce((a, b) => a + b, 0) / rpes.length) * 10) / 10).toString().replace(".", ",")}` : null,
+      ].filter(Boolean).join(" · ");
+      entries.push({
+        id: `w-${workout.id}`, kind: "entreno",
+        title: `Sesión · ${exercises.length} ejercicio${exercises.length > 1 ? "s" : ""}`,
+        meta, tab: "entrenar", done: sets > 0,
+        // La fila no muestra los ejercicios, pero buscar "press banca" tiene que
+        // encontrarla: el texto buscable no es el que se pinta.
+        names: exercises.map((e) => e.name),
+        search: exercises.map((e) => e.name).join(" "),
+      });
+    }
+    (workout.cardio || []).forEach((c) => entries.push({
+      id: `c-${c.id}`, kind: "cardio", title: c.type,
+      meta: [`${c.minutes} min`, c.kcal ? `${c.kcal} kcal` : null].filter(Boolean).join(" · "),
+      tab: "entrenar", done: true,
+    }));
+  }
+
+  nutrition.filter((n) => n.date === date).forEach((n) => entries.push({
+    id: `n-${n.id}`, kind: "comida", title: n.name,
+    meta: [`${Math.round(Number(n.kcal) || 0)} kcal`, Number(n.protein) ? `${Math.round(n.protein)} g P` : null].filter(Boolean).join(" · "),
+    tab: "nutricion", done: true,
+  }));
+
+  const weight = weights.find((w) => w.date === date);
+  if (weight) entries.push({ id: `p-${weight.id || date}`, kind: "peso", title: `${String(weight.kg).replace(".", ",")} kg`, meta: "peso corporal", tab: "cuerpo", done: true });
+
+  const measure = measurements.find((m) => m.date === date);
+  if (measure) {
+    const parts = ["cintura", "cadera", "pecho", "brazo", "muslo"]
+      .filter((key) => Number(measure[key]) > 0)
+      .map((key) => `${key} ${String(measure[key]).replace(".", ",")}`);
+    if (parts.length) entries.push({ id: `m-${measure.id || date}`, kind: "medidas", title: "Medidas", meta: `${parts.join(" · ")} cm`, tab: "cuerpo", done: true });
+  }
+
+  const note = wellness.find((w) => w.date === date);
+  if (note && (note.sleep != null || note.steps != null || note.energy || (note.notes || "").trim())) {
+    const meta = [
+      note.sleep != null ? `${String(note.sleep).replace(".", ",")} h de sueño` : null,
+      note.steps ? `${Number(note.steps).toLocaleString("es-ES")} pasos` : null,
+      note.energy ? `energía ${note.energy}` : null,
+      (note.notes || "").trim() || null,
+    ].filter(Boolean).join(" · ");
+    entries.push({ id: `s-${note.id || date}`, kind: "nota", title: "Nota del día", meta, tab: "cuerpo", done: true, search: note.notes || "" });
+  }
+
+  // Todo lo que se pinta es buscable; `search` solo anade lo que no se ve.
+  // `date` viaja con la entrada para que pulsarla pueda abrir la pantalla
+  // destino en ese dia, no en hoy.
+  return entries.map((entry) => ({
+    ...entry,
+    date,
+    search: `${entry.title} ${entry.meta || ""} ${entry.search || ""}`.toLowerCase(),
+  }));
+}
+
+// Busqueda del Diario sobre todo el historial: sesiones, ejercicios, alimentos,
+// medidas y notas. Reutiliza dayFeed en vez de formatear las filas otra vez, asi
+// que un resultado se ve exactamente igual que en la lista del dia.
+// ponytail: recorre dia a dia de mas reciente a mas antiguo y para al llegar al
+// tope. Sin indice: con el historial de una persona el corte llega en las
+// primeras decenas de dias. Si algun dia va lento, indexar por termino.
+export function searchFeed(query, data = {}, { limit = 40, maxDays = 460 } = {}) {
+  const needle = String(query || "").trim().toLowerCase();
+  if (needle.length < 2) return [];
+
+  const dates = new Set();
+  ["workouts", "nutrition", "weights", "measurements", "wellness"].forEach((key) => {
+    (data[key] || []).forEach((row) => { if (row && row.date) dates.add(row.date); });
+  });
+
+  const results = [];
+  const ordered = [...dates].sort((a, b) => b.localeCompare(a)).slice(0, maxDays);
+  for (const date of ordered) {
+    for (const entry of dayFeed(date, data)) {
+      if (!entry.search.includes(needle)) continue;
+      // Una sesion se pinta como "Sesión · 3 ejercicios": si lo que coincidio fue
+      // el nombre de un ejercicio, el resultado tiene que decir cual, o la fila no
+      // explica por que esta ahi.
+      const matched = (entry.names || []).find((name) => name.toLowerCase().includes(needle));
+      results.push({ ...entry, date, meta: matched ? [matched, entry.meta].filter(Boolean).join(" · ") : entry.meta });
+    }
+    if (results.length >= limit) break;
+  }
+  return results.slice(0, limit);
+}
+
+// ============================================================================
+// Autoregulacion dentro de la sesion
+// ----------------------------------------------------------------------------
+// Escala de RPE que se ofrece al registrar: por debajo de 6 (5+ reps en reserva)
+// la serie no informa de la proximidad al fallo, y el medio punto solo aporta de
+// 7 en adelante, que es donde se decide si la carga sube.
+export const RPE_STEPS = [6, 7, 7.5, 8, 8.5, 9, 9.5, 10];
+
+// Tren inferior mueve saltos de carga mayores que el superior.
+const LOWER_BODY = new Set(["Cuadriceps", "Cu\u00e1driceps", "Femoral", "Gl\u00fateos", "Gluteos", "Aductores", "Gemelos"]);
+
+// "7-8", "7–8", "8" -> [7, 8]
+export function parseRpeTarget(target) {
+  const nums = String(target ?? "").match(/\d+(?:[.,]\d+)?/g);
+  if (!nums || !nums.length) return null;
+  const values = nums.map((n) => parseFloat(n.replace(",", ".")));
+  return [values[0], values[values.length - 1]];
+}
+
+// Que hacer en la SIGUIENTE serie del mismo ejercicio, a partir de como salio la
+// que se acaba de registrar. Es ajuste intra-sesion (backoff normal despues de
+// una serie de tope), no progresion: subir la prescripcion de la proxima sesion
+// pide 2+ sesiones completas al RPE objetivo y no lo decide una sola serie.
+export function nextSetAdvice({ rpe, targetRpe, kg, muscle } = {}) {
+  const done = parseFloat(rpe);
+  const range = parseRpeTarget(targetRpe);
+  const load = Number(kg) || 0;
+  if (!done) return null;
+
+  // Llegar al fallo donde no tocaba acumula fatiga sin estimulo extra.
+  if (done >= 9.5 && (!range || range[1] < 9)) {
+    return { kg: load ? round(load * 0.93) : null, kind: "backoff", text: "Serie al fallo o casi. Baja un ~7 % en la siguiente y recupera el rango objetivo." };
+  }
+  if (!range) return null;
+  const [low, high] = range;
+
+  if (done >= high + 1) {
+    return { kg: load ? round(load * 0.93) : null, kind: "backoff", text: `Salió ${fmt(done - high)} por encima del objetivo. Baja un ~7 % en la siguiente; el backoff después de una serie dura es lo normal.` };
+  }
+  if (done <= low - 1) {
+    const step = LOWER_BODY.has(muscle) ? 5 : 2.5;
+    return { kg: load ? round(load + step) : null, kind: "up", text: `Te sobró margen (${fmt(low - done)} por debajo). Puedes sumar ${fmt(step)} kg en la siguiente serie.` };
+  }
+  return { kg: load || null, kind: "hold", text: "En el rango objetivo: repite la misma carga en la siguiente serie." };
+}
+
+const round = (value) => Math.round(value * 2) / 2;
+const fmt = (value) => String(Math.round(value * 10) / 10).replace(".", ",");
+
+// ============================================================================
+// Tema
+// ----------------------------------------------------------------------------
+// El prototipo 3a es oscuro puro: ese es el aspecto de la app, asi que "dark" es
+// el valor por defecto y no "auto". Quien prefiera claro lo elige en Ajustes y su
+// eleccion manda sobre el sistema.
+// ponytail: sin migracion. Una preferencia guardada antigua ("auto" o "light")
+// se respeta tal cual; solo cambia lo que ve quien nunca ha elegido.
+export const THEME_KEY = "ft-theme";
+
+export function readThemePref() {
+  try {
+    const stored = localStorage.getItem(THEME_KEY);
+    return stored === "auto" || stored === "light" || stored === "dark" ? stored : "dark";
+  } catch {
+    return "dark";
+  }
+}
+
+export function resolveTheme(pref, systemDark) {
+  return pref === "auto" ? (systemDark ? "dark" : "light") : pref;
+}
+
+// ============================================================================
+// Plan semanal
+// ----------------------------------------------------------------------------
+// La semana no necesita modelo nuevo: las rutinas ya traen `suggestedDay` desde
+// fase1Config (0=domingo .. 6=sabado), asi que el plan es "que rutina cae en que
+// dia" leido de las propias rutinas. Reasignar un dia escribe ese campo.
+// ponytail: una rutina por dia. Si algun dia hacen falta dos sesiones el mismo
+// dia, esto pasa a ser una lista y el resto del calculo no cambia.
+export const WEEK_ORDER = [
+  { key: "L", dow: 1, label: "lunes" },
+  { key: "M", dow: 2, label: "martes" },
+  { key: "X", dow: 3, label: "miércoles" },
+  { key: "J", dow: 4, label: "jueves" },
+  { key: "V", dow: 5, label: "viernes" },
+  { key: "S", dow: 6, label: "sábado" },
+  { key: "D", dow: 0, label: "domingo" },
+];
+
+const loggedSets = (workout) =>
+  (workout?.exercises || []).reduce((total, e) => total + (e.sets || []).filter((s) => Number(s.reps) > 0).length, 0);
+
+export function mondayOf(iso) {
+  const dow = new Date(`${iso}T00:00:00`).getDay();
+  return addDays(iso, dow === 0 ? -6 : 1 - dow);
+}
+
+// Estados: hecho (hay series registradas), hoy, perdido (dia pasado con rutina y
+// sin registrar), previsto (futuro con rutina) y libre (sin rutina asignada).
+export function planWeek(routines = [], workouts = [], today = localISO(), weekStart = null) {
+  const monday = weekStart || mondayOf(today);
+  return WEEK_ORDER.map((day, index) => {
+    const iso = addDays(monday, index);
+    const routine = routines.find((r) => r.suggestedDay != null && Number(r.suggestedDay) === day.dow) || null;
+    const workout = workouts.find((w) => w.date === iso) || null;
+    const sets = loggedSets(workout);
+    const state = sets > 0 ? "hecho"
+      : !routine ? "libre"
+        : iso === today ? "hoy"
+          : iso < today ? "perdido" : "previsto";
+    return { ...day, iso, routine, workout, sets, state };
+  });
+}
+
+// Cumplimiento de las N semanas COMPLETAS anteriores a la actual: contar la
+// semana en curso como incumplida solo porque aun no ha terminado convierte el
+// panel en un reproche los lunes.
+export function planCompliance(routines = [], workouts = [], today = localISO(), weeks = 8) {
+  const perWeek = routines.filter((r) => r.suggestedDay != null && r.suggestedDay !== "").length;
+  const thisMonday = mondayOf(today);
+  const rows = [];
+  for (let i = weeks; i >= 1; i--) {
+    const start = addDays(thisMonday, -7 * i);
+    const end = addDays(start, 6);
+    const done = workouts.filter((w) => w.date >= start && w.date <= end && loggedSets(w) > 0).length;
+    rows.push({ start, end, done, planned: perWeek });
+  }
+  const done = rows.reduce((total, r) => total + r.done, 0);
+  const planned = perWeek * weeks;
+  const full = rows.filter((r) => r.planned > 0 && r.done >= r.planned).length;
+  return {
+    weeks: rows, perWeek, done, planned, full,
+    adherence: planned > 0 ? Math.round((done / planned) * 100) : null,
+  };
+}
+
+// Numero de semana desde la primera sesion registrada. La app no guarda inicio
+// de bloque, y el primer entreno es el unico ancla que existe en los datos.
+export function weekNumber(workouts = [], today = localISO()) {
+  const first = workouts.filter((w) => loggedSets(w) > 0).map((w) => w.date).sort()[0];
+  if (!first) return null;
+  return Math.floor(daysBetween(mondayOf(first), mondayOf(today)) / 7) + 1;
+}
+
+// Aplica un ajuste de sesion (quitar ejercicios y cambiar la carga de trabajo)
+// sobre los ejercicios del dia. Regla dura: una serie ya registrada no se toca
+// nunca; cambiarle el peso falsearia el historial de carga y de RPE, que es de
+// donde salen la progresion, los records y el aviso de fatiga.
+// `draft` es [{ id, kg, removed }].
+export function applyAdjustments(exercises = [], draft = []) {
+  const wanted = new Map(draft.map((d) => [d.id, d]));
+  return exercises
+    .filter((e) => !wanted.get(e.id)?.removed)
+    .map((e) => {
+      const target = wanted.get(e.id);
+      if (!target) return e;
+      const pending = (e.sets || []).some((s) => !(Number(s.reps) > 0));
+      if (!pending) return e;
+      return { ...e, sets: (e.sets || []).map((s) => (Number(s.reps) > 0 ? s : { ...s, kg: target.kg ? String(target.kg) : "" })) };
+    });
+}

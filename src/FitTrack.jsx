@@ -1,11 +1,12 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
 import { supabase } from "./supabase.js";
-import { ROUTINE_TEMPLATES, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
+import { PLACES, ROUTINE_TEMPLATES, routinePlace, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS } from "./app-config.js";
 import {
   authUserChanged, canonExercise, epley, loadProgressHighlight, localISO, mergePhotoUrls,
-  migrateWorkouts as migrateWorkoutData, proteinAdherence, validateBackup as validateBackupData,
+  migrateWorkouts as migrateWorkoutData, proteinAdherence, readThemePref, resolveTheme,
+  THEME_KEY, validateBackup as validateBackupData, WEEK_ORDER, applyAdjustments,
 } from "./app-utils.js";
 import { inferCyclePhase } from "./cycle-inference.js";
 import { latestWeight } from "./settings-utils.js";
@@ -27,12 +28,15 @@ import {
   Dumbbell, Scale, Utensils, LayoutDashboard, Plus, Trash2,
   Download, Upload, AlertTriangle,
   Check, ChevronDown, ChevronLeft, ChevronRight, Timer, Play, Pause, RotateCcw,
-  Apple, Pencil, X, Clock, Activity, ListChecks,
-  Settings, Zap, BookOpen
+  Apple, Pencil, X, Clock, Activity, ListChecks, CalendarDays,
+  Settings, Zap, BookOpen, Menu, Sun, Moon, Newspaper
 } from "lucide-react";
 
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
+const DiarioScreen = lazy(() => import("./DiarioScreen.jsx"));
+const SessionScreen = lazy(() => import("./SessionScreen.jsx"));
 const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
+const PlanScreen = lazy(() => import("./PlanScreen.jsx"));
 
 /* ----------------------------- helpers ----------------------------- */
 const uid = () => Math.random().toString(36).slice(2, 10);
@@ -169,8 +173,13 @@ async function sha256(s) {
 /* ----------------------------- styles ----------------------------- */
 export const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+/* El tema tambien en el documento: el fondo del navegador asoma al hacer
+   overscroll y en las pantallas mas cortas que el viewport. */
+html{background:#17150f;color-scheme:dark;}
+html[data-theme="light"]{background:#f3efe6;color-scheme:light;}
 .ft-root *{box-sizing:border-box;}
-.ft-root{--bg:#f3efe6;--panel:#faf7f0;--panel2:#ece6da;--line:#dcd4c2;--text:#16140d;--muted:#6f6a5d;--accent:#e7531c;--accentdim:rgba(231,83,28,.12);--danger:#c0341a;--blue:#2f6f8f;--ok:#3a7d44;font-family:'Hanken Grotesk',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.4;background-image:none;}
+.ft-root{--bg:#f3efe6;--panel:#faf7f0;--panel2:#ece6da;--line:#dcd4c2;--hair:rgba(22,20,13,.10);--text:#16140d;--muted:#6f6a5d;--accent:#e7531c;--accentdim:rgba(231,83,28,.12);--danger:#c0341a;--blue:#2f6f8f;--ok:#3d8b68;--attn:#c4451a;color-scheme:light;font-family:'Hanken Grotesk',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.4;background-image:none;}
+.ft-root[data-theme="dark"]{--bg:#17150f;--panel:#201d16;--panel2:#1e1b14;--line:rgba(243,239,230,.12);--hair:rgba(243,239,230,.08);--text:#f3efe6;--muted:#8b8578;--accent:#e7531c;--accentdim:rgba(231,83,28,.18);--danger:#ff6b4a;--blue:#6fb2f0;--ok:#4fa87f;--attn:#ff8a5c;color-scheme:dark;}
 .ft-mono{font-family:'IBM Plex Mono',monospace;}
 .ft-wrap{max-width:1120px;margin:0 auto;padding:20px 18px 90px;}
 .ft-wrap.with-side{padding-left:74px;}
@@ -226,7 +235,7 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-btn.ghost:hover{border-color:var(--accent);}
 .ft-btn:disabled{opacity:.4;cursor:not-allowed;}
 .ft-trash{background:transparent;border:none;color:var(--muted);cursor:pointer;padding:5px;border-radius:6px;display:grid;place-items:center;}
-.ft-trash:hover{color:var(--danger);background:rgba(255,107,74,.1);}
+.ft-trash:hover{color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,transparent);}
 .ft-datebar{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px;}
 .ft-datebar .nav{background:var(--panel);border:1px solid var(--line);color:var(--text);width:36px;height:36px;border-radius:9px;cursor:pointer;display:grid;place-items:center;}
 .ft-datebar .nav:hover{border-color:var(--accent);}
@@ -255,10 +264,10 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-stat .v small{font-size:13px;color:var(--muted);font-weight:700;margin-left:3px;}
 .ft-stat .sub{font-size:12px;margin-top:7px;color:var(--muted);font-family:'IBM Plex Mono';display:flex;align-items:center;gap:5px;}
 .ft-alert{border-radius:13px;padding:14px 15px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;font-size:14px;}
-.ft-alert.warn{background:rgba(255,107,74,.1);border:1px solid rgba(255,107,74,.4);}
-.ft-alert.ok{background:rgba(61,220,151,.09);border:1px solid rgba(61,220,151,.35);}
-.ft-alert.info{background:rgba(90,209,255,.08);border:1px solid rgba(90,209,255,.3);}
-.ft-alert.pr{background:rgba(197,248,42,.1);border:1px solid rgba(197,248,42,.45);}
+.ft-alert.warn{background:color-mix(in srgb,var(--attn) 12%,transparent);border:1px solid color-mix(in srgb,var(--attn) 42%,transparent);}
+.ft-alert.ok{background:color-mix(in srgb,var(--ok) 12%,transparent);border:1px solid color-mix(in srgb,var(--ok) 38%,transparent);}
+.ft-alert.info{background:color-mix(in srgb,var(--blue) 11%,transparent);border:1px solid color-mix(in srgb,var(--blue) 34%,transparent);}
+.ft-alert.pr{background:var(--accentdim);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);}
 .ft-alert .t{font-weight:700;margin-bottom:3px;}
 .ft-alert .b{color:var(--muted);line-height:1.5;}
 .ft-list{display:flex;flex-direction:column;gap:8px;}
@@ -313,22 +322,163 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-side .label{text-align:left;}
 .ft-lock-box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 24px;width:100%;max-width:340px;}
 .recharts-cartesian-axis-tick-value{font-family:'IBM Plex Mono';font-size:11px;}
-/* ---- brutalist re-skin: sharp corners + editorial chrome ---- */
-.ft-root .ft-card,.ft-root .ft-stat,.ft-root .ft-nav,.ft-root .ft-nav button,.ft-root .ft-btn,.ft-root .ft-iconbtn,.ft-root .ft-input,.ft-root .ft-select,.ft-root .ft-ex,.ft-root .ft-li,.ft-root .ft-lock-box,.ft-root .ft-combo-list,.ft-root .ft-combo-list button,.ft-root .ft-toggle,.ft-root .ft-toggle button,.ft-root .ft-mu,.ft-root .ft-chip,.ft-root .ft-prev,.ft-root .ft-secchip,.ft-root .ft-energy button,.ft-root .ft-photo,.ft-root .ft-alert,.ft-root .ft-set .si,.ft-root .ft-addset,.ft-root .ft-datebar .nav,.ft-root .ft-logo .mark,.ft-root .ft-trash,.ft-root .ft-photo-del{border-radius:0;}
-.ft-root .ft-logo h1{letter-spacing:-.045em;}
-.ft-root .ft-card h2,.ft-root .ft-h3{letter-spacing:-.01em;}
-.ft-root .ft-card{border-color:var(--line);}
-.ft-root .ft-nav button.active,.ft-root .ft-btn,.ft-root .ft-toggle button.on,.ft-root .ft-energy button.on,.ft-root .ft-logo .mark{color:#f3efe6;}
-.ft-root .ft-btn.ghost{color:var(--text);}
-/* ---- editorial panels: hairline framing + section rules + big numerals ---- */
-.ft-root .ft-card{background:var(--bg);padding:22px 24px 24px;}
-.ft-root .ft-card h2{font-family:'Archivo';font-weight:800;font-size:23px;letter-spacing:-.02em;padding-bottom:13px;margin-bottom:18px;border-bottom:1px solid var(--line);}
-.ft-root .ft-card h2 .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;}
-.ft-root .ft-stat{background:var(--bg);padding:18px 20px 20px;}
-.ft-root .ft-stat .k{letter-spacing:.16em;}
-.ft-root .ft-stat .v{font-family:'Archivo';font-size:44px;letter-spacing:-.04em;font-variant-numeric:tabular-nums;}
-.ft-root .ft-stat .v small{font-size:14px;}
-.ft-root .ft-h3{font-size:14px;letter-spacing:.04em;}
+/* ---- sistema visual del prototipo 3a ---------------------------------------
+   Tarjetas suaves (12px), tipo pequena, mono para todo lo que es metadato, y
+   el color como semantica: teal = va bien / accion principal, naranja = pide
+   atencion, azul = ajuste sugerido. --------------------------------------- */
+.ft-dc{max-width:1120px;margin:0 auto;}
+.ft-dc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:0 2px 13px;border-bottom:1px solid var(--line);}
+.ft-dc-head h1{margin:0;font-family:'Archivo';font-weight:700;font-size:24px;line-height:1;letter-spacing:-.03em;}
+.ft-dc-head .sub{display:block;font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.1em;}
+/* Escritorio: las mismas secciones del prototipo repartidas en dos columnas,
+   no una columna de movil estirada. */
+.ft-dc-grid{display:grid;grid-template-columns:1fr;gap:12px;align-items:start;margin-top:12px;}
+.ft-dc-grid>.ft-dc-card,.ft-dc-grid>*>.ft-dc-card{margin-top:0;}
+@media (min-width:860px){.ft-dc-grid{grid-template-columns:1fr 1fr;}.ft-dc-grid .span2{grid-column:1 / -1;}}
+.ft-dc-chips{display:flex;gap:6px;flex-wrap:wrap;padding:14px 0 0;}
+.ft-dc-chips button{font-family:'IBM Plex Mono';font-weight:600;font-size:10.5px;padding:7px 11px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;}
+.ft-dc-chips button:hover{color:var(--text);}
+.ft-dc-chips button.on{background:var(--accentdim);border-color:var(--accent);color:var(--accent);}
+/* Filtros del diario: todo incluido es el estado normal, asi que se pinta
+   callado; lo que llama la atencion es lo que has dejado fuera. */
+.ft-dc-chips button.off{opacity:.4;text-decoration:line-through;}
+/* ---- plan: la semana de un vistazo ---------------------------------------
+   Siete celdas iguales; el punto lleva el estado y el color hace el trabajo:
+   verde hecho, naranja sin registrar, apagado libre o por venir. */
+.ft-plan-week{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:12px;}
+.ft-plan-week button{background:var(--panel);border:0;cursor:pointer;padding:11px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--text);min-width:0;}
+.ft-plan-week button:hover{background:color-mix(in srgb,var(--text) 6%,transparent);}
+.ft-plan-week button.sel{background:color-mix(in srgb,var(--accent) 12%,var(--panel));box-shadow:inset 0 -2px 0 var(--accent);}
+.ft-plan-week .k{font-family:'IBM Plex Mono';font-weight:600;font-size:11px;letter-spacing:.1em;}
+.ft-plan-week .dot{width:7px;height:7px;border-radius:50%;background:var(--line);}
+.ft-root .ft-plan-week .n{font-family:'IBM Plex Mono';font-size:8.5px;letter-spacing:.06em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.ft-plan-week button.hecho .dot{background:var(--ok);}
+.ft-plan-week button.hoy .dot{background:var(--accent);box-shadow:0 0 0 3px var(--accentdim);}
+.ft-plan-week button.perdido .dot{background:var(--attn);}
+.ft-plan-week button.previsto .dot{background:var(--muted);}
+.ft-dc-search{flex:1;min-width:0;background:transparent;border:0;outline:0;font-family:'Hanken Grotesk';font-size:13px;color:var(--text);}
+.ft-dc-search::placeholder{color:var(--muted);}
+.ft-dc-strip{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line);}
+.ft-dc-strip>div,.ft-dc-strip>button{background:var(--bg);padding:12px 14px;display:flex;flex-direction:column;gap:5px;min-width:0;}
+.ft-dc-strip .k{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.14em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ft-dc-strip .v{font-family:'Archivo';font-weight:700;font-size:24px;line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums;}
+.ft-dc-strip .v small{font-family:'IBM Plex Mono';font-weight:500;font-size:10px;color:var(--muted);margin-left:4px;letter-spacing:0;}
+.ft-dc-strip .d{font-family:'IBM Plex Mono';font-weight:500;font-size:10px;color:var(--muted);}
+/* Cifra que se puede abrir: la interrogacion solo aparece al pasar por encima,
+   para no llenar la tira de simbolos. */
+.ft-dc-strip button.ft-kpi{text-align:left;border:0;font:inherit;color:inherit;cursor:pointer;}
+.ft-dc-strip button.ft-kpi:hover{background:color-mix(in srgb,var(--text) 5%,var(--bg));}
+.ft-kpi .why{display:inline-grid;place-items:center;width:12px;height:12px;margin-left:5px;border-radius:50%;border:1px solid var(--line);font-size:8px;color:var(--muted);opacity:0;transition:opacity .12s;vertical-align:1px;}
+.ft-kpi:hover .why,.ft-kpi:focus-visible .why{opacity:1;}
+.ft-dc-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-top:12px;display:flex;flex-direction:column;gap:7px;}
+.ft-dc-card.attn{border-left:3px solid var(--accent);}
+.ft-dc-card .t{font-weight:700;font-size:15px;line-height:1.35;}
+.ft-dc-card .b{font-size:12.5px;line-height:1.45;color:var(--muted);}
+/* Nota al pie: misma voz en cualquier contenedor, no solo dentro de tarjeta. */
+.ft-root .n{font-family:'IBM Plex Mono';font-size:10.5px;line-height:1.5;color:var(--muted);}
+.ft-dc-card .h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.ft-dc-big{font-family:'Archivo';font-weight:700;font-size:30px;line-height:.9;letter-spacing:-.04em;font-variant-numeric:tabular-nums;}
+.ft-dc-big small{font-family:'IBM Plex Mono';font-weight:500;font-size:11px;color:var(--muted);margin-left:5px;letter-spacing:0;}
+.ft-dc-foot{display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--hair);font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);}
+.ft-dc-tag{font-family:'IBM Plex Mono';font-weight:600;font-size:10px;padding:4px 8px;border-radius:5px;background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok);white-space:nowrap;}
+.ft-dc-tag.late{background:color-mix(in srgb,var(--attn) 18%,transparent);color:var(--attn);}
+.ft-dc-kicker{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--attn);}
+.ft-dc-kicker span{color:var(--muted);letter-spacing:.06em;}
+.ft-dc-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px;}
+.ft-dc-btn{font-family:'Hanken Grotesk';font-weight:700;font-size:12px;padding:10px 14px;border:none;border-radius:9px;background:var(--ok);color:var(--bg);cursor:pointer;}
+.ft-dc-btn:hover{filter:brightness(1.08);}
+.ft-dc-btn.warn{background:var(--accent);color:#faf7f0;}
+.ft-dc-btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text);font-weight:600;}
+.ft-dc-btn.ghost:hover{border-color:var(--muted);filter:none;}
+.ft-dc-chip{font-family:'IBM Plex Mono';font-weight:600;font-size:10px;letter-spacing:.06em;padding:6px 9px;border-radius:7px;border:1px solid color-mix(in srgb,var(--ok) 42%,transparent);background:transparent;color:var(--ok);cursor:pointer;}
+.ft-dc-ok{display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--ok) 12%,transparent);border:1px solid color-mix(in srgb,var(--ok) 34%,transparent);border-radius:12px;padding:12px 15px;margin-top:12px;font-weight:600;font-size:12.5px;}
+.ft-dc-quiet{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:color-mix(in srgb,var(--text) 5%,transparent);border:none;border-radius:10px;padding:10px 13px;margin-top:8px;color:var(--muted);font-family:'Hanken Grotesk';font-size:11.5px;cursor:pointer;}
+.ft-dc-quiet:hover{background:color-mix(in srgb,var(--text) 9%,transparent);}
+.ft-dc-quiet .dot{width:7px;height:7px;border-radius:50%;background:var(--attn);flex:none;}
+.ft-dc-day{display:flex;align-items:baseline;justify-content:space-between;gap:9px;padding:18px 2px 7px;}
+.ft-dc-day .t{font-family:'IBM Plex Mono';font-weight:700;font-size:13px;letter-spacing:.04em;}
+.ft-dc-day .m{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);}
+.ft-dc-list{border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.ft-dc-row{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--hair);padding:10px 14px;cursor:pointer;color:inherit;}
+.ft-dc-row:last-child{border-bottom:none;}
+.ft-dc-row:hover{background:color-mix(in srgb,var(--text) 6%,transparent);}
+.ft-dc-row .kind{font-family:'IBM Plex Mono';font-weight:500;font-size:9.5px;letter-spacing:.1em;color:var(--muted);width:58px;flex:none;}
+.ft-dc-row .nm{font-weight:700;font-size:13.5px;}
+.ft-dc-row .mt{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);margin-top:2px;}
+.ft-dc-row .go{font-family:'IBM Plex Mono';font-size:13px;color:var(--muted);}
+.ft-dc-empty{font-family:'IBM Plex Mono';font-size:11.5px;line-height:1.5;color:var(--muted);padding:14px;}
+.ft-dc-step{width:32px;height:32px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--text);font-family:'IBM Plex Mono';font-weight:600;font-size:15px;cursor:pointer;}
+.ft-dc-step:hover{border-color:var(--muted);}
+.ft-dc-rpe{flex:1;min-width:0;text-align:center;font-family:'IBM Plex Mono';font-weight:600;font-size:11px;padding:9px 0;border-radius:6px;background:transparent;border:1px solid var(--line);color:var(--muted);cursor:pointer;}
+.ft-dc-rpe:hover{color:var(--text);}
+/* ---- movil: barra inferior de 5 destinos (Diario · Metricas · + · Plan · Mas) ---- */
+.ft-tabbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:45;align-items:flex-end;gap:4px;padding:8px 12px calc(10px + env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--line);}
+.ft-tabbar button{flex:1;background:none;border:none;color:var(--muted);cursor:pointer;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:5px;font-family:'IBM Plex Mono';font-weight:600;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;}
+.ft-tabbar button.active{color:var(--accent);}
+.ft-tabbar button.add{color:var(--muted);}
+.ft-tabbar button.add .circle{width:52px;height:52px;border-radius:50%;background:var(--ok);color:var(--bg);display:grid;place-items:center;box-shadow:0 6px 18px var(--accentdim);}
+.ft-sheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;}
+.ft-sheet-panel{width:100%;max-width:560px;margin:0 auto;border-radius:16px 16px 0 0;max-height:80vh;overflow:auto;background:var(--panel);border-top:1px solid var(--line);padding:16px 16px calc(20px + env(safe-area-inset-bottom));animation:ft-up .18s ease;}
+@keyframes ft-up{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.ft-sheet-panel h3{margin:0 0 12px;font-family:'Archivo';font-weight:800;text-transform:uppercase;font-size:15px;letter-spacing:-.01em;display:flex;align-items:center;}
+.ft-sheet-panel h3 button{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;}
+.ft-sheet-row{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;border-bottom:1px solid var(--line);color:var(--text);padding:14px 2px;cursor:pointer;font:600 14px 'Hanken Grotesk',sans-serif;text-align:left;}
+.ft-sheet-row:last-child{border-bottom:none;}
+.ft-sheet-row .sub{margin-left:auto;font-family:'IBM Plex Mono';font-size:11px;color:var(--muted);font-weight:400;}
+@media (max-width:720px){
+  .ft-side{display:none;}
+  .ft-wrap.with-side{padding-left:18px;padding-bottom:104px;}
+  .ft-tabbar{display:flex;}
+}
+/* ---- re-skin 3a ------------------------------------------------------------
+   Las pantallas que todavia no se reescribieron (Entrenar, Nutricion,
+   Biblioteca, Rutinas, Ajustes) se pintan con estas clases base, asi que
+   traducirlas aqui las migra a la vez sin tocar su JSX: tarjeta suave sobre
+   panel, cabecera en mono en vez del titular de 23px, cifras de 24px en vez de
+   44 y teal para la accion principal. ---------------------------------------- */
+.ft-root .ft-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px 17px;margin-bottom:12px;}
+.ft-root .ft-card h2{font-family:'IBM Plex Mono';font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;padding-bottom:0;border-bottom:none;gap:8px;}
+.ft-root .ft-card h2 .tag{font-size:10px;letter-spacing:.06em;color:var(--muted);}
+.ft-root .ft-h3{font-family:'IBM Plex Mono';font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.ft-root .ft-stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px 15px;}
+.ft-root .ft-stat .k{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.14em;margin-bottom:6px;}
+.ft-root .ft-stat .v{font-family:'Archivo';font-weight:700;font-size:24px;letter-spacing:-.035em;font-variant-numeric:tabular-nums;}
+.ft-root .ft-stat .v small{font-family:'IBM Plex Mono';font-size:10px;font-weight:500;}
+.ft-root .ft-stat .sub{font-size:10.5px;margin-top:6px;}
+.ft-root .ft-btn{border-radius:9px;background:var(--ok);color:var(--bg);font-weight:700;font-size:12px;padding:10px 14px;}
+.ft-root .ft-btn:hover{filter:brightness(1.08);}
+.ft-root .ft-btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text);font-weight:600;}
+.ft-root .ft-btn.ghost:hover{border-color:var(--muted);filter:none;}
+.ft-root .ft-iconbtn{border-radius:9px;font-size:11.5px;}
+.ft-root .ft-input,.ft-root .ft-select{border-radius:9px;background:var(--panel2);font-size:13px;padding:9px 11px;}
+.ft-root .ft-field label{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.14em;}
+.ft-root .ft-li{border-radius:10px;background:var(--panel2);padding:10px 13px;}
+.ft-root .ft-li .li-main{font-size:13.5px;font-weight:700;}
+.ft-root .ft-li .li-d,.ft-root .ft-li .li-sub{font-size:10.5px;}
+.ft-root .ft-ex{border-radius:12px;background:var(--panel2);}
+.ft-root .ft-ex-head .nm{font-size:14px;}
+.ft-root .ft-toggle{border-radius:9px;}
+.ft-root .ft-toggle button{border-radius:7px;font-size:11.5px;}
+.ft-root .ft-toggle button.on{background:var(--accentdim);color:var(--accent);}
+.ft-root .ft-energy button{border-radius:8px;}
+.ft-root .ft-energy button.on{background:var(--accentdim);color:var(--accent);border-color:var(--accent);}
+.ft-root .ft-chip,.ft-root .ft-mu,.ft-root .ft-measures button{border-radius:6px;}
+.ft-root .ft-secchip{border-radius:20px;}
+.ft-root .ft-secchip.on{border-color:var(--ok);color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent);}
+.ft-root .ft-set .si,.ft-root .ft-addset{border-radius:8px;}
+.ft-root .ft-alert{border-radius:12px;font-size:13px;}
+.ft-root .ft-alert .t{font-size:14px;}
+.ft-root .ft-alert .b{font-size:12.5px;}
+.ft-root .ft-combo-list,.ft-root .ft-lock-box{border-radius:12px;}
+.ft-root .ft-combo-list button{font-size:13px;}
+.ft-root .ft-prev{border-radius:10px;font-size:12px;}
+.ft-root .ft-photo{border-radius:10px;}
+.ft-root .ft-photo-del,.ft-root .ft-trash{border-radius:8px;}
+.ft-root .ft-datebar .nav{border-radius:9px;}
+.ft-root .ft-logo .mark,.ft-root .ft-side-logo .mark{border-radius:9px;}
+.ft-root .ft-nav button{border-radius:9px;}
+.ft-root .ft-nav button.active,.ft-root .ft-logo .mark,.ft-root .ft-side-logo .mark{color:#f3efe6;}
+.ft-root .ft-empty{font-family:'IBM Plex Mono';font-size:12px;}
 `;
 
 /* ----------------------------- shared: food combo ----------------------------- */
@@ -375,7 +525,28 @@ function AmountField({ food, value, onChange, onEnter, label = "Cantidad" }) {
 
 /* ----------------------------- APP ----------------------------- */
 export default function App() {
-  const [tab, setTab] = useState("entrenar");
+  const [tab, setTab] = useState("diario");
+  // Fecha a la que salta la pantalla destino. La fija quien navega (una fila del
+  // Diario); las llamadas normales a setTab la dejan en null = hoy.
+  const [focusDate, setFocusDate] = useState(null);
+  const goTo = (next, date = null) => { setFocusDate(date); setTab(next); };
+  // Tema: oscuro por defecto, que es el aspecto del prototipo. "auto" sigue al
+  // sistema (y reacciona si el sistema cambia); "light" y "dark" son eleccion
+  // explicita y mandan sobre el sistema.
+  const [themePref, setThemePref] = useState(readThemePref);
+  const [systemDark, setSystemDark] = useState(() => typeof matchMedia === "function" && matchMedia("(prefers-color-scheme: dark)").matches);
+  useEffect(() => {
+    if (typeof matchMedia !== "function") return undefined;
+    const query = matchMedia("(prefers-color-scheme: dark)");
+    const update = (event) => setSystemDark(event.matches);
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  useEffect(() => { try { localStorage.setItem(THEME_KEY, themePref); } catch { /* almacenamiento bloqueado */ } }, [themePref]);
+  const theme = resolveTheme(themePref, systemDark);
+  // El fondo del documento tambien: .ft-root solo pinta lo que ocupa, y al hacer
+  // overscroll o con la pantalla a medias asomaba el blanco del navegador.
+  useEffect(() => { document.documentElement.setAttribute("data-theme", theme); }, [theme]);
   const [session, setSession] = useState(undefined); // undefined = cargando, null = sin sesión
   const [sessionError, setSessionError] = useState("");
   const [sessionAttempt, setSessionAttempt] = useState(0);
@@ -581,19 +752,36 @@ export default function App() {
   ].filter(Boolean).join(" · ");
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sheet, setSheet] = useState(null);
+
+  // La barra inferior lleva 5 destinos; lo que no cabe vive en la hoja "Mas".
+  const MORE_TABS = ["entrenar", "cuerpo", "nutricion", "biblioteca", "rutinas", "ajustes"];
+  const ADD_ROWS = [
+    { id: "entrenar", label: "Entreno", sub: "series y RPE", icon: Dumbbell },
+    { id: "nutricion", label: "Comida", sub: "kcal y macros", icon: Utensils },
+    { id: "cuerpo", label: "Peso, medidas y nota", sub: "y ciclo", icon: Scale },
+  ];
+  const MORE_ROWS = [
+    { id: "entrenar", label: "Entrenar", sub: "sesión del día", icon: Dumbbell },
+    { id: "cuerpo", label: "Cuerpo", sub: "peso · medidas · fotos", icon: Scale },
+    { id: "nutricion", label: "Nutrición", sub: "comidas del día", icon: Utensils },
+    { id: "biblioteca", label: "Biblioteca", sub: "alimentos · recetas · rutinas", icon: Apple },
+    { id: "ajustes", label: "Ajustes", sub: "objetivos y cuenta", icon: Settings },
+  ];
 
   const NAV = [
+    { id: "diario", label: "Diario", icon: Newspaper },
     { id: "entrenar", label: "Entrenar", icon: Dumbbell },
     { id: "cuerpo", label: "Cuerpo", icon: Scale },
     { id: "nutricion", label: "Nutrición", icon: Utensils },
     { id: "biblioteca", label: "Biblioteca", icon: Apple },
-    { id: "rutinas", label: "Rutinas", icon: ListChecks },
+    { id: "plan", label: "Plan", icon: CalendarDays },
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "ajustes", label: "Ajustes", icon: Settings },
   ];
 
   return (
-    <div className="ft-root">
+    <div className="ft-root" data-theme={theme}>
       <style>{CSS}</style>
       {session === undefined ? (
         <div className="ft-wrap"><div className="ft-empty">
@@ -630,13 +818,16 @@ export default function App() {
             </button>
             <nav className="ft-nav">
               {NAV.map(({ id, label, icon: Ic }) => (
-                <button key={id} className={tab === id ? "active" : ""} onClick={() => { setTab(id); setMenuOpen(false); }} title={label}>
+                <button key={id} className={tab === id ? "active" : ""} onClick={() => { goTo(id); setMenuOpen(false); }} title={label}>
                   <Ic size={17} /><span className="label">{label}</span>
                 </button>
               ))}
             </nav>
             <div className="ft-side-foot">
               <SaveIndicator />
+              <button className="ft-iconbtn" onClick={() => setThemePref(theme === "dark" ? "light" : "dark")} title="Tema" aria-label="Cambiar tema">
+                {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}<span className="label">Tema {theme === "dark" ? "oscuro" : "claro"}</span>
+              </button>
               <button className="ft-iconbtn" onClick={exportData} title="Exportar" aria-label="Exportar"><Download size={15} /><span className="label">Exportar</span></button>
               <button className="ft-iconbtn" onClick={() => fileRef.current.click()} title="Importar" aria-label="Importar"><Upload size={15} /><span className="label">Importar</span></button>
               <input ref={fileRef} type="file" accept="application/json" hidden onChange={importData} />
@@ -649,21 +840,63 @@ export default function App() {
               </div>
             </div>
           </aside>
-          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} />}
+          {tab === "diario" && (
+            <Suspense fallback={<div className="ft-empty">Cargando Diario…</div>}>
+              <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements} wellness={wellness} goals={goals} setGoals={setGoals} setTab={goTo} />
+            </Suspense>
+          )}
+          {tab === "entrenar" && <Train workouts={workouts} setWorkouts={setWorkouts} routines={routines} setRoutines={setRoutines} userId={userId} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} initialDate={focusDate} />}
           {tab === "cuerpo" && (
             <Suspense fallback={<div className="ft-empty">Cargando Cuerpo…</div>}>
-              <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} menstrualLogs={menstrualLogs} setMenstrualLogs={setMenstrualLogs} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} />
+              <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} menstrualLogs={menstrualLogs} setMenstrualLogs={setMenstrualLogs} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} initialDate={focusDate} />
             </Suspense>
           )}
-          {tab === "nutricion" && <Nutrition nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={setTab} />}
-          {tab === "biblioteca" && <Library foods={foods} setFoods={setFoods} recipes={recipes} setRecipes={setRecipes} />}
-          {tab === "rutinas" && <Routines routines={routines} setRoutines={setRoutines} />}
+          {tab === "nutricion" && <Nutrition nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={setTab} initialDate={focusDate} />}
+          {(tab === "biblioteca" || tab === "rutinas") && (
+            <Library key={tab} foods={foods} setFoods={setFoods} recipes={recipes} setRecipes={setRecipes}
+              routines={routines} setRoutines={setRoutines} initialView={tab === "rutinas" ? "rutinas" : "mis"} />
+          )}
+          {tab === "plan" && (
+            <Suspense fallback={<div className="ft-empty">Cargando Plan…</div>}>
+              <PlanScreen routines={routines} setRoutines={setRoutines} workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements} wellness={wellness} setTab={goTo} />
+            </Suspense>
+          )}
           {tab === "dashboard" && (
             <Suspense fallback={<div className="ft-empty">Cargando Dashboard…</div>}>
-              <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} />
+              <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={routines} />
             </Suspense>
           )}
-          {tab === "ajustes" && <SettingsScreen goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} />}
+          {tab === "ajustes" && <SettingsScreen goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} themePref={themePref} setThemePref={setThemePref} theme={theme} />}
+
+          <nav className="ft-tabbar">
+            <button className={tab === "diario" ? "active" : ""} onClick={() => goTo("diario")}><Newspaper size={18} />Diario</button>
+            <button className={tab === "dashboard" ? "active" : ""} onClick={() => goTo("dashboard")}><LayoutDashboard size={18} />Métricas</button>
+            <button className="add" onClick={() => setSheet("add")} aria-label="Registrar"><span className="circle"><Plus size={26} /></span>Añadir</button>
+            <button className={tab === "plan" ? "active" : ""} onClick={() => goTo("plan")}><CalendarDays size={18} />Plan</button>
+            <button className={MORE_TABS.includes(tab) ? "active" : ""} onClick={() => setSheet("more")}><Menu size={18} />Más</button>
+          </nav>
+
+          {sheet && (
+            <div className="ft-sheet" onClick={() => setSheet(null)}>
+              <div className="ft-sheet-panel" onClick={(e) => e.stopPropagation()}>
+                <h3>{sheet === "add" ? "Registrar" : "Más"}<button onClick={() => setSheet(null)} aria-label="Cerrar"><X size={18} /></button></h3>
+                {(sheet === "add" ? ADD_ROWS : MORE_ROWS).map(({ id, label, sub, icon: Ic }) => (
+                  <button key={id} className="ft-sheet-row" onClick={() => { goTo(id); setSheet(null); }}>
+                    <Ic size={17} />{label}<span className="sub">{sub}</span>
+                  </button>
+                ))}
+                {sheet === "more" && (
+                  <>
+                    <button className="ft-sheet-row" onClick={() => setThemePref(theme === "dark" ? "light" : "dark")}>
+                      {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}Tema<span className="sub">{theme === "dark" ? "oscuro" : "claro"}</span>
+                    </button>
+                    <button className="ft-sheet-row" onClick={() => { setSheet(null); exportData(); }}><Download size={17} />Exportar<span className="sub">json</span></button>
+                    <button className="ft-sheet-row" onClick={() => { setSheet(null); fileRef.current.click(); }}><Upload size={17} />Importar<span className="sub">json</span></button>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -687,8 +920,8 @@ function DateBar({ date, setDate }) {
 }
 
 /* ----------------------------- TRAIN ----------------------------- */
-export function Train({ workouts, setWorkouts, routines, setRoutines, userId, periods = [], menstrualLogs = [], wellness = [] }) {
-  const [date, setDate] = useState(todayISO());
+export function Train({ workouts, setWorkouts, routines, setRoutines, userId, periods = [], menstrualLogs = [], wellness = [], initialDate }) {
+  const [date, setDate] = useState(initialDate || todayISO());
   // Fase ovulatoria/ventana fértil probable: mayor laxitud articular es común (no es
   // sobreentrenamiento ni requiere bajar volumen, es cuidado de técnica/rango en
   // patrones de rodilla y cadera-lumbar bajo carga). Solo se muestra con confianza
@@ -725,6 +958,9 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
     });
     return map;
   }, [workouts, date]);
+  // La sesion guiada no es otra pantalla: es otro modo de la misma, sobre los
+  // mismos datos. Una serie con reps ya es una serie registrada.
+  const [inSession, setInSession] = useState(false);
   const [durInput, setDurInput] = useState(session.durationMin ? String(session.durationMin) : "");
   useEffect(() => { setDurInput(session.durationMin ? String(session.durationMin) : ""); }, [date, session.durationMin]);
   const commitDuration = () => writeSession({ durationMin: Number(durInput) || 0 });
@@ -791,6 +1027,24 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
   const addSet = (exId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: [...e.sets, { id: uid(), reps: "", kg: "", rpe: "" }] }));
   const delSet = (exId, sId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: e.sets.length > 1 ? e.sets.filter((s) => s.id !== sId) : e.sets }));
   const delEx = (exId) => upEx(exercises.filter((e) => e.id !== exId));
+  // Carga de golpe para todo un ejercicio. Reutiliza applyAdjustments, que ya
+  // impone la regla dura: una serie registrada no se reescribe nunca, porque de
+  // ahi salen los records, la progresion y el aviso de fatiga.
+  const setExerciseLoad = (exId, kg) => upEx(applyAdjustments(exercises, [{ id: exId, kg, removed: false }]));
+  // La rutina del dia, para poder quitar un ejercicio tambien de ella y que no
+  // vuelva a proponerse la semana que viene.
+  const dayRoutine = routines.find((r) => r.suggestedDay != null && Number(r.suggestedDay) === new Date(`${date}T00:00:00`).getDay()) || null;
+  const delExEverywhere = (exId) => {
+    const target = exercises.find((e) => e.id === exId);
+    if (target && dayRoutine) {
+      setRoutines((prev) => prev.map((r) => (r.id === dayRoutine.id
+        ? { ...r, exercises: (r.exercises || []).filter((x) => x.name !== target.name) }
+        : r)));
+    }
+    delEx(exId);
+  };
+  const [removingId, setRemovingId] = useState(null);
+  const [manualOpen, setManualOpen] = useState(false);
   const addCardio = () => { if (!cardio.minutes) return; writeSession({ cardio: [...cardioList, { id: uid(), type: cardio.type, minutes: Number(cardio.minutes), kcal: Number(cardio.kcal) || 0 }] }); setCardio({ type: CARDIO_TYPES[0], minutes: "", kcal: "" }); };
   const delCardio = (id) => writeSession({ cardio: cardioList.filter((c) => c.id !== id) });
 
@@ -837,9 +1091,38 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
     setRoutines((prev) => [...prev, { id: uid(), name: nm.trim(), exercises: items }]);
   };
 
+  if (inSession && exercises.length > 0) {
+    return (
+      <Suspense fallback={<div className="ft-empty">Cargando sesión…</div>}>
+        <SessionScreen
+          exercises={exercises}
+          writeExercises={(next) => writeSession({ exercises: next })}
+          lastPerformance={lastPerformance}
+          onExit={(minutes) => {
+            if (minutes > 0 && minutes > (session.durationMin || 0)) writeSession({ durationMin: minutes });
+            setInSession(false);
+          }}
+        />
+      </Suspense>
+    );
+  }
+
   return (
     <>
-      <ScreenMast kicker="FITTRACK · ENTRENAR" title="Entrenar" right={<EDateNav date={date} setDate={setDate} />} />
+      <ScreenMast
+        kicker="FITTRACK · ENTRENAR"
+        title="Entrenar"
+        right={
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <EDateNav date={date} setDate={setDate} />
+            {exercises.length > 0 && (
+              <button className="ft-dc-btn" onClick={() => setInSession(true)}>
+                {exercises.some((e) => (e.sets || []).some((x) => Number(x.reps) > 0)) ? "Seguir sesión" : "Empezar sesión"}
+              </button>
+            )}
+          </div>
+        }
+      />
       {strengthHighlight && (
         <Headline
           kicker="Lo que importa ahora · Fuerza"
@@ -871,52 +1154,56 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
             : <button className="ft-btn ghost" onClick={pauseT}><Pause size={15} /> Pausar</button>}
           <button className="ft-btn ghost" onClick={resetT}><RotateCcw size={15} /> Reiniciar</button>
           <button className="ft-btn ghost" onClick={commitT} disabled={tSec < 60}><Check size={15} /> Guardar (+{Math.round(tSec / 60)} min)</button>
-        </div>
-        <div className="ft-row" style={{ marginTop: 12 }}>
-          <div className="ft-field" style={{ maxWidth: 200 }}><label>Minutos (editar a mano)</label>
-            <input className="ft-input ft-mono" type="number" inputMode="numeric" enterKeyHint="done" value={durInput} placeholder="0"
-              onChange={(e) => setDurInput(e.target.value)}
-              onBlur={commitDuration}
-              onKeyDown={(e) => { if (e.key === "Enter") { commitDuration(); e.currentTarget.blur(); } }} /></div>
+          <input className="ft-input ft-mono" style={{ maxWidth: 96 }} type="number" inputMode="numeric" enterKeyHint="done" value={durInput} placeholder="min"
+            aria-label="Minutos de la sesión (editar a mano)" title="Minutos (editar a mano)"
+            onChange={(e) => setDurInput(e.target.value)}
+            onBlur={commitDuration}
+            onKeyDown={(e) => { if (e.key === "Enter") { commitDuration(); e.currentTarget.blur(); } }} />
         </div>
       </div>
 
+      {/* Casi todos los dias se empieza cargando una rutina, no escribiendo un
+          ejercicio a mano. Lo habitual va en una fila; el alta manual, plegada. */}
       <div className="ft-card">
-        <h2><Plus size={16} /> Añadir ejercicio</h2>
-        <div className="ft-row" style={{ marginBottom: 12, alignItems: "flex-end" }}>
+        <h2><Plus size={16} /> Preparar el día</h2>
+        <div className="ft-row" style={{ gap: 8 }}>
           {routines.length > 0 && (
-            <div className="ft-field" style={{ maxWidth: 300 }}><label>Cargar una rutina completa</label>
-              <select className="ft-select" value="" onChange={(e) => loadRoutine(e.target.value)}>
-                <option value="">Elegir rutina…</option>
-                {routines.map((r, i) => <option key={r.id} value={i}>{r.name} ({r.exercises.length} ej.)</option>)}
-              </select></div>
+            <select className="ft-select" style={{ flex: "1 1 190px" }} value="" onChange={(e) => loadRoutine(e.target.value)} aria-label="Cargar una rutina completa">
+              <option value="">Cargar rutina…</option>
+              {routines.map((r, i) => <option key={r.id} value={i}>{r.name} ({r.exercises.length} ej.)</option>)}
+            </select>
           )}
           {routinesWithMin.length > 0 && (
-            <div className="ft-field" style={{ maxWidth: 260 }}><label>Versión mínima (día difícil)</label>
-              <select className="ft-select" value="" onChange={(e) => loadMinimal(e.target.value)}>
-                <option value="">Elegir mínima…</option>
-                {routinesWithMin.map(({ r, i }) => <option key={r.id} value={i}>{r.name.split("—")[0].trim()} · {minimalFor(r).length} ej.{minimalMin(r) ? ` · ${minimalMin(r)} min` : ""}</option>)}
-              </select></div>
+            <select className="ft-select" style={{ flex: "1 1 170px" }} value="" onChange={(e) => loadMinimal(e.target.value)} aria-label="Cargar la versión mínima de una rutina">
+              <option value="">Versión mínima…</option>
+              {routinesWithMin.map(({ r, i }) => <option key={r.id} value={i}>{r.name.split("—")[0].trim()} · {minimalFor(r).length} ej.{minimalMin(r) ? ` · ${minimalMin(r)} min` : ""}</option>)}
+            </select>
           )}
-          <div className="ft-field" style={{ flex: "none" }}><label>Antes de empezar</label>
-            <button className="ft-btn ghost" onClick={loadWarmup} title="Añade los 7 ejercicios de movilidad y suma 10 min de duración"><Zap size={15} /> Calentamiento 10 min</button></div>
+          <button className="ft-btn ghost" style={{ flex: "none" }} onClick={loadWarmup} title="Añade los 7 ejercicios de movilidad y suma 10 min de duración"><Zap size={15} /> Calentamiento</button>
+          <button className="ft-btn ghost" style={{ flex: "none" }} aria-expanded={manualOpen} onClick={() => setManualOpen((v) => !v)}>
+            {manualOpen ? <X size={15} /> : <Plus size={15} />} Ejercicio suelto
+          </button>
         </div>
-        <div className="ft-row" style={{ marginBottom: 10 }}>
-          <div className="ft-field" style={{ flex: 2, minWidth: 150 }}><label>Ejercicio</label>
-            <input className="ft-input" placeholder="Ej. Press banca" value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addExercise()} /></div>
-          <div className="ft-field"><label>Sugerencias · {primary}</label>
-            <select className="ft-select" value="" onChange={(e) => applyPreset(e.target.value)}>
-              <option value="">Elegir ejercicio…</option>
-              {EXERCISE_PRESETS.map((p, i) => p.primary === primary ? <option key={p.name} value={i}>{p.name}</option> : null)}
-            </select></div>
-          <div className="ft-field"><label>Músculo primario</label>
-            <select className="ft-select" value={primary} onChange={(e) => setPrimary(e.target.value)}>{MUSCLES.map((m) => <option key={m}>{m}</option>)}</select></div>
-        </div>
-        <label style={{ fontSize: 11, color: "var(--muted)", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 600 }}>Músculos secundarios (multiarticular)</label>
-        <div className="ft-secchips">
-          {MUSCLES.filter((m) => m !== primary).map((m) => <span key={m} className={"ft-secchip" + (secondary.includes(m) ? " on" : "")} onClick={() => toggleSec(m)}>{m}</span>)}
-        </div>
-        <div style={{ marginTop: 14 }}><button className="ft-btn" onClick={addExercise}><Plus size={15} /> Añadir ejercicio</button></div>
+
+        {manualOpen && (
+          <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--hair)" }}>
+            <div className="ft-row" style={{ gap: 8 }}>
+              <input className="ft-input" style={{ flex: "2 1 160px" }} placeholder="Nombre del ejercicio" aria-label="Nombre del ejercicio" value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addExercise()} />
+              <select className="ft-select" style={{ flex: "1 1 150px" }} value="" onChange={(e) => applyPreset(e.target.value)} aria-label={`Sugerencias de ${primary}`}>
+                <option value="">Sugerencias · {primary}</option>
+                {EXERCISE_PRESETS.map((p, i) => p.primary === primary ? <option key={p.name} value={i}>{p.name}</option> : null)}
+              </select>
+              <select className="ft-select" style={{ flex: "1 1 120px" }} value={primary} onChange={(e) => setPrimary(e.target.value)} aria-label="Músculo primario">
+                {MUSCLES.map((m) => <option key={m}>{m}</option>)}
+              </select>
+              <button className="ft-btn" style={{ flex: "none" }} onClick={addExercise}><Plus size={15} /> Añadir</button>
+            </div>
+            <div className="n" style={{ marginTop: 8 }}>Secundarios (opcional, para repartir el volumen en los multiarticulares)</div>
+            <div className="ft-secchips" style={{ marginTop: 4 }}>
+              {MUSCLES.filter((m) => m !== primary).map((m) => <span key={m} className={"ft-secchip" + (secondary.includes(m) ? " on" : "")} onClick={() => toggleSec(m)}>{m}</span>)}
+            </div>
+          </div>
+        )}
       </div>
 
       {exercises.length === 0 ? (
@@ -952,8 +1239,31 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
                       <AlertTriangle size={14} style={{ color: "var(--accent)" }} />
                     </span>
                   )}
-                  <button className="ft-trash" onClick={() => delEx(ex.id)}><Trash2 size={16} /></button>
+                  {removingId === ex.id ? (
+                    <span style={{ display: "flex", gap: 6, alignItems: "center", marginLeft: "auto" }}>
+                      <button className="ft-dc-chip" onClick={() => { delEx(ex.id); setRemovingId(null); }}>SOLO HOY</button>
+                      <button className="ft-dc-chip" onClick={() => { delExEverywhere(ex.id); setRemovingId(null); }}>Y DE LA RUTINA</button>
+                      <button className="ft-trash" aria-label="Cancelar" onClick={() => setRemovingId(null)}><X size={15} /></button>
+                    </span>
+                  ) : (
+                    <button className="ft-trash" aria-label={`Quitar ${ex.name}`} onClick={() => (dayRoutine ? setRemovingId(ex.id) : delEx(ex.id))}><Trash2 size={16} /></button>
+                  )}
                 </div>
+                {ex.sets.some((s) => !(Number(s.reps) > 0)) && (() => {
+                  const kgs = ex.sets.map((s) => Number(s.kg) || 0).filter((kg) => kg > 0);
+                  const load = kgs.length ? Math.max(...kgs) : 0;
+                  const step = ["Cuádriceps", "Femoral", "Glúteos", "Aductores", "Gemelos"].includes(ex.primary) ? 5 : 2.5;
+                  return (
+                    <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 9 }}>
+                      <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 9, letterSpacing: ".14em", color: "var(--muted)" }}>PENDIENTES</span>
+                      <button className="ft-dc-step" style={{ width: 26, height: 26, fontSize: 13 }} aria-label={`Bajar carga pendiente de ${ex.name}`} onClick={() => setExerciseLoad(ex.id, Math.max(0, load - step))}>−</button>
+                      <span style={{ fontFamily: "'IBM Plex Mono'", fontWeight: 600, fontSize: 12, minWidth: 62, textAlign: "center" }}>
+                        {load ? `${String(load).replace(".", ",")} kg` : "sin carga"}
+                      </span>
+                      <button className="ft-dc-step" style={{ width: 26, height: 26, fontSize: 13 }} aria-label={`Subir carga pendiente de ${ex.name}`} onClick={() => setExerciseLoad(ex.id, load + step)}>+</button>
+                    </div>
+                  );
+                })()}
                 {last && (
                   <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "'IBM Plex Mono'", marginBottom: 8 }}>
                     Última vez ({fmtDate(last.date)}): <b style={{ color: "var(--text)" }}>{last.kg} kg × {last.reps}</b>{last.rpe ? ` @ RPE ${last.rpe}` : ""}
@@ -1005,8 +1315,8 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
 
 /* ----------------------------- BODY (peso + medidas + bienestar) ----------------------------- */
 /* ----------------------------- NUTRITION ----------------------------- */
-export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setTab }) {
-  const [date, setDate] = useState(todayISO());
+export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setTab, initialDate }) {
+  const [date, setDate] = useState(initialDate || todayISO());
   const [mode, setMode] = useState("biblioteca");
   const [sel, setSel] = useState(null); const [grams, setGrams] = useState("");
   const [recId, setRecId] = useState(""); const [servings, setServings] = useState("1");
@@ -1031,7 +1341,7 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
 
   return (
     <div style={{ fontFamily: A_DISP, color: A_INK }}>
-      <ScreenMast kicker="FITTRACK · HOY" title="Nutrición" right={<EDateNav date={date} setDate={setDate} />} />
+      <ScreenMast kicker={date === todayISO() ? "FITTRACK · HOY" : "FITTRACK · OTRO DÍA"} title="Nutrición" right={<EDateNav date={date} setDate={setDate} />} />
       {adherence && (
         <Headline
           kicker="Lo que importa ahora · Proteína"
@@ -1115,8 +1425,11 @@ export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setT
 }
 
 /* ----------------------------- LIBRARY (alimentos + catálogo + recetas) ----------------------------- */
-export function Library({ foods, setFoods, recipes, setRecipes }) {
-  const [view, setView] = useState("mis");
+// Una sola biblioteca: alimentos, recetas y rutinas. Son tres catalogos de lo
+// mismo -- cosas guardadas que luego se cargan en un registro -- y tenerlos en
+// destinos distintos obligaba a saber de antemano en cual habias guardado algo.
+export function Library({ foods, setFoods, recipes, setRecipes, routines = [], setRoutines = () => {}, initialView = "mis" }) {
+  const [view, setView] = useState(initialView);
   const [f, setF] = useState({ name: "", kcal: "", protein: "", carbs: "", fat: "", unit: "g" });
   const [editId, setEditId] = useState(null); const [q, setQ] = useState("");
   const [catFilter, setCatFilter] = useState("Todas"); const [catQ, setCatQ] = useState("");
@@ -1163,7 +1476,10 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
         <button className={view === "mis" ? "on" : ""} onClick={() => setView("mis")}>Mis alimentos ({foods.length})</button>
         <button className={view === "catalogo" ? "on" : ""} onClick={() => setView("catalogo")}>Catálogo</button>
         <button className={view === "recetas" ? "on" : ""} onClick={() => setView("recetas")}>Recetas ({recipes.length})</button>
+        <button className={view === "rutinas" ? "on" : ""} onClick={() => setView("rutinas")}>Rutinas ({routines.length})</button>
       </div>
+
+      {view === "rutinas" && <Routines routines={routines} setRoutines={setRoutines} embedded />}
 
       {view === "mis" && (<>
         <div className="ft-card">
@@ -1244,10 +1560,93 @@ export function Library({ foods, setFoods, recipes, setRecipes }) {
 }
 
 /* ----------------------------- ROUTINES ----------------------------- */
-export function Routines({ routines, setRoutines }) {
+// El dia que le toca a una rutina vive en la propia rutina (suggestedDay), asi
+// que Rutinas y Plan cuentan lo mismo sin pasarse nada.
+const dayNameOf = (routine) => {
+  const day = WEEK_ORDER.find((d) => routine.suggestedDay != null && Number(routine.suggestedDay) === d.dow);
+  return day ? day.label : null;
+};
+
+const exLine = (exercise) => [
+  exercise.primary || "Sin grupo",
+  `${exercise.targetSets || 3}×${exercise.targetReps || "8"}`,
+  exercise.targetRpe ? `RPE ${exercise.targetRpe}` : null,
+  exercise.restSec ? `${exercise.restSec}s` : null,
+].filter(Boolean).join(" · ");
+
+// El calentamiento y la version minima ya estaban en fase1Config pero solo se
+// podian cargar desde Entrenar: aqui se ven antes de decidir.
+function RoutineDetail({ routine }) {
+  const minimal = routine.minimal?.exercises || null;
+  return (
+    <div className="ft-li-detail">
+      {routine.hasWarmup && (
+        <>
+          <div className="ft-h3" style={{ marginBottom: 8 }}>Bloque 0 · Calentamiento</div>
+          <div className="ft-dc-card" style={{ marginTop: 0, marginBottom: 14, gap: 6 }}>
+            <div className="n">{WARMUP.durationMin} min · obligatorio antes de cualquier sesión de fuerza</div>
+            <div className="n" style={{ color: "var(--text)" }}>{WARMUP.exercises.map((w) => w.name).join(" · ")}</div>
+            {WARMUP.note && <div className="n">{WARMUP.note}</div>}
+          </div>
+        </>
+      )}
+
+      <div className="ft-h3" style={{ marginBottom: 8 }}>{routine.hasWarmup ? "Bloque 1 · Principal" : "Ejercicios"}</div>
+      {routine.exercises.map((exercise, index) => (
+        <div className="ft-li" key={exercise.id || index}>
+          <span className="li-main">
+            {exercise.name}
+            {exercise.isOptional && <span className="ft-dc-tag late" style={{ marginLeft: 8 }}>OPCIONAL</span>}
+          </span>
+          <span className="li-sub">{exLine(exercise)}</span>
+        </div>
+      ))}
+      {routine.exercises.some((e) => e.notes) && (
+        <div className="n" style={{ marginTop: 10 }}>
+          {routine.exercises.filter((e) => e.notes).map((e) => `${e.name}: ${e.notes}`).join(" · ")}
+        </div>
+      )}
+
+      {minimal && (
+        <>
+          <div className="ft-h3" style={{ margin: "16px 0 8px" }}>Versión mínima</div>
+          <div className="ft-dc-card" style={{ marginTop: 0, gap: 6 }}>
+            <div className="n">
+              {routine.minimal.durationMin ? `${routine.minimal.durationMin} min · ` : ""}
+              Para días de cólicos, energía baja o RPE al alza: mantiene el estímulo en una fracción del tiempo.
+            </div>
+            <div className="n" style={{ color: "var(--text)" }}>
+              {minimal.map((e) => `${e.name} ${e.targetSets || 2}×${e.targetReps || ""}`.trim()).join(" · ")}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export function Routines({ routines, setRoutines, embedded = false }) {
   const [name, setName] = useState("");
   const [items, setItems] = useState([]);
   const [editRoutineId, setEditRoutineId] = useState(null); const [openRoutineId, setOpenRoutineId] = useState(null);
+  // Filtro por grupo muscular: sale de los propios ejercicios, no de una lista
+  // fija, asi que solo aparecen los grupos que alguna rutina trabaja de verdad.
+  const [muscleFilter, setMuscleFilter] = useState("todos");
+  // Lugar: se deduce de los ejercicios, no de una etiqueta escrita a mano, asi
+  // que sigue siendo cierto cuando editas la rutina.
+  const [placeFilter, setPlaceFilter] = useState("todos");
+  const placeOf = useMemo(() => new Map(routines.map((r) => [r.id, routinePlace(r)])), [routines]);
+  const placeTabs = useMemo(
+    () => ["todos", ...PLACES.filter((place) => [...placeOf.values()].includes(place))],
+    [placeOf],
+  );
+  const muscleTabs = useMemo(
+    () => ["todos", ...[...new Set(routines.flatMap((r) => (r.exercises || []).map((e) => e.primary).filter(Boolean)))].sort()],
+    [routines],
+  );
+  const shownRoutines = routines
+    .filter((r) => muscleFilter === "todos" || (r.exercises || []).some((e) => e.primary === muscleFilter))
+    .filter((r) => placeFilter === "todos" || placeOf.get(r.id) === placeFilter);
   const [exName, setExName] = useState(""); const [primary, setPrimary] = useState(MUSCLES[0]); const [secondary, setSecondary] = useState([]);
   const [sets, setSets] = useState("3"); const [reps, setReps] = useState("8");
 
@@ -1274,8 +1673,7 @@ export function Routines({ routines, setRoutines }) {
 
   return (
     <>
-      <ScreenMast kicker="FITTRACK · RUTINAS" title="Rutinas" />
-      <div style={{ height: 16 }} />
+      {!embedded && <><ScreenMast kicker="FITTRACK · RUTINAS" title="Rutinas" /><div style={{ height: 16 }} /></>}
       <div className="ft-alert info"><ListChecks size={20} color="var(--blue)" /><div><div className="t">Plantillas de entrenamiento</div><div className="b">Define tus días (A / B / C, Push / Pull / Legs…) una vez. Después, en Entrenar las cargas con un toque: registrar pasa a ser editar, no escribir desde cero.</div></div></div>
       <div className="ft-card">
         <h2>{editRoutineId ? <Pencil size={16} /> : <Plus size={16} />} {editRoutineId ? "Editar rutina" : "Nueva rutina"}</h2>
@@ -1298,21 +1696,58 @@ export function Routines({ routines, setRoutines }) {
       </div>
       <div className="ft-card">
         <h2><ListChecks size={16} /> Mis rutinas <span className="tag">{routines.length}</span></h2>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12 }}>
           <button className="ft-btn ghost" onClick={loadTemplates}><Download size={15} /> Cargar plantillas Fase 1</button>
           <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 11, color: "var(--muted)" }}>{ROUTINE_TEMPLATES.length} rutinas guía · Empuje/Tracción/Pierna + accesorio + amable</span>
         </div>
-        {routines.length === 0 ? <div className="ft-empty">Aún no has creado rutinas. Usa “Cargar plantillas Fase 1” para empezar con las rutinas guía, o créalas a mano arriba.</div> : (
-          <div className="ft-list">{routines.map((r) => { const open = openRoutineId === r.id; return (
+        {placeTabs.length > 2 && (
+          <>
+            <div className="ft-h3" style={{ marginBottom: 6 }}>Lugar</div>
+            <div className="ft-dc-chips" style={{ paddingTop: 0, marginBottom: 6 }}>
+              {placeTabs.map((place) => (
+                <button key={place} className={placeFilter === place ? "on" : ""} onClick={() => setPlaceFilter(place)}>
+                  {place.toUpperCase()}
+                </button>
+              ))}
+            </div>
+            <div className="n" style={{ marginBottom: 14 }}>
+              Se deduce de los ejercicios: una rutina vale para el sitio que pide su movimiento más exigente.
+              El calentamiento obligatorio usa minibanda, así que ninguna sesión de fuerza es del todo sin material.
+            </div>
+          </>
+        )}
+        {muscleTabs.length > 1 && (
+          <div className="ft-dc-chips" style={{ paddingTop: 0, marginBottom: 14 }}>
+            {muscleTabs.map((m) => (
+              <button key={m} className={muscleFilter === m ? "on" : ""} onClick={() => setMuscleFilter(m)}>
+                {m === "todos" ? "TODOS" : m.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        )}
+        {routines.length === 0 ? <div className="ft-empty">Aún no has creado rutinas. Usa “Cargar plantillas Fase 1” para empezar con las rutinas guía, o créalas a mano arriba.</div> : shownRoutines.length === 0 ? (
+          <div className="ft-empty">
+            {placeFilter !== "todos" && muscleFilter !== "todos"
+              ? `Ninguna rutina de ${placeFilter} trabaja ${muscleFilter} como grupo principal.`
+              : placeFilter !== "todos"
+                ? `Ninguna rutina se puede hacer en ${placeFilter}.`
+                : `Ninguna rutina trabaja ${muscleFilter} como grupo principal.`}
+          </div>
+        ) : (
+          <div className="ft-list">{shownRoutines.map((r) => { const open = openRoutineId === r.id; return (
             <div className="ft-li-group" key={r.id}>
               <div className="ft-li">
                 <span className="li-main">{r.name}</span>
-                <span className="li-sub">{r.focus ? `${r.focus} · ` : ""}{r.exercises.length} ej.{r.estimatedMin ? ` · ~${r.estimatedMin} min` : ""}</span>
+                <span className="li-sub">
+                  {r.focus ? `${r.focus} · ` : ""}{r.exercises.length} ej.{r.estimatedMin ? ` · ~${r.estimatedMin} min` : ""}
+                  {dayNameOf(r) && <span className="ft-dc-tag" style={{ marginLeft: 8 }}>{dayNameOf(r).toUpperCase()}</span>}
+                  <span className="ft-mu" style={{ marginLeft: 6 }}>{placeOf.get(r.id)}</span>
+                </span>
                 <button className="ft-btn ghost ft-detail-toggle" style={{ padding: "7px 10px" }} aria-expanded={open} onClick={() => setOpenRoutineId(open ? null : r.id)}><ChevronDown size={14} /> {open ? "Ocultar" : "Ver ejercicios"}</button>
                 <button className="ft-trash" aria-label={`Editar ${r.name}`} title="Editar rutina" onClick={() => editRoutine(r)}><Pencil size={15} /></button>
                 <button className="ft-trash" aria-label={`Eliminar ${r.name}`} title="Eliminar rutina" onClick={() => delRoutine(r.id)}><Trash2 size={15} /></button>
               </div>
-              {open && <div className="ft-li-detail">{r.exercises.map((exercise) => <div className="ft-li" key={exercise.id}><span className="li-main">{exercise.name}</span><span className="li-sub">{exercise.primary || "Sin grupo"}{exercise.secondary?.length ? ` · ${exercise.secondary.join(", ")}` : ""}</span><span className="li-v">{exercise.targetSets || 3}×{exercise.targetReps || "8"}</span></div>)}</div>}
+              {open && <RoutineDetail routine={r} />}
             </div>
           ); })}</div>
         )}

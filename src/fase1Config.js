@@ -392,3 +392,57 @@ export function templateToAppRoutine(tpl, uid) {
       : null,
   };
 }
+
+
+// ============================================================================
+// 6. DÓNDE SE PUEDE HACER CADA RUTINA
+// ----------------------------------------------------------------------------
+// El equipo no se guarda a mano en cada plantilla: se infiere del nombre del
+// ejercicio, igual que `guessPrimaryMuscle` infiere el músculo. Así sigue siendo
+// correcto cuando la usuaria edita una rutina o crea la suya, que es justo
+// cuando una etiqueta escrita a mano se queda vieja.
+//
+// Tres niveles, del menos al más exigente:
+//   0 · casa sin equipo   — solo peso corporal
+//   1 · casa con equipo   — mancuernas, banda, disco, TRX, barra vacía, rueda
+//   2 · gimnasio          — barra cargada, máquinas, poleas, barra de dominadas
+//
+// Una rutina vale para el nivel de su ejercicio MÁS exigente: si un solo
+// movimiento pide polea, la sesión entera pide gimnasio.
+//
+// Aviso de alcance: el calentamiento obligatorio (WARMUP) incluye abducción con
+// minibanda, así que ninguna sesión de fuerza es estrictamente "sin material".
+// El nivel describe los ejercicios de la rutina, no el calentamiento.
+// ponytail: heurística por nombre, no un campo nuevo. Nombres ambiguos como
+// "Remo" o "Sentadilla" se leen como la versión con barra, que es como aparecen
+// en estas plantillas. Si algún día se equivoca de más, el arreglo es un campo
+// `equipment` opcional que pise la heurística, no reescribir esto.
+export const PLACES = ["casa sin equipo", "casa con equipo", "gimnasio"];
+
+const EQUIPMENT_KEYWORDS = [
+  // El orden manda: lo explícito primero. "Bisagra sin peso o con banda" es
+  // peso corporal, aunque mencione la banda como alternativa.
+  [/sin peso|peso corporal/i, 0],
+  [/plancha|bird dog|cat-?cow|respiraci[oó]n|reverse crunch|flexion/i, 0],
+  [/puente de gl[uú]teo (en piso|a una pierna)/i, 0],
+  [/m[aá]quina|polea|jal[oó]n|dominad|prensa|extensi[oó]n de cu[aá]driceps|curl femoral/i, 2],
+  [/press banca|press inclinado|peso muerto|^remo$|^remo\b(?!.*trx)|^sentadilla$/i, 2],
+  [/trx|minibanda|banda|mancuerna|disco|goblet|barra vac[ií]a|palo|rueda/i, 1],
+  [/b[uú]lgara|step-?up|hip thrust|pallof|curl|elevaciones laterales|press militar|extensi[oó]n tr[ií]ceps|p[aá]jaros/i, 1],
+];
+
+/** Nivel de equipo que exige un ejercicio: 0 sin equipo, 1 casa, 2 gimnasio. */
+export function guessEquipmentLevel(name) {
+  const text = String(name || "");
+  for (const [pattern, level] of EQUIPMENT_KEYWORDS) {
+    if (pattern.test(text)) return level;
+  }
+  return 1; // sin pistas, lo prudente es asumir que hace falta algo
+}
+
+/** Dónde se puede hacer una rutina: la exigencia de su ejercicio más duro. */
+export function routinePlace(routine) {
+  const exercises = routine?.exercises || [];
+  if (!exercises.length) return PLACES[0];
+  return PLACES[Math.max(...exercises.map((e) => guessEquipmentLevel(e.name)))];
+}

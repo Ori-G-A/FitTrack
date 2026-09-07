@@ -1,6 +1,33 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addDays, authUserChanged, daysBetween, loadProgressHighlight, proteinAdherence, weightTrendHighlight, localISO, lutealRetentionKg, matchedLoadRpeTrend, mergePhotoUrls, migrateWorkouts, selectFreshRecords, slopePerDay, validateBackup } from "../src/app-utils.js";
+import {
+  addDays,
+  applyAdjustments,
+  authUserChanged,
+  dayFeed,
+  daysBetween,
+  loadProgressHighlight,
+  localISO,
+  lutealRetentionKg,
+  matchedLoadRpeTrend,
+  mergePhotoUrls,
+  migrateWorkouts,
+  mondayOf,
+  nextSetAdvice,
+  parseRpeTarget,
+  planCompliance,
+  planWeek,
+  proteinAdherence,
+  readThemePref,
+  resolveTheme,
+  searchFeed,
+  selectFreshRecords,
+  slopePerDay,
+  stepsToday,
+  validateBackup,
+  weekNumber,
+  weightTrendHighlight,
+} from "../src/app-utils.js";
 
 const DEFAULT_GOALS = { kcalTarget: 2200, proteinTarget: 150, autoMacros: false };
 
@@ -233,4 +260,252 @@ test("la adherencia de proteina solo cuenta los dias registrados", () => {
   assert.equal(adherence.avg, 135);
   // sin objetivo no hay nada que comparar
   assert.equal(proteinAdherence(nutrition, 0, "2026-09-01"), null);
+});
+
+test("dayFeed reúne entreno, comidas y cuerpo del día en una sola lista", () => {
+  const date = "2026-09-06";
+  const entries = dayFeed(date, {
+    workouts: [{ id: "w1", date, durationMin: 52, exercises: [{ name: "Sentadilla", sets: [{ reps: 5, kg: 100, rpe: "8" }, { reps: 5, kg: 100, rpe: "8" }] }], cardio: [{ id: "c1", type: "Bici", minutes: 30, kcal: 210 }] }],
+    nutrition: [{ id: "n1", date, name: "Avena", kcal: 320, protein: 12 }, { id: "n2", date: "2026-09-05", name: "Ayer", kcal: 100, protein: 5 }],
+    weights: [{ id: "p1", date, kg: 68.4 }],
+    measurements: [{ id: "m1", date, cintura: 74, cadera: null, pecho: null, brazo: null, muslo: null }],
+    wellness: [{ id: "s1", date, sleep: 7, energy: 4, notes: "" }],
+  });
+  assert.deepEqual(entries.map((e) => e.kind), ["entreno", "cardio", "comida", "peso", "medidas", "nota"]);
+  assert.equal(entries[0].meta, "52 min · 2 series · 1000 kg · RPE 8");
+  assert.equal(entries[2].meta, "320 kcal · 12 g P");
+  assert.equal(entries[3].title, "68,4 kg");
+  assert.equal(entries[4].meta, "cintura 74 cm");
+});
+
+test("dayFeed ignora el ruido: sesión vacía, nota en blanco y días ajenos", () => {
+  const date = "2026-09-06";
+  const entries = dayFeed(date, {
+    workouts: [{ id: "w1", date, exercises: [] }],
+    wellness: [{ id: "s1", date, sleep: null, energy: null, notes: "   " }],
+    nutrition: [{ id: "n1", date: "2026-09-05", name: "Ayer", kcal: 100 }],
+  });
+  assert.deepEqual(entries, []);
+});
+
+// --- autoregulacion intra-sesion ------------------------------------------
+test("parseRpeTarget entiende rangos y valores sueltos", () => {
+  assert.deepEqual(parseRpeTarget("7–8"), [7, 8]);
+  assert.deepEqual(parseRpeTarget("6-7"), [6, 7]);
+  assert.deepEqual(parseRpeTarget("8"), [8, 8]);
+  assert.equal(parseRpeTarget("—"), null);
+});
+
+test("pasarse un punto del objetivo pide backoff, no progresión", () => {
+  const advice = nextSetAdvice({ rpe: "9", targetRpe: "7–8", kg: 80, muscle: "Pecho" });
+  assert.equal(advice.kind, "backoff");
+  assert.equal(advice.kg, 74.5); // ~7% menos, redondeado a medio kilo
+});
+
+test("una serie al fallo en un accesorio también pide backoff", () => {
+  const advice = nextSetAdvice({ rpe: "10", targetRpe: "6", kg: 30, muscle: "Tríceps" });
+  assert.equal(advice.kind, "backoff");
+  assert.match(advice.text, /fallo/);
+});
+
+test("quedarse corta sube más en tren inferior que en superior", () => {
+  assert.equal(nextSetAdvice({ rpe: "6", targetRpe: "7–8", kg: 100, muscle: "Cuádriceps" }).kg, 105);
+  assert.equal(nextSetAdvice({ rpe: "6", targetRpe: "7–8", kg: 40, muscle: "Bíceps" }).kg, 42.5);
+});
+
+test("dentro del rango objetivo se repite la carga", () => {
+  const advice = nextSetAdvice({ rpe: "7.5", targetRpe: "7–8", kg: 60, muscle: "Espalda" });
+  assert.equal(advice.kind, "hold");
+  assert.equal(advice.kg, 60);
+});
+
+test("sin RPE registrado no se aconseja nada", () => {
+  assert.equal(nextSetAdvice({ rpe: "", targetRpe: "7–8", kg: 60 }), null);
+});
+
+// --- tema ------------------------------------------------------------------
+test("el tema por defecto es oscuro, que es el aspecto del prototipo", () => {
+  // Sin localStorage (aqui) o sin valor guardado, oscuro. Un valor invalido
+  // tampoco debe colar: la app pinta data-theme con lo que salga de aqui.
+  assert.equal(readThemePref(), "dark");
+  assert.equal(resolveTheme("dark", false), "dark");
+  assert.equal(resolveTheme("light", true), "light");
+  // "auto" es lo unico que consulta al sistema.
+  assert.equal(resolveTheme("auto", true), "dark");
+  assert.equal(resolveTheme("auto", false), "light");
+});
+
+// --- busqueda del diario ---------------------------------------------------
+const searchData = {
+  workouts: [{
+    id: "w1", date: "2026-09-01", durationMin: 55, cardio: [{ id: "c1", type: "Bici", minutes: 40, kcal: 300 }],
+    exercises: [{ id: "e1", name: "Press banca", sets: [{ id: "s1", reps: "8", kg: "60", rpe: "8" }] }],
+  }],
+  nutrition: [{ id: "n1", date: "2026-08-20", name: "Avena en copos", kcal: 380, protein: 13 }],
+  weights: [{ id: "p1", date: "2026-08-15", kg: 70 }],
+  measurements: [], wellness: [{ id: "x1", date: "2026-07-02", sleep: 6, energy: 3, notes: "Récord en remo" }],
+};
+
+test("la búsqueda encuentra ejercicios que la fila no llega a mostrar", () => {
+  // La sesión se pinta como "Sesión · 1 ejercicio": sin el campo de búsqueda
+  // aparte, teclear el nombre del ejercicio no encontraría nada.
+  const hit = searchFeed("press banca", searchData);
+  assert.equal(hit.length, 1);
+  assert.equal(hit[0].date, "2026-09-01");
+  assert.equal(hit[0].kind, "entreno");
+  assert.doesNotMatch(hit[0].title, /press/i);
+  // Y la fila dice cuál fue el ejercicio que coincidió, o no se entiende por qué sale.
+  assert.match(hit[0].meta, /^Press banca ·/);
+});
+
+test("la búsqueda cubre alimentos, notas y cardio, y ordena por fecha", () => {
+  assert.equal(searchFeed("avena", searchData)[0].kind, "comida");
+  assert.equal(searchFeed("récord", searchData)[0].kind, "nota");
+  assert.equal(searchFeed("bici", searchData)[0].kind, "cardio");
+  // Varias coincidencias salen de más reciente a más antigua.
+  const fechas = searchFeed("a", { ...searchData }).map((r) => r.date);
+  assert.deepEqual([...fechas].sort((a, b) => b.localeCompare(a)), fechas);
+});
+
+test("la búsqueda calla con menos de dos caracteres y no inventa resultados", () => {
+  assert.deepEqual(searchFeed("", searchData), []);
+  assert.deepEqual(searchFeed("p", searchData), []);
+  assert.deepEqual(searchFeed("zzzz", searchData), []);
+});
+
+test("la búsqueda respeta el tope de resultados", () => {
+  const muchos = { nutrition: Array.from({ length: 60 }, (_, i) => ({ id: `n${i}`, date: addDays("2026-01-01", i), name: "Avena", kcal: 100, protein: 5 })) };
+  assert.equal(searchFeed("avena", muchos).length, 40);
+  assert.equal(searchFeed("avena", muchos, { limit: 5 }).length, 5);
+});
+
+// --- plan semanal ----------------------------------------------------------
+const sesion = (date, sets = 3) => ({
+  id: `w-${date}`, date, durationMin: 50,
+  exercises: [{ id: "e", name: "Sentadilla", sets: Array.from({ length: sets }, (_, i) => ({ id: `s${i}`, reps: "8", kg: "80", rpe: "8" })) }],
+});
+const planRoutines = [
+  { id: "r1", name: "Empuje", suggestedDay: 1, exercises: [] },
+  { id: "r2", name: "Tracción", suggestedDay: 4, exercises: [] },
+];
+
+test("la semana empieza en lunes, venga de donde venga la fecha", () => {
+  assert.equal(mondayOf("2026-09-06"), "2026-08-31"); // domingo cae en su propia semana
+  assert.equal(mondayOf("2026-08-31"), "2026-08-31"); // lunes
+  assert.equal(mondayOf("2026-09-02"), "2026-08-31"); // miércoles
+});
+
+test("cada día del plan sabe si está hecho, pendiente o perdido", () => {
+  // Miércoles 2 sept: el lunes tenía Empuje y se registró; el jueves está por venir.
+  const week = planWeek(planRoutines, [sesion("2026-08-31")], "2026-09-02");
+  const byKey = Object.fromEntries(week.map((d) => [d.key, d.state]));
+  assert.equal(byKey.L, "hecho");
+  assert.equal(byKey.M, "libre");   // sin rutina asignada
+  assert.equal(byKey.J, "previsto");
+  // Sin registrar un día pasado con rutina, el estado es "perdido" y no "libre":
+  // la diferencia entre no tocaba y no lo hiciste es justo lo que se viene a ver.
+  const tarde = planWeek(planRoutines, [], "2026-09-06");
+  assert.equal(tarde.find((d) => d.key === "L").state, "perdido");
+  assert.equal(tarde.find((d) => d.key === "J").state, "perdido");
+});
+
+test("un día con serie registrada cuenta como hecho aunque no estuviera planificado", () => {
+  const week = planWeek(planRoutines, [sesion("2026-09-01")], "2026-09-02");
+  assert.equal(week.find((d) => d.key === "M").state, "hecho");
+  // Una sesión cargada pero sin reps no cuenta: el plan mide lo hecho, no lo abierto.
+  const vacia = { id: "w0", date: "2026-09-01", exercises: [{ id: "e", sets: [{ id: "s", reps: "", kg: "", rpe: "" }] }] };
+  assert.equal(planWeek(planRoutines, [vacia], "2026-09-02").find((d) => d.key === "M").state, "libre");
+});
+
+test("el cumplimiento mide semanas completas, no la que está en curso", () => {
+  // Hoy es martes de la semana del 31 ago; la ventana son las 8 semanas previas.
+  const previas = ["2026-08-24", "2026-08-27", "2026-08-17", "2026-08-20"].map((d) => sesion(d));
+  const c = planCompliance(planRoutines, [...previas, sesion("2026-09-01")], "2026-09-01");
+  assert.equal(c.perWeek, 2);
+  assert.equal(c.planned, 16);
+  assert.equal(c.done, 4);          // la sesión de esta semana queda fuera
+  assert.equal(c.adherence, 25);
+  assert.equal(c.full, 2);          // dos semanas con las dos sesiones
+  assert.equal(c.weeks.length, 8);
+});
+
+test("sin días asignados el cumplimiento no inventa un porcentaje", () => {
+  const c = planCompliance([{ id: "r", name: "Suelta", exercises: [] }], [sesion("2026-08-24")], "2026-09-01");
+  assert.equal(c.perWeek, 0);
+  assert.equal(c.adherence, null);
+});
+
+test("el número de semana cuenta desde la primera sesión registrada", () => {
+  assert.equal(weekNumber([sesion("2026-08-31")], "2026-08-31"), 1);
+  assert.equal(weekNumber([sesion("2026-08-31")], "2026-09-06"), 1); // misma semana
+  assert.equal(weekNumber([sesion("2026-08-31")], "2026-09-07"), 2);
+  assert.equal(weekNumber([], "2026-09-06"), null);
+});
+
+// --- ajustar la sesión ------------------------------------------------------
+test("ajustar la carga solo reescribe las series que faltan por hacer", () => {
+  const exercises = [{
+    id: "a", name: "Press banca", sets: [
+      { id: "s1", reps: "8", kg: "60", rpe: "8" },   // hecha: intocable
+      { id: "s2", reps: "", kg: "60", rpe: "" },     // pendiente
+      { id: "s3", reps: "", kg: "60", rpe: "" },
+    ],
+  }];
+  const [out] = applyAdjustments(exercises, [{ id: "a", kg: 55, removed: false }]);
+  assert.equal(out.sets[0].kg, "60");  // ya registrada: el historial no se falsea
+  assert.equal(out.sets[0].reps, "8");
+  assert.equal(out.sets[1].kg, "55");
+  assert.equal(out.sets[2].kg, "55");
+});
+
+test("un ejercicio con todo registrado no cambia aunque se pida otra carga", () => {
+  const exercises = [{ id: "a", name: "Sentadilla", sets: [{ id: "s1", reps: "5", kg: "100", rpe: "8" }] }];
+  const [out] = applyAdjustments(exercises, [{ id: "a", kg: 80, removed: false }]);
+  assert.equal(out.sets[0].kg, "100");
+});
+
+test("quitar un ejercicio lo saca de la sesión y deja intactos los demás", () => {
+  const exercises = [
+    { id: "a", name: "Press", sets: [{ id: "s1", reps: "", kg: "40", rpe: "" }] },
+    { id: "b", name: "Remo", sets: [{ id: "s2", reps: "10", kg: "50", rpe: "7" }] },
+  ];
+  const out = applyAdjustments(exercises, [{ id: "a", kg: 40, removed: true }, { id: "b", kg: 50, removed: false }]);
+  assert.equal(out.length, 1);
+  assert.equal(out[0].name, "Remo");
+  assert.equal(out[0].sets[0].kg, "50");
+});
+
+test("sin carga se vacía el kilaje de las series pendientes, no se pone un cero", () => {
+  const exercises = [{ id: "a", name: "Fondos", sets: [{ id: "s1", reps: "", kg: "20", rpe: "" }] }];
+  const [out] = applyAdjustments(exercises, [{ id: "a", kg: 0, removed: false }]);
+  assert.equal(out.sets[0].kg, "");
+});
+
+test("un día de descanso sigue teniendo contenido: el Plan lo lee con dayFeed", () => {
+  const datos = {
+    workouts: [],
+    nutrition: [{ id: "n1", date: "2026-09-01", name: "Yogur", kcal: 346, protein: 28 }],
+    weights: [{ id: "w1", date: "2026-09-01", kg: 69 }],
+    measurements: [],
+    wellness: [{ id: "s1", date: "2026-09-01", sleep: 6.4, energy: 2, notes: "" }],
+  };
+  // El dia no tiene sesion, que es justo el caso en el que el Plan antes no
+  // mostraba nada y su unico boton mandaba a Entrenar.
+  const resto = dayFeed("2026-09-01", datos).filter((e) => e.kind !== "entreno");
+  assert.deepEqual(resto.map((e) => e.kind), ["comida", "peso", "nota"]);
+  assert.deepEqual(resto.map((e) => e.tab), ["nutricion", "cuerpo", "cuerpo"]);
+});
+
+test("los pasos de hoy se leen contra la media de los 7 días anteriores", () => {
+  const wellness = [
+    { date: "2026-08-30", steps: 6000 }, { date: "2026-08-31", steps: 8000 },
+    { date: "2026-09-01", steps: 0 }, // sin registrar: no arrastra la media a la baja
+    { date: "2026-09-06", steps: 9000 },
+  ];
+  const hoy = stepsToday(wellness, "2026-09-06");
+  assert.equal(hoy.today, 9000);
+  assert.equal(hoy.avg, 7000);
+  assert.equal(hoy.days, 2);
+  // Un día sin dato no es un día de cero pasos.
+  assert.equal(stepsToday(wellness, "2026-09-05").today, null);
 });

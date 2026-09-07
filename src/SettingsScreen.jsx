@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Check, Download, Flame, Lock, Target, Trash2, X } from "lucide-react";
+import { AlertTriangle, Check, Download, Flame, Lock, Moon, Target, Trash2, X } from "lucide-react";
 import { ACTIVITY_LEVELS } from "./app-config.js";
 import { Headline, ScreenMast } from "./EditorialUI.jsx";
 import { distributeProtein, PROTEIN_CONFIG } from "./fase1Config.js";
@@ -13,7 +13,9 @@ const PACE_MODES = [
 ];
 const modeOf = (weeklyChange) => (Number(weeklyChange) < 0 ? "deficit" : Number(weeklyChange) > 0 ? "volumen" : "mantener");
 
-export default function SettingsScreen({ goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData }) {
+const THEME_MODES = [["auto", "Sistema"], ["light", "Claro"], ["dark", "Oscuro"]];
+
+export default function SettingsScreen({ goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData, themePref = "auto", setThemePref, theme = "light" }) {
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const updateGoal = (key, value) => setGoals((current) => ({ ...current, [key]: value }));
@@ -94,7 +96,7 @@ export default function SettingsScreen({ goals, setGoals, weights, exportData, u
             </div>
             <div className="ft-field" style={{ marginBottom: 12 }}>
               <label>Ritmo objetivo: {goals.weeklyChange > 0 ? "+" : ""}{Number(goals.weeklyChange).toFixed(2)} kg/semana{goals.weeklyChange < 0 ? " (déficit)" : goals.weeklyChange > 0 ? " (volumen)" : " (mantenimiento)"}</label>
-              <input type="range" min="-1" max="1" step="0.05" value={goals.weeklyChange} onChange={(event) => updateGoal("weeklyChange", Number(event.target.value))} style={{ accentColor: "#e7531c", width: "100%" }} />
+              <input type="range" min="-1" max="1" step="0.05" value={goals.weeklyChange} onChange={(event) => updateGoal("weeklyChange", Number(event.target.value))} style={{ accentColor: "var(--accent)", width: "100%" }} />
             </div>
             {direction && <div className="ft-prev" style={{ marginTop: 0 }}><span>Objetivo detectado:</span><b style={{ color: direction === "perder grasa" ? "var(--blue)" : direction === "ganar músculo" ? "var(--accent)" : "var(--text)" }}>{direction}</b></div>}
           </div>
@@ -105,13 +107,13 @@ export default function SettingsScreen({ goals, setGoals, weights, exportData, u
               <div className="ft-field"><label>Nivel de actividad</label><select className="ft-select" value={goals.activity} onChange={(event) => updateGoal("activity", event.target.value)}>{ACTIVITY_LEVELS.map((activity) => <option key={activity.key} value={activity.key}>{activity.label}</option>)}</select></div>
             </div>
             <label style={{ display: "flex", alignItems: "center", gap: 9, cursor: "pointer", marginBottom: 14, fontSize: 14 }}>
-              <input type="checkbox" checked={goals.autoMacros} onChange={(event) => updateGoal("autoMacros", event.target.checked)} style={{ accentColor: "#e7531c", width: 18, height: 18 }} />
+              <input type="checkbox" checked={goals.autoMacros} onChange={(event) => updateGoal("autoMacros", event.target.checked)} style={{ accentColor: "var(--accent)", width: 18, height: 18 }} />
               Calcular calorías y proteína automáticamente desde mi peso
             </label>
             {goals.autoMacros && (
               <div className="ft-field" style={{ marginBottom: 14 }}>
                 <label>Proteína por kg de peso: {proteinPerKg.toFixed(1)} g/kg{referenceWeight ? ` · ${Math.round(referenceWeight * proteinPerKg)} g/día para ${Math.round(referenceWeight * 10) / 10} kg` : ""}</label>
-                <input type="range" min={PROTEIN_CONFIG.minGPerKg} max={PROTEIN_CONFIG.maxGPerKg} step="0.1" value={proteinPerKg} onChange={(event) => updateGoal("proteinPerKg", Number(event.target.value))} style={{ accentColor: "#e7531c", width: "100%" }} />
+                <input type="range" min={PROTEIN_CONFIG.minGPerKg} max={PROTEIN_CONFIG.maxGPerKg} step="0.1" value={proteinPerKg} onChange={(event) => updateGoal("proteinPerKg", Number(event.target.value))} style={{ accentColor: "var(--accent)", width: "100%" }} />
                 <div className="ft-mono" style={{ fontSize: 11, color: "var(--muted)" }}>1.6 conservador · 2.0 recomendado en déficit · 2.4 máximo. El objetivo se recalcula solo al cambiar tu peso.</div>
               </div>
             )}
@@ -142,6 +144,17 @@ export default function SettingsScreen({ goals, setGoals, weights, exportData, u
         </div>
 
         <div>
+          <div className="ft-card">
+            <h2><Moon size={16} /> Apariencia</h2>
+            <div className="ft-toggle" style={{ display: "flex", width: "100%", flexWrap: "nowrap", marginBottom: 0 }}>
+              {THEME_MODES.map(([key, label]) => (
+                <button key={key} className={themePref === key ? "on" : ""} style={{ flex: 1, minWidth: 0 }} onClick={() => setThemePref?.(key)}>{label}</button>
+              ))}
+            </div>
+            <p style={{ color: "var(--muted)", fontSize: 13, marginBottom: 0 }}>
+              {themePref === "auto" ? `Sigue a tu sistema: ahora mismo está en ${theme === "dark" ? "oscuro" : "claro"}.` : "Elección fija; no cambia aunque tu sistema cambie."}
+            </p>
+          </div>
           <div className="ft-card"><h2><Lock size={16} /> Cuenta</h2><p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 0 }}>Sesión activa: <strong style={{ color: "var(--text)" }}>{userEmail}</strong></p><button className="ft-btn ghost" onClick={signOut}><X size={15} /> Cerrar sesión</button></div>
           <div className="ft-card"><h2><Download size={16} /> Copia de seguridad</h2><p style={{ color: "var(--muted)", fontSize: 14, marginTop: 0 }}>Tus datos, incluidas las fotos, se sincronizan con tu cuenta en Supabase. Exporta un JSON periódicamente como copia adicional; puedes reimportarlo desde el menú lateral.</p><button className="ft-btn" onClick={exportData}><Download size={15} /> Exportar copia ahora</button></div>
           <div className="ft-card">

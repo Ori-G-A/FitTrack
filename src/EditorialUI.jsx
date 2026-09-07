@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { localISO } from "./app-utils.js";
 
-export const A_INK = "#16140d";
-export const A_INK2 = "#6a655a";
-export const A_ACC = "#e7531c";
-export const A_OK = "#3a7d44";
-export const A_DANGER = "#c0341a";
+export const A_INK = "var(--text)";
+export const A_INK2 = "var(--muted)";
+export const A_ACC = "var(--accent)";
+export const A_OK = "var(--ok)";
+export const A_DANGER = "var(--danger)";
 export const A_DISP = "'Archivo', sans-serif";
 export const A_MONO = "'IBM Plex Mono', monospace";
-export const A_PAPER = "#f3efe6";
-export const A_LINE = "rgba(22,20,13,0.16)";
-export const A_HAIR = "rgba(22,20,13,0.10)";
+export const A_PAPER = "var(--bg)";
+export const A_LINE = "var(--line)";
+export const A_HAIR = "var(--hair)";
 
 export function useReveal(delay = 0) {
   const [visible, setVisible] = useState(false);
@@ -45,22 +45,6 @@ export function DKicker({ children, color }) {
   return <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: color || A_INK2, fontWeight: 500 }}>{children}</div>;
 }
 
-export function ScreenMast({ kicker, title, right }) {
-  const show = useReveal(40);
-  const isMobile = useIsMobile();
-  return (
-    <Rise show={show} i={0}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12, borderBottom: `2px solid ${A_INK}`, paddingBottom: 14 }}>
-        <div>
-          <DKicker>{kicker}</DKicker>
-          <h1 style={{ margin: "10px 0 0", fontFamily: A_DISP, fontWeight: 900, fontSize: isMobile ? 38 : 60, lineHeight: 0.85, letterSpacing: "-0.045em", textTransform: "uppercase", color: A_INK }}>{title}</h1>
-        </div>
-        {right}
-      </div>
-    </Rise>
-  );
-}
-
 // Sparkline sin libreria: una polilinea normalizada, suficiente para "va subiendo".
 export function Spark({ values = [], width = 190, height = 46, color = A_ACC }) {
   if (values.length < 2) return null;
@@ -82,30 +66,45 @@ export function Spark({ values = [], width = 190, height = 46, color = A_ACC }) 
 }
 
 // Lo que importa ahora: una sola frase por pantalla, con su cifra al lado.
+// Tarjeta de aviso del prototipo: borde de atencion a la izquierda, kicker en
+// mono, titular corto y la cifra a la derecha.
 export function Headline({ kicker, sub, value, unit, valueSub, spark, children }) {
   const show = useReveal(60);
-  const isMobile = useIsMobile();
   return (
     <Rise show={show} i={1}>
-      <div style={{ display: "flex", gap: isMobile ? 14 : 26, alignItems: "center", flexWrap: "wrap", borderLeft: `4px solid ${A_ACC}`, borderBottom: `1px solid ${A_LINE}`, background: A_PAPER, padding: isMobile ? "16px 15px" : "20px 24px" }}>
-        <div style={{ flex: "1 1 320px", minWidth: 0 }}>
-          <DKicker color={A_ACC}>{kicker}</DKicker>
-          <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 20 : 26, lineHeight: 1.15, letterSpacing: "-0.02em", margin: "10px 0 0", color: A_INK }}>{children}</div>
-          {sub && <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".06em", textTransform: "uppercase", color: A_INK2, marginTop: 9 }}>{sub}</div>}
-        </div>
-        {(value != null || spark) && (
-          <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 14 : 22 }}>
-            {spark && <Spark values={spark} width={isMobile ? 110 : 190} height={isMobile ? 34 : 46} />}
-            {value != null && (
-              <div style={{ textAlign: "right", borderLeft: isMobile ? "none" : `1px solid ${A_LINE}`, paddingLeft: isMobile ? 0 : 22 }}>
-                <div style={{ fontFamily: A_DISP, fontWeight: 900, fontSize: isMobile ? 34 : 46, lineHeight: 0.9, letterSpacing: "-0.04em", color: A_ACC, fontVariantNumeric: "tabular-nums" }}>
-                  {value}{unit && <span style={{ fontSize: isMobile ? 14 : 18, fontFamily: A_MONO, fontWeight: 500, marginLeft: 3, color: A_INK2 }}>{unit}</span>}
+      <div className="ft-dc-card attn" style={{ marginTop: 12 }}>
+        <div className="ft-dc-kicker">{kicker}{sub && <span>{sub}</span>}</div>
+        <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+          <div className="t" style={{ flex: "1 1 260px", minWidth: 0 }}>{children}</div>
+          {(value != null || spark) && (
+            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              {spark && <Spark values={spark} width={110} height={34} />}
+              {value != null && (
+                <div style={{ textAlign: "right" }}>
+                  <div className="ft-dc-big" style={{ color: A_ACC }}>{value}{unit && <small>{unit}</small>}</div>
+                  {valueSub && <div style={{ fontFamily: A_MONO, fontSize: 10, letterSpacing: ".08em", textTransform: "uppercase", color: A_INK2, marginTop: 7 }}>{valueSub}</div>}
                 </div>
-                {valueSub && <div style={{ fontFamily: A_MONO, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: A_INK2, marginTop: 8 }}>{valueSub}</div>}
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </Rise>
+  );
+}
+
+// Cabecera de pantalla: titulo de 24px y su linea de contexto en mono, no el
+// mast de 60px en mayusculas del lenguaje anterior.
+export function ScreenMast({ kicker, title, right }) {
+  const show = useReveal(40);
+  return (
+    <Rise show={show} i={0}>
+      <div className="ft-dc-head">
+        <div>
+          <h1>{title}</h1>
+          {kicker && <span className="sub">{kicker}</span>}
+        </div>
+        {right}
       </div>
     </Rise>
   );
@@ -119,32 +118,33 @@ export function EDateNav({ date, setDate }) {
   };
   const current = new Date(`${date}T00:00:00`);
   const label = date === localISO() ? "Hoy" : current.toLocaleDateString("es-ES", { weekday: "long" });
-  const buttonStyle = { width: 34, height: 34, border: `1px solid ${A_LINE}`, background: "transparent", cursor: "pointer", display: "grid", placeItems: "center", color: A_INK };
+  const buttonStyle = { width: 32, height: 32, borderRadius: 9, border: `1px solid ${A_LINE}`, background: "transparent", cursor: "pointer", display: "grid", placeItems: "center", color: A_INK };
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 4 }}>
-      <button onClick={() => shift(-1)} style={buttonStyle}><ChevronLeft size={18} /></button>
-      <div style={{ textAlign: "center", minWidth: 132 }}>
-        <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 16, textTransform: "capitalize" }}>{label}</div>
-        <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2 }}>{current.toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })}</div>
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <button onClick={() => shift(-1)} style={buttonStyle} aria-label="Día anterior"><ChevronLeft size={16} /></button>
+      <div style={{ textAlign: "center", minWidth: 120 }}>
+        <div style={{ fontFamily: A_DISP, fontWeight: 700, fontSize: 14, textTransform: "capitalize" }}>{label}</div>
+        <div style={{ fontFamily: A_MONO, fontSize: 10.5, color: A_INK2 }}>{current.toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })}</div>
       </div>
-      <button onClick={() => shift(1)} style={buttonStyle}><ChevronRight size={18} /></button>
+      <button onClick={() => shift(1)} style={buttonStyle} aria-label="Día siguiente"><ChevronRight size={16} /></button>
     </div>
   );
 }
 
+// Strip de cifras del prototipo: separadores de 1px, etiqueta en mono, cifra 24px.
 export function KpiStrip({ items }) {
   const show = useReveal(80);
   const isMobile = useIsMobile();
   return (
     <Rise show={show} i={1}>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : `repeat(${items.length},1fr)`, border: `1px solid ${A_LINE}`, borderTop: "none" }}>
-        {items.map((item, index) => (
-          <div key={item.k} style={{ padding: isMobile ? "14px 16px 16px" : "18px 22px 20px", borderLeft: isMobile ? (index % 2 ? `1px solid ${A_LINE}` : "none") : (index ? `1px solid ${A_LINE}` : "none"), borderTop: isMobile && index >= 2 ? `1px solid ${A_LINE}` : "none" }}>
-            <DKicker>{item.k}</DKicker>
-            <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 32 : 46, lineHeight: 0.95, letterSpacing: "-0.04em", marginTop: 10, fontVariantNumeric: "tabular-nums", color: item.color || A_INK }}>
-              {item.v}{item.u && <span style={{ fontSize: isMobile ? 13 : 15, fontFamily: A_MONO, fontWeight: 500, marginLeft: 5, color: A_INK2 }}>{item.u}</span>}
-            </div>
-            {item.sub && <div style={{ fontFamily: A_MONO, fontSize: 11, marginTop: 8, color: item.subColor || A_INK2 }}>{item.sub}</div>}
+      <div className="ft-dc-strip" style={{ "--cols": isMobile ? 2 : items.length }}>
+        {items.map((item) => (
+          <div key={item.k}>
+            <span className="k">{String(item.k).toUpperCase()}</span>
+            <span className="v" style={item.color ? { color: item.color } : undefined}>
+              {item.v}{item.u && <small>{item.u}</small>}
+            </span>
+            {item.sub && <span className="d" style={item.subColor ? { color: item.subColor } : undefined}>{item.sub}</span>}
           </div>
         ))}
       </div>
@@ -152,13 +152,13 @@ export function KpiStrip({ items }) {
   );
 }
 
+// Panel de seccion: la tarjeta del prototipo, con la cabecera en mono.
 export function EPanel({ title, meta, children, i = 2, raise }) {
   const show = useReveal(60);
-  const isMobile = useIsMobile();
   return (
     <Rise show={show} i={i} style={raise ? { position: "relative", zIndex: 20 } : undefined}>
-      <div style={{ border: `1px solid ${A_LINE}`, borderTop: "none", padding: isMobile ? "18px 15px 20px" : "22px 24px 24px", background: A_PAPER }}>
-        {title && <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 6, borderBottom: `1px solid ${A_HAIR}`, paddingBottom: 12, marginBottom: 18 }}><h2 style={{ margin: 0, fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 19 : 24, textTransform: "uppercase", letterSpacing: "-0.02em", whiteSpace: isMobile ? "normal" : "nowrap" }}>{title}</h2>{meta && <span style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, textTransform: "uppercase", letterSpacing: ".04em" }}>{meta}</span>}</div>}
+      <div className="ft-dc-card">
+        {title && <div className="h"><span>{title}</span>{meta && <span>{meta}</span>}</div>}
         {children}
       </div>
     </Rise>

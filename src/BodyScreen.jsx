@@ -67,21 +67,21 @@ const PHASE_NAMES = {
 };
 const CONFIDENCE_NAMES = { low: "baja", medium: "media", high: "alta" };
 
-export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId }) {
+export default function BodyScreen({ weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
   const creatineStart = goals?.creatineStart || "";
   const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
   const creaWaterKg = creatineStart ? creatineWaterKg(creatineStart, todayISO()) : null;
   const creaSat = creaWaterKg == null ? null : Math.min(100, Math.round((creaWaterKg / 1.5) * 100));
   const creaWater = creaWaterKg == null ? null : creaWaterKg.toFixed(1);
   const creaFull = creatineStart ? addDays(creatineStart, 28) : null;
-  const [wDate, setWDate] = useState(todayISO()); const [kg, setKg] = useState("");
+  const [wDate, setWDate] = useState(initialDate || todayISO()); const [kg, setKg] = useState("");
   const addW = () => { if (!kg) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: Number(kg) }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); };
   const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
   const wSorted = [...weights].sort((a, b) => b.date.localeCompare(a.date));
   const trend = weightTrendHighlight(weights, todayISO());
   const wChart = [...weights].sort((a, b) => a.date.localeCompare(b.date)).map((w) => ({ date: fmtDate(w.date), kg: w.kg }));
 
-  const [mDate, setMDate] = useState(todayISO());
+  const [mDate, setMDate] = useState(initialDate || todayISO());
   const [meas, setMeas] = useState({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
   const addM = () => {
     const vals = Object.fromEntries(Object.entries(meas).map(([k, v]) => [k, v === "" ? null : Number(v)]));
@@ -93,13 +93,16 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
   const mSorted = [...measurements].sort((a, b) => b.date.localeCompare(a.date));
   const cinturaChart = [...measurements].filter((m) => m.cintura != null).sort((a, b) => a.date.localeCompare(b.date)).map((m) => ({ date: fmtDate(m.date), cintura: m.cintura }));
 
-  const [welDate, setWelDate] = useState(todayISO());
+  const [welDate, setWelDate] = useState(initialDate || todayISO());
   const existingWel = wellness.find((w) => w.date === welDate);
-  const [wel, setWel] = useState({ sleep: "", energy: 0, notes: "" });
-  useEffect(() => { setWel(existingWel ? { sleep: existingWel.sleep ?? "", energy: existingWel.energy ?? 0, notes: existingWel.notes ?? "" } : { sleep: "", energy: 0, notes: "" }); }, [welDate]); // eslint-disable-line
+  // Los pasos viven con el resto del dia (sueno, pulso, energia): un numero por
+  // fecha, mismo guardado y misma sincronizacion. No hace falta una tabla aparte
+  // ni una integracion con el reloj para poder mirarlos en el Diario.
+  const [wel, setWel] = useState({ sleep: "", restingHr: "", steps: "", energy: 0, notes: "" });
+  useEffect(() => { setWel(existingWel ? { sleep: existingWel.sleep ?? "", restingHr: existingWel.restingHr ?? "", steps: existingWel.steps ?? "", energy: existingWel.energy ?? 0, notes: existingWel.notes ?? "" } : { sleep: "", restingHr: "", steps: "", energy: 0, notes: "" }); }, [welDate]); // eslint-disable-line
   const saveWel = () => {
-    if (wel.sleep === "" && !wel.energy && !wel.notes.trim()) return;
-    setWellness((p) => [...p.filter((x) => x.date !== welDate), { id: uid(), date: welDate, sleep: wel.sleep === "" ? null : Number(wel.sleep), energy: wel.energy || null, notes: wel.notes.trim() }].sort((a, b) => a.date.localeCompare(b.date)));
+    if (wel.sleep === "" && wel.restingHr === "" && wel.steps === "" && !wel.energy && !wel.notes.trim()) return;
+    setWellness((p) => [...p.filter((x) => x.date !== welDate), { id: uid(), date: welDate, sleep: wel.sleep === "" ? null : Number(wel.sleep), restingHr: wel.restingHr === "" ? null : Number(wel.restingHr), steps: wel.steps === "" ? null : Number(wel.steps), energy: wel.energy || null, notes: wel.notes.trim() }].sort((a, b) => a.date.localeCompare(b.date)));
   };
   const welSorted = [...wellness].sort((a, b) => b.date.localeCompare(a.date));
 
@@ -182,10 +185,10 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
         {wChart.length >= 2 && (
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={wChart} margin={{ top: 14, right: 10, left: -18, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} domain={["auto", "auto"]} />
-              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
-              <Line type="monotone" dataKey="kg" stroke="#e7531c" strokeWidth={2.5} dot={{ r: 3, fill: "#e7531c" }} />
+              <CartesianGrid stroke="var(--hair)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="var(--muted)" tick={{ fill: "var(--muted)" }} /><YAxis stroke="var(--muted)" tick={{ fill: "var(--muted)" }} domain={["auto", "auto"]} />
+              <Tooltip contentStyle={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
+              <Line type="monotone" dataKey="kg" stroke="var(--accent)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--accent)" }} />
             </LineChart>
           </ResponsiveContainer>
         )}
@@ -246,7 +249,7 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
             <div className="ft-field"><label>Dolor pelvico</label><select className="ft-select" value={cycleLog.pelvicPain} onChange={(e) => setCycleLog({ ...cycleLog, pelvicPain: e.target.value })}>{PAIN_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
             <div className="ft-field" style={{ flex: 2 }}><label>Notas</label><input className="ft-input" placeholder="Opcional" value={cycleLog.notes} onChange={(e) => setCycleLog({ ...cycleLog, notes: e.target.value })} /></div>
           </div>
-          <div className="ft-alert" style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${phaseStyle.color}55`, marginBottom: 12 }}>
+          <div className="ft-alert" style={{ background: "var(--panel2)", border: `1px solid ${phaseStyle.color}55`, marginBottom: 12 }}>
             <Droplet size={20} color={phaseStyle.color} />
             <div>
               <div className="t">Fase estimada: {PHASE_NAMES[phaseEstimate.phase]} · confianza {CONFIDENCE_NAMES[phaseEstimate.confidence]}</div>
@@ -258,7 +261,7 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
               )}
             </div>
           </div>
-          <div className="ft-alert" style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${phaseStyle.color}33` }}>
+          <div className="ft-alert" style={{ background: "var(--panel2)", border: `1px solid ${phaseStyle.color}33` }}>
             <Sparkles size={20} color={phaseStyle.color} />
             <div>
               <div className="t">Hoy, en {PHASE_NAMES[phaseEstimate.phase]}</div>
@@ -375,10 +378,10 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
         {cinturaChart.length >= 2 && (
           <ResponsiveContainer width="100%" height={180}>
             <LineChart data={cinturaChart} margin={{ top: 16, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(22,20,13,0.12)" strokeDasharray="3 3" />
-              <XAxis dataKey="date" stroke="#6a655a" tick={{ fill: "#6a655a" }} /><YAxis stroke="#6a655a" tick={{ fill: "#6a655a" }} domain={["auto", "auto"]} />
-              <Tooltip contentStyle={{ background: "#faf7f0", border: "1px solid rgba(22,20,13,0.16)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
-              <Line type="monotone" dataKey="cintura" stroke="#5ad1ff" strokeWidth={2.5} dot={{ r: 3, fill: "#5ad1ff" }} name="Cintura" />
+              <CartesianGrid stroke="var(--hair)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="var(--muted)" tick={{ fill: "var(--muted)" }} /><YAxis stroke="var(--muted)" tick={{ fill: "var(--muted)" }} domain={["auto", "auto"]} />
+              <Tooltip contentStyle={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
+              <Line type="monotone" dataKey="cintura" stroke="var(--blue)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--blue)" }} name="Cintura" />
             </LineChart>
           </ResponsiveContainer>
         )}
@@ -401,6 +404,8 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={welDate} onChange={(e) => setWelDate(e.target.value)} /></div>
           <div className="ft-field"><label>Horas de sueño</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.5" placeholder="0" value={wel.sleep} onChange={(e) => setWel({ ...wel, sleep: e.target.value })} /></div>
+          <div className="ft-field"><label>Pulso en reposo (ppm)</label><input className="ft-input ft-mono" type="number" inputMode="numeric" placeholder="0" title="Al despertar, antes de levantarte" value={wel.restingHr} onChange={(e) => setWel({ ...wel, restingHr: e.target.value })} /></div>
+          <div className="ft-field"><label>Pasos</label><input className="ft-input ft-mono" type="number" inputMode="numeric" placeholder="0" title="Los del reloj o el móvil al final del día" value={wel.steps} onChange={(e) => setWel({ ...wel, steps: e.target.value })} /></div>
         </div>
         <label style={{ fontSize: 11, color: "var(--muted)", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 600 }}>Energía / cómo te sentiste</label>
         <div className="ft-energy" style={{ marginTop: 6, marginBottom: 12 }}>
@@ -414,7 +419,7 @@ export default function BodyScreen({ weights, setWeights, measurements, setMeasu
           <div className="ft-list" style={{ marginTop: 10 }}>
             {welSorted.slice(0, 6).map((w) => (
               <div className="ft-li" key={w.id}><span className="li-d">{fmtDate(w.date)}</span>
-                <span className="li-sub">{w.sleep != null ? `${w.sleep}h` : ""} {w.energy ? `· energía ${w.energy}/5` : ""}</span>
+                <span className="li-sub">{w.sleep != null ? `${w.sleep}h` : ""} {w.restingHr ? `· ${w.restingHr} ppm` : ""} {w.steps ? `· ${w.steps.toLocaleString("es-ES")} pasos` : ""} {w.energy ? `· energía ${w.energy}/5` : ""}</span>
                 {w.notes && <span className="li-main" style={{ fontWeight: 400, fontStyle: "italic", color: "var(--muted)" }}>“{w.notes}”</span>}
               </div>
             ))}

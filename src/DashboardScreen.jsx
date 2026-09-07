@@ -3,8 +3,11 @@ import { LayoutDashboard } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES, KCAL_PER_KG, PHASE_GROUPS } from "./app-config.js";
 import { canonExercise, creatineWaterKg, daysBetween, epley, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
-import { buildCycleStarts, cycleContext, inferCyclePhase, symptomScore } from "./cycle-inference.js";
-import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, Rise, useIsMobile, useReveal } from "./EditorialUI.jsx";
+import { CLEAR_BLEEDING_LEVELS, buildCycleStarts, cycleContext, inferCyclePhase, ovulationEstimate, phaseSegments, symptomScore } from "./cycle-inference.js";
+import { planCompliance } from "./app-utils.js";
+import DetailSheet from "./DetailSheet.jsx";
+import { weightVsExpected } from "./settings-utils.js";
+import { A_DISP, A_INK, A_INK2, A_MONO, DKicker, useIsMobile, useReveal } from "./EditorialUI.jsx";
 
 const MAJOR_MUSCLES = ["Pecho", "Espalda", "Hombros", "Cuádriceps", "Femoral"];
 const SECONDARY_FACTOR = 0.5;
@@ -20,9 +23,9 @@ const PR_ALERT_MAX_ITEMS = 3;
    BRUTALIST DASHBOARD — editorial layout fed by real data.
    Inlined animation/SVG primitives (bone/ink/tangerine).
    ============================================================ */
-const A_PAPER = "#f3efe6", A_PANEL = "#faf7f0",
-  A_ACC = "#e7531c", A_OK = "#3f7d4e", A_DANGER = "#c0341a",
-  A_LINE = "rgba(22,20,13,0.16)", A_HAIR = "rgba(22,20,13,0.10)";
+const A_PAPER = "var(--bg)", A_PANEL = "var(--panel)",
+  A_ACC = "var(--accent)", A_OK = "var(--ok)", A_DANGER = "var(--danger)",
+  A_LINE = "var(--line)", A_HAIR = "var(--hair)";
 const CHART_TOOLTIP = { background: A_PANEL, border: `1px solid ${A_LINE}`, borderRadius: 0, fontFamily: A_MONO, fontSize: 12 };
 function useCountUp(value, { dur = 1100, decimals = 0, delay = 0 } = {}) {
   const [n, setN] = useState(0);
@@ -161,7 +164,7 @@ function BHeatmap({ days, isMobile }) {
   days.forEach((d) => { if (d.dw === 0 || cols.length === 0) cols.push([]); cols[cols.length - 1].push(d); });
   if (isMobile) cols = cols.slice(-12); // últimas ~12 semanas para que entre sin desbordar
   const CELL = isMobile ? 18 : 15, GAP = 4;
-  const ramp = ["rgba(22,20,13,0.07)", "rgba(231,83,28,0.26)", "rgba(231,83,28,0.5)", "rgba(231,83,28,0.74)", "#e7531c"];
+  const ramp = ["var(--hair)", "rgba(231,83,28,0.26)", "rgba(231,83,28,0.5)", "rgba(231,83,28,0.74)", "var(--accent)"];
   const dayLabels = ["L", "", "X", "", "V", "", "D"];
   return (
     <div>
@@ -186,10 +189,86 @@ function BHeatmap({ days, isMobile }) {
   );
 }
 
-export default function DashboardScreen({ workouts, weights, nutrition, measurements, periods, goals, menstrualLogs = [], wellness = [] }) {
-  const show = useReveal(60);
+
+/* ----------------------------------------------------------------------------
+   PESO · REAL VS ESPERADO — la tarjeta que encabeza Metricas (prototipo 3a).
+   Una tarjeta, no una pantalla: quien solo quiere el progreso general sigue de
+   largo hasta la cuadricula. La matematica esta en weightVsExpected.
+   ---------------------------------------------------------------------------- */
+// Tarjeta de seccion del prototipo: cabecera en mono, contenido dentro.
+function DCard({ title, meta, span, children }) {
+  return (
+    <div className={span ? "ft-dc-card span2" : "ft-dc-card"}>
+      <div className="h"><span>{title}</span>{meta && <span>{meta}</span>}</div>
+      {children}
+    </div>
+  );
+}
+
+// Cabecera de la tarjeta de peso: real, esperado y meta. Vivia en una tarjeta
+// propia encima del grafico de tendencia, que dibujaba la MISMA serie: dos
+// tarjetas seguidas respondiendo a la misma pregunta con dos dibujos distintos.
+function VsExpectedHead({ vs }) {
+  // 68 y no 68,0: la meta suele ser redonda y el decimal vacio solo hace ruido.
+  const kg = (value) => (Math.round(value * 10) / 10).toString().replace(".", ",");
+  const fecha = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+  const gap = Math.abs(vs.delta);
+  return (
+    <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 14, flexWrap: "wrap", paddingBottom: 4 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <span className="ft-dc-big">{kg(vs.real)}<small>kg real</small></span>
+        <span style={{ fontFamily: A_MONO, fontSize: 10.5, color: A_INK2 }}>
+          esperado {kg(vs.expected)}{vs.target ? ` · meta ${kg(vs.target)}` : ""}
+        </span>
+      </div>
+      <div className="ft-dc-foot" style={{ borderTop: "none", paddingTop: 0, marginTop: 0, flex: "1 1 190px" }}>
+        {gap >= 0.1 && vs.ahead != null && (
+          <span className={vs.ahead ? "ft-dc-tag" : "ft-dc-tag late"}>{kg(gap)} KG {vs.ahead ? "ADELANTADA" : "POR DETRÁS"}</span>
+        )}
+        <span style={{ flex: 1 }}>
+          {vs.projection ? `proyección ${fecha(vs.projection)}` : vs.perWeek == null ? "sin tendencia aún" : "sin proyección a este ritmo"}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// Barra de fases del ciclo en curso: ancho proporcional a los dias que llevo
+// cada fase, no a una duracion asumida.
+function BCycleStrip({ segments }) {
+  const total = segments.reduce((sum, seg) => sum + seg.days, 0) || 1;
+  return (
+    <div style={{ display: "flex", height: 10, borderRadius: 999, overflow: "hidden", background: A_HAIR }}>
+      {segments.map((seg, i) => (
+        <span
+          key={`${seg.phase}-${i}`}
+          title={`${seg.label} · ${seg.days} d`}
+          style={{ width: `${(seg.days / total) * 100}%`, background: (CYCLE_PHASES[PHASE_GROUPS[seg.phase]] || CYCLE_PHASES["Por confirmar"]).color }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Filas clave/valor: el mismo formato que usa la hoja de detalle, pero dentro de
+// una tarjeta. ponytail: si aparece una tercera copia, extraer a EditorialUI.
+function BRows({ rows }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      {rows.map((row, i) => (
+        <div key={row.k} style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, padding: "8px 0", borderBottom: i < rows.length - 1 ? "1px solid var(--hair)" : "none" }}>
+          <span style={{ fontFamily: A_MONO, fontSize: 10.5, color: A_INK2 }}>{row.k}</span>
+          <span style={{ fontFamily: A_MONO, fontSize: 12.5, fontWeight: 600, textAlign: "right", color: row.strong ? A_INK : A_INK2 }}>{row.v}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function DashboardScreen({ workouts, weights, nutrition, measurements, periods, goals, menstrualLogs = [], wellness = [], routines = [] }) {
   const isMobile = useIsMobile();
   const sortedW = useMemo(() => [...weights].sort((a, b) => a.date.localeCompare(b.date)), [weights]);
+  const vsExpected = useMemo(() => weightVsExpected(weights, goals), [weights, goals]);
   const maSeries = useMemo(() => sortedW.map((w) => {
     const start = new Date(w.date + "T00:00:00"); start.setDate(start.getDate() - 6);
     const win = sortedW.filter((x) => x.date <= w.date && new Date(x.date + "T00:00:00") >= start);
@@ -282,13 +361,15 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
   );
   const trackable = useMemo(() => Object.keys(exHistory).filter((n) => exHistory[n].length >= 2), [exHistory]);
   const muscleOptions = useMemo(() => [...new Set(trackable.map((n) => exHistory[n][0].muscle))].sort(), [trackable, exHistory]);
+  const [filter, setFilter] = useState("all");
+  const [openKpi, setOpenKpi] = useState(null);
   const [muscleFilter, setMuscleFilter] = useState("all");
   const [exFilter, setExFilter] = useState("all");
   const exOptions = useMemo(() => trackable.filter((n) => muscleFilter === "all" || exHistory[n][0].muscle === muscleFilter).sort(), [trackable, exHistory, muscleFilter]);
   // exFilter puede quedar obsoleto al cambiar de músculo; lo tratamos como "all" si ya no aplica
   const activeEx = exOptions.includes(exFilter) ? exFilter : "all";
   const strengthSeries = useMemo(() => {
-    const colors = [A_ACC, A_INK, "rgba(22,20,13,0.45)", A_OK];
+    const colors = [A_ACC, A_INK, "var(--muted)", A_OK];
     const picked = (activeEx !== "all" ? [activeEx] : [...exOptions].sort((a, b) => exHistory[b].length - exHistory[a].length)).slice(0, 4);
     return picked.map((n, idx) => { const h = exHistory[n]; const first = h[0].oneRM || 1; return { label: n.length > 11 ? n.slice(0, 11) : n, color: colors[idx % colors.length], w: idx === 0 ? 3 : 2.25, points: h.map((x) => ({ date: x.iso, pct: (x.oneRM / first - 1) * 100, kg: x.oneRM })), lastKg: h[h.length - 1].oneRM }; });
   }, [exHistory, exOptions, activeEx]);
@@ -363,7 +444,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const loggedDays = Object.values(byDay).filter((v) => v > 50);
     if (loggedDays.length < 10 || trend === null) return null;
     const avgKcal = loggedDays.reduce((s, v) => s + v, 0) / loggedDays.length;
-    return { maint: Math.round(avgKcal - (trend / 7) * KCAL_PER_KG), days: loggedDays.length };
+    return { maint: Math.round(avgKcal - (trend / 7) * KCAL_PER_KG), days: loggedDays.length, avgKcal: Math.round(avgKcal) };
   }, [nutrition, trend]);
   const macro14 = useMemo(() => {
     const since = isoMinus(13); const byDay = {};
@@ -394,6 +475,10 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
   const timed = workouts.filter((w) => w.durationMin > 0).length;
   const avgMin = timed ? Math.round(totalMin / timed) : 0;
 
+  // Adherencia al plan: cuantas de las sesiones previstas se registraron en las
+  // 8 semanas completas anteriores. El mapa de calor de al lado dice cuando
+  // entrenaste; esto dice si eso era lo que tocaba, que el mapa no sabe.
+  const compliance = useMemo(() => planCompliance(routines, workouts), [routines, workouts]);
   const heat = useMemo(() => {
     const trained = {};
     workouts.forEach((w) => { const s = w.exercises.reduce((t, e) => t + e.sets.length, 0) + ((w.cardio || []).length); if (s > 0) trained[w.date] = s; });
@@ -414,21 +499,108 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     const weeks = remaining / trend; const d = new Date(); d.setDate(d.getDate() + Math.round(weeks * 7));
     return { weeks: Math.round(weeks), date: d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" }) };
   }, [goals, currentMA, trend]);
+  // Resumen del ciclo EN MARCHA, no solo la fase de hoy: cuanto llevas, que
+  // fases han pasado, cuanto sangrado y cuantos dias con sintomas altos. Es lo
+  // que Cuerpo ya sabe del historico, contado del ciclo que estas viviendo.
   const cyc = useMemo(() => {
     const date = todayISO();
     const ctx = cycleContext(date, periods, menstrualLogs);
     if (!ctx.currentStart) return null;
     const phase = PHASE_GROUPS[inferCyclePhase({ date, menstrualLogs, periods, wellness }).phase];
-    return { phase, day: ctx.cycleDay, daysToNext: ctx.daysToNext };
+    const logs = menstrualLogs.filter((log) => log.date >= ctx.currentStart && log.date <= date);
+    return {
+      phase, day: ctx.cycleDay, daysToNext: ctx.daysToNext, avgCycle: ctx.avgCycle, samples: ctx.samples,
+      start: ctx.currentStart, nextPeriod: ctx.nextPeriod,
+      segments: phaseSegments(ctx.currentStart, date, periods, menstrualLogs),
+      logged: logs.length,
+      bleedDays: logs.filter((log) => CLEAR_BLEEDING_LEVELS.includes(log.bleedingLevel)).length,
+      symptomDays: logs.filter((log) => symptomScore(log) >= 3).length,
+      ovulation: ovulationEstimate({ date, periods, menstrualLogs }),
+    };
   }, [periods, menstrualLogs, wellness]);
+
+  // Sueno: ya se registra en el check-in de Cuerpo y no se veia en ningun lado.
+  const sleep = useMemo(() => {
+    const nights = wellness.filter((w) => Number(w.sleep) > 0).sort((a, b) => a.date.localeCompare(b.date));
+    if (!nights.length) return null;
+    const mean = (list) => list.reduce((sum, w) => sum + Number(w.sleep), 0) / list.length;
+    const last14 = nights.filter((w) => w.date >= isoMinus(13));
+    const last7 = nights.filter((w) => w.date >= isoMinus(6));
+    if (!last14.length) return null;
+    return {
+      avg7: last7.length ? mean(last7) : null, avg14: mean(last14), nights: last14.length,
+      short: last14.filter((w) => Number(w.sleep) < 6).length,
+      best: Math.max(...last14.map((w) => Number(w.sleep))), worst: Math.min(...last14.map((w) => Number(w.sleep))),
+      series: last14.map((w) => ({ iso: w.date, sueno: round1(Number(w.sleep)) })),
+    };
+  }, [wellness]);
+
+  // Pulso en reposo: sube cuando la recuperacion va mal, asi que se lee contra tu
+  // propia linea base (28 dias previos), no contra una tabla por edad.
+  const hr = useMemo(() => {
+    const days = wellness.filter((w) => Number(w.restingHr) > 0).sort((a, b) => a.date.localeCompare(b.date));
+    if (!days.length) return null;
+    const mean = (list) => list.reduce((sum, w) => sum + Number(w.restingHr), 0) / list.length;
+    const recent = days.filter((w) => w.date >= isoMinus(6));
+    const baseline = days.filter((w) => w.date < isoMinus(6) && w.date >= isoMinus(34));
+    return {
+      last: Number(days[days.length - 1].restingHr), lastDate: days[days.length - 1].date,
+      avg7: recent.length ? mean(recent) : null, base: baseline.length >= 5 ? mean(baseline) : null,
+      days: days.length,
+      series: days.filter((w) => w.date >= isoMinus(29)).map((w) => ({ iso: w.date, pulso: Math.round(Number(w.restingHr)) })),
+    };
+  }, [wellness]);
+
+  // Movimiento: el cardio ya registrado en Entrenar, agregado. Es donde aterriza
+  // lo que venga de un reloj o de Strava: misma entrada, tipo + minutos + kcal.
+  const movement = useMemo(() => {
+    const items = workouts.filter((w) => w.date >= isoMinus(27)).flatMap((w) => (w.cardio || []).map((c) => ({ ...c, date: w.date })));
+    if (!items.length) return null;
+    const byType = {};
+    items.forEach((c) => {
+      const row = byType[c.type] || (byType[c.type] = { min: 0, kcal: 0, n: 0 });
+      row.min += Number(c.minutes) || 0; row.kcal += Number(c.kcal) || 0; row.n += 1;
+    });
+    const week = items.filter((c) => c.date >= isoMinus(6));
+    return {
+      rows: Object.entries(byType).map(([type, v]) => ({ type, ...v })).sort((a, b) => b.min - a.min),
+      totalMin: items.reduce((sum, c) => sum + (Number(c.minutes) || 0), 0),
+      weekMin: week.reduce((sum, c) => sum + (Number(c.minutes) || 0), 0),
+      days: new Set(items.map((c) => c.date)).size,
+    };
+  }, [workouts]);
 
   const alerts = useMemo(() => {
     const a = [];
     recentPRs.forEach((p) => a.push({ type: "pr", title: `¡Nuevo récord en ${p.name}!`, body: `Tu 1RM estimado subió a ${p.best} kg. La sobrecarga progresiva está funcionando.` }));
+    // El estado de la tendencia se dice aqui aunque la tarjeta "real vs esperado"
+    // muestre el hueco: son dos preguntas distintas. La tarjeta compara contra la
+    // recta acumulada del objetivo; esto compara el ritmo de las ultimas semanas
+    // contra el ritmo objetivo, y es lo unico que confirma "vas bien". La accion
+    // (cuantas kcal mover) no se repite: vive en el Diario.
     if (trend !== null) {
       const diff = trend - goals.weeklyChange;
-      if (Math.abs(diff) > 0.25) a.push({ type: "warn", title: "Desvío en tu tendencia de peso", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem vs objetivo ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}. ${diff > 0 ? "Vas más hacia arriba de lo previsto — recorta calorías." : "Bajas más rápido de lo previsto — sube calorías para proteger músculo."}${maintenance ? ` Mantenimiento estimado ~${maintenance.maint} kcal.` : ""}${cycleConfound ? (lutealOffset ? ` Estás en fase lútea tardía: la tendencia ya descuenta tus ${lutealOffset.kg} kg de retención habituales, así que este desvío es real y podés ajustar calorías sin esperar.` : " Estás en fase lútea tardía con síntomas compatibles con retención de líquidos — parte de este desvío puede ser agua, no grasa. Esperá unos días antes de ajustar calorías.") : ""}` });
-      else a.push({ type: "ok", title: "Peso en línea con tu objetivo", body: `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem, dentro de ±0,25 de tu meta.` });
+      const real = `Tendencia real ${trend > 0 ? "+" : ""}${trend.toFixed(2)} kg/sem frente a tu objetivo de ${goals.weeklyChange > 0 ? "+" : ""}${goals.weeklyChange.toFixed(2)}`;
+      if (Math.abs(diff) > 0.25) {
+        a.push({
+          type: "warn",
+          title: "Desvío en tu tendencia de peso",
+          body: `${real}. ${diff > 0 ? "Vas más hacia arriba de lo previsto." : "Bajas más rápido de lo previsto."}${maintenance ? ` Mantenimiento estimado ~${maintenance.maint} kcal.` : ""} El Diario propone el ajuste de calorías en cuanto haya tres semanas de pesajes.`,
+        });
+      } else {
+        a.push({ type: "ok", title: "Peso en línea con tu objetivo", body: `${real}, dentro de ±0,25.` });
+      }
+    }
+    // Lo que ni la tarjeta ni el Diario saben: que hoy es lutea tardia y parte
+    // del desvio puede ser agua.
+    if (trend !== null && cycleConfound && Math.abs(trend - goals.weeklyChange) > 0.25) {
+      a.push({
+        type: "warn",
+        title: "Estás en fase lútea tardía",
+        body: lutealOffset
+          ? `La tendencia ya descuenta tus ${lutealOffset.kg} kg de retención habituales, así que el desvío que ves es real y puedes ajustar calorías sin esperar.`
+          : "Los síntomas de hoy son compatibles con retención de líquidos: parte del desvío puede ser agua, no grasa. Espera unos días antes de ajustar calorías.",
+      });
     }
     if (protAvg7 !== null && goals.proteinTarget && protAvg7 < 0.85 * goals.proteinTarget) a.push({ type: "warn", title: "Proteína por debajo del objetivo", body: `Media de ${Math.round(protAvg7)} g/día la última semana frente a tu meta de ${goals.proteinTarget} g.` });
     const vols = MAJOR_MUSCLES.map((m) => weeklyMuscle[m] || 0); const maxV = Math.max(...vols);
@@ -468,39 +640,314 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
   const noData = weights.length === 0 && workouts.length === 0 && nutrition.length === 0;
   if (noData) return <div className="ft-card"><div className="ft-empty"><div className="ic"><LayoutDashboard size={34} /></div>Aún no hay datos. Registra entrenamientos, peso o comidas y aquí verás tu evolución, récords y alertas.</div></div>;
 
+  // Cada cifra de arriba abre su desglose. No es una pantalla nueva: es la misma
+  // cifra, con de donde sale y que significa. Las notas se escriben desde los
+  // datos; cuando no hay nada que decir, no se dice nada.
+  const kg1 = (value) => (value == null ? "—" : `${value.toFixed(1).replace(".", ",")} kg`);
+  const kcal = (value) => `${Math.round(value).toLocaleString("es-ES")} kcal`;
   const kpis = [
-    { k: "Peso · media 7d", v: currentMA, dec: 1, u: "kg", sub: currentW !== null ? `hoy ${currentW.toFixed(1)} kg` : "sin registro", big: true },
-    { k: "Cambio 7 días", v: change7, dec: 1, u: "kg", sub: "tendencia real", signed: true },
-    { k: "Mantenimiento", v: maintenance ? maintenance.maint : null, dec: 0, u: "kcal", sub: maintenance ? `de ${maintenance.days} días` : "necesito ~2 sem." },
-    { k: "Constancia", v: trainingDays7, dec: 0, u: "/sem", sub: `${nutDays7} días dieta · ${avgMin} min/ses` },
+    { k: "Peso · media 7d", v: currentMA, dec: 1, u: "kg", sub: currentW !== null ? `hoy ${currentW.toFixed(1)} kg` : "sin registro", big: true,
+      detail: {
+        title: "Peso · media de 7 días",
+        sub: "La media suaviza el ruido diario de agua y glucógeno",
+        rows: [
+          { k: "Media 7 días", v: kg1(currentMA), strong: true },
+          { k: "Último pesaje", v: kg1(currentW) },
+          { k: "Cambio 7 días", v: change7 == null ? "—" : `${change7 > 0 ? "+" : ""}${kg1(change7)}` },
+          ...(vsExpected ? [
+            { k: "Esperado por tu objetivo", v: kg1(vsExpected.expected) },
+            { k: "Diferencia", v: `${vsExpected.delta > 0 ? "+" : ""}${kg1(vsExpected.delta)}`, strong: true },
+          ] : []),
+          ...(goals.targetWeight ? [{ k: "Meta", v: kg1(Number(goals.targetWeight)) }] : []),
+        ],
+        note: vsExpected && vsExpected.ahead != null
+          ? `Vas ${kg1(Math.abs(vsExpected.delta))} ${vsExpected.ahead ? "por delante de" : "por detrás de"} la recta que marca tu objetivo${vsExpected.projection ? `, y a este ritmo llegarías a la meta alrededor del ${fmtDate(vsExpected.projection)}` : ""}.`
+          : "Con dos pesajes o más aparece la comparación contra la recta de tu objetivo.",
+        source: "Media móvil de 7 días sobre tus pesajes. Un solo día pesa poco: por eso la cifra grande es la media y no la báscula de esta mañana.",
+      } },
+    { k: "Cambio 7 días", v: change7, dec: 1, u: "kg", sub: "tendencia real", signed: true,
+      detail: {
+        title: "Cambio en 7 días",
+        sub: "Diferencia entre tu último pesaje y el más cercano a una semana antes",
+        rows: [
+          { k: "Diferencia", v: change7 == null ? "—" : `${change7 > 0 ? "+" : ""}${kg1(change7)}`, strong: true },
+          { k: "Ritmo objetivo", v: `${Number(goals.weeklyChange).toFixed(2).replace(".", ",")} kg/sem` },
+          ...(trend !== null ? [{ k: "Tendencia de 3 semanas", v: `${trend > 0 ? "+" : ""}${trend.toFixed(2).replace(".", ",")} kg/sem`, strong: true }] : []),
+        ],
+        note: "Siete días es poca ventana: cabe entera dentro de una fluctuación de agua, sal o fase del ciclo. La tendencia de tres semanas es la que decide, y es la que usa el aviso del Diario para proponer calorías.",
+      } },
+    { k: "Mantenimiento", v: maintenance ? maintenance.maint : null, dec: 0, u: "kcal", sub: maintenance ? `de ${maintenance.days} días` : "necesito ~2 sem.",
+      detail: {
+        title: "Mantenimiento estimado",
+        sub: maintenance ? `Medido sobre ${maintenance.days} días con comida registrada` : "Hacen falta 10 días registrados",
+        rows: maintenance ? [
+          { k: "Ingesta media", v: kcal(maintenance.avgKcal), strong: true },
+          { k: "Tendencia de peso", v: `${trend > 0 ? "+" : ""}${trend.toFixed(2).replace(".", ",")} kg/sem` },
+          { k: "Equivalencia", v: `${kcal(Math.abs((trend / 7) * KCAL_PER_KG))}/día` },
+          { k: "Mantenimiento", v: kcal(maintenance.maint), strong: true },
+        ] : [],
+        note: maintenance
+          ? "Esto no es una fórmula por peso y actividad: es tu mantenimiento medido. Se toma lo que comes de media y se le suma o resta lo que tu peso dice que sobra o falta. Si no cuadra con la calculadora, manda esto."
+          : "Se calcula con al menos 10 días de comida registrada y tres semanas de pesajes. Sin eso, cualquier número sería una fórmula genérica disfrazada.",
+        source: "Conversión de 7700 kcal por kilo de peso corporal.",
+      } },
+    { k: "Constancia", v: trainingDays7, dec: 0, u: "/sem", sub: `${nutDays7} días dieta · ${avgMin} min/ses`,
+      detail: {
+        title: "Constancia de la última semana",
+        rows: [
+          { k: "Días con entreno", v: `${trainingDays7} de 7`, strong: true },
+          { k: "Días con comida registrada", v: `${nutDays7} de 7` },
+          { k: "Duración media", v: avgMin ? `${avgMin} min por sesión` : "sin duración anotada" },
+          ...(compliance.adherence != null ? [{ k: "Adherencia al plan (8 sem.)", v: `${compliance.adherence}%`, strong: true }] : []),
+        ],
+        note: compliance.adherence != null
+          ? `En las 8 semanas completas anteriores registraste ${compliance.done} de las ${compliance.planned} sesiones previstas. La semana en curso no cuenta aquí: contarla a medias solo haría bajar el número los lunes.`
+          : "Asigna días a tus rutinas en Plan y aquí aparecerá también cuánto del plan estás cumpliendo.",
+      } },
   ];
   const macroRows = macro14 ? [
     { label: "Proteína", avg: macro14.p, target: macroTargets.p, hero: true },
     { label: "Carbohidratos", avg: macro14.c, target: macroTargets.c },
     { label: "Grasa", avg: macro14.f, target: macroTargets.f },
   ] : [];
-  const dateLabel = new Date().toLocaleDateString("es-ES", { weekday: "short", day: "2-digit", month: "short", year: "numeric" }).toUpperCase();
-  const alColor = (ty) => ty === "warn" ? A_DANGER : ty === "ok" ? A_OK : ty === "pr" ? A_ACC : A_INK2;
-  const rowGrid = { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.85fr 1fr", borderTop: `1px solid ${A_LINE}` };
-  const cellL = { padding: isMobile ? "20px 18px 22px" : "22px 28px 26px", borderRight: isMobile ? "none" : `1px solid ${A_LINE}`, borderBottom: isMobile ? `1px solid ${A_LINE}` : "none" };
-  const cellR = { padding: isMobile ? "20px 18px 22px" : "22px 28px 24px" };
-  const secHead = { display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 6, marginBottom: 16 };
-  const secTitle = { ...dSecH, fontSize: isMobile ? 19 : 24, whiteSpace: isMobile ? "normal" : "nowrap" };
-  const meta = { fontFamily: A_MONO, fontSize: 11, color: A_INK2, textTransform: "uppercase", letterSpacing: ".04em" };
-  const selStyle = { fontFamily: A_MONO, fontSize: 11, color: A_INK, background: A_PANEL, border: `1px solid ${A_LINE}`, padding: "5px 8px", textTransform: "uppercase", letterSpacing: ".04em", cursor: "pointer" };
+  const dateLabel = new Date().toLocaleDateString("es-ES", { weekday: "short", day: "2-digit", month: "short", year: "numeric" });
+  const alColor = (ty) => ty === "warn" ? "var(--attn)" : ty === "ok" ? A_OK : ty === "pr" ? A_ACC : A_INK2;
+  const selStyle = { fontFamily: A_MONO, fontSize: 11, color: A_INK, background: A_PANEL, border: "1px solid var(--line)", borderRadius: 7, padding: "6px 9px", cursor: "pointer" };
+
+  // Las secciones del prototipo con su grupo: los chips filtran la cuadricula.
+  // En escritorio la cuadricula va a dos columnas; en movil, a una.
+  const groups = [["all", "TODO"], ["cuerpo", "CUERPO"], ["fuerza", "FUERZA"], ["nutricion", "NUTRICIÓN"]];
+  const on = (group) => filter === "all" || filter === group;
+
+  const cards = [
+    on("cuerpo") && (
+      <DCard key="peso" span title="Peso y tendencia" meta="media 7 d vs objetivo · 12 sem">
+        {vsExpected && <VsExpectedHead vs={vsExpected} />}
+        {weightChart.length >= 2 ? (
+          <>
+            <BWeightChart data={weightChart.map((point) => ({ ...point, date: fmtDate(point.iso) }))} targetKey="objetivo" />
+            <div style={{ display: "flex", gap: 16, paddingTop: 4 }}><DLegend color={A_ACC} label="Media 7d" /><DLegend color={A_INK2} label="Objetivo" dash /></div>
+          </>
+        ) : <DNeed>Registra tu peso al menos 2 días para ver la tendencia.</DNeed>}
+      </DCard>
+    ),
+
+    on("nutricion") && (
+      <DCard key="macros" title="Macros · media 14 d vs objetivo" meta="carbo/grasa según frecuencia">
+        {macro14 ? <BMacros rows={macroRows} footer={"media " + Math.round(macro14.k) + " / " + (goals.kcalTarget || "-") + " kcal"} /> : <DNeed>Registra comidas para ver tus macros.</DNeed>}
+      </DCard>
+    ),
+
+    on("nutricion") && (
+      <DCard key="kcal" title="Calorías diarias · 14 d" meta={kcalAvg ? "media " + kcalAvg + " kcal" : null}>
+        {kcalChart.some((d) => d.kcal > 0) ? <BKcalBars data={kcalChart} target={Number(goals.kcalTarget) || null} /> : <DNeed>Registra comidas para ver tus calorías diarias.</DNeed>}
+      </DCard>
+    ),
+
+    on("fuerza") && (
+      <DCard key="fuerza" title="Progresión de fuerza" meta="1RM est. · vs inicio">
+        {trackable.length > 0 && (
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <select value={muscleFilter} onChange={(e) => { setMuscleFilter(e.target.value); setExFilter("all"); }} style={selStyle}>
+              <option value="all">Todos los músculos</option>
+              {muscleOptions.map((m) => <option key={m} value={m}>{m}</option>)}
+            </select>
+            <select value={activeEx} onChange={(e) => setExFilter(e.target.value)} style={selStyle}>
+              <option value="all">Todos los ejercicios</option>
+              {exOptions.map((n) => <option key={n} value={n}>{n}</option>)}
+            </select>
+          </div>
+        )}
+        {strengthSeries.length > 0 ? (
+          <>
+            <BStrength series={strengthSeries} isMobile={isMobile} />
+            {isMobile && <BStrengthLegend series={strengthSeries} />}
+          </>
+        ) : <DNeed>Necesitas al menos 2 sesiones de un mismo ejercicio.</DNeed>}
+      </DCard>
+    ),
+
+    on("fuerza") && (
+      <DCard key="volumen" title="Volumen muscular" meta={(Object.keys(weeklyMuscle).length ? "esta semana" : "histórico") + " · tonelaje + % ef."}>
+        {muscleData.length > 0 ? <BMuscleBars data={muscleData} /> : <DNeed>Registra entrenamientos para ver el volumen por grupo.</DNeed>}
+      </DCard>
+    ),
+
+    on("fuerza") && rpeSeries.length >= 2 && (
+      <DCard key="rpe" title="Esfuerzo · RPE" meta={rpeSeries.length + " sesiones · ahora " + rpeSeries[rpeSeries.length - 1].rpe.toFixed(1)}>
+        <BWeightChart data={rpeSeries.map((point) => ({ ...point, date: fmtDate(point.iso) }))} valueKey="rpe" valueLabel="RPE medio" unit="RPE" />
+      </DCard>
+    ),
+
+    on("fuerza") && (
+      <DCard key="records" title="Récords" meta="1RM estimado">
+        {prs.length > 0 ? prs.slice(0, 6).map((p, i) => (
+          <div key={p.name} style={{ display: "grid", gridTemplateColumns: "22px 1fr auto", alignItems: "baseline", gap: 10, padding: "9px 0", borderBottom: i < Math.min(prs.length, 6) - 1 ? "1px solid var(--hair)" : "none" }}>
+            <span style={{ fontFamily: A_MONO, fontSize: 10.5, color: A_INK2 }}>{String(i + 1).padStart(2, "0")}</span>
+            <span style={{ fontSize: 13.5, fontWeight: 700, display: "flex", alignItems: "center", gap: 7 }}>
+              {p.name}
+              {p.isRecent && <span style={{ fontFamily: A_MONO, fontSize: 9, letterSpacing: ".08em", textTransform: "uppercase", background: "color-mix(in srgb,var(--ok) 18%,transparent)", color: "var(--ok)", padding: "2px 6px", borderRadius: 4 }}>nuevo</span>}
+            </span>
+            <span style={{ fontFamily: A_DISP, fontWeight: 700, fontSize: 19, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.03em" }}>{p.best}<span style={{ fontSize: 11, fontFamily: A_MONO, fontWeight: 500, color: A_INK2, marginLeft: 3 }}>kg</span></span>
+          </div>
+        )) : <DNeed>Registra entrenamientos con peso y reps para ver tus 1RM estimados.</DNeed>}
+      </DCard>
+    ),
+
+    on("cuerpo") && measLatest && (
+      <DCard key="medidas" title="Medidas" meta={"última " + fmtDate(measLatest.date)}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(" + (isMobile ? 3 : 5) + ", 1fr)", gap: 1, background: "var(--line)", border: "1px solid var(--line)", borderRadius: 8, overflow: "hidden" }}>
+          {MEAS_FIELDS.filter(([k]) => measLatest[k] != null).map(([k, label]) => {
+            const d = measDelta(k);
+            return (
+              <div key={k} style={{ background: A_PANEL, padding: "11px 12px" }}>
+                <span style={{ fontFamily: A_MONO, fontSize: 9, letterSpacing: ".14em", color: A_INK2 }}>{label.toUpperCase()}</span>
+                <div style={{ fontFamily: A_DISP, fontWeight: 700, fontSize: 21, letterSpacing: "-0.03em", marginTop: 6 }}>{measLatest[k]}<span style={{ fontSize: 11, fontFamily: A_MONO, fontWeight: 500, color: A_INK2, marginLeft: 3 }}>cm</span></div>
+                {d != null && <div style={{ fontFamily: A_MONO, fontSize: 10, marginTop: 4, color: d <= 0 ? A_OK : A_INK2 }}>{d > 0 ? "+" : ""}{d.toFixed(1)} cm</div>}
+              </div>
+            );
+          })}
+        </div>
+      </DCard>
+    ),
+
+    on("fuerza") && (
+      <DCard key="constancia" span title="Constancia" meta={"racha " + heat.streak + " d · " + heat.total + " sesiones · mejor semana " + heat.bestWeek}>
+        <BHeatmap days={heat.days} isMobile={isMobile} />
+        {compliance.adherence != null && (
+          <div className="ft-dc-foot">
+            <span className={compliance.adherence >= 80 ? "ft-dc-tag" : "ft-dc-tag late"}>{compliance.adherence}% DEL PLAN</span>
+            <span style={{ flex: 1 }}>
+              {compliance.done} de {compliance.planned} sesiones previstas en las 8 semanas completas anteriores
+              {compliance.full ? ` · ${compliance.full} con el plan entero` : ""}
+            </span>
+          </div>
+        )}
+      </DCard>
+    ),
+
+    on("cuerpo") && projection && !projection.off && (
+      <DCard key="proyeccion" title="Proyección a tu meta">
+        <div style={{ fontSize: 13, lineHeight: 1.5, color: A_INK2 }}>
+          A tu ritmo actual llegarías a <b style={{ color: A_INK }}>{goals.targetWeight} kg</b> alrededor del <b style={{ color: A_INK }}>{projection.date}</b> (~{Math.abs(projection.weeks)} semanas).
+        </div>
+      </DCard>
+    ),
+
+    on("cuerpo") && cyc && (
+      <DCard key="ciclo" title={"Ciclo en curso · " + cyc.phase} meta={cyc.daysToNext >= 0 ? "próximo en ~" + cyc.daysToNext + " d" : Math.abs(cyc.daysToNext) + " d de retraso"}>
+        <span className="ft-dc-big">{cyc.day}<small>día de ~{cyc.avgCycle} d</small></span>
+        {cyc.segments.length > 0 && <BCycleStrip segments={cyc.segments} />}
+        <BRows rows={[
+          { k: "Empezó", v: fmtDate(cyc.start), strong: true },
+          { k: "Sangrado registrado", v: cyc.bleedDays ? `${cyc.bleedDays} día${cyc.bleedDays === 1 ? "" : "s"}` : "sin registrar" },
+          ...(cyc.ovulation?.date ? [{ k: "Ovulación estimada", v: `${fmtDate(cyc.ovulation.date)} · día ${cyc.ovulation.cycleDay}` }] : []),
+          { k: "Días con síntomas altos", v: cyc.symptomDays ? `${cyc.symptomDays} de ${cyc.logged} anotados` : `0 de ${cyc.logged} anotados` },
+          { k: "Próximo periodo", v: cyc.nextPeriod ? fmtDate(cyc.nextPeriod) : "sin estimar", strong: true },
+        ]} />
+        <div style={{ display: "flex", gap: 11 }}>
+          <span style={{ width: 8, height: 8, borderRadius: 999, background: CYCLE_PHASES[cyc.phase].color, marginTop: 5, flexShrink: 0 }} />
+          <span style={{ fontSize: 13, lineHeight: 1.5, color: A_INK2 }}>{CYCLE_PHASES[cyc.phase].note}</span>
+        </div>
+        <div className="ft-dc-foot">
+          <span style={{ flex: 1 }}>
+            {cyc.samples ? `Media sobre ${cyc.samples} ciclo${cyc.samples === 1 ? "" : "s"} completo${cyc.samples === 1 ? "" : "s"}.` : "Aún sin ciclos completos: la duración media es la de referencia (28 d)."} El historial completo está en Cuerpo.
+          </span>
+        </div>
+      </DCard>
+    ),
+
+    on("cuerpo") && (
+      <DCard key="sueno" title="Sueño" meta={sleep ? `media 14 d ${sleep.avg14.toFixed(1).replace(".", ",")} h` : null}>
+        {sleep ? (
+          <>
+            <span className="ft-dc-big">{(sleep.avg7 ?? sleep.avg14).toFixed(1).replace(".", ",")}<small>h · media 7 d</small></span>
+            <BWeightChart data={sleep.series.map((point) => ({ ...point, date: fmtDate(point.iso) }))} valueKey="sueno" valueLabel="Horas" unit="h" />
+            <BRows rows={[
+              { k: "Noches anotadas (14 d)", v: `${sleep.nights} de 14`, strong: true },
+              { k: "Rango", v: `${sleep.worst.toFixed(1).replace(".", ",")} – ${sleep.best.toFixed(1).replace(".", ",")} h` },
+              { k: "Noches por debajo de 6 h", v: `${sleep.short}`, strong: sleep.short > 0 },
+            ]} />
+            {sleep.short > 0 && (
+              <div className="ft-dc-foot"><span style={{ flex: 1 }}>
+                Por debajo de 6 h la recuperación entre sesiones se resiente antes que el rendimiento del día: si además el RPE sube a igual carga, mira ahí primero y no a la programación.
+              </span></div>
+            )}
+          </>
+        ) : <DNeed>Anota las horas de sueño en el check-in diario de Cuerpo y aquí verás la media y las noches cortas.</DNeed>}
+      </DCard>
+    ),
+
+    on("cuerpo") && (
+      <DCard key="pulso" title="Ritmo cardíaco en reposo" meta={hr ? `${hr.days} día${hr.days === 1 ? "" : "s"} anotados` : null}>
+        {hr && hr.series.length >= 2 ? (
+          <>
+            <span className="ft-dc-big">{Math.round(hr.avg7 ?? hr.last)}<small>ppm · media 7 d</small></span>
+            <BWeightChart data={hr.series.map((point) => ({ ...point, date: fmtDate(point.iso) }))} valueKey="pulso" valueLabel="Pulso" unit="ppm" />
+            <BRows rows={[
+              { k: "Último", v: `${hr.last} ppm · ${fmtDate(hr.lastDate)}`, strong: true },
+              ...(hr.base ? [
+                { k: "Tu línea base (28 d previos)", v: `${Math.round(hr.base)} ppm` },
+                { k: "Diferencia", v: `${hr.avg7 - hr.base > 0 ? "+" : ""}${(hr.avg7 - hr.base).toFixed(1).replace(".", ",")} ppm`, strong: true },
+              ] : [{ k: "Línea base", v: "faltan días para calcularla" }]),
+            ]} />
+            {hr.base && hr.avg7 - hr.base >= 5 && (
+              <div className="ft-dc-foot"><span style={{ flex: 1 }}>
+                Cinco pulsaciones por encima de tu línea base mantenidas una semana suelen ir con fatiga acumulada, falta de sueño o algo incubándose. Es una señal para descargar, no para apretar.
+              </span></div>
+            )}
+          </>
+        ) : <DNeed>Anota tu pulso en reposo en el check-in diario de Cuerpo (nada más despertar, antes de levantarte). Con una semana de datos aparece tu línea base.</DNeed>}
+      </DCard>
+    ),
+
+    on("fuerza") && (
+      <DCard key="movimiento" title="Movimiento" meta={movement ? `${movement.days} día${movement.days === 1 ? "" : "s"} · 4 sem` : null}>
+        {movement ? (
+          <>
+            <span className="ft-dc-big">{movement.weekMin}<small>min esta semana</small></span>
+            <BRows rows={[
+              ...movement.rows.map((row) => ({ k: row.type.toUpperCase(), v: `${row.min} min · ${row.n} ses.${row.kcal ? ` · ${Math.round(row.kcal).toLocaleString("es-ES")} kcal` : ""}` })),
+              { k: "Total 4 semanas", v: `${movement.totalMin} min`, strong: true },
+            ]} />
+          </>
+        ) : <DNeed>El cardio que registres en Entrenar (tipo, minutos y kcal) se resume aquí. Es también donde entra lo que traigas de un reloj o de Strava.</DNeed>}
+      </DCard>
+    ),
+  ].filter(Boolean);
 
   return (
-    <div style={{ marginBottom: 8 }}>
+    <div className="ft-dc">
+      <div className="ft-dc-head">
+        <div>
+          <h1>Métricas</h1>
+          <span className="sub">{cards.length} secciones · {dateLabel}</span>
+        </div>
+      </div>
+
+      <div className="ft-dc-strip" style={{ "--cols": isMobile ? 2 : 4 }}>
+        {kpis.map((kpi, i) => (
+          <button key={kpi.k} className="ft-kpi" onClick={() => setOpenKpi(kpi.k)} aria-label={`Ver de dónde sale ${kpi.k}`}>
+            <span className="k">{kpi.k.toUpperCase()}<span className="why">?</span></span>
+            <span className="v" style={kpi.signed ? { color: kpi.v <= 0 ? A_OK : "var(--attn)" } : undefined}>
+              {kpi.v === null ? "\u2014" : <>{kpi.signed && kpi.v > 0 ? "+" : ""}<CountUp value={kpi.v} decimals={kpi.dec} delay={200 + i * 80} /></>}
+              <small>{kpi.u}</small>
+            </span>
+            <span className="d">{kpi.sub}</span>
+          </button>
+        ))}
+      </div>
+
       {alerts.length > 0 && (
-        <div style={{ border: `1px solid ${A_LINE}`, borderLeft: `5px solid ${A_ACC}`, background: A_PANEL, padding: "16px 22px", marginBottom: 18 }}>
-          <DKicker color={A_ACC}>Alertas y avisos · {alerts.length}</DKicker>
-          <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 22, textTransform: "uppercase", letterSpacing: "-0.01em", marginTop: 6, color: A_INK }}>{alerts[0].title}.</div>
-          <div style={{ fontSize: 13, color: A_INK2, marginTop: 6, lineHeight: 1.5, maxWidth: 780 }}>{alerts[0].body}</div>
+        <div className="ft-dc-card attn">
+          <div className="ft-dc-kicker">Avisos · {alerts.length}<span>{dateLabel}</span></div>
+          <div className="t">{alerts[0].title}.</div>
+          <div className="b">{alerts[0].body}</div>
           {alerts.length > 1 && (
-            <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 7, borderTop: `1px solid ${A_HAIR}`, paddingTop: 12 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 7, borderTop: "1px solid var(--hair)", paddingTop: 10, marginTop: 2 }}>
               {alerts.slice(1).map((al, i) => (
-                <div key={i} style={{ display: "flex", gap: 10, fontSize: 12.5, color: A_INK2, lineHeight: 1.45 }}>
-                  <span style={{ width: 7, height: 7, marginTop: 5, flexShrink: 0, background: alColor(al.type) }} />
+                <div key={i} style={{ display: "flex", gap: 9, fontSize: 12, color: A_INK2, lineHeight: 1.45 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: 999, marginTop: 5, flexShrink: 0, background: alColor(al.type) }} />
                   <span><b style={{ color: A_INK }}>{al.title}.</b> {al.body}</span>
                 </div>
               ))}
@@ -509,170 +956,18 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
         </div>
       )}
 
-      <div style={{ border: `1px solid ${A_LINE}`, background: A_PAPER, color: A_INK, fontFamily: A_DISP }}>
-        {/* masthead */}
-        <Rise show={show} i={0}>
-          <div style={{ padding: isMobile ? "20px 18px 0" : "26px 28px 0" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".2em", color: A_INK2, paddingTop: 6 }}>FITTRACK&nbsp;—&nbsp;N°01</div>
-              <div style={{ fontFamily: A_MONO, fontSize: 11, letterSpacing: ".12em", color: A_INK2 }}>{dateLabel}</div>
-            </div>
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 12, marginTop: 8, borderBottom: `2px solid ${A_INK}`, paddingBottom: 12 }}>
-              <h1 style={{ margin: 0, fontFamily: A_DISP, fontWeight: 900, fontSize: isMobile ? 44 : 84, lineHeight: 0.82, letterSpacing: "-0.05em", textTransform: "uppercase" }}>Resumen</h1>
-              {!isMobile && <div style={{ textAlign: "right", maxWidth: 260, fontFamily: A_MONO, fontSize: 11, lineHeight: 1.5, color: A_INK2, paddingBottom: 6 }}>Cuerpo · Fuerza · Nutrición. Una sola vista de tu progreso real.</div>}
-            </div>
-          </div>
-        </Rise>
+      {openKpi && (() => {
+        const kpi = kpis.find((x) => x.k === openKpi);
+        return kpi?.detail ? <DetailSheet kicker="De dónde sale" {...kpi.detail} onClose={() => setOpenKpi(null)} /> : null;
+      })()}
 
-        {/* KPI strip */}
-        <Rise show={show} i={1}>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", borderBottom: `1px solid ${A_LINE}` }}>
-            {kpis.map((s, i) => (
-              <div key={i} style={{
-                padding: isMobile ? "14px 16px 16px" : "20px 24px 22px",
-                borderLeft: isMobile ? (i % 2 ? `1px solid ${A_LINE}` : "none") : (i ? `1px solid ${A_LINE}` : "none"),
-                borderTop: isMobile && i >= 2 ? `1px solid ${A_LINE}` : "none",
-              }}>
-                <DKicker>{s.k}</DKicker>
-                <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 34 : (s.big ? 60 : 52), lineHeight: 0.95, letterSpacing: "-0.04em", marginTop: 10, fontVariantNumeric: "tabular-nums", color: s.signed ? (s.v <= 0 ? A_OK : A_ACC) : A_INK }}>
-                  {s.v === null ? "—" : <>{s.signed && s.v > 0 ? "+" : ""}<CountUp value={s.v} decimals={s.dec} delay={300 + i * 90} /></>}
-                  <span style={{ fontSize: isMobile ? 14 : 18, fontFamily: A_MONO, fontWeight: 500, marginLeft: 6, color: A_INK2 }}>{s.u}</span>
-                </div>
-                <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, marginTop: 9 }}>{s.sub}</div>
-              </div>
-            ))}
-          </div>
-        </Rise>
-
-        {/* weight + records */}
-        <div style={{ ...rowGrid, borderTop: "none" }}>
-          <Rise show={show} i={2} style={cellL}>
-            <div style={secHead}>
-              <h2 style={secTitle}>Peso y tendencia</h2>
-              <div style={{ display: "flex", gap: 16 }}><DLegend color={A_ACC} label="Media 7d" /><DLegend color={A_INK2} label="Objetivo" dash /></div>
-            </div>
-            {weightChart.length >= 2 ? <BWeightChart data={weightChart.map((point) => ({ ...point, date: fmtDate(point.iso) }))} targetKey="objetivo" /> : <DNeed>Registra tu peso al menos 2 días para ver la tendencia.</DNeed>}
-          </Rise>
-          <Rise show={show} i={3} style={cellR}>
-            <h2 style={{ ...secTitle, marginBottom:16 }}>Récords</h2>
-            {prs.length > 0 ? (
-              <div>{prs.slice(0, 6).map((p, i) => (
-                <div key={p.name} style={{ display: "grid", gridTemplateColumns: "20px 1fr auto", alignItems: "baseline", gap: 10, padding: "9px 0", borderBottom: i < Math.min(prs.length, 6) - 1 ? `1px solid ${A_HAIR}` : "none" }}>
-                  <span style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2 }}>{String(i + 1).padStart(2, "0")}</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 7 }}>{p.name}{p.isRecent && <span style={{ fontFamily: A_MONO, fontSize: 9, letterSpacing: ".08em", textTransform: "uppercase", background: A_ACC, color: A_PAPER, padding: "2px 5px" }}>nuevo</span>}</span>
-                  <span style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 22, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.03em" }}>{p.best}<span style={{ fontSize: 12, fontFamily: A_MONO, fontWeight: 500, color: A_INK2, marginLeft: 3 }}>kg</span></span>
-                </div>
-              ))}</div>
-            ) : <DNeed>Registra entrenamientos con peso y reps para ver tus 1RM estimados.</DNeed>}
-          </Rise>
-        </div>
-
-        {/* strength + macros */}
-        <div style={rowGrid}>
-          <Rise show={show} i={4} style={cellL}>
-            <div style={secHead}><h2 style={secTitle}>Progresión de fuerza</h2><span style={meta}>1RM est. · vs inicio</span></div>
-            {trackable.length > 0 && (
-              <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
-                <select value={muscleFilter} onChange={(e) => { setMuscleFilter(e.target.value); setExFilter("all"); }} style={selStyle}>
-                  <option value="all">Todos los músculos</option>
-                  {muscleOptions.map((m) => <option key={m} value={m}>{m}</option>)}
-                </select>
-                <select value={activeEx} onChange={(e) => setExFilter(e.target.value)} style={selStyle}>
-                  <option value="all">Todos los ejercicios</option>
-                  {exOptions.map((n) => <option key={n} value={n}>{n}</option>)}
-                </select>
-              </div>
-            )}
-            {strengthSeries.length > 0 ? <><BStrength series={strengthSeries} isMobile={isMobile} />{isMobile && <BStrengthLegend series={strengthSeries} />}</> : <DNeed>Necesitas al menos 2 sesiones de un mismo ejercicio.</DNeed>}
-          </Rise>
-          <Rise show={show} i={5} style={cellR}>
-            <div style={secHead}><h2 style={secTitle}>Macros</h2><span style={meta}>media 14d · carbo/grasa según frec. de entreno</span></div>
-            {macro14 ? <BMacros rows={macroRows} footer={`media ${Math.round(macro14.k)} / ${goals.kcalTarget || "—"} kcal`} /> : <DNeed>Registra comidas para ver tus macros.</DNeed>}
-          </Rise>
-        </div>
-
-        {rpeSeries.length >= 2 && (
-          <div style={{ borderTop: `1px solid ${A_LINE}` }}>
-            <Rise show={show} i={6} style={{ padding: isMobile ? "20px 18px 22px" : "22px 28px 26px" }}>
-              <div style={secHead}><h2 style={secTitle}>Esfuerzo (RPE)</h2><span style={meta}>{rpeSeries.length} sesiones · ahora {rpeSeries[rpeSeries.length - 1].rpe.toFixed(1)}</span></div>
-              <BWeightChart data={rpeSeries.map((point) => ({ ...point, date: fmtDate(point.iso) }))} valueKey="rpe" valueLabel="RPE medio" unit="RPE" />
-            </Rise>
-          </div>
-        )}
-
-        {measLatest && (
-          <div style={{ borderTop: `1px solid ${A_LINE}` }}>
-            <Rise show={show} i={6} style={{ padding: isMobile ? "20px 18px 22px" : "22px 28px 26px" }}>
-              <div style={secHead}><h2 style={secTitle}>Medidas</h2><span style={meta}>última {fmtDate(measLatest.date)}</span></div>
-              <div style={{ display: "grid", gridTemplateColumns: `repeat(${isMobile ? 3 : 5}, 1fr)`, gap: 1, background: A_LINE, border: `1px solid ${A_LINE}` }}>
-                {MEAS_FIELDS.filter(([k]) => measLatest[k] != null).map(([k, label]) => {
-                  const d = measDelta(k);
-                  return (
-                    <div key={k} style={{ background: A_PAPER, padding: "12px 14px" }}>
-                      <DKicker>{label}</DKicker>
-                      <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: isMobile ? 24 : 30, letterSpacing: "-0.03em", marginTop: 6 }}>{measLatest[k]}<span style={{ fontSize: 13, fontFamily: A_MONO, fontWeight: 500, color: A_INK2, marginLeft: 3 }}>cm</span></div>
-                      {d != null && <div style={{ fontFamily: A_MONO, fontSize: 11, marginTop: 4, color: d <= 0 ? A_OK : A_INK2 }}>{d > 0 ? "+" : ""}{d.toFixed(1)} cm</div>}
-                    </div>
-                  );
-                })}
-              </div>
-            </Rise>
-          </div>
-        )}
-
-        {/* calories + muscle */}
-        <div style={{ ...rowGrid, gridTemplateColumns: isMobile ? "1fr" : "1fr 1.25fr" }}>
-          <Rise show={show} i={6} style={cellL}>
-            <h2 style={{ ...secTitle, marginBottom:18 }}>Calorías</h2>
-            {kcalChart.some((d) => d.kcal > 0) ? (<><BKcalBars data={kcalChart} target={Number(goals.kcalTarget) || null} /><div style={{ display: "flex", justifyContent: "space-between", ...meta, marginTop: 10 }}><span>últimos 14 días</span><span>media {kcalAvg || "—"} kcal</span></div></>) : <DNeed>Registra comidas para ver tus calorías diarias.</DNeed>}
-          </Rise>
-          <Rise show={show} i={7} style={cellR}>
-            <div style={secHead}><h2 style={secTitle}>Volumen muscular</h2><span style={meta}>{Object.keys(weeklyMuscle).length ? "esta semana" : "histórico"} · tonelaje + % ef. vs tu media</span></div>
-            {muscleData.length > 0 ? <BMuscleBars data={muscleData} /> : <DNeed>Registra entrenamientos para ver el volumen por grupo.</DNeed>}
-          </Rise>
-        </div>
-
-        {/* consistency + streak */}
-        <div style={rowGrid}>
-          <Rise show={show} i={8} style={cellL}>
-            <div style={secHead}><h2 style={secTitle}>Constancia</h2><span style={meta}>{isMobile ? "últimas 12 semanas" : "últimas 26 semanas"}</span></div>
-            <BHeatmap days={heat.days} isMobile={isMobile} />
-          </Rise>
-          <Rise show={show} i={9} style={cellR}>
-            <h2 style={{ ...secTitle, marginBottom:14 }}>Racha</h2>
-            <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 60, lineHeight: 0.95, letterSpacing: "-0.04em", fontVariantNumeric: "tabular-nums", color: A_ACC }}>
-              <CountUp value={heat.streak} delay={700} /><span style={{ fontSize: 15, fontFamily: A_MONO, fontWeight: 500, marginLeft: 8, letterSpacing: ".04em", color: A_INK2, textTransform: "uppercase" }}>días</span>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", marginTop: 18 }}>
-              {[`${heat.total} sesiones registradas`, `${heat.weeksOn} semanas con entreno`, `mejor semana: ${heat.bestWeek} sesiones`].map((line, i) => (
-                <div key={i} style={{ fontFamily: A_MONO, fontSize: 12, color: A_INK, padding: "10px 0", borderBottom: i < 2 ? `1px solid ${A_HAIR}` : "none", display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ width: 8, height: 8, background: i === 0 ? A_ACC : A_INK2, flexShrink: 0 }} />{line}
-                </div>
-              ))}
-            </div>
-          </Rise>
-        </div>
-
-        {/* footer: projection + cycle */}
-        {(projection && !projection.off || cyc) && (
-          <Rise show={show} i={10}>
-            <div style={{ display: "grid", gridTemplateColumns: !isMobile && cyc && projection && !projection.off ? "1fr 1fr" : "1fr", borderTop: `2px solid ${A_INK}` }}>
-              {projection && !projection.off && (
-                <div style={{ padding: isMobile ? "16px 18px" : "18px 28px", borderRight: !isMobile && cyc ? `1px solid ${A_LINE}` : "none", borderBottom: isMobile && cyc ? `1px solid ${A_LINE}` : "none", display: "flex", gap: 14 }}>
-                  <div style={{ fontFamily: A_DISP, fontWeight: 900, fontSize: 30, color: A_ACC, lineHeight: 1 }}>→</div>
-                  <div><DKicker color={A_ACC}>Proyección a tu meta</DKicker><div style={{ fontSize: 13.5, lineHeight: 1.5, marginTop: 6, color: A_INK, maxWidth: 460 }}>A tu ritmo actual llegarías a {goals.targetWeight} kg alrededor del <b>{projection.date}</b> (~{Math.abs(projection.weeks)} semanas).</div></div>
-                </div>
-              )}
-              {cyc && (
-                <div style={{ padding: isMobile ? "16px 18px" : "18px 28px", display: "flex", gap: 14 }}>
-                  <div style={{ width: 10, height: 10, borderRadius: 999, background: CYCLE_PHASES[cyc.phase].color, marginTop: 6, flexShrink: 0 }} />
-                  <div><DKicker>Ciclo · fase {cyc.phase} · día {cyc.day}</DKicker><div style={{ fontSize: 13.5, lineHeight: 1.5, marginTop: 6, color: A_INK2, maxWidth: 460 }}>{CYCLE_PHASES[cyc.phase].note} {cyc.daysToNext >= 0 ? `Próximo periodo en ~${cyc.daysToNext} días.` : `Periodo con ~${Math.abs(cyc.daysToNext)} días de retraso.`}</div></div>
-                </div>
-              )}
-            </div>
-          </Rise>
-        )}
+      <div className="ft-dc-chips">
+        {groups.map(([key, label]) => (
+          <button key={key} className={filter === key ? "on" : ""} onClick={() => setFilter(key)}>{label}</button>
+        ))}
       </div>
+
+      <div className="ft-dc-grid">{cards}</div>
     </div>
   );
 }
