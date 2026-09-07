@@ -472,6 +472,17 @@ textarea.ft-input{resize:vertical;min-height:60px;}
   .ft-root .ft-input,.ft-root .ft-select,.ft-root .ft-dc-search,.ft-root .ft-dc-btn{min-height:40px;}
 }
 .ft-dc-date{width:auto;min-width:132px;padding:7px 9px;font-size:12px;}
+/* Cifra grande y editable, como el paso de cantidad del prototipo. */
+.ft-qty{display:flex;align-items:center;justify-content:center;gap:12px;padding:6px 0 2px;}
+.ft-qty-input{width:min(150px,42vw);border:none;background:transparent;text-align:right;font-family:'Archivo';font-weight:700;font-size:40px;letter-spacing:-.04em;color:var(--text);padding:0;outline:none;font-variant-numeric:tabular-nums;}
+.ft-qty-input:focus{color:var(--accent);}
+.ft-qty .u{font-family:'IBM Plex Mono';font-size:13px;color:var(--muted);flex:none;}
+/* Accion primaria de la pantalla: ancha, al final, y dice lo que va a pasar. */
+.ft-dc-cta{width:100%;margin-top:16px;padding:15px 18px;border:none;border-radius:12px;background:var(--ok);color:var(--bg);font-family:'Hanken Grotesk';font-weight:700;font-size:14.5px;cursor:pointer;}
+.ft-dc-cta:hover:enabled{filter:brightness(1.08);}
+.ft-dc-cta:disabled{background:var(--panel2);color:var(--muted);cursor:default;}
+.ft-dc-mio{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.12em;color:var(--muted);flex:none;}
+.ft-dc-plus{font-family:'IBM Plex Mono';font-size:21px;line-height:1;color:var(--ok);flex:none;width:22px;text-align:center;}
 .ft-dc-rpe{flex:1;min-width:0;text-align:center;font-family:'IBM Plex Mono';font-weight:600;font-size:11px;padding:9px 0;border-radius:6px;background:transparent;border:1px solid var(--line);color:var(--muted);cursor:pointer;}
 .ft-dc-rpe:hover{color:var(--text);}
 /* ---- movil: barra inferior de 5 destinos (Diario · Metricas · + · Plan · Mas) ---- */

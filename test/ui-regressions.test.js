@@ -144,23 +144,30 @@ test("Biblioteca abre con la lista y la ficha vive en el panel derecho", async (
   assert.match(app, /<LibraryScreen/);
 });
 
-test("registrar comida no se puede sin cantidad", async () => {
+test("registrar comida son tres pantallas y la cantidad es obligatoria", async () => {
   const screen = await readFile(new URL("../src/NutritionScreen.jsx", import.meta.url), "utf8");
   const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
 
-  // El paso de cantidad es lo único que el handoff marca como intocable de esta
-  // pantalla: sin él se registran raciones inventadas y los macros del día no
-  // significan nada. Elegir abre el panel; guardar exige un número mayor que 0.
-  assert.match(screen, /const valid = amount > 0;/);
-  assert.match(screen, /className="ft-dc-btn" disabled=\{!valid\}/);
-  assert.match(screen, /pick && \(/);
+  // El día, elegir qué y cuánto: cada una ocupa la pantalla y trae su salida.
+  // Con paneles colgando al lado hacía falta pegar cabeceras por encima para
+  // alcanzar la acción, que es justo lo que se veía mal.
+  assert.match(screen, /function AmountScreen\(/);
+  assert.match(screen, /function SearchScreen\(/);
+  assert.match(screen, /onClick=\{onBack\}>Atrás</);
+  assert.match(screen, /onClick=\{onClose\}>Cerrar</);
 
-  // Las cuatro pestañas del prototipo, sobre datos que ya existen.
+  // La cantidad manda: sin un número mayor que cero no se registra.
+  assert.match(screen, /const valid = amount > 0;/);
+  assert.match(screen, /className="ft-dc-cta" disabled=\{!valid\}/);
+  // Y el botón dice lo que va a pasar, no "guardar".
+  assert.ok(screen.includes("`Añadir ${fmt(amount)} ${unidad} · ${kcalFmt(macros.kcal)} kcal`"));
+
+  // La cabecera del buscador lleva el gasto del día y lo que queda.
+  assert.ok(screen.includes("quedan ${kcalFmt(quedan)}"));
+
   for (const key of ["buscar", "mios", "recetas", "recientes"]) {
     assert.ok(screen.includes(`"${key}"`), `falta la pestaña ${key}`);
   }
-
-  // La versión vieja se borró: dos pantallas de nutrición divergen enseguida.
   assert.doesNotMatch(app, /export function Nutrition\(/);
   assert.match(app, /<NutritionScreen/);
 });
@@ -255,18 +262,12 @@ test("en móvil la ficha reemplaza la lista y las cifras no se aprietan", async 
   const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
   const nutrition = await readFile(new URL("../src/NutritionScreen.jsx", import.meta.url), "utf8");
 
-  // Apilada debajo era la solución de escritorio encogida; el prototipo hace del
-  // paso de cantidad una pantalla. Los paneles traen su propio Cerrar/Cancelar,
-  // así que ocultar la lista no deja a nadie encerrado.
+  // Biblioteca: apilada debajo era la solución de escritorio encogida.
   assert.match(app, /@media \(max-width:959px\)\{\.ft-lib\.open \.ft-lib-list\{display:none;\}\}/);
-  for (const vuelta of ["onClose", "Cancelar"]) {
-    assert.ok(nutrition.includes(vuelta), `el panel de cantidad no ofrece ${vuelta}`);
-  }
 
-  // Cuatro cifras en 84 px no se leen. Tres sí: es la densidad del propio
-  // prototipo en un teléfono de 390.
-  assert.match(nutrition, /"--cols": isMobile \? 2 : 4/);
-  assert.doesNotMatch(nutrition, /"--cols": 4/);
+  // Nutrición ya no usa panel: elegir algo lleva a su propia pantalla, así que
+  // no queda lista debajo que ocultar ni cifras apretadas contra un panel.
+  assert.doesNotMatch(nutrition, /ft-lib-detail/);
 });
 
 test("el rail y la barra móvil llevan a lo mismo, y nada queda huérfano", async () => {
