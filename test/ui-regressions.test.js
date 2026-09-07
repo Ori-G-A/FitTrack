@@ -302,3 +302,22 @@ test("planificar otro día no son ocho flechas", async () => {
   // Las flechas se quedan para moverse de día en día.
   assert.match(nutrition, /aria-label="Día anterior"/);
 });
+
+test("en móvil los controles se pueden tocar con el dedo", async () => {
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const dash = await readFile(new URL("../src/DashboardScreen.jsx", import.meta.url), "utf8");
+
+  // La app se usa entrenando, con una mano ocupada: por debajo de 32 px se falla
+  // el toque. Papeleras, steppers, chips y campos suben a 36-40 en móvil.
+  assert.match(app, /@media \(max-width:720px\)\{\s*\n\s*\.ft-root \.ft-dc-step,\.ft-root \.ft-dc-step\.sm\{width:40px;height:40px/);
+  assert.match(app, /\.ft-root \.ft-trash,\.ft-root \.ft-addset,\.ft-root \.ft-iconbtn\{min-height:40px;min-width:40px;\}/);
+
+  // El tamaño compacto es una clase, no un estilo inline: inline le gana a
+  // cualquier media query y esos dos steppers se quedaban en 26 px.
+  assert.match(app, /\.ft-dc-step\.sm\{width:26px;height:26px/);
+  assert.doesNotMatch(app, /className="ft-dc-step" style=\{\{ width: 26/);
+
+  // Y los dos filtros de fuerza llevan la clase compartida, o se quedan fuera.
+  assert.match(dash, /<select className="ft-select" value=\{muscleFilter\}/);
+  assert.match(dash, /<select className="ft-select" value=\{activeEx\}/);
+});

@@ -455,6 +455,15 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-empty{font-family:'IBM Plex Mono';font-size:11.5px;line-height:1.5;color:var(--muted);padding:14px;}
 .ft-dc-step{width:32px;height:32px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--text);font-family:'IBM Plex Mono';font-weight:600;font-size:15px;cursor:pointer;}
 .ft-dc-step:hover{border-color:var(--muted);}
+.ft-dc-step.sm{width:26px;height:26px;font-size:13px;}
+/* Dedo, no raton: la app se usa entrenando. 40 px es el minimo comodo y por
+   debajo de 32 se falla el toque con la mano ocupada. */
+@media (max-width:720px){
+  .ft-root .ft-dc-step,.ft-root .ft-dc-step.sm{width:40px;height:40px;font-size:17px;}
+  .ft-root .ft-dc-chip,.ft-root .ft-dc-chips button,.ft-root .ft-secchip,.ft-root .ft-measures button{min-height:36px;}
+  .ft-root .ft-trash,.ft-root .ft-addset,.ft-root .ft-iconbtn{min-height:40px;min-width:40px;}
+  .ft-root .ft-input,.ft-root .ft-select,.ft-root .ft-dc-search,.ft-root .ft-dc-btn{min-height:40px;}
+}
 .ft-dc-date{width:auto;min-width:132px;padding:7px 9px;font-size:12px;}
 .ft-dc-rpe{flex:1;min-width:0;text-align:center;font-family:'IBM Plex Mono';font-weight:600;font-size:11px;padding:9px 0;border-radius:6px;background:transparent;border:1px solid var(--line);color:var(--muted);cursor:pointer;}
 .ft-dc-rpe:hover{color:var(--text);}
@@ -1345,11 +1354,11 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
                   return (
                     <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 9 }}>
                       <span style={{ fontFamily: "'IBM Plex Mono'", fontSize: 9, letterSpacing: ".14em", color: "var(--muted)" }}>PENDIENTES</span>
-                      <button className="ft-dc-step" style={{ width: 26, height: 26, fontSize: 13 }} aria-label={`Bajar carga pendiente de ${ex.name}`} onClick={() => setExerciseLoad(ex.id, Math.max(0, load - step))}>−</button>
+                      <button className="ft-dc-step sm" aria-label={`Bajar carga pendiente de ${ex.name}`} onClick={() => setExerciseLoad(ex.id, Math.max(0, load - step))}>−</button>
                       <span style={{ fontFamily: "'IBM Plex Mono'", fontWeight: 600, fontSize: 12, minWidth: 62, textAlign: "center" }}>
                         {load ? `${String(load).replace(".", ",")} kg` : "sin carga"}
                       </span>
-                      <button className="ft-dc-step" style={{ width: 26, height: 26, fontSize: 13 }} aria-label={`Subir carga pendiente de ${ex.name}`} onClick={() => setExerciseLoad(ex.id, load + step)}>+</button>
+                      <button className="ft-dc-step sm" aria-label={`Subir carga pendiente de ${ex.name}`} onClick={() => setExerciseLoad(ex.id, load + step)}>+</button>
                     </div>
                   );
                 })()}

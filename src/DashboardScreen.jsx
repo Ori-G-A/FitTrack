@@ -582,11 +582,11 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
       <DCard key="fuerza" id="fuerza" title="Progresión de fuerza" meta="1RM est. · vs inicio">
         {trackable.length > 0 && (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <select value={muscleFilter} onChange={(e) => { setMuscleFilter(e.target.value); setExFilter("all"); }} style={selStyle}>
+            <select className="ft-select" value={muscleFilter} onChange={(e) => { setMuscleFilter(e.target.value); setExFilter("all"); }} style={selStyle}>
               <option value="all">Todos los músculos</option>
               {muscleOptions.map((m) => <option key={m} value={m}>{m}</option>)}
             </select>
-            <select value={activeEx} onChange={(e) => setExFilter(e.target.value)} style={selStyle}>
+            <select className="ft-select" value={activeEx} onChange={(e) => setExFilter(e.target.value)} style={selStyle}>
               <option value="all">Todos los ejercicios</option>
               {exOptions.map((n) => <option key={n} value={n}>{n}</option>)}
             </select>
