@@ -10,6 +10,9 @@ export const DEFAULT_GOALS = {
   activity: "moderado",
   proteinPerKg: 2,
   proteinMeals: 4,
+  // Solo decide si se sigue el ciclo; vacio = sin indicar, que sigue mostrandolo
+  // si ya hay registros.
+  sex: "",
   // Fecha del ultimo aviso de ritmo aplicado o descartado: corta la ventana de
   // weightPaceAlert para que el mismo desvio no se cobre dos veces.
   paceCheckedAt: "",

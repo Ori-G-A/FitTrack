@@ -35,6 +35,8 @@ import {
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
 const DiarioScreen = lazy(() => import("./DiarioScreen.jsx"));
 const SessionScreen = lazy(() => import("./SessionScreen.jsx"));
+const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
+const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
 const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
 const PlanScreen = lazy(() => import("./PlanScreen.jsx"));
 
@@ -415,6 +417,14 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-row .nm{font-weight:700;font-size:13.5px;}
 .ft-dc-row .mt{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);margin-top:2px;}
 .ft-dc-row .go{font-family:'IBM Plex Mono';font-size:13px;color:var(--muted);}
+.ft-more-user{display:flex;align-items:center;gap:13px;padding:16px 2px 4px;}
+.ft-more-user .avatar{flex:0 0 auto;width:46px;height:46px;border-radius:50%;background:var(--text);color:var(--bg);display:grid;place-items:center;font-family:'Archivo';font-weight:900;font-size:19px;}
+.ft-more-user b{display:block;font-family:'Archivo';font-weight:700;font-size:20px;letter-spacing:-.03em;text-transform:capitalize;line-height:1.1;}
+.ft-more-user small{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);}
+.ft-more-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:14px;}
+@media (min-width:760px){.ft-more-grid{grid-template-columns:1fr 1fr;}}
+.ft-more-row{border-bottom:none;background:var(--bg);padding:14px 16px;}
+.ft-more-row .nm{font-size:14px;}
 .ft-dc-empty{font-family:'IBM Plex Mono';font-size:11.5px;line-height:1.5;color:var(--muted);padding:14px;}
 .ft-dc-step{width:32px;height:32px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--text);font-family:'IBM Plex Mono';font-weight:600;font-size:15px;cursor:pointer;}
 .ft-dc-step:hover{border-color:var(--muted);}
@@ -766,19 +776,13 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [sheet, setSheet] = useState(null);
 
-  // La barra inferior lleva 5 destinos; lo que no cabe vive en la hoja "Mas".
-  const MORE_TABS = ["entrenar", "cuerpo", "nutricion", "biblioteca", "rutinas", "ajustes"];
+  // La barra inferior lleva 5 destinos; lo que no cabe vive en la pantalla "Mas",
+  // que ademas es la unica que muestra de quien es la cuenta.
+  const MORE_TABS = ["mas", "perfil", "entrenar", "cuerpo", "nutricion", "biblioteca", "rutinas", "ajustes"];
   const ADD_ROWS = [
     { id: "entrenar", label: "Entreno", sub: "series y RPE", icon: Dumbbell },
     { id: "nutricion", label: "Comida", sub: "kcal y macros", icon: Utensils },
     { id: "cuerpo", label: "Peso, medidas y nota", sub: "y ciclo", icon: Scale },
-  ];
-  const MORE_ROWS = [
-    { id: "entrenar", label: "Entrenar", sub: "sesión del día", icon: Dumbbell },
-    { id: "cuerpo", label: "Cuerpo", sub: "peso · medidas · fotos", icon: Scale },
-    { id: "nutricion", label: "Nutrición", sub: "comidas del día", icon: Utensils },
-    { id: "biblioteca", label: "Biblioteca", sub: "alimentos · recetas · rutinas", icon: Apple },
-    { id: "ajustes", label: "Ajustes", sub: "objetivos y cuenta", icon: Settings },
   ];
 
   const NAV = [
@@ -789,7 +793,7 @@ export default function App() {
     { id: "biblioteca", label: "Biblioteca", icon: Apple },
     { id: "plan", label: "Plan", icon: CalendarDays },
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { id: "ajustes", label: "Ajustes", icon: Settings },
+    { id: "mas", label: "Más", icon: Menu },
   ];
 
   return (
@@ -878,6 +882,19 @@ export default function App() {
               <DashboardScreen workouts={workouts} weights={weights} nutrition={nutrition} measurements={measurements} periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} goals={goals} routines={routines} focusCard={focusCard} onFocused={() => setFocusCard(null)} />
             </Suspense>
           )}
+          {tab === "mas" && (
+            <Suspense fallback={<div className="ft-empty">Cargando…</div>}>
+              <MoreScreen userEmail={session.user.email} goals={goals} weights={weights} periods={periods} menstrualLogs={menstrualLogs}
+                foods={foods} recipes={recipes} routines={routines} theme={theme} setThemePref={setThemePref}
+                exportData={exportData} importData={() => fileRef.current.click()} setTab={goTo} />
+            </Suspense>
+          )}
+          {tab === "perfil" && (
+            <Suspense fallback={<div className="ft-empty">Cargando Perfil…</div>}>
+              <PerfilScreen userEmail={session.user.email} goals={goals} setGoals={setGoals}
+                periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} setTab={goTo} />
+            </Suspense>
+          )}
           {tab === "ajustes" && <SettingsScreen goals={goals} setGoals={setGoals} weights={weights} exportData={exportData} userEmail={session.user.email} signOut={signOut} deleteAllData={deleteAllData} themePref={themePref} setThemePref={setThemePref} theme={theme} />}
 
           <nav className="ft-tabbar">
@@ -885,27 +902,18 @@ export default function App() {
             <button className={tab === "dashboard" ? "active" : ""} onClick={() => goTo("dashboard")}><LayoutDashboard size={18} />Métricas</button>
             <button className="add" onClick={() => setSheet("add")} aria-label="Registrar"><span className="circle"><Plus size={26} /></span>Añadir</button>
             <button className={tab === "plan" ? "active" : ""} onClick={() => goTo("plan")}><CalendarDays size={18} />Plan</button>
-            <button className={MORE_TABS.includes(tab) ? "active" : ""} onClick={() => setSheet("more")}><Menu size={18} />Más</button>
+            <button className={MORE_TABS.includes(tab) ? "active" : ""} onClick={() => goTo("mas")}><Menu size={18} />Más</button>
           </nav>
 
           {sheet && (
             <div className="ft-sheet" onClick={() => setSheet(null)}>
               <div className="ft-sheet-panel" onClick={(e) => e.stopPropagation()}>
-                <h3>{sheet === "add" ? "Registrar" : "Más"}<button onClick={() => setSheet(null)} aria-label="Cerrar"><X size={18} /></button></h3>
-                {(sheet === "add" ? ADD_ROWS : MORE_ROWS).map(({ id, label, sub, icon: Ic }) => (
+                <h3>Registrar<button onClick={() => setSheet(null)} aria-label="Cerrar"><X size={18} /></button></h3>
+                {ADD_ROWS.map(({ id, label, sub, icon: Ic }) => (
                   <button key={id} className="ft-sheet-row" onClick={() => { goTo(id); setSheet(null); }}>
                     <Ic size={17} />{label}<span className="sub">{sub}</span>
                   </button>
                 ))}
-                {sheet === "more" && (
-                  <>
-                    <button className="ft-sheet-row" onClick={() => setThemePref(theme === "dark" ? "light" : "dark")}>
-                      {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}Tema<span className="sub">{theme === "dark" ? "oscuro" : "claro"}</span>
-                    </button>
-                    <button className="ft-sheet-row" onClick={() => { setSheet(null); exportData(); }}><Download size={17} />Exportar<span className="sub">json</span></button>
-                    <button className="ft-sheet-row" onClick={() => { setSheet(null); fileRef.current.click(); }}><Upload size={17} />Importar<span className="sub">json</span></button>
-                  </>
-                )}
               </div>
             </div>
           )}

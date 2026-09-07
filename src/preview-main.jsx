@@ -12,6 +12,8 @@ const SessionScreen = lazy(() => import("./SessionScreen.jsx"));
 const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
 const PlanScreen = lazy(() => import("./PlanScreen.jsx"));
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
+const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
+const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
 
 const today = localISO();
 const day = (n) => addDays(today, n);
@@ -121,7 +123,7 @@ const PLAN_ROUTINES = [
 // Rutinas reales de las plantillas: traen calentamiento, notas y version minima.
 const TEMPLATE_ROUTINES = ROUTINE_TEMPLATES.map((t) => templateToAppRoutine(t, uid));
 
-const SCREENS = ["Diario", "Entrenar", "Nutrición", "Cuerpo", "Plan", "Biblioteca", "Métricas"];
+const SCREENS = ["Diario", "Entrenar", "Nutrición", "Cuerpo", "Plan", "Biblioteca", "Métricas", "Más", "Perfil"];
 
 function Preview() {
   const [screen, setScreen] = useState("Diario");
@@ -130,7 +132,7 @@ function Preview() {
   const [focus, setFocus] = useState(null);
   // Un destino por pestana real. Colapsarlos aqui hacia que toda fila del Diario
   // aterrizara en Entrenar, que no es lo que hace la app.
-  const TAB_TO_SCREEN = { entrenar: "Entrenar", nutricion: "Nutrición", cuerpo: "Cuerpo", rutinas: "Biblioteca", biblioteca: "Biblioteca" };
+  const TAB_TO_SCREEN = { entrenar: "Entrenar", nutricion: "Nutrición", cuerpo: "Cuerpo", rutinas: "Biblioteca", biblioteca: "Biblioteca", mas: "Más", perfil: "Perfil", ajustes: "Más" };
   const goTo = (tab, date = null) => { setFocus(date); setScreen(TAB_TO_SCREEN[tab] || "Diario"); };
   const [card, setCard] = useState(null);
   const [theme, setTheme] = useState("dark");
@@ -179,6 +181,15 @@ function Preview() {
               wellness={feedWellness} setWellness={setFeedWellness} periods={feedPeriods} setPeriods={setFeedPeriods}
               menstrualLogs={feedLogs} setMenstrualLogs={setFeedLogs} photos={[]} setPhotos={() => {}}
               goals={goals} setGoals={setGoals} userId="preview" initialDate={focus} />
+          )}
+          {screen === "Más" && (
+            <MoreScreen userEmail="ana@correo.com" goals={goals} weights={feedWeights} periods={feedPeriods} menstrualLogs={feedLogs}
+              foods={[]} recipes={[]} routines={libRoutines} theme={theme} setThemePref={setTheme}
+              exportData={() => {}} importData={() => {}} setTab={goTo} />
+          )}
+          {screen === "Perfil" && (
+            <PerfilScreen userEmail="ana@correo.com" goals={goals} setGoals={setGoals}
+              periods={feedPeriods} menstrualLogs={feedLogs} wellness={feedWellness} setTab={goTo} />
           )}
           {screen === "Sesión" && (
             <SessionScreen exercises={exercises} writeExercises={setExercises} onExit={() => {}}

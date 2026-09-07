@@ -116,3 +116,22 @@ test("los avisos se leen en el Diario y saltan a su tarjeta de Métricas", async
   assert.match(alerts, /export function alertMetrics/);
   assert.doesNotMatch(dash, /const trend = useMemo/);
 });
+
+test("Más es una pantalla con la cuenta, no una hoja de atajos", async () => {
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const more = await readFile(new URL("../src/MoreScreen.jsx", import.meta.url), "utf8");
+
+  // La hoja "more" se fue entera: si vuelve, hay dos Más con contenidos distintos.
+  assert.doesNotMatch(app, /setSheet\("more"\)/);
+  assert.doesNotMatch(app, /const MORE_ROWS/);
+  assert.match(app, /goTo\("mas"\)/);
+  assert.match(app, /tab === "mas"/);
+  assert.match(app, /tab === "perfil"/);
+
+  // Lo que faltaba del mockup: de quién es la cuenta.
+  assert.match(more, /ft-more-user/);
+  assert.match(more, /\{userEmail\}/);
+
+  // Nada de filas que no llevan a ningún sitio.
+  assert.doesNotMatch(more, /disabled/);
+});
