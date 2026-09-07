@@ -252,3 +252,21 @@ test("el modo sesión va a pantalla completa, sin rail ni barra inferior", async
   // Fondo propio del modo sesión, el del prototipo.
   assert.match(app, /\.ft-root\.ft-focus\{--bg:#141209;\}/);
 });
+
+test("en móvil la ficha reemplaza la lista y las cifras no se aprietan", async () => {
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const nutrition = await readFile(new URL("../src/NutritionScreen.jsx", import.meta.url), "utf8");
+
+  // Apilada debajo era la solución de escritorio encogida; el prototipo hace del
+  // paso de cantidad una pantalla. Los paneles traen su propio Cerrar/Cancelar,
+  // así que ocultar la lista no deja a nadie encerrado.
+  assert.match(app, /@media \(max-width:959px\)\{\.ft-lib\.open \.ft-lib-list\{display:none;\}\}/);
+  for (const vuelta of ["onClose", "Cancelar"]) {
+    assert.ok(nutrition.includes(vuelta), `el panel de cantidad no ofrece ${vuelta}`);
+  }
+
+  // Cuatro cifras en 84 px no se leen. Tres sí: es la densidad del propio
+  // prototipo en un teléfono de 390.
+  assert.match(nutrition, /"--cols": isMobile \? 2 : 4/);
+  assert.doesNotMatch(nutrition, /"--cols": 4/);
+});

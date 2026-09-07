@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { CATALOG, round1, uid } from "./FitTrack.jsx";
 import { localISO, addDays, proteinAdherence } from "./app-utils.js";
 import { PROTEIN_CONFIG } from "./fase1Config.js";
+import { useIsMobile } from "./EditorialUI.jsx";
 import { toast } from "./toast.jsx";
 
 // Registrar una comida: primero se elige qué, después cuánto. El paso de cantidad
@@ -67,6 +68,8 @@ const fromEntry = (entry) => {
 };
 
 function AmountPanel({ pick, date, meals, onSave, onClose }) {
+  // Cuatro cifras en 84 px cada una no se leen: en movil van de dos en dos.
+  const isMobile = useIsMobile();
   const [qty, setQty] = useState(String(pick.lastQty ?? pick.base));
   const [meal, setMeal] = useState(meals[0]);
   const amount = Number(String(qty).replace(",", "."));
@@ -106,7 +109,7 @@ function AmountPanel({ pick, date, meals, onSave, onClose }) {
         </div>
       </label>
 
-      <div className="ft-dc-strip" style={{ "--cols": 4, border: "1px solid var(--line)", borderRadius: 10, overflow: "hidden" }}>
+      <div className="ft-dc-strip" style={{ "--cols": isMobile ? 2 : 4, border: "1px solid var(--line)", borderRadius: 10, overflow: "hidden" }}>
         {[["KCAL", macros ? kcalFmt(macros.kcal) : "—"], ["PROT", macros ? num(macros.protein) : "—"],
           ["CARB", macros ? num(macros.carbs) : "—"], ["GRASA", macros ? num(macros.fat) : "—"]].map(([label, value]) => (
           <div key={label}><span className="k">{label}</span><span className="v" style={{ fontSize: 19 }}>{value}</span></div>
@@ -130,6 +133,7 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
   const [tab, setTab_] = useState("mios");
   const [query, setQuery] = useState("");
   const [pick, setPick] = useState(null);
+  const isMobile = useIsMobile();
 
   const meals = mealsFor(goals);
   const dayItems = nutrition.filter((entry) => entry.date === date);
@@ -188,7 +192,7 @@ export default function NutritionScreen({ nutrition, setNutrition, foods = [], r
         </div>
       </div>
 
-      <div className="ft-dc-strip" style={{ "--cols": 4 }}>
+      <div className="ft-dc-strip" style={{ "--cols": isMobile ? 2 : 4 }}>
         <div>
           <span className="k">KCAL</span>
           <span className="v">{kcalFmt(sum.kcal)}</span>

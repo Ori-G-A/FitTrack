@@ -426,6 +426,10 @@ textarea.ft-input{resize:vertical;min-height:60px;}
 .ft-dc-row .go{font-family:'IBM Plex Mono';font-size:13px;color:var(--muted);}
 .ft-lib{display:grid;grid-template-columns:1fr;gap:16px;align-items:start;margin-top:4px;}
 @media (min-width:960px){.ft-lib.open{grid-template-columns:minmax(0,1fr) minmax(0,420px);}}
+/* En movil la ficha no se apila debajo de la lista: la reemplaza, como el paso
+   de cantidad del prototipo. Todos los paneles traen su propio Cerrar/Cancelar,
+   asi que siempre hay vuelta atras. */
+@media (max-width:959px){.ft-lib.open .ft-lib-list{display:none;}}
 .ft-lib-list{min-width:0;display:flex;flex-direction:column;}
 .ft-lib-detail{min-width:0;}
 @media (min-width:960px){.ft-lib-detail{position:sticky;top:14px;}}
