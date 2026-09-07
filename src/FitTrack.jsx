@@ -38,6 +38,7 @@ const SessionScreen = lazy(() => import("./SessionScreen.jsx"));
 const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
 const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
 const LibraryScreen = lazy(() => import("./LibraryScreen.jsx"));
+const NutritionScreen = lazy(() => import("./NutritionScreen.jsx"));
 const DashboardScreen = lazy(() => import("./DashboardScreen.jsx"));
 const PlanScreen = lazy(() => import("./PlanScreen.jsx"));
 
@@ -880,7 +881,11 @@ export default function App() {
               <BodyScreen weights={weights} setWeights={setWeights} measurements={measurements} setMeasurements={setMeasurements} wellness={wellness} setWellness={setWellness} periods={periods} setPeriods={setPeriods} menstrualLogs={menstrualLogs} setMenstrualLogs={setMenstrualLogs} photos={photos} setPhotos={setPhotos} goals={goals} setGoals={setGoals} userId={userId} initialDate={focusDate} />
             </Suspense>
           )}
-          {tab === "nutricion" && <Nutrition nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={setTab} initialDate={focusDate} />}
+          {tab === "nutricion" && (
+            <Suspense fallback={<div className="ft-empty">Cargando Nutrición…</div>}>
+              <NutritionScreen nutrition={nutrition} setNutrition={setNutrition} foods={foods} recipes={recipes} goals={goals} setTab={goTo} initialDate={focusDate} />
+            </Suspense>
+          )}
           {(tab === "biblioteca" || tab === "rutinas") && (
             <Suspense fallback={<div className="ft-empty">Cargando Biblioteca…</div>}>
               <LibraryScreen key={tab} foods={foods} setFoods={setFoods} recipes={recipes} setRecipes={setRecipes}
@@ -1350,114 +1355,6 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
 
 /* ----------------------------- BODY (peso + medidas + bienestar) ----------------------------- */
 /* ----------------------------- NUTRITION ----------------------------- */
-export function Nutrition({ nutrition, setNutrition, foods, recipes, goals, setTab, initialDate }) {
-  const [date, setDate] = useState(initialDate || todayISO());
-  const [mode, setMode] = useState("biblioteca");
-  const [sel, setSel] = useState(null); const [grams, setGrams] = useState("");
-  const [recId, setRecId] = useState(""); const [servings, setServings] = useState("1");
-  const [m, setM] = useState({ name: "", kcal: "", protein: "", carbs: "", fat: "" });
-
-  const dayItems = nutrition.filter((n) => n.date === date);
-  const sum = dayItems.reduce((t, n) => ({ kcal: t.kcal + (+n.kcal || 0), protein: t.protein + (+n.protein || 0), carbs: t.carbs + (+n.carbs || 0), fat: t.fat + (+n.fat || 0) }), { kcal: 0, protein: 0, carbs: 0, fat: 0 });
-  const computed = sel && grams ? scaleFood(sel, grams) : null;
-
-  const recTotals = (r) => r.items.reduce((t, i) => ({ kcal: t.kcal + i.kcal, protein: t.protein + i.protein, carbs: t.carbs + i.carbs, fat: t.fat + i.fat }), { kcal: 0, protein: 0, carbs: 0, fat: 0 });
-  const selRec = recipes.find((r) => r.id === recId);
-  const recPreview = selRec ? (() => { const tot = recTotals(selRec); const f = (Number(servings) || 0) / (selRec.servings || 1); return { kcal: tot.kcal * f, protein: tot.protein * f, carbs: tot.carbs * f, fat: tot.fat * f }; })() : null;
-
-  const addFromLib = () => { if (!sel || !grams) return; const c = scaleFood(sel, grams); setNutrition((p) => [...p, { id: uid(), date, name: sel.name, grams: Number(grams), unit: sel.unit || "g", kcal: round1(c.kcal), protein: round1(c.protein), carbs: round1(c.carbs), fat: round1(c.fat) }]); setSel(null); setGrams(""); };
-  const addRecipe = () => { if (!selRec || !recPreview) return; setNutrition((p) => [...p, { id: uid(), date, name: `${selRec.name} (${servings} porc.)`, grams: null, kcal: round1(recPreview.kcal), protein: round1(recPreview.protein), carbs: round1(recPreview.carbs), fat: round1(recPreview.fat) }]); setRecId(""); setServings("1"); };
-  const addManual = () => { if (!m.name.trim()) return; setNutrition((p) => [...p, { id: uid(), date, name: m.name.trim(), grams: null, kcal: +m.kcal || 0, protein: +m.protein || 0, carbs: +m.carbs || 0, fat: +m.fat || 0 }]); setM({ name: "", kcal: "", protein: "", carbs: "", fat: "" }); };
-  const del = (id) => setNutrition((p) => p.filter((n) => n.id !== id));
-
-  const adherence = useMemo(() => proteinAdherence(nutrition, goals.proteinTarget, date), [nutrition, goals.proteinTarget, date]);
-  const kcalPct = goals.kcalTarget ? Math.round((sum.kcal / goals.kcalTarget) * 100) : 0;
-  const protPct = goals.proteinTarget ? Math.round((sum.protein / goals.proteinTarget) * 100) : 0;
-
-  return (
-    <div style={{ fontFamily: A_DISP, color: A_INK }}>
-      <ScreenMast kicker={date === todayISO() ? "FITTRACK · HOY" : "FITTRACK · OTRO DÍA"} title="Nutrición" right={<EDateNav date={date} setDate={setDate} />} />
-      {adherence && (
-        <Headline
-          kicker="Lo que importa ahora · Proteína"
-          sub={`Media ${adherence.avg} g en los días registrados · objetivo ${adherence.target} g`}
-          value={adherence.onTarget}
-          unit={`/ ${adherence.logged}`}
-          valueSub="días en objetivo"
-          spark={adherence.series}
-        >
-          {adherence.onTarget === adherence.logged
-            ? `Llegaste al objetivo de proteína los ${adherence.logged} días que registraste.`
-            : `Llegaste al objetivo de proteína ${adherence.onTarget} de los ${adherence.logged} días que registraste esta semana.`}
-        </Headline>
-      )}
-      <KpiStrip items={[
-        { k: "Calorías", v: Math.round(sum.kcal), u: `/ ${goals.kcalTarget || "—"}`, sub: `${kcalPct}% objetivo`, subColor: kcalPct > 105 ? A_DANGER : A_OK },
-        { k: "Proteína", v: Math.round(sum.protein), u: `/ ${goals.proteinTarget || "—"} g`, sub: `${protPct}% objetivo`, subColor: protPct >= 90 ? A_OK : A_INK2 },
-        { k: "Carbohidratos", v: Math.round(sum.carbs), u: "g" },
-        { k: "Grasa", v: Math.round(sum.fat), u: "g" },
-      ]} />
-
-      <EPanel title="Añadir comida" i={2} raise>
-        <div className="ft-toggle">
-          <button className={mode === "biblioteca" ? "on" : ""} onClick={() => setMode("biblioteca")}>Alimento</button>
-          <button className={mode === "receta" ? "on" : ""} onClick={() => setMode("receta")}>Receta</button>
-          <button className={mode === "manual" ? "on" : ""} onClick={() => setMode("manual")}>Manual</button>
-        </div>
-
-        {mode === "biblioteca" && (foods.length === 0 ? (
-          <div className="ft-empty">No tienes alimentos guardados.<div style={{ marginTop: 12 }}><button className="ft-btn" onClick={() => setTab("biblioteca")}><Apple size={15} /> Ir a la biblioteca</button></div></div>
-        ) : (<>
-          <div className="ft-row">
-            <FoodCombo foods={foods} selected={sel} onChange={setSel} />
-            <AmountField food={sel} value={grams} onChange={setGrams} onEnter={addFromLib} />
-            <button className="ft-btn" onClick={addFromLib} disabled={!sel || !grams}><Plus size={15} /> Añadir</button>
-          </div>
-          {computed && <div className="ft-prev"><span><b>{Math.round(computed.kcal)}</b> kcal</span><span>P <b>{round1(computed.protein)}</b></span><span>C <b>{round1(computed.carbs)}</b></span><span>G <b>{round1(computed.fat)}</b></span><span style={{ opacity: .7 }}>· {sel.name} · {grams} {sel.unit || "g"}</span></div>}
-        </>))}
-
-        {mode === "receta" && (recipes.length === 0 ? (
-          <div className="ft-empty">No tienes recetas guardadas.<div style={{ marginTop: 12 }}><button className="ft-btn" onClick={() => setTab("biblioteca")}><BookOpen size={15} /> Crear una receta</button></div></div>
-        ) : (<>
-          <div className="ft-row">
-            <div className="ft-field" style={{ flex: 2 }}><label>Receta</label><select className="ft-select" value={recId} onChange={(e) => setRecId(e.target.value)}><option value="">Elegir receta…</option>{recipes.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}</select></div>
-            <div className="ft-field" style={{ maxWidth: 120 }}><label>Porciones</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.5" value={servings} onChange={(e) => setServings(e.target.value)} /></div>
-            <button className="ft-btn" onClick={addRecipe} disabled={!selRec}><Plus size={15} /> Añadir</button>
-          </div>
-          {recPreview && <div className="ft-prev"><span><b>{Math.round(recPreview.kcal)}</b> kcal</span><span>P <b>{round1(recPreview.protein)}</b></span><span>C <b>{round1(recPreview.carbs)}</b></span><span>G <b>{round1(recPreview.fat)}</b></span><span style={{ opacity: .7 }}>· {servings} de {selRec.servings} porciones</span></div>}
-        </>))}
-
-        {mode === "manual" && (<>
-          <div className="ft-row" style={{ marginBottom: 10 }}><div className="ft-field" style={{ flex: 3, minWidth: 160 }}><label>Comida</label><input className="ft-input" placeholder="Ej. Café con leche" value={m.name} onChange={(e) => setM({ ...m, name: e.target.value })} /></div></div>
-          <div className="ft-row">
-            <div className="ft-field"><label>Kcal</label><input className="ft-input ft-mono" type="number" placeholder="0" value={m.kcal} onChange={(e) => setM({ ...m, kcal: e.target.value })} /></div>
-            <div className="ft-field"><label>Prot</label><input className="ft-input ft-mono" type="number" placeholder="0" value={m.protein} onChange={(e) => setM({ ...m, protein: e.target.value })} /></div>
-            <div className="ft-field"><label>Carb</label><input className="ft-input ft-mono" type="number" placeholder="0" value={m.carbs} onChange={(e) => setM({ ...m, carbs: e.target.value })} /></div>
-            <div className="ft-field"><label>Grasa</label><input className="ft-input ft-mono" type="number" placeholder="0" value={m.fat} onChange={(e) => setM({ ...m, fat: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addManual()} /></div>
-            <button className="ft-btn" onClick={addManual}><Plus size={15} /></button>
-          </div>
-        </>)}
-      </EPanel>
-
-      <EPanel title="Comidas del día" meta={`${dayItems.length} ${dayItems.length === 1 ? "registro" : "registros"}`} i={3}>
-        {dayItems.length === 0 ? <div className="ft-empty">Sin registros este día.</div> : (
-          <div>
-            {dayItems.map((n, idx) => (
-              <div key={n.id} style={{ display: "grid", gridTemplateColumns: "1fr auto auto", alignItems: "center", gap: 14, padding: "12px 0", borderBottom: idx < dayItems.length - 1 ? `1px solid ${A_HAIR}` : "none" }}>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontWeight: 600, fontSize: 15 }}>{n.name}</div>
-                  <div style={{ fontFamily: A_MONO, fontSize: 11, color: A_INK2, marginTop: 2 }}>{n.grams ? `${n.grams} ${n.unit || "g"} · ` : ""}P {Math.round(n.protein)} · C {Math.round(n.carbs)} · G {Math.round(n.fat)}</div>
-                </div>
-                <div style={{ fontFamily: A_DISP, fontWeight: 800, fontSize: 20, color: A_ACC, fontVariantNumeric: "tabular-nums" }}>{Math.round(n.kcal)}<span style={{ fontSize: 11, fontFamily: A_MONO, color: A_INK2, marginLeft: 3 }}>kcal</span></div>
-                <button className="ft-trash" onClick={() => del(n.id)}><Trash2 size={16} /></button>
-              </div>
-            ))}
-          </div>
-        )}
-      </EPanel>
-    </div>
-  );
-}
 
 
 /* ----------------------------- ROUTINES ----------------------------- */

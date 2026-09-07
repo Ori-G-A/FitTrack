@@ -2,7 +2,7 @@
 // ejemplo para poder verlas sin pasar por el login. Borrar junto con preview.html.
 import React, { Suspense, lazy, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { CSS, Nutrition, Train } from "./FitTrack.jsx";
+import { CSS, Train } from "./FitTrack.jsx";
 import { ROUTINE_TEMPLATES, templateToAppRoutine } from "./fase1Config.js";
 import { addDays, localISO } from "./app-utils.js";
 import { DEFAULT_GOALS } from "./app-config.js";
@@ -15,6 +15,7 @@ const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
 const MoreScreen = lazy(() => import("./MoreScreen.jsx"));
 const PerfilScreen = lazy(() => import("./PerfilScreen.jsx"));
 const LibraryScreen = lazy(() => import("./LibraryScreen.jsx"));
+const NutritionScreen = lazy(() => import("./NutritionScreen.jsx"));
 
 const today = localISO();
 const day = (n) => addDays(today, n);
@@ -185,7 +186,7 @@ function Preview() {
               userId="preview" periods={periods} menstrualLogs={menstrualLogs} wellness={wellness} initialDate={focus} />
           )}
           {screen === "Nutrición" && (
-            <Nutrition key={focus || "hoy"} nutrition={feedNutrition} setNutrition={setFeedNutrition} foods={[]} recipes={[]}
+            <NutritionScreen key={focus || "hoy"} nutrition={feedNutrition} setNutrition={setFeedNutrition} foods={libFoods} recipes={libRecipes}
               goals={goals} setTab={goTo} initialDate={focus} />
           )}
           {screen === "Cuerpo" && (

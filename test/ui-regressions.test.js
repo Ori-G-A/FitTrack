@@ -14,21 +14,6 @@ test("manual duration saves on Enter, on blur and by itself", async () => {
   assert.match(source, /if \(durInput === \(session\.durationMin \? String\(session\.durationMin\) : ""\)\) return;/);
 });
 
-test("nutrition imports every editorial token it renders", async () => {
-  const source = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
-  const importBlock = source.match(/import \{[\s\S]*?\} from "\.\/EditorialUI\.jsx";/)?.[0] || "";
-  const nutrition = source.slice(
-    source.indexOf("export function Nutrition"),
-    source.indexOf("/* ----------------------------- LIBRARY"),
-  );
-
-  for (const token of ["A_ACC", "A_DANGER", "A_HAIR", "A_OK"]) {
-    assert.match(nutrition, new RegExp(`\\b${token}\\b`));
-    assert.match(importBlock, new RegExp(`\\b${token}\\b`));
-  }
-  assert.doesNotMatch(nutrition, /<DNeed\b/);
-});
-
 test("el aviso de ritmo persiste su decisión en goals, no en estado local", async () => {
   const source = await readFile(new URL("../src/DiarioScreen.jsx", import.meta.url), "utf8");
   // Sin paceCheckedAt en goals, el aviso reaparece a cada montaje del Diario
@@ -154,4 +139,25 @@ test("Biblioteca abre con la lista y la ficha vive en el panel derecho", async (
   assert.doesNotMatch(app, /export function Library\(/);
   assert.doesNotMatch(app, /export function Routines\(/);
   assert.match(app, /<LibraryScreen/);
+});
+
+test("registrar comida no se puede sin cantidad", async () => {
+  const screen = await readFile(new URL("../src/NutritionScreen.jsx", import.meta.url), "utf8");
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+
+  // El paso de cantidad es lo único que el handoff marca como intocable de esta
+  // pantalla: sin él se registran raciones inventadas y los macros del día no
+  // significan nada. Elegir abre el panel; guardar exige un número mayor que 0.
+  assert.match(screen, /const valid = amount > 0;/);
+  assert.match(screen, /className="ft-dc-btn" disabled=\{!valid\}/);
+  assert.match(screen, /pick && \(/);
+
+  // Las cuatro pestañas del prototipo, sobre datos que ya existen.
+  for (const key of ["buscar", "mios", "recetas", "recientes"]) {
+    assert.ok(screen.includes(`"${key}"`), `falta la pestaña ${key}`);
+  }
+
+  // La versión vieja se borró: dos pantallas de nutrición divergen enseguida.
+  assert.doesNotMatch(app, /export function Nutrition\(/);
+  assert.match(app, /<NutritionScreen/);
 });
