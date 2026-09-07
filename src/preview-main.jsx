@@ -125,7 +125,7 @@ const PLAN_ROUTINES = [
 // Rutinas reales de las plantillas: traen calentamiento, notas y version minima.
 const TEMPLATE_ROUTINES = ROUTINE_TEMPLATES.map((t) => templateToAppRoutine(t, uid));
 
-const SCREENS = ["Diario", "Entrenar", "Nutrición", "Peso", "Medidas", "Nota", "Check-in", "Plan", "Biblioteca", "Métricas", "Más", "Perfil"];
+const SCREENS = ["Diario", "Entrenar", "Nutrición", "Cuerpo", "Plan", "Biblioteca", "Métricas", "Más", "Perfil"];
 
 function Preview() {
   const [screen, setScreen] = useState("Diario");
@@ -134,8 +134,13 @@ function Preview() {
   const [focus, setFocus] = useState(null);
   // Un destino por pestana real. Colapsarlos aqui hacia que toda fila del Diario
   // aterrizara en Entrenar, que no es lo que hace la app.
-  const TAB_TO_SCREEN = { entrenar: "Entrenar", nutricion: "Nutrición", peso: "Peso", medidas: "Medidas", nota: "Nota", checkin: "Check-in", cuerpo: "Peso", rutinas: "Biblioteca", biblioteca: "Biblioteca", mas: "Más", perfil: "Perfil", ajustes: "Más" };
-  const goTo = (tab, date = null) => { setFocus(date); setScreen(TAB_TO_SCREEN[tab] || "Diario"); };
+  const TAB_TO_SCREEN = { entrenar: "Entrenar", nutricion: "Nutrición", cuerpo: "Cuerpo", peso: "Cuerpo", medidas: "Cuerpo", nota: "Cuerpo", checkin: "Cuerpo", rutinas: "Biblioteca", biblioteca: "Biblioteca", mas: "Más", perfil: "Perfil", ajustes: "Más" };
+  const [bodySection, setBodySection] = useState(null);
+  const goTo = (tab, date = null) => {
+    setFocus(date);
+    setBodySection(["peso", "medidas", "nota", "checkin"].includes(tab) ? tab : null);
+    setScreen(TAB_TO_SCREEN[tab] || "Diario");
+  };
   const [card, setCard] = useState(null);
   const [theme, setTheme] = useState("dark");
   const [goals, setGoals] = useState({ ...DEFAULT_GOALS, kcalTarget: 1850, proteinTarget: 150, weeklyChange: -0.3, targetWeight: "68", startWeight: "" });
@@ -189,8 +194,8 @@ function Preview() {
             <NutritionScreen key={focus || "hoy"} nutrition={feedNutrition} setNutrition={setFeedNutrition} foods={libFoods} recipes={libRecipes}
               goals={goals} setTab={goTo} initialDate={focus} />
           )}
-          {["Peso", "Medidas", "Nota", "Check-in"].includes(screen) && (
-            <BodyScreen key={screen + (focus || "hoy")} section={{ Peso: "peso", Medidas: "medidas", Nota: "nota", "Check-in": "checkin" }[screen]} weights={feedWeights} setWeights={setFeedWeights} measurements={feedMeas} setMeasurements={setFeedMeas}
+          {screen === "Cuerpo" && (
+            <BodyScreen key={(bodySection || "peso") + (focus || "hoy")} section={bodySection || "peso"} weights={feedWeights} setWeights={setFeedWeights} measurements={feedMeas} setMeasurements={setFeedMeas}
               wellness={feedWellness} setWellness={setFeedWellness} periods={feedPeriods} setPeriods={setFeedPeriods}
               menstrualLogs={feedLogs} setMenstrualLogs={setFeedLogs} photos={[]} setPhotos={() => {}}
               goals={goals} setGoals={setGoals} userId="preview" initialDate={focus} />

@@ -56,8 +56,10 @@ test("cada fila del diario aterriza en la pantalla de su tipo", async () => {
     assert.ok(renderiza, `la app no renderiza ${destino}`);
     assert.match(mapa, new RegExp(`${destino}: "([^"]+)"`), `el banco no enruta ${destino}`);
   }
-  const pantallas = [...mapa.matchAll(/(peso|medidas|nota|entrenar|nutricion): "([^"]+)"/g)].map((m) => m[2]);
-  assert.equal(new Set(pantallas).size, 5, "el banco colapsa dos destinos en la misma pantalla");
+  // Peso, medidas y nota comparten pantalla (Cuerpo) a propósito, pero cada una
+  // abre su sección: el banco tiene que llevar la sección, no solo la pantalla.
+  assert.match(bench, /setBodySection\(\["peso", "medidas", "nota", "checkin"\]\.includes\(tab\)/);
+  assert.match(bench, /section=\{bodySection \|\| "peso"\}/);
 });
 
 test("el día del Plan recibe todo el día, no solo el entreno", async () => {
@@ -174,12 +176,38 @@ test("Cuerpo se registra en cuatro pantallas, no en una pila de formularios", as
   for (const section of ["peso", "medidas", "nota", "checkin"]) {
     assert.match(body, new RegExp(`section === "${section}"`), `falta la sección ${section}`);
   }
-  assert.match(app, /const BODY_TABS = \["peso", "medidas", "nota", "checkin"\]/);
+  assert.match(app, /const BODY_TABS = \["cuerpo", "peso", "medidas", "nota", "checkin"\]/);
   assert.match(app, /<BodyScreen key=\{tab\} section=\{tab\}/);
+  // Una pantalla, cuatro secciones conmutables: si desaparece el selector,
+  // vuelven a ser cuatro destinos sueltos.
+  assert.match(body, /onClick=\{\(\) => setSection\(id\)\}/);
 
   // El peso se registra con stepper y atajos, no con un campo suelto, y la coma
   // decimal es la de la app: escribirla no puede invalidar el pesaje.
   assert.match(body, /aria-label="Subir 0,1 kg"/);
   assert.match(body, /const parseKg = \(value\) => Number\(String\(value\)\.replace\(",", "\."\)\)/);
   assert.doesNotMatch(body, /setKg\([^)]*toFixed\(1\)\)/);
+});
+
+test("un perfil de hombre no ve nada del ciclo", async () => {
+  const body = await readFile(new URL("../src/BodyScreen.jsx", import.meta.url), "utf8");
+  const dash = await readFile(new URL("../src/DashboardScreen.jsx", import.meta.url), "utf8");
+  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+
+  // El check-in, la fase en la tira de peso, la tarjeta de Métricas y la fila de
+  // Añadir se apagan con el mismo criterio, no cada una por su cuenta.
+  assert.match(body, /const cycle = tracksCycle\(goals\)/);
+  assert.match(body, /\.\.\.\(cycle \? \[\["checkin"/);
+  assert.match(body, /\{cycle && \(\s*\n\s*<div>\s*\n\s*<span className="k">FASE ESTIMADA/);
+  assert.match(dash, /on\("cuerpo"\) && tracksCycle\(goals\) && cyc/);
+  assert.match(app, /tracksCycle\(goals\) \? \[\{ id: "checkin"/);
+});
+
+test("sin ciclo no salen avisos de ciclo ni corrección por fase", async () => {
+  const alerts = await readFile(new URL("../src/alerts.js", import.meta.url), "utf8");
+  // Se apaga en el origen: sin inicios de ciclo, ni retención lútea que descontar
+  // de la tendencia ni avisos que emitir.
+  assert.match(alerts, /const cycle = tracksCycle\(goals\)/);
+  assert.match(alerts, /const starts = cycle \? buildCycleStarts/);
+  assert.match(alerts, /if \(!cycle\) return a;/);
 });

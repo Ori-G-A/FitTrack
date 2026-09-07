@@ -1,5 +1,10 @@
 export const KCAL_PER_KG = 7700;
 
+// Si el perfil dice "hombre" no hay ciclo que seguir: ni check-in, ni fase en la
+// tira de peso, ni tarjeta en Metricas, ni avisos de retencion lutea. Vacio no
+// asume nada, que es distinto de decir que no.
+export const tracksCycle = (goals = {}) => goals?.sex !== "hombre";
+
 export const DEFAULT_GOALS = {
   startWeight: "",
   targetWeight: "",

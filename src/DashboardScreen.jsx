@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { CYCLE_PHASES, KCAL_PER_KG, PHASE_GROUPS } from "./app-config.js";
+import { CYCLE_PHASES, KCAL_PER_KG, PHASE_GROUPS, tracksCycle } from "./app-config.js";
 import { alertMetrics } from "./alerts.js";
 import { daysBetween, localISO } from "./app-utils.js";
 import { CLEAR_BLEEDING_LEVELS, cycleContext, inferCyclePhase, ovulationEstimate, phaseSegments, symptomScore } from "./cycle-inference.js";
@@ -668,7 +668,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
       </DCard>
     ),
 
-    on("cuerpo") && cyc && (
+    on("cuerpo") && tracksCycle(goals) && cyc && (
       <DCard key="ciclo" id="ciclo" title={"Ciclo en curso · " + cyc.phase} meta={cyc.daysToNext >= 0 ? "próximo en ~" + cyc.daysToNext + " d" : Math.abs(cyc.daysToNext) + " d de retraso"}>
         <span className="ft-dc-big">{cyc.day}<small>día de ~{cyc.avgCycle} d</small></span>
         {cyc.segments.length > 0 && <BCycleStrip segments={cyc.segments} />}

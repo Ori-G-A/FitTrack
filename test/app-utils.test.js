@@ -546,3 +546,27 @@ test("las comidas del día salen del reparto elegido, no de una lista fija", () 
     assert.deepEqual(split.map((meal) => meal.label), PROTEIN_CONFIG.mealLabels[count]);
   }
 });
+
+test("con perfil de hombre no se calcula ni se avisa nada del ciclo", () => {
+  const hoy = localISO();
+  const dias = (n) => addDays(hoy, -n);
+  const weights = Array.from({ length: 25 }, (_, i) => ({ id: `w${i}`, date: dias(24 - i), kg: +(80 - i * 0.1).toFixed(1) }));
+  const periods = [{ id: "p1", date: dias(56) }, { id: "p2", date: dias(28) }];
+  const menstrualLogs = [56, 55, 28, 27].map((d) => ({ id: `l${d}`, date: dias(d), bleedingLevel: "medium" }));
+  const datos = { workouts: [], nutrition: [], weights, wellness: [], periods, menstrualLogs };
+
+  const hombre = { ...datos, goals: { sex: "hombre", weeklyChange: -0.3 } };
+  const mujer = { ...datos, goals: { sex: "mujer", weeklyChange: -0.3 } };
+
+  const m = alertMetrics(hombre);
+  assert.equal(m.completeCyclesCount, 0);
+  assert.equal(m.lutealOffset, null);
+  assert.equal(m.cycleConfound, false);
+  assert.equal(m.phaseByDate.size, 0, "no se infiere fase para ningún pesaje");
+
+  const avisosHombre = buildAlerts(m, hombre.goals);
+  assert.equal(avisosHombre.filter((a) => a.card === "ciclo").length, 0);
+  // Y con perfil de mujer los mismos datos sí los producen: la diferencia es el
+  // perfil, no que falten datos.
+  assert.ok(buildAlerts(alertMetrics(mujer), mujer.goals).some((a) => a.card === "ciclo"));
+});

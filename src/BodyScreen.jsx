@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { CYCLE_PHASES, PHASE_GROUPS } from "./app-config.js";
+import { CYCLE_PHASES, PHASE_GROUPS, tracksCycle } from "./app-config.js";
 import { addDays, creatineWaterKg, daysBetween, localISO, weightTrendHighlight } from "./app-utils.js";
 import { LUTEAL_LENGTH, cycleContext, dailyGuidance, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog, ovulationEstimate, summarizeCycles, symptomDistribution } from "./cycle-inference.js";
 import { Headline, ScreenMast } from "./EditorialUI.jsx";
@@ -67,7 +67,7 @@ const PHASE_NAMES = {
 };
 const CONFIDENCE_NAMES = { low: "baja", medium: "media", high: "alta" };
 
-export default function BodyScreen({ section = "peso", weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
+export default function BodyScreen({ section: initialSection = "peso", weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
   const creatineStart = goals?.creatineStart || "";
   const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
   const creaWaterKg = creatineStart ? creatineWaterKg(creatineStart, todayISO()) : null;
@@ -163,24 +163,36 @@ export default function BodyScreen({ section = "peso", weights, setWeights, meas
   };
   const pSortedPhotos = [...photos].sort((a, b) => b.date.localeCompare(a.date));
 
-  const HEAD = {
-    peso: ["Peso", "báscula · tendencia · creatina"],
-    medidas: ["Medidas", "cintura · cadera · pecho · brazo · muslo · fotos"],
-    nota: ["Nota del día", "sueño · pulso · pasos · energía"],
-    checkin: ["Check-in de ciclo", "sangrado · flujo · síntomas"],
-  }[section] || ["Cuerpo", ""];
+  // Cuerpo es una pantalla con cuatro secciones, no cuatro pantallas: se registra
+  // todo en el mismo sitio y se cambia de seccion sin volver atras. Quien llega
+  // desde el Diario o desde el Plan aterriza en la suya, que es lo que importaba.
+  const cycle = tracksCycle(goals);
+  const SECTIONS = [
+    ["peso", "PESO", "báscula · tendencia · creatina"],
+    ["medidas", "MEDIDAS", "cintura · cadera · pecho · brazo · muslo · fotos"],
+    ["nota", "NOTA DEL DÍA", "sueño · pulso · pasos · energía"],
+    ...(cycle ? [["checkin", "CHECK-IN", "ciclo · sangrado · flujo · síntomas"]] : []),
+  ];
+  const [section, setSection] = useState(SECTIONS.some(([id]) => id === initialSection) ? initialSection : "peso");
+  const sub = SECTIONS.find(([id]) => id === section)?.[2] || "";
 
   return (
     <div className="ft-dc">
       <div className="ft-dc-head">
         <div>
-          <h1>{HEAD[0]}</h1>
-          <span className="sub">{HEAD[1]}</span>
+          <h1>Cuerpo</h1>
+          <span className="sub">{sub}</span>
         </div>
       </div>
 
+      <div className="ft-dc-chips">
+        {SECTIONS.map(([id, label]) => (
+          <button key={id} className={section === id ? "on" : ""} aria-pressed={section === id} onClick={() => setSection(id)}>{label}</button>
+        ))}
+      </div>
+
       {section === "peso" && trend && (
-        <div className="ft-dc-strip" style={{ "--cols": 3 }}>
+        <div className="ft-dc-strip" style={{ "--cols": cycle ? 3 : 2 }}>
           <div>
             <span className="k">ÚLTIMO PESO</span>
             <span className="v">{wSorted[0] ? wSorted[0].kg.toFixed(1).replace(".", ",") : "—"}<small>kg</small></span>
@@ -191,11 +203,13 @@ export default function BodyScreen({ section = "peso", weights, setWeights, meas
             <span className="v">{trend.perWeek > 0 ? "+" : ""}{String(trend.perWeek).replace(".", ",")}<small>kg/sem</small></span>
             <span className="d">últimos {trend.days} días</span>
           </div>
-          <div>
-            <span className="k">FASE ESTIMADA</span>
-            <span className="v" style={{ fontSize: 19 }}>{PHASE_GROUPS[phaseEstimate.phase] || "—"}</span>
-            <span className="d">confianza {CONFIDENCE_NAMES[phaseEstimate.confidence] || phaseEstimate.confidence}</span>
-          </div>
+          {cycle && (
+            <div>
+              <span className="k">FASE ESTIMADA</span>
+              <span className="v" style={{ fontSize: 19 }}>{PHASE_GROUPS[phaseEstimate.phase] || "—"}</span>
+              <span className="d">confianza {CONFIDENCE_NAMES[phaseEstimate.confidence] || phaseEstimate.confidence}</span>
+            </div>
+          )}
         </div>
       )}
 

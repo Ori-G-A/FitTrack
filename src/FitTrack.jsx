@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "rea
 import { withTimeout } from "./async-utils.js";
 import { supabase } from "./supabase.js";
 import { PLACES, ROUTINE_TEMPLATES, routinePlace, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
-import { DEFAULT_GOALS } from "./app-config.js";
+import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
 import {
   authUserChanged, canonExercise, epley, loadProgressHighlight, localISO, mergePhotoUrls,
   migrateWorkouts as migrateWorkoutData, proteinAdherence, readThemePref, resolveTheme,
@@ -799,16 +799,17 @@ export default function App() {
     { id: "peso", label: "Peso", sub: "báscula del día", icon: Scale },
     { id: "nota", label: "Nota del día", sub: "sueño · pasos · energía", icon: Moon },
     { id: "medidas", label: "Medidas", sub: "cintura · cadera · fotos", icon: Ruler },
-    { id: "checkin", label: "Check-in de ciclo", sub: "sangrado y síntomas", icon: Droplet },
-  ];
+    // El check-in solo existe si hay ciclo que seguir.
+    ...(tracksCycle(goals) ? [{ id: "checkin", label: "Check-in de ciclo", sub: "sangrado y síntomas", icon: Droplet }] : []),
+  ].filter(Boolean);
 
   // Cuerpo se registra en cuatro sitios distintos; los cuatro son la misma
   // pantalla con una seccion activa, y el rail solo lleva al primero.
-  const BODY_TABS = ["peso", "medidas", "nota", "checkin"];
+  const BODY_TABS = ["cuerpo", "peso", "medidas", "nota", "checkin"];
   const NAV = [
     { id: "diario", label: "Diario", icon: Newspaper },
     { id: "entrenar", label: "Entrenar", icon: Dumbbell },
-    { id: "peso", label: "Cuerpo", icon: Scale },
+    { id: "cuerpo", label: "Cuerpo", icon: Scale },
     { id: "nutricion", label: "Nutrición", icon: Utensils },
     { id: "biblioteca", label: "Biblioteca", icon: Apple },
     { id: "plan", label: "Plan", icon: CalendarDays },

@@ -1,4 +1,4 @@
-import { KCAL_PER_KG } from "./app-config.js";
+import { KCAL_PER_KG, tracksCycle } from "./app-config.js";
 import { canonExercise, creatineWaterKg, daysBetween, epley, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
 import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 
@@ -39,11 +39,14 @@ export function alertMetrics({ workouts = [], nutrition = [], weights = [], well
   const maSeries = movingAverage(sortedW);
   const currentMA = maSeries.length ? maSeries[maSeries.length - 1].media : null;
 
-  const starts = buildCycleStarts(periods, menstrualLogs);
+  // Sin seguimiento de ciclo el resto de la cadena no puede corregir por fase ni
+  // avisar de retencion: se apaga en el origen, no en cada sitio que la usa.
+  const cycle = tracksCycle(goals);
+  const starts = cycle ? buildCycleStarts(periods, menstrualLogs) : [];
   const completeCyclesCount = starts.length > 1 ? starts.length - 1 : 0;
 
   const phaseByDate = new Map();
-  sortedW.forEach((w) => phaseByDate.set(w.date, inferCyclePhase({ date: w.date, menstrualLogs, periods, wellness }).phase));
+  if (cycle) sortedW.forEach((w) => phaseByDate.set(w.date, inferCyclePhase({ date: w.date, menstrualLogs, periods, wellness }).phase));
 
   const lutealOffset = completeCyclesCount >= 3
     ? lutealRetentionKg(sortedW, (date) => phaseByDate.get(date))
@@ -66,7 +69,7 @@ export function alertMetrics({ workouts = [], nutrition = [], weights = [], well
   })();
 
   const cycleConfound = (() => {
-    if (completeCyclesCount < 2) return false;
+    if (!cycle || completeCyclesCount < 2) return false;
     if (inferCyclePhase({ date: today, menstrualLogs, periods, wellness }).phase !== "luteal_late") return false;
     return symptomScore(menstrualLogs.find((log) => log.date === today)) >= 3;
   })();
@@ -143,7 +146,7 @@ export function alertMetrics({ workouts = [], nutrition = [], weights = [], well
   })();
 
   return {
-    sortedW, maSeries, maSeriesForTrend, currentMA, phaseByDate, completeCyclesCount, lutealOffset,
+    cycle, sortedW, maSeries, maSeriesForTrend, currentMA, phaseByDate, completeCyclesCount, lutealOffset,
     trend, cycleConfound, loadRpe, lowEnergyDays, exHistory, prs, recentPRs, weeklyMuscle,
     rpeSeries, deloadSignal, maintenance, protAvg7, lastTrain, projection,
   };
@@ -152,7 +155,7 @@ export function alertMetrics({ workouts = [], nutrition = [], weights = [], well
 export function buildAlerts(metrics, goals = {}) {
   const {
     recentPRs, trend, maintenance, cycleConfound, lutealOffset, protAvg7, weeklyMuscle,
-    lastTrain, projection, loadRpe, deloadSignal, lowEnergyDays, completeCyclesCount,
+    lastTrain, projection, loadRpe, deloadSignal, lowEnergyDays, completeCyclesCount, cycle,
   } = metrics;
   const today = localISO();
   const a = [];
@@ -231,6 +234,7 @@ export function buildAlerts(metrics, goals = {}) {
   }
 
   const CYCLE_TARGET = 3;
+  if (!cycle) return a;
   if (completeCyclesCount < CYCLE_TARGET) {
     a.push({ type: "info", card: "ciclo", title: "Progreso hacia seguimiento más robusto", body: `Ciclos completos registrados: ${completeCyclesCount}/${CYCLE_TARGET}. Cuando llegues a la meta, la tendencia de peso va a descontar sola la retención de la fase lútea.` });
   } else if (lutealOffset) {
