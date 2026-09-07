@@ -148,7 +148,11 @@ function PaceDone({ done, undo }) {
 // que lo disparo, que es donde se ve el dato entero.
 const ALERT_COLOR = { warn: "var(--attn)", ok: "var(--ok)", pr: "var(--accent)", info: "var(--muted)" };
 
-function Alerts({ alerts, openCard }) {
+// Descartar no es silenciar para siempre: el aviso vuelve a los 7 dias si la
+// condicion sigue ahi. Y se puede deshacer, como el aviso de ritmo.
+const DISMISS_DAYS = 7;
+
+function Alerts({ alerts, openCard, onDismiss }) {
   const urgent = alerts.filter((alert) => alert.type === "warn").length;
   return (
     <div className="ft-dc-card attn">
@@ -156,12 +160,15 @@ function Alerts({ alerts, openCard }) {
         Para hoy
         <span>{urgent ? `${urgent} por revisar de ${alerts.length}` : `${alerts.length} al día`}</span>
       </div>
-      {alerts.map((alert, index) => (
-        <button key={`${alert.card}-${index}`} className="ft-dc-alert" onClick={() => openCard(alert.card)}>
+      {alerts.map((alert) => (
+        <div key={alert.key} className="ft-dc-alert">
           <span className="dot" style={{ background: ALERT_COLOR[alert.type] }} />
-          <span className="tx"><b>{alert.title}.</b> {alert.body}</span>
-          <span className="go">›</span>
-        </button>
+          <button className="tx" onClick={() => openCard(alert.card)}>
+            <b>{alert.title}.</b> {alert.body}
+            <span className="go">›</span>
+          </button>
+          <button className="ft-dc-x" onClick={() => onDismiss(alert)} aria-label={`Descartar: ${alert.title}`} title="Descartar">×</button>
+        </div>
       ))}
     </div>
   );
@@ -189,10 +196,28 @@ export default function DiarioScreen({ workouts = [], nutrition = [], weights = 
   // La proteina del dia se lee en su aviso, no en la tira: repetirla aqui dejaba
   // fuera lo unico que la tira no contaba, que es cuanto te has movido.
   const steps = useMemo(() => stepsToday(wellness, today), [wellness, today]);
-  const alerts = useMemo(
+  const allAlerts = useMemo(
     () => buildAlerts(alertMetrics({ workouts, nutrition, weights, wellness, periods, menstrualLogs, goals }), goals),
     [workouts, nutrition, weights, wellness, periods, menstrualLogs, goals],
   );
+  const dismissed = goals.dismissedAlerts || {};
+  const alerts = allAlerts.filter((alert) => {
+    const when = dismissed[alert.key];
+    return !when || addDays(when, DISMISS_DAYS) <= today;
+  });
+  const [undoDismiss, setUndoDismiss] = useState(null);
+  const dismissAlert = (alert) => {
+    setGoals((current) => ({ ...current, dismissedAlerts: { ...(current.dismissedAlerts || {}), [alert.key]: today } }));
+    setUndoDismiss(alert);
+  };
+  const undoAlert = () => {
+    setGoals((current) => {
+      const next = { ...(current.dismissedAlerts || {}) };
+      delete next[undoDismiss.key];
+      return { ...current, dismissedAlerts: next };
+    });
+    setUndoDismiss(null);
+  };
 
   const sumDay = (date) => nutrition.filter((n) => n.date === date)
     .reduce((total, n) => ({ kcal: total.kcal + (Number(n.kcal) || 0), protein: total.protein + (Number(n.protein) || 0) }), { kcal: 0, protein: 0 });
@@ -285,7 +310,14 @@ export default function DiarioScreen({ workouts = [], nutrition = [], weights = 
         ? <PaceDone done={paceDone} undo={undoPace} />
         : alert && <PaceAlert alert={alert} goals={goals} onApply={applyPace} onDismiss={dismissPace} />}
 
-      {alerts.length > 0 && <Alerts alerts={alerts} openCard={openCard} />}
+      {alerts.length > 0 && <Alerts alerts={alerts} openCard={openCard} onDismiss={dismissAlert} />}
+
+      {undoDismiss && (
+        <button className="ft-dc-quiet" onClick={undoAlert}>
+          <span style={{ flex: 1 }}>Descartado «{undoDismiss.title}» · vuelve en {DISMISS_DAYS} días si sigue pasando</span>
+          <span style={{ fontFamily: "'IBM Plex Mono'", fontWeight: 600, fontSize: 10, color: "var(--text)" }}>DESHACER</span>
+        </button>
+      )}
 
       {protein && protein.onTarget < protein.logged && (
         <button className="ft-dc-quiet" onClick={() => setTab("nutricion")}>

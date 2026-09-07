@@ -333,3 +333,22 @@ test("la acción principal de cada pantalla no se va al desplazarse", async () =
   const bench = await readFile(new URL("../src/preview-main.jsx", import.meta.url), "utf8");
   assert.match(bench, /useState\(\s*\n?\s*CATALOG\.map/);
 });
+
+test("los avisos se pueden descartar, y vuelven si la causa sigue", async () => {
+  const diario = await readFile(new URL("../src/DiarioScreen.jsx", import.meta.url), "utf8");
+  const config = await readFile(new URL("../src/app-config.js", import.meta.url), "utf8");
+
+  // Se descarta con la ✕ de cada fila y se guarda en goals, no en estado local:
+  // si no, volvían todos al recargar.
+  assert.match(diario, /onClick=\{\(\) => onDismiss\(alert\)\}/);
+  assert.match(diario, /dismissedAlerts: \{ \.\.\.\(current\.dismissedAlerts \|\| \{\}\), \[alert\.key\]: today \}/);
+  assert.match(config, /dismissedAlerts: \{\},/);
+
+  // Descartar no es silenciar para siempre.
+  assert.match(diario, /const DISMISS_DAYS = 7;/);
+  assert.match(diario, /addDays\(when, DISMISS_DAYS\) <= today/);
+
+  // Y se puede deshacer, como el aviso de ritmo.
+  assert.match(diario, /DESHACER/);
+  assert.match(diario, /delete next\[undoDismiss\.key\]/);
+});

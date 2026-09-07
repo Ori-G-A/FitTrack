@@ -570,3 +570,22 @@ test("con perfil de hombre no se calcula ni se avisa nada del ciclo", () => {
   // perfil, no que falten datos.
   assert.ok(buildAlerts(alertMetrics(mujer), mujer.goals).some((a) => a.card === "ciclo"));
 });
+
+test("cada aviso trae una clave estable para poder descartarlo", () => {
+  const hoy = localISO();
+  const dias = (n) => addDays(hoy, -n);
+  const weights = Array.from({ length: 25 }, (_, i) => ({ id: `w${i}`, date: dias(24 - i), kg: +(70 - i * 0.12).toFixed(1) }));
+  const nutrition = Array.from({ length: 14 }, (_, i) => ({ id: `n${i}`, date: dias(13 - i), kcal: 1800, protein: 70 }));
+  const goals = { weeklyChange: -0.3, proteinTarget: 150, sex: "mujer" };
+  const datos = { workouts: [], nutrition, weights, wellness: [], periods: [], menstrualLogs: [], goals };
+  const avisos = buildAlerts(alertMetrics(datos), goals);
+
+  // Sin clave no hay forma de recordar cuál descartaste, y el índice del array
+  // cambia en cuanto aparece o desaparece otro aviso.
+  avisos.forEach((aviso) => assert.match(aviso.key, /^[a-z]+:[a-z0-9-]+$/, `clave inválida: ${aviso.key}`));
+  assert.equal(new Set(avisos.map((a) => a.key)).size, avisos.length, "hay claves repetidas");
+
+  // Y la clave no cambia entre cálculos con los mismos datos, o descartar duraría
+  // hasta el siguiente render.
+  assert.deepEqual(buildAlerts(alertMetrics(datos), goals).map((a) => a.key), avisos.map((a) => a.key));
+});

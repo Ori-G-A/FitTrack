@@ -243,5 +243,15 @@ export function buildAlerts(metrics, goals = {}) {
     a.push({ type: "info", card: "ciclo", title: "Sin retención lútea medible", body: `Ya tenés ${completeCyclesCount} ciclos completos, pero tus pesadas no muestran una diferencia clara entre fase lútea tardía y folicular (hace falta al menos 3 pesadas en cada fase y una diferencia mayor a 0,2 kg). No hay nada que descontar: pesate también en los días previos al periodo y se recalcula solo.` });
   }
 
-  return a;
+  return a.map((alert) => ({ ...alert, key: alertKey(alert) }));
+}
+
+export function alertKey(alert) {
+  const slug = (alert.title || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 40);
+  return `${alert.card}:${slug}`;
 }

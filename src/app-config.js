@@ -21,6 +21,9 @@ export const DEFAULT_GOALS = {
   // Fecha del ultimo aviso de ritmo aplicado o descartado: corta la ventana de
   // weightPaceAlert para que el mismo desvio no se cobre dos veces.
   paceCheckedAt: "",
+  // Avisos descartados: clave -> fecha. Vuelven a los 7 dias si la condicion
+  // sigue siendo cierta, para que descartar no sea silenciarlos para siempre.
+  dismissedAlerts: {},
 };
 
 export const ACTIVITY_LEVELS = [
