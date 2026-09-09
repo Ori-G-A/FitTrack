@@ -356,17 +356,27 @@ export function inferCyclePhase({ date = localISO(), menstrualLogs = [], periods
     // periodo esperado" y "el periodo ya vino y no lo registraste" producen los
     // mismos datos. Sin un registro reciente que confirme que el ciclo sigue
     // corriendo, esto es una suposicion y no puede venderse como estimacion firme.
-    // Los dias de sangrado del propio ciclo no valen como confirmacion: son de
-    // hace tres semanas. Lo que descarta un periodo no registrado es un check-in
-    // RECIENTE, hecho despues de que el periodo pudiera haber llegado.
-    const lastCheckIn = [...logs].reverse().find((item) => item.date <= date);
-    const sinRegistroReciente = !lastCheckIn || daysBetween(lastCheckIn.date, date) > 10;
-    const sinConfirmar = !context.nextStart && score < 3 && sinRegistroReciente;
+    // Lutea tardia significa que el periodo TODAVIA no ha llegado. Dos cosas lo
+    // contradicen y las dos se registraban sin que el codigo las mirara:
+    //
+    //   - Sangrado reciente de cualquier tipo. Si se marco "manchado", no cuenta
+    //     como inicio de ciclo, pero desde luego no es "aun no ha venido".
+    //   - Un check-in que no dice nada del sangrado. Haberlo abierto para anotar
+    //     colicos no confirma que no hayas sangrado.
+    //
+    // Solo confirma un check-in que diga explicitamente que no hubo sangrado.
+    const recientes = logs.filter((item) => item.date <= date && daysBetween(item.date, date) <= 7);
+    const sangradoReciente = recientes.find((item) => item.bleedingLevel && !["not_logged", "none"].includes(item.bleedingLevel));
+    const confirmaSinSangrado = logs.some((item) => item.date <= date
+      && daysBetween(item.date, date) <= 10 && item.bleedingLevel === "none");
+    const sinConfirmar = !context.nextStart && (Boolean(sangradoReciente) || (score < 3 && !confirmaSinSangrado));
     const base = context.nextStart
       ? `Estas a ${context.daysToNext} dias de un periodo registrado.`
-      : sinConfirmar
-        ? `Estas cerca del periodo esperado, pero no hay registros de este ciclo: si tu periodo ya llego, registralo en el check-in y la fase se recalcula.`
-        : `Estas cerca del periodo esperado segun tus ciclos registrados.`;
+      : sangradoReciente
+        ? `Registraste sangrado hace ${daysBetween(sangradoReciente.date, date)} dias, asi que el periodo no esta por venir. Si ese fue tu periodo, marcalo como leve, medio o abundante en el check-in y el ciclo se recalcula desde ahi.`
+        : sinConfirmar
+          ? `Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula.`
+          : `Estas cerca del periodo esperado segun tus ciclos registrados.`;
     return {
       date,
       phase: sinConfirmar ? "unknown" : "luteal_late",
@@ -499,7 +509,7 @@ export function dailyGuidance({ date = localISO(), menstrualLogs = [], periods =
   if (Number(wellnessLog?.sleep) > 0 && Number(wellnessLog.sleep) < 6) notes.push("Menos de 6 h de sueno: parte del bajon de hoy puede ser descanso, no fase del ciclo.");
   // Mismo umbral que getCycleInsights: sin dos ciclos completos esto es orientativo.
   const provisional = buildCycleStarts(periods, menstrualLogs).length < 3;
-  return { ...base, phase: estimate.phase, confidence: estimate.confidence, notes, provisional };
+  return { ...base, phase: estimate.phase, confidence: estimate.confidence, reason: estimate.reason, notes, provisional };
 }
 
 export function recalculateCycleEstimates(userId, startDate, endDate, data = {}) {

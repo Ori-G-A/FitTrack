@@ -274,7 +274,7 @@ test("no afirma lútea tardía cuando el periodo pudo llegar sin registrarse", (
   const aCiegas = inferCyclePhase({ date: hoy, menstrualLogs: base, periods: [], wellness: [] });
   assert.equal(aCiegas.phase, "unknown", "afirma una fase con el calendario como única evidencia");
   assert.equal(aCiegas.confidence, "low");
-  assert.match(aCiegas.reason, /registralo en el check-in/);
+  assert.match(aCiegas.reason, /ningun check-in reciente dice si ya sangraste/);
 
   // Con un check-in reciente sí se puede afirmar: alguien que registra a diario y
   // no ha sangrado está de verdad en lútea tardía.
@@ -284,6 +284,19 @@ test("no afirma lútea tardía cuando el periodo pudo llegar sin registrarse", (
   // Y con síntomas altos hoy, también: el dato del día manda sobre el calendario.
   const conSintomas = [...base, { id: "hoy", date: hoy, bleedingLevel: "none", crampsLevel: 6, bloatingLevel: 3 }];
   assert.equal(inferCyclePhase({ date: hoy, menstrualLogs: conSintomas, periods: [], wellness: [] }).phase, "luteal_late");
+
+  // Lútea tardía significa que el periodo TODAVÍA no ha llegado, así que un
+  // sangrado reciente lo contradice — aunque se marcara como manchado y no cuente
+  // como inicio de ciclo. Es el caso de un periodo registrado a medias.
+  const manchado = [...base, ...[5, 4, 3].map((n) => ({ id: `m${n}`, date: d(n), bleedingLevel: "spotting" }))];
+  const conManchado = inferCyclePhase({ date: hoy, menstrualLogs: manchado, periods: [], wellness: [] });
+  assert.equal(conManchado.phase, "unknown", "sangrado reciente y aun dice que el periodo esta por venir");
+  assert.match(conManchado.reason, /marcalo como leve, medio o abundante/);
+
+  // Y abrir el check-in para anotar cólicos no confirma que no hayas sangrado:
+  // solo un "no hubo" explícito cuenta como confirmación.
+  const sinDecirlo = [...base, ...[5, 4, 3].map((n) => ({ id: `s${n}`, date: d(n), bleedingLevel: "not_logged", crampsLevel: 4 }))];
+  assert.equal(inferCyclePhase({ date: hoy, menstrualLogs: sinDecirlo, periods: [], wellness: [] }).phase, "unknown");
 
   // Registrar el periodo lo resuelve: pasa a folicular temprana.
   const registrado = [...base, ...[3, 2, 1].map((n) => ({ id: `n${n}`, date: d(n), bleedingLevel: "medium" }))];

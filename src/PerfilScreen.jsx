@@ -115,6 +115,11 @@ export default function PerfilScreen({ embedded = false, userEmail = "", goals =
               <span style={{ color: phaseColor }}>GUÍA DE HOY · {group.toUpperCase()}</span>
               {guide.provisional && <span>provisional · faltan ciclos</span>}
             </div>
+            {guide.reason && (
+              <div className="n" style={{ borderBottom: "1px solid var(--hair)", paddingBottom: 9 }}>
+                <b style={{ color: "var(--text)" }}>Por qué.</b> {guide.reason}
+              </div>
+            )}
             <div className="b"><b style={{ color: "var(--text)" }}>Hormonas.</b> {guide.hormones}</div>
             <div className="b"><b style={{ color: "var(--text)" }}>Qué esperar.</b> {guide.expected}</div>
             <div className="b"><b style={{ color: "var(--text)" }}>Entreno.</b> {guide.training}</div>
@@ -125,7 +130,9 @@ export default function PerfilScreen({ embedded = false, userEmail = "", goals =
               </div>
             )}
             <div className="ft-dc-acts">
-              <button className="ft-dc-btn ghost" onClick={() => setTab("cuerpo")}>Actualizar el check-in</button>
+              <button className={guide.phase === "unknown" ? "ft-dc-btn" : "ft-dc-btn ghost"} onClick={() => setTab("checkin")}>
+                {guide.phase === "unknown" ? "Registrar el periodo" : "Actualizar el check-in"}
+              </button>
             </div>
           </div>
 
