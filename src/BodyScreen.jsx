@@ -117,10 +117,10 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
 
   const delPeriod = (id) => setPeriods((p) => p.filter((x) => x.id !== id));
   const fmtNext = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long" });
-  const [cycleDate, setCycleDate] = useState(todayISO());
+  const [cycleDate, setCycleDate] = useState(initialDate || todayISO());
   const existingCycleLog = menstrualLogs.find((log) => log.date === cycleDate);
   const [cycleLog, setCycleLog] = useState(emptyMenstrualLog(cycleDate));
-  useEffect(() => { setCycleLog(existingCycleLog ? normalizeMenstrualLog(existingCycleLog) : emptyMenstrualLog(cycleDate)); }, [cycleDate, existingCycleLog?.updatedAt]); // eslint-disable-line
+  useEffect(() => { setCycleLog(existingCycleLog ? normalizeMenstrualLog(existingCycleLog) : emptyMenstrualLog(cycleDate)); }, [cycleDate, existingCycleLog]);
   const phaseEstimate = inferCyclePhase({ date: cycleDate, menstrualLogs, periods, wellness });
   const ctx = cycleContext(cycleDate, periods, menstrualLogs);
   const phaseStyle = CYCLE_PHASES[PHASE_GROUPS[phaseEstimate.phase]];
@@ -136,6 +136,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   // El check-in es la unica entrada: buildCycleStarts deriva los inicios de ciclo del
   // sangrado registrado, sin duplicar el registro en `periods`.
   const saveCycleLog = () => {
+    if (!cycleDate) return;
     const now = new Date();
     const normalized = normalizeMenstrualLog({ ...cycleLog, id: existingCycleLog?.id || cycleLog.id || uid(), date: cycleDate, createdAt: existingCycleLog?.createdAt }, now);
     setMenstrualLogs((prev) => [...prev.filter((item) => item.date !== cycleDate), normalized].sort((a, b) => a.date.localeCompare(b.date)));
@@ -304,7 +305,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
           </div>
           <h3 className="ft-h3" style={{ marginBottom: 10 }}>Check-in menstrual</h3>
           <div className="ft-row" style={{ marginBottom: 10 }}>
-            <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={cycleDate} onChange={(e) => setCycleDate(e.target.value)} /></div>
+            <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={cycleDate} onChange={(e) => { if (e.target.value) setCycleDate(e.target.value); }} /></div>
             <div className="ft-field"><label>Sangrado</label><select className="ft-select" value={cycleLog.bleedingLevel} onChange={(e) => setCycleLog({ ...cycleLog, bleedingLevel: e.target.value, hasSpotting: e.target.value === "spotting" })}>{BLEEDING_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
             <div className="ft-field"><label>Como estuvo tu flujo</label><select className="ft-select" value={cycleLog.cervicalFluid} onChange={(e) => setCycleLog({ ...cycleLog, cervicalFluid: e.target.value })}>{FLUID_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
             <button className="ft-btn" onClick={saveCycleLog}><Check size={15} /> Guardar ciclo</button>

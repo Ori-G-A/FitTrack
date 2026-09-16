@@ -309,13 +309,16 @@ export function inferCyclePhase({ date = localISO(), menstrualLogs = [], periods
   const context = cycleContext(date, periods, logs);
   // El check-in del dia manda sobre la duracion asumida del periodo: si registraste
   // "no hubo" o "manchado", no estas menstruando aunque el periodo dure 5 dias en papel.
-  const loggedNoBleeding = Boolean(log) && log.bleedingLevel !== "not_logged" && !isClearBleeding(log.bleedingLevel);
+  const loggedNoBleeding = ["none", "spotting"].includes(log?.bleedingLevel);
   const periodEvent = loggedNoBleeding ? null : periods.find((period) => periodContains(period, date));
-  const ovulations = detectOvulationProbableDates(logs);
+  // Una ovulacion de otro ciclo no puede determinar la fase del ciclo actual.
+  const currentLogs = logs.filter((item) => (!context.currentStart || item.date >= context.currentStart)
+    && (!context.nextStart || item.date < context.nextStart));
+  const ovulations = detectOvulationProbableDates(currentLogs);
   const ovulation = ovulations.get(date);
   const lastOvulation = [...ovulations.keys()].filter((itemDate) => itemDate < date).sort().pop();
   const dpo = lastOvulation ? daysBetween(lastOvulation, date) : null;
-  const hasUsefulFluid = logs.some((item) => item.cervicalFluid && !["not_checked", "unknown"].includes(item.cervicalFluid));
+  const hasUsefulFluid = currentLogs.some((item) => item.date <= date && item.cervicalFluid && !["not_checked", "unknown"].includes(item.cervicalFluid));
   const confidence = confidenceFromContext(context, hasUsefulFluid, ovulations.size > 0);
 
   if (log && isClearBleeding(log.bleedingLevel)) {

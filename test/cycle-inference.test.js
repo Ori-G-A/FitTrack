@@ -15,6 +15,43 @@ import {
 } from "../src/cycle-inference.js";
 import { addDays, localISO } from "../src/app-utils.js";
 
+test("un nuevo periodo corta la influencia de la ovulacion del ciclo anterior", () => {
+  const menstrualLogs = [
+    { date: "2026-08-14", cervicalFluid: "watery" },
+    { date: "2026-08-15", cervicalFluid: "dry" },
+  ];
+  for (const data of [
+    { periods: [{ date: "2026-08-29", duration: 5 }], menstrualLogs },
+    { periods: [], menstrualLogs: [...menstrualLogs,
+      ...Array.from({ length: 5 }, (_, day) => ({ date: addDays("2026-08-29", day), bleedingLevel: "medium" })),
+      { date: "2026-09-03", bleedingLevel: "none" },
+    ] },
+  ]) {
+    assert.equal(inferCyclePhase({ date: "2026-09-02", ...data }).phase, "menstruation");
+    const result = inferCyclePhase({ date: "2026-09-04", ...data });
+    assert.equal(result.phase, "follicular_early");
+    assert.equal(dailyGuidance({ date: "2026-09-04", ...data }).phase, result.phase);
+    assert.equal(inferCyclePhase({ date: "2026-09-13", ...data, menstrualLogs: [...data.menstrualLogs,
+      { date: "2026-09-11", cervicalFluid: "watery" },
+      { date: "2026-09-12", cervicalFluid: "dry" },
+    ] }).phase, "luteal_early");
+  }
+});
+
+test("un registro de sintomas sin campo de sangrado no cancela un periodo", () => {
+  const periods = [{ date: "2026-09-01", duration: 5 }];
+  for (const bleedingLevel of [undefined, null, "", "not_logged"]) {
+    assert.equal(inferCyclePhase({ date: "2026-09-03", periods,
+      menstrualLogs: [{ date: "2026-09-03", crampsLevel: 4, bleedingLevel }],
+    }).phase, "menstruation");
+  }
+  for (const bleedingLevel of ["none", "spotting"]) {
+    assert.notEqual(inferCyclePhase({ date: "2026-09-03", periods,
+      menstrualLogs: [{ date: "2026-09-03", bleedingLevel }],
+    }).phase, "menstruation");
+  }
+});
+
 test("menstrual logs do not duplicate sleep or energy fields", () => {
   assert.equal(MENSTRUAL_DAILY_LOG_FIELDS.includes("sleep"), false);
   assert.equal(MENSTRUAL_DAILY_LOG_FIELDS.includes("sleepHours"), false);

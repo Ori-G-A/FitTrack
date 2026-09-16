@@ -82,7 +82,7 @@ export default function PerfilScreen({ embedded = false, userEmail = "", goals =
             <div className="t">Sin datos de ciclo todavía</div>
             <div className="b">Registra un check-in y aquí verás en qué fase estás, qué esperar y cómo suele afectar al entreno.</div>
             <div className="ft-dc-acts">
-              <button className="ft-dc-btn" onClick={() => setTab("cuerpo")}>Hacer el check-in</button>
+              <button className="ft-dc-btn" onClick={() => setTab("checkin")}>Hacer el check-in</button>
             </div>
           </div>
         )
