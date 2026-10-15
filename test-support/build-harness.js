@@ -2,7 +2,7 @@ import { build } from 'esbuild';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-export async function buildHarness({ mutation, capture = false, entry = 'test-support/app-entry.jsx' } = {}) {
+export async function buildHarness({ mutation, capture = false, capturePreview = false, entry = 'test-support/app-entry.jsx' } = {}) {
   const result = await build({
     entryPoints: [resolve(entry)], bundle: true,
     format: 'iife', platform: 'browser', write: false, metafile: true,
@@ -11,6 +11,12 @@ export async function buildHarness({ mutation, capture = false, entry = 'test-su
       name: 'sdd-test-boundaries',
       setup(builder) {
         builder.onResolve({ filter: /(?:^|\/)supabase\.js$/ }, () => ({ path: resolve('test-support/fake-supabase.js') }));
+        if (capturePreview) builder.onLoad({ filter: /(?:preview-main|maqueta)\.jsx$/ }, async ({ path }) => {
+          const source = await readFile(path, 'utf8');
+          const root = 'createRoot(document.getElementById("root")).render';
+          if (!source.includes(root)) throw new Error('Raíz preview no encontrada');
+          return { contents: source.replace(root, 'globalThis.__sddPreviewRoot = createRoot(document.getElementById("root")); globalThis.__sddPreviewRoot.render'), loader: 'jsx' };
+        });
         if (capture) builder.onLoad({ filter: /FitTrack\.jsx$/ }, async ({ path }) => {
           const source = await readFile(path, 'utf8');
           const anchor = '  // Misma lectura que usa Ajustes:';

@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
+import { loadUserData } from "./app-data-lifecycle.js";
 import { supabase } from "./supabase.js";
 import { PLACES, ROUTINE_TEMPLATES, routinePlace, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
@@ -699,44 +700,13 @@ export default function App() {
     let cancelled = false;
     setLoaded(false);
     setLoadError(false);
-    (async () => {
-      try {
-        const [nextWorkouts, nextWeights, nextNutrition, nextFoods, nextRecipes, nextRoutines,
-          nextMeasurements, nextWellness, nextPeriods, nextMenstrualLogs, nextPhotos, nextGoals] = await Promise.all([
-          loadKey(userId, "workouts", []),
-          loadKey(userId, "weights", []),
-          loadKey(userId, "nutrition", []),
-          loadKey(userId, "foods", []),
-          loadKey(userId, "recipes", []),
-          loadKey(userId, "routines", []),
-          loadKey(userId, "measurements", []),
-          loadKey(userId, "wellness", []),
-          loadKey(userId, "periods", []),
-          loadKey(userId, "menstrualLogs", []),
-          loadKey(userId, "photos", []),
-          loadKey(userId, "goals", DEFAULT_GOALS),
-        ]);
-        const hydratedPhotos = await hydratePhotos(userId, nextPhotos);
-        if (cancelled) return;
-        setWorkouts(migrateWorkouts(nextWorkouts));
-        setWeights(nextWeights);
-        setNutrition(nextNutrition);
-        setFoods(migrateFoodUnits(nextFoods));
-        setRecipes(nextRecipes);
-        setRoutines(nextRoutines);
-        setMeasurements(nextMeasurements);
-        setWellness(nextWellness);
-        setPeriods(nextPeriods);
-        setMenstrualLogs(nextMenstrualLogs);
-        setPhotos(hydratedPhotos);
-        setGoals(nextGoals);
-        setLoaded(true);
-      } catch (error) {
-        if (cancelled) return;
-        console.error("loadAppData", error);
-        setLoadError(true);
-      }
-    })();
+    loadUserData({
+      userId, loadKey, defaultGoals: DEFAULT_GOALS, hydratePhotos, migrateWorkouts, migrateFoodUnits,
+      setters: { setWorkouts, setWeights, setNutrition, setFoods, setRecipes, setRoutines,
+        setMeasurements, setWellness, setPeriods, setMenstrualLogs, setPhotos, setGoals, setLoaded },
+      isCancelled: () => cancelled,
+      onError: (error) => { console.error("loadAppData", error); setLoadError(true); },
+    });
     return () => { cancelled = true; };
   }, [session?.user?.id, loadAttempt]);
 

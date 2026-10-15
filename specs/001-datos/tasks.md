@@ -120,10 +120,10 @@ a clarify; no cambiar código/aserciones silenciosamente para forzar el gate.
 
 ### US1 — E2: carga
 
-- [ ] T016 [US1; FR-001, FR-002, FR-007, FR-008; US1-AS1, US1-AS5, US1-AS6]
+- [x] T016 [US1; FR-001, FR-002, FR-007, FR-008; US1-AS1, US1-AS5, US1-AS6]
   Depende de T015. Extraer coordinación de carga a `src/app-data-lifecycle.js`,
   manteniendo callbacks, migraciones, cleanup y firmas de Train/pantallas.
-- [ ] T017 [US1; FR-001, FR-002, FR-006, FR-007, FR-008; US1-AS1, US1-AS5,
+- [x] T017 [US1; FR-001, FR-002, FR-006, FR-007, FR-008; US1-AS1, US1-AS5,
   US1-AS6] Depende de T016. Reejecutar T002/T006/T007/T008, cola y suite;
   activar límites de lifecycle; humo principal/preview con cliente falso si se
   toca montaje o firmas. Registrar E2 sin confundir preview con backend aislado.

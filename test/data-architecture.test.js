@@ -4,7 +4,7 @@ import { build } from 'esbuild';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-const layers = ['src/data-operations.js', 'src/save-coordinator.js'];
+const layers = ['src/data-operations.js', 'src/save-coordinator.js', 'src/app-data-lifecycle.js'];
 async function checkLayers(snippet) {
   const result = await build({
     ...(snippet ? { stdin: { contents: snippet, sourcefile: '__architecture_fixture__.js', resolveDir: process.cwd() } } : { entryPoints: layers }),
