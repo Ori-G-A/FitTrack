@@ -100,3 +100,12 @@ falló con la dependencia antigua. Tras corregirla, checkpoint completo repetido
 211/211 Node, 3/3 Chromium, 18 IDs completos de 002 y 21/21 de 001. Los once
 archivos pin conservan hash. Build verde (19,19 s), aviso de chunk conocido.
 Evidencia: [e1.json](evidence/e1.json). RLS sigue pendiente; no se cierra 002.
+
+## E2 — FR-012 configuración
+
+Rojo sobre supabase.js sin validación: dos subcasos inválidos y su grupo fallan
+porque createClient sí se invoca (1 frente a 0); caso válido pasa. Después del
+validador puro y su llamada previa al SDK: 215/215 Node, 3/3 Chromium y build
+verde (20,98 s). Claves/URLs ausentes, vacías, malformadas o protocolo ajeno
+rechazan con nombre de variable y sin valor; entradas válidas originales se
+conservan. No se inspecciona env real. [Evidencia E2](evidence/e2.json).
