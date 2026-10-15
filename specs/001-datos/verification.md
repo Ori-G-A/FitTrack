@@ -51,7 +51,7 @@ Chromium. Los pins nuevos no se habían declarado válidos antes de ese cierre.
 | E1 / T014–T015 | Completa | 159/159 Node; mismos pins públicos, 3 mutaciones y límites verdes |
 | E2 / T016–T017 | Completa | 159/159 Node y 1 smoke adicional de ambos previews; cleanup/migraciones preservados |
 | E3 / T018–T019 | Completa | 160/160 Node, 3/3 Chromium, 21 filas completas; pins de copia sin cambios |
-| E4 / T020–T021 | Pendiente | Borrado y reejecución |
+| E4 / T020–T021 | Completa | 160/160 Node, 3/3 Chromium y gate de 21 filas; errores por paso preservados |
 | T022–T024 / converge | Pendiente | Gate final, build y cierre de gaps |
 
 CI remoto no observado. No hay despliegues ni pruebas contra datos reales.

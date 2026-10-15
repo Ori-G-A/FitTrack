@@ -75,3 +75,20 @@ export function importUserData(event, { userId, createReader, validateBackup,
   reader.onerror = () => { notify('No se pudo leer el archivo'); event.target.value = ''; };
   reader.readAsText(file);
 }
+
+export async function deleteUserData({ userId, suspendUserSaves, waitForUserSaves,
+  deleteUserPhotos, deleteAppData, signOut, resumeUserSaves, setLoaded }) {
+  if (!userId) throw new Error('No hay una sesión activa');
+  suspendUserSaves(userId);
+  setLoaded(false);
+  try {
+    await waitForUserSaves(userId);
+    await deleteUserPhotos(userId);
+    await deleteAppData(userId);
+    await signOut();
+  } catch (error) {
+    resumeUserSaves(userId);
+    setLoaded(true);
+    throw error;
+  }
+}

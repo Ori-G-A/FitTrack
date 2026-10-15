@@ -138,10 +138,10 @@ a clarify; no cambiar código/aserciones silenciosamente para forzar el gate.
 
 ### US3 — E4: borrado
 
-- [ ] T020 [US3; FR-011; US3-AS1, US3-AS2] Depende de T019. Extraer borrado
+- [x] T020 [US3; FR-011; US3-AS1, US3-AS2] Depende de T019. Extraer borrado
   filtrado a data-operations y coordinación a lifecycle; retirar consulta app_data
   directa de App. No añadir transacción/rollback ni corregir retorno signOut.
-- [ ] T021 [US3; FR-011; US3-AS1, US3-AS2] Depende de T020. Reejecutar T011,
+- [x] T021 [US3; FR-011; US3-AS1, US3-AS2] Depende de T020. Reejecutar T011,
   cola, carga, suite y límites de lifecycle/data-operations; registrar E4.
 
 No hay tareas rojas de producto porque no hay CHANGE. Si surge uno, detener

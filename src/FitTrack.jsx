@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
-import { exportUserData, importUserData, loadUserData } from "./app-data-lifecycle.js";
+import { deleteUserData, exportUserData, importUserData, loadUserData } from "./app-data-lifecycle.js";
+import { deleteAppDataForUser } from "./data-operations.js";
 import { supabase } from "./supabase.js";
 import { PLACES, ROUTINE_TEMPLATES, routinePlace, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
@@ -750,22 +751,11 @@ export default function App() {
   useSyncedValue(userId, "goals", goals, loaded);
 
   const signOut = () => supabase.auth.signOut();
-  const deleteAllData = async () => {
-    if (!userId) throw new Error("No hay una sesión activa");
-    suspendUserSaves(userId);
-    setLoaded(false);
-    try {
-      await waitForUserSaves(userId);
-      await deleteUserPhotos(userId);
-      const { error } = await supabase.from("app_data").delete().eq("user_id", userId);
-      if (error) throw error;
-      await supabase.auth.signOut();
-    } catch (error) {
-      resumeUserSaves(userId);
-      setLoaded(true);
-      throw error;
-    }
-  };
+  const deleteAllData = () => deleteUserData({
+    userId, suspendUserSaves, waitForUserSaves, deleteUserPhotos,
+    deleteAppData: (id) => deleteAppDataForUser(supabase, id),
+    signOut, resumeUserSaves, setLoaded,
+  });
 
   const exportData = () => exportUserData({
     data: { workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, menstrualLogs, photos, goals },
