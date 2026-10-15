@@ -1,12 +1,13 @@
 # Tareas — 001-datos
 
-Estado: APROBADA para ejecución local por el propietario; integración
-documental. Fecha: 2026-10-15. Referencias: [spec](spec.md), [plan](plan.md),
-[research](research.md), [análisis](analyze.md). Rama: `codex/001-datos-docs`.
+Estado: COMPLETADA localmente tras aprobación del propietario; integración
+remota pendiente. Fecha: 2026-10-15. Referencias: [spec](spec.md), [plan](plan.md),
+[research](research.md), [análisis](analyze.md). Ejecución: `codex/001-datos-code`;
+origen documental: `codex/001-datos-docs`.
 
 Todas las tareas trazan a US1 (conservar registros), US2 (gestionar copias) o
 US3 (borrar datos). Los FR y escenarios son los de la spec; no hay CHANGE.
-Las casillas corresponden al trabajo futuro de 001, no al piloto ya ejecutado.
+Las casillas registran ejecución local, no aprobación de un merge remoto.
 Ninguna tarea se marca completa por disponer de un diseño o de evidencia parcial.
 
 ## 1. Preparación — E0
@@ -149,20 +150,20 @@ la parte afectada y volver a clarify/plan/tasks/analyze antes de implementarlo.
 
 ## 5. Trazabilidad y verificación final
 
-- [ ] T022 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
+- [x] T022 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
   FR-007, FR-008, FR-009, FR-010, FR-011; US1-AS1, US1-AS2, US1-AS3,
   US1-AS4, US1-AS5, US1-AS6, US2-AS1, US2-AS2, US3-AS1, US3-AS2]
   Depende de T021. `pnpm test:sdd:complete` verde; cada ID tiene prueba descubierta
   y aprobada, sin PENDING/partial ni omitidos. Reejecutar negativos de prueba
   inexistente/omitida/duplicada y revisar suficiencia de las aserciones.
-- [ ] T023 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
+- [x] T023 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
   FR-007, FR-008, FR-009, FR-010, FR-011; US1-AS1, US1-AS2, US1-AS3,
   US1-AS4, US1-AS5, US1-AS6, US2-AS1, US2-AS2, US3-AS1, US3-AS2]
   Depende de T022. Ejecutar suite, build, Chromium y checks de límites. Auditar
   si cambió lockfile/dependencias desde preparación. Registrar comandos y salidas
   reales, avisos/omisiones y la repetición íntegra de checkpoints que fallaron.
   Observar CI del commit exacto antes de merge; si no hay CI, declararlo pendiente.
-- [ ] T024 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
+- [x] T024 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
   FR-007, FR-008, FR-009, FR-010, FR-011; US1-AS1, US1-AS2, US1-AS3,
   US1-AS4, US1-AS5, US1-AS6, US2-AS1, US2-AS2, US3-AS1, US3-AS2]
   Depende de T023. Converge contra spec, plan y constitución: cero gaps nuevos;
@@ -175,6 +176,11 @@ la parte afectada y volver a clarify/plan/tasks/analyze antes de implementarlo.
 G-DOC: aprobación del propietario de tareas y analyze, PR documental abierto y
 fusionado por el propietario después de sus dependencias (enmienda/readiness).
 No marcar la puerta cumplida por guardar estos archivos o crear un commit local.
+
+Registro posterior: el propietario aprobó todos los artefactos y ordenó continuar
+con el trabajo local. Se aplicó esa instrucción directa para ejecutar pins y
+extracciones, manteniendo la integración remota pendiente. No se afirma que el
+PR documental esté publicado o fusionado; ver approvals.md y verification.md.
 
 Orden: G-DOC → T001 → T002–T011 → T012/G-PIN → T013 → T014 → T015 → T016 →
 T017 → T018 → T019 → T020 → T021 → T022 → T023 → T024.
@@ -190,11 +196,11 @@ no se ha solicitado delegación a agentes.
 - [x] No se confunde piloto parcial con pin completo; se amplía runner en T012.
 - [x] Mutaciones conservarán aserciones aunque cambie su punto de instrumentación.
 - [x] Tareas habilitadoras trazan al resultado de historias explícitas.
-- [x] Analyze documental disponible; aprobación y merge siguen pendientes.
+- [x] Analyze y tareas aprobados por el dueño; integración remota pendiente.
 
 ## Registro de ejecución
 
-T001–T012 ejecutadas: ver verification.md y su baseline sobre src original. Preparación anticipada: ver
+T001–T024 completadas localmente: ver verification.md, baseline y evidencia final. Preparación anticipada: ver
 [readiness](../../docs/sdd/readiness.md). Al cerrar una tarea registrar: qué se
 hizo, revisión, comando y salida/test/números, y cualquier desviación del plan.
 No completar casillas por diseño, por estimación ni por existencia del piloto.

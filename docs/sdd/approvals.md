@@ -16,7 +16,7 @@ en la [spec 001](../../specs/001-datos/spec.md).
 | Plan 001 revisado | «continua» del 2026-10-15 tras presentarlo como siguiente decisión pendiente | Aprobado para avanzar a tareas/analyze; no se infiere dispensa de puertas restantes |
 | Tareas y analyze 001 | «apruebo todo. Cotninua con el trabajo» tras presentar tareas/analyze | Aprobados; autorización directa para continuar localmente con pins y extracciones por puertas |
 | PR documental 001 | Título/cuerpo preparados; no hay merge registrado | Pendiente de apertura/fusión por el propietario |
-| Refactor productivo / converge | Misma autorización directa de continuar el trabajo | Autorizado localmente; G-PIN verde antes de tocar src; entregas y converge registrados en verification |
+| Refactor productivo / converge | Misma autorización directa de continuar el trabajo | E1–E4 verificadas localmente, 21/21 IDs completos y converge sin gaps nuevos; CI e integración remota pendientes |
 | Calendario | Fechas propuestas por el agente | Tentativo, no compromiso del propietario |
 | Despliegue | Ninguna autorización | Fuera de alcance; vínculo real de main con Vercel sin verificar |
 
@@ -31,6 +31,7 @@ con su corrección editorial, no un diff frente a una 1.0.0 previamente versiona
 3. `codex/001-datos-docs`: tareas/analyze de 001; depende de readiness.
 4. `codex/001-datos`: rama inicial de área; deberá incorporar lo fusionado por el
    dueño antes de avanzar con la refactorización.
+5. `codex/001-datos-code`: implementación final local, dependiente de la rama documental.
 
 No hay PRs publicados ni merges realizados. Los borradores de plan no se
 consideran etapas aprobadas por estar guardados en el workspace.
@@ -39,7 +40,7 @@ local; la integración remota conserva sus aprobaciones y no se da por realizada
 
 ## Próxima decisión concreta
 
-Ejecutar las entregas aprobadas conservando pins verdes. Estado actual en
-[verification](../../specs/001-datos/verification.md). Apertura/fusión de PRs
-por el dueño sigue pendiente; su [cuerpo documental](../../specs/001-datos/docs-pr.md)
-está preparado. No se amplía el dominio ni se da CI remoto por observado.
+Revisar el código y su [convergencia](../../specs/001-datos/converge.md), abrir los
+PRs respetando el orden de dependencias y observar CI antes de integrar.
+[Cuerpo de PR de código](../../specs/001-datos/code-pr.md) preparado.
+No se amplía el dominio ni se da CI remoto por observado.

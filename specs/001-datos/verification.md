@@ -52,6 +52,44 @@ Chromium. Los pins nuevos no se habían declarado válidos antes de ese cierre.
 | E2 / T016–T017 | Completa | 159/159 Node y 1 smoke adicional de ambos previews; cleanup/migraciones preservados |
 | E3 / T018–T019 | Completa | 160/160 Node, 3/3 Chromium, 21 filas completas; pins de copia sin cambios |
 | E4 / T020–T021 | Completa | 160/160 Node, 3/3 Chromium y gate de 21 filas; errores por paso preservados |
-| T022–T024 / converge | Pendiente | Gate final, build y cierre de gaps |
+| T022–T024 / converge | Completa localmente | Gate completo, build y audit verdes; revisión local sin gaps nuevos; CI remoto pendiente |
 
 CI remoto no observado. No hay despliegues ni pruebas contra datos reales.
+
+## Cierre local
+
+Suite final: 160/160 Node y 3/3 Chromium. El runner agrega 147 resultados de
+nivel superior (144 Node + 3 browser); los subcasos llevan el total Node a 160.
+Gate completo: 21/21. Build: 2254 módulos, 16,90 s; chunk index 508,72 kB.
+Audit: 0 vulnerabilidades. Hashes de los seis pins: idénticos a BASE.
+Código: `80920d4c1ff86648ef5f39ce459284929d7cf975`.
+Detalle: [converge](converge.md). Cuerpo para revisión: [PR de código](code-pr.md).
+
+## Notas de ejecución por tarea
+
+| Tarea | Trabajo y evidencia |
+| --- | --- |
+| T001 | Fixtures de sesión/Storage, relojes, capturas de App y módulos aislados; cliente real excluido |
+| T002 | Consulta/upsert, fallback y frontera 15000 ms; grupo lectura/escritura verde en BASE y final |
+| T003 | Cola/concurrencia/referencias, grupo correspondiente verde en ambas revisiones |
+| T004 | Bus/errores/intercalados y promesas resueltas, grupo de eventos verde |
+| T005 | Suspensión y snapshot de colas, grupo correspondiente verde |
+| T006 | Hook React, 599/600 ms, delay explícito y unsubscribe, grupo correspondiente verde |
+| T007 | Carga/migraciones/cancelación y error de fotos, grupo correspondiente verde |
+| T008 | 12 claves/URLs/timer y payloads, grupo correspondiente verde |
+| T009 | Exportación no espera cola, fotos completas, error y revocación, grupo verde |
+| T010 | Importación/fronteras/validación/aplicación parcial y cleanup, grupo verde |
+| T011 | Callback original de borrado/fallos por etapa/sin usuario; caso de éxito por UI. Ajuste de técnica explicado arriba |
+| T012 | 158/158 Node y 3/3 Chromium sobre src intacto; 21 complete y baseline guardada antes de extraer |
+| T013 | Imports transitivos y referencias DOM directas; negativos React/DOM; módulos activados al crearlos |
+| T014 | Coordinador extraído en E1, conservando fachada/instancia global y semántica |
+| T015 | 159/159 Node después de E1, incluidos mutaciones y límites |
+| T016 | Coordinación de carga extraída a lifecycle en E2 |
+| T017 | 159/159 Node y smoke de ambos previews con Train, tras E2 |
+| T018 | Importación/exportación extraídas preservando adaptadores y orden, E3 |
+| T019 | 160/160 Node y 3/3 Chromium; 21 complete tras E3 |
+| T020 | Borrado coordinado en lifecycle y consulta filtrada en adaptador, E4 |
+| T021 | 160/160 Node y 3/3 Chromium; 21 complete tras E4 |
+| T022 | Trazabilidad completa y negativos verdes; seis hashes de pins sin cambios |
+| T023 | Suite/build/audit locales verdes; se declara CI remoto no ejecutado, gate externo antes de merge |
+| T024 | Revisión contra spec/plan/constitución sin gaps nuevos; code-pr preparado y cierre de KD-001 propuesto, no aplicado |

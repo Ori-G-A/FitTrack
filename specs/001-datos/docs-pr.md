@@ -1,5 +1,8 @@
 # Propuesta de PR documental
 
+Documento de la etapa previa a implementación: sus resultados parciales eran
+los disponibles entonces. Evidencia actual: [PR de código](code-pr.md) y verification.md.
+
 Título: **Define tareas y verificación para refactorizar los datos de FitTrack**
 
 La persistencia y las acciones de copia/borrado están coordinadas desde App.

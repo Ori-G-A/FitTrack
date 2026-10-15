@@ -48,13 +48,17 @@ No se ha declarado ningún hito completado. Commits y aprobaciones vigentes:
 
 | ID | Comprobación pendiente | Criterio de aceptación | Hito |
 | --- | --- | --- | --- |
-| AUTO-001 | Verificador inicial implementado; cobertura completa pendiente | test:sdd cruza resultados reales y rechaza pruebas inexistentes/omitidas; modo completo rechaza partial/pending | M1 docs; M2 cobertura íntegra |
-| AUTO-002 | Límites de capas | Prueba rechaza imports prohibidos y pasa con límites del plan 001 | M2 |
+| AUTO-001 | Verificador implementado; spec 001 con 21/21 IDs completos | test:sdd cruza resultados reales y rechaza pruebas inexistentes/omitidas; modo completo rechaza partial/pending | Aplicado a 001; extender a futuras specs |
+| AUTO-002 | Límites de capas implementados en 001 | Imports transitivos y DOM directo comprobados; fixtures negativos y tres módulos de datos | Completo local para 001; CI remoto pendiente |
 | AUTO-003 | RLS y BD local | Pruebas ejecutan permisos de dos usuarios/anónimo; guarda rechaza host no local antes de conectar; CI sin credenciales reales | M3 |
-| AUTO-004 | UI observable | Escenarios críticos se ejecutan en navegador con fixtures; texto fuente no sustituye prueba funcional | M7, incremental por área |
+| AUTO-004 | Tres recorridos Chromium de datos y humo de previews implementados | Resto de escenarios de UI por área; texto fuente no sustituye prueba funcional | 001 verificada localmente; resto incremental hasta M7 |
 | AUTO-005 | Entorno local alineado y CI configurado; ejecución remota pendiente | Node/pnpm fijados y copia limpia comprobada; observar jobs obligatorios del commit revisado antes de declarar CI verde | M1 |
 
 ## Registro de seguimiento
+
+Las citas de hallazgos originales corresponden a BASE
+`46697650f18043319a7c96ccdf93ebbdf29e2d75`, no a líneas movidas tras refactorizar.
+El estado actual de 001 está en verification.md de su spec.
 
 | ID | Hallazgo y reproducción | Aceptación medible | Momento |
 | --- | --- | --- | --- |
@@ -101,9 +105,12 @@ la secuencia histórica no sustituye el [estado vigente](approvals.md).
   requieren CHANGE posterior; no se declaran defectos resueltos.
 - Checklist de requisitos completado documentalmente; [plan](../../specs/001-datos/plan.md)
   y [research](../../specs/001-datos/research.md) preparados para aprobación.
-- Actualización 2026-10-15: plan autorizado para avanzar; 24 tareas y analyze
-  documental preparados en `codex/001-datos-docs`. Pendiente revisión del dueño
-  y puerta documental; posteriormente pins, implementación y converge.
+- Actualización 2026-10-15: tareas/analyze e implementación local autorizados
+  mediante «apruebo todo. Cotninua con el trabajo». G-PIN verde antes de extraer;
+  E1–E4 y convergencia completadas localmente en `codex/001-datos-code`.
 - Actualización 2026-10-15: mejoras de preparación autorizadas y ejecutadas;
   [readiness](readiness.md) recoge versiones, piloto, mutaciones, navegador,
-  trazabilidad parcial, instalación limpia y auditoría. src permanece en BASE.
+  trazabilidad inicial, instalación limpia y auditoría sobre src en BASE.
+  Cierre de implementación: [verification](../../specs/001-datos/verification.md),
+  160/160 Node, 3/3 Chromium, build verde y 21/21 IDs completos. CI y merges
+  remotos pendientes; no se declara M1/M2 integrado ni se retira KD-001 todavía.

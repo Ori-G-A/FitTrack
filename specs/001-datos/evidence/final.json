@@ -1,0 +1,29 @@
+{
+  "codeRevision": "80920d4c1ff86648ef5f39ce459284929d7cf975",
+  "generatedAt": "2026-10-15T18:11:09.901Z",
+  "node": "v24.21.0",
+  "sourceHash": "d0d0dfad04eb4bccf77bba080bde30768e1518b16da010bdea2a038c610df2ee",
+  "nodeTests": 160,
+  "nodePassed": 160,
+  "browserPassed": 3,
+  "traceability": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 21
+  },
+  "frozenPinFilesVerified": 6,
+  "audit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0
+  },
+  "build": {
+    "passed": true,
+    "modules": 2254,
+    "seconds": 16.9,
+    "indexChunkKB": 508.72
+  },
+  "remoteCI": "not_observed"
+}

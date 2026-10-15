@@ -3,6 +3,8 @@
 Fecha: 2026-10-15. Revisión documental de [spec](spec.md), [plan](plan.md),
 [research](research.md), [tareas](tasks.md) y constitución 1.0.1.
 Estado: sin hallazgos CRITICAL abiertos. No es converge ni aprobación del dueño.
+Este informe conserva la revisión de la etapa documental anterior a ejecutar.
+Estado vigente tras la aprobación e implementación: [converge](converge.md).
 
 ## Comprobaciones realizadas
 
