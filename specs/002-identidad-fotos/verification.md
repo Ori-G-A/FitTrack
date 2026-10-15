@@ -88,3 +88,15 @@ propuestos». Se resolvieron C2 y se concretaron plan, research, casos rojos/ver
 y revisión cruzada. No se ejecutaron cambios productivos ni se reetiquetó el
 snapshot preparatorio histórico como una etapa aprobada. Plan/tasks requieren
 su propia aprobación antes de E1–E3; RLS real sigue siendo gate de cierre E4.
+
+## E1 — Coordinación de fotos
+
+Baseline cliente verificado contra hash original antes de tocar src. Se extrae
+photo-service con cliente/adaptadores y se conservan fachada y pins. La prueba
+de capas detectó localStorage transitivo a través de app-utils; T022 separa
+localISO sin cambiar su algoritmo ni reexport público. El primer intento de
+script de extracción se detuvo por separadores de línea; una reejecución aún
+falló con la dependencia antigua. Tras corregirla, checkpoint completo repetido:
+211/211 Node, 3/3 Chromium, 18 IDs completos de 002 y 21/21 de 001. Los once
+archivos pin conservan hash. Build verde (19,19 s), aviso de chunk conocido.
+Evidencia: [e1.json](evidence/e1.json). RLS sigue pendiente; no se cierra 002.

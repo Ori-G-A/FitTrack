@@ -1,7 +1,7 @@
 # Tareas propuestas — 002
 
-Estado: BORRADOR. Las marcas describen preparación realmente realizada;
-no implican aprobación de la etapa o autorización productiva.
+Estado: PLAN DE TAREAS APROBADO, 2026-10-15, con autorización de ejecución
+local. Las marcas distinguen preparación, implementación y cierre pendiente.
 
 | ID | Historia/resultado | Tarea y condición de cierre | Estado |
 | --- | --- | --- | --- |
@@ -15,8 +15,8 @@ no implican aprobación de la etapa o autorización productiva.
 | T008 | US3, privacidad | Pins flag, sesión, cupo, sanitización, error y handlers | Hecho preparatorio |
 | T009 | US2, aislamiento | Diseño local desechable y guardas comprobadas antes de conexión | Parcial: guarda pura y tres pruebas verdes; falta integrarla en runner y fixture |
 | T010 | US2, aislamiento | RLS ejecutada para dos usuarios y anónimo, permitidos/denegados | Pendiente; motor Docker no disponible |
-| T011 | Todas | Clarify/checklist/aprobación spec/plan/tasks y analyze | Parcial: alcance y CHANGE aprobados; plan/tasks pendientes de propietario |
-| T012 | Todas | PR documental preparado; integración por propietario | Pendiente |
+| T011 | Todas | Clarify/checklist/aprobación spec/plan/tasks y analyze | Completo: aprobación explícita de alcance y después plan/tareas/revisión |
+| T012 | Todas | PR documental preparado; integración por propietario | Cuerpo preparado; ejecución local autorizada antes de integración remota |
 | T013 | Todas | Gate PIN completo sobre src original, hashes y trazabilidad | Pendiente de RLS; alcance aprobado y evidencia preparatoria ejecutada |
 | T014 | US2, compatibilidad | Separar coordinación de fotos y conservar fachada | Pendiente de puertas |
 | T015 | US1, sesión | Evaluar extracción según beneficio demostrado | Evaluación preparada: mantener en App, justificación en research; sin extracción propuesta |
@@ -26,8 +26,9 @@ no implican aprobación de la etapa o autorización productiva.
 | T019 | Todas | Converge, revisión KD y evidencia completa por ID | Pendiente |
 | T020 | Todas | Cuerpo PR de código con orden de merge y límites observados | Pendiente |
 | T021 | Todas | Incluir gate completo 002 en CI con entorno local desechable y documentar límites remotos | Pendiente; hallazgo TEST-002-02 de analyze |
+| T022 | US2, capas sin DOM | Separar localISO puro conservando reexport de app-utils para eliminar localStorage transitivo | Implementado; checkpoint completo de E1 en curso |
 
-Converge añadirá T022 en adelante si aparecen gaps; no reescribirá tareas
+Converge añadirá T023 en adelante si aparecen gaps; no reescribirá tareas
 completadas. Ningún pending/partial es admisible al presentar PR de código.
 
 ## Autorización de ejecución local — 2026-10-15

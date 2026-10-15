@@ -1,7 +1,8 @@
 # Spec 002 — Identidad y fotos privadas
 
 Estado: ALCANCE APROBADO, 2026-10-15, mediante «Aprobar alcance y ambos cambios
-propuestos». Plan técnico y tareas pendientes de su propia puerta de aprobación.
+propuestos». Plan técnico, tareas y revisión aprobados después con autorización
+explícita de ejecución local; RLS real sigue siendo requisito de cierre.
 Gobierno: [constitución](../../.specify/memory/constitution.md).
 Evidencia: [survey](../../docs/sdd/identidad-fotos-survey.md).
 

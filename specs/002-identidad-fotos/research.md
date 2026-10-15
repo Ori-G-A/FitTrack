@@ -1,7 +1,7 @@
 # Decisiones técnicas — 002
 
-Estado: propuestas del plan para aprobación, 2026-10-15. Alcance y FR-012/013
-aprobados; estas decisiones no autorizan ejecución productiva antes de su puerta.
+Estado: decisiones del plan aprobado, 2026-10-15. Ejecución local autorizada;
+RLS real se mantiene como requisito de cierre independiente.
 
 ## R1 — Separar fotos sin cambiar fachadas
 

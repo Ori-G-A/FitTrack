@@ -1,8 +1,8 @@
-import { withTimeout } from "./async-utils.js";
-import { createSignedPhoto, PHOTO_BUCKET, photoStoragePath, uploadPhotoWithClient } from "./photo-operations.js";
+import { photoStoragePath } from "./photo-operations.js";
+import { createPhotoService } from "./photo-service.js";
+export { photoForStorage } from "./photo-service.js";
 import { supabase } from "./supabase.js";
 
-const STORAGE_REQUEST_TIMEOUT_MS = 20000;
 const SOURCE_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]);
 const MAX_SOURCE_BYTES = 25 * 1024 * 1024;
 
@@ -44,87 +44,17 @@ const blobToDataUrl = (blob) => new Promise((resolve, reject) => {
 
 export { photoStoragePath };
 
-export const photoForStorage = ({ signedUrl, ...photo }) => photo;
+const serviceFor = (client = supabase) => createPhotoService({
+  client,
+  readDataUrl: async (dataUrl) => (await fetch(dataUrl)).blob(),
+  fetchPhoto: (source) => fetch(source),
+  blobToDataUrl,
+  onError: (...args) => console.error(...args),
+});
 
-async function signedPhoto(photo, client = supabase) {
-  return createSignedPhoto(client, photo);
-}
-
-export async function uploadPhotoData(userId, photo, client = supabase) {
-  return uploadPhotoWithClient(client, userId, photo);
-}
-
-export async function hydratePhotos(userId, photos, client = supabase) {
-  if (!Array.isArray(photos) || photos.length === 0) return [];
-  return Promise.all(photos.map(async (photo) => {
-    try {
-      return await (photo.dataUrl ? uploadPhotoData(userId, photo, client) : signedPhoto(photo, client));
-    } catch (error) {
-      console.error("hydratePhoto", error);
-      return photo;
-    }
-  }));
-}
-
-export async function refreshPhotoUrls(photos, client = supabase) {
-  if (!Array.isArray(photos) || photos.length === 0) return [];
-  return Promise.all(photos.map(async (photo) => {
-    if (!photo.storagePath || photo.dataUrl) return photo;
-    try {
-      return await signedPhoto(photo, client);
-    } catch (error) {
-      console.error("refreshPhotoUrl", error);
-      return photo;
-    }
-  }));
-}
-
-export async function photosForBackup(photos) {
-  return Promise.all(photos.map(async (photo) => {
-    if (photo.dataUrl) return photoForStorage(photo);
-    const source = photo.signedUrl || (await signedPhoto(photo)).signedUrl;
-    const response = await withTimeout(
-      fetch(source),
-      STORAGE_REQUEST_TIMEOUT_MS,
-      "La descarga de una foto tardo demasiado.",
-    );
-    if (!response.ok) throw new Error("No se pudo incluir una foto en la copia");
-    return { id: photo.id, date: photo.date, dataUrl: await blobToDataUrl(await response.blob()) };
-  }));
-}
-
-export async function deletePhotoFile(photo, client = supabase) {
-  if (!photo.storagePath) return;
-  const { error } = await withTimeout(
-    client.storage.from(PHOTO_BUCKET).remove([photo.storagePath]),
-    STORAGE_REQUEST_TIMEOUT_MS,
-    "La eliminacion de la foto tardo demasiado.",
-  );
-  if (error) throw error;
-}
-
-export async function deleteUserPhotos(userId) {
-  const paths = [];
-  for (let offset = 0; ; offset += 100) {
-    const { data, error } = await withTimeout(
-      supabase.storage.from(PHOTO_BUCKET).list(userId, {
-        limit: 100,
-        offset,
-        sortBy: { column: "name", order: "asc" },
-      }),
-      STORAGE_REQUEST_TIMEOUT_MS,
-      "La consulta de fotos tardo demasiado.",
-    );
-    if (error) throw error;
-    paths.push(...data.filter((item) => item.name).map((item) => `${userId}/${item.name}`));
-    if (data.length < 100) break;
-  }
-  for (let index = 0; index < paths.length; index += 100) {
-    const { error } = await withTimeout(
-      supabase.storage.from(PHOTO_BUCKET).remove(paths.slice(index, index + 100)),
-      STORAGE_REQUEST_TIMEOUT_MS,
-      "La eliminacion de fotos tardo demasiado.",
-    );
-    if (error) throw error;
-  }
-}
+export const uploadPhotoData = (userId, photo, client = supabase) => serviceFor(client).uploadPhotoData(userId, photo);
+export const hydratePhotos = (userId, photos, client = supabase) => serviceFor(client).hydratePhotos(userId, photos);
+export const refreshPhotoUrls = (photos, client = supabase) => serviceFor(client).refreshPhotoUrls(photos);
+export const photosForBackup = (photos) => serviceFor().photosForBackup(photos);
+export const deletePhotoFile = (photo, client = supabase) => serviceFor(client).deletePhotoFile(photo);
+export const deleteUserPhotos = (userId) => serviceFor().deleteUserPhotos(userId);

@@ -12,8 +12,8 @@ Fecha: 2026-10-15. No es aprobación del propietario ni analyze final.
 - [x] C2-001 a C2-005 resueltas dentro del alcance; FR-012/013 aprobados.
 - [x] Casos preparatorios de UI/sesión/fotos ejecutados y manifiesto revisado.
 - [ ] Entorno RLS local disponible y pruebas reales ejecutadas.
-- [ ] Plan/tasks aprobados y analyze final sin hallazgos críticos.
-- [ ] PR documental integrado o autorización directa local registrada.
+- [x] Plan/tasks y revisión cruzada aprobados, sin contradicciones críticas nuevas.
+- [x] Autorización directa de ejecución local registrada; integración remota pendiente.
 
 La preparación puede continuar sin decisiones de producto; la implementación
 productiva debe respetar las puertas de la constitución. No se presenta PR de
