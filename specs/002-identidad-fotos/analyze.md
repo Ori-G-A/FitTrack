@@ -1,7 +1,8 @@
 # Revisión cruzada del plan — 002
 
-Fecha: 2026-10-15. Revisión preparatoria del agente; plan/tasks aún no aprobados.
-No es gate de implementación completado ni converge. Referencias:
+Fecha: 2026-10-15. Revisión inicial del agente, aprobada posteriormente junto
+con plan/tasks. Los hallazgos siguientes reflejan esa revisión previa; el avance
+posterior está en verification.md. No es converge final. Referencias:
 [spec](spec.md), [plan](plan.md), [research](research.md), [tareas](tasks.md),
 [casos de validación](validation-plan.md).
 

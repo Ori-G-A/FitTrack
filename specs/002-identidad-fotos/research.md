@@ -91,6 +91,16 @@ rechazar las cinco filas pendientes actuales. CI solo configura 001 hasta añadi
 la comprobación 002 correspondiente; no afirmar CI remoto verde por resultados
 locales ni quitar las puertas de cierre.
 
+## R8 — Dependencia transitiva encontrada durante E1
+
+El detector nuevo rechazó app-utils por su acceso a localStorage. Fotos solo
+necesitaba localISO, pero el límite se revisa por módulo importado, no por asumir
+tree shaking. Se movió el cuerpo idéntico a date-utils y se conserva la reexport
+de app-utils; photo-operations importa el módulo puro. T022 registra esta
+dependencia necesaria. No se cambia la regla de calendario ni las fórmulas de
+la futura 003. El detector mantiene fixtures negativos, sin permitir DOM para
+acomodar la extracción.
+
 ## Autorización de ejecución local — 2026-10-15
 
 El propietario aprobó plan, tareas y revisión mediante «Aprobar plan, tareas y

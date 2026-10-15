@@ -2,7 +2,9 @@
 
 Fecha: 2026-10-15. Rama: `codex/002-identidad-fotos`.
 Producción base: `80920d4c1ff86648ef5f39ce459284929d7cf975`.
-No hay refactor productivo de 002 ni gate PIN completo declarado.
+Estado actual: E1–E3 implementadas y verificadas localmente. Las secciones
+preparatorias siguientes conservan evidencia anterior al refactor; el avance
+actual está en E1/E2/E3 y [converge parcial](converge.md). RLS real pendiente.
 
 ## Pruebas ejecutadas
 
@@ -23,13 +25,13 @@ de ejecución vm separado por caso. Reloj controlado para 5000/15000/20000 ms,
 sin esperas reales ni conexiones. Las pruebas de compresión ejercitan cálculo
 de dimensiones y callbacks sobre primitivas simuladas; no prueban códec real.
 
-## Límites
+## Límites del checkpoint preparatorio
 
 - UI de acceso, sesión y recuperación probadas en DOM jsdom; no se atribuye
   esa ejecución a un recorrido nuevo en Chromium ni a códec real de imágenes.
 - Sin ejecución RLS: docker info código 1 por motor/pipe ausente. No se conectó
   ningún backend; pruebas SQL textuales existentes siguen siendo estáticas.
-- FR-012/013 aprobados posteriormente, todavía sin implementar. KD-003/004/005
+- En ese checkpoint FR-012/013 aún no estaban implementados. KD-003/004/005
   siguen abiertos. La evidencia de tests anterior a esa aprobación se conserva.
 - Sin PR publicado, merge o CI remoto observado.
 - Las pruebas nuevas no sustituyen el gate PIN completo de 002: RLS y decisiones
@@ -86,8 +88,8 @@ esto no sustituye la aprobación de la etapa ni el gate PIN completo con RLS.
 El propietario aprobó alcance y FR-012/013 con «Aprobar alcance y ambos cambios
 propuestos». Se resolvieron C2 y se concretaron plan, research, casos rojos/verdes
 y revisión cruzada. No se ejecutaron cambios productivos ni se reetiquetó el
-snapshot preparatorio histórico como una etapa aprobada. Plan/tasks requieren
-su propia aprobación antes de E1–E3; RLS real sigue siendo gate de cierre E4.
+snapshot preparatorio histórico como una etapa aprobada. Plan/tasks se aprobaron
+posteriormente antes de E1–E3; RLS real sigue siendo gate de cierre E4.
 
 ## E1 — Coordinación de fotos
 

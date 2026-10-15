@@ -17,16 +17,16 @@ local. Las marcas distinguen preparación, implementación y cierre pendiente.
 | T010 | US2, aislamiento | RLS ejecutada para dos usuarios y anónimo, permitidos/denegados | Pendiente; motor Docker no disponible |
 | T011 | Todas | Clarify/checklist/aprobación spec/plan/tasks y analyze | Completo: aprobación explícita de alcance y después plan/tareas/revisión |
 | T012 | Todas | PR documental preparado; integración por propietario | Cuerpo preparado; ejecución local autorizada antes de integración remota |
-| T013 | Todas | Gate PIN completo sobre src original, hashes y trazabilidad | Pendiente de RLS; alcance aprobado y evidencia preparatoria ejecutada |
-| T014 | US2, compatibilidad | Separar coordinación de fotos y conservar fachada | Pendiente de puertas |
-| T015 | US1, sesión | Evaluar extracción según beneficio demostrado | Evaluación preparada: mantener en App, justificación en research; sin extracción propuesta |
-| T016 | US3, arranque | FR-012: prueba roja e implementación de validación aprobada | CHANGE aprobado; pendiente de plan/gate PIN y ejecución |
-| T017 | US3, diagnóstico | FR-013: prueba roja e implementación de fallback sanitizado | CHANGE aprobado; pendiente de plan/gate PIN y ejecución |
-| T018 | Todas | Límites de capas, pins de 001 intactos, suite/Chromium/build | Pendiente final; checkpoint preparatorio en verification |
-| T019 | Todas | Converge, revisión KD y evidencia completa por ID | Pendiente |
+| T013 | Todas | Gate PIN cliente sobre src original, hashes y trazabilidad; RLS separado según plan aprobado | Completo cliente: client-baseline.json y once pins intactos; RLS en T010 |
+| T014 | US2, compatibilidad | Separar coordinación de fotos y conservar fachada | Completo E1, 74de716 |
+| T015 | US1, sesión | Evaluar extracción según beneficio demostrado | Completo: mantener en App, justificación en research; sin cambios de sesión |
+| T016 | US3, arranque | FR-012: prueba roja e implementación de validación aprobada | Completo E2, 4a23f37, rojo por llamada previa al SDK y verde completo |
+| T017 | US3, diagnóstico | FR-013: prueba roja e implementación de fallback sanitizado | Completo E3, 54deef5, rojo por aviso ausente y verde completo |
+| T018 | Todas | Límites de capas, pins de 001 intactos, suite/Chromium/build | Completo para cliente E1–E3: 220 Node, 3 Chromium y build; RLS en T010 |
+| T019 | Todas | Converge, revisión KD y evidencia completa por ID | Parcial: cliente verificado; dos IDs RLS pendientes y KD sin retirada formal |
 | T020 | Todas | Cuerpo PR de código con orden de merge y límites observados | Pendiente |
 | T021 | Todas | Incluir gate completo 002 en CI con entorno local desechable y documentar límites remotos | Pendiente; hallazgo TEST-002-02 de analyze |
-| T022 | US2, capas sin DOM | Separar localISO puro conservando reexport de app-utils para eliminar localStorage transitivo | Implementado; checkpoint completo de E1 en curso |
+| T022 | US2, capas sin DOM | Separar localISO puro conservando reexport de app-utils para eliminar localStorage transitivo | Completo E1, mismos cálculos y checkpoint repetido verde |
 
 Converge añadirá T023 en adelante si aparecen gaps; no reescribirá tareas
 completadas. Ningún pending/partial es admisible al presentar PR de código.

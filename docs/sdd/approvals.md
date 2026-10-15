@@ -20,7 +20,8 @@ en la [spec 001](../../specs/001-datos/spec.md).
 | Calendario | Fechas propuestas por el agente | Tentativo, no compromiso del propietario |
 | Despliegue | Ninguna autorización | Fuera de alcance; vínculo real de main con Vercel sin verificar |
 | Preparación 002 | «continua hast llgar al limite de uso de tokens», después del cierre local de 001 | Survey, spec/plan/tasks en borrador y pruebas previas; no se infiere aprobación de CHANGE nuevos ni cierre de puertas |
-| Alcance 002 y FR-012/013 | «Aprobar alcance y ambos cambios propuestos», 2026-10-15, en respuesta a la spec presentada | Aprobados AS-IS de identidad/fotos, validación de configuración y diagnóstico local sanitizado; plan/tasks requieren revisión propia |
+| Alcance 002 y FR-012/013 | «Aprobar alcance y ambos cambios propuestos», 2026-10-15, en respuesta a la spec presentada | Aprobados AS-IS de identidad/fotos, validación de configuración y diagnóstico local sanitizado |
+| Plan, tareas y revisión 002 | «Aprobar plan, tareas y revisión; continuar implementación local» | Aprobados; E1–E3 verificadas localmente, RLS real pendiente de cierre |
 
 ## Git y orden de integración
 
@@ -56,18 +57,22 @@ configuración al iniciar y diagnóstico local sanitizado. El propietario aprob�
 posteriormente alcance y ambos cambios mediante su respuesta explícita del
 2026-10-15. La instrucción anterior de continuar no se utiliza como aprobación
 retroactiva del contenido; la aceptación se atribuye a esta respuesta posterior.
-Rama local `codex/002-identidad-fotos`, dependiente de 001-code. Los borradores
-de plan/tasks permanecen como borradores. La verificación de RLS sigue pendiente
+Rama local `codex/002-identidad-fotos`, dependiente de 001-code. Plan/tasks
+aprobados posteriormente, como registra la sección siguiente. RLS sigue pendiente
 porque el motor local no está disponible; no hay conexión a un backend real.
 
 Las pruebas preparatorias verificadas se guardaron en `a35f7aa`, separadas de
 la aprobación de alcance. El [plan 002](../../specs/002-identidad-fotos/plan.md),
 [research](../../specs/002-identidad-fotos/research.md), tareas y revisión cruzada
-se presentan concretos para la siguiente puerta; no se marcan aprobados por
-estar escritos. No se exige aprobar otra vez FR-012/013 ni las decisiones C2.
+se presentaron antes de la aprobación posterior explícita. No se marcan aprobados
+solo por estar escritos. No se exige aprobar otra vez FR-012/013 ni decisiones C2.
 
 ## Plan 002 aprobado — 2026-10-15
 
 Respuesta explícita: «Aprobar plan, tareas y revisión; continuar implementación
 local». Autoriza E1–E3 locales; RLS real sigue siendo requisito de cierre.
 No requiere repetir aprobación de alcance, plan o entregas ya incluidas.
+
+E1–E3 implementadas en `74de716`, `4a23f37` y `54deef5`: 220 Node y tres
+Chromium aprobados, build correcto, once archivos pin originales intactos.
+002 mantiene dos IDs RLS pendientes; no se presenta PR de código ni cierre M3.

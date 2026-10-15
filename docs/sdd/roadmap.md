@@ -121,8 +121,8 @@ la secuencia histórica no sustituye el [estado vigente](approvals.md).
 
 - [Survey](identidad-fotos-survey.md), [spec](../../specs/002-identidad-fotos/spec.md),
   plan, tareas y matriz preparados en `codex/002-identidad-fotos`.
-- Producción intacta. El propietario aprobó alcance y ambos CHANGE de
-  configuración/diagnóstico local el 2026-10-15; plan/tasks pendientes de su puerta.
+- El propietario aprobó alcance y ambos CHANGE de configuración/diagnóstico
+  local, y después plan/tasks/revisión y ejecución local el 2026-10-15.
 - Pruebas de módulos, UI y sesión preparadas; estado por caso y límites en
   [verification](../../specs/002-identidad-fotos/verification.md).
 - AUTO-003 sin cierre: Docker CLI instalado pero motor no disponible; no hay
@@ -131,4 +131,9 @@ la secuencia histórica no sustituye el [estado vigente](approvals.md).
   integración/CI remotos pendientes y no se reescribe su evidencia histórica.
 - Pruebas preparatorias guardadas en `a35f7aa`. Plan técnico concretado con
   [research](../../specs/002-identidad-fotos/research.md), casos de validación y
-  revisión cruzada; su aprobación es la siguiente puerta, sin reabrir alcance.
+  revisión cruzada, aprobados en `357503d`.
+- E1–E3 implementadas (`74de716`, `4a23f37`, `54deef5`): 220/220 Node,
+  3/3 Chromium y build verde; once pins intactos. 002 tiene 21/23 IDs completos,
+  solo FR-011/US2-AS5 pendientes por RLS. [Converge parcial](../../specs/002-identidad-fotos/converge.md).
+- KD-004/005 tienen corrección local y evidencia; su retirada requiere enmienda
+  PATCH separada. KD-003 sigue sin corregirse; no se declara M3 completo.
