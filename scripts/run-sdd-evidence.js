@@ -3,8 +3,11 @@ import { createRequire } from 'node:module';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { verifyTrace } from './sdd-trace.js';
+import { selectSpec, contractIds } from './sdd-contract.js';
 
 const require = createRequire(import.meta.url);
+const selectedSpec = selectSpec(process.argv.slice(2));
+const outputPrefix = selectedSpec === '001-datos' ? 'test-results/sdd' : `test-results/sdd-${selectedSpec}`;
 const manifestPackage = JSON.parse(readFileSync('package.json', 'utf8'));
 if (readFileSync('.node-version', 'utf8').trim() !== manifestPackage.devEngines.runtime.version) {
   throw new Error('El espejo .node-version no coincide con el runtime propietario en package.json');
@@ -20,8 +23,8 @@ function run(args, output) {
   }
   return result.stdout;
 }
-const tap = run(['--test', '--test-isolation=none', '--test-reporter=tap'], 'test-results/sdd-pilot.tap');
-const browserJson = run([require.resolve('@playwright/test/cli'), 'test', '--reporter=json'], 'test-results/sdd-browser.json');
+const tap = run(['--test', '--test-isolation=none', '--test-reporter=tap'], `${outputPrefix}-pilot.tap`);
+const browserJson = run([require.resolve('@playwright/test/cli'), 'test', '--reporter=json'], `${outputPrefix}-browser.json`);
 const results = [...tap.matchAll(/^(ok|not ok) \d+ - (.+)$/gm)].map((match) => {
   const skipped = / # (SKIP|TODO)/.test(match[2]);
   return { name: match[2].replace(/ # (SKIP|TODO).*$/, ''), status: skipped ? 'skipped' : match[1] === 'ok' ? 'passed' : 'failed' };
@@ -35,14 +38,15 @@ function collect(suites) {
   }
 }
 collect(JSON.parse(browserJson).suites);
-const spec = readFileSync('specs/001-datos/spec.md', 'utf8');
-const ids = [...spec.matchAll(/^- (FR-\d+) \[AS-IS\]|^- (US\d-AS\d+):/gm)].map((m) => m[1] || m[2]);
-const manifest = JSON.parse(readFileSync('specs/001-datos/traceability.json', 'utf8'));
+const spec = readFileSync(`specs/${selectedSpec}/spec.md`, 'utf8');
+const ids = contractIds(spec);
+const manifest = JSON.parse(readFileSync(`specs/${selectedSpec}/traceability.json`, 'utf8'));
+if (manifest.spec !== selectedSpec) throw new Error('El manifiesto no corresponde a la spec seleccionada');
 const srcFiles = spawnSync('git', ['ls-files', 'src'], { encoding: 'utf8' }).stdout.trim().split(/\r?\n/);
 const sourceHash = createHash('sha256');
 for (const file of srcFiles) sourceHash.update(file).update(readFileSync(file));
 const report = verifyTrace(manifest, ids, results, { complete: process.argv.includes('--complete') });
-writeFileSync('test-results/sdd-evidence.json', JSON.stringify({ generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), results, ...report }, null, 2));
+writeFileSync(`${outputPrefix}-evidence.json`, JSON.stringify({ spec: selectedSpec, generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), results, ...report }, null, 2));
 console.log(`${results.length} pruebas ejecutadas; trazabilidad: ${JSON.stringify(report.counts)}`);
 if (report.errors.length) { console.error(report.errors.join('\n')); process.exitCode = 1; }
 else console.log(process.argv.includes('--complete') ? 'Contrato completo: todas las filas tienen pruebas ejecutadas y aprobadas; revisar aserciones y puertas de gobierno.' : 'Evidencia válida; consultar estados del manifiesto y puertas de gobierno.');

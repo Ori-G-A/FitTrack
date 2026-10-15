@@ -18,7 +18,9 @@ fixture.emitSession = (user) => {
 
 export const supabase = {
   auth: {
-    getSession: async () => ({ data: { session: fixture.user ? { user: fixture.user } : null } }),
+    getSession: async () => await fixture.onGetSession?.() ?? ({ data: { session: fixture.user ? { user: fixture.user } : null } }),
+    signInWithPassword: async credentials => await fixture.onAuthenticate?.('login', credentials) ?? { error: null },
+    signUp: async credentials => await fixture.onAuthenticate?.('register', credentials) ?? { error: null },
     onAuthStateChange: (listener) => {
       fixture.listeners.add(listener);
       return { data: { subscription: { unsubscribe() { fixture.listeners.delete(listener); } } } };

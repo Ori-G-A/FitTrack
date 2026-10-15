@@ -10,10 +10,19 @@ export async function waitFor(predicate, label = 'estado') {
   }
 }
 const bundles = new Map();
-export async function mountApp(seed = {}, { hook = false } = {}) {
+export async function mountApp(seed = {}, { hook = false, captureIntervals = false } = {}) {
   if (!bundles.has(hook)) bundles.set(hook, buildHarness({ capture: !hook, entry: hook ? 'test-support/hook-entry.jsx' : 'test-support/app-entry.jsx' }));
   const dom = new JSDOM('<div id="root"></div>', { url: 'http://sdd.invalid/', runScripts: 'outside-only', virtualConsole: new VirtualConsole() });
   const w = dom.window, clock = createClock(), captures = [], alerts = [], downloads = [], revoked = [];
+  const intervals = new Map(); let intervalSequence = 0;
+  if (captureIntervals) {
+    const realSetInterval = w.setInterval.bind(w), realClearInterval = w.clearInterval.bind(w);
+    w.setInterval = (callback, delay, ...args) => {
+      if (delay !== 12 * 60 * 60 * 1000) return realSetInterval(callback, delay, ...args);
+      const id = `photo:${++intervalSequence}`; intervals.set(id, { callback, delay }); return id;
+    };
+    w.clearInterval = id => intervals.has(id) ? intervals.delete(id) : realClearInterval(id);
+  }
   w.__sddFixture = seed;
   w.__sddCapture = value => captures.push(value);
   w.matchMedia = () => ({ matches: false, addEventListener() {}, removeEventListener() {} });
@@ -45,7 +54,7 @@ export async function mountApp(seed = {}, { hook = false } = {}) {
   w.eval(await bundles.get(hook));
   if (!hook) await waitFor(() => captures.length, 'montaje');
   const app = {
-    w, clock, alerts, downloads, revoked, captures,
+    w, clock, alerts, downloads, revoked, captures, intervals,
     get fixture() { return w.__sddFixture; },
     get current() { return captures.at(-1); },
     async ready() { await waitFor(() => w.__sddCommitted?.loaded, 'carga y efectos'); },
