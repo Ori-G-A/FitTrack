@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
-import { loadUserData } from "./app-data-lifecycle.js";
+import { exportUserData, importUserData, loadUserData } from "./app-data-lifecycle.js";
 import { supabase } from "./supabase.js";
 import { PLACES, ROUTINE_TEMPLATES, routinePlace, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
@@ -767,42 +767,25 @@ export default function App() {
     }
   };
 
-  const exportData = async () => {
-    try {
-      const backupPhotos = await photosForBackup(photos);
-      const blob = new Blob([JSON.stringify({ workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, menstrualLogs, photos: backupPhotos, goals }, null, 2)], { type: "application/json" });
+  const exportData = () => exportUserData({
+    data: { workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, menstrualLogs, photos, goals },
+    photosForBackup,
+    download: (backup) => {
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a"); a.href = url; a.download = `fittrack-${todayISO()}.json`; a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-    } catch (error) { alert(error?.message || "No se pudo crear la copia de seguridad"); }
-  };
+    },
+    onError: (error) => alert(error?.message || "No se pudo crear la copia de seguridad"),
+  });
   const fileRef = useRef();
-  const importData = (e) => {
-    const f = e.target.files?.[0]; if (!f) return;
-    if (f.size > 50 * 1024 * 1024) { alert("La copia supera el límite de 50 MB"); e.target.value = ""; return; }
-    const r = new FileReader();
-    r.onload = async () => {
-      try {
-        const d = validateBackup(JSON.parse(r.result));
-        if (!window.confirm("Esta importación reemplazará las colecciones incluidas en la copia. ¿Continuar?")) return;
-        if (d.workouts) setWorkouts(migrateWorkouts(d.workouts));
-        if (d.weights) setWeights(d.weights);
-        if (d.nutrition) setNutrition(d.nutrition);
-        if (d.foods) setFoods(migrateFoodUnits(d.foods));
-        if (d.recipes) setRecipes(d.recipes);
-        if (d.routines) setRoutines(d.routines);
-        if (d.measurements) setMeasurements(d.measurements);
-        if (d.wellness) setWellness(d.wellness);
-        if (d.periods) setPeriods(d.periods);
-        if (d.menstrualLogs) setMenstrualLogs(d.menstrualLogs);
-        if (d.photos) setPhotos(await hydratePhotos(userId, d.photos));
-        if (d.goals) setGoals(d.goals);
-      } catch (error) { alert(error?.message || "Archivo no válido"); }
-      finally { e.target.value = ""; }
-    };
-    r.onerror = () => { alert("No se pudo leer el archivo"); e.target.value = ""; };
-    r.readAsText(f);
-  };
+  const importData = (event) => importUserData(event, {
+    userId, createReader: () => new FileReader(), validateBackup,
+    confirm: (message) => window.confirm(message), notify: (message) => alert(message),
+    migrateWorkouts, migrateFoodUnits, hydratePhotos,
+    setters: { setWorkouts, setWeights, setNutrition, setFoods, setRecipes, setRoutines,
+      setMeasurements, setWellness, setPeriods, setMenstrualLogs, setPhotos, setGoals },
+  });
 
   // Misma lectura que usa Ajustes: direccion del objetivo + ultimo peso registrado.
   const currentWeight = latestWeight(weights);

@@ -50,7 +50,7 @@ Chromium. Los pins nuevos no se habían declarado válidos antes de ese cierre.
 | T013 / límites | Checker creado y activado por módulo | Grafo transitivo y negativos React/DOM; lifecycle se incorpora al crearlo |
 | E1 / T014–T015 | Completa | 159/159 Node; mismos pins públicos, 3 mutaciones y límites verdes |
 | E2 / T016–T017 | Completa | 159/159 Node y 1 smoke adicional de ambos previews; cleanup/migraciones preservados |
-| E3 / T018–T019 | Pendiente | Copias y reejecución |
+| E3 / T018–T019 | Completa | 160/160 Node, 3/3 Chromium, 21 filas completas; pins de copia sin cambios |
 | E4 / T020–T021 | Pendiente | Borrado y reejecución |
 | T022–T024 / converge | Pendiente | Gate final, build y cierre de gaps |
 

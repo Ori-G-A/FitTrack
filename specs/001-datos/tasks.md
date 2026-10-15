@@ -130,10 +130,10 @@ a clarify; no cambiar código/aserciones silenciosamente para forzar el gate.
 
 ### US2 — E3: copias
 
-- [ ] T018 [US2; FR-009, FR-010; US2-AS1, US2-AS2] Depende de T017. Extraer
+- [x] T018 [US2; FR-009, FR-010; US2-AS1, US2-AS2] Depende de T017. Extraer
   coordinación de export/import al lifecycle conservando adaptadores de navegador,
   confirmación, validación, orden de setters, fotos y mensajes existentes.
-- [ ] T019 [US2; FR-009, FR-010; US2-AS1, US2-AS2] Depende de T018.
+- [x] T019 [US2; FR-009, FR-010; US2-AS1, US2-AS2] Depende de T018.
   Reejecutar T009/T010, Chromium de copia, carga/guardado y suite; registrar E3.
 
 ### US3 — E4: borrado
