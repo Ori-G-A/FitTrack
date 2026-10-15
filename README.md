@@ -9,7 +9,7 @@ pnpm install
 pnpm dev
 ```
 
-La interfaz principal en `src/FitTrack.jsx` es responsive y sirve tanto la experiencia de escritorio como la de navegador móvil. La carpeta `desktop/` es un prototipo histórico y no debe usarse como artefacto de producción.
+La interfaz principal en `src/FitTrack.jsx` es responsive y sirve tanto la experiencia de escritorio como la de navegador móvil. `src/preview-main.jsx` y `preview/maqueta.jsx` contienen vistas de prueba que comparten componentes con la aplicación; su código compartido sigue sujeto a verificación.
 
 ## Variables
 
