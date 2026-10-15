@@ -96,7 +96,7 @@ a clarify; no cambiar código/aserciones silenciosamente para forzar el gate.
 
 ## 3. Fundamentos — verificación de capas
 
-- [ ] T013 [US1, US2, US3; FR-003, FR-004, FR-005, FR-006, FR-007, FR-009,
+- [x] T013 [US1, US2, US3; FR-003, FR-004, FR-005, FR-006, FR-007, FR-009,
   FR-010, FR-011; US1-AS2, US1-AS3, US1-AS4, US1-AS5, US1-AS6,
   US2-AS1, US2-AS2, US3-AS1, US3-AS2] Depende de T012. Crear
   `test/data-architecture.test.js :: datos limites de dependencia` con resolución
@@ -108,12 +108,12 @@ a clarify; no cambiar código/aserciones silenciosamente para forzar el gate.
 
 ### US1 — E1: cola y bus
 
-- [ ] T014 [US1; FR-003, FR-004, FR-005, FR-006; US1-AS2, US1-AS3, US1-AS4,
+- [x] T014 [US1; FR-003, FR-004, FR-005, FR-006; US1-AS2, US1-AS3, US1-AS4,
   US1-AS5] Depende de T012 y T013. Extraer `src/save-coordinator.js`; conservar
   exports de data-sync y una sola instancia global productiva. Retener errores,
   referencias, plazos y orden. Adaptar solo la instrumentación de la mutación de
   cola al módulo extraído; conservar la aserción y los pins públicos originales.
-- [ ] T015 [US1; FR-003, FR-004, FR-005, FR-006; US1-AS2, US1-AS3, US1-AS4,
+- [x] T015 [US1; FR-003, FR-004, FR-005, FR-006; US1-AS2, US1-AS3, US1-AS4,
   US1-AS5] Depende de T014. Reejecutar T003/T004/T005/T006, mutaciones y suite;
   activar límites del coordinador; registrar resultados. Commit lógico E1 con
   reversión de extracción independiente de pruebas.

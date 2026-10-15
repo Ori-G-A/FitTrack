@@ -7,12 +7,15 @@ import { build } from 'esbuild';
 
 async function moduleUnderTest(file, client, replacement) {
   const source = await readFile(file, 'utf8');
-  if (replacement && !source.includes(replacement[0])) throw new Error('Mutación ya no aplicable');
+  const moved = replacement && !source.includes(replacement[0]);
+  const targetSource = moved ? await readFile('src/save-coordinator.js', 'utf8') : source;
+  if (replacement && !targetSource.includes(replacement[0])) throw new Error('Mutación ya no aplicable');
   const result = await build({
-    stdin: { contents: replacement ? source.replace(...replacement) : source, resolveDir: resolve('src'), sourcefile: file },
+    stdin: { contents: replacement && !moved ? source.replace(...replacement) : source, resolveDir: resolve('src'), sourcefile: file },
     bundle: true, write: false, format: 'iife', globalName: 'subject', platform: 'browser',
     define: { 'process.env.NODE_ENV': '"development"' },
     plugins: [{ name: 'fake-client', setup(builder) {
+      if (moved) builder.onLoad({ filter: /save-coordinator\.js$/ }, () => ({ contents: targetSource.replace(...replacement), loader: 'js' }));
       builder.onResolve({ filter: /supabase\.js$/ }, () => ({ path: 'fake', namespace: 'sdd' }));
       builder.onLoad({ filter: /.*/, namespace: 'sdd' }, () => ({ contents: 'export const supabase = globalThis.client;' }));
     } }],
