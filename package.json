@@ -3,12 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@11.11.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.21.0",
+      "onFail": "download"
+    }
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test --test-isolation=none"
+    "test": "node --test --test-isolation=none",
+    "test:browser": "playwright test",
+    "test:sdd": "node scripts/run-sdd-evidence.js",
+    "test:sdd:complete": "node scripts/run-sdd-evidence.js --complete"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
@@ -18,7 +28,10 @@
     "recharts": "^2.13.3"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.0",
     "@vitejs/plugin-react": "^4.7.0",
+    "esbuild": "0.25.12",
+    "jsdom": "30.1.2",
     "vite": "^6.4.3"
   }
 }
