@@ -179,35 +179,37 @@ decidirá cada corrección; preservarlos ahora no equivale a aceptarlos para sie
 
 El estado de evidencia por ID y los nombres exactos ejecutables se mantienen en
 [traceability.json](traceability.json). Las filas siguientes son la matriz de
-planificación completa, todavía PENDING hasta escribir los pins íntegros y tareas.
+planificación completa, con pins y tareas asignados pero ejecución PENDING.
 Un piloto o recorrido parcial no acredita todo el requisito.
 
 | FR o escenario | Historia | Resultado | Archivo :: prueba | Tarea | Estado |
 | --- | --- | --- | --- | --- | --- |
-| FR-001 | US1 | Recuperar registros | PENDING | PENDING | PENDING |
-| FR-002 | US1 | Guardar registros | PENDING | PENDING | PENDING |
-| FR-003 | US1 | Conservar orden | PENDING | PENDING | PENDING |
-| FR-004 | US1 | Observar guardado | PENDING | PENDING | PENDING |
-| FR-005 | US1 | Controlar entradas | PENDING | PENDING | PENDING |
-| FR-006 | US1 | Diferir guardado | PENDING | PENDING | PENDING |
-| FR-007 | US1 | Recuperar sesión | PENDING | PENDING | PENDING |
-| FR-008 | US1 | Conservar claves | PENDING | PENDING | PENDING |
-| FR-009 | US2 | Obtener copia | PENDING | PENDING | PENDING |
-| FR-010 | US2 | Aplicar copia | PENDING | PENDING | PENDING |
-| FR-011 | US3 | Borrar datos | PENDING | PENDING | PENDING |
-| US1-AS1 | US1 | Recuperar/guardar | PENDING | PENDING | PENDING |
-| US1-AS2 | US1 | Conservar orden | PENDING | PENDING | PENDING |
-| US1-AS3 | US1 | Observar fallo | PENDING | PENDING | PENDING |
-| US1-AS4 | US1 | Controlar entradas | PENDING | PENDING | PENDING |
-| US1-AS5 | US1 | Diferir guardado | PENDING | PENDING | PENDING |
-| US1-AS6 | US1 | Recuperar sesión | PENDING | PENDING | PENDING |
-| US2-AS1 | US2 | Obtener copia | PENDING | PENDING | PENDING |
-| US2-AS2 | US2 | Aplicar copia | PENDING | PENDING | PENDING |
-| US3-AS1 | US3 | Ordenar borrado | PENDING | PENDING | PENDING |
-| US3-AS2 | US3 | Observar fallo parcial | PENDING | PENDING | PENDING |
+| FR-001 | US1 | Recuperar registros | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | PENDING |
+| FR-002 | US1 | Guardar registros | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | PENDING |
+| FR-003 | US1 | Conservar orden | test/data-sync.test.js :: datos cola orden concurrencia y referencia | T003 | PENDING |
+| FR-004 | US1 | Observar guardado | test/data-sync.test.js :: datos eventos y promesas de guardado | T004 | PENDING |
+| FR-005 | US1 | Controlar entradas | test/data-sync.test.js :: datos suspension y espera capturada | T005 | PENDING |
+| FR-006 | US1 | Diferir guardado | test/data-sync-hooks.test.js :: datos debounce y suscripciones | T006 | PENDING |
+| FR-007 | US1 | Recuperar sesión | test/data-lifecycle.test.js :: datos carga y descarte de resultados | T007 | PENDING |
+| FR-008 | US1 | Conservar claves | test/data-lifecycle.test.js :: datos claves sincronizadas y timer | T008 | PENDING |
+| FR-009 | US2 | Obtener copia | test/data-backup.test.js :: datos exportacion completa o error | T009 | PENDING |
+| FR-010 | US2 | Aplicar copia | test/data-backup.test.js :: datos importacion validacion y aplicacion parcial | T010 | PENDING |
+| FR-011 | US3 | Borrar datos | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | PENDING |
+| US1-AS1 | US1 | Recuperar/guardar | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | PENDING |
+| US1-AS2 | US1 | Conservar orden | test/data-sync.test.js :: datos cola orden concurrencia y referencia | T003 | PENDING |
+| US1-AS3 | US1 | Observar fallo | test/data-sync.test.js :: datos eventos y promesas de guardado | T004 | PENDING |
+| US1-AS4 | US1 | Controlar entradas | test/data-sync.test.js :: datos suspension y espera capturada | T005 | PENDING |
+| US1-AS5 | US1 | Diferir guardado | test/data-sync-hooks.test.js :: datos debounce y suscripciones | T006 | PENDING |
+| US1-AS6 | US1 | Recuperar sesión | test/data-lifecycle.test.js :: datos carga y descarte de resultados | T007 | PENDING |
+| US2-AS1 | US2 | Obtener copia | test/data-backup.test.js :: datos exportacion completa o error | T009 | PENDING |
+| US2-AS2 | US2 | Aplicar copia | test/data-backup.test.js :: datos importacion validacion y aplicacion parcial | T010 | PENDING |
+| US3-AS1 | US3 | Ordenar borrado | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | PENDING |
+| US3-AS2 | US3 | Observar fallo parcial | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | PENDING |
 
 ## Aprobación
 
 El propietario aprobó el alcance descrito mediante «aprobado el alcance» el
 2026-10-14. C-001 a C-003 quedan resueltas según la propuesta presentada.
-Plan técnico en preparación para aprobación independiente; implementación no iniciada.
+Plan técnico aprobado para avanzar mediante «continua» el 2026-10-15.
+Tareas/analyze documentados para revisión; implementación no iniciada y puerta
+documental pendiente.
