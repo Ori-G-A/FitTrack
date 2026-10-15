@@ -65,3 +65,9 @@ la aprobación de alcance. El [plan 002](../../specs/002-identidad-fotos/plan.md
 [research](../../specs/002-identidad-fotos/research.md), tareas y revisión cruzada
 se presentan concretos para la siguiente puerta; no se marcan aprobados por
 estar escritos. No se exige aprobar otra vez FR-012/013 ni las decisiones C2.
+
+## Plan 002 aprobado — 2026-10-15
+
+Respuesta explícita: «Aprobar plan, tareas y revisión; continuar implementación
+local». Autoriza E1–E3 locales; RLS real sigue siendo requisito de cierre.
+No requiere repetir aprobación de alcance, plan o entregas ya incluidas.
