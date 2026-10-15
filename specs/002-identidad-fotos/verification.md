@@ -109,3 +109,15 @@ validador puro y su llamada previa al SDK: 215/215 Node, 3/3 Chromium y build
 verde (20,98 s). Claves/URLs ausentes, vacías, malformadas o protocolo ajeno
 rechazan con nombre de variable y sin valor; entradas válidas originales se
 conservan. No se inspecciona env real. [Evidencia E2](evidence/e2.json).
+
+## E3 — FR-013 diagnóstico local
+
+Rojo previo: tres subcasos y su grupo fallan por ausencia de aviso/llamada al
+logger; el caso sin degradación pasa. Verde tras mensaje fijo y protección del
+logger: 220/220 Node, 3/3 Chromium y build correcto (16,79 s). Se conserva cupo,
+fingerprint, sesión y plazo; no se imprime error, stack, contexto ni payload.
+Los once pins originales siguen intactos y 001 conserva 21/21 IDs completos.
+[Evidencia E3](evidence/e3.json). 002 alcanza 21 complete y dos pending: FR-011
+y US2-AS5, ambos RLS real. El verificador completo rechaza esas dos filas como
+corresponde. Nuevo docker info termina con código 1 por motor no disponible.
+No se presenta PR de código ni cierre de 002, ni se retira ninguna KD todavía.

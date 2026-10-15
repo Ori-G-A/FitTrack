@@ -1,0 +1,31 @@
+{
+  "stage": "E3",
+  "generatedAt": "2026-10-15T20:18:23.935Z",
+  "node": "v24.21.0",
+  "sourceHash": "b1672dd6886cd33fe7382928efa34b743b2d38cb5c3b17949aef776ba7052525",
+  "nodePassed": 220,
+  "browserPassed": 3,
+  "traceability": {
+    "pending": 2,
+    "partial": 0,
+    "complete": 21
+  },
+  "dataTrace": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 21
+  },
+  "unchangedPinFiles": 11,
+  "buildPassed": true,
+  "red": {
+    "nodePassed": 1,
+    "nodeFailed": 4,
+    "reason": "Ausencia de diagnóstico local y de llamada al logger"
+  },
+  "completeGate": [
+    "Cobertura incompleta: FR-011",
+    "Cobertura incompleta: US2-AS5"
+  ],
+  "rls": "pending_local_docker_engine_unavailable",
+  "remoteCI": "not_observed"
+}

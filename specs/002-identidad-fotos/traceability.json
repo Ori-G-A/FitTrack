@@ -128,8 +128,10 @@
     },
     {
       "id": "FR-013",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "identidad CHANGE reporting degradado sin filtrar datos"
+      ],
       "plannedTaskIds": [
         "T017"
       ]
@@ -228,8 +230,11 @@
     },
     {
       "id": "US3-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "identidad CHANGE configuracion antes de crear cliente",
+        "identidad CHANGE reporting degradado sin filtrar datos"
+      ],
       "plannedTaskIds": [
         "T016",
         "T017"

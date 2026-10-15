@@ -35,7 +35,11 @@ export async function reportClientError(kind, error, context = {}) {
     );
     if (insertError) throw insertError;
   } catch {
-    // Reporting must never create another user-facing failure.
+    try {
+      console.warn("FitTrack: no se pudo enviar el diagnóstico opcional.");
+    } catch {
+      // El diagnóstico local tampoco debe causar otro fallo ni reportarse a sí mismo.
+    }
   }
 }
 
