@@ -1,0 +1,29 @@
+{
+  "spec": "002-identidad-fotos",
+  "note": "Preparación sobre producción intacta; pending/partial bloquean PR de código. Runner seleccionable mediante --spec=002-identidad-fotos. Los CHANGE y RLS real siguen pendientes.",
+  "requirements": [
+    { "id": "FR-001", "status": "complete", "tests": ["identidad autenticacion credenciales errores y plazo"], "plannedTaskIds": ["T002"] },
+    { "id": "FR-002", "status": "complete", "tests": ["identidad acceso interfaz validacion mensajes y espera"], "plannedTaskIds": ["T003"] },
+    { "id": "FR-003", "status": "complete", "tests": ["identidad sesion consulta eventos reintento y limpieza"], "plannedTaskIds": ["T004"] },
+    { "id": "FR-004", "status": "complete", "tests": ["identidad fotos validacion firma subida y recuperacion", "identidad fotos compresion y materializacion de copia"], "plannedTaskIds": ["T005"] },
+    { "id": "FR-005", "status": "complete", "tests": ["identidad fotos validacion firma subida y recuperacion"], "plannedTaskIds": ["T005"] },
+    { "id": "FR-006", "status": "complete", "tests": ["identidad fotos validacion firma subida y recuperacion", "identidad fotos borrado paginacion orden y fallos"], "plannedTaskIds": ["T005", "T006"] },
+    { "id": "FR-007", "status": "complete", "tests": ["identidad fotos validacion firma subida y recuperacion", "identidad fotos recuperacion visible intervalo y merge concurrente"], "plannedTaskIds": ["T005", "T007"] },
+    { "id": "FR-008", "status": "complete", "tests": ["identidad fotos compresion y materializacion de copia"], "plannedTaskIds": ["T005"] },
+    { "id": "FR-009", "status": "complete", "tests": ["identidad fotos borrado paginacion orden y fallos"], "plannedTaskIds": ["T006"] },
+    { "id": "FR-010", "status": "complete", "tests": ["identidad diagnosticos activacion deduplicacion y privacidad"], "plannedTaskIds": ["T008"] },
+    { "id": "FR-011", "status": "pending", "tests": [], "plannedTaskIds": ["T009", "T010"] },
+    { "id": "FR-012", "status": "pending", "tests": [], "plannedTaskIds": ["T016"] },
+    { "id": "FR-013", "status": "pending", "tests": [], "plannedTaskIds": ["T017"] },
+    { "id": "US1-AS1", "status": "complete", "tests": ["identidad autenticacion credenciales errores y plazo"], "plannedTaskIds": ["T002"] },
+    { "id": "US1-AS2", "status": "complete", "tests": ["identidad acceso interfaz validacion mensajes y espera"], "plannedTaskIds": ["T003"] },
+    { "id": "US1-AS3", "status": "complete", "tests": ["identidad sesion consulta eventos reintento y limpieza"], "plannedTaskIds": ["T004"] },
+    { "id": "US2-AS1", "status": "complete", "tests": ["identidad fotos validacion firma subida y recuperacion", "identidad fotos compresion y materializacion de copia"], "plannedTaskIds": ["T005"] },
+    { "id": "US2-AS2", "status": "complete", "tests": ["identidad fotos validacion firma subida y recuperacion", "identidad fotos recuperacion visible intervalo y merge concurrente"], "plannedTaskIds": ["T005", "T007"] },
+    { "id": "US2-AS3", "status": "complete", "tests": ["identidad fotos compresion y materializacion de copia"], "plannedTaskIds": ["T005"] },
+    { "id": "US2-AS4", "status": "complete", "tests": ["identidad fotos borrado paginacion orden y fallos"], "plannedTaskIds": ["T006"] },
+    { "id": "US2-AS5", "status": "pending", "tests": [], "plannedTaskIds": ["T009", "T010"] },
+    { "id": "US3-AS1", "status": "complete", "tests": ["identidad diagnosticos activacion deduplicacion y privacidad"], "plannedTaskIds": ["T008"] },
+    { "id": "US3-AS2", "status": "pending", "tests": [], "plannedTaskIds": ["T016", "T017"] }
+  ]
+}
