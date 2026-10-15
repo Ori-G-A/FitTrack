@@ -1,0 +1,41 @@
+{
+  "base": "46697650f18043319a7c96ccdf93ebbdf29e2d75",
+  "generatedAt": "2026-10-15T18:01:02.909Z",
+  "node": "v24.21.0",
+  "sourceHash": "577abd800c6c0ae8bc04d8c63a844b83a828e8629c9224a0e758f329932d8004",
+  "nodeTests": 158,
+  "nodePassed": 158,
+  "browserTests": 3,
+  "browserPassed": 3,
+  "traceability": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 21
+  },
+  "pins": [
+    {
+      "file": "test/data-backup.test.js",
+      "sha256": "2470c825c95980c7222221726a60c1618adb8f4a7e46c0fcd2daa3ee481c32de"
+    },
+    {
+      "file": "test/data-delete.test.js",
+      "sha256": "a9c636f883e932f7b3320c4b281ae40ec1da6d51bb8add042e2ecbdb79d25cd7"
+    },
+    {
+      "file": "test/data-lifecycle.test.js",
+      "sha256": "3e3d05a0335e3abc0eea810014946b7cb3a82e1514cbe6da08d430d5f62ff920"
+    },
+    {
+      "file": "test/data-operations.test.js",
+      "sha256": "3c7f2a9f1fc894cae009187a915a258c22261502bd50a47e03fb48f183d7a6db"
+    },
+    {
+      "file": "test/data-sync-hooks.test.js",
+      "sha256": "5b825bc66fe3015eb4d96f24443c7b42d02d8917abc8d9eb2fd786c4a56bf5e6"
+    },
+    {
+      "file": "test/data-sync.test.js",
+      "sha256": "faff2b66e94c9d0c8711dc2e17edea5ac6bbee7a612e37ce75d78531b2b6f5dd"
+    }
+  ]
+}

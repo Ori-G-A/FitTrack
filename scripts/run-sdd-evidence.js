@@ -20,7 +20,7 @@ function run(args, output) {
   }
   return result.stdout;
 }
-const tap = run(['--test', '--test-isolation=none', '--test-reporter=tap', 'test/sdd-readiness.test.js', 'test/sdd-mutations.test.js'], 'test-results/sdd-pilot.tap');
+const tap = run(['--test', '--test-isolation=none', '--test-reporter=tap'], 'test-results/sdd-pilot.tap');
 const browserJson = run([require.resolve('@playwright/test/cli'), 'test', '--reporter=json'], 'test-results/sdd-browser.json');
 const results = [...tap.matchAll(/^(ok|not ok) \d+ - (.+)$/gm)].map((match) => {
   const skipped = / # (SKIP|TODO)/.test(match[2]);
@@ -45,4 +45,4 @@ const report = verifyTrace(manifest, ids, results, { complete: process.argv.incl
 writeFileSync('test-results/sdd-evidence.json', JSON.stringify({ generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), results, ...report }, null, 2));
 console.log(`${results.length} pruebas ejecutadas; trazabilidad: ${JSON.stringify(report.counts)}`);
 if (report.errors.length) { console.error(report.errors.join('\n')); process.exitCode = 1; }
-else console.log('Evidencia parcial válida. No habilita implementación ni declara la spec completa.');
+else console.log(process.argv.includes('--complete') ? 'Contrato completo: todas las filas tienen pruebas ejecutadas y aprobadas; revisar aserciones y puertas de gobierno.' : 'Evidencia válida; consultar estados del manifiesto y puertas de gobierno.');

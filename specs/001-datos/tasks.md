@@ -1,6 +1,6 @@
 # Tareas — 001-datos
 
-Estado: PROPUESTA revisada, pendiente de aprobación del propietario y puerta
+Estado: APROBADA para ejecución local por el propietario; integración
 documental. Fecha: 2026-10-15. Referencias: [spec](spec.md), [plan](plan.md),
 [research](research.md), [análisis](analyze.md). Rama: `codex/001-datos-docs`.
 
@@ -11,7 +11,7 @@ Ninguna tarea se marca completa por disponer de un diseño o de evidencia parcia
 
 ## 1. Preparación — E0
 
-- [ ] T001 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
+- [x] T001 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
   FR-007, FR-008, FR-009, FR-010, FR-011; US1-AS1, US1-AS2, US1-AS3,
   US1-AS4, US1-AS5, US1-AS6, US2-AS1, US2-AS2, US3-AS1, US3-AS2]
   Ampliar `test-support/` con cliente programable, sesiones cambiantes, promesas
@@ -26,49 +26,49 @@ demuestran todas las cláusulas asignadas; no se permite mover producción para
 escribirla. T002–T011 dependen de T001; se ejecutan sin modificar src respecto
 a BASE. Sus nombres exactos y obligaciones se fijan aquí y en la matriz del plan.
 
-- [ ] T002 [US1; FR-001, FR-002; US1-AS1] Crear
+- [x] T002 [US1; FR-001, FR-002; US1-AS1] Crear
   `test/data-operations.test.js :: datos lectura y escritura por usuario y clave`.
   Verificar filtros/payload/conflicto exactos, claves y usuarios diferentes,
   value 0/false/null/ausencia, fallback por referencia, error retornado y rechazo,
   14999/15000 ms con reloj controlado y finalización remota tras timeout.
-- [ ] T003 [US1; FR-003; US1-AS2] Crear
+- [x] T003 [US1; FR-003; US1-AS2] Crear
   `test/data-sync.test.js :: datos cola orden concurrencia y referencia`.
   Mismo par serial, diferentes pares concurrentes, usuarios distintos con misma
   clave, referencia mutada mientras espera, continuación y limpieza tras fallo.
-- [ ] T004 [US1; FR-004; US1-AS3] Crear
+- [x] T004 [US1; FR-004; US1-AS3] Crear
   `test/data-sync.test.js :: datos eventos y promesas de guardado`.
   Secuencias saving/saved/error, promesa resuelta ante error, consola y fallback
   sin message; saved entre tareas seriales, contador de operaciones en ejecución
   y secuencia determinista donde otro inicio sobrescribe error global.
-- [ ] T005 [US1; FR-005; US1-AS4] Crear
+- [x] T005 [US1; FR-005; US1-AS4] Crear
   `test/data-sync.test.js :: datos suspension y espera capturada`.
   Usuario ausente, suspensión silenciosa, reanudación, trabajos previamente
   encolados y espera snapshot que excluye entradas futuras y otros usuarios.
-- [ ] T006 [US1; FR-006; US1-AS5] Crear
+- [x] T006 [US1; FR-006; US1-AS5] Crear
   `test/data-sync-hooks.test.js :: datos debounce y suscripciones`.
   Componente mínimo con React real: 599/600 ms, delay explícito, enabled/userId
   falsos, rerender, cleanup y desmontaje. Sin replay y sin callback tras unsubscribe.
-- [ ] T007 [US1; FR-007; US1-AS6] Crear
+- [x] T007 [US1; FR-007; US1-AS6] Crear
   `test/data-lifecycle.test.js :: datos carga y descarte de resultados`.
   App original: 12 claves/defaults, paralelismo, espera de fotos, migraciones
   workouts/foods, foto no hidratada conservada, error de carga, limpieza y
   respuesta tardía de sesión anterior sin aplicar setters tras cleanup.
-- [ ] T008 [US1; FR-008; US1-AS5] Crear
+- [x] T008 [US1; FR-008; US1-AS5] Crear
   `test/data-lifecycle.test.js :: datos claves sincronizadas y timer`.
   12 claves solo tras loaded, signedUrl excluida, timer cargado por separado y
   payloads de iniciar/pausar/reiniciar observados mediante interacciones de Train.
-- [ ] T009 [US2; FR-009; US2-AS1] Crear
+- [x] T009 [US2; FR-009; US2-AS1] Crear
   `test/data-backup.test.js :: datos exportacion completa o error`.
   Accionar exportación de App: estado en memoria distinto del remoto, sin esperar
   cola, 12 claves sin timer, fotos embebidas, fecha local/nombre y revocación URL;
   foto no descargable muestra error y no produce descarga parcial.
-- [ ] T010 [US2; FR-010; US2-AS2] Crear
+- [x] T010 [US2; FR-010; US2-AS2] Crear
   `test/data-backup.test.js :: datos importacion validacion y aplicacion parcial`.
   Sin archivo; 50 MiB y un byte más; JSON, estructura y fechas inválidas;
   cancelación; defaults goals; claves ausentes/desconocidas; arrays vacíos;
   migraciones; orden de aplicación respecto a fotos y conservación de foto que
   falla. Capturar error de lectura y limpieza del input al finalizar/cancelar.
-- [ ] T011 [US3; FR-011; US3-AS1, US3-AS2] Crear
+- [x] T011 [US3; FR-011; US3-AS1, US3-AS2] Crear
   `test/data-delete.test.js :: datos borrado orden y recuperacion`.
   Sin usuario/sin efectos; cola pendiente; suspensión y loaded; orden fotos,
   app_data filtrado y signOut. Inyectar excepción en cada paso alcanzable:
@@ -78,7 +78,7 @@ a BASE. Sus nombres exactos y obligaciones se fijan aquí y en la matriz del pla
   capturar el callback real del cierre de App mediante instrumentación exclusiva
   del bundle de tests, sin copiar su cuerpo ni cambiar sus dependencias/efectos.
   Los casos alcanzables se prueban mediante UI. Registrar ese límite de evidencia.
-- [ ] T012 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
+- [x] T012 [US1, US2, US3; FR-001, FR-002, FR-003, FR-004, FR-005, FR-006,
   FR-007, FR-008, FR-009, FR-010, FR-011; US1-AS1, US1-AS2, US1-AS3,
   US1-AS4, US1-AS5, US1-AS6, US2-AS1, US2-AS2, US3-AS1, US3-AS2]
   Depende de T002–T011. Ampliar `scripts/run-sdd-evidence.js` para ejecutar la
@@ -194,7 +194,7 @@ no se ha solicitado delegación a agentes.
 
 ## Registro de ejecución
 
-No hay tareas T001–T024 ejecutadas todavía. Preparación anticipada: ver
+T001–T012 ejecutadas: ver verification.md y su baseline sobre src original. Preparación anticipada: ver
 [readiness](../../docs/sdd/readiness.md). Al cerrar una tarea registrar: qué se
 hizo, revisión, comando y salida/test/números, y cualquier desviación del plan.
 No completar casillas por diseño, por estimación ni por existencia del piloto.
