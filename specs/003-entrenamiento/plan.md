@@ -1,3 +1,4 @@
+<!-- Aprobado el 2026-10-16 mediante «adelante»: plan, tareas, revisión y ejecución local de pins/extracciones antes de integración remota. Los estados de propuesta que siguen conservan el contenido presentado. -->
 # Plan técnico — 003-entrenamiento
 
 Estado: PROPUESTO para aprobación conjunta con tareas y analyze. Alcance aprobado

@@ -157,3 +157,11 @@ escenarios y preservación del temporizador con mejoras separadas. C-001/002/003
 resueltas. Autoriza preparar plan técnico; «continua» durante su preparación
 mantiene esa tarea. No se infiere aprobación anticipada del plan ni ejecución
 productiva. La evidencia previa de alcance está en 47e06c6.
+
+## Plan 003 aprobado y ejecución local autorizada — 2026-10-16
+
+«adelante» responde a la petición concreta de aprobar plan, tareas y revisión
+para ejecutar localmente pins y extracciones. Se autoriza E0–E5 y se conserva
+G-PIN antes de producción. La etapa documental queda preparada en a74651d;
+esta autorización permite ejecutar localmente antes del merge documental.
+No autoriza despliegues ni nuevas correcciones CHANGE.

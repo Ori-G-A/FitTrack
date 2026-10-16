@@ -1,3 +1,4 @@
+<!-- Aprobado el 2026-10-16 mediante «adelante»: plan, tareas, revisión y ejecución local de pins/extracciones antes de integración remota. Los estados de propuesta que siguen conservan el contenido presentado. -->
 # Revisión cruzada — 003
 
 Fecha: 2026-10-16. Revisión documental del agente; no revisión externa.
