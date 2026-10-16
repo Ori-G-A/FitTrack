@@ -85,3 +85,28 @@ de 001 completos. El propietario conserva apertura/fusión de PRs y observación
 remota de CI. Cuerpo de PR listo en specs/002-identidad-fotos/code-pr.md.
 La referencia codex/002-identidad-fotos-docs conserva 357503d para separar etapas.
 No se declara cierre integrado M3 ni retirada constitucional de KD por este registro.
+
+## Integración remota solicitada — 2026-10-16
+
+La instrucción directa «integra los pr y veamos como nos va» autoriza publicar
+las ramas y abrir/fusionar sus PRs; actualiza la reserva operativa anterior de
+apertura y merge por el propietario. No modifica los contratos de producto ni
+ratifica una nueva versión constitucional.
+
+Se publicaron seis PRs dependientes: [#2](https://github.com/Ori-G-A/FitTrack/pull/2)
+(constitución), [#3](https://github.com/Ori-G-A/FitTrack/pull/3) (readiness),
+[#4](https://github.com/Ori-G-A/FitTrack/pull/4) (001 docs),
+[#5](https://github.com/Ori-G-A/FitTrack/pull/5) (001 código),
+[#6](https://github.com/Ori-G-A/FitTrack/pull/6) (002 docs) y
+[#7](https://github.com/Ori-G-A/FitTrack/pull/7) (002 código).
+
+CI remoto reveló un pin contradictorio de pnpm en la rama constitucional y una
+maqueta de smoke tests excluida mediante .git/info/exclude. Se eliminó el pin
+redundante de CI, se versionó la maqueta existente y se incluyó preview en la
+copia limpia. Las correcciones se propagaron sin reescribir historial ni pins.
+El primer PR pasó CI tras corregir pnpm; los siguientes vuelven a verificarse.
+
+GitHub registra despliegues Production de los commits de main mediante Vercel
+y un Preview del PR #7. La exclusión previa de despliegues sigue vigente hasta
+respuesta explícita sobre ese efecto automático. Se solicitó aclaración antes
+de fusionar a main. Ningún merge se declara realizado en este checkpoint.

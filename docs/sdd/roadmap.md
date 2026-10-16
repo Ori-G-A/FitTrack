@@ -143,3 +143,12 @@ verde. 002 alcanza 23/23 IDs completos y 001 conserva 21/21; once pins intactos.
 KD-003 también tiene evidencia de corrección local, pendiente de PATCH junto con
 KD-004/005. CI configurado en rls-and-sdd-002, sin ejecución remota observada.
 [PR preparado](../../specs/002-identidad-fotos/code-pr.md); apertura/fusión por propietario.
+
+## Publicación para integración — 2026-10-16
+
+PRs remotos #2–#7 publicados en orden constitucional/readiness/001 docs/001
+código/002 docs/002 código; enlaces y autorización en [approvals](approvals.md).
+CI encontró y permitió corregir dos problemas de reproducibilidad: pin pnpm
+contradictorio en la primera rama y maqueta de preview excluida del repositorio.
+Se conserva la evidencia histórica anterior. La integración sigue pendiente de
+CI verde y de aclarar el despliegue automático de Vercel asociado a main.
