@@ -29,3 +29,8 @@ export async function upsertAppDataKey(client, userId, key, value) {
   );
   if (error) throw error;
 }
+
+export async function deleteAppDataForUser(client, userId) {
+  const { error } = await client.from("app_data").delete().eq("user_id", userId);
+  if (error) throw error;
+}

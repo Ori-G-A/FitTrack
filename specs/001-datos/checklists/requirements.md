@@ -17,6 +17,7 @@ Fecha: 2026-10-14. Revisión documental contra [spec](../spec.md) y
 - [x] Limitaciones de bus, importación, signOut y rollback no están ocultas.
 - [x] No se confunden dobles del backend con verificación efectiva de RLS.
 
-Resultado: requisitos listos para planificar. La trazabilidad ejecutada y la
-suficiencia de los pins siguen pendientes. Los nombres previstos de pruebas
-están en el plan y se asignarán a tareas después de aprobarlo.
+Resultado inicial: requisitos listos para planificar. Posteriormente se aprobaron
+plan/tareas y se ejecutaron los pins íntegros en BASE y tras la implementación.
+Estado vigente y suficiencia de evidencia: [verification](../verification.md)
+y [converge](../converge.md). El checklist inicial no sustituye esa ejecución.

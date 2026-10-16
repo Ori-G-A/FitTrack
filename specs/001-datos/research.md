@@ -101,3 +101,17 @@ La [documentación de pnpm](https://pnpm.io/settings/cli) explica gestión de
 runtime y validación de engines. No se cambia el Node global del usuario.
 Las excepciones de antigüedad que pnpm agregó para un Playwright recién publicado
 se retiraron; la versión final elegida respeta la política existente.
+
+## R9. Ajustes de caracterización tras el primer checkpoint
+
+Los timers de dominio avanzan con reloj controlado, pero deben empezar después
+del commit de efectos de React. Se añadió un marcador de commit exclusivamente
+al bundle de pruebas, sin cambiar la lógica de App. La suspensión se comprueba
+tras estabilizar el inicio de las otras escrituras del fixture.
+
+FR-011 exige propagar el fallo del callback y recuperar loaded/guardado, sin
+garantizar que el estado local de Settings sobreviva a su desmontaje. Se prueba
+ese callback real mediante captura del cierre original, sin copiar su cuerpo;
+el éxito se prueba por UI. DATA-005 registra el feedback que puede perderse.
+Estos ajustes se hicieron antes de validar los pins sobre BASE, y se reejecutó
+íntegro el checkpoint. Los hashes de los pins se fijaron después de ese cierre.

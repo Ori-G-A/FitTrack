@@ -2,6 +2,7 @@
 
 Estado: APROBADO para avanzar a tareas y análisis, 2026-10-15.
 Autorización: «continua», tras presentar el plan revisado como siguiente decisión.
+Ejecución local E1–E4 autorizada posteriormente y completada; ver verification.md.
 Contrato: [spec](spec.md). Decisiones: [research](research.md).
 Revisión de calidad: [checklist](checklists/requirements.md).
 Base productiva: `46697650f18043319a7c96ccdf93ebbdf29e2d75`.
@@ -74,9 +75,9 @@ separar fases se documenta y se revisa antes de ejecutarla.
 La matriz siguiente sigue siendo el objetivo completo. Los pilotos actuales
 no la sustituyen ni cambian PENDING por completo sin revisar todas sus cláusulas.
 
-Los nombres son compromisos del plan, no pruebas existentes ni ejecutadas.
-Cada prueba puede contener subcasos; debe demostrar todas las cláusulas del FR
-que referencia, sin reducir el contrato a su caso feliz.
+Los nombres eran compromisos del plan; ahora sus pins están implementados y
+verificados en BASE y tras las extracciones. Cada grupo contiene subcasos que
+demuestran las cláusulas referenciadas; detalle en traceability.json/verification.md.
 
 | Archivo :: nombre previsto | FR | Escenarios | Casos obligatorios |
 | --- | --- | --- | --- |
@@ -196,7 +197,8 @@ El propietario autorizó continuar el 2026-10-15, después de presentar el plan
 revisado como siguiente decisión pendiente. Se registra aprobación para preparar
 tareas y análisis; no se infiere fusión del PR documental ni dispensa de pins.
 La infraestructura y pruebas anticipadas tienen autorización y evidencia propia
-en readiness. No se han implementado las extracciones productivas.
+en readiness. La autorización posterior de tareas y ejecución permitió completar
+las extracciones productivas localmente, con pins previos y verificación final.
 
 ## Ajustes técnicos al desglosar tareas
 

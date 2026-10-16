@@ -1,5 +1,7 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
+import { deleteUserData, exportUserData, importUserData, loadUserData } from "./app-data-lifecycle.js";
+import { deleteAppDataForUser } from "./data-operations.js";
 import { supabase } from "./supabase.js";
 import { PLACES, ROUTINE_TEMPLATES, routinePlace, templateToAppRoutine, WARMUP, guessPrimaryMuscle, isJointLaxityRisk } from "./fase1Config.js";
 import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
@@ -699,44 +701,13 @@ export default function App() {
     let cancelled = false;
     setLoaded(false);
     setLoadError(false);
-    (async () => {
-      try {
-        const [nextWorkouts, nextWeights, nextNutrition, nextFoods, nextRecipes, nextRoutines,
-          nextMeasurements, nextWellness, nextPeriods, nextMenstrualLogs, nextPhotos, nextGoals] = await Promise.all([
-          loadKey(userId, "workouts", []),
-          loadKey(userId, "weights", []),
-          loadKey(userId, "nutrition", []),
-          loadKey(userId, "foods", []),
-          loadKey(userId, "recipes", []),
-          loadKey(userId, "routines", []),
-          loadKey(userId, "measurements", []),
-          loadKey(userId, "wellness", []),
-          loadKey(userId, "periods", []),
-          loadKey(userId, "menstrualLogs", []),
-          loadKey(userId, "photos", []),
-          loadKey(userId, "goals", DEFAULT_GOALS),
-        ]);
-        const hydratedPhotos = await hydratePhotos(userId, nextPhotos);
-        if (cancelled) return;
-        setWorkouts(migrateWorkouts(nextWorkouts));
-        setWeights(nextWeights);
-        setNutrition(nextNutrition);
-        setFoods(migrateFoodUnits(nextFoods));
-        setRecipes(nextRecipes);
-        setRoutines(nextRoutines);
-        setMeasurements(nextMeasurements);
-        setWellness(nextWellness);
-        setPeriods(nextPeriods);
-        setMenstrualLogs(nextMenstrualLogs);
-        setPhotos(hydratedPhotos);
-        setGoals(nextGoals);
-        setLoaded(true);
-      } catch (error) {
-        if (cancelled) return;
-        console.error("loadAppData", error);
-        setLoadError(true);
-      }
-    })();
+    loadUserData({
+      userId, loadKey, defaultGoals: DEFAULT_GOALS, hydratePhotos, migrateWorkouts, migrateFoodUnits,
+      setters: { setWorkouts, setWeights, setNutrition, setFoods, setRecipes, setRoutines,
+        setMeasurements, setWellness, setPeriods, setMenstrualLogs, setPhotos, setGoals, setLoaded },
+      isCancelled: () => cancelled,
+      onError: (error) => { console.error("loadAppData", error); setLoadError(true); },
+    });
     return () => { cancelled = true; };
   }, [session?.user?.id, loadAttempt]);
 
@@ -780,59 +751,31 @@ export default function App() {
   useSyncedValue(userId, "goals", goals, loaded);
 
   const signOut = () => supabase.auth.signOut();
-  const deleteAllData = async () => {
-    if (!userId) throw new Error("No hay una sesión activa");
-    suspendUserSaves(userId);
-    setLoaded(false);
-    try {
-      await waitForUserSaves(userId);
-      await deleteUserPhotos(userId);
-      const { error } = await supabase.from("app_data").delete().eq("user_id", userId);
-      if (error) throw error;
-      await supabase.auth.signOut();
-    } catch (error) {
-      resumeUserSaves(userId);
-      setLoaded(true);
-      throw error;
-    }
-  };
+  const deleteAllData = () => deleteUserData({
+    userId, suspendUserSaves, waitForUserSaves, deleteUserPhotos,
+    deleteAppData: (id) => deleteAppDataForUser(supabase, id),
+    signOut, resumeUserSaves, setLoaded,
+  });
 
-  const exportData = async () => {
-    try {
-      const backupPhotos = await photosForBackup(photos);
-      const blob = new Blob([JSON.stringify({ workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, menstrualLogs, photos: backupPhotos, goals }, null, 2)], { type: "application/json" });
+  const exportData = () => exportUserData({
+    data: { workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, menstrualLogs, photos, goals },
+    photosForBackup,
+    download: (backup) => {
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a"); a.href = url; a.download = `fittrack-${todayISO()}.json`; a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-    } catch (error) { alert(error?.message || "No se pudo crear la copia de seguridad"); }
-  };
+    },
+    onError: (error) => alert(error?.message || "No se pudo crear la copia de seguridad"),
+  });
   const fileRef = useRef();
-  const importData = (e) => {
-    const f = e.target.files?.[0]; if (!f) return;
-    if (f.size > 50 * 1024 * 1024) { alert("La copia supera el límite de 50 MB"); e.target.value = ""; return; }
-    const r = new FileReader();
-    r.onload = async () => {
-      try {
-        const d = validateBackup(JSON.parse(r.result));
-        if (!window.confirm("Esta importación reemplazará las colecciones incluidas en la copia. ¿Continuar?")) return;
-        if (d.workouts) setWorkouts(migrateWorkouts(d.workouts));
-        if (d.weights) setWeights(d.weights);
-        if (d.nutrition) setNutrition(d.nutrition);
-        if (d.foods) setFoods(migrateFoodUnits(d.foods));
-        if (d.recipes) setRecipes(d.recipes);
-        if (d.routines) setRoutines(d.routines);
-        if (d.measurements) setMeasurements(d.measurements);
-        if (d.wellness) setWellness(d.wellness);
-        if (d.periods) setPeriods(d.periods);
-        if (d.menstrualLogs) setMenstrualLogs(d.menstrualLogs);
-        if (d.photos) setPhotos(await hydratePhotos(userId, d.photos));
-        if (d.goals) setGoals(d.goals);
-      } catch (error) { alert(error?.message || "Archivo no válido"); }
-      finally { e.target.value = ""; }
-    };
-    r.onerror = () => { alert("No se pudo leer el archivo"); e.target.value = ""; };
-    r.readAsText(f);
-  };
+  const importData = (event) => importUserData(event, {
+    userId, createReader: () => new FileReader(), validateBackup,
+    confirm: (message) => window.confirm(message), notify: (message) => alert(message),
+    migrateWorkouts, migrateFoodUnits, hydratePhotos,
+    setters: { setWorkouts, setWeights, setNutrition, setFoods, setRecipes, setRoutines,
+      setMeasurements, setWellness, setPeriods, setMenstrualLogs, setPhotos, setGoals },
+  });
 
   // Misma lectura que usa Ajustes: direccion del objetivo + ultimo peso registrado.
   const currentWeight = latestWeight(weights);

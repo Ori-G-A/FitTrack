@@ -1,195 +1,243 @@
 {
   "spec": "001-datos",
-  "note": "Evidencia inicial parcial. Ningún FR está completamente caracterizado todavía.",
+  "note": "Pins completos revisados y ejecutados sobre src original; gate de suite/navegador en verification.md.",
   "requirements": [
     {
       "id": "FR-001",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-PILOT-001 App original carga y guarda con servicios simulados"
+        "datos lectura y escritura por usuario y clave"
       ],
       "plannedTaskIds": [
         "T002"
       ],
       "plannedTests": [
         "test/data-operations.test.js :: datos lectura y escritura por usuario y clave"
+      ],
+      "supportingTests": [
+        "SDD-PILOT-001 App original carga y guarda con servicios simulados"
       ]
     },
     {
       "id": "FR-002",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-E2E-001 cargar y guardar objetivo desde interfaz"
+        "datos lectura y escritura por usuario y clave"
       ],
       "plannedTaskIds": [
         "T002"
       ],
       "plannedTests": [
         "test/data-operations.test.js :: datos lectura y escritura por usuario y clave"
+      ],
+      "supportingTests": [
+        "SDD-E2E-001 cargar y guardar objetivo desde interfaz"
       ]
     },
     {
       "id": "FR-003",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos cola orden concurrencia y referencia"
+      ],
       "plannedTaskIds": [
         "T003"
       ],
       "plannedTests": [
         "test/data-sync.test.js :: datos cola orden concurrencia y referencia"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "FR-004",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-E2E-003 fallo de guardado visible y dato remoto conservado"
+        "datos eventos y promesas de guardado"
       ],
       "plannedTaskIds": [
         "T004"
       ],
       "plannedTests": [
         "test/data-sync.test.js :: datos eventos y promesas de guardado"
+      ],
+      "supportingTests": [
+        "SDD-E2E-003 fallo de guardado visible y dato remoto conservado"
       ]
     },
     {
       "id": "FR-005",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos suspension y espera capturada"
+      ],
       "plannedTaskIds": [
         "T005"
       ],
       "plannedTests": [
         "test/data-sync.test.js :: datos suspension y espera capturada"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "FR-006",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos debounce y suscripciones"
+      ],
       "plannedTaskIds": [
         "T006"
       ],
       "plannedTests": [
         "test/data-sync-hooks.test.js :: datos debounce y suscripciones"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "FR-007",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-PILOT-001 App original carga y guarda con servicios simulados",
-        "SDD-PILOT-002 carga pendiente impide escrituras"
+        "datos carga y descarte de resultados"
       ],
       "plannedTaskIds": [
         "T007"
       ],
       "plannedTests": [
         "test/data-lifecycle.test.js :: datos carga y descarte de resultados"
+      ],
+      "supportingTests": [
+        "SDD-PILOT-001 App original carga y guarda con servicios simulados",
+        "SDD-PILOT-002 carga pendiente impide escrituras"
       ]
     },
     {
       "id": "FR-008",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-PILOT-001 App original carga y guarda con servicios simulados"
+        "datos claves sincronizadas y timer"
       ],
       "plannedTaskIds": [
         "T008"
       ],
       "plannedTests": [
         "test/data-lifecycle.test.js :: datos claves sincronizadas y timer"
+      ],
+      "supportingTests": [
+        "SDD-PILOT-001 App original carga y guarda con servicios simulados"
       ]
     },
     {
       "id": "FR-009",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
+        "datos exportacion completa o error"
       ],
       "plannedTaskIds": [
         "T009"
       ],
       "plannedTests": [
         "test/data-backup.test.js :: datos exportacion completa o error"
+      ],
+      "supportingTests": [
+        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
       ]
     },
     {
       "id": "FR-010",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
+        "datos importacion validacion y aplicacion parcial"
       ],
       "plannedTaskIds": [
         "T010"
       ],
       "plannedTests": [
         "test/data-backup.test.js :: datos importacion validacion y aplicacion parcial"
+      ],
+      "supportingTests": [
+        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
       ]
     },
     {
       "id": "FR-011",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos borrado orden y recuperacion"
+      ],
       "plannedTaskIds": [
         "T011"
       ],
       "plannedTests": [
         "test/data-delete.test.js :: datos borrado orden y recuperacion"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "US1-AS1",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-PILOT-001 App original carga y guarda con servicios simulados"
+        "datos lectura y escritura por usuario y clave"
       ],
       "plannedTaskIds": [
         "T002"
       ],
       "plannedTests": [
         "test/data-operations.test.js :: datos lectura y escritura por usuario y clave"
+      ],
+      "supportingTests": [
+        "SDD-PILOT-001 App original carga y guarda con servicios simulados"
       ]
     },
     {
       "id": "US1-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos cola orden concurrencia y referencia"
+      ],
       "plannedTaskIds": [
         "T003"
       ],
       "plannedTests": [
         "test/data-sync.test.js :: datos cola orden concurrencia y referencia"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "US1-AS3",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-E2E-003 fallo de guardado visible y dato remoto conservado"
+        "datos eventos y promesas de guardado"
       ],
       "plannedTaskIds": [
         "T004"
       ],
       "plannedTests": [
         "test/data-sync.test.js :: datos eventos y promesas de guardado"
+      ],
+      "supportingTests": [
+        "SDD-E2E-003 fallo de guardado visible y dato remoto conservado"
       ]
     },
     {
       "id": "US1-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos suspension y espera capturada"
+      ],
       "plannedTaskIds": [
         "T005"
       ],
       "plannedTests": [
         "test/data-sync.test.js :: datos suspension y espera capturada"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "US1-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos debounce y suscripciones",
+        "datos claves sincronizadas y timer"
+      ],
       "plannedTaskIds": [
         "T006",
         "T008"
@@ -197,68 +245,84 @@
       "plannedTests": [
         "test/data-sync-hooks.test.js :: datos debounce y suscripciones",
         "test/data-lifecycle.test.js :: datos claves sincronizadas y timer"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "US1-AS6",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-PILOT-002 carga pendiente impide escrituras"
+        "datos carga y descarte de resultados"
       ],
       "plannedTaskIds": [
         "T007"
       ],
       "plannedTests": [
         "test/data-lifecycle.test.js :: datos carga y descarte de resultados"
+      ],
+      "supportingTests": [
+        "SDD-PILOT-002 carga pendiente impide escrituras"
       ]
     },
     {
       "id": "US2-AS1",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
+        "datos exportacion completa o error"
       ],
       "plannedTaskIds": [
         "T009"
       ],
       "plannedTests": [
         "test/data-backup.test.js :: datos exportacion completa o error"
+      ],
+      "supportingTests": [
+        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
       ]
     },
     {
       "id": "US2-AS2",
-      "status": "partial",
+      "status": "complete",
       "tests": [
-        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
+        "datos importacion validacion y aplicacion parcial"
       ],
       "plannedTaskIds": [
         "T010"
       ],
       "plannedTests": [
         "test/data-backup.test.js :: datos importacion validacion y aplicacion parcial"
+      ],
+      "supportingTests": [
+        "SDD-E2E-002 exportar y reimportar copia desde interfaz"
       ]
     },
     {
       "id": "US3-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos borrado orden y recuperacion"
+      ],
       "plannedTaskIds": [
         "T011"
       ],
       "plannedTests": [
         "test/data-delete.test.js :: datos borrado orden y recuperacion"
-      ]
+      ],
+      "supportingTests": []
     },
     {
       "id": "US3-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "datos borrado orden y recuperacion"
+      ],
       "plannedTaskIds": [
         "T011"
       ],
       "plannedTests": [
         "test/data-delete.test.js :: datos borrado orden y recuperacion"
-      ]
+      ],
+      "supportingTests": []
     }
   ]
 }

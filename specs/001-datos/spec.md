@@ -112,19 +112,23 @@ Sus pruebas pendientes bloquean cualquier refactor. No hay CHANGE aprobado.
 
 ## Evidencia AS-IS
 
+Las citas de esta tabla corresponden a BASE
+`46697650f18043319a7c96ccdf93ebbdf29e2d75`, usada para fijar comportamiento.
+La ubicación final y su verificación están en [converge](converge.md).
+
 | FR | Código | Cobertura actual y límite |
 | --- | --- | --- |
-| FR-001 | `src/data-operations.js:5` | supabase-contracts: éxito filtrado; faltan null y errores |
-| FR-002 | `src/data-operations.js:21` | supabase-contracts y async-utils: parcial; faltan fronteras |
-| FR-003 | `src/data-sync.js:40` | PENDING cola y concurrencia |
-| FR-004 | `src/data-sync.js:9`, `25` | PENDING secuencias exactas de eventos |
-| FR-005 | `src/data-sync.js:40`, `64` | PENDING suspensión y snapshot de colas |
-| FR-006 | `src/data-sync.js:16`, `56` | PENDING suscripciones y timers |
-| FR-007 | `src/FitTrack.jsx:695` | PENDING coordinación y cleanup |
-| FR-008 | `src/FitTrack.jsx:767`, `1179` | PENDING integración de claves y timer |
-| FR-009 | `src/FitTrack.jsx:800`, `src/photo-storage.js:82` | PENDING descarga y errores |
-| FR-010 | `src/FitTrack.jsx:810`, `src/app-utils.js:257` | app-utils: parcial; falta flujo |
-| FR-011 | `src/FitTrack.jsx:783` | PENDING secuencia y fallos por paso |
+| FR-001 | `src/data-operations.js:5` | Pin T002: BASE y final verdes |
+| FR-002 | `src/data-operations.js:21` | Pin T002: BASE y final verdes |
+| FR-003 | `src/data-sync.js:40` | Pin T003: BASE y final verdes |
+| FR-004 | `src/data-sync.js:9`, `25` | Pin T004: BASE y final verdes |
+| FR-005 | `src/data-sync.js:40`, `64` | Pin T005: BASE y final verdes |
+| FR-006 | `src/data-sync.js:16`, `56` | Pin T006: BASE y final verdes |
+| FR-007 | `src/FitTrack.jsx:695` | Pin T007: BASE y final verdes |
+| FR-008 | `src/FitTrack.jsx:767`, `1179` | Pin T008: BASE y final verdes |
+| FR-009 | `src/FitTrack.jsx:800`, `src/photo-storage.js:82` | Pin T009: BASE y final verdes |
+| FR-010 | `src/FitTrack.jsx:810`, `src/app-utils.js:257` | Pin T010: BASE y final verdes |
+| FR-011 | `src/FitTrack.jsx:783` | Pin T011: BASE y final verdes |
 
 ## Criterios medibles de aceptación
 
@@ -178,38 +182,39 @@ decidirá cada corrección; preservarlos ahora no equivale a aceptarlos para sie
 ## Traceability
 
 El estado de evidencia por ID y los nombres exactos ejecutables se mantienen en
-[traceability.json](traceability.json). Las filas siguientes son la matriz de
-planificación completa, con pins y tareas asignados pero ejecución PENDING.
-Un piloto o recorrido parcial no acredita todo el requisito.
+[traceability.json](traceability.json). Las filas siguientes enlazan los pins y
+tareas ejecutados sobre BASE y la revisión final. No se atribuye la cobertura
+completa al piloto inicial; el cierre está en verification.md.
 
 | FR o escenario | Historia | Resultado | Archivo :: prueba | Tarea | Estado |
 | --- | --- | --- | --- | --- | --- |
-| FR-001 | US1 | Recuperar registros | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | PENDING |
-| FR-002 | US1 | Guardar registros | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | PENDING |
-| FR-003 | US1 | Conservar orden | test/data-sync.test.js :: datos cola orden concurrencia y referencia | T003 | PENDING |
-| FR-004 | US1 | Observar guardado | test/data-sync.test.js :: datos eventos y promesas de guardado | T004 | PENDING |
-| FR-005 | US1 | Controlar entradas | test/data-sync.test.js :: datos suspension y espera capturada | T005 | PENDING |
-| FR-006 | US1 | Diferir guardado | test/data-sync-hooks.test.js :: datos debounce y suscripciones | T006 | PENDING |
-| FR-007 | US1 | Recuperar sesión | test/data-lifecycle.test.js :: datos carga y descarte de resultados | T007 | PENDING |
-| FR-008 | US1 | Conservar claves | test/data-lifecycle.test.js :: datos claves sincronizadas y timer | T008 | PENDING |
-| FR-009 | US2 | Obtener copia | test/data-backup.test.js :: datos exportacion completa o error | T009 | PENDING |
-| FR-010 | US2 | Aplicar copia | test/data-backup.test.js :: datos importacion validacion y aplicacion parcial | T010 | PENDING |
-| FR-011 | US3 | Borrar datos | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | PENDING |
-| US1-AS1 | US1 | Recuperar/guardar | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | PENDING |
-| US1-AS2 | US1 | Conservar orden | test/data-sync.test.js :: datos cola orden concurrencia y referencia | T003 | PENDING |
-| US1-AS3 | US1 | Observar fallo | test/data-sync.test.js :: datos eventos y promesas de guardado | T004 | PENDING |
-| US1-AS4 | US1 | Controlar entradas | test/data-sync.test.js :: datos suspension y espera capturada | T005 | PENDING |
-| US1-AS5 | US1 | Diferir guardado | test/data-sync-hooks.test.js :: datos debounce y suscripciones | T006 | PENDING |
-| US1-AS6 | US1 | Recuperar sesión | test/data-lifecycle.test.js :: datos carga y descarte de resultados | T007 | PENDING |
-| US2-AS1 | US2 | Obtener copia | test/data-backup.test.js :: datos exportacion completa o error | T009 | PENDING |
-| US2-AS2 | US2 | Aplicar copia | test/data-backup.test.js :: datos importacion validacion y aplicacion parcial | T010 | PENDING |
-| US3-AS1 | US3 | Ordenar borrado | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | PENDING |
-| US3-AS2 | US3 | Observar fallo parcial | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | PENDING |
+| FR-001 | US1 | Recuperar registros | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | VERIFIED |
+| FR-002 | US1 | Guardar registros | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | VERIFIED |
+| FR-003 | US1 | Conservar orden | test/data-sync.test.js :: datos cola orden concurrencia y referencia | T003 | VERIFIED |
+| FR-004 | US1 | Observar guardado | test/data-sync.test.js :: datos eventos y promesas de guardado | T004 | VERIFIED |
+| FR-005 | US1 | Controlar entradas | test/data-sync.test.js :: datos suspension y espera capturada | T005 | VERIFIED |
+| FR-006 | US1 | Diferir guardado | test/data-sync-hooks.test.js :: datos debounce y suscripciones | T006 | VERIFIED |
+| FR-007 | US1 | Recuperar sesión | test/data-lifecycle.test.js :: datos carga y descarte de resultados | T007 | VERIFIED |
+| FR-008 | US1 | Conservar claves | test/data-lifecycle.test.js :: datos claves sincronizadas y timer | T008 | VERIFIED |
+| FR-009 | US2 | Obtener copia | test/data-backup.test.js :: datos exportacion completa o error | T009 | VERIFIED |
+| FR-010 | US2 | Aplicar copia | test/data-backup.test.js :: datos importacion validacion y aplicacion parcial | T010 | VERIFIED |
+| FR-011 | US3 | Borrar datos | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | VERIFIED |
+| US1-AS1 | US1 | Recuperar/guardar | test/data-operations.test.js :: datos lectura y escritura por usuario y clave | T002 | VERIFIED |
+| US1-AS2 | US1 | Conservar orden | test/data-sync.test.js :: datos cola orden concurrencia y referencia | T003 | VERIFIED |
+| US1-AS3 | US1 | Observar fallo | test/data-sync.test.js :: datos eventos y promesas de guardado | T004 | VERIFIED |
+| US1-AS4 | US1 | Controlar entradas | test/data-sync.test.js :: datos suspension y espera capturada | T005 | VERIFIED |
+| US1-AS5 | US1 | Diferir guardado | test/data-sync-hooks.test.js :: datos debounce y suscripciones | T006 | VERIFIED |
+| US1-AS6 | US1 | Recuperar sesión | test/data-lifecycle.test.js :: datos carga y descarte de resultados | T007 | VERIFIED |
+| US2-AS1 | US2 | Obtener copia | test/data-backup.test.js :: datos exportacion completa o error | T009 | VERIFIED |
+| US2-AS2 | US2 | Aplicar copia | test/data-backup.test.js :: datos importacion validacion y aplicacion parcial | T010 | VERIFIED |
+| US3-AS1 | US3 | Ordenar borrado | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | VERIFIED |
+| US3-AS2 | US3 | Observar fallo parcial | test/data-delete.test.js :: datos borrado orden y recuperacion | T011 | VERIFIED |
 
 ## Aprobación
 
 El propietario aprobó el alcance descrito mediante «aprobado el alcance» el
 2026-10-14. C-001 a C-003 quedan resueltas según la propuesta presentada.
 Plan técnico aprobado para avanzar mediante «continua» el 2026-10-15.
-Tareas/analyze documentados para revisión; implementación no iniciada y puerta
-documental pendiente.
+Tareas/analyze e implementación local autorizadas posteriormente mediante
+«apruebo todo. Cotninua con el trabajo». Entregas E1–E4 y convergencia local
+verificadas; PRs y CI remotos permanecen pendientes, sin afirmar merges.
