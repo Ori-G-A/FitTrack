@@ -73,6 +73,8 @@ El estado actual de 001 está en verification.md de su spec.
 | DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | En un CHANGE posterior, decidir resultado visible y probar retorno error separado de rechazo de promesa | Después de 001; priorizar en cierre M2 |
 | DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | Reproducir con Storage diferido y rechazo; decidir feedback visible persistente y escribir regresión antes de corregir | Revisión al cierre M2; no se cambia en refactor AS-IS |
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia; integración por el propietario pendiente | Corrección local registrada; merge pendiente |
+| IDEN-001 | Reporter consume fingerprint/cupo antes de consultar sesión y su getSession carece de timeout propio | Pins preparatorios lo reproducen; conservar AS-IS y decidir cambio separado de FR-013 | Clarify 002 C2-004 |
+| PHOTO-001 | Fuente admite 25 MiB; migración Storage limita resultado a 5 MiB sin comprobación local del tamaño comprimido | No prometer aceptación remota por validar origen; decidir si hace falta CHANGE y prueba de frontera del resultado | Survey 002; sin cambio aprobado |
 
 Estos hallazgos no son autorización para corregir comportamiento en fase 0.
 
@@ -114,3 +116,19 @@ la secuencia histórica no sustituye el [estado vigente](approvals.md).
   Cierre de implementación: [verification](../../specs/001-datos/verification.md),
   160/160 Node, 3/3 Chromium, build verde y 21/21 IDs completos. CI y merges
   remotos pendientes; no se declara M1/M2 integrado ni se retira KD-001 todavía.
+
+## Preparación de 002 — 2026-10-15
+
+- [Survey](identidad-fotos-survey.md), [spec](../../specs/002-identidad-fotos/spec.md),
+  plan, tareas y matriz preparados en `codex/002-identidad-fotos`.
+- Producción intacta. El propietario aprobó alcance y ambos CHANGE de
+  configuración/diagnóstico local el 2026-10-15; plan/tasks pendientes de su puerta.
+- Pruebas de módulos, UI y sesión preparadas; estado por caso y límites en
+  [verification](../../specs/002-identidad-fotos/verification.md).
+- AUTO-003 sin cierre: Docker CLI instalado pero motor no disponible; no hay
+  ejecución de RLS, migraciones nuevas ni acceso a datos reales.
+- No se declaran M3 ni KD-003/004/005 cerrados. Las etapas de 001 siguen con
+  integración/CI remotos pendientes y no se reescribe su evidencia histórica.
+- Pruebas preparatorias guardadas en `a35f7aa`. Plan técnico concretado con
+  [research](../../specs/002-identidad-fotos/research.md), casos de validación y
+  revisión cruzada; su aprobación es la siguiente puerta, sin reabrir alcance.
