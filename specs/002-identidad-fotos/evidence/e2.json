@@ -1,0 +1,20 @@
+{
+  "stage": "E2",
+  "generatedAt": "2026-10-15T20:16:05.125Z",
+  "node": "v24.21.0",
+  "sourceHash": "3bbba710621795948e05c3b08ac4b57e7d2d15fc893f634aa48fbe811d6ce1f5",
+  "nodePassed": 215,
+  "browserPassed": 3,
+  "traceability": {
+    "pending": 4,
+    "partial": 0,
+    "complete": 19
+  },
+  "buildPassed": true,
+  "red": {
+    "nodePassed": 1,
+    "nodeFailed": 3,
+    "reason": "SDK invocado antes de validar configuración inválida"
+  },
+  "rls": "pending"
+}

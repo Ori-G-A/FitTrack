@@ -20,13 +20,13 @@ export async function identityModule(file, { client = {}, enabled = false, globa
       builder.onLoad({ filter: /.*/, namespace: 'synthetic' }, () => ({ contents: 'export const supabase = globalThis.client;' }));
     } }],
   }).then(result => result.outputFiles[0].text));
-  const clock = createClock(), errors = [];
+  const clock = createClock(), errors = [], warnings = [];
   const subject = vm.runInNewContext(`${await bundles.get(key)}\nsubject`, {
     client, Blob, Error, Date, crypto: { randomUUID: () => 'generated-id' },
     setTimeout: clock.setTimeout, clearTimeout: clock.clearTimeout,
     fetch: () => { throw new Error('Red bloqueada en caracterización de identidad'); },
-    console: { error: (...args) => errors.push(args) },
+    console: { error: (...args) => errors.push(args), warn: (...args) => warnings.push(args) },
     ...globals,
   });
-  return { subject, clock, errors };
+  return { subject, clock, errors, warnings };
 }

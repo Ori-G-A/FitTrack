@@ -1,5 +1,10 @@
 const LOOPBACK_LITERALS = new Set(['127.0.0.1', '[::1]']);
 
+export const isLocalDockerEndpoint = (value) => typeof value === 'string' && (
+  /^npipe:\/{4}\.\/pipe\/[a-zA-Z0-9_.-]+$/.test(value) ||
+  /^unix:\/\/\/(?!\/)[^?#\0]+$/.test(value)
+);
+
 // Guarda pura: no lee variables, archivos ni DNS y nunca abre conexiones.
 export function assertDisposableLocalRlsTarget({ apiUrl, databaseUrl, environment } = {}) {
   if (environment !== 'fittrack-sdd-disposable') throw new Error('RLS requiere un entorno desechable explícito');

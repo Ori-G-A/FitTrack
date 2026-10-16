@@ -1,7 +1,7 @@
 # Plan técnico propuesto — 002
 
-Estado: PLAN PARA APROBACIÓN. La [spec](spec.md) y FR-012/013 están aprobados;
-este plan y sus tareas todavía no. Decisiones técnicas: [research](research.md).
+Estado: PLAN APROBADO, 2026-10-15, para ejecución local de E1–E3;
+RLS real obligatorio al cierre. Decisiones técnicas: [research](research.md).
 
 ## Entregas y puertas
 

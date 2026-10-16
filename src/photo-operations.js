@@ -1,4 +1,4 @@
-import { localISO } from "./app-utils.js";
+import { localISO } from "./date-utils.js";
 import { withTimeout } from "./async-utils.js";
 
 export const PHOTO_BUCKET = "progress-photos";
@@ -23,9 +23,9 @@ export async function createSignedPhoto(client, photo) {
   return { ...photo, signedUrl: data.signedUrl };
 }
 
-export async function uploadPhotoWithClient(client, userId, photo) {
+export async function uploadPhotoWithClient(client, userId, photo, readDataUrl = dataUrlToBlob) {
   if (!photo.dataUrl) return createSignedPhoto(client, photo);
-  const blob = await dataUrlToBlob(photo.dataUrl);
+  const blob = await readDataUrl(photo.dataUrl);
   const contentType = ["image/jpeg", "image/png", "image/webp"].includes(blob.type) ? blob.type : "image/jpeg";
   const id = photo.id || newId();
   const storagePath = photoStoragePath(userId, contentType, id);

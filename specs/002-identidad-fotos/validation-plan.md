@@ -1,6 +1,7 @@
 # Casos de validación previstos — 002
 
-Plan para aprobación. No son resultados ejecutados ni tests ya añadidos.
+Plan aprobado. Las tablas conservan los casos previstos; sus resultados
+ejecutados de E2/E3 se registran en verification.md, sin sustituir la RLS pendiente.
 Baseline preparatorio: [evidencia](evidence/preparatory.json).
 
 ## FR-012 — Configuración, rojo antes de verde

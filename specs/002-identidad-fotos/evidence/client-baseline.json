@@ -1,0 +1,57 @@
+{
+  "status": "approved_client_baseline_before_E1",
+  "generatedAt": "2026-10-15T19:55:13.818Z",
+  "codeRevision": "80920d4c1ff86648ef5f39ce459284929d7cf975",
+  "node": "v24.21.0",
+  "sourceHash": "d0d0dfad04eb4bccf77bba080bde30768e1518b16da010bdea2a038c610df2ee",
+  "nodeTests": 210,
+  "nodePassed": 210,
+  "browserPassed": 3,
+  "browserSkipped": 0,
+  "identityTrace": {
+    "pending": 5,
+    "partial": 0,
+    "complete": 18
+  },
+  "dataTrace": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 21
+  },
+  "frozenDataPinsVerified": 6,
+  "preparatoryPins": [
+    {
+      "file": "test/identity-auth.test.js",
+      "sha256": "f1c86293737a4e4e7cc3296541ae8406f640098adf8afb702daff9cda11e1374"
+    },
+    {
+      "file": "test/identity-diagnostics.test.js",
+      "sha256": "5487267be2445f5139a9d9ae47e7c27651bf325ed4cad7b898ed95141f8a9092"
+    },
+    {
+      "file": "test/identity-photos.test.js",
+      "sha256": "5271ff038be539e89dc6046aad62b7569ae05bba92e112e3e76b95a72ca8da7c"
+    },
+    {
+      "file": "test/identity-recovery.test.js",
+      "sha256": "40cbbb6945192e1e615b9d9837b96c8a6438aae650579b3fb3d9f26ae16472e0"
+    },
+    {
+      "file": "test/identity-session.test.js",
+      "sha256": "e39c2a783a1a84d1dec61a824d278f16557ce3165b432a63a05ff9d4e0109bff"
+    }
+  ],
+  "build": {
+    "passed": true,
+    "modules": 2254,
+    "seconds": 16.86,
+    "indexChunkKB": 508.72
+  },
+  "rlsExecution": "not_run_local_docker_engine_unavailable",
+  "remoteCI": "not_observed",
+  "localRlsGuardTestsPassed": 3,
+  "localRlsGuardIntegration": "pending_future_database_runner",
+  "completeIdentityGate": "rejected_expected_five_pending_ids",
+  "approval": "Aprobar plan, tareas y revisión; continuar implementación local",
+  "rlsGate": "pending_independent_closure_requirement"
+}

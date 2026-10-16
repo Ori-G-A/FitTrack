@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
+import { validateSupabaseConfig } from "./supabase-config.js";
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const { supabaseUrl, supabaseAnonKey } = validateSupabaseConfig(import.meta.env);
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

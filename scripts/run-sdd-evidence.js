@@ -1,9 +1,10 @@
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { verifyTrace } from './sdd-trace.js';
 import { selectSpec, contractIds } from './sdd-contract.js';
+import { currentRlsHashes, validateRlsEvidence } from './rls-evidence.js';
 
 const require = createRequire(import.meta.url);
 const selectedSpec = selectSpec(process.argv.slice(2));
@@ -38,6 +39,10 @@ function collect(suites) {
   }
 }
 collect(JSON.parse(browserJson).suites);
+if (selectedSpec === '002-identidad-fotos' && existsSync('test-results/rls-evidence.json')) {
+  const rls = JSON.parse(readFileSync('test-results/rls-evidence.json', 'utf8'));
+  results.push(...validateRlsEvidence(rls, currentRlsHashes()));
+}
 const spec = readFileSync(`specs/${selectedSpec}/spec.md`, 'utf8');
 const ids = contractIds(spec);
 const manifest = JSON.parse(readFileSync(`specs/${selectedSpec}/traceability.json`, 'utf8'));

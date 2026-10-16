@@ -22,4 +22,31 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:sdd
+      - run: pnpm test:sdd:complete
+
+  rls-and-sdd-002:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: supabase/setup-cli@v3.0.1
+        with:
+          version: 2.121.0
+      - run: pnpm test:rls
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run test:sdd:complete --spec=002-identidad-fotos
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: evidencia-sdd-002
+          path: |
+            test-results/rls-evidence.json
+            test-results/rls.tap
+            test-results/sdd-002-identidad-fotos-evidence.json
+          if-no-files-found: ignore

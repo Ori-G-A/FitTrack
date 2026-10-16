@@ -1,7 +1,7 @@
 # Decisiones técnicas — 002
 
-Estado: propuestas del plan para aprobación, 2026-10-15. Alcance y FR-012/013
-aprobados; estas decisiones no autorizan ejecución productiva antes de su puerta.
+Estado: decisiones del plan aprobado, 2026-10-15. Ejecución local autorizada;
+RLS real se mantiene como requisito de cierre independiente.
 
 ## R1 — Separar fotos sin cambiar fachadas
 
@@ -90,6 +90,51 @@ resultados descubiertos; no cuenta dos veces las pruebas. El modo completo debe
 rechazar las cinco filas pendientes actuales. CI solo configura 001 hasta añadir
 la comprobación 002 correspondiente; no afirmar CI remoto verde por resultados
 locales ni quitar las puertas de cierre.
+
+## R8 — Dependencia transitiva encontrada durante E1
+
+El detector nuevo rechazó app-utils por su acceso a localStorage. Fotos solo
+necesitaba localISO, pero el límite se revisa por módulo importado, no por asumir
+tree shaking. Se movió el cuerpo idéntico a date-utils y se conserva la reexport
+de app-utils; photo-operations importa el módulo puro. T022 registra esta
+dependencia necesaria. No se cambia la regla de calendario ni las fórmulas de
+la futura 003. El detector mantiene fixtures negativos, sin permitir DOM para
+acomodar la extracción.
+
+## R9 — E4 ejecutada contra Supabase real local
+
+El 2026-10-15 la comprobación fuera del sandbox encontró Docker 28.3.0 operativo.
+Se descargó CLI 2.121.0 desde la [release oficial](https://github.com/supabase/cli/releases/tag/v2.121.0),
+verificando SHA-256 contra checksums.txt; no se añadieron dependencias al proyecto.
+La [referencia de CLI](https://supabase.com/docs/reference/cli/supabase-start)
+documenta start/status/stop y la selección de servicios. Se comprobó el help del
+binario instalado antes de implementar el runner. Una primera matriz real pasó
+el 2026-10-15 con limpieza confirmada.
+
+Al retomar el 2026-10-16 se reforzó la invalidación de evidencia antes del
+preflight, los límites de espera y el rechazo de pipes Docker remotos. El motor
+estaba detenido y Desktop abortaba por el socket dockerInference inaccesible.
+Los logs y el error Windows 1920 coincidían con el
+[reporte Docker #554](https://github.com/docker/desktop-feedback/issues/554).
+Con Desktop detenido, se preservó solo la carpeta runtime Docker/run como
+`C:/Users/orian/AppData/Local/Docker/run.sdd-preserved-e35458893858` y se recreó
+run. Desktop inició correctamente; no se modificó configuración ni discos WSL.
+El fixture fallido anterior se retiró verificando su project_id y marcador.
+
+El runner usa proyecto/directorio temporal propios, APIs loopback, identidad de
+fixture comprobada antes de crear cliente privilegiado y roles reales A/B/anónimo.
+No recrea auth.uid() ni Storage. Copia las migraciones productivas sin cambios y
+solo añade el prerrequisito app_data mínimo para la instancia desechable.
+La evidencia solo es válida tras tres contratos aprobados y limpieza confirmada;
+hashes actuales evitan reutilizarla tras cambios de políticas, herramientas o SDK.
+
+## R10 — CI configurado, integración remota separada
+
+El job rls-and-sdd-002 instala CLI fija con la acción oficial setup-cli@v3.0.1,
+ejecuta el mismo runner y exige test:sdd:complete de 002. Solo se archivan TAP y
+evidencia sin credenciales; los contextos temporales no son artefactos. El gate
+001 también se exige completo. Las pruebas locales no demuestran una ejecución
+de GitHub Actions: la observación remota sigue pendiente de los PRs del propietario.
 
 ## Autorización de ejecución local — 2026-10-15
 

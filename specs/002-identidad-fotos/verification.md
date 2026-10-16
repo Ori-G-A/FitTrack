@@ -2,7 +2,9 @@
 
 Fecha: 2026-10-15. Rama: `codex/002-identidad-fotos`.
 Producción base: `80920d4c1ff86648ef5f39ce459284929d7cf975`.
-No hay refactor productivo de 002 ni gate PIN completo declarado.
+Estado actual: E1–E4 implementadas y verificadas localmente. Las secciones
+preparatorias siguientes conservan evidencia anterior al refactor; el avance
+actual está en E1/E2/E3/E4 y [converge](converge.md). Integración remota pendiente.
 
 ## Pruebas ejecutadas
 
@@ -23,13 +25,13 @@ de ejecución vm separado por caso. Reloj controlado para 5000/15000/20000 ms,
 sin esperas reales ni conexiones. Las pruebas de compresión ejercitan cálculo
 de dimensiones y callbacks sobre primitivas simuladas; no prueban códec real.
 
-## Límites
+## Límites del checkpoint preparatorio
 
 - UI de acceso, sesión y recuperación probadas en DOM jsdom; no se atribuye
   esa ejecución a un recorrido nuevo en Chromium ni a códec real de imágenes.
 - Sin ejecución RLS: docker info código 1 por motor/pipe ausente. No se conectó
   ningún backend; pruebas SQL textuales existentes siguen siendo estáticas.
-- FR-012/013 aprobados posteriormente, todavía sin implementar. KD-003/004/005
+- En ese checkpoint FR-012/013 aún no estaban implementados. KD-003/004/005
   siguen abiertos. La evidencia de tests anterior a esa aprobación se conserva.
 - Sin PR publicado, merge o CI remoto observado.
 - Las pruebas nuevas no sustituyen el gate PIN completo de 002: RLS y decisiones
@@ -86,5 +88,68 @@ esto no sustituye la aprobación de la etapa ni el gate PIN completo con RLS.
 El propietario aprobó alcance y FR-012/013 con «Aprobar alcance y ambos cambios
 propuestos». Se resolvieron C2 y se concretaron plan, research, casos rojos/verdes
 y revisión cruzada. No se ejecutaron cambios productivos ni se reetiquetó el
-snapshot preparatorio histórico como una etapa aprobada. Plan/tasks requieren
-su propia aprobación antes de E1–E3; RLS real sigue siendo gate de cierre E4.
+snapshot preparatorio histórico como una etapa aprobada. Plan/tasks se aprobaron
+posteriormente antes de E1–E3; RLS real sigue siendo gate de cierre E4.
+
+## E1 — Coordinación de fotos
+
+Baseline cliente verificado contra hash original antes de tocar src. Se extrae
+photo-service con cliente/adaptadores y se conservan fachada y pins. La prueba
+de capas detectó localStorage transitivo a través de app-utils; T022 separa
+localISO sin cambiar su algoritmo ni reexport público. El primer intento de
+script de extracción se detuvo por separadores de línea; una reejecución aún
+falló con la dependencia antigua. Tras corregirla, checkpoint completo repetido:
+211/211 Node, 3/3 Chromium, 18 IDs completos de 002 y 21/21 de 001. Los once
+archivos pin conservan hash. Build verde (19,19 s), aviso de chunk conocido.
+Evidencia: [e1.json](evidence/e1.json). RLS sigue pendiente; no se cierra 002.
+
+## E2 — FR-012 configuración
+
+Rojo sobre supabase.js sin validación: dos subcasos inválidos y su grupo fallan
+porque createClient sí se invoca (1 frente a 0); caso válido pasa. Después del
+validador puro y su llamada previa al SDK: 215/215 Node, 3/3 Chromium y build
+verde (20,98 s). Claves/URLs ausentes, vacías, malformadas o protocolo ajeno
+rechazan con nombre de variable y sin valor; entradas válidas originales se
+conservan. No se inspecciona env real. [Evidencia E2](evidence/e2.json).
+
+## E3 — FR-013 diagnóstico local
+
+Rojo previo: tres subcasos y su grupo fallan por ausencia de aviso/llamada al
+logger; el caso sin degradación pasa. Verde tras mensaje fijo y protección del
+logger: 220/220 Node, 3/3 Chromium y build correcto (16,79 s). Se conserva cupo,
+fingerprint, sesión y plazo; no se imprime error, stack, contexto ni payload.
+Los once pins originales siguen intactos y 001 conserva 21/21 IDs completos.
+[Evidencia E3](evidence/e3.json). 002 alcanza 21 complete y dos pending: FR-011
+y US2-AS5, ambos RLS real. El verificador completo rechaza esas dos filas como
+corresponde. Nuevo docker info termina con código 1 por motor no disponible.
+No se presenta PR de código ni cierre de 002, ni se retira ninguna KD todavía.
+
+## E4 — Cierre local del contrato, 2026-10-16
+
+La primera matriz de servidor concluyó el 2026-10-15 con tres pruebas reales
+aprobadas y limpieza confirmada. Al retomar se reforzaron el preflight y los
+límites de espera. Docker estaba detenido y abortaba por un socket inaccesible;
+R9 documenta la recuperación acotada de su carpeta runtime, con respaldo intacto.
+El intento fallido se retiró después de verificar ruta y marcador. La matriz
+se repitió con las guardas definitivas y volvió a pasar; no quedan contenedores
+ni volúmenes de los fixtures.
+
+```powershell
+pnpm test:rls
+pnpm run test:sdd:complete --spec=002-identidad-fotos
+pnpm run build
+```
+
+Resultado final: 226/226 Node, 3/3 contratos RLS reales y 3/3 Chromium; cero
+omitidos. El runner cruza 172 nombres principales (166 Node, tres RLS y tres
+Chromium). Trazabilidad 002: 23 complete, cero pending/partial. Los mismos
+resultados satisfacen 21/21 IDs de 001. Once archivos pin originales conservan
+SHA-256; sourceHash de src coincide con E3, pues E4 solo añade pruebas/CI.
+
+Build: 2257 módulos, 10,80 s, aviso de tamaño conocido. Políticas SQL,
+dependencias y lockfile sin cambios. El job CI queda configurado para la misma
+CLI y exige ambos contratos completos, pero no se ha observado ejecución remota.
+No hay PR publicado, merge ni despliegue realizado. KD-003/004/005 cuentan con
+evidencia local para revisión; su retirada constitucional requiere PATCH separada.
+
+Evidencia persistida: [E4](evidence/e4.json) y [RLS real](evidence/rls-local.json).

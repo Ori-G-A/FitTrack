@@ -55,3 +55,16 @@ pnpm run build
 pnpm test
 pnpm audit --prod
 ```
+
+El contrato de datos se comprueba con `pnpm test:sdd:complete`. Para el contrato
+de identidad/fotos, preparar Docker local y la CLI fijada según la
+[guía de pruebas RLS](rls-tests/README.md), y ejecutar:
+
+```bash
+pnpm test:rls
+pnpm run test:sdd:complete --spec=002-identidad-fotos
+```
+
+Estas pruebas crean y retiran un Supabase local desechable; no utilizan
+`.env.local` ni el backend de usuarios. El gate de 002 exige evidencia RLS
+actual, tres recorridos Chromium y el contrato completo sin filas pendientes.

@@ -1,7 +1,7 @@
 # PR documental propuesto — 002
 
-Estado: cuerpo de PR para revisión; alcance aprobado, plan/tasks pendientes;
-no publicado. Dependencia:
+Estado: cuerpo histórico de PR documental hasta 357503d, etapa aprobada;
+no publicado. No describe los commits productivos posteriores. Dependencia:
 `codex/001-datos-code`, cuyo cierre local está en 7060952. Apertura/fusión por
 propietario; no se afirma integración remota de las ramas anteriores.
 
