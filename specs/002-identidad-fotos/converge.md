@@ -1,7 +1,19 @@
 # Convergencia local — 002
 
 Estado: IMPLEMENTACIÓN E1–E4 VERIFICADA LOCALMENTE, 2026-10-16.
-Revisión de código: ed077ec. Integración y CI remotos pendientes.
+Revisión de código local: ed077ec. Integración posterior verificada en 9a10a54.
+
+## Integración observada — 2026-10-16
+
+PRs #6 y #7 fusionados tras sus dependencias. El commit final de main
+`9a10a54efbf50fcac281397e30f149e31d73a9cd` pasó test-and-build y
+rls-and-sdd-002 en [CI](https://github.com/Ori-G-A/FitTrack/actions/runs/38939114677).
+Vercel confirmó Production success y el propietario informó «la aplicación
+funciona bien». El agente no realizó una sesión visual pública: la URL del
+deployment redirigía al login de Vercel.
+KD-003/004/005 tienen evidencia integrada, con retirada normativa pendiente de
+PATCH ratificada. Las secciones siguientes conservan el checkpoint local y sus
+límites; las afirmaciones de integración pendiente corresponden a esa etapa.
 
 ## Contrato y evidencia
 
@@ -51,3 +63,14 @@ el propietario abre/fusiona PRs y observa los jobs obligatorios del commit.
 
 PR de código preparado: [cuerpo y orden de integración](code-pr.md).
 El estado parcial anterior se conserva en e3d72fb; no se reescriben sus resultados.
+
+
+## Ratificación PATCH 1.0.2 — 2026-10-16
+
+El propietario respondió «adelante» a la propuesta concreta del PR #8 para
+ratificar, aplicar e integrar la PATCH. KD-001/003/004/005 se retiran del
+registro activo; KD-002 y los seguimientos DATA/IDEN/PHOTO se conservan.
+M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
+esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
+un nuevo alcance de producto. La autorización incluye el despliegue automático
+asociado a esta integración puntual y no establece un permiso permanente.

@@ -1,6 +1,6 @@
 # Registro de aprobaciones y estado
 
-Revisado: 2026-10-15. Este archivo registra evidencia de decisiones; las reglas
+Revisado: 2026-10-16. Este archivo registra evidencia de decisiones; las reglas
 siguen en la [constitución](../../.specify/memory/constitution.md) y el alcance
 en la [spec 001](../../specs/001-datos/spec.md).
 
@@ -23,7 +23,28 @@ en la [spec 001](../../specs/001-datos/spec.md).
 | Alcance 002 y FR-012/013 | «Aprobar alcance y ambos cambios propuestos», 2026-10-15, en respuesta a la spec presentada | Aprobados AS-IS de identidad/fotos, validación de configuración y diagnóstico local sanitizado |
 | Plan, tareas y revisión 002 | «Aprobar plan, tareas y revisión; continuar implementación local», seguido de «adelante» al pasar a RLS y «continua» | Aprobados; E1–E4 verificadas localmente, 23/23 IDs completos; CI/integración remotos pendientes |
 
-## Git y orden de integración
+## Estado vigente de integración — 2026-10-16
+
+Este checkpoint sustituye los estados pendientes de integración de la tabla
+histórica anterior. No reinterpreta las aprobaciones de alcance o plan.
+
+- «integra los pr y veamos como nos va» autorizó publicar e integrar los seis PRs.
+- «Autorizar fusiones y despliegue automático» autorizó expresamente el efecto
+  de Vercel sobre main; no es una autorización permanente de despliegues futuros.
+- PRs #2–#7 fusionados en orden, sin conflictos. Commit final integrado:
+  `9a10a54efbf50fcac281397e30f149e31d73a9cd`.
+- [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/38939114677):
+  test-and-build y rls-and-sdd-002 completados correctamente. La suite verifica
+  contratos completos de 001 y 002, con RLS local desechable y Chromium.
+- Vercel confirmó Production success, deployment `7125230490`. La comprobación
+  HTTP del agente recibió el login de Vercel, no una prueba visual de la app.
+- El propietario informó después «la aplicación funciona bien. seguimos».
+  Se registra como validación manual general de la aplicación publicada; no
+  afirma recorridos, cuenta de prueba o pruebas de datos que no describió.
+- La retirada normativa de KD-001/003/004/005 se prepara en una PATCH separada.
+  La constitución vigente continúa siendo 1.0.1 hasta ratificación explícita.
+
+## Git y orden de integración (histórico previo a los merges)
 
 La documentación creada al inicio estaba sin versionar; no había commits de
 sus etapas. La primera enmienda registrada incorpora la constitución completa
@@ -110,3 +131,14 @@ GitHub registra despliegues Production de los commits de main mediante Vercel
 y un Preview del PR #7. La exclusión previa de despliegues sigue vigente hasta
 respuesta explícita sobre ese efecto automático. Se solicitó aclaración antes
 de fusionar a main. Ningún merge se declara realizado en este checkpoint.
+
+
+## Ratificación PATCH 1.0.2 — 2026-10-16
+
+El propietario respondió «adelante» a la propuesta concreta del PR #8 para
+ratificar, aplicar e integrar la PATCH. KD-001/003/004/005 se retiran del
+registro activo; KD-002 y los seguimientos DATA/IDEN/PHOTO se conservan.
+M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
+esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
+un nuevo alcance de producto. La autorización incluye el despliegue automático
+asociado a esta integración puntual y no establece un permiso permanente.

@@ -50,10 +50,31 @@ Comparación contra spec, plan y constitución 1.0.1; no se declara revisión ex
 Resultado: **0 gaps de implementación nuevos abiertos en esta revisión local**.
 No se añade fase de convergencia porque no se detectó trabajo corrector nuevo.
 
-## Integración pendiente
+## Integración observada — 2026-10-16
+
+PR documental #4 y PR de código #5 fusionados en main, después de #2/#3.
+La integración final con 002 quedó en `9a10a54` y pasó ambos jobs de
+[CI](https://github.com/Ori-G-A/FitTrack/actions/runs/38939114677).
+Vercel confirmó despliegue correcto y el propietario informó que la aplicación
+funciona bien. Esta confirmación no sustituye los contratos automatizados.
+KD-001 tiene evidencia integrada para su retirada; falta ratificar la PATCH.
+No se han corregido ni cerrado DATA-001–005 por esta actualización documental.
+
+## Estado anterior a la integración (histórico)
 
 CI remoto y apertura/fusión de PRs no observados. La aprobación del dueño para
 continuar habilitó el trabajo local, sin afirmar un merge remoto inexistente.
 La puerta de CI antes de integrar sigue abierta. KD-001 tiene evidencia para
 proponer su cierre en enmienda PATCH independiente; aquí no se modifica la
 constitución ni se declara cerrada por el simple paso de los tests.
+
+
+## Ratificación PATCH 1.0.2 — 2026-10-16
+
+El propietario respondió «adelante» a la propuesta concreta del PR #8 para
+ratificar, aplicar e integrar la PATCH. KD-001/003/004/005 se retiran del
+registro activo; KD-002 y los seguimientos DATA/IDEN/PHOTO se conservan.
+M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
+esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
+un nuevo alcance de producto. La autorización incluye el despliegue automático
+asociado a esta integración puntual y no establece un permiso permanente.

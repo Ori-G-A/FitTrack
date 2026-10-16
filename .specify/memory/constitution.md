@@ -1,7 +1,8 @@
 # Constitución de FitTrack
 
-Versión: 1.0.1. Ratificación inicial y corrección editorial autorizada: 2026-10-14.
-Estado: APROBADA mediante «aprobado. Crea las carpetas» en esta conversación.
+Versión: 1.0.2. Ratificación inicial: 2026-10-14. PATCH ratificada: 2026-10-16.
+Estado: APROBADA; PATCH ratificada mediante «adelante» en respuesta a la
+propuesta de retirar KD-001/003/004/005 y completar la integración del PR #8.
 La ratificación no convierte las specs futuras ni los cambios de dominio
 pendientes en decisiones aprobadas.
 
@@ -9,9 +10,11 @@ pendientes en decisiones aprobadas.
 
 FitTrack es una aplicación web React 18/Vite 6 con Supabase como backend
 de autenticación, datos y fotos (`package.json:15`, `src/supabase.js:1`).
-El README describe Vercel como destino de despliegue; el estado real y la
-conexión automática de este checkout no se han verificado. No se presupone
-que sea una copia aislada de desarrollo. Desplegar queda fuera del trabajo SDD.
+Vercel despliega automáticamente desde main. El propietario autorizó las
+fusiones de #2–#7 y su despliegue de `9a10a54`, confirmado por Vercel, y después
+informó que la aplicación funciona bien. La integración documental del PR #8
+también fue autorizada mediante «adelante». Estas decisiones puntuales no
+conceden autorización permanente para futuros despliegues.
 Solo se ha identificado un backend de datos; no se exige paridad entre motores
 inexistentes. Las fórmulas actuales se documentan como software observado,
 sin ratificar su validez clínica.
@@ -22,9 +25,9 @@ sin ratificar su validez clínica.
 
 Cada área DEBE tener requisitos EARS con IDs estables y etiquetas `[AS-IS]`
 o `[CHANGE]`, resultados de usuario, escenarios, exclusiones y trazabilidad.
-Una modificación de comportamiento DEBE ser un `[CHANGE]` aprobado. La suite
-actual pasa, pero todavía no demuestra cobertura de un contrato completo
-(`test/ui-regressions.test.js:5`). Esa brecha motiva este principio.
+Una modificación de comportamiento DEBE ser un `[CHANGE]` aprobado. La brecha
+inicial de cobertura contractual motiva este principio. 001/002 ya cuentan con
+contratos completos verificados; la adopción continúa en las áreas restantes.
 
 ### P2. Datos íntegros y efectos controlados — no negociable
 
@@ -48,7 +51,7 @@ Las pruebas de texto fuente existentes no bastan para probar interacciones
 El código nuevo DEBE separar cálculos de dominio, coordinación de casos de uso,
 acceso a servicios y presentación. Los cálculos puros no DEBEN importar React,
 DOM ni Supabase. Los límites exactos y sus pruebas se deciden en cada plan.
-La mezcla actual de estado, importación y acceso directo al backend en
+La mezcla inicial de estado, importación y acceso directo al backend en
 `src/FitTrack.jsx:614`, `783`, `814` motiva esta separación incremental.
 
 ### P5. Seguridad y privacidad — no negociable
@@ -65,8 +68,8 @@ Una inspección del SQL no demuestra aplicación efectiva de RLS en un servidor.
 Se DEBEN reportar comandos, resultados, omisiones y límites reales. Optimizar
 exige baseline y objetivo medido. Cada tarea DEBE trazar a una historia y esta
 a un resultado de usuario. No se DEBE imponer una abstracción sin necesidad
-documentada. El build y las pruebas están declarados en CI, pero no la
-trazabilidad ni los límites de arquitectura (`.github/workflows/ci.yml:24`).
+documentada. CI verifica build, pruebas, trazabilidad y límites de arquitectura
+para 001/002; las áreas futuras deben extender esa evidencia.
 
 ## Invariantes de dominio y propietarios futuros
 
@@ -122,21 +125,23 @@ No deben extenderse a código nuevo. Su cierre requiere evidencia y enmienda PAT
 
 | ID | Desviación y evidencia | Principio | Spec correctora | Límite |
 | --- | --- | --- | --- | --- |
-| KD-001 | Coordinación de datos y backend en componente (`src/FitTrack.jsx:783`) | P4 | 001-datos | M2 |
 | KD-002 | Sin trazabilidad FR → pruebas; parte de UI es inspección textual (`test/ui-regressions.test.js:3`) | P1, P3 | 006-interfaz y cada área al tocarse | M7 |
-| KD-003 | RLS comprobada mediante texto SQL (`test/supabase-contracts.test.js:88`) | P5, P6 | 002-identidad-fotos | M3 |
-| KD-004 | Fallos de reporting silenciados (`src/error-reporting.js:40`) | Validación y errores | 002-identidad-fotos | M3 |
-| KD-005 | Configuración pasada directamente a createClient (`src/supabase.js:3`) sin validación explícita propia | Validación y errores | 002-identidad-fotos | M3 |
+
+KD-001/003/004/005 retiradas mediante PATCH 1.0.2 tras revisar implementación,
+pins y CI integrado. Evidencia y límites en el
+[informe de enmienda](../../docs/sdd/amendment-1.0.2.md).
+KD-002 sigue activa para las áreas restantes; no invalida la trazabilidad
+completa de 001/002 ni se considera resuelta para todo el proyecto.
 
 ## Cumplimiento y automatización
 
-Declarado en CI hoy: pruebas Node y build Vite; no se ha observado una ejecución
-remota de esta revisión. Lo aprobado localmente figura en el survey.
+CI de main observado en `9a10a54`: test-and-build y rls-and-sdd-002 aprobados,
+incluidos contratos completos 001/002, límites de capas, Chromium y RLS sobre
+Supabase local desechable con guardas y limpieza. Esa ejecución no prueba RLS
+en el backend productivo ni cubre todos los escenarios de las áreas futuras.
 
-Por revisión hasta automatizar: trazabilidad (AUTO-001), límites de capas
-(AUTO-002), RLS ejecutada y guardas locales (AUTO-003), comportamiento de UI
-(AUTO-004), ausencia de jobs omitidos y versiones del entorno (AUTO-005).
-Las tareas se gestionan en el roadmap. Cobertura y trazabilidad son
+AUTO-001–005 tienen evidencia para el alcance integrado; su extensión por área
+y las revisiones pendientes se gestionan en el roadmap. Cobertura y trazabilidad son
 complementarias; también se revisa que las aserciones prueben el requisito entero.
 
 ## Gobernanza
@@ -158,11 +163,11 @@ se conservan identificadores y no se hace traducción masiva. D-001 resuelta.
 
 ## Informe de impacto de sincronización
 
-- Versión anterior ratificada: 1.0.0. Esta PATCH corrige estados editoriales
-  contradictorios, sin añadir ni redefinir principios.
-- Plantillas locales: spec y tareas creadas con requisitos de esta propuesta.
-- Guía y roadmap: creados y enlazados; sin cambios de runtime ni de CI.
-- Ratificación registrada el 2026-10-14, incluidas las desviaciones KD y sus hitos.
-- Autorización de corrección: «aplica tus sugerencias y revisa el estado actual
-  de lo aprobado», después de señalar las contradicciones sobre KD e idioma.
-- Informe detallado: `docs/sdd/amendment-1.0.1.md`.
+- Versión anterior ratificada: 1.0.1. Esta PATCH actualiza hechos y retira
+  KD-001/003/004/005 resueltas; conserva principios y KD-002.
+- Ratificación: «adelante», 2026-10-16, en respuesta a la propuesta concreta
+  de PATCH e integración del PR #8. No aprueba nuevas specs de producto.
+- Roadmap, aprobaciones y converge 001/002 sincronizados con la integración.
+- Plantillas y AGENTS: sin cambios de reglas; runtime, SQL y dependencias intactos.
+- Informe vigente: [1.0.2](../../docs/sdd/amendment-1.0.2.md).
+- Informe histórico conservado: [1.0.1](../../docs/sdd/amendment-1.0.1.md).
