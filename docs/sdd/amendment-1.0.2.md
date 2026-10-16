@@ -1,15 +1,15 @@
-# Propuesta de enmienda PATCH 1.0.2
+# Enmienda PATCH 1.0.2
 
-Fecha: 2026-10-16. Estado: preparada para ratificación, NO APROBADA.
+Fecha: 2026-10-16. Estado: RATIFICADA mediante «adelante», en respuesta a la propuesta del PR #8.
 Rama propia: `codex/sdd-constitution-1.0.2`.
-Constitución vigente: [1.0.1](../../.specify/memory/constitution.md).
+Constitución vigente: [1.0.2](../../.specify/memory/constitution.md).
 
 La integración de 001/002 ya tiene evidencia remota y el propietario confirmó
-que la aplicación funciona bien. Esta propuesta retira exclusivamente las
+que la aplicación funciona bien. Esta PATCH retira exclusivamente las
 desviaciones resueltas; no cambia principios, contratos de producto, permisos
 permanentes de despliegue ni los seguimientos de defectos preservados.
 
-## Cambios exactos propuestos al ratificar
+## Cambios ratificados
 
 1. Incrementar la versión constitucional 1.0.1 a 1.0.2 y registrar la fecha y
    respuesta explícita de ratificación, sin inventarlas antes de recibirla.
@@ -43,16 +43,24 @@ en `9a10a54efbf50fcac281397e30f149e31d73a9cd`.
 
 ## Informe de impacto de sincronización
 
-| Artefacto | Impacto previsto |
+| Artefacto | Impacto aplicado |
 | --- | --- |
-| Constitución | PATCH factual y retirada de cuatro KD tras ratificación; sin redefinir principios |
-| Roadmap/aprobaciones | Integración observada y validación manual registradas; M3 espera la puerta normativa |
+| Constitución | PATCH factual y retirada ratificada de cuatro KD; sin redefinir principios |
+| Roadmap/aprobaciones | Integración observada y validación manual registradas; puerta normativa ratificada |
 | Converge 001/002 | Añadir integración observada sin reescribir checkpoints locales ni sus resultados |
 | AGENTS/plantillas | Sin cambio de reglas; los enlaces apuntan a la constitución vigente |
 | Runtime, tests, SQL y dependencias | Sin cambios |
 | Áreas 003–006 | Sin alcance aprobado por esta enmienda |
 
-Verificación de esta entrega: enlaces locales y diff. No se repiten pruebas de
-runtime por cambios documentales. Tras ratificar se aplicará la lista exacta a
-la constitución, se comprobarán enlaces/diff y se observará CI del PR antes de
-integrar. No se presenta este documento guardado como ratificación efectiva.
+Verificación de esta entrega: enlaces locales y diff. No se repiten pruebas de runtime locales por cambios documentales. La lista ratificada se aplica a la constitución; se observará CI del PR #8 antes de integrar.
+
+
+## Ratificación PATCH 1.0.2 — 2026-10-16
+
+El propietario respondió «adelante» a la propuesta concreta del PR #8 para
+ratificar, aplicar e integrar la PATCH. KD-001/003/004/005 se retiran del
+registro activo; KD-002 y los seguimientos DATA/IDEN/PHOTO se conservan.
+M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
+esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
+un nuevo alcance de producto. La autorización incluye el despliegue automático
+asociado a esta integración puntual y no establece un permiso permanente.

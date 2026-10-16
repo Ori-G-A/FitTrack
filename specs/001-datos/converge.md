@@ -67,3 +67,14 @@ continuar habilitó el trabajo local, sin afirmar un merge remoto inexistente.
 La puerta de CI antes de integrar sigue abierta. KD-001 tiene evidencia para
 proponer su cierre en enmienda PATCH independiente; aquí no se modifica la
 constitución ni se declara cerrada por el simple paso de los tests.
+
+
+## Ratificación PATCH 1.0.2 — 2026-10-16
+
+El propietario respondió «adelante» a la propuesta concreta del PR #8 para
+ratificar, aplicar e integrar la PATCH. KD-001/003/004/005 se retiran del
+registro activo; KD-002 y los seguimientos DATA/IDEN/PHOTO se conservan.
+M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
+esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
+un nuevo alcance de producto. La autorización incluye el despliegue automático
+asociado a esta integración puntual y no establece un permiso permanente.

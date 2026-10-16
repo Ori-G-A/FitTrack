@@ -131,3 +131,14 @@ GitHub registra despliegues Production de los commits de main mediante Vercel
 y un Preview del PR #7. La exclusión previa de despliegues sigue vigente hasta
 respuesta explícita sobre ese efecto automático. Se solicitó aclaración antes
 de fusionar a main. Ningún merge se declara realizado en este checkpoint.
+
+
+## Ratificación PATCH 1.0.2 — 2026-10-16
+
+El propietario respondió «adelante» a la propuesta concreta del PR #8 para
+ratificar, aplicar e integrar la PATCH. KD-001/003/004/005 se retiran del
+registro activo; KD-002 y los seguimientos DATA/IDEN/PHOTO se conservan.
+M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
+esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
+un nuevo alcance de producto. La autorización incluye el despliegue automático
+asociado a esta integración puntual y no establece un permiso permanente.
