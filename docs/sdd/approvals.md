@@ -142,3 +142,10 @@ M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
 esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
 un nuevo alcance de producto. La autorización incluye el despliegue automático
 asociado a esta integración puntual y no establece un permiso permanente.
+
+## Preparación de alcance 003 — 2026-10-16
+
+«adelante», tras presentar la preparación de 003 como siguiente etapa, autoriza
+survey y propuesta de alcance. Se preparan once FR AS-IS y diez escenarios con
+C-001/002/003 propuestos. La aprobación del alcance todavía no se ha recibido;
+plan, tareas, analyze e implementación no se consideran aprobados.

@@ -175,3 +175,19 @@ M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
 esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
 un nuevo alcance de producto. La autorización incluye el despliegue automático
 asociado a esta integración puntual y no establece un permiso permanente.
+
+## Preparación de 003-entrenamiento — 2026-10-16
+
+La PATCH 1.0.2 se integró mediante PR #8 (c7d9e81), después de CI aprobado
+sobre su head 845d619. El propietario autorizó después preparar la siguiente
+área mediante «adelante»; no se interpreta como aprobación de una spec aún
+no presentada. [Survey](entrenamiento-survey.md),
+[alcance propuesto](../../specs/003-entrenamiento/spec.md) y checklist preparados.
+Once FR AS-IS, diez escenarios y tres aclaraciones propuestas; sin CHANGE ni
+implementación. Alcance y plan siguen sujetos a sus puertas independientes.
+
+Hallazgos TRAIN-001/002/003: carga timer sin guarda de cancelación observada por
+lectura (carrera pendiente de reproducir), contador guiado por ticks y distinta
+semántica de duración al guardar. Se caracterizarán; no hay corrección autorizada.
+No se congelan módulos compartidos ni se altera proteína/ciclo/avisos por mover
+sus utilidades de entrenamiento. La frontera incluye llamadores inventariados.
