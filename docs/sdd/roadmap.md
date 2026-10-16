@@ -191,3 +191,11 @@ lectura (carrera pendiente de reproducir), contador guiado por ticks y distinta
 semántica de duración al guardar. Se caracterizarán; no hay corrección autorizada.
 No se congelan módulos compartidos ni se altera proteína/ciclo/avisos por mover
 sus utilidades de entrenamiento. La frontera incluye llamadores inventariados.
+
+## Plan 003 preparado — 2026-10-16
+
+Alcance aprobado mediante «si». Plan, research, validación, 24 tareas y analyze
+preparados en specs/003-entrenamiento, con once grupos de pins y tres recorridos
+Chromium previstos. El selector existente admite 003; manifiesto inicial con
+21 pending y tests vacíos. G-PIN bloquea la extracción hasta verificar original.
+Plan/tareas/revisión pendientes de aprobación; sin implementación iniciada.

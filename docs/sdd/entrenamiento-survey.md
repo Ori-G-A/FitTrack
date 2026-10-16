@@ -67,7 +67,7 @@ Lectura de pruebas; no se ejecutó una nueva suite por este inventario documenta
 
 Se requieren pins ejecutados sobre BASE antes de extraer, pruebas funcionales
 de Train/SessionScreen/Library/Plan, fronteras de fórmulas y fecha local, y
-extensión del selector/manifiesto SDD a 003 en el plan técnico posterior.
+manifiesto SDD de 003 en el plan técnico posterior. La revisión técnica confirmó que el selector existente ya admite 003; no requiere reescritura.
 
 ## Hallazgos para caracterizar, sin corrección autorizada
 

@@ -11,7 +11,7 @@ Referencia: [spec](spec.md) y [survey](../../docs/sdd/entrenamiento-survey.md).
 - [x] Hallazgos preservados y exclusiones explícitos.
 - [x] Separación entre aprobación de alcance y de plan.
 - [x] Propietario aprueba alcance y C-001/002/003 mediante «si», 2026-10-16.
-- [ ] Plan define fronteras exactas, pins, pruebas y tareas.
+- [x] Plan propuesto define fronteras, pins, pruebas y tareas; pendiente de aprobación.
 - [ ] Caracterización ejecutada sobre original antes de transformar.
 - [ ] Matriz con nombres exactos y evidencia ejecutada completa.
 
