@@ -6,3 +6,5 @@ dist/
 .vercel/
 coverage/
 _tmp_*
+test-results/
+playwright-report/
