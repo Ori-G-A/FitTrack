@@ -41,18 +41,21 @@ y hallazgos; no acelerar omitiendo puertas.
 | M7 | 2027-01-22 | 006 completada; KD-002 cerrada; revisión final y guía de transferencia si aplica |
 
 Cada cierre incluye revisión de constitución/KD y aprobación del propietario.
-No se ha declarado ningún hito completado. Commits y aprobaciones vigentes:
-[registro](approvals.md). No hay PRs publicados ni merges realizados.
+Estado vigente al 2026-10-16: M0 y M1 integrados; implementación y verificación
+de M2/M3 integradas, con revisión KD realizada y retirada normativa pendiente
+de PATCH ratificada. No se declara M3 cerrado mientras falte esa puerta.
+PRs #2–#7 fusionados, CI de main verde y aplicación validada por el propietario.
+Commits, autorizaciones y límites: [registro](approvals.md).
 
 ## Automatización
 
 | ID | Comprobación pendiente | Criterio de aceptación | Hito |
 | --- | --- | --- | --- |
 | AUTO-001 | Verificador implementado; 001 con 21/21 y 002 con 23/23 IDs completos | test:sdd cruza resultados reales y rechaza pruebas inexistentes/omitidas; modo completo rechaza partial/pending y evidencia RLS obsoleta | Aplicado a 001/002; extender a futuras specs |
-| AUTO-002 | Límites de capas implementados en 001 | Imports transitivos y DOM directo comprobados; fixtures negativos y tres módulos de datos | Completo local para 001; CI remoto pendiente |
-| AUTO-003 | RLS real y BD local implementadas | Tres contratos reales A/B/anónimo aprobados, guardas y limpieza verificadas; CI configurado sin credenciales reales | Completo local 002; CI remoto pendiente |
+| AUTO-002 | Límites de capas implementados en 001/002 | Imports transitivos y DOM directo comprobados; fixtures negativos | Verificado en CI de main; extender a futuras áreas |
+| AUTO-003 | RLS real y BD local implementadas | Tres contratos reales A/B/anónimo aprobados, guardas y limpieza verificadas; sin credenciales reales | Verificado en CI de main para 002 |
 | AUTO-004 | Tres recorridos Chromium de datos y humo de previews implementados | Resto de escenarios de UI por área; texto fuente no sustituye prueba funcional | 001 verificada localmente; resto incremental hasta M7 |
-| AUTO-005 | Entorno local alineado y CI configurado; ejecución remota pendiente | Node/pnpm fijados y copia limpia comprobada; observar jobs obligatorios del commit revisado antes de declarar CI verde | M1 |
+| AUTO-005 | Entorno local y CI alineados | Node/pnpm fijados; checkout remoto instalado, probado y compilado; jobs obligatorios aprobados | Verificado en main 9a10a54 |
 
 ## Registro de seguimiento
 
@@ -63,7 +66,7 @@ El estado actual de 001 está en verification.md de su spec.
 | ID | Hallazgo y reproducción | Aceptación medible | Momento |
 | --- | --- | --- | --- |
 | ENV-001 | Fallo de pnpm dentro del sandbox; fuera del aislamiento funciona sin reparar estado global | Evidencia y límites registrados en readiness; usar ejecución autorizada para sus scripts | Diagnóstico local registrado |
-| ENV-002 | Diferencia inicial Node/pnpm local/CI | Node 24.21.0/pnpm 11.11.0 fijados y verificados; CI remoto sigue pendiente | Local resuelto; AUTO-005 pendiente remoto |
+| ENV-002 | Diferencia inicial Node/pnpm local/CI | Node 24.21.0/pnpm 11.11.0 fijados y verificados en CI | Resuelto; CI de main aprobado |
 | DOC-001 | README mencionaba desktop/ ausente | Referencia sustituida por previews existentes; sin declarar código legacy congelado | Resuelto documentalmente |
 | TEST-001 | UI y RLS contienen asserts sobre texto, no ejecución completa | Requisitos tocados tienen pruebas de comportamiento suficientes; mantener evidencia estática útil | M7 / AUTO-003/004 |
 | PERF-001 | Build inicial avisa chunk index 507,04 kB | Medir coste y decidir presupuesto antes de optimizar; no basta ocultar warning | Survey 006 |
@@ -72,7 +75,7 @@ El estado actual de 001 está en verification.md de su spec.
 | DATA-003 | Bus global puede sobrescribir error al comenzar otro guardado (`src/data-sync.js:9`, `25`) | En un CHANGE posterior, aprobar política de agregación y escribir regresión determinista antes de corregir | Después de 001; priorizar en cierre M2 |
 | DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | En un CHANGE posterior, decidir resultado visible y probar retorno error separado de rechazo de promesa | Después de 001; priorizar en cierre M2 |
 | DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | Reproducir con Storage diferido y rechazo; decidir feedback visible persistente y escribir regresión antes de corregir | Revisión al cierre M2; no se cambia en refactor AS-IS |
-| DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia; integración por el propietario pendiente | Corrección local registrada; merge pendiente |
+| DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
 | IDEN-001 | Reporter consume fingerprint/cupo antes de consultar sesión y su getSession carece de timeout propio | Pins preparatorios lo reproducen; conservar AS-IS y decidir cambio separado de FR-013 | Clarify 002 C2-004 |
 | PHOTO-001 | Fuente admite 25 MiB; migración Storage limita resultado a 5 MiB sin comprobación local del tamaño comprimido | No prometer aceptación remota por validar origen; decidir si hace falta CHANGE y prueba de frontera del resultado | Survey 002; sin cambio aprobado |
 
@@ -144,7 +147,7 @@ KD-003 también tiene evidencia de corrección local, pendiente de PATCH junto c
 KD-004/005. CI configurado en rls-and-sdd-002, sin ejecución remota observada.
 [PR preparado](../../specs/002-identidad-fotos/code-pr.md); apertura/fusión por propietario.
 
-## Publicación para integración — 2026-10-16
+## Publicación para integración — checkpoint anterior a las fusiones
 
 PRs remotos #2–#7 publicados en orden constitucional/readiness/001 docs/001
 código/002 docs/002 código; enlaces y autorización en [approvals](approvals.md).
@@ -152,3 +155,12 @@ CI encontró y permitió corregir dos problemas de reproducibilidad: pin pnpm
 contradictorio en la primera rama y maqueta de preview excluida del repositorio.
 Se conserva la evidencia histórica anterior. La integración sigue pendiente de
 CI verde y de aclarar el despliegue automático de Vercel asociado a main.
+
+## Cierre de integración y siguiente puerta — 2026-10-16
+
+El checkpoint anterior quedó superado por la autorización expresa del despliegue,
+las seis fusiones, CI verde de main y la confirmación manual del propietario.
+Los detalles y límites están en [approvals](approvals.md). Se prepara la
+[PATCH 1.0.2](amendment-1.0.2.md) para retirar únicamente KD-001/003/004/005.
+KD-002 y los seguimientos DATA/IDEN/PHOTO siguen abiertos. La propuesta todavía
+no cambia la constitución ni aprueba un alcance para 003-entrenamiento.
