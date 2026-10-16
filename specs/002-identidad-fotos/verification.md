@@ -2,9 +2,9 @@
 
 Fecha: 2026-10-15. Rama: `codex/002-identidad-fotos`.
 Producción base: `80920d4c1ff86648ef5f39ce459284929d7cf975`.
-Estado actual: E1–E3 implementadas y verificadas localmente. Las secciones
+Estado actual: E1–E4 implementadas y verificadas localmente. Las secciones
 preparatorias siguientes conservan evidencia anterior al refactor; el avance
-actual está en E1/E2/E3 y [converge parcial](converge.md). RLS real pendiente.
+actual está en E1/E2/E3/E4 y [converge](converge.md). Integración remota pendiente.
 
 ## Pruebas ejecutadas
 
@@ -123,3 +123,33 @@ Los once pins originales siguen intactos y 001 conserva 21/21 IDs completos.
 y US2-AS5, ambos RLS real. El verificador completo rechaza esas dos filas como
 corresponde. Nuevo docker info termina con código 1 por motor no disponible.
 No se presenta PR de código ni cierre de 002, ni se retira ninguna KD todavía.
+
+## E4 — Cierre local del contrato, 2026-10-16
+
+La primera matriz de servidor concluyó el 2026-10-15 con tres pruebas reales
+aprobadas y limpieza confirmada. Al retomar se reforzaron el preflight y los
+límites de espera. Docker estaba detenido y abortaba por un socket inaccesible;
+R9 documenta la recuperación acotada de su carpeta runtime, con respaldo intacto.
+El intento fallido se retiró después de verificar ruta y marcador. La matriz
+se repitió con las guardas definitivas y volvió a pasar; no quedan contenedores
+ni volúmenes de los fixtures.
+
+```powershell
+pnpm test:rls
+pnpm run test:sdd:complete --spec=002-identidad-fotos
+pnpm run build
+```
+
+Resultado final: 226/226 Node, 3/3 contratos RLS reales y 3/3 Chromium; cero
+omitidos. El runner cruza 172 nombres principales (166 Node, tres RLS y tres
+Chromium). Trazabilidad 002: 23 complete, cero pending/partial. Los mismos
+resultados satisfacen 21/21 IDs de 001. Once archivos pin originales conservan
+SHA-256; sourceHash de src coincide con E3, pues E4 solo añade pruebas/CI.
+
+Build: 2257 módulos, 10,80 s, aviso de tamaño conocido. Políticas SQL,
+dependencias y lockfile sin cambios. El job CI queda configurado para la misma
+CLI y exige ambos contratos completos, pero no se ha observado ejecución remota.
+No hay PR publicado, merge ni despliegue realizado. KD-003/004/005 cuentan con
+evidencia local para revisión; su retirada constitucional requiere PATCH separada.
+
+Evidencia persistida: [E4](evidence/e4.json) y [RLS real](evidence/rls-local.json).

@@ -1,57 +1,53 @@
-# Convergencia parcial — 002
+# Convergencia local — 002
 
-Estado: CLIENTE E1–E3 VERIFICADO, CIERRE DEL ÁREA PENDIENTE. 2026-10-15.
-No es presentación de PR de código: FR-011 y US2-AS5 siguen pending.
+Estado: IMPLEMENTACIÓN E1–E4 VERIFICADA LOCALMENTE, 2026-10-16.
+Revisión de código: ed077ec. Integración y CI remotos pendientes.
 
-## Contrato y evidencia actual
+## Contrato y evidencia
 
 | Área | Resultado | Evidencia |
 | --- | --- | --- |
-| FR-001/002/003 y US1 | Autenticación/sesión conservadas, sin extracción adicional | Pins identity-auth/session intactos y suite completa |
-| FR-004 a FR-009 y US2-AS1 a AS4 | Coordinación de fotos separada; fachada, cálculo de fecha, orden y errores conservados | E1, pruebas de capas con fixtures negativos, pins fotos/recovery intactos |
-| FR-010 y US3-AS1 | Cupo, fingerprint, sanitización y resultado de reporting conservados | Pin identity-diagnostics intacto |
-| FR-012 | Configuración inválida rechaza antes de crear cliente; válida conserva argumentos | Rojo/verde E2, SDK instrumentado sin validación propia |
-| FR-013 y US3-AS2 | Diagnóstico local fijo, acotado, sin contenido externo y con logger protegido | Rojo/verde E3, fallos devueltos/rechazos/timeout/logger |
-| FR-011 y US2-AS5 | Sin prueba de permisos ejecutada | Pendiente: motor Docker local no disponible |
+| FR-001/002/003 y US1 | Autenticación y sesión conservadas | Pins auth/session intactos |
+| FR-004 a FR-009 y US2-AS1 a AS4 | Fotos separadas de DOM/cliente global, sin cambiar datos, orden ni fallback | E1 y límites transitivos con fixtures negativos |
+| FR-010 y US3-AS1 | Cupo, fingerprints y sanitización conservados | Pin diagnostics intacto |
+| FR-012 | Configuración inválida rechaza antes del SDK; válida conserva argumentos | Rojo/verde E2 |
+| FR-013 y US3-AS2 | Diagnóstico local fijo y logger protegido, sin contenido externo | Rojo/verde E3 |
+| FR-011 y US2-AS5 | Aislamiento real de app_data, Storage y diagnósticos para dos usuarios/anónimo | E4, tres contratos reales y limpieza confirmada |
 
-Último checkpoint: 220/220 Node, 3/3 Chromium, build correcto; 21 complete y
-dos pending de 002. Mismos resultados verifican 21/21 IDs de 001. Once archivos
-pin originales conservan SHA-256; no se cambiaron aserciones AS-IS para acomodar
-el refactor. Build conserva aviso de chunk conocido, sin optimización incidental.
-Evidencia: [E1](evidence/e1.json), [E2](evidence/e2.json), [E3](evidence/e3.json).
+Último checkpoint: 226/226 Node, 3/3 RLS reales y 3/3 Chromium; 23 complete,
+cero pending/partial de 002. Los mismos resultados verifican 21/21 IDs de 001.
+Once archivos pin originales conservan SHA-256. Build correcto, 2257 módulos,
+10,80 s; aviso de tamaño PERF-001 conservado. No se cambiaron dependencias,
+lockfile ni políticas SQL. Los cambios posteriores a E3 son herramientas y CI,
+sin nuevo cambio en src.
 
-## Cambios y límites revisados
+Evidencia: [E1](evidence/e1.json), [E2](evidence/e2.json), [E3](evidence/e3.json),
+[E4](evidence/e4.json) y [matriz RLS](evidence/rls-local.json).
 
-photo-service recibe cliente y adaptadores; photo-storage conserva exports y
-E/S del navegador. La dependencia transitiva de localStorage se corrigió con
-date-utils y reexport de localISO; el algoritmo permanece idéntico. Supabase
-configura su cliente después de validar las entradas, con errores sin valores.
-Reporting usa solo un literal fijo en consola y absorbe el fallo del logger.
+## Revisión de gaps
 
-Sin cambios SQL, dependencias, claves app_data, formatos persistidos, parámetros
-de imágenes ni nuevas garantías de atomicidad/reintentos. DATA-001 a DATA-005,
-IDEN-001 y PHOTO-001 no se corrigen incidentalmente. No se conectó backend real,
-no hubo deploy, PR publicado, merge ni CI remoto observado.
+La dependencia transitiva de localStorage se eliminó separando localISO puro
+con reexport compatible (T022). La revisión de E4 añadió invalidación antes del
+preflight y límites de espera (T023), rechazo de pipes Docker remotos (T024) y
+repetición completa final (T025). No quedan gaps nuevos de implementación local.
+La falta inicial de motor se resolvió; research R9 conserva el diagnóstico y el
+respaldo runtime de Docker. Los fixtures temporales y sus volúmenes se retiraron.
 
-## Revisión de desviaciones
+## Compatibilidad y límites
 
-- KD-004: corregida localmente por FR-013; no retirada de la constitución.
-- KD-005: corregida localmente por FR-012; no retirada de la constitución.
-- KD-003: abierta; la guarda pura no prueba permisos de un servidor.
-- La enmienda PATCH de cierre se preparará separadamente con evidencia;
-  este documento no ratifica cambios constitucionales.
+Sin nueva atomicidad, compensación, reintentos o cambios de cupo. DATA-001 a
+DATA-005, IDEN-001 y PHOTO-001 permanecen en roadmap para cambios posteriores.
+Las pruebas de compresión usan primitivas simuladas; no prometen soporte de
+códec HEIC universal. RLS se ejecutó en Supabase local desechable con los SQL
+actuales, no en un backend real de usuarios. CI está configurado, no observado.
+No hubo despliegue, push, PR publicado ni merge.
 
-## Trabajo restante autorizado y condiciones de reanudación
+## Gobierno y revisión KD
 
-T009: completar runner y fixture, invocando guarda antes de cualquier conexión.
-T010: Supabase local desechable operativo y matriz real de dos usuarios/anónimo.
-T021: integrar gate 002 en CI con ese entorno y observar su ejecución remota.
-T019/T020: concluir convergencia, revisión KD y preparar PR de código solo cuando
-no queden pending/partial. Integración/fusión por propietario, como antes.
+KD-003/004/005 tienen evidencia local de corrección; no se retiran de la
+constitución en este commit. La enmienda PATCH y la ratificación son separadas.
+KD-002 continúa para las demás áreas. M3 integrado no se declara completado:
+el propietario abre/fusiona PRs y observa los jobs obligatorios del commit.
 
-La aprobación de ejecución local ya existe: no hay que volver a aprobar alcance,
-plan ni FR-012/013 para retomar lo pendiente. La condición técnica actual es
-disponer del motor/entorno local para ejecutar permisos. El último docker info
-terminó en código 1 por ausencia del pipe dockerDesktopLinuxEngine. No hay
-evidencia RLS que justifique declarar cierre; tampoco una excepción aprobada
-para omitirlo.
+PR de código preparado: [cuerpo y orden de integración](code-pr.md).
+El estado parcial anterior se conserva en e3d72fb; no se reescriben sus resultados.

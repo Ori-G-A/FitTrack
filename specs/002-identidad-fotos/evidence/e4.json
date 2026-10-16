@@ -25,5 +25,6 @@
   "fixtureCleanupPassed": true,
   "ciConfigured": true,
   "remoteCI": "not_observed",
-  "publishedPRs": false
+  "publishedPRs": false,
+  "codeRevision": "ed077ec"
 }

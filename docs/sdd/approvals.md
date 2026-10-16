@@ -21,7 +21,7 @@ en la [spec 001](../../specs/001-datos/spec.md).
 | Despliegue | Ninguna autorización | Fuera de alcance; vínculo real de main con Vercel sin verificar |
 | Preparación 002 | «continua hast llgar al limite de uso de tokens», después del cierre local de 001 | Survey, spec/plan/tasks en borrador y pruebas previas; no se infiere aprobación de CHANGE nuevos ni cierre de puertas |
 | Alcance 002 y FR-012/013 | «Aprobar alcance y ambos cambios propuestos», 2026-10-15, en respuesta a la spec presentada | Aprobados AS-IS de identidad/fotos, validación de configuración y diagnóstico local sanitizado |
-| Plan, tareas y revisión 002 | «Aprobar plan, tareas y revisión; continuar implementación local» | Aprobados; E1–E3 verificadas localmente, RLS real pendiente de cierre |
+| Plan, tareas y revisión 002 | «Aprobar plan, tareas y revisión; continuar implementación local», seguido de «adelante» al pasar a RLS y «continua» | Aprobados; E1–E4 verificadas localmente, 23/23 IDs completos; CI/integración remotos pendientes |
 
 ## Git y orden de integración
 
@@ -75,4 +75,13 @@ No requiere repetir aprobación de alcance, plan o entregas ya incluidas.
 
 E1–E3 implementadas en `74de716`, `4a23f37` y `54deef5`: 220 Node y tres
 Chromium aprobados, build correcto, once archivos pin originales intactos.
-002 mantiene dos IDs RLS pendientes; no se presenta PR de código ni cierre M3.
+Ese checkpoint mantenía dos IDs RLS pendientes; E4 los completa posteriormente.
+
+## E4 verificada — 2026-10-16
+
+`ed077ec` incorpora RLS real desechable, guardas y CI. Resultado final: 226 Node,
+tres contratos RLS reales y tres Chromium aprobados; 23/23 IDs de 002 y 21/21
+de 001 completos. El propietario conserva apertura/fusión de PRs y observación
+remota de CI. Cuerpo de PR listo en specs/002-identidad-fotos/code-pr.md.
+La referencia codex/002-identidad-fotos-docs conserva 357503d para separar etapas.
+No se declara cierre integrado M3 ni retirada constitucional de KD por este registro.
