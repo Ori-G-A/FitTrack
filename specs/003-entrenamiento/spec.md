@@ -1,6 +1,6 @@
 # Spec 003: entrenamiento
 
-Estado: PROPUESTA DE ALCANCE, pendiente de aprobación del propietario.
+Estado: ALCANCE APROBADO, 2026-10-16; plan técnico pendiente.
 Fecha: 2026-10-16. Constitución: [1.0.2](../../.specify/memory/constitution.md).
 Evidencia: [survey](../../docs/sdd/entrenamiento-survey.md).
 
@@ -105,15 +105,15 @@ FR-006 conserva ticks (TRAIN-002); FR-005/006 conservan sumar frente a sustituir
 duración (TRAIN-003). Son límites observados, no garantías deseadas ni defectos
 corregidos. Se revisarán al caracterizar, antes de extraer y en converge.
 
-## Clarificaciones propuestas
+## Clarificaciones resueltas
 
 - C-001: preservar AS-IS y separar los tres hallazgos de timer; recomendación:
   no introducir CHANGE en esta primera refactorización.
 - C-002: incluir las operaciones de rutinas de Biblioteca/Plan y sus consumidores,
   manteniendo fuera sus dominios de alimentos/cuerpo; recomendación: sí.
 - C-003: mantener cálculos actuales sin ratificar validez clínica; recomendación: sí.
-- Decisión del propietario: pendiente junto con la aprobación de alcance.
-  No bloquea inventario/documentación; sí la aprobación del plan e implementación.
+- Decisión del propietario: «si», en respuesta a la propuesta de alcance presentada; C-001/002/003 aceptadas.
+  Preservar AS-IS, incluir operaciones de rutinas/Plan y mantener las fórmulas actuales; plan e implementación conservan sus puertas.
 
 ## Traceability
 
@@ -147,6 +147,4 @@ ejecutada declarada para 003.
 
 ## Aprobación
 
-«adelante» autoriza preparar el alcance después de la PATCH. No se interpreta
-como aprobación de esta propuesta aún no presentada. Alcance/clarificaciones:
-pendientes. Plan, tareas, analyze e implementación: no aprobados ni iniciados.
+El propietario respondió «si» a la propuesta concreta de alcance, autorizando preparar el plan técnico. Se aprueban los once FR AS-IS, diez escenarios y C-001/002/003. La instrucción posterior «continua» mantiene la preparación del plan en curso; no aprueba anticipadamente su contenido aún no presentado. Plan, tareas, analyze e implementación pendientes de aprobación.

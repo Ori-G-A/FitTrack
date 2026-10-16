@@ -10,7 +10,7 @@ Referencia: [spec](spec.md) y [survey](../../docs/sdd/entrenamiento-survey.md).
 - [x] Criterios de aceptación verificables, sin afirmar ejecución inexistente.
 - [x] Hallazgos preservados y exclusiones explícitos.
 - [x] Separación entre aprobación de alcance y de plan.
-- [ ] Propietario aprueba alcance y C-001/002/003.
+- [x] Propietario aprueba alcance y C-001/002/003 mediante «si», 2026-10-16.
 - [ ] Plan define fronteras exactas, pins, pruebas y tareas.
 - [ ] Caracterización ejecutada sobre original antes de transformar.
 - [ ] Matriz con nombres exactos y evidencia ejecutada completa.

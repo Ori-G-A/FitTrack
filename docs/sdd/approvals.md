@@ -149,3 +149,11 @@ asociado a esta integración puntual y no establece un permiso permanente.
 survey y propuesta de alcance. Se preparan once FR AS-IS y diez escenarios con
 C-001/002/003 propuestos. La aprobación del alcance todavía no se ha recibido;
 plan, tareas, analyze e implementación no se consideran aprobados.
+
+## Alcance 003 aprobado — 2026-10-16
+
+El propietario respondió «si» a la propuesta concreta: once FR AS-IS, diez
+escenarios y preservación del temporizador con mejoras separadas. C-001/002/003
+resueltas. Autoriza preparar plan técnico; «continua» durante su preparación
+mantiene esa tarea. No se infiere aprobación anticipada del plan ni ejecución
+productiva. La evidencia previa de alcance está en 47e06c6.
