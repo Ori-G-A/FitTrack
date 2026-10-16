@@ -1,0 +1,29 @@
+{
+  "stage": "E4",
+  "generatedAt": "2026-10-16T15:06:41.443Z",
+  "node": "v24.21.0",
+  "sourceHash": "b1672dd6886cd33fe7382928efa34b743b2d38cb5c3b17949aef776ba7052525",
+  "nodePassed": 226,
+  "browserPassed": 3,
+  "rlsPassed": 3,
+  "traceability": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 23
+  },
+  "dataTrace": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 21
+  },
+  "unchangedPinFiles": 11,
+  "build": {
+    "passed": true,
+    "modules": 2257,
+    "seconds": 10.8
+  },
+  "fixtureCleanupPassed": true,
+  "ciConfigured": true,
+  "remoteCI": "not_observed",
+  "publishedPRs": false
+}

@@ -17,6 +17,7 @@
     "preview": "vite preview",
     "test": "node --test --test-isolation=none",
     "test:browser": "playwright test",
+    "test:rls": "node scripts/run-local-rls.js",
     "test:sdd": "node scripts/run-sdd-evidence.js",
     "test:sdd:complete": "node scripts/run-sdd-evidence.js --complete"
   },

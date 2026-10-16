@@ -1,6 +1,6 @@
 {
   "spec": "002-identidad-fotos",
-  "note": "Preparación sobre producción intacta; pending/partial bloquean PR de código. Runner seleccionable mediante --spec=002-identidad-fotos. Los CHANGE y RLS real siguen pendientes.",
+  "note": "Contrato cliente y RLS real ejecutables. El gate exige evidencia RLS local válida, hashes actuales y limpieza confirmada; CI remoto se informa por separado.",
   "requirements": [
     {
       "id": "FR-001",
@@ -109,8 +109,12 @@
     },
     {
       "id": "FR-011",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "SDD-RLS-001 app_data dos propietarios y anonimo",
+        "SDD-RLS-002 Storage privado permite solo prefijo propio",
+        "SDD-RLS-003 diagnosticos insert-only sin suplantacion"
+      ],
       "plannedTaskIds": [
         "T009",
         "T010"
@@ -211,8 +215,12 @@
     },
     {
       "id": "US2-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "SDD-RLS-001 app_data dos propietarios y anonimo",
+        "SDD-RLS-002 Storage privado permite solo prefijo propio",
+        "SDD-RLS-003 diagnosticos insert-only sin suplantacion"
+      ],
       "plannedTaskIds": [
         "T009",
         "T010"

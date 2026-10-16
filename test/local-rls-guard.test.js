@@ -1,12 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assertDisposableLocalRlsTarget } from '../scripts/local-rls-guard.js';
+import { assertDisposableLocalRlsTarget, isLocalDockerEndpoint } from '../scripts/local-rls-guard.js';
 
 const local = {
   environment: 'fittrack-sdd-disposable',
   apiUrl: 'http://127.0.0.1:54321',
   databaseUrl: 'postgresql://synthetic:synthetic@127.0.0.1:54322/postgres',
 };
+
+test('RLS Docker acepta sockets locales y rechaza pipes de otra maquina', () => {
+  for (const value of ['npipe:////./pipe/dockerDesktopLinuxEngine', 'unix:///var/run/docker.sock']) assert.equal(isLocalDockerEndpoint(value), true);
+  for (const value of ['tcp://127.0.0.1:2375', 'ssh://remote', 'npipe:////remote/pipe/docker_engine', 'unix://remote/path', 'unix:////remote/path', undefined]) assert.equal(isLocalDockerEndpoint(value), false);
+});
 
 test('RLS guarda admite solo destino desechable local explícito sin conectar', () => {
   assert.deepEqual(assertDisposableLocalRlsTarget(local), { apiOrigin: local.apiUrl, databaseUrl: local.databaseUrl });
