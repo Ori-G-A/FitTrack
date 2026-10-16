@@ -5,7 +5,7 @@ New-Item -ItemType Directory -Path (Split-Path $reportPath) -Force | Out-Null
 $cleanPath = Join-Path ([IO.Path]::GetTempPath()) ('FitTrack-sdd-clean-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $cleanPath | Out-Null
 "Copia limpia: $cleanPath" | Set-Content -LiteralPath $reportPath
-foreach ($copyPath in @('package.json','pnpm-lock.yaml','pnpm-workspace.yaml','.node-version','vite.config.js','index.html','vercel.json','src','test','test-support','scripts','browser-tests','playwright.config.js')) {
+foreach ($copyPath in @('package.json','pnpm-lock.yaml','pnpm-workspace.yaml','.node-version','vite.config.js','index.html','vercel.json','src','preview','test','test-support','scripts','browser-tests','playwright.config.js')) {
   Copy-Item -LiteralPath (Join-Path $workspacePath $copyPath) -Destination $cleanPath -Recurse
 }
 New-Item -ItemType Directory -Path (Join-Path $cleanPath 'supabase') | Out-Null
