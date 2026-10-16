@@ -1,6 +1,7 @@
 # Plan técnico — 001-datos
 
-Estado: REVISADO con mejoras autorizadas; aprobación integral pendiente, 2026-10-15.
+Estado: APROBADO para avanzar a tareas y análisis, 2026-10-15.
+Autorización: «continua», tras presentar el plan revisado como siguiente decisión.
 Contrato: [spec](spec.md). Decisiones: [research](research.md).
 Revisión de calidad: [checklist](checklists/requirements.md).
 Base productiva: `46697650f18043319a7c96ccdf93ebbdf29e2d75`.
@@ -23,7 +24,7 @@ caracterizados y se registran para una corrección posterior.
 | `src/data-sync.js` | Fachada con exports actuales; compone instancia global y conserva hook React | FR-003 a FR-006; timer |
 | `src/app-data-lifecycle.js` (nuevo) | Coordina carga, importación/exportación y borrado mediante dependencias explícitas y callbacks | FR-007/009/010/011 |
 | `src/FitTrack.jsx` | Estado y presentación; adapta navegador y conecta casos de uso; conserva APIs de Train y pantallas | FR-006/007/008/009/010/011 |
-| `test/support/` (nuevo) | Harness JSX/DOM, cliente falso, reloj y fixtures sintéticos | Pruebas de las tres historias |
+| `test-support/` (existente, ampliar) | Harness JSX/DOM, cliente falso, reloj y fixtures sintéticos | Pruebas de las tres historias |
 | `test/data-*.test.js` (nuevos) | Contratos y regresión observables, sin exigir la estructura de módulos elegida | Todos los FR/escenarios |
 
 Los adaptadores de navegador (selección de archivo, FileReader, Blob, URL y
@@ -177,7 +178,7 @@ Estas tres comprobaciones no constituyen un porcentaje global de mutation testin
 | P4, capas | PASS condicionado a implementación | Límites definidos; KD-001 solo se retira después de comprobarlos |
 | P5, privacidad | PASS | Clientes falsos, red bloqueada, sin variables reales; permisos no se alteran |
 | P6, evidencia | PASS | Matriz, comandos, omisiones y trazabilidad; nada se declara ejecutado aquí |
-| Aprobaciones/PR | PASS de diseño | Plan pendiente; tareas/analyze y puerta documental antes de implementación |
+| Aprobaciones/PR | PASS de diseño | Plan aprobado para avanzar; tareas/analyze y puerta documental antes de implementación |
 | Desviaciones | PASS sin nuevas | Se mantienen las KD ratificadas; defectos preservados quedan en follow-ups |
 
 PASS aquí evalúa el diseño, no demuestra que la implementación satisfaga el
@@ -191,6 +192,20 @@ tareas concretas y analyze. Preparar cuerpo de PR documental tras esos pasos.
 El propietario abre/fusiona. Código: rama correspondiente con pins, extracciones,
 trazabilidad sin PENDING y evidencia de converge. Orden: docs antes de código.
 
-Pendiente aprobación explícita de este plan revisado. La infraestructura y las
-pruebas de preparación fueron autorizadas por separado y tienen evidencia en
-readiness. No se han implementado las extracciones productivas.
+El propietario autorizó continuar el 2026-10-15, después de presentar el plan
+revisado como siguiente decisión pendiente. Se registra aprobación para preparar
+tareas y análisis; no se infiere fusión del PR documental ni dispensa de pins.
+La infraestructura y pruebas anticipadas tienen autorización y evidencia propia
+en readiness. No se han implementado las extracciones productivas.
+
+## Ajustes técnicos al desglosar tareas
+
+- Se usa `test-support/`, ruta que el piloto ya validó, en lugar de crear un
+  segundo `test/support/`. No afecta el contrato ni añade dependencias.
+- T012 ampliará el runner de evidencia para incluir todos los pins nuevos:
+  el runner actual solo ejecuta piloto/mutaciones y navegador. El gate previo a
+  cualquier extracción debe observar los tests completos, no solo el piloto.
+- Las mutaciones literales de la cola deben apuntar al módulo realmente extraído
+  después de E1. Se permite adaptar ese punto de instrumentación, conservando
+  el comportamiento alterado y las aserciones que lo detectan. Los pins públicos
+  originales no se sustituyen por tests del módulo nuevo.

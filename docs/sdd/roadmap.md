@@ -100,8 +100,9 @@ la secuencia histórica no sustituye el [estado vigente](approvals.md).
   requieren CHANGE posterior; no se declaran defectos resueltos.
 - Checklist de requisitos completado documentalmente; [plan](../../specs/001-datos/plan.md)
   y [research](../../specs/001-datos/research.md) preparados para aprobación.
-- Pendientes: aprobar plan revisado, generar tareas, analyze y puerta documental;
-  posteriormente pins sobre código original, implementación y converge.
+- Actualización 2026-10-15: plan autorizado para avanzar; 24 tareas y analyze
+  documental preparados en `codex/001-datos-docs`. Pendiente revisión del dueño
+  y puerta documental; posteriormente pins, implementación y converge.
 - Actualización 2026-10-15: mejoras de preparación autorizadas y ejecutadas;
   [readiness](readiness.md) recoge versiones, piloto, mutaciones, navegador,
   trazabilidad parcial, instalación limpia y auditoría. src permanece en BASE.

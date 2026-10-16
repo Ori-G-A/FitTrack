@@ -13,8 +13,9 @@ en la [spec 001](../../specs/001-datos/spec.md).
 | Mejoras propuestas de evidencia | «aplica tus sugerencias y revisa el estado actual de lo aprobado» | Autorizadas: entorno, piloto, entregas pequeñas, compatibilidad temporal, mutaciones, trazabilidad y navegador |
 | Preparación técnica anticipada | Misma autorización anterior, que incluye validar el entorno y el código original antes del plan | Autorizada para infraestructura y pruebas; no autoriza extracción productiva |
 | Checklist de requisitos | Revisión realizada por el agente | Completo documentalmente; no es aprobación del dueño ni analyze |
-| Plan 001 revisado | Presentado; el usuario pidió mejorar antes de aprobar | Pendiente de aprobación; no se infiere aprobación total de «aplica tus sugerencias» |
-| Tareas, analyze y PR documental 001 | No hay aprobación ni merge registrados | Pendientes |
+| Plan 001 revisado | «continua» del 2026-10-15 tras presentarlo como siguiente decisión pendiente | Aprobado para avanzar a tareas/analyze; no se infiere dispensa de puertas restantes |
+| Tareas y analyze 001 | Preparados por el agente después de esa autorización | 24 tareas y análisis sin CRITICAL abiertos; pendientes de aprobación del propietario |
+| PR documental 001 | Título/cuerpo preparados; no hay merge registrado | Pendiente de apertura/fusión por el propietario |
 | Refactor productivo / converge | Puertas anteriores aún pendientes | No iniciado; src conserva la revisión base |
 | Calendario | Fechas propuestas por el agente | Tentativo, no compromiso del propietario |
 | Despliegue | Ninguna autorización | Fuera de alcance; vínculo real de main con Vercel sin verificar |
@@ -27,7 +28,8 @@ con su corrección editorial, no un diff frente a una 1.0.0 previamente versiona
 
 1. `codex/sdd-constitution-1.0.1`: commit de constitución e informe editorial.
 2. `codex/sdd-readiness`: preparación técnica y revisión documental; depende del anterior.
-3. `codex/001-datos`: rama inicial de área; deberá incorporar lo fusionado por el
+3. `codex/001-datos-docs`: tareas/analyze de 001; depende de readiness.
+4. `codex/001-datos`: rama inicial de área; deberá incorporar lo fusionado por el
    dueño antes de avanzar con la refactorización.
 
 No hay PRs publicados ni merges realizados. Los borradores de plan no se
@@ -35,7 +37,8 @@ consideran etapas aprobadas por estar guardados en el workspace.
 
 ## Próxima decisión concreta
 
-Revisar el [plan actualizado](../../specs/001-datos/plan.md) con la evidencia de
-[preparación](readiness.md). Tras aprobarlo: tareas y analyze, puerta documental
-y luego pins completos antes de cualquier extracción. La evidencia parcial
-obtenida no sustituye esos pins ni cambia las decisiones de dominio.
+Revisar [tareas](../../specs/001-datos/tasks.md) y
+[analyze](../../specs/001-datos/analyze.md), y abrir/fusionar el PR documental
+con su [cuerpo preparado](../../specs/001-datos/docs-pr.md), respetando dependencias.
+Luego se ejecutan pins completos antes de cualquier extracción. La evidencia
+parcial obtenida no sustituye esos pins ni cambia decisiones de dominio.
