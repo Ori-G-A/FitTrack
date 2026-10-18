@@ -266,3 +266,12 @@ El preview principal monta Nutrición; preview/maqueta.jsx conserva un marcador
 para esa pestaña y no importa esa pantalla. El pin FR-016 abre ambos y verifica
 su conducta actual; no se añade funcionalidad al preview antiguo. Posible mejora
 futura de006, fuera de esta extracción AS-IS.
+
+## Implementación local 004 — 2026-10-18
+
+E1–E4 verificadas por entrega; checkpoint actual: 263 Node, 9 Chromium, 31/31 IDs de 004,
+40 hashes congelados y build correcto. CI de 004 añadido; sin CI remoto observado.
+001/003: 21/21 sobre los mismos resultados; 002/G-CLOSE bloqueados por Docker:
+acceso al socket dockerInference denegado. Intento RLS actual fallido, cleanup
+sin confirmar y fixture propio conservado para recuperación. T029 añadida;
+[converge](../../specs/004-nutricion-objetivos/converge.md). No hay integración de 004.

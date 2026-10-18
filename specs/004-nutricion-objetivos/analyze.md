@@ -23,6 +23,14 @@ algoritmos; callbacks de inferencia anticipados; futuros filtrados accidentalmen
 conversión Number.isFinite añadida; snapshots recalculados en updater; autoMacros
 movido fuera de Ajustes. Cada riesgo tiene pruebas y frontera en el plan.
 
-Aceptación solicitada: plan + tareas + revisión y ejecución local E0–E5,
+Aprobación recibida: plan + tareas + revisión y ejecución local E0–E5,
 conservando G-PIN y cierre real RLS. La implementación y su aceptación final
 se evalúan después; esta revisión no certifica resultados runtime.
+
+## Revisión de implementación
+
+E1–E4 verificadas; arquitectura, consumidores, ventanas, callbacks y pins
+comprobados en E5. CI004 configurado, sin resultado remoto observado.
+El [converge](converge.md) mantiene abierto T029/RLS y G-CLOSE; no hay
+aceptación final ni integración declaradas. La tabla inicial describe el plan
+antes de ejecutar; la evidencia vigente se enlaza desde converge.

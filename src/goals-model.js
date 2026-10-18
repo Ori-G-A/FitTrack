@@ -138,14 +138,14 @@ export function compareWeightExpected(weights = [], goals = {}, today = localISO
   if (points.length < 2) return null;
 
   const since = addDays(today, -VS_EXPECTED_WINDOW_DAYS);
-  const window = points.filter((p) => p.date >= since);
-  if (window.length < 2) return null;
-  const anchor = window[0];
+  const recentPoints = points.filter((p) => p.date >= since);
+  if (recentPoints.length < 2) return null;
+  const anchor = recentPoints[0];
   const startKg = anchor === points[0] ? Number(goals.startWeight) || Number(anchor.kg) : Number(anchor.kg);
   const goalPerWeek = Number(goals.weeklyChange) || 0;
   const expectedAt = (iso) => startKg + goalPerWeek * (daysBetween(anchor.date, iso) / 7);
 
-  const real = Number(window[window.length - 1].kg);
+  const real = Number(recentPoints[recentPoints.length - 1].kg);
   const expected = Math.round(expectedAt(today) * 10) / 10;
   const delta = Math.round((real - expected) * 10) / 10;
   const target = Number(goals.targetWeight) || null;
@@ -161,7 +161,7 @@ export function compareWeightExpected(weights = [], goals = {}, today = localISO
     if (weeks > 0 && weeks <= 104) projection = addDays(today, Math.round(weeks * 7));
   }
 
-  const series = window.map((p) => ({ iso: p.date, real: Number(p.kg), expected: Math.round(expectedAt(p.date) * 100) / 100 }));
+  const series = recentPoints.map((p) => ({ iso: p.date, real: Number(p.kg), expected: Math.round(expectedAt(p.date) * 100) / 100 }));
 
   return { real, expected, delta, ahead, target, perWeek, goalPerWeek, projection, series, anchorDate: anchor.date };
 }

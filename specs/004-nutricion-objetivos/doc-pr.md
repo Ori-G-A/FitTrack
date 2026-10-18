@@ -16,8 +16,7 @@ peso/ciclo y cambios clínicos quedan fuera. Cero CHANGE y nuevas dependencias.
 
 Validación documental: véase [verificación](verification.md). Los 31 IDs están
 pending y tests vacíos: plannedTests son previsiones. No se ejecutaron pins004,
-suite/build/Chromium ni RLS en esta etapa. Plan y ejecución local pendientes de
-aprobación. PR preparado, sin publicación ni integración remota declaradas.
+suite/build/Chromium ni RLS en esta etapa. Plan y ejecución local aprobados posteriormente en 5b5fb83. PR documental preparado, sin publicación ni integración remota declaradas.
 
 Orden: aprobar documentos; integrar PR documental o autorizar ejecución local
 antes de su integración; E0 verde sobre BASE; E1–E4 con checkpoints; E5/converge;

@@ -111,7 +111,16 @@ productiva permanecen pendientes. No se declara M0 ni M1 completado.
 
 ## Baseline 004 — 2026-10-18
 
-Plan aprobado y ejecución local autorizada. Sobre src original2a70042:260 Node,
-9 Chromium,31/31 contratos004 y build verdes. Cuatro mutaciones detectadas,
+Plan aprobado y ejecución local autorizada. Sobre src original2a70042: 260 Node,
+9 Chromium, 31/31 contratos de 004 y build verdes. Cuatro mutaciones detectadas,
 22 pins anteriores intactos. [Baseline](../../specs/004-nutricion-objetivos/evidence/baseline.json).
-No se declara implementación004 completa ni RLS renovada; T020–T028 pendientes.
+No se declara implementación004 completa ni RLS renovada; T020–T028 pendientes en este checkpoint inicial.
+
+## Implementación 004 y cierre pendiente — 2026-10-18
+
+[Checkpoint](../../specs/004-nutricion-objetivos/evidence/e5.json): 263 Node, 9 Chromium,
+31/31 contratos de 004, build y 40 hashes intactos.001/003: 21/21 sobre la misma colección.
+La ejecución RLS actual falló por motor Docker inaccesible (socket de inferencia);
+cleanup no confirmado. No se restaura evidencia previa ni se declara completo002.
+[Acción pendiente](../../specs/004-nutricion-objetivos/converge.md):T029 y repetición
+íntegra de 002 con RLS. Sin cambios SQL/dependencias ni publicación/integración/despliegue.

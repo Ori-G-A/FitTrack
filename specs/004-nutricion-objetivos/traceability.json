@@ -1,6 +1,6 @@
 {
   "spec": "004-nutricion-objetivos",
-  "note": "Pins originales004 ejecutados:18 grupos Node y tres Chromium; revisión de aserciones realizada. G-PIN aún exige suite/build y registro baseline antes de extraer.",
+  "note": "E0–E4 ejecutados y pins conservados. Checkpoint de código E5:263 Node,9 Chromium y31 IDs completos. G-CLOSE pendiente de renovar RLS y gate002; CI remoto no observado.",
   "requirements": [
     {
       "id": "FR-001",

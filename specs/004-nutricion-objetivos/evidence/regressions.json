@@ -1,0 +1,35 @@
+{
+  "collection": "Mismos resultados TAP/Chromium de checkpoint004; verificador original sin reejecutar suite",
+  "node": "v24.21.0",
+  "reports": [
+    {
+      "spec": "001-datos",
+      "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+      "generatedAt": "2026-10-18T21:21:00.037Z",
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      }
+    },
+    {
+      "spec": "003-entrenamiento",
+      "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+      "generatedAt": "2026-10-18T21:21:00.037Z",
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      }
+    },
+    {
+      "spec": "002-identidad-fotos",
+      "status": "blocked",
+      "reason": "Evidencia RLS incompleta o entorno no coincidente",
+      "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+      "rlsRenewed": false
+    }
+  ]
+}

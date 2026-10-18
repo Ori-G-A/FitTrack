@@ -16,4 +16,4 @@ Fecha: 2026-10-18. Revisión documental del agente, no aceptación del propietar
 - [x] Plan, tareas y analyze aprobados; ejecución local autorizada.
 - [x] Pins completos ejecutados sobre original antes de extraer.
 
-El alcance aprobado autoriza preparar el plan; este aún no autoriza código productivo ni integración.
+Plan y ejecución local aprobados. Extracciones verificadas; cierre global pendiente de RLS. Integración y despliegue no autorizados.

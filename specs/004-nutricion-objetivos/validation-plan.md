@@ -59,7 +59,7 @@ FitTrack debe fallar; comprobar casos válidos y callbacks de inferencia.
 ## Registro y aceptación
 
 E0 registra src idéntico a BASE, comandos/runtime, 31 IDs revisados, Node/Chromium/
-build reales y hashes normalizados UTF8 CRLF→LF de pins nuevos y22 anteriores.
+build reales y hashes normalizados UTF8 CRLF→LF de pins nuevos y 22 anteriores.
 E1–E4 repiten checkpoint descrito en plan; G-CLOSE exige misma revisión/hash,
 gates001/002/003/004 completos y RLS renovada con limpieza. Guardar evidencia
 en evidence/baseline.json y checkpoints, sin crearlos con resultados previstos.
