@@ -69,3 +69,16 @@ capturados y carrera TRAIN-001 conservados; commitT mantiene la suma redondeada
 en la pantalla. Sesión guiada sigue contando ticks. Checkpoint completo: 239/239
 Node, 6/6 Chromium, 21/21 contratos, build correcto y 22 hashes intactos.
 Evidencia: [e3.json](evidence/e3.json). T017 completada.
+
+
+## E4 — 2026-10-17
+
+Train movido a TrainingScreen con la misma firma y lazy SessionScreen; FitTrack
+conserva export Train, MUSCLES, EXERCISE_PRESETS y uid. Constantes en training-config
+y expresión UID original en id-utils. Helpers fmtDate/clock movidos tras revisar
+llamadores. DateBar/dayNameOf/exLine sin usos observados quedan fuera de limpieza.
+SessionScreen importa métricas/consejo puros directamente. La única adaptación
+de prueba heredada es la ruta de lectura del primer test textual de duración;
+conserva todas sus aserciones. Pins congelados intactos.
+Checkpoint: 239/239 Node, 6/6 Chromium, 21/21 contratos y build correcto.
+Evidencia: [e4.json](evidence/e4.json). T018/T019 completadas.

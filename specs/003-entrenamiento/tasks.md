@@ -3,7 +3,7 @@
 
 Estado: APROBADAS para ejecución local. [Plan](plan.md),
 [validación](validation-plan.md), [analyze](analyze.md).
-E0 completada el 2026-10-17; E1–E3 completadas; E4/E5 pendientes.
+E0 completada el 2026-10-17; E1–E4 y sus checkpoints completados; E5 pendiente.
 
 | ID | Historia y contrato | Resultado/tarea | Depende de | Estado |
 | --- | --- | --- | --- | --- |
@@ -24,9 +24,9 @@ E0 completada el 2026-10-17; E1–E3 completadas; E4/E5 pendientes.
 | T015 | US3; FR-007/008/009/011, US3-AS1/AS2/AS3/AS4 | E1: extraer métricas/consejo/plan y fechas necesarias, mantener imports/reexports; repetir checkpoint. | T014 | Completada |
 | T016 | US1/US3; FR-001/002/003/008/010/011, US1-AS1/AS2/AS3, US3-AS2/AS4 | E2: extraer transformaciones records/routines e integrar Biblioteca/Plan preservando snapshots, IDs y campos. | T015 | Completada |
 | T017 | US1/US2; FR-004/005/006, US1-AS4, US2-AS1/AS2 | E3: hook timer con puertos; conservar debounce, ciclo de efectos y distintos relojes; repetir pruebas de carreras y tiempo. | T016 | Completada |
-| T018 | US1/US2/US3; todos los FR/escenarios | E4: extraer TrainingScreen y constantes mínimas, conservar Train y props, lazy SessionScreen; evitar ciclo hacia FitTrack. | T017 | Pendiente |
-| T019 | US1/US2/US3; todos los FR/escenarios | Suite/build/Chromium y hashes tras cada entrega; registrar resultados reales y repetir cualquier checkpoint fallido íntegro. | T018 | Pendiente |
-| T020 | US3; FR-011, US3-AS4; capas de FR-001–010 | Comprobar límites transitivos y fixtures negativos; revisar imports, wrappers y consumidores. | T018 | Pendiente |
+| T018 | US1/US2/US3; todos los FR/escenarios | E4: extraer TrainingScreen y constantes mínimas, conservar Train y props, lazy SessionScreen; evitar ciclo hacia FitTrack. | T017 | Completada |
+| T019 | US1/US2/US3; todos los FR/escenarios | Suite/build/Chromium y hashes tras cada entrega; registrar resultados reales y repetir cualquier checkpoint fallido íntegro. | T018 | Completada |
+| T020 | US3; FR-011, US3-AS4; capas de FR-001–010 | Comprobar límites transitivos y fixtures negativos; revisar imports, wrappers y consumidores. | T018 | Completada |
 | T021 | US1/US2/US3; todos los FR/escenarios | Añadir gate completo 003 a CI; conservar 001/002/RLS. Revisar manifiesto contra pruebas realmente descubiertas. | T019,T020 | Pendiente |
 | T022 | US1/US2/US3; todos los FR/escenarios | Gate final 001/002/003 con evidencia válida; revisiones sin tests omitidos, build e inventario de diferencias. | T021 | Pendiente |
 | T023 | US1/US2/US3; todos los FR/escenarios | Converge contra spec/plan/constitución; añadir tareas si hay gaps, revisar TRAIN y KD-002 sin retirarla globalmente. | T022 | Pendiente |
