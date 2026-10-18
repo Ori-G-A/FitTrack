@@ -1,4 +1,5 @@
-import { CATALOG, CATALOG_CATS, CATALOG_UNIT_BY_NAME } from "./nutrition-config.js";
+import { migrateFoodUnits } from "./nutrition-records.js";
+import { CATALOG, CATALOG_CATS } from "./nutrition-config.js";
 export { CATALOG, CATALOG_CATS } from "./nutrition-config.js";
 import { round1, scaleFood } from "./nutrition-numbers.js";
 export { round1, scaleFood } from "./nutrition-numbers.js";
@@ -59,7 +60,6 @@ const LIQUID_MEASURES = [["1 cdta", 5], ["1 cda", 15], ["¼ taza", 60], ["½ taz
 
 const validateBackup = (value) => validateBackupData(value, DEFAULT_GOALS);
 const migrateWorkouts = (workouts) => migrateWorkoutData(workouts, MUSCLES[0]);
-const migrateFoodUnits = (foods) => foods.map((f) => (f.unit ? f : { ...f, unit: CATALOG_UNIT_BY_NAME.get(f.name.toLowerCase()) || "g" }));
 
 async function sha256(s) {
   try { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)); return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join(""); }

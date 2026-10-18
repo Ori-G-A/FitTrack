@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 export async function buildNutrition({mutation}={}){
  const result=await build({entryPoints:[resolve('test-support/nutrition-entry.jsx')],bundle:true,write:false,format:'iife',platform:'browser',metafile:true,define:{'process.env.NODE_ENV':'"development"','import.meta.env':'{}'},plugins:[{name:'nutrition-original-callbacks',setup(b){
   b.onResolve({filter:/(?:^|\/)supabase\.js$/},()=>({path:resolve('test-support/fake-supabase.js')}));
-  b.onLoad({filter:/(?:FitTrack|NutritionScreen|LibraryScreen|SettingsScreen|DiarioScreen|DashboardScreen)\.jsx$|app-utils\.js$/},async({path})=>{
+  b.onLoad({filter:/(?:FitTrack|NutritionScreen|LibraryScreen|SettingsScreen|DiarioScreen|DashboardScreen)\.jsx$|app-utils\.js$|nutrition-records\.js$/},async({path})=>{
    let s=await readFile(path,'utf8');
    const insert=(anchor,code)=>{if(!s.includes(anchor))throw new Error('Ancla de instrumentación ausente '+path+' '+anchor);s=s.replace(anchor,code+'\n'+anchor);};
    if(path.endsWith('FitTrack.jsx'))s+='\nexport {migrateFoodUnits};\n';

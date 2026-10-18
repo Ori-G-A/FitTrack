@@ -1,0 +1,27 @@
+{
+  "stage": "e2",
+  "status": "checkpoint passed",
+  "generatedAt": "2026-10-18T15:18:25.549Z",
+  "parentRevision": "1ae9aa481cebadae57ba47d99fb43fd4113e7036",
+  "sourceHash": "253d7575ac6710d3ec8b301324cd63a955fa6ef7fb96169e83f63ae1ac1761c0",
+  "node": "v24.21.0",
+  "nodeTests": 260,
+  "nodePassed": 260,
+  "browserPassed": 9,
+  "traceability": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 31
+  },
+  "pinsVerified": 18,
+  "previousPinsVerified": 22,
+  "build": {
+    "passed": true,
+    "log": "test-results/nutrition-e2-build.log"
+  },
+  "commands": [
+    "pnpm run test:sdd:complete --spec=004-nutricion-objetivos",
+    "pnpm run build"
+  ],
+  "remoteCI": "not_observed"
+}

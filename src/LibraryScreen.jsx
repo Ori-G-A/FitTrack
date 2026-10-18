@@ -1,6 +1,11 @@
 import { saveTrainingRoutine, appendRoutineTemplates } from "./training-routines.js";
 import React, { useEffect, useMemo, useState } from "react";
-import { CATALOG, CATALOG_CATS, EXERCISE_PRESETS, MUSCLES, round1, scaleFood, uid } from "./FitTrack.jsx";
+import { CATALOG, CATALOG_CATS } from "./nutrition-config.js";
+import { EXERCISE_PRESETS, MUSCLES } from "./training-config.js";
+import { scaleFood } from "./nutrition-numbers.js";
+import { uid } from "./id-utils.js";
+import { recipeTotals } from "./nutrition-model.js";
+import { foodData, saveFoodRecord, appendCatalogFood, saveRecipeRecord, appendRecipeIngredient, removeRecordById } from "./nutrition-records.js";
 import { PLACES, ROUTINE_TEMPLATES, WARMUP, routinePlace, templateToAppRoutine } from "./fase1Config.js";
 import { toast } from "./toast.jsx";
 
@@ -20,10 +25,7 @@ const NEW_LABEL = { mis: "Nuevo alimento", recetas: "Nueva receta", rutinas: "Nu
 const plural = (count, singular, plural_) => `${count} ${count === 1 ? singular : plural_}`;
 
 const macroLine = (item) => `${Math.round(item.kcal)} kcal · P ${num(item.protein)} · C ${num(item.carbs)} · G ${num(item.fat)}`;
-const recipeTotals = (recipe) => recipe.items.reduce(
-  (total, item) => ({ kcal: total.kcal + item.kcal, protein: total.protein + item.protein, carbs: total.carbs + item.carbs, fat: total.fat + item.fat }),
-  { kcal: 0, protein: 0, carbs: 0, fat: 0 },
-);
+
 
 function Rows({ rows }) {
   return (
@@ -108,7 +110,7 @@ function RecipeDetail({ recipe, foods, onSave, onDelete, onClose }) {
   const addItem = () => {
     if (!picked || !grams) return;
     const scaled = scaleFood(picked, grams);
-    setItems((current) => [...current, { id: uid(), name: picked.name, grams: Number(grams), unit: picked.unit || "g", kcal: round1(scaled.kcal), protein: round1(scaled.protein), carbs: round1(scaled.carbs), fat: round1(scaled.fat) }]);
+    setItems((current) => appendRecipeIngredient(current, picked, grams, scaled, uid));
     setPickId(""); setGrams("");
   };
   const total = recipeTotals({ items });
@@ -300,21 +302,17 @@ export default function LibraryScreen({ foods, setFoods, recipes, setRecipes, ro
     .filter((r) => place === "todos" || placeOf.get(r.id) === place);
 
   const saveFood = (draft) => {
-    const data = { name: draft.name.trim(), kcal: +draft.kcal || 0, protein: +draft.protein || 0, carbs: +draft.carbs || 0, fat: +draft.fat || 0, unit: draft.unit || "g" };
-    setFoods((current) => (draft.id
-      ? current.map((food) => food.id === draft.id ? { ...food, ...data } : food)
-      : [...current, { id: uid(), ...data }]).sort((a, b) => a.name.localeCompare(b.name)));
+    const data = foodData(draft);
+    setFoods((current) => saveFoodRecord(current, draft, data, uid));
     toast(`${data.name} guardado`);
     setOpen(null);
   };
   const addFromCatalog = (item) => {
     if (existing.has(item.name.toLowerCase())) return;
-    setFoods((current) => [...current, { id: uid(), name: item.name, kcal: item.kcal, protein: item.protein, carbs: item.carbs, fat: item.fat, unit: item.unit || "g" }].sort((a, b) => a.name.localeCompare(b.name)));
+    setFoods((current) => appendCatalogFood(current, item, uid));
   };
   const saveRecipe = (data) => {
-    setRecipes((current) => open && open !== "nuevo"
-      ? current.map((recipe) => recipe.id === open ? { ...recipe, ...data } : recipe)
-      : [...current, { id: uid(), ...data }]);
+    setRecipes((current) => saveRecipeRecord(current, open, data, uid));
     toast(`Receta «${data.name}» guardada`);
     setOpen(null);
   };
@@ -329,8 +327,8 @@ export default function LibraryScreen({ foods, setFoods, recipes, setRecipes, ro
   const detail = (() => {
     if (!open) return null;
     const isNew = open === "nuevo";
-    if (tab === "mis") return <FoodDetail food={isNew ? null : foods.find((f) => f.id === open)} onSave={saveFood} onDelete={(id) => { setFoods((c) => c.filter((f) => f.id !== id)); setOpen(null); }} onClose={() => setOpen(null)} />;
-    if (tab === "recetas") return <RecipeDetail recipe={isNew ? null : recipes.find((r) => r.id === open)} foods={foods} onSave={saveRecipe} onDelete={(id) => { setRecipes((c) => c.filter((r) => r.id !== id)); setOpen(null); }} onClose={() => setOpen(null)} />;
+    if (tab === "mis") return <FoodDetail food={isNew ? null : foods.find((f) => f.id === open)} onSave={saveFood} onDelete={(id) => { setFoods((c) => removeRecordById(c, id)); setOpen(null); }} onClose={() => setOpen(null)} />;
+    if (tab === "recetas") return <RecipeDetail recipe={isNew ? null : recipes.find((r) => r.id === open)} foods={foods} onSave={saveRecipe} onDelete={(id) => { setRecipes((c) => removeRecordById(c, id)); setOpen(null); }} onClose={() => setOpen(null)} />;
     if (tab === "rutinas") return <RoutineDetail routine={isNew ? null : routines.find((r) => r.id === open)} onSave={saveRoutine} onDelete={(id) => { setRoutines((c) => c.filter((r) => r.id !== id)); setOpen(null); }} onClose={() => setOpen(null)} />;
     return null;
   })();

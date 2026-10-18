@@ -25,7 +25,7 @@ Estado: APROBADAS para ejecución local E0–E5 el 2026-10-18. [Plan](plan.md), 
 | T018 | US1/US2/US3; FR-001–006/008/009/013/014; US1-AS1–5, US2-AS2/3, US3-AS3/4 | Tres recorridos Chromium, cuatro mutaciones controladas y negativos del verificador, con controles restaurados. | T002,T003,T004,T005,T006,T007,T008,T009,T010,T011,T012,T013,T014,T015,T016,T017 | Completada |
 | T019 | US1/US2/US3; todos los FR/escenarios | G-PIN: suite/build/Chromium sobre src original, 31 IDs completos, revisión de aserciones y congelación de pins; comprobar 22 hashes previos. | T018 | Completada |
 | T020 | US1/US2; FR-001/007/016; US1-AS1, US2-AS1, US3-AS6 | E1: catálogo/unidades/proteína y fachadas; checkpoint completo por entrega. | T019 | Completada |
-| T021 | US1; FR-001–006/016; US1-AS1–5, US3-AS6 | E2: modelos/operaciones alimentarias; integrar Biblioteca/Nutrición sin cambiar snapshots/updaters; checkpoint. | T020 | Pendiente |
+| T021 | US1; FR-001–006/016; US1-AS1–5, US3-AS6 | E2: modelos/operaciones alimentarias; integrar Biblioteca/Nutrición sin cambiar snapshots/updaters; checkpoint. | T020 | Completada |
 | T022 | US2/US3; FR-008/009/013/014/015/016; US2-AS2/3, US3-AS3–6 | E3: objetivos y acciones; callbacks de inferencia sin anticiparlos, efecto en Ajustes intacto; checkpoint. | T021 | Pendiente |
 | T023 | US2/US3; FR-010/011/012/016; US2-AS4, US3-AS1/2/6 | E4: métricas y consumidores; ventanas y avisos ajenos intactos; checkpoint. | T022 | Pendiente |
 | T024 | US3; FR-016; US3-AS6; capas de todos los FR | Prueba de arquitectura transitiva y negativos; APIs/consumidores, inventario de llamadas y revisión de diferencias. | T023 | Pendiente |
