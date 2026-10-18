@@ -3,7 +3,7 @@
 
 Estado: APROBADAS para ejecución local. [Plan](plan.md),
 [validación](validation-plan.md), [analyze](analyze.md).
-E0 completada el 2026-10-17; E1/E2 completadas; E3–E5 pendientes.
+E0 completada el 2026-10-17; E1–E3 completadas; E4/E5 pendientes.
 
 | ID | Historia y contrato | Resultado/tarea | Depende de | Estado |
 | --- | --- | --- | --- | --- |
@@ -23,7 +23,7 @@ E0 completada el 2026-10-17; E1/E2 completadas; E3–E5 pendientes.
 | T014 | US1/US2/US3; todos los FR/escenarios | G-PIN: suite/build/Chromium verdes sobre src original, 21 IDs completos, hashes de pins 003 y once previos; registrar BASE y resultados. | T013 | Completada |
 | T015 | US3; FR-007/008/009/011, US3-AS1/AS2/AS3/AS4 | E1: extraer métricas/consejo/plan y fechas necesarias, mantener imports/reexports; repetir checkpoint. | T014 | Completada |
 | T016 | US1/US3; FR-001/002/003/008/010/011, US1-AS1/AS2/AS3, US3-AS2/AS4 | E2: extraer transformaciones records/routines e integrar Biblioteca/Plan preservando snapshots, IDs y campos. | T015 | Completada |
-| T017 | US1/US2; FR-004/005/006, US1-AS4, US2-AS1/AS2 | E3: hook timer con puertos; conservar debounce, ciclo de efectos y distintos relojes; repetir pruebas de carreras y tiempo. | T016 | Pendiente |
+| T017 | US1/US2; FR-004/005/006, US1-AS4, US2-AS1/AS2 | E3: hook timer con puertos; conservar debounce, ciclo de efectos y distintos relojes; repetir pruebas de carreras y tiempo. | T016 | Completada |
 | T018 | US1/US2/US3; todos los FR/escenarios | E4: extraer TrainingScreen y constantes mínimas, conservar Train y props, lazy SessionScreen; evitar ciclo hacia FitTrack. | T017 | Pendiente |
 | T019 | US1/US2/US3; todos los FR/escenarios | Suite/build/Chromium y hashes tras cada entrega; registrar resultados reales y repetir cualquier checkpoint fallido íntegro. | T018 | Pendiente |
 | T020 | US3; FR-011, US3-AS4; capas de FR-001–010 | Comprobar límites transitivos y fixtures negativos; revisar imports, wrappers y consumidores. | T018 | Pendiente |

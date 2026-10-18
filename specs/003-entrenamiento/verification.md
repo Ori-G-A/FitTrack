@@ -59,3 +59,13 @@ masivos se reexportan por app-utils. Se corrigió sintaxis de asignación y se
 descartó una ejecución que coincidió con edición; checkpoint completo repetido
 sobre árbol estable: 239/239 Node, 6/6 Chromium, 21/21 contratos y build correcto.
 22 hashes intactos. Evidencia: [e2.json](evidence/e2.json). T016 completada.
+
+
+## E3 — 2026-10-17
+
+Extraído use-training-timer con puertos de persistencia, reloj, intervalos y
+logger compuestos en pantalla. Dependencias de efectos [userId]/[tRun], cierres
+capturados y carrera TRAIN-001 conservados; commitT mantiene la suma redondeada
+en la pantalla. Sesión guiada sigue contando ticks. Checkpoint completo: 239/239
+Node, 6/6 Chromium, 21/21 contratos, build correcto y 22 hashes intactos.
+Evidencia: [e3.json](evidence/e3.json). T017 completada.

@@ -1,3 +1,4 @@
+import { useTrainingTimer } from "./use-training-timer.js";
 import { patchTrainingSession, createTrainingExercise, createTrainingExercises, appendTrainingExercises, editTrainingSet, addTrainingSet, deleteTrainingSet, deleteTrainingExercise, createTrainingCardio, deleteTrainingCardio } from "./training-records.js";
 import { minimalRoutineExercises, minimalRoutineMinutes, routineForDate, removeRoutineExercise, trainingSessionRoutineItems } from "./training-routines.js";
 import { lastTrainingPerformance, trainingSummary } from "./training-metrics.js";
@@ -37,6 +38,13 @@ import {
   Apple, Pencil, X, Clock, Activity, ListChecks, CalendarDays,
   Settings, Zap, BookOpen, Menu, Sun, Moon, Newspaper, Droplet, Ruler
 } from "lucide-react";
+
+const TRAINING_TIMER_PORTS = {
+  loadKey, saveKey, now: () => Date.now(),
+  setInterval: (tick, ms) => setInterval(tick, ms),
+  clearInterval: (id) => clearInterval(id),
+  logError: (...args) => console.error(...args),
+};
 
 const BodyScreen = lazy(() => import("./BodyScreen.jsx"));
 const DiarioScreen = lazy(() => import("./DiarioScreen.jsx"));
@@ -1074,35 +1082,7 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
   const addCardio = () => { if (!cardio.minutes) return; writeSession({ cardio: [...cardioList, createTrainingCardio(cardio, uid)] }); setCardio({ type: CARDIO_TYPES[0], minutes: "", kcal: "" }); };
   const delCardio = (id) => writeSession({ cardio: deleteTrainingCardio(cardioList, id) });
 
-  // timer
-  const [tSec, setTSec] = useState(0); const [tRun, setTRun] = useState(false); const tRef = useRef(null);
-  // ponytail: el conteo se recalcula del reloj real (Date.now()-startedAt) en cada tick,
-  // no se acumula tick a tick — así un tab en background/pantalla bloqueada (donde el
-  // navegador pausa setInterval) no hace que el tiempo registrado quede por detrás.
-  const runRef = useRef({ startedAt: null, baseSec: 0 });
-  useEffect(() => {
-    (async () => {
-      try {
-        const t = await loadKey(userId, "timer", { running: false, baseSec: 0, startedAt: null });
-        if (t.running && t.startedAt) {
-          runRef.current = { startedAt: t.startedAt, baseSec: t.baseSec || 0 };
-          setTSec(runRef.current.baseSec + Math.floor((Date.now() - runRef.current.startedAt) / 1000));
-          setTRun(true);
-        } else { runRef.current = { startedAt: null, baseSec: t.baseSec || 0 }; setTSec(t.baseSec || 0); }
-      } catch (error) { console.error("loadTimer", error); }
-    })();
-    return () => clearInterval(tRef.current);
-  }, [userId]);
-  useEffect(() => {
-    if (!tRun) { clearInterval(tRef.current); return; }
-    const tick = () => setTSec(runRef.current.startedAt ? runRef.current.baseSec + Math.floor((Date.now() - runRef.current.startedAt) / 1000) : runRef.current.baseSec);
-    tick();
-    tRef.current = setInterval(tick, 1000);
-    return () => clearInterval(tRef.current);
-  }, [tRun]);
-  const startT = () => { runRef.current = { startedAt: Date.now(), baseSec: tSec }; saveKey(userId, "timer", { running: true, startedAt: runRef.current.startedAt, baseSec: tSec }); setTRun(true); };
-  const pauseT = () => { runRef.current = { startedAt: null, baseSec: tSec }; saveKey(userId, "timer", { running: false, startedAt: null, baseSec: tSec }); setTRun(false); };
-  const resetT = () => { runRef.current = { startedAt: null, baseSec: 0 }; saveKey(userId, "timer", { running: false, startedAt: null, baseSec: 0 }); setTRun(false); setTSec(0); };
+  const { tSec, tRun, startT, pauseT, resetT } = useTrainingTimer(userId, TRAINING_TIMER_PORTS);
   const commitT = () => { const min = Math.round(tSec / 60); if (min > 0) writeSession({ durationMin: (session.durationMin || 0) + min }); resetT(); };
 
   const { totalVol, totalSets, avgRpe } = trainingSummary(exercises);
