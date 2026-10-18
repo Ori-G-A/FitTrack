@@ -1,0 +1,19 @@
+{
+  "stage": "e3",
+  "generatedAt": "2026-10-18T02:11:13.989Z",
+  "node": "v24.21.0",
+  "nodeTests": 239,
+  "nodePassed": 239,
+  "browserPassed": 6,
+  "counts": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 21
+  },
+  "pinsVerified": 11,
+  "previousPinsVerified": 11,
+  "buildPassed": true,
+  "sourceHash": "ce6b6e37bcf0fbd1ca4fa14237657ef71b391264dfb764bf47c518e60d5d6342",
+  "sourceHashEncoding": "sorted src js/jsx/css names and current bytes",
+  "note": "Runtime evidence only; stage review recorded in verification.md"
+}

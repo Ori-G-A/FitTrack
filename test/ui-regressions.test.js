@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 test("manual duration saves on Enter, on blur and by itself", async () => {
-  const source = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const source = await readFile(new URL("../src/TrainingScreen.jsx", import.meta.url), "utf8");
   const input = source.slice(source.indexOf("Minutos (editar a mano)"), source.indexOf("Minutos (editar a mano)") + 600);
   assert.match(input, /onBlur=\{commitDuration\}/);
   assert.match(input, /e\.key === "Enter"[\s\S]*?commitDuration\(\)/);

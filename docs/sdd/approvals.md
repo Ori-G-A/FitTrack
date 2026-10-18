@@ -142,3 +142,49 @@ M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
 esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
 un nuevo alcance de producto. La autorización incluye el despliegue automático
 asociado a esta integración puntual y no establece un permiso permanente.
+
+## Preparación de alcance 003 — 2026-10-16
+
+«adelante», tras presentar la preparación de 003 como siguiente etapa, autoriza
+survey y propuesta de alcance. Se preparan once FR AS-IS y diez escenarios con
+C-001/002/003 propuestos. La aprobación del alcance todavía no se ha recibido;
+plan, tareas, analyze e implementación no se consideran aprobados.
+
+## Alcance 003 aprobado — 2026-10-16
+
+El propietario respondió «si» a la propuesta concreta: once FR AS-IS, diez
+escenarios y preservación del temporizador con mejoras separadas. C-001/002/003
+resueltas. Autoriza preparar plan técnico; «continua» durante su preparación
+mantiene esa tarea. No se infiere aprobación anticipada del plan ni ejecución
+productiva. La evidencia previa de alcance está en 47e06c6.
+
+## Plan 003 aprobado y ejecución local autorizada — 2026-10-16
+
+«adelante» responde a la petición concreta de aprobar plan, tareas y revisión
+para ejecutar localmente pins y extracciones. Se autoriza E0–E5 y se conserva
+G-PIN antes de producción. La etapa documental queda preparada en a74651d;
+esta autorización permite ejecutar localmente antes del merge documental.
+No autoriza despliegues ni nuevas correcciones CHANGE.
+
+
+## Continuación de ejecución 003 — 2026-10-17
+
+El propietario indicó «continua» después del checkpoint con Docker/RLS
+bloqueado. Se retomó T025 dentro de la ejecución E0–E5 ya autorizada: Docker
+volvió a responder, se renovó RLS con limpieza y el gate 002 pasó 23/23.
+La verificación local está completa; [evidencia final](../../specs/003-entrenamiento/evidence/final.json).
+Esta continuación no se interpreta como aceptación final de implementación
+ni autorización de publicación, fusión o despliegue. El propietario dispone
+del [cuerpo de PR preparado](../../specs/003-entrenamiento/code-pr.md) para revisar.
+
+
+## Integración 003 autorizada — 2026-10-17
+
+El propietario indicó «continua e integra» tras la entrega local completa de
+003 en c0be838. Autoriza publicar la rama/PR e integrar la refactorización.
+Al consultar expresamente el efecto de Vercel sobre main, respondió
+«Autorizar integración y despliegue automático». La autorización sustituye
+para esta entrega la reserva anterior de apertura/fusión por el propietario.
+La fusión se ejecutará con ambos jobs CI aprobados y SHA de head comprobado.
+No se declara aún PR publicado, merge ni despliegue completado, y no se
+concede permiso permanente para futuras áreas.

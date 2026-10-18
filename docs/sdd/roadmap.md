@@ -1,5 +1,11 @@
 # Roadmap de adopción SDD
 
+Estado actual, 2026-10-17: PATCH 1.0.2 y 001/002 integradas previamente.
+003 tiene alcance/plan/ejecución local aprobados, baseline fijada y E1–E4
+verificadas. E5 y RLS renovada también verificadas: gates 001/002/003 verdes.
+Cierre M4 pendiente de revisión del propietario e integración remota. Los registros siguientes
+conservan la evolución anterior. [Verificación 003](../../specs/003-entrenamiento/verification.md).
+
 Estado: constitución y comienzo por 001-datos aprobados el 2026-10-14;
 fechas y estimaciones continúan siendo tentativas.
 Gobierno: [constitución](../../.specify/memory/constitution.md).
@@ -175,3 +181,48 @@ M2/M3 cumplen la puerta normativa con esta ratificación; la integración de
 esta entrega documental queda sujeta a CI verde del PR #8. No se aprueba
 un nuevo alcance de producto. La autorización incluye el despliegue automático
 asociado a esta integración puntual y no establece un permiso permanente.
+
+## Preparación de 003-entrenamiento — 2026-10-16
+
+La PATCH 1.0.2 se integró mediante PR #8 (c7d9e81), después de CI aprobado
+sobre su head 845d619. El propietario autorizó después preparar la siguiente
+área mediante «adelante»; no se interpreta como aprobación de una spec aún
+no presentada. [Survey](entrenamiento-survey.md),
+[alcance propuesto](../../specs/003-entrenamiento/spec.md) y checklist preparados.
+Once FR AS-IS, diez escenarios y tres aclaraciones propuestas; sin CHANGE ni
+implementación. Alcance y plan siguen sujetos a sus puertas independientes.
+
+Hallazgos TRAIN-001/002/003: carga timer sin guarda de cancelación observada por
+lectura (carrera pendiente de reproducir), contador guiado por ticks y distinta
+semántica de duración al guardar. Se caracterizarán; no hay corrección autorizada.
+No se congelan módulos compartidos ni se altera proteína/ciclo/avisos por mover
+sus utilidades de entrenamiento. La frontera incluye llamadores inventariados.
+
+## Plan 003 preparado — 2026-10-16
+
+Alcance aprobado mediante «si». Plan, research, validación, 24 tareas y analyze
+preparados en specs/003-entrenamiento, con once grupos de pins y tres recorridos
+Chromium previstos. El selector existente admite 003; manifiesto inicial con
+21 pending y tests vacíos. G-PIN bloquea la extracción hasta verificar original.
+Plan/tareas/revisión pendientes de aprobación; sin implementación iniciada.
+
+
+## Ejecución 003 — 2026-10-17
+
+Baseline b0fec02 y extracciones b69104f, a5412b8, 973ed8b, 6c8d3f8, con
+checkpoints completos por entrega. Cierre local: 242 pruebas Node, 6 Chromium,
+21/21 contratos de entrenamiento y datos; límites de capas y hashes comprobados.
+TRAIN-001 reproducido; TRAIN-002/003 conservados. CI 003 configurado, sin
+resultado remoto observado. T025 bloquea G-CLOSE: Docker falla al abrir el socket
+de inferencia y no permite renovar RLS. No se corrigen políticas ni se restaura
+evidencia invalidada. KD-002 sigue activa para las áreas restantes.
+
+
+## Verificación local 003 completa — 2026-10-17
+
+T025 resuelta al volver a responder Docker; RLS renovada 3/3 y fixture retirado.
+Gate 002 repetido íntegramente: 23/23 contratos. Los tres gates coinciden con
+el código actual: 001 21/21, 002 23/23, 003 21/21, 242 Node, 6 Chromium y build
+correcto. Converge local sin gaps; 25 tareas completadas y cuerpo de PR preparado.
+M4 aún requiere revisión e integración por el propietario; KD-002 sigue activa
+para el resto del proyecto. [Resumen final](../../specs/003-entrenamiento/evidence/final.json).

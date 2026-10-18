@@ -1,0 +1,60 @@
+{
+  "status": "local_verification_complete_pending_owner_review_and_remote_integration",
+  "generatedAt": "2026-10-18T02:31:15.241Z",
+  "codeRevision": "1e7733cb28f068ac45e43929e310988a2ebfe9d3",
+  "sourceHash": "46d54704c21b886acf6fca820d790862b09c21d2857f1d224c87b30626ad3a01",
+  "sourceHashEncoding": "git ls-files src ordered names and current bytes; same hash in all three gates",
+  "node": "v24.21.0",
+  "nodeTests": 242,
+  "nodePassed": 242,
+  "browserPassed": 6,
+  "rlsPassed": 3,
+  "rlsCleanupPassed": true,
+  "rlsGeneratedAt": "2026-10-18T02:29:42.814Z",
+  "gates": [
+    {
+      "spec": "001-datos",
+      "generatedAt": "2026-10-18T02:16:14.301Z",
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      "executedResults": 188,
+      "passed": true
+    },
+    {
+      "spec": "002-identidad-fotos",
+      "generatedAt": "2026-10-18T02:30:47.827Z",
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 23
+      },
+      "executedResults": 191,
+      "passed": true
+    },
+    {
+      "spec": "003-entrenamiento",
+      "generatedAt": "2026-10-18T02:15:25.545Z",
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      "executedResults": 188,
+      "passed": true
+    }
+  ],
+  "pinsVerified": 11,
+  "previousPinsVerified": 11,
+  "buildPassed": true,
+  "remoteCI": "not_observed",
+  "published": false,
+  "deployed": false,
+  "limitations": [
+    "TRAIN-001: old user timer response overwrites new user timer; reproduced and preserved",
+    "TRAIN-002: guided duration counts ticks; persisted timer uses elapsed wall time",
+    "TRAIN-003: timer adds minutes; guided exit replaces only with a greater duration"
+  ]
+}

@@ -23,6 +23,16 @@ jobs:
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:sdd:complete
+      - run: pnpm run test:sdd:complete --spec=003-entrenamiento
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: evidencia-sdd-003
+          path: |
+            test-results/sdd-003-entrenamiento-evidence.json
+            test-results/sdd-003-entrenamiento-pilot.tap
+            test-results/sdd-003-entrenamiento-browser.json
+          if-no-files-found: ignore
 
   rls-and-sdd-002:
     runs-on: ubuntu-latest

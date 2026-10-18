@@ -1,3 +1,4 @@
+import { saveTrainingRoutine, appendRoutineTemplates } from "./training-routines.js";
 import React, { useEffect, useMemo, useState } from "react";
 import { CATALOG, CATALOG_CATS, EXERCISE_PRESETS, MUSCLES, round1, scaleFood, uid } from "./FitTrack.jsx";
 import { PLACES, ROUTINE_TEMPLATES, WARMUP, routinePlace, templateToAppRoutine } from "./fase1Config.js";
@@ -318,16 +319,11 @@ export default function LibraryScreen({ foods, setFoods, recipes, setRecipes, ro
     setOpen(null);
   };
   const saveRoutine = (data) => {
-    setRoutines((current) => open && open !== "nuevo"
-      ? current.map((routine) => routine.id === open ? { ...routine, ...data } : routine)
-      : [...current, { id: uid(), ...data }]);
+    setRoutines((current) => saveTrainingRoutine(current, open, data, uid));
     toast(`Rutina «${data.name}» guardada`);
     setOpen(null);
   };
-  const loadTemplates = () => setRoutines((current) => {
-    const have = new Set(current.map((r) => r.name));
-    return [...current, ...ROUTINE_TEMPLATES.filter((t) => !have.has(t.name)).map((t) => templateToAppRoutine(t, uid))];
-  });
+  const loadTemplates = () => setRoutines((current) => appendRoutineTemplates(current, ROUTINE_TEMPLATES, templateToAppRoutine, uid));
 
   const counts = { mis: foods.length, catalogo: CATALOG.length, recetas: recipes.length, rutinas: routines.length };
   const detail = (() => {

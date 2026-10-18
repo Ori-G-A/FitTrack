@@ -1,5 +1,7 @@
+import { replaceExerciseSets, registerTrainingSet } from "./training-records.js";
 import React, { useEffect, useMemo, useState } from "react";
-import { canonExercise, nextSetAdvice, RPE_STEPS } from "./app-utils.js";
+import { canonExercise } from "./training-metrics.js";
+import { nextSetAdvice, RPE_STEPS } from "./training-advice.js";
 
 // Una serie cuenta como registrada cuando tiene repeticiones: el modelo de datos
 // ya crea las series vacias al cargar la rutina, asi que "pendiente" y "hecha"
@@ -71,11 +73,11 @@ export default function SessionScreen({ exercises, writeExercises, onExit, lastP
 
   if (!exercise || !draft) return null;
 
-  const patchSets = (nextSets) => writeExercises(exercises.map((e, i) => (i === index ? { ...e, sets: nextSets } : e)));
+  const patchSets = (nextSets) => writeExercises(replaceExerciseSets(exercises, index, nextSets));
 
   const register = () => {
     if (!targetSet) return;
-    patchSets(sets.map((s) => (s.id === targetSet.id ? { ...s, reps: String(draft.reps), kg: draft.kg ? String(draft.kg) : "", rpe: draft.rpe } : s)));
+    patchSets(registerTrainingSet(sets, targetSet.id, draft));
     setAdvice(editingSetId ? null : nextSetAdvice({ rpe: draft.rpe, targetRpe: exercise.targetRpe, kg: draft.kg, muscle: exercise.primary }));
     setEditingSetId(null);
   };
