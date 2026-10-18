@@ -118,33 +118,33 @@ corregidos. Se revisarán al caracterizar, antes de extraer y en converge.
 ## Traceability
 
 Una fila por requisito y escenario. Los nombres previstos de prueba y tareas
-se definen en el plan propuesto y validation-plan.md; no hay cobertura
-ejecutada declarada para 003.
+se definen en el plan aprobado y validation-plan.md. E0–E4 verificadas;
+la matriz ejecutable de traceability.json incluye además Chromium y arquitectura.
 
 | ID | Historia | Resultado | Archivo :: prueba | Tarea | Estado |
 | --- | --- | --- | --- | --- | --- |
-| FR-001 | US1 | Contrato de entrenamiento preservado | test/training-records.test.js :: entrenamiento sesion por fecha orden y vaciado (prevista) | T002 | PENDING |
-| FR-002 | US1 | Contrato de entrenamiento preservado | test/training-records.test.js :: entrenamiento carga completa minima y calentamiento (prevista) | T003 | PENDING |
-| FR-003 | US1 | Contrato de entrenamiento preservado | test/training-records.test.js :: entrenamiento edicion series ejercicios y cardio (prevista) | T004 | PENDING |
-| FR-004 | US1 | Contrato de entrenamiento preservado | test/training-duration.test.js :: entrenamiento duracion manual eventos y limpieza (prevista) | T005 | PENDING |
-| FR-005 | US2 | Contrato de entrenamiento preservado | test/training-timer.test.js :: entrenamiento timer persistencia reloj y transiciones (prevista) | T006 | PENDING |
-| FR-006 | US2 | Contrato de entrenamiento preservado | test/training-guided.test.js :: entrenamiento sesion guiada registro correccion y salida (prevista) | T007 | PENDING |
-| FR-007 | US3 | Contrato de entrenamiento preservado | test/training-metrics.test.js :: entrenamiento metricas historial y fronteras (prevista) | T008 | PENDING |
-| FR-008 | US3 | Contrato de entrenamiento preservado | test/training-metrics.test.js :: entrenamiento consejo y ajustes conservan registros (prevista) | T009 | PENDING |
-| FR-009 | US3 | Contrato de entrenamiento preservado | test/training-plan.test.js :: entrenamiento semana cumplimiento y asignacion (prevista) | T010 | PENDING |
-| FR-010 | US1 | Contrato de entrenamiento preservado | test/training-routines.test.js :: entrenamiento rutinas plantillas y biblioteca (prevista) | T011 | PENDING |
-| FR-011 | US3 | Contrato de entrenamiento preservado | test/training-compatibility.test.js :: entrenamiento consumidores y previews compatibles (prevista) | T012 | PENDING |
-| US1-AS1 | US1 | Crear y vaciar una sesión conserva datos ajenos y orden observable. | validation-plan.md :: entrenamiento sesion por fecha orden y vaciado (previstas) | T002 | PENDING |
-| US1-AS2 | US1 | Cargar rutina completa, mínima y calentamiento conserva prescripción y repetición de carga. | validation-plan.md :: entrenamiento carga completa minima y calentamiento (previstas) | T003 | PENDING |
-| US1-AS3 | US1 | Editar series/cardio y guardar rutina conserva IDs, serie mínima y eliminación opcional. | validation-plan.md :: entrenamiento edicion series ejercicios y cardio; entrenamiento rutinas plantillas y biblioteca (previstas) | T004, T011 | PENDING |
-| US1-AS4 | US1 | Guardar duración por teclado, blur y espera conserva el valor y cleanup. | validation-plan.md :: entrenamiento duracion manual eventos y limpieza (previstas) | T005 | PENDING |
-| US2-AS1 | US2 | Reanudar timer con tiempo transcurrido, pausar, aplicar y reiniciar conserva persistencia. | validation-plan.md :: entrenamiento timer persistencia reloj y transiciones (previstas) | T006 | PENDING |
-| US2-AS2 | US2 | Registrar/corregir serie guiada, añadir extra y salir conserva duración y limpieza de foco. | validation-plan.md :: entrenamiento sesion guiada registro correccion y salida (previstas) | T007 | PENDING |
-| US3-AS1 | US3 | Consultar antecedentes y métricas con ceros, empates y fechas límite conserva resultados. | validation-plan.md :: entrenamiento metricas historial y fronteras (previstas) | T008 | PENDING |
-| US3-AS2 | US3 | Aplicar consejo/ajuste conserva series registradas y fronteras RPE. | validation-plan.md :: entrenamiento consejo y ajustes conservan registros (previstas) | T009 | PENDING |
-| US3-AS3 | US3 | Asignar rutina y consultar semana/cumplimiento conserva estados y semanas completas. | validation-plan.md :: entrenamiento semana cumplimiento y asignacion (previstas) | T010 | PENDING |
-| US3-AS4 | US3 | Abrir App y ambos previews conserva consumidores e inferencia recibida. | validation-plan.md :: entrenamiento consumidores y previews compatibles (previstas) | T012 | PENDING |
+| FR-001 | US1 | Contrato de entrenamiento preservado | test/training-records.test.js :: entrenamiento sesion por fecha orden y vaciado | T002 | COMPLETE |
+| FR-002 | US1 | Contrato de entrenamiento preservado | test/training-records.test.js :: entrenamiento carga completa minima y calentamiento | T003 | COMPLETE |
+| FR-003 | US1 | Contrato de entrenamiento preservado | test/training-records.test.js :: entrenamiento edicion series ejercicios y cardio | T004 | COMPLETE |
+| FR-004 | US1 | Contrato de entrenamiento preservado | test/training-duration.test.js :: entrenamiento duracion manual eventos y limpieza | T005 | COMPLETE |
+| FR-005 | US2 | Contrato de entrenamiento preservado | test/training-timer.test.js :: entrenamiento timer persistencia reloj y transiciones | T006 | COMPLETE |
+| FR-006 | US2 | Contrato de entrenamiento preservado | test/training-guided.test.js :: entrenamiento sesion guiada registro correccion y salida | T007 | COMPLETE |
+| FR-007 | US3 | Contrato de entrenamiento preservado | test/training-metrics.test.js :: entrenamiento metricas historial y fronteras | T008 | COMPLETE |
+| FR-008 | US3 | Contrato de entrenamiento preservado | test/training-metrics.test.js :: entrenamiento consejo y ajustes conservan registros | T009 | COMPLETE |
+| FR-009 | US3 | Contrato de entrenamiento preservado | test/training-plan.test.js :: entrenamiento semana cumplimiento y asignacion | T010 | COMPLETE |
+| FR-010 | US1 | Contrato de entrenamiento preservado | test/training-routines.test.js :: entrenamiento rutinas plantillas y biblioteca | T011 | COMPLETE |
+| FR-011 | US3 | Contrato de entrenamiento preservado | test/training-compatibility.test.js :: entrenamiento consumidores y previews compatibles | T012 | COMPLETE |
+| US1-AS1 | US1 | Crear y vaciar una sesión conserva datos ajenos y orden observable. | validation-plan.md :: entrenamiento sesion por fecha orden y vaciado | T002 | COMPLETE |
+| US1-AS2 | US1 | Cargar rutina completa, mínima y calentamiento conserva prescripción y repetición de carga. | validation-plan.md :: entrenamiento carga completa minima y calentamiento | T003 | COMPLETE |
+| US1-AS3 | US1 | Editar series/cardio y guardar rutina conserva IDs, serie mínima y eliminación opcional. | validation-plan.md :: entrenamiento edicion series ejercicios y cardio; entrenamiento rutinas plantillas y biblioteca | T004, T011 | COMPLETE |
+| US1-AS4 | US1 | Guardar duración por teclado, blur y espera conserva el valor y cleanup. | validation-plan.md :: entrenamiento duracion manual eventos y limpieza | T005 | COMPLETE |
+| US2-AS1 | US2 | Reanudar timer con tiempo transcurrido, pausar, aplicar y reiniciar conserva persistencia. | validation-plan.md :: entrenamiento timer persistencia reloj y transiciones | T006 | COMPLETE |
+| US2-AS2 | US2 | Registrar/corregir serie guiada, añadir extra y salir conserva duración y limpieza de foco. | validation-plan.md :: entrenamiento sesion guiada registro correccion y salida | T007 | COMPLETE |
+| US3-AS1 | US3 | Consultar antecedentes y métricas con ceros, empates y fechas límite conserva resultados. | validation-plan.md :: entrenamiento metricas historial y fronteras | T008 | COMPLETE |
+| US3-AS2 | US3 | Aplicar consejo/ajuste conserva series registradas y fronteras RPE. | validation-plan.md :: entrenamiento consejo y ajustes conservan registros | T009 | COMPLETE |
+| US3-AS3 | US3 | Asignar rutina y consultar semana/cumplimiento conserva estados y semanas completas. | validation-plan.md :: entrenamiento semana cumplimiento y asignacion | T010 | COMPLETE |
+| US3-AS4 | US3 | Abrir App y ambos previews conserva consumidores e inferencia recibida. | validation-plan.md :: entrenamiento consumidores y previews compatibles | T012 | COMPLETE |
 
 ## Aprobación
 
-El propietario respondió «si» a la propuesta concreta de alcance, autorizando preparar el plan técnico. Se aprueban los once FR AS-IS, diez escenarios y C-001/002/003. La instrucción posterior «continua» mantiene la preparación del plan en curso; no aprueba anticipadamente su contenido aún no presentado. Plan, tareas, analyze e implementación pendientes de aprobación.
+El propietario respondió «si» a la propuesta concreta de alcance, autorizando preparar el plan técnico. Se aprueban los once FR AS-IS, diez escenarios y C-001/002/003. La instrucción posterior «continua» mantiene la preparación del plan en curso; no aprueba anticipadamente su contenido aún no presentado. El propietario aprobó posteriormente plan, tareas, analyze y ejecución local mediante «adelante», registrado en 11e1fb1 y docs/sdd/approvals.md. La integración remota conserva su puerta.

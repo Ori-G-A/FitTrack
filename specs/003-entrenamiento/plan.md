@@ -93,4 +93,4 @@ TRAIN-001/002/003 permanecen AS-IS. Si un test descubre un comportamiento distin
 al supuesto, registrar evidencia y ajustar la descripción factual antes de extraer;
 cambiar conducta requiere CHANGE aprobado. Ningún ciclo de imports ni dependencia
 DOM transitiva se acepta en módulos puros. Los detalles de [validación](validation-plan.md)
-y [tareas](tasks.md) son parte del plan. Aprobación aún pendiente.
+y [tareas](tasks.md) son parte del plan. Plan y ejecución local aprobados; cierre pendiente de T025 y revisión de integración.

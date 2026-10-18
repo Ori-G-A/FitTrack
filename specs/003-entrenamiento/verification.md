@@ -1,4 +1,8 @@
-# Verificación documental — 003
+# Verificación — 003
+
+Estado actual, 2026-10-17: E0–E4 verificadas y E5 preparada. Gates 001/003
+verdes, 242/242 Node, 6/6 Chromium y build correcto. G-CLOSE bloqueada por
+Docker/RLS en T025. Las secciones fechadas conservan el historial de evidencia.
 
 Fecha: 2026-10-16. Alcance aprobado en d22d608. Plan/tareas aún propuestos.
 
@@ -82,3 +86,43 @@ de prueba heredada es la ruta de lectura del primer test textual de duración;
 conserva todas sus aserciones. Pins congelados intactos.
 Checkpoint: 239/239 Node, 6/6 Chromium, 21/21 contratos y build correcto.
 Evidencia: [e4.json](evidence/e4.json). T018/T019 completadas.
+
+
+## E5 — verificación final en curso, 2026-10-17
+
+Arquitectura y negativos: 3/3. Gates completos finales 001 y 003: 242/242 Node
+(182 tests de nivel superior), 6/6 Chromium, 21/21 IDs en cada spec; sin omitidos
+ni reintentos. Los 22 pins congelados siguen intactos. Build de E4 válido sobre
+el mismo código productivo; E5 solo añade pruebas, CI y documentación.
+
+CI conserva 001/002/RLS y añade gate completo 003 con artefactos. Esta es
+configuración local revisada, no un resultado remoto observado.
+
+La regeneración RLS falló antes de iniciar el fixture porque Docker estaba
+apagado. El arranque de Docker reveló un socket dockerInference inaccesible;
+la recuperación local quedó bloqueada por acceso al socket. Evidencia anterior invalidada por el
+runner, sin restaurarla ni presentar su resultado como vigente. T022–T024 aún
+no se consideran cerradas.
+
+
+## Resultado del cierre local — 2026-10-17
+
+Gates 001 y 003 verdes; gate 002 ejecutado y rechazado por «Evidencia RLS
+incompleta o entorno no coincidente». Su suite previa al rechazo pasó 242/242
+Node y 6/6 Chromium. El runner RLS invalidó la evidencia anterior; no se reutiliza.
+Build final E5 correcto. Resumen: [e5.json](evidence/e5.json).
+
+Docker Desktop falló antes de arrancar Linux al abrir su socket vacío de
+inferencia con error de acceso. Se intentó reinicio normal y apartarlo de forma
+reversible mediante Rename-Item y File.Move; ambos renombrados fallaron y no se
+creó backup. Se cerró la instancia fallida. No se cambiaron permisos, configuración,
+imágenes ni volúmenes. T025 registra recuperar el entorno y repetir RLS/002.
+
+Converge revisó contrato, límites, snapshots, IDs, consumidores, hashes, CI y
+exclusiones. No se detectó un gap de implementación adicional; G-CLOSE sigue
+bloqueada por T025. TRAIN-001/002/003 y KD-002 permanecen abiertos.
+[PR preparado](code-pr.md), sin publicación, CI remoto, merge ni despliegue de 003.
+
+Comprobación documental final: 56 enlaces locales existentes, 25 tareas únicas
+y grafo acíclico; git diff --check correcto. Archivos SQL, package.json y
+lockfile sin diferencias respecto a BASE. No se añadieron placeholders.

@@ -1,5 +1,12 @@
 # Preparación verificada de SDD
 
+Actualización 2026-10-17: los resultados siguientes documentan la preparación
+inicial. 001/002 ya se integraron; 003 ejecutó E0–E4 con baseline y checkpoints.
+Resultado actual: 242/242 Node, 6/6 Chromium, build correcto, 21/21 contratos
+en los gates finales 001 y 003. El gate 002 fue rechazado por evidencia RLS
+incompleta tras fallo de Docker local; cierre pendiente en T025.
+[Estado y evidencia actual de 003](../../specs/003-entrenamiento/verification.md).
+
 Revisión: 2026-10-15. Autorización: «aplica tus sugerencias y revisa el estado
 actual de lo aprobado». Estado de decisiones: [aprobaciones](approvals.md).
 Plan resultante: [001-datos](../../specs/001-datos/plan.md).

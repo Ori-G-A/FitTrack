@@ -23,6 +23,29 @@ cuya ubicación cambie. No se ha demostrado en runtime que la implementación
 futura cumpla estas decisiones.
 
 Resultado documental: 0 hallazgos CRITICAL abiertos del diseño propuesto.
-Puertas pendientes: aprobación de plan/tasks/revisión, PR documental según
-autorización, G-PIN ejecutado, implementación y converge. No son defectos
-ocultados ni pruebas aprobadas. Ninguna fila se promueve a complete en esta etapa.
+Puertas señaladas en la revisión de diseño inicial: aprobación, G-PIN,
+implementación y converge. Su resolución y estado actual se registran abajo.
+
+
+## Revisión de implementación — 2026-10-17
+
+E0–E4 ejecutadas en orden, con baseline anterior a producción y un commit
+por extracción. Las tres mutaciones se siguen detectando y los 22 archivos de
+pins conservan sus hashes. Nueva prueba de arquitectura examina imports
+transitivos y rechaza fixtures React, DOM, app-utils y Supabase. El hook acepta
+React y recibe puertos; TrainingScreen no depende transitivamente de FitTrack.
+
+Revisados snapshots/updaters e IDs: ejercicios y sets se crean fuera/dentro del
+updater donde lo hacía el original; guardar día crea ítems fuera y el ID de rutina
+dentro. No hay cambio de formato, prescripción, SQL, dependencias ni inferencia.
+El test textual de duración cambió solo su ruta. TRAIN-001/002/003 conservados.
+KD-002 continúa activa para áreas 004–006; no se declara adopción global completa.
+
+Verificación final ejecutada: gates 001/003 verdes; renovación RLS bloqueada.
+La primera ejecución RLS falló porque Docker estaba apagado; no afecta la evidencia
+funcional de E1–E4 y no se presenta como RLS verde. Sin CI remoto observado de 003.
+
+
+Converge final: implementación y arquitectura verificadas; gate 002 rechazado
+por evidencia RLS incompleta tras fallo del motor local. Gap explícito T025,
+que bloquea T022 y la aprobación de cierre. No hay excepción ni bypass del gate.

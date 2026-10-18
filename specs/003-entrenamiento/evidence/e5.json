@@ -1,0 +1,30 @@
+{
+  "stage": "e5",
+  "generatedAt": "2026-10-18T02:19:55.158Z",
+  "node": "v24.21.0",
+  "nodeTests": 242,
+  "nodePassed": 242,
+  "browserPassed": 6,
+  "counts": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 21
+  },
+  "pinsVerified": 11,
+  "previousPinsVerified": 11,
+  "buildPassed": true,
+  "sourceHash": "d1204fa9a53558121b9e3dde025eb7a4c7b03c3fdfb8b1ba34178bd3b7d7f331",
+  "sourceHashEncoding": "sorted src js/jsx/css names and current bytes",
+  "note": "Runtime evidence only; stage review recorded in verification.md",
+  "closure": "incomplete: identity RLS regression blocked by local Docker",
+  "dataGate": {
+    "complete": 21,
+    "pending": 0,
+    "partial": 0
+  },
+  "identityGate": {
+    "passed": false,
+    "reason": "Local Docker fails on inaccessible dockerInference socket; RLS evidence invalidated; complete 002 gate rejected"
+  },
+  "remoteCI": "not_observed"
+}

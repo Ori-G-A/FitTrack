@@ -1,6 +1,6 @@
 # Decisiones técnicas — 003
 
-Estado: decisiones propuestas bajo el alcance aprobado; sujetas al plan.
+Estado: decisiones adoptadas mediante el plan aprobado; E1–E4 verificadas.
 
 | ID | Decisión | Razón y alternativa descartada |
 | --- | --- | --- |

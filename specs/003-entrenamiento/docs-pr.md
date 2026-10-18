@@ -1,6 +1,7 @@
 # PR documental preparado — 003
 
-Estado: contenido propuesto; no publicado ni aprobado como plan.
+Estado: cuerpo histórico de propuesta; plan aprobado y ejecución local autorizada.
+No se publicó PR documental independiente. La entrega final se describe en code-pr.md.
 Título: Define el plan de entrenamiento con contratos originales y extracción incremental.
 
 La coordinación de sesiones, timer y rutinas sigue mezclada con la presentación.

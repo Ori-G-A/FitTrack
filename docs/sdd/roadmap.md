@@ -1,5 +1,11 @@
 # Roadmap de adopción SDD
 
+Estado actual, 2026-10-17: PATCH 1.0.2 y 001/002 integradas previamente.
+003 tiene alcance/plan/ejecución local aprobados, baseline fijada y E1–E4
+verificadas. Gates finales 001/003 verdes; cierre M4 pendiente de RLS/002 por
+fallo local de Docker y de revisión/integración. Los registros siguientes
+conservan la evolución anterior. [Verificación 003](../../specs/003-entrenamiento/verification.md).
+
 Estado: constitución y comienzo por 001-datos aprobados el 2026-10-14;
 fechas y estimaciones continúan siendo tentativas.
 Gobierno: [constitución](../../.specify/memory/constitution.md).
@@ -199,3 +205,14 @@ preparados en specs/003-entrenamiento, con once grupos de pins y tres recorridos
 Chromium previstos. El selector existente admite 003; manifiesto inicial con
 21 pending y tests vacíos. G-PIN bloquea la extracción hasta verificar original.
 Plan/tareas/revisión pendientes de aprobación; sin implementación iniciada.
+
+
+## Ejecución 003 — 2026-10-17
+
+Baseline b0fec02 y extracciones b69104f, a5412b8, 973ed8b, 6c8d3f8, con
+checkpoints completos por entrega. Cierre local: 242 pruebas Node, 6 Chromium,
+21/21 contratos de entrenamiento y datos; límites de capas y hashes comprobados.
+TRAIN-001 reproducido; TRAIN-002/003 conservados. CI 003 configurado, sin
+resultado remoto observado. T025 bloquea G-CLOSE: Docker falla al abrir el socket
+de inferencia y no permite renovar RLS. No se corrigen políticas ni se restaura
+evidencia invalidada. KD-002 sigue activa para las áreas restantes.

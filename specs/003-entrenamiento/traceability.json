@@ -1,6 +1,6 @@
 {
   "spec": "003-entrenamiento",
-  "note": "Pins ejecutados sobre src original; el gate completo debe verificar nuevamente todos los resultados. Baseline y hashes se registran únicamente después del gate verde.",
+  "note": "Pins ejecutados y congelados sobre src original en b0fec02; E1–E4 verificados. Cierre incluye arquitectura, negativos y verificación permanente de hashes.",
   "requirements": [
     {
       "id": "FR-001",
@@ -146,7 +146,10 @@
       "status": "complete",
       "tests": [
         "entrenamiento consumidores y previews compatibles",
-        "entrenamiento navegador biblioteca y plan"
+        "entrenamiento navegador biblioteca y plan",
+        "entrenamiento capas puras y coordinacion sin ciclos",
+        "entrenamiento arquitectura detecta React DOM y cliente transitivos",
+        "entrenamiento conserva los pins fijados antes de extraer"
       ],
       "plannedTests": [
         "entrenamiento consumidores y previews compatibles"
@@ -289,7 +292,10 @@
       "status": "complete",
       "tests": [
         "entrenamiento consumidores y previews compatibles",
-        "entrenamiento navegador biblioteca y plan"
+        "entrenamiento navegador biblioteca y plan",
+        "entrenamiento capas puras y coordinacion sin ciclos",
+        "entrenamiento arquitectura detecta React DOM y cliente transitivos",
+        "entrenamiento conserva los pins fijados antes de extraer"
       ],
       "plannedTests": [
         "entrenamiento consumidores y previews compatibles"

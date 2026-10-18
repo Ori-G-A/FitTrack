@@ -11,9 +11,9 @@ Referencia: [spec](spec.md) y [survey](../../docs/sdd/entrenamiento-survey.md).
 - [x] Hallazgos preservados y exclusiones explícitos.
 - [x] Separación entre aprobación de alcance y de plan.
 - [x] Propietario aprueba alcance y C-001/002/003 mediante «si», 2026-10-16.
-- [x] Plan propuesto define fronteras, pins, pruebas y tareas; pendiente de aprobación.
-- [ ] Caracterización ejecutada sobre original antes de transformar.
-- [ ] Matriz con nombres exactos y evidencia ejecutada completa.
+- [x] Plan aprobado define fronteras, pins, pruebas y tareas.
+- [x] Caracterización ejecutada sobre original antes de transformar.
+- [x] Matriz con nombres exactos y evidencia ejecutada completa.
 
-La matriz PENDING es intencional en esta etapa documental; bloquea presentar
-un PR de código, no preparar la propuesta de alcance.
+E0 verificada y fijada en b0fec02; E1–E4 ejecutadas con checkpoints completos.
+El cierre conjunto y converge se documentan en verification.md.
