@@ -18,3 +18,7 @@ Riesgos: diferencias de NaN/Infinity, cadenas/negativos, redondeo antes de umbra
 orden estable con fechas iguales y componentes montados. Se cubren explícitamente
 en E0. Los controles de reloj no reemplazan fecha local por UTC. Extraer handlers
 no convierte snapshots persistidos en referencias a alimentos editables.
+
+R-008 (E1): round1 y scaleFood tienen consumidores compartidos inventariados
+y expresiones sin E/S. Se extraen a nutrition-numbers.js para que los nuevos
+modelos puedan usarlos sin importar FitTrack; fachada original conservada.
