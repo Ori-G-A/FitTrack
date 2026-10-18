@@ -252,3 +252,10 @@ runtime nuevas. Alcance y tres aclaraciones pendientes antes del plan.
 Respuesta explícita «Aprobar alcance y las tres aclaraciones». C-001/002/003
 resueltas en la spec; siguiente etapa: plan técnico, tareas y revisión cruzada.
 NUTR-001/002/003 se preservan AS-IS, con reproducción pendiente en E0.
+
+## Plan 004 preparado — 2026-10-18
+
+[Plan](../../specs/004-nutricion-objetivos/plan.md), validación, research, 28 tareas
+y analyze propuestos. 16 grupos de pins y tres recorridos Chromium; E0 exige
+31 contratos completos sobre original antes de E1–E4. No hay código ni pruebas
+runtime nuevos. Plan/tareas/revisión y ejecución local pendientes de aprobación.

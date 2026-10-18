@@ -137,43 +137,43 @@ La aprobación autoriza preparar el plan técnico. No aprueba su ejecución anti
 
 ## Traceability
 
-Una fila por FR y escenario. Pruebas/tareas concretas se definirán al aprobar
-el alcance y preparar el plan. PENDING es estado real de esta etapa documental;
+Una fila por FR y escenario. Pruebas/tareas concretas propuestas en el
+[plan de validación](validation-plan.md) y [tareas](tasks.md). PENDING es estado real de esta etapa documental;
 el manifiesto no usa nombres de pruebas inexistentes como evidencia ejecutada.
 
 | ID | Historia | Resultado | Prueba | Tarea | Estado |
 | --- | --- | --- | --- | --- | --- |
-| FR-001 | US1 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-002 | US1 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-003 | US1 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-004 | US1 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-005 | US1 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-006 | US1 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-007 | US2 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-008 | US2 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-009 | US2 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-010 | US2 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-011 | US3 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-012 | US3 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-013 | US3 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-014 | US3 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-015 | US3 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| FR-016 | US3 | Preservar contrato observado | Pendiente de pin 004 | Se define en plan | PENDING |
-| US1-AS1 | US1 | FR-001, FR-002 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US1-AS2 | US1 | FR-003 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US1-AS3 | US1 | FR-004 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US1-AS4 | US1 | FR-005 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US1-AS5 | US1 | FR-006 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US2-AS1 | US2 | FR-007 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US2-AS2 | US2 | FR-008 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US2-AS3 | US2 | FR-009 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US2-AS4 | US2 | FR-010 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US3-AS1 | US3 | FR-011 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US3-AS2 | US3 | FR-012 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US3-AS3 | US3 | FR-013 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US3-AS4 | US3 | FR-014 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US3-AS5 | US3 | FR-015 | Pendiente de pin 004 | Se define en plan | PENDING |
-| US3-AS6 | US3 | FR-016 | Pendiente de pin 004 | Se define en plan | PENDING |
+| FR-001 | US1 | Preservar contrato observado | nutricion catalogo y migracion conservan valores y unidades | T002 | PENDING |
+| FR-002 | US1 | Preservar contrato observado | nutricion alimentos conservan crud conversiones orden y deduplicacion | T003 | PENDING |
+| FR-003 | US1 | Preservar contrato observado | nutricion recetas conservan ingredientes porciones y snapshots | T004 | PENDING |
+| FR-004 | US1 | Preservar contrato observado | nutricion busqueda conserva fuentes limites recientes y navegacion | T005 | PENDING |
+| FR-005 | US1 | Preservar contrato observado | nutricion cantidad conserva validacion escalado guardado y retorno | T006 | PENDING |
+| FR-006 | US1 | Preservar contrato observado | nutricion diario nutricional conserva totales grupos fechas y borrado | T007 | PENDING |
+| FR-007 | US2 | Preservar contrato observado | nutricion proteina conserva clamps reparto etiquetas y redondeos | T008 | PENDING |
+| FR-008 | US2 | Preservar contrato observado | nutricion objetivos conservan referencia actividad direccion y sugerencia | T009 | PENDING |
+| FR-009 | US2 | Preservar contrato observado | nutricion objetivos conservan edicion efecto automatico y montaje | T010 | PENDING |
+| FR-010 | US2 | Preservar contrato observado | nutricion adherencia conserva ventana dias registrados y umbral | T011 | PENDING |
+| FR-011 | US3 | Preservar contrato observado | nutricion alertas conservan mantenimiento proteina y otras metricas | T012 | PENDING |
+| FR-012 | US3 | Preservar contrato observado | nutricion metricas conservan series medias ventanas y macros | T013 | PENDING |
+| FR-013 | US3 | Preservar contrato observado | nutricion ritmo conserva guardas ventana limites y redondeos | T014 | PENDING |
+| FR-014 | US3 | Preservar contrato observado | nutricion ritmo conserva aplicar descartar snapshot y deshacer | T015 | PENDING |
+| FR-015 | US3 | Preservar contrato observado | nutricion real esperado conserva ancla direccion y proyeccion | T016 | PENDING |
+| FR-016 | US3 | Preservar contrato observado | nutricion consumidores y previews conservan contratos y fachadas | T017 | PENDING |
+| US1-AS1 | US1 | FR-001, FR-002 | nutricion catalogo y migracion conservan valores y unidades; nutricion alimentos conservan crud conversiones orden y deduplicacion | T002, T003 | PENDING |
+| US1-AS2 | US1 | FR-003 | nutricion recetas conservan ingredientes porciones y snapshots | T004 | PENDING |
+| US1-AS3 | US1 | FR-004 | nutricion busqueda conserva fuentes limites recientes y navegacion | T005 | PENDING |
+| US1-AS4 | US1 | FR-005 | nutricion cantidad conserva validacion escalado guardado y retorno | T006 | PENDING |
+| US1-AS5 | US1 | FR-006 | nutricion diario nutricional conserva totales grupos fechas y borrado | T007 | PENDING |
+| US2-AS1 | US2 | FR-007 | nutricion proteina conserva clamps reparto etiquetas y redondeos | T008 | PENDING |
+| US2-AS2 | US2 | FR-008 | nutricion objetivos conservan referencia actividad direccion y sugerencia | T009 | PENDING |
+| US2-AS3 | US2 | FR-009 | nutricion objetivos conservan edicion efecto automatico y montaje | T010 | PENDING |
+| US2-AS4 | US2 | FR-010 | nutricion adherencia conserva ventana dias registrados y umbral | T011 | PENDING |
+| US3-AS1 | US3 | FR-011 | nutricion alertas conservan mantenimiento proteina y otras metricas | T012 | PENDING |
+| US3-AS2 | US3 | FR-012 | nutricion metricas conservan series medias ventanas y macros | T013 | PENDING |
+| US3-AS3 | US3 | FR-013 | nutricion ritmo conserva guardas ventana limites y redondeos | T014 | PENDING |
+| US3-AS4 | US3 | FR-014 | nutricion ritmo conserva aplicar descartar snapshot y deshacer | T015 | PENDING |
+| US3-AS5 | US3 | FR-015 | nutricion real esperado conserva ancla direccion y proyeccion | T016 | PENDING |
+| US3-AS6 | US3 | FR-016 | nutricion consumidores y previews conservan contratos y fachadas | T017 | PENDING |
 
 ## Aprobación
 
