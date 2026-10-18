@@ -49,3 +49,13 @@ funcional de E1–E4 y no se presenta como RLS verde. Sin CI remoto observado de
 Converge final: implementación y arquitectura verificadas; gate 002 rechazado
 por evidencia RLS incompleta tras fallo del motor local. Gap explícito T025,
 que bloquea T022 y la aprobación de cierre. No hay excepción ni bypass del gate.
+
+
+## Converge local cerrado — 2026-10-17
+
+T025 resuelta: Docker responde; RLS renovada 3/3 con limpieza confirmada y
+gate 002 completo 23/23. Los reportes 001/002/003 coinciden con el hash del
+código actual, sin pruebas omitidas/reintentadas. Se conservan 22 hashes de pins.
+No quedan gaps de implementación para 003. Los riesgos TRAIN están preservados
+y KD-002 sigue para áreas restantes. Revisión del propietario, PR e integración
+remota pendientes; ninguna aprobación nueva de producto o despliegue inferida.

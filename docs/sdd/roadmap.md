@@ -2,8 +2,8 @@
 
 Estado actual, 2026-10-17: PATCH 1.0.2 y 001/002 integradas previamente.
 003 tiene alcance/plan/ejecución local aprobados, baseline fijada y E1–E4
-verificadas. Gates finales 001/003 verdes; cierre M4 pendiente de RLS/002 por
-fallo local de Docker y de revisión/integración. Los registros siguientes
+verificadas. E5 y RLS renovada también verificadas: gates 001/002/003 verdes.
+Cierre M4 pendiente de revisión del propietario e integración remota. Los registros siguientes
 conservan la evolución anterior. [Verificación 003](../../specs/003-entrenamiento/verification.md).
 
 Estado: constitución y comienzo por 001-datos aprobados el 2026-10-14;
@@ -216,3 +216,13 @@ TRAIN-001 reproducido; TRAIN-002/003 conservados. CI 003 configurado, sin
 resultado remoto observado. T025 bloquea G-CLOSE: Docker falla al abrir el socket
 de inferencia y no permite renovar RLS. No se corrigen políticas ni se restaura
 evidencia invalidada. KD-002 sigue activa para las áreas restantes.
+
+
+## Verificación local 003 completa — 2026-10-17
+
+T025 resuelta al volver a responder Docker; RLS renovada 3/3 y fixture retirado.
+Gate 002 repetido íntegramente: 23/23 contratos. Los tres gates coinciden con
+el código actual: 001 21/21, 002 23/23, 003 21/21, 242 Node, 6 Chromium y build
+correcto. Converge local sin gaps; 25 tareas completadas y cuerpo de PR preparado.
+M4 aún requiere revisión e integración por el propietario; KD-002 sigue activa
+para el resto del proyecto. [Resumen final](../../specs/003-entrenamiento/evidence/final.json).

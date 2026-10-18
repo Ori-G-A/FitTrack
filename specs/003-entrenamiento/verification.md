@@ -1,8 +1,10 @@
 # Verificación — 003
 
-Estado actual, 2026-10-17: E0–E4 verificadas y E5 preparada. Gates 001/003
-verdes, 242/242 Node, 6/6 Chromium y build correcto. G-CLOSE bloqueada por
-Docker/RLS en T025. Las secciones fechadas conservan el historial de evidencia.
+Estado actual, 2026-10-17: verificación local E0–E5 completa. Gates 001/002/003
+verdes, 242/242 Node, 6/6 Chromium, 3/3 RLS reales con cleanup y build correcto.
+Los tres gates corresponden al mismo hash de src. T025 resuelta. Revisión del
+propietario e integración pendientes. [Resumen final](evidence/final.json).
+Las secciones fechadas conservan el historial de evidencia.
 
 Fecha: 2026-10-16. Alcance aprobado en d22d608. Plan/tareas aún propuestos.
 
@@ -126,3 +128,33 @@ bloqueada por T025. TRAIN-001/002/003 y KD-002 permanecen abiertos.
 Comprobación documental final: 56 enlaces locales existentes, 25 tareas únicas
 y grafo acíclico; git diff --check correcto. Archivos SQL, package.json y
 lockfile sin diferencias respecto a BASE. No se añadieron placeholders.
+
+
+## Verificación local completa — 2026-10-17
+
+El motor Docker volvió a responder al retomar el trabajo. Se repitió
+pnpm test:rls sobre un fixture nuevo: 3 contratos reales aprobados y cleanup
+confirmado. La consulta filtrada de contenedores no encontró restos del fixture.
+No hubo cambios adicionales de configuración, permisos ni archivos de Docker.
+Evidencia sanitizada: [rls-local.json](evidence/rls-local.json).
+
+Después se repitió íntegramente pnpm run test:sdd:complete
+--spec=002-identidad-fotos: 242/242 Node, 6/6 Chromium, 3/3 RLS; 23/23 IDs.
+Se contrastaron los reportes 001/002/003 con git ls-files src y sus bytes
+actuales: mismo hash en los tres, todos los resultados aprobados, sin
+omitidos ni reintentos. 001 y 003 conservan 21/21 IDs cada una.
+Build final correcto y 22 hashes congelados intactos.
+
+Converge: requisitos, historias, escenarios, límites de capas, consumidores,
+snapshots/updaters, IDs, datos persistidos, fórmulas y exclusiones revisados.
+T025 resuelta; T022/T023/T024 completadas en su alcance local. Ningún gap de
+implementación abierto. TRAIN-001/002/003 y KD-002 se conservan como se aprobó.
+Evidencia de cierre: [final.json](evidence/final.json), sin sobrescribir baseline
+ni el checkpoint E5 anterior que documenta el fallo.
+
+Entrega preparada para revisión del propietario: [cuerpo de PR](code-pr.md).
+No hay PR publicado ni CI remoto observado para 003; no se ejecutó merge ni
+despliegue. El resultado no cierra M4 integrado ni la adopción global de SDD.
+
+Comprobación documental de cierre: 72 enlaces locales existentes, 25 tareas
+únicas completadas y grafo acíclico; evidencia RLS archivada sin credenciales.

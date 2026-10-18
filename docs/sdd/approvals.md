@@ -165,3 +165,14 @@ para ejecutar localmente pins y extracciones. Se autoriza E0–E5 y se conserva
 G-PIN antes de producción. La etapa documental queda preparada en a74651d;
 esta autorización permite ejecutar localmente antes del merge documental.
 No autoriza despliegues ni nuevas correcciones CHANGE.
+
+
+## Continuación de ejecución 003 — 2026-10-17
+
+El propietario indicó «continua» después del checkpoint con Docker/RLS
+bloqueado. Se retomó T025 dentro de la ejecución E0–E5 ya autorizada: Docker
+volvió a responder, se renovó RLS con limpieza y el gate 002 pasó 23/23.
+La verificación local está completa; [evidencia final](../../specs/003-entrenamiento/evidence/final.json).
+Esta continuación no se interpreta como aceptación final de implementación
+ni autorización de publicación, fusión o despliegue. El propietario dispone
+del [cuerpo de PR preparado](../../specs/003-entrenamiento/code-pr.md) para revisar.

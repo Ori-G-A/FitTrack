@@ -2,7 +2,7 @@
 
 Estado: APROBADAS para ejecución local. [Plan](plan.md),
 [validación](validation-plan.md), [analyze](analyze.md).
-E0 completada el 2026-10-17; E1–E4 y sus checkpoints completados; E5 preparada; cierre bloqueado por Docker/RLS (T025).
+E0–E5 y T025 verificadas localmente el 2026-10-17. Revisión del propietario e integración remota pendientes.
 
 | ID | Historia y contrato | Resultado/tarea | Depende de | Estado |
 | --- | --- | --- | --- | --- |
@@ -27,10 +27,10 @@ E0 completada el 2026-10-17; E1–E4 y sus checkpoints completados; E5 preparada
 | T019 | US1/US2/US3; todos los FR/escenarios | Suite/build/Chromium y hashes tras cada entrega; registrar resultados reales y repetir cualquier checkpoint fallido íntegro. | T018 | Completada |
 | T020 | US3; FR-011, US3-AS4; capas de FR-001–010 | Comprobar límites transitivos y fixtures negativos; revisar imports, wrappers y consumidores. | T018 | Completada |
 | T021 | US1/US2/US3; todos los FR/escenarios | Añadir gate completo 003 a CI; conservar 001/002/RLS. Revisar manifiesto contra pruebas realmente descubiertas. | T019,T020 | Completada |
-| T022 | US1/US2/US3; todos los FR/escenarios | Gate final 001/002/003 con evidencia válida; revisiones sin tests omitidos, build e inventario de diferencias. | T021,T025 | Bloqueada por T025 |
-| T023 | US1/US2/US3; todos los FR/escenarios | Converge contra spec/plan/constitución; añadir tareas si hay gaps, revisar TRAIN y KD-002 sin retirarla globalmente. | T022 | En curso; gap T025 registrado |
-| T024 | US1/US2/US3; todos los FR/escenarios | Preparar PR de código con evidencia, omisiones, orden de integración y rollback de código; no declarar merge/CI remoto sin observar. | T023 | Preparada; cierre condicionado a T022/T023 |
-| T025 | Regresión 002 / G-CLOSE | Recuperar arranque Docker local (socket de inferencia inaccesible), ejecutar RLS desechable con limpieza y repetir gate completo 002. Sin restaurar evidencia invalidada ni cambiar políticas. | T021 | Bloqueada por entorno local |
+| T022 | US1/US2/US3; todos los FR/escenarios | Gate final 001/002/003 con evidencia válida; revisiones sin tests omitidos, build e inventario de diferencias. | T021,T025 | Completada |
+| T023 | US1/US2/US3; todos los FR/escenarios | Converge contra spec/plan/constitución; añadir tareas si hay gaps, revisar TRAIN y KD-002 sin retirarla globalmente. | T022 | Completada |
+| T024 | US1/US2/US3; todos los FR/escenarios | Preparar PR de código con evidencia, omisiones, orden de integración y rollback de código; no declarar merge/CI remoto sin observar. | T023 | Completada |
+| T025 | Regresión 002 / G-CLOSE | Recuperar arranque Docker local (socket de inferencia inaccesible), ejecutar RLS desechable con limpieza y repetir gate completo 002. Sin restaurar evidencia invalidada ni cambiar políticas. | T021 | Completada |
 
 G-PIN bloquea T015–T024 hasta T014 verde. E1–E4 requieren cada una su checkpoint
 de grupo, suite y build antes de comenzar la siguiente; T019 consolida esa
@@ -44,3 +44,13 @@ pero valida imports reales tras las extracciones.
 - Dependencias acíclicas y puerta BASE anterior a producción.
 - Plan y analyze aprobados; autorización registrada en docs/sdd/approvals.md.
 - Converge añadirá T025 en adelante sin reescribir tareas completadas.
+
+
+## Cierre de T025 — 2026-10-17
+
+El motor Docker volvió a responder; no se aplicó ninguna reparación adicional
+de permisos ni archivos. RLS: 3/3 contratos reales, cleanup confirmado y cero
+contenedores del fixture restantes. Gate 002 repetido íntegramente: 23/23 IDs.
+T022 contrastó los tres gates contra el mismo hash de src; T023 cerró converge
+sin gaps de implementación; T024 entrega el cuerpo de PR local preparado.
+No se infiere aprobación del propietario para publicar, fusionar o desplegar.

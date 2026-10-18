@@ -16,4 +16,8 @@ Referencia: [spec](spec.md) y [survey](../../docs/sdd/entrenamiento-survey.md).
 - [x] Matriz con nombres exactos y evidencia ejecutada completa.
 
 E0 verificada y fijada en b0fec02; E1–E4 ejecutadas con checkpoints completos.
-El cierre conjunto y converge se documentan en verification.md.
+El cierre conjunto y converge están verificados en verification.md; revisión e integración pendientes.
+
+- [x] Gates finales 001/002/003 sobre el mismo hash de código.
+- [x] RLS real renovada y limpieza confirmada; T025 resuelta.
+- [x] Converge local sin gaps y cuerpo de PR preparado para el propietario.

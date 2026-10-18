@@ -1,6 +1,6 @@
 # Spec 003: entrenamiento
 
-Estado: ALCANCE APROBADO, 2026-10-16; plan técnico aprobado y E0 verificada.
+Estado: ALCANCE APROBADO, 2026-10-16; plan técnico aprobado y E0–E5 verificadas localmente; revisión e integración pendientes.
 Fecha: 2026-10-16. Constitución: [1.0.2](../../.specify/memory/constitution.md).
 Evidencia: [survey](../../docs/sdd/entrenamiento-survey.md).
 
@@ -100,7 +100,7 @@ La matriz ejecutable está en [traceability.json](traceability.json).
 
 ## Compatibilidad temporal
 
-FR-005 conserva el ciclo de carga timer que se caracterizará en TRAIN-001.
+FR-005 conserva el ciclo de carga timer reproducido en TRAIN-001.
 FR-006 conserva ticks (TRAIN-002); FR-005/006 conservan sumar frente a sustituir
 duración (TRAIN-003). Son límites observados, no garantías deseadas ni defectos
 corregidos. Se revisarán al caracterizar, antes de extraer y en converge.
