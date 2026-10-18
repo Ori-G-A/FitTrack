@@ -38,3 +38,13 @@ completa y el gate después de corregirlos; ninguna aserción BASE se relajó.
 Las tres mutaciones son detectadas y los negativos de trazabilidad pasan.
 TRAIN-001 reproducido; TRAIN-002/003 preservados. Sin modificaciones de src,
 SQL ni dependencias. E1–E5 pendientes; no hay PR/CI/merge remoto de 003.
+
+
+## E1 — 2026-10-17
+
+Extraídos training-metrics, training-advice, training-plan y fechas puras.
+FitTrack utiliza selectores de antecedentes/resumen; app-utils conserva APIs.
+Un primer checkpoint detectó addDays sin importar; se corrigió el import y se
+repitieron suite, Chromium y build completos. Resultado: 239/239 Node, 6/6
+Chromium, 21/21 contratos, build correcto; 22 hashes de pins intactos.
+Evidencia: [e1.json](evidence/e1.json). T015 completada; E2 pendiente.

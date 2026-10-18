@@ -1,3 +1,4 @@
+import { lastTrainingPerformance, trainingSummary } from "./training-metrics.js";
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
 import { deleteUserData, exportUserData, importUserData, loadUserData } from "./app-data-lifecycle.js";
@@ -1010,19 +1011,7 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
   // nombre canónico) en la sesión previa más reciente antes de esta fecha. Da el
   // punto de comparación para decidir repetir o subir carga a propósito, y de paso
   // deja un dato más comparable sesión a sesión para el seguimiento de RPE.
-  const lastPerformance = useMemo(() => {
-    const map = {};
-    [...workouts].filter((w) => w.date < date).sort((a, b) => a.date.localeCompare(b.date)).forEach((w) => {
-      w.exercises.forEach((e) => {
-        const best = e.sets.reduce((m, s) => {
-          const kg = Number(s.kg) || 0, reps = Number(s.reps) || 0;
-          return kg > 0 && kg >= (m?.kg || 0) ? { kg, reps, rpe: s.rpe || "" } : m;
-        }, null);
-        if (best) map[canonExercise(e.name)] = { ...best, date: w.date };
-      });
-    });
-    return map;
-  }, [workouts, date]);
+  const lastPerformance = useMemo(() => lastTrainingPerformance(workouts, date), [workouts, date]);
   // La sesion guiada no es otra pantalla: es otro modo de la misma, sobre los
   // mismos datos. Una serie con reps ya es una serie registrada.
   const [inSession, setInSession] = useState(false);
@@ -1144,10 +1133,7 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
   const resetT = () => { runRef.current = { startedAt: null, baseSec: 0 }; saveKey(userId, "timer", { running: false, startedAt: null, baseSec: 0 }); setTRun(false); setTSec(0); };
   const commitT = () => { const min = Math.round(tSec / 60); if (min > 0) writeSession({ durationMin: (session.durationMin || 0) + min }); resetT(); };
 
-  const totalVol = exercises.reduce((t, e) => t + e.sets.reduce((st, s) => st + (Number(s.reps) || 0) * (Number(s.kg) || 0), 0), 0);
-  const totalSets = exercises.reduce((t, e) => t + e.sets.length, 0);
-  const rpeVals = exercises.flatMap((e) => e.sets.map((s) => parseFloat(s.rpe)).filter((v) => v > 0));
-  const avgRpe = rpeVals.length ? rpeVals.reduce((a, b) => a + b, 0) / rpeVals.length : null;
+  const { totalVol, totalSets, avgRpe } = trainingSummary(exercises);
   const saveDayAsRoutine = () => {
     if (!exercises.length) return;
     const nm = window.prompt("Nombre de la rutina:", `Rutina ${date}`);
