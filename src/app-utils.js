@@ -119,26 +119,7 @@ export function weightTrendHighlight(weights = [], today = localISO(), windowDay
   };
 }
 
-export function proteinAdherence(nutrition = [], target, today = localISO(), days = 7) {
-  const goal = Number(target) || 0;
-  if (!goal) return null;
-  const since = addDays(today, -(days - 1));
-  const byDate = new Map();
-  nutrition
-    .filter((item) => item.date >= since && item.date <= today)
-    .forEach((item) => byDate.set(item.date, (byDate.get(item.date) || 0) + (Number(item.protein) || 0)));
-  if (byDate.size === 0) return null;
-  const logged = [...byDate.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([, grams]) => Math.round(grams));
-  // 90% del objetivo cuenta como dia cumplido: el pesaje de comida no da para mas precision.
-  return {
-    onTarget: logged.filter((grams) => grams >= goal * 0.9).length,
-    logged: logged.length,
-    days,
-    target: goal,
-    avg: Math.round(logged.reduce((sum, grams) => sum + grams, 0) / logged.length),
-    series: logged,
-  };
-}
+export { proteinAdherence } from "./nutrition-metrics.js";
 
 export function validateBackup(value, defaultGoals) {
   if (!isPlainObject(value)) throw new Error("La copia debe contener un objeto JSON");

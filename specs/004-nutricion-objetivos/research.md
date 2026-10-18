@@ -27,3 +27,8 @@ E3 / FR-014: ui-regressions inspeccionaba objetos inline de Diario. Se adapta
 a comprobar llamada y expresión trasladada en goals-operations, conservando
 la guarda sobre estado local y añadiendo enlace de undo. Los pins funcionales
 congelados de E0 no cambian; el harness solo adapta su ancla de mutación.
+
+R-009 (E4): los filtros de ventanas de alerts/macro14/nutDays7 permanecen en
+sus adaptadores para conservar incluso el momento de isoMinus por registro.
+La serie calórica y el conteo de entrenos reciben dateAt explícito y lo invocan
+en el mismo punto del bucle que BASE; dominio no importa reloj de navegador.

@@ -27,7 +27,7 @@ Estado: APROBADAS para ejecución local E0–E5 el 2026-10-18. [Plan](plan.md), 
 | T020 | US1/US2; FR-001/007/016; US1-AS1, US2-AS1, US3-AS6 | E1: catálogo/unidades/proteína y fachadas; checkpoint completo por entrega. | T019 | Completada |
 | T021 | US1; FR-001–006/016; US1-AS1–5, US3-AS6 | E2: modelos/operaciones alimentarias; integrar Biblioteca/Nutrición sin cambiar snapshots/updaters; checkpoint. | T020 | Completada |
 | T022 | US2/US3; FR-008/009/013/014/015/016; US2-AS2/3, US3-AS3–6 | E3: objetivos y acciones; callbacks de inferencia sin anticiparlos, efecto en Ajustes intacto; checkpoint. | T021 | Completada |
-| T023 | US2/US3; FR-010/011/012/016; US2-AS4, US3-AS1/2/6 | E4: métricas y consumidores; ventanas y avisos ajenos intactos; checkpoint. | T022 | Pendiente |
+| T023 | US2/US3; FR-010/011/012/016; US2-AS4, US3-AS1/2/6 | E4: métricas y consumidores; ventanas y avisos ajenos intactos; checkpoint. | T022 | Completada |
 | T024 | US3; FR-016; US3-AS6; capas de todos los FR | Prueba de arquitectura transitiva y negativos; APIs/consumidores, inventario de llamadas y revisión de diferencias. | T023 | Pendiente |
 | T025 | US1/US2/US3; todos los FR/escenarios | Añadir gate004 a CI conservando001/002/003 y RLS; contrastar manifiesto con resultados reales completos. | T024 | Pendiente |
 | T026 | US1/US2/US3; todos los FR/escenarios | G-CLOSE: renovar RLS desechable con limpieza, suite/build/Chromium y gates001/002/003/004 del mismo src; hashes congelados. | T025 | Pendiente |
