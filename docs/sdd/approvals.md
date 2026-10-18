@@ -204,3 +204,11 @@ El propietario indicó después «continua». Autoriza preparar survey/propuesta
 de la siguiente área del roadmap, 004-nutricion-objetivos. Se proponen 16 FR
 AS-IS y 15 escenarios con C-001/002/003 pendientes. No se interpreta como
 aprobación anticipada del alcance nuevo, su plan, código ni integración.
+
+## Alcance 004 aprobado — 2026-10-18
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a la petición
+concreta de aprobar 16 FR AS-IS, 15 escenarios y C-001/002/003. Se autoriza
+preparar plan, tareas y analyze. Se preservan diferencias numéricas y temporales
+y quedan fuera cambios clínicos y algoritmos de peso/ciclo. No se infiere
+aprobación del plan, ejecución local, publicación, integración ni despliegue.

@@ -246,3 +246,9 @@ runtime nuevas. Alcance y tres aclaraciones pendientes antes del plan.
 | NUTR-001 | Guardas numéricas distintas; amount > 0 no exige finitud y Biblioteca admite negativos en distintas entradas | Reproducir en E0; preservar AS-IS y reservar corrección para CHANGE |
 | NUTR-002 | Ventanas de métricas distintas; algunos filtros no excluyen registros futuros | Caracterizar y no unificar filtros al extraer |
 | NUTR-003 | AutoMacros depende del montaje/actualización de Ajustes, también en section datos | Caracterizar timing/cleanup; no trasladar a un efecto global sin CHANGE |
+
+## Alcance 004 aprobado — 2026-10-18
+
+Respuesta explícita «Aprobar alcance y las tres aclaraciones». C-001/002/003
+resueltas en la spec; siguiente etapa: plan técnico, tareas y revisión cruzada.
+NUTR-001/002/003 se preservan AS-IS, con reproducción pendiente en E0.

@@ -1,6 +1,6 @@
 # Spec 004: nutrición y objetivos
 
-Estado: ALCANCE PROPUESTO; no aprobado. Fecha: 2026-10-18.
+Estado: ALCANCE APROBADO; plan e implementación pendientes. Fecha: 2026-10-18.
 Constitución: [1.0.2](../../.specify/memory/constitution.md).
 Evidencia de código: [survey](../../docs/sdd/nutricion-objetivos-survey.md).
 BASE productiva: 2a7004277bd75d87fdf9746c90853b4c34eac044 (PR #9 integrado).
@@ -127,14 +127,13 @@ y en converge; una corrección requiere decisión CHANGE independiente.
 
 ## Clarificaciones
 
-Sesión propuesta: 2026-10-18. Las respuestas aún no se han recibido.
+Sesión: 2026-10-18. El propietario respondió «Aprobar alcance y las tres aclaraciones».
 
-- [NEEDS CLARIFICATION] C-001: preservar AS-IS y separar las correcciones NUTR; recomendación: sí, fijar primero la baseline sin endurecer validaciones ni homogeneizar fechas.
-- [NEEDS CLARIFICATION] C-002: incluir consumidores, métricas nutricionales y real/esperado; recomendación: sí, manteniendo fuera los algoritmos de peso/ciclo de 005 y las operaciones de datos/rutinas ya separadas.
-- [NEEDS CLARIFICATION] C-003: conservar fórmulas/textos actuales sin ratificarlos clínicamente y sin dependencias/datos externos; recomendación: sí.
+- C-001 resuelta: preservar AS-IS; correcciones NUTR requieren CHANGE separado.
+- C-002 resuelta: incluir consumidores, métricas y real/esperado; mantener fuera algoritmos de peso/ciclo de 005.
+- C-003 resuelta: conservar fórmulas/textos actuales sin ratificación clínica ni dependencias o datos externos.
 
-Estas decisiones bloquean aprobar el alcance y avanzar al plan técnico; no
-impiden verificar documentación. No hay implementación autorizada por este borrador.
+La aprobación autoriza preparar el plan técnico. No aprueba su ejecución anticipadamente.
 
 ## Traceability
 
@@ -178,7 +177,6 @@ el manifiesto no usa nombres de pruebas inexistentes como evidencia ejecutada.
 
 ## Aprobación
 
-La instrucción «continua» después de integrar 003 autoriza preparar la siguiente
-área y su propuesta. No se considera aprobación anticipada de estos requisitos
-ni del futuro plan. Alcance y C-001/002/003 pendientes; plan, tareas, analyze,
-implementación e integración de 004 no aprobados.
+El 2026-10-18 el propietario respondió «Aprobar alcance y las tres aclaraciones»
+a la propuesta de 16 FR AS-IS y 15 escenarios. Alcance y C-001/002/003 aprobados.
+Plan, tareas, analyze, implementación e integración sujetos a sus puertas posteriores.
