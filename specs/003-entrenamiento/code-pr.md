@@ -1,7 +1,8 @@
 # PR de código preparado — 003-entrenamiento
 
-Estado: verificación local completa; cuerpo preparado para el propietario.
-No publicado. Revisión, CI remoto e integración pendientes.
+Estado: verificación local completa; publicación e integración autorizadas.
+El propietario también autorizó el despliegue automático asociado. CI remoto
+y ejecución de la fusión pendientes; ver docs/sdd/approvals.md.
 Título: Separa entrenamiento preservando sesiones, rutinas y métricas.
 
 Train concentraba presentación, transformaciones de sesiones y cálculos de

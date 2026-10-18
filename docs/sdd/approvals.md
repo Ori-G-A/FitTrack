@@ -176,3 +176,15 @@ La verificación local está completa; [evidencia final](../../specs/003-entrena
 Esta continuación no se interpreta como aceptación final de implementación
 ni autorización de publicación, fusión o despliegue. El propietario dispone
 del [cuerpo de PR preparado](../../specs/003-entrenamiento/code-pr.md) para revisar.
+
+
+## Integración 003 autorizada — 2026-10-17
+
+El propietario indicó «continua e integra» tras la entrega local completa de
+003 en c0be838. Autoriza publicar la rama/PR e integrar la refactorización.
+Al consultar expresamente el efecto de Vercel sobre main, respondió
+«Autorizar integración y despliegue automático». La autorización sustituye
+para esta entrega la reserva anterior de apertura/fusión por el propietario.
+La fusión se ejecutará con ambos jobs CI aprobados y SHA de head comprobado.
+No se declara aún PR publicado, merge ni despliegue completado, y no se
+concede permiso permanente para futuras áreas.
