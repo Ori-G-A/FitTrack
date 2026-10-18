@@ -1,3 +1,4 @@
+export { applyAdjustments } from "./training-records.js";
 export { canonExercise, matchedLoadRpeTrend, epley, loadProgressHighlight } from "./training-metrics.js";
 export { RPE_STEPS, parseRpeTarget, nextSetAdvice } from "./training-advice.js";
 export { WEEK_ORDER, mondayOf, planWeek, planCompliance, weekNumber } from "./training-plan.js";
@@ -343,20 +344,3 @@ export function resolveTheme(pref, systemDark) {
 // dia" leido de las propias rutinas. Reasignar un dia escribe ese campo.
 // ponytail: una rutina por dia. Si algun dia hacen falta dos sesiones el mismo
 // dia, esto pasa a ser una lista y el resto del calculo no cambia.
-// Aplica un ajuste de sesion (quitar ejercicios y cambiar la carga de trabajo)
-// sobre los ejercicios del dia. Regla dura: una serie ya registrada no se toca
-// nunca; cambiarle el peso falsearia el historial de carga y de RPE, que es de
-// donde salen la progresion, los records y el aviso de fatiga.
-// `draft` es [{ id, kg, removed }].
-export function applyAdjustments(exercises = [], draft = []) {
-  const wanted = new Map(draft.map((d) => [d.id, d]));
-  return exercises
-    .filter((e) => !wanted.get(e.id)?.removed)
-    .map((e) => {
-      const target = wanted.get(e.id);
-      if (!target) return e;
-      const pending = (e.sets || []).some((s) => !(Number(s.reps) > 0));
-      if (!pending) return e;
-      return { ...e, sets: (e.sets || []).map((s) => (Number(s.reps) > 0 ? s : { ...s, kg: target.kg ? String(target.kg) : "" })) };
-    });
-}

@@ -1,3 +1,5 @@
+import { patchTrainingSession, createTrainingExercise, createTrainingExercises, appendTrainingExercises, editTrainingSet, addTrainingSet, deleteTrainingSet, deleteTrainingExercise, createTrainingCardio, deleteTrainingCardio } from "./training-records.js";
+import { minimalRoutineExercises, minimalRoutineMinutes, routineForDate, removeRoutineExercise, trainingSessionRoutineItems } from "./training-routines.js";
 import { lastTrainingPerformance, trainingSummary } from "./training-metrics.js";
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
@@ -1028,79 +1030,49 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
     return () => clearTimeout(timer);
   }, [durInput]); // eslint-disable-line
 
-  const writeSession = (patch) => {
-    setWorkouts((prev) => {
-      const cur = prev.find((w) => w.date === date);
-      const next = { ...(cur || { id: uid(), date, exercises: [], durationMin: 0, cardio: [] }), ...patch };
-      const empty = next.exercises.length === 0 && !next.durationMin && (!next.cardio || next.cardio.length === 0);
-      const others = prev.filter((w) => w.date !== date);
-      return empty ? others : [...others, next];
-    });
-  };
+  const writeSession = (patch) => setWorkouts((prev) => patchTrainingSession(prev, date, patch, uid));
 
   const toggleSec = (m) => setSecondary((s) => s.includes(m) ? s.filter((x) => x !== m) : [...s, m]);
   const applyPreset = (idx) => { if (idx === "") return; const p = EXERCISE_PRESETS[Number(idx)]; setName(p.name); setPrimary(p.primary); setSecondary(p.secondary); };
   const addExercise = () => {
     if (!name.trim()) return;
-    const ex = { id: uid(), name: name.trim(), primary, secondary: secondary.filter((m) => m !== primary), sets: [{ id: uid(), reps: "", kg: "", rpe: "" }] };
+    const ex = createTrainingExercise(name, primary, secondary, uid);
     writeSession({ exercises: [...exercises, ex] }); setName(""); setSecondary([]);
   };
   const addExercisesFromList = (list, addMin = 0) => {
-    const newEx = list.map((e) => ({
-      id: uid(), name: e.name,
-      primary: e.primary || guessPrimaryMuscle(e.name), secondary: e.secondary || [],
-      targetRpe: e.targetRpe || "", targetReps: e.targetReps != null ? String(e.targetReps) : "", notes: e.notes || "",
-      sets: Array.from({ length: Math.max(1, Number(e.targetSets) || 1) }, () => ({ id: uid(), reps: "", kg: "", rpe: "" })),
-    }));
-    setWorkouts((prev) => {
-      const cur = prev.find((w) => w.date === date) || { id: uid(), date, exercises: [], durationMin: 0, cardio: [] };
-      const next = { ...cur, exercises: [...cur.exercises, ...newEx], durationMin: (cur.durationMin || 0) + addMin };
-      const others = prev.filter((w) => w.date !== date);
-      return [...others, next];
-    });
+    const newEx = createTrainingExercises(list, uid);
+    setWorkouts((prev) => appendTrainingExercises(prev, date, newEx, addMin, uid));
   };
   const loadRoutine = (idx) => { if (idx === "") return; addExercisesFromList(routines[Number(idx)].exercises); };
   // Resuelve la versión mínima desde la rutina o, si no la tiene, desde la plantilla original.
-  const minimalFor = (r) => {
-    if (!r) return null;
-    if (r.minimal && r.minimal.exercises) return r.minimal.exercises;
-    const tpl = ROUTINE_TEMPLATES.find((t) => t.id === r.templateId || t.name === r.name);
-    if (tpl && tpl.minimalVersion) return tpl.minimalVersion.exercises.map((e) => ({ name: e.name, targetSets: e.sets, targetReps: e.reps }));
-    return null;
-  };
-  const minimalMin = (r) => {
-    if (r && r.minimal && r.minimal.durationMin) return r.minimal.durationMin;
-    const tpl = ROUTINE_TEMPLATES.find((t) => t.id === r.templateId || t.name === r.name);
-    return tpl && tpl.minimalVersion ? tpl.minimalVersion.durationMin : null;
-  };
+  const minimalFor = (r) => minimalRoutineExercises(r, ROUTINE_TEMPLATES);
+  const minimalMin = (r) => minimalRoutineMinutes(r, ROUTINE_TEMPLATES);
   const loadMinimal = (idx) => { if (idx === "") return; const list = minimalFor(routines[Number(idx)]); if (list) addExercisesFromList(list); };
   const loadWarmup = () => addExercisesFromList(WARMUP.exercises.map((w) => ({ name: w.name, targetReps: w.dose, targetSets: 1 })), WARMUP.durationMin);
   const routinesWithMin = routines.map((r, i) => ({ r, i })).filter((x) => minimalFor(x.r));
   const upEx = (n) => writeSession({ exercises: n });
-  const editSet = (exId, sId, f, v) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: e.sets.map((s) => s.id === sId ? { ...s, [f]: v } : s) }));
-  const addSet = (exId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: [...e.sets, { id: uid(), reps: "", kg: "", rpe: "" }] }));
-  const delSet = (exId, sId) => upEx(exercises.map((e) => e.id !== exId ? e : { ...e, sets: e.sets.length > 1 ? e.sets.filter((s) => s.id !== sId) : e.sets }));
-  const delEx = (exId) => upEx(exercises.filter((e) => e.id !== exId));
+  const editSet = (exId, sId, f, v) => upEx(editTrainingSet(exercises, exId, sId, f, v));
+  const addSet = (exId) => upEx(addTrainingSet(exercises, exId, uid));
+  const delSet = (exId, sId) => upEx(deleteTrainingSet(exercises, exId, sId));
+  const delEx = (exId) => upEx(deleteTrainingExercise(exercises, exId));
   // Carga de golpe para todo un ejercicio. Reutiliza applyAdjustments, que ya
   // impone la regla dura: una serie registrada no se reescribe nunca, porque de
   // ahi salen los records, la progresion y el aviso de fatiga.
   const setExerciseLoad = (exId, kg) => upEx(applyAdjustments(exercises, [{ id: exId, kg, removed: false }]));
   // La rutina del dia, para poder quitar un ejercicio tambien de ella y que no
   // vuelva a proponerse la semana que viene.
-  const dayRoutine = routines.find((r) => r.suggestedDay != null && Number(r.suggestedDay) === new Date(`${date}T00:00:00`).getDay()) || null;
+  const dayRoutine = routineForDate(routines, date);
   const delExEverywhere = (exId) => {
     const target = exercises.find((e) => e.id === exId);
     if (target && dayRoutine) {
-      setRoutines((prev) => prev.map((r) => (r.id === dayRoutine.id
-        ? { ...r, exercises: (r.exercises || []).filter((x) => x.name !== target.name) }
-        : r)));
+      setRoutines((prev) => removeRoutineExercise(prev, dayRoutine.id, target.name));
     }
     delEx(exId);
   };
   const [removingId, setRemovingId] = useState(null);
   const [manualOpen, setManualOpen] = useState(false);
-  const addCardio = () => { if (!cardio.minutes) return; writeSession({ cardio: [...cardioList, { id: uid(), type: cardio.type, minutes: Number(cardio.minutes), kcal: Number(cardio.kcal) || 0 }] }); setCardio({ type: CARDIO_TYPES[0], minutes: "", kcal: "" }); };
-  const delCardio = (id) => writeSession({ cardio: cardioList.filter((c) => c.id !== id) });
+  const addCardio = () => { if (!cardio.minutes) return; writeSession({ cardio: [...cardioList, createTrainingCardio(cardio, uid)] }); setCardio({ type: CARDIO_TYPES[0], minutes: "", kcal: "" }); };
+  const delCardio = (id) => writeSession({ cardio: deleteTrainingCardio(cardioList, id) });
 
   // timer
   const [tSec, setTSec] = useState(0); const [tRun, setTRun] = useState(false); const tRef = useRef(null);
@@ -1138,7 +1110,7 @@ export function Train({ workouts, setWorkouts, routines, setRoutines, userId, pe
     if (!exercises.length) return;
     const nm = window.prompt("Nombre de la rutina:", `Rutina ${date}`);
     if (!nm || !nm.trim()) return;
-    const items = exercises.map((e) => ({ id: uid(), name: e.name, primary: e.primary, secondary: e.secondary || [], targetSets: e.sets.length, targetReps: String(e.sets[0]?.reps || e.targetReps || ""), targetRpe: e.targetRpe || "" }));
+    const items = trainingSessionRoutineItems(exercises, uid);
     setRoutines((prev) => [...prev, { id: uid(), name: nm.trim(), exercises: items }]);
   };
 

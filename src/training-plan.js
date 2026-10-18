@@ -64,3 +64,9 @@ export function weekNumber(workouts = [], today = localISO()) {
   if (!first) return null;
   return Math.floor(daysBetween(mondayOf(first), mondayOf(today)) / 7) + 1;
 }
+
+export const assignTrainingRoutine = (current, dow, routineId) => current.map((routine) => {
+    if (routine.id === routineId) return { ...routine, suggestedDay: dow };
+    if (Number(routine.suggestedDay) === dow) return { ...routine, suggestedDay: null };
+    return routine;
+  });

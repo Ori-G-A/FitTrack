@@ -48,3 +48,14 @@ Un primer checkpoint detectó addDays sin importar; se corrigió el import y se
 repitieron suite, Chromium y build completos. Resultado: 239/239 Node, 6/6
 Chromium, 21/21 contratos, build correcto; 22 hashes de pins intactos.
 Evidencia: [e1.json](evidence/e1.json). T015 completada; E2 pendiente.
+
+
+## E2 — 2026-10-17
+
+Extraídas transformaciones records/routines e integradas en Train, Biblioteca,
+Plan y sesión guiada. Generadores inyectados; creación de ejercicios fuera del
+updater y creación de sesión/rutina dentro del updater conservadas. Ajustes
+masivos se reexportan por app-utils. Se corrigió sintaxis de asignación y se
+descartó una ejecución que coincidió con edición; checkpoint completo repetido
+sobre árbol estable: 239/239 Node, 6/6 Chromium, 21/21 contratos y build correcto.
+22 hashes intactos. Evidencia: [e2.json](evidence/e2.json). T016 completada.

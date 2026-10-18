@@ -1,3 +1,4 @@
+import { assignTrainingRoutine } from "./training-plan.js";
 import React, { useMemo, useState } from "react";
 import { dayFeed, localISO, planWeek, weekNumber } from "./app-utils.js";
 
@@ -62,11 +63,7 @@ export default function PlanScreen({ routines = [], setRoutines, workouts = [], 
 
   // Un día, una rutina: asignarla aquí se la quita a quien la tuviera antes, o
   // el mismo entreno saldría dos veces en la misma semana.
-  const assign = (dow, routineId) => setRoutines((current) => current.map((routine) => {
-    if (routine.id === routineId) return { ...routine, suggestedDay: dow };
-    if (Number(routine.suggestedDay) === dow) return { ...routine, suggestedDay: null };
-    return routine;
-  }));
+  const assign = (dow, routineId) => setRoutines((current) => assignTrainingRoutine(current, dow, routineId));
 
   // Un dia no es solo el entreno: es todo lo que se registro ese dia. La sesion
   // ya tiene su bloque arriba, asi que aqui va el resto y los huecos que faltan
