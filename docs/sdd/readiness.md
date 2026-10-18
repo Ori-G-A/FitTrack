@@ -5,7 +5,8 @@ inicial. 001/002 ya se integraron; 003 ejecutó E0–E4 con baseline y checkpoin
 Resultado actual: 242/242 Node, 6/6 Chromium, build correcto, 21/21 contratos
 en los gates finales 001 y 003. T025 resuelta: Docker respondió, RLS renovada
 3/3 con limpieza y gate 002 completo 23/23. Los tres gates coinciden con src
-actual. Verificación local de 003 completa; revisión e integración pendientes.
+actual. 003 integrada mediante PR #9 en 2a70042: CI del PR/main y Vercel Production
+aprobados, observados el 2026-10-18. Los checkpoints locales se conservan.
 [Estado y evidencia actual de 003](../../specs/003-entrenamiento/verification.md).
 
 Revisión: 2026-10-15. Autorización: «aplica tus sugerencias y revisa el estado

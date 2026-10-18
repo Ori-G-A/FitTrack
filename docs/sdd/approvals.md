@@ -188,3 +188,19 @@ para esta entrega la reserva anterior de apertura/fusión por el propietario.
 La fusión se ejecutará con ambos jobs CI aprobados y SHA de head comprobado.
 No se declara aún PR publicado, merge ni despliegue completado, y no se
 concede permiso permanente para futuras áreas.
+
+
+## Integración 003 comprobada y preparación 004 — 2026-10-18
+
+La autorización «continua e integra», con confirmación «Autorizar integración
+y despliegue automático», se ejecutó mediante PR #9. Head 28bd509, CI del PR
+39090760297 aprobado; merge 2a7004277bd75d87fdf9746c90853b4c34eac044, CI
+de main 39090941895 aprobado; Vercel Production 7148987435 exitoso sobre ese SHA.
+La URL individual exige login de Vercel: no se afirma prueba funcional con datos
+productivos. El [PR #9](https://github.com/Ori-G-A/FitTrack/pull/9) conserva la
+evidencia remota posterior al checkpoint local. M4 queda integrado; KD-002 sigue.
+
+El propietario indicó después «continua». Autoriza preparar survey/propuesta
+de la siguiente área del roadmap, 004-nutricion-objetivos. Se proponen 16 FR
+AS-IS y 15 escenarios con C-001/002/003 pendientes. No se interpreta como
+aprobación anticipada del alcance nuevo, su plan, código ni integración.

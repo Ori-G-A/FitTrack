@@ -1,10 +1,11 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-17: PATCH 1.0.2 y 001/002 integradas previamente.
-003 tiene alcance/plan/ejecución local aprobados, baseline fijada y E1–E4
-verificadas. E5 y RLS renovada también verificadas: gates 001/002/003 verdes.
-Cierre M4 pendiente de revisión del propietario e integración remota. Los registros siguientes
-conservan la evolución anterior. [Verificación 003](../../specs/003-entrenamiento/verification.md).
+Estado actual, 2026-10-18: 001/002/003 integradas y PATCH 1.0.2 ratificada.
+M4 integrado mediante [PR #9](https://github.com/Ori-G-A/FitTrack/pull/9), con
+CI del PR/main y Vercel Production aprobados sobre 2a70042. La propuesta 004
+está preparada; alcance y aclaraciones pendientes. Los registros siguientes
+conservan el historial. [Survey 004](nutricion-objetivos-survey.md).
+
 
 Estado: constitución y comienzo por 001-datos aprobados el 2026-10-14;
 fechas y estimaciones continúan siendo tentativas.
@@ -226,3 +227,22 @@ el código actual: 001 21/21, 002 23/23, 003 21/21, 242 Node, 6 Chromium y build
 correcto. Converge local sin gaps; 25 tareas completadas y cuerpo de PR preparado.
 M4 aún requiere revisión e integración por el propietario; KD-002 sigue activa
 para el resto del proyecto. [Resumen final](../../specs/003-entrenamiento/evidence/final.json).
+
+
+## Preparación de 004 — 2026-10-18
+
+003 integrado en 2a70042 con CI y despliegue aprobados. M4 integrado sin
+retirar KD-002 para el resto del proyecto. La comprobación funcional con datos
+de producción no se ejecutó; URL individual protegida por login de Vercel.
+
+[Survey](nutricion-objetivos-survey.md) y [alcance propuesto](../../specs/004-nutricion-objetivos/spec.md):
+16 AS-IS, 15 escenarios y 31 filas pending. Incluye alimentos/recetas, cantidades,
+objetivos, métricas nutricionales y avisos de ritmo; conserva algoritmos de
+peso/ciclo de 005 y contratos de 001/002/003. Sin cambios productivos ni pruebas
+runtime nuevas. Alcance y tres aclaraciones pendientes antes del plan.
+
+| ID | Observación por lectura en BASE 2a70042 | Tratamiento propuesto |
+| --- | --- | --- |
+| NUTR-001 | Guardas numéricas distintas; amount > 0 no exige finitud y Biblioteca admite negativos en distintas entradas | Reproducir en E0; preservar AS-IS y reservar corrección para CHANGE |
+| NUTR-002 | Ventanas de métricas distintas; algunos filtros no excluyen registros futuros | Caracterizar y no unificar filtros al extraer |
+| NUTR-003 | AutoMacros depende del montaje/actualización de Ajustes, también en section datos | Caracterizar timing/cleanup; no trasladar a un efecto global sin CHANGE |
