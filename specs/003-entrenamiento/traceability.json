@@ -1,11 +1,14 @@
 {
   "spec": "003-entrenamiento",
-  "note": "Plan propuesto. plannedTests son nombres reservados, todavía no ejecutados. tests permanece vacío hasta evidencia observada; modo completo debe rechazar las 21 filas.",
+  "note": "Pins ejecutados sobre src original; el gate completo debe verificar nuevamente todos los resultados. Baseline y hashes se registran únicamente después del gate verde.",
   "requirements": [
     {
       "id": "FR-001",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento sesion por fecha orden y vaciado",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento sesion por fecha orden y vaciado"
       ],
@@ -15,8 +18,11 @@
     },
     {
       "id": "FR-002",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento carga completa minima y calentamiento",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento carga completa minima y calentamiento"
       ],
@@ -26,8 +32,11 @@
     },
     {
       "id": "FR-003",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento edicion series ejercicios y cardio",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento edicion series ejercicios y cardio"
       ],
@@ -37,8 +46,11 @@
     },
     {
       "id": "FR-004",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento duracion manual eventos y limpieza",
+        "entrenamiento navegador timer y duracion"
+      ],
       "plannedTests": [
         "entrenamiento duracion manual eventos y limpieza"
       ],
@@ -48,8 +60,11 @@
     },
     {
       "id": "FR-005",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento timer persistencia reloj y transiciones",
+        "entrenamiento navegador timer y duracion"
+      ],
       "plannedTests": [
         "entrenamiento timer persistencia reloj y transiciones"
       ],
@@ -59,8 +74,11 @@
     },
     {
       "id": "FR-006",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento sesion guiada registro correccion y salida",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento sesion guiada registro correccion y salida"
       ],
@@ -70,8 +88,10 @@
     },
     {
       "id": "FR-007",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento metricas historial y fronteras"
+      ],
       "plannedTests": [
         "entrenamiento metricas historial y fronteras"
       ],
@@ -81,8 +101,11 @@
     },
     {
       "id": "FR-008",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento consejo y ajustes conservan registros",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento consejo y ajustes conservan registros"
       ],
@@ -92,8 +115,11 @@
     },
     {
       "id": "FR-009",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento semana cumplimiento y asignacion",
+        "entrenamiento navegador biblioteca y plan"
+      ],
       "plannedTests": [
         "entrenamiento semana cumplimiento y asignacion"
       ],
@@ -103,8 +129,11 @@
     },
     {
       "id": "FR-010",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento rutinas plantillas y biblioteca",
+        "entrenamiento navegador biblioteca y plan"
+      ],
       "plannedTests": [
         "entrenamiento rutinas plantillas y biblioteca"
       ],
@@ -114,8 +143,11 @@
     },
     {
       "id": "FR-011",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento consumidores y previews compatibles",
+        "entrenamiento navegador biblioteca y plan"
+      ],
       "plannedTests": [
         "entrenamiento consumidores y previews compatibles"
       ],
@@ -125,8 +157,11 @@
     },
     {
       "id": "US1-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento sesion por fecha orden y vaciado",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento sesion por fecha orden y vaciado"
       ],
@@ -136,8 +171,11 @@
     },
     {
       "id": "US1-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento carga completa minima y calentamiento",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento carga completa minima y calentamiento"
       ],
@@ -147,8 +185,13 @@
     },
     {
       "id": "US1-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento edicion series ejercicios y cardio",
+        "entrenamiento rutinas plantillas y biblioteca",
+        "entrenamiento navegador registrar y corregir serie",
+        "entrenamiento navegador biblioteca y plan"
+      ],
       "plannedTests": [
         "entrenamiento edicion series ejercicios y cardio",
         "entrenamiento rutinas plantillas y biblioteca"
@@ -160,8 +203,11 @@
     },
     {
       "id": "US1-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento duracion manual eventos y limpieza",
+        "entrenamiento navegador timer y duracion"
+      ],
       "plannedTests": [
         "entrenamiento duracion manual eventos y limpieza"
       ],
@@ -171,8 +217,11 @@
     },
     {
       "id": "US2-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento timer persistencia reloj y transiciones",
+        "entrenamiento navegador timer y duracion"
+      ],
       "plannedTests": [
         "entrenamiento timer persistencia reloj y transiciones"
       ],
@@ -182,8 +231,11 @@
     },
     {
       "id": "US2-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento sesion guiada registro correccion y salida",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento sesion guiada registro correccion y salida"
       ],
@@ -193,8 +245,10 @@
     },
     {
       "id": "US3-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento metricas historial y fronteras"
+      ],
       "plannedTests": [
         "entrenamiento metricas historial y fronteras"
       ],
@@ -204,8 +258,11 @@
     },
     {
       "id": "US3-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento consejo y ajustes conservan registros",
+        "entrenamiento navegador registrar y corregir serie"
+      ],
       "plannedTests": [
         "entrenamiento consejo y ajustes conservan registros"
       ],
@@ -215,8 +272,11 @@
     },
     {
       "id": "US3-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento semana cumplimiento y asignacion",
+        "entrenamiento navegador biblioteca y plan"
+      ],
       "plannedTests": [
         "entrenamiento semana cumplimiento y asignacion"
       ],
@@ -226,8 +286,11 @@
     },
     {
       "id": "US3-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "entrenamiento consumidores y previews compatibles",
+        "entrenamiento navegador biblioteca y plan"
+      ],
       "plannedTests": [
         "entrenamiento consumidores y previews compatibles"
       ],

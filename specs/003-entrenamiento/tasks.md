@@ -1,26 +1,26 @@
 <!-- Aprobado el 2026-10-16 mediante «adelante»: plan, tareas, revisión y ejecución local de pins/extracciones antes de integración remota. Los estados de propuesta que siguen conservan el contenido presentado. -->
 # Tareas — 003-entrenamiento
 
-Estado: PROPUESTAS, pendientes de aprobación. [Plan](plan.md),
+Estado: APROBADAS para ejecución local. [Plan](plan.md),
 [validación](validation-plan.md), [analyze](analyze.md).
-Todas las tareas de ejecución están pendientes; el alcance sí está aprobado.
+E0 completada el 2026-10-17; las extracciones E1–E5 siguen pendientes.
 
 | ID | Historia y contrato | Resultado/tarea | Depende de | Estado |
 | --- | --- | --- | --- | --- |
-| T001 | US1/US2/US3; todos los FR/escenarios | Aprobación plan/tasks/analyze y puerta documental; preparar harness 003, manifiesto y reloj/IDs aislados. | — | Pendiente |
-| T002 | US1; FR-001, US1-AS1 | Escribir y ejecutar sobre original training-records.test.js :: entrenamiento sesion por fecha orden y vaciado; cubrir casos de validation-plan. | T001 | Pendiente |
-| T003 | US1; FR-002, US1-AS2 | Escribir y ejecutar sobre original training-records.test.js :: entrenamiento carga completa minima y calentamiento; cubrir casos de validation-plan. | T001 | Pendiente |
-| T004 | US1; FR-003, US1-AS3 | Escribir y ejecutar sobre original training-records.test.js :: entrenamiento edicion series ejercicios y cardio; cubrir casos de validation-plan. | T001 | Pendiente |
-| T005 | US1; FR-004, US1-AS4 | Escribir y ejecutar sobre original training-duration.test.js :: entrenamiento duracion manual eventos y limpieza; cubrir casos de validation-plan. | T001 | Pendiente |
-| T006 | US2; FR-005, US2-AS1 | Escribir y ejecutar sobre original training-timer.test.js :: entrenamiento timer persistencia reloj y transiciones; cubrir casos de validation-plan. | T001 | Pendiente |
-| T007 | US2; FR-006, US2-AS2 | Escribir y ejecutar sobre original training-guided.test.js :: entrenamiento sesion guiada registro correccion y salida; cubrir casos de validation-plan. | T001 | Pendiente |
-| T008 | US3; FR-007, US3-AS1 | Escribir y ejecutar sobre original training-metrics.test.js :: entrenamiento metricas historial y fronteras; cubrir casos de validation-plan. | T001 | Pendiente |
-| T009 | US3; FR-008, US3-AS2 | Escribir y ejecutar sobre original training-metrics.test.js :: entrenamiento consejo y ajustes conservan registros; cubrir casos de validation-plan. | T001 | Pendiente |
-| T010 | US3; FR-009, US3-AS3 | Escribir y ejecutar sobre original training-plan.test.js :: entrenamiento semana cumplimiento y asignacion; cubrir casos de validation-plan. | T001 | Pendiente |
-| T011 | US1; FR-010, US1-AS3 | Escribir y ejecutar sobre original training-routines.test.js :: entrenamiento rutinas plantillas y biblioteca; cubrir casos de validation-plan. | T001 | Pendiente |
-| T012 | US3; FR-011, US3-AS4 | Escribir y ejecutar sobre original training-compatibility.test.js :: entrenamiento consumidores y previews compatibles; cubrir casos de validation-plan. | T001 | Pendiente |
-| T013 | US1/US2/US3; FR-001/003/004/005/006/008/009/010/011; todos los escenarios | Tres recorridos Chromium y mutaciones/negativos de manifiesto previstos en validation-plan. | T002–T012 | Pendiente |
-| T014 | US1/US2/US3; todos los FR/escenarios | G-PIN: suite/build/Chromium verdes sobre src original, 21 IDs completos, hashes de pins 003 y once previos; registrar BASE y resultados. | T013 | Pendiente |
+| T001 | US1/US2/US3; todos los FR/escenarios | Aprobación plan/tasks/analyze y puerta documental; preparar harness 003, manifiesto y reloj/IDs aislados. | — | Completada |
+| T002 | US1; FR-001, US1-AS1 | Escribir y ejecutar sobre original training-records.test.js :: entrenamiento sesion por fecha orden y vaciado; cubrir casos de validation-plan. | T001 | Completada |
+| T003 | US1; FR-002, US1-AS2 | Escribir y ejecutar sobre original training-records.test.js :: entrenamiento carga completa minima y calentamiento; cubrir casos de validation-plan. | T001 | Completada |
+| T004 | US1; FR-003, US1-AS3 | Escribir y ejecutar sobre original training-records.test.js :: entrenamiento edicion series ejercicios y cardio; cubrir casos de validation-plan. | T001 | Completada |
+| T005 | US1; FR-004, US1-AS4 | Escribir y ejecutar sobre original training-duration.test.js :: entrenamiento duracion manual eventos y limpieza; cubrir casos de validation-plan. | T001 | Completada |
+| T006 | US2; FR-005, US2-AS1 | Escribir y ejecutar sobre original training-timer.test.js :: entrenamiento timer persistencia reloj y transiciones; cubrir casos de validation-plan. | T001 | Completada |
+| T007 | US2; FR-006, US2-AS2 | Escribir y ejecutar sobre original training-guided.test.js :: entrenamiento sesion guiada registro correccion y salida; cubrir casos de validation-plan. | T001 | Completada |
+| T008 | US3; FR-007, US3-AS1 | Escribir y ejecutar sobre original training-metrics.test.js :: entrenamiento metricas historial y fronteras; cubrir casos de validation-plan. | T001 | Completada |
+| T009 | US3; FR-008, US3-AS2 | Escribir y ejecutar sobre original training-metrics.test.js :: entrenamiento consejo y ajustes conservan registros; cubrir casos de validation-plan. | T001 | Completada |
+| T010 | US3; FR-009, US3-AS3 | Escribir y ejecutar sobre original training-plan.test.js :: entrenamiento semana cumplimiento y asignacion; cubrir casos de validation-plan. | T001 | Completada |
+| T011 | US1; FR-010, US1-AS3 | Escribir y ejecutar sobre original training-routines.test.js :: entrenamiento rutinas plantillas y biblioteca; cubrir casos de validation-plan. | T001 | Completada |
+| T012 | US3; FR-011, US3-AS4 | Escribir y ejecutar sobre original training-compatibility.test.js :: entrenamiento consumidores y previews compatibles; cubrir casos de validation-plan. | T001 | Completada |
+| T013 | US1/US2/US3; FR-001/003/004/005/006/008/009/010/011; todos los escenarios | Tres recorridos Chromium y mutaciones/negativos de manifiesto previstos en validation-plan. | T002–T012 | Completada |
+| T014 | US1/US2/US3; todos los FR/escenarios | G-PIN: suite/build/Chromium verdes sobre src original, 21 IDs completos, hashes de pins 003 y once previos; registrar BASE y resultados. | T013 | Completada |
 | T015 | US3; FR-007/008/009/011, US3-AS1/AS2/AS3/AS4 | E1: extraer métricas/consejo/plan y fechas necesarias, mantener imports/reexports; repetir checkpoint. | T014 | Pendiente |
 | T016 | US1/US3; FR-001/002/003/008/010/011, US1-AS1/AS2/AS3, US3-AS2/AS4 | E2: extraer transformaciones records/routines e integrar Biblioteca/Plan preservando snapshots, IDs y campos. | T015 | Pendiente |
 | T017 | US1/US2; FR-004/005/006, US1-AS4, US2-AS1/AS2 | E3: hook timer con puertos; conservar debounce, ciclo de efectos y distintos relojes; repetir pruebas de carreras y tiempo. | T016 | Pendiente |
@@ -42,5 +42,5 @@ pero valida imports reales tras las extracciones.
 - Cada FR tiene un pin concreto T002–T012; cada escenario se vincula en la matriz.
 - No hay CHANGE ni tarea roja de comportamiento nuevo; las mutaciones prueban sensibilidad.
 - Dependencias acíclicas y puerta BASE anterior a producción.
-- Plan y analyze son propuestas, no ejecución aprobada.
+- Plan y analyze aprobados; autorización registrada en docs/sdd/approvals.md.
 - Converge añadirá T025 en adelante sin reescribir tareas completadas.

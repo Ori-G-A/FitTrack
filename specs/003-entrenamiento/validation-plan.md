@@ -1,6 +1,6 @@
 # Plan de validación — 003
 
-Estado: PREVISTO, ninguna prueba nueva ejecutada. Nombres exactos reservados;
+Estado: E0 EJECUTADA el 2026-10-17; ver [baseline](evidence/baseline.json). Nombres exactos fijados;
 cada grupo será test de nivel superior descubierto por TAP. Los subcasos de la
 tabla cubren todo el requisito: un nombre coincidente no basta para completarlo.
 

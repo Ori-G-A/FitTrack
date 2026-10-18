@@ -1,7 +1,6 @@
-<!-- Aprobado el 2026-10-16 mediante «adelante»: plan, tareas, revisión y ejecución local de pins/extracciones antes de integración remota. Los estados de propuesta que siguen conservan el contenido presentado. -->
 # Plan técnico — 003-entrenamiento
 
-Estado: PROPUESTO para aprobación conjunta con tareas y analyze. Alcance aprobado
+Estado: APROBADO para ejecución local junto con tareas y analyze. Alcance aprobado
 el 2026-10-16. [Spec](spec.md), [research](research.md), [validación](validation-plan.md).
 BASE productiva: c7d9e814de992b376005d82ee042f1304da6e46f. Los commits documentales
 posteriores no cambian src. No hay CHANGE aprobado.

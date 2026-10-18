@@ -21,3 +21,20 @@ de los documentos. No se ejecutó suite runtime por esta entrega documental.
 Falta ejecutar E0 y todo el plan tras aprobación. No hay conteos de pruebas
 nuevas, baseline de pins ni CI remoto de 003 declarado. El cuerpo de PR documental
 está preparado; no se publicó ni se fusionó esta rama.
+
+
+## E0 — 2026-10-17
+
+Plan y ejecución local aprobados en 11e1fb1. G-PIN verde sobre src c7d9e81:
+239/239 pruebas Node (179 de nivel superior), 6/6 Chromium, build correcto
+con aviso existente de bundle >500 kB; 21/21 contratos completos.
+Once pins nuevos congelados y once anteriores verificados, normalizando CRLF
+a LF y contrastando los anteriores también con sus blobs Git.
+Evidencia: [baseline](evidence/baseline.json), [manifiesto](traceability.json).
+
+Se corrigieron dos defectos del harness: selector RUTINAS y sincronización
+React act con MessageChannel de tareas reales en JSDOM. Se repitió la suite
+completa y el gate después de corregirlos; ninguna aserción BASE se relajó.
+Las tres mutaciones son detectadas y los negativos de trazabilidad pasan.
+TRAIN-001 reproducido; TRAIN-002/003 preservados. Sin modificaciones de src,
+SQL ni dependencias. E1–E5 pendientes; no hay PR/CI/merge remoto de 003.

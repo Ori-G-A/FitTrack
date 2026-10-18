@@ -1,6 +1,6 @@
 # Spec 003: entrenamiento
 
-Estado: ALCANCE APROBADO, 2026-10-16; plan técnico pendiente.
+Estado: ALCANCE APROBADO, 2026-10-16; plan técnico aprobado y E0 verificada.
 Fecha: 2026-10-16. Constitución: [1.0.2](../../.specify/memory/constitution.md).
 Evidencia: [survey](../../docs/sdd/entrenamiento-survey.md).
 
@@ -64,22 +64,22 @@ resultados antes y después de la refactorización.
 
 ## Evidencia AS-IS
 
-Las referencias remiten a BASE c7d9e81. Los pins de esta área aún no están
-escritos/ejecutados; las pruebas existentes del survey aportan evidencia parcial.
+Las referencias remiten a BASE c7d9e81. Los pins están ejecutados y fijados en [baseline](evidence/baseline.json).
+La matriz ejecutable está en [traceability.json](traceability.json).
 
 | FR | Código | Prueba de caracterización | Límite |
 | --- | --- | --- | --- |
-| FR-001 | src/FitTrack.jsx:1042 | PENDING | Requiere pin completo sobre BASE |
-| FR-002 | src/FitTrack.jsx:1057 | PENDING | Requiere pin completo sobre BASE |
-| FR-003 | src/FitTrack.jsx:1089 | PENDING | Requiere pin completo sobre BASE |
-| FR-004 | src/FitTrack.jsx:1028 | PENDING | Requiere pin completo sobre BASE |
-| FR-005 | src/FitTrack.jsx:1116 | PENDING | Requiere pin completo sobre BASE |
-| FR-006 | src/SessionScreen.jsx:24; src/FitTrack.jsx:1166 | PENDING | Requiere pin completo sobre BASE |
-| FR-007 | src/FitTrack.jsx:1000; src/app-utils.js:22,52,183 | PENDING | Requiere pin completo sobre BASE |
-| FR-008 | src/app-utils.js:443,570 | PENDING | Requiere pin completo sobre BASE |
-| FR-009 | src/app-utils.js:513; src/PlanScreen.jsx:65 | PENDING | Requiere pin completo sobre BASE |
-| FR-010 | src/fase1Config.js:381; src/LibraryScreen.jsx:320 | PENDING | Requiere pin completo sobre BASE |
-| FR-011 | src/FitTrack.jsx:898,995; src/preview-main.jsx:208 | PENDING | Requiere pin completo sobre BASE |
+| FR-001 | src/FitTrack.jsx:1042 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-002 | src/FitTrack.jsx:1057 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-003 | src/FitTrack.jsx:1089 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-004 | src/FitTrack.jsx:1028 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-005 | src/FitTrack.jsx:1116 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-006 | src/SessionScreen.jsx:24; src/FitTrack.jsx:1166 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-007 | src/FitTrack.jsx:1000; src/app-utils.js:22,52,183 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-008 | src/app-utils.js:443,570 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-009 | src/app-utils.js:513; src/PlanScreen.jsx:65 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-010 | src/fase1Config.js:381; src/LibraryScreen.jsx:320 | Gate completo 003 verde | Baseline anterior a extracción |
+| FR-011 | src/FitTrack.jsx:898,995; src/preview-main.jsx:208 | Gate completo 003 verde | Baseline anterior a extracción |
 
 ## Criterios medibles de aceptación
 
