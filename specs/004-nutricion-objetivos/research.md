@@ -22,3 +22,8 @@ no convierte snapshots persistidos en referencias a alimentos editables.
 R-008 (E1): round1 y scaleFood tienen consumidores compartidos inventariados
 y expresiones sin E/S. Se extraen a nutrition-numbers.js para que los nuevos
 modelos puedan usarlos sin importar FitTrack; fachada original conservada.
+
+E3 / FR-014: ui-regressions inspeccionaba objetos inline de Diario. Se adapta
+a comprobar llamada y expresión trasladada en goals-operations, conservando
+la guarda sobre estado local y añadiendo enlace de undo. Los pins funcionales
+congelados de E0 no cambian; el harness solo adapta su ancla de mutación.

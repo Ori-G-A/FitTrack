@@ -25,7 +25,7 @@ export async function buildNutrition({mutation}={}){
    if(mutation==='recipe-grams')s=s.replace('grams: pick.unit === "porc." || pick.unit === "ración" ? null : qty','grams: qty');
    if(mutation==='adherence-round')s=s.replace('.map(([, grams]) => Math.round(grams));','.map(([, grams]) => grams);');
    if(mutation==='datos-effect')s=s.replace('if (!goals.autoMacros || !suggestion) return;','if (section === "datos" || !goals.autoMacros || !suggestion) return;');
-   if(mutation==='undo-snapshot'){s=s.replace('setPaceDone({ kind, kcal: patch.kcalTarget, previous });','setPaceDone({ kind, kcal: patch.kcalTarget, previous, captured: goals });');s=s.replace('({ ...current, ...paceDone.previous })','({ ...paceDone.captured, ...paceDone.previous })');}
+   if(mutation==='undo-snapshot'){s=s.replace('setPaceDone({ kind, kcal: patch.kcalTarget, previous });','setPaceDone({ kind, kcal: patch.kcalTarget, previous, captured: goals });');s=s.replace('undoPaceGoals(current, paceDone.previous)','undoPaceGoals(paceDone.captured, paceDone.previous)');}
    return {contents:s,loader:path.endsWith('.jsx')?'jsx':'js'};
   });
  }}]});

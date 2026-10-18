@@ -1,3 +1,4 @@
+import { paceSnapshot, markPaceGoals, undoPaceGoals } from "./goals-operations.js";
 import React, { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import DetailSheet from "./DetailSheet.jsx";
@@ -229,14 +230,14 @@ export default function DiarioScreen({ workouts = [], nutrition = [], weights = 
   // Lo que se acaba de hacer con el aviso, solo para poder deshacerlo en el sitio.
   const [paceDone, setPaceDone] = useState(null);
   const markPace = (kind, patch) => {
-    const previous = { kcalTarget: goals.kcalTarget, autoMacros: goals.autoMacros, paceCheckedAt: goals.paceCheckedAt };
-    setGoals((current) => ({ ...current, ...patch, paceCheckedAt: today }));
+    const previous = paceSnapshot(goals);
+    setGoals((current) => markPaceGoals(current, patch, today));
     setPaceDone({ kind, kcal: patch.kcalTarget, previous });
   };
   const applyPace = () => markPace("applied", { kcalTarget: alert.next, autoMacros: false });
   const dismissPace = () => markPace("dismissed", {});
   const undoPace = () => {
-    setGoals((current) => ({ ...current, ...paceDone.previous }));
+    setGoals((current) => undoPaceGoals(current, paceDone.previous));
     setPaceDone(null);
   };
 

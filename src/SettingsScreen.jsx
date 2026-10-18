@@ -1,3 +1,4 @@
+import { updateGoalField, automaticGoalPatch } from "./goals-operations.js";
 import React, { useEffect, useMemo, useState } from "react";
 import { AlertTriangle, Check, Download, Flame, Lock, Moon, Target, Trash2, X } from "lucide-react";
 import { ACTIVITY_LEVELS } from "./app-config.js";
@@ -18,7 +19,7 @@ const THEME_MODES = [["auto", "Sistema"], ["light", "Claro"], ["dark", "Oscuro"]
 export default function SettingsScreen({ section = "todo", goals, setGoals, weights, exportData, userEmail, signOut, deleteAllData, themePref = "auto", setThemePref, theme = "light" }) {
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [deleteError, setDeleteError] = useState("");
-  const updateGoal = (key, value) => setGoals((current) => ({ ...current, [key]: value }));
+  const updateGoal = (key, value) => setGoals((current) => updateGoalField(current, key, value));
   const latest = latestWeight(weights);
   const referenceWeight = Number(goals.startWeight) || latest || null;
   const direction = goalDirection(Number(goals.startWeight) || latest, Number(goals.targetWeight));
@@ -33,7 +34,7 @@ export default function SettingsScreen({ section = "todo", goals, setGoals, weig
   useEffect(() => {
     if (!goals.autoMacros || !suggestion) return;
     if (Number(goals.kcalTarget) !== suggestion.kcal || Number(goals.proteinTarget) !== suggestion.protein) {
-      setGoals((current) => ({ ...current, kcalTarget: suggestion.kcal, proteinTarget: suggestion.protein }));
+      setGoals((current) => automaticGoalPatch(current, suggestion));
     }
   }, [goals.autoMacros, goals.kcalTarget, goals.proteinTarget, setGoals, suggestion]);
 
