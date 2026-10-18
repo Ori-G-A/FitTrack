@@ -259,3 +259,10 @@ NUTR-001/002/003 se preservan AS-IS, con reproducción pendiente en E0.
 y analyze propuestos. 16 grupos de pins y tres recorridos Chromium; E0 exige
 31 contratos completos sobre original antes de E1–E4. No hay código ni pruebas
 runtime nuevos. Plan/tareas/revisión y ejecución local pendientes de aprobación.
+
+## Caracterización 004: límite de maqueta — 2026-10-18
+
+El preview principal monta Nutrición; preview/maqueta.jsx conserva un marcador
+para esa pestaña y no importa esa pantalla. El pin FR-016 abre ambos y verifica
+su conducta actual; no se añade funcionalidad al preview antiguo. Posible mejora
+futura de006, fuera de esta extracción AS-IS.

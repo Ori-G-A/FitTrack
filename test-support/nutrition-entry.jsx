@@ -1,0 +1,35 @@
+import React, { act, useState, useCallback } from 'react';
+import { createRoot } from 'react-dom/client';
+import Nutrition from '../src/NutritionScreen.jsx';
+import Library from '../src/LibraryScreen.jsx';
+import Account from '../src/AccountScreen.jsx';
+import Settings from '../src/SettingsScreen.jsx';
+import Diario from '../src/DiarioScreen.jsx';
+import Dashboard from '../src/DashboardScreen.jsx';
+import * as fit from '../src/FitTrack.jsx';
+import * as normalization from '../src/NutritionScreen.jsx';
+import * as app from '../src/app-utils.js';
+import * as goalsModule from '../src/settings-utils.js';
+import * as protein from '../src/fase1Config.js';
+import * as alerts from '../src/alerts.js';
+import { DEFAULT_GOALS } from '../src/app-config.js';
+globalThis.__nutModules={fit,normalization,app,goals:goalsModule,protein,alerts};
+globalThis.__nutAct=act;
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+globalThis.__nutWrites=[];
+function Entry(){
+ const seed=globalThis.__nutSeed||{};
+ const [foods,setFoods]=useState(seed.foods||[]),[recipes,setRecipes]=useState(seed.recipes||[]);
+ const [nutrition,setNutrition]=useState(seed.nutrition||[]),[weights,setWeights]=useState(seed.weights||[]);
+ const [goals,updateGoals]=useState({...DEFAULT_GOALS,...seed.goals});
+ const setGoals=useCallback(value=>{globalThis.__nutWrites.push(value);updateGoals(value);},[]);
+ const [view,setView]=useState(seed.view||'nutrition');
+ const [workouts,setWorkouts]=useState(seed.workouts||[]);
+ const noop=()=>{};
+ const shared={foods,setFoods,recipes,setRecipes,nutrition,setNutrition,weights,setWeights,goals,setGoals,setTab:setView,workouts,setWorkouts,measurements:[],wellness:[],periods:[],menstrualLogs:[],routines:[],userEmail:'sdd@example.invalid',exportData:noop,importData:noop,signOut:noop,deleteAllData:noop,setThemePref:noop};
+ globalThis.__nutState={...shared,view,setView};
+ return <div className="ft-root">{view==='nutrition'?<Nutrition {...shared} initialDate={seed.date||'2026-10-18'}/>:view==='library'?<Library {...shared}/>:view==='account'?<Account {...shared} section={seed.section}/>:view==='settings'?<Settings {...shared} section={seed.section}/>:view==='diario'?<Diario {...shared}/>:view==='dashboard'?<Dashboard {...shared}/>:null}</div>;
+}
+const root=createRoot(document.getElementById('root'));
+globalThis.__nutUnmount=()=>act(()=>root.unmount());
+act(()=>root.render(<Entry/>));

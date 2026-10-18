@@ -1,6 +1,6 @@
 # Spec 004: nutrición y objetivos
 
-Estado: ALCANCE APROBADO; plan e implementación pendientes. Fecha: 2026-10-18.
+Estado: ALCANCE Y PLAN APROBADOS; ejecución local E0–E5 autorizada. Fecha: 2026-10-18.
 Constitución: [1.0.2](../../.specify/memory/constitution.md).
 Evidencia de código: [survey](../../docs/sdd/nutricion-objetivos-survey.md).
 BASE productiva: 2a7004277bd75d87fdf9746c90853b4c34eac044 (PR #9 integrado).
@@ -74,8 +74,9 @@ Como usuario, quiero mantener las métricas y las acciones sobre avisos para ent
 
 ## Evidencia AS-IS
 
-Las referencias son de BASE, no un resultado de ejecución nuevo. No hay pins
-004 escritos ni cobertura contractual completa declarada.
+Las referencias de la tabla son el inventario histórico de BASE. E0 añadió
+pins funcionales completos antes de extracción; [baseline](evidence/baseline.json):
+260 Node, 9 Chromium y 31 contratos completos. No se reescribe el inventario inicial.
 
 | FR | Código en BASE | Evidencia actual y límite |
 | --- | --- | --- |
@@ -118,7 +119,7 @@ Las referencias son de BASE, no un resultado de ejecución nuevo. No hay pins
 
 ## Compatibilidad temporal
 
-- NUTR-001, FR-002/003/005/008: preservar las guardas y conversiones numéricas observadas, incluida ausencia de comprobación de finitud en cantidad; reproducción controlada pendiente de E0.
+- NUTR-001, FR-002/003/005/008: preservar las guardas y conversiones numéricas observadas, incluida ausencia de comprobación de finitud en cantidad; reproducido con Infinity, conversiones y recetas en E0.
 - NUTR-002, FR-010/011/012: conservar ventanas y tratamiento desigual de registros futuros; no unificarlos al extraer.
 - NUTR-003, FR-009: mantener autoMacros en el ciclo de montaje/actualización de Ajustes, también en section datos; no convertirlo en recálculo global.
 
@@ -138,45 +139,46 @@ La aprobación autoriza preparar el plan técnico. No aprueba su ejecución anti
 ## Traceability
 
 Una fila por FR y escenario. Pruebas/tareas concretas propuestas en el
-[plan de validación](validation-plan.md) y [tareas](tasks.md). PENDING es estado real de esta etapa documental;
-el manifiesto no usa nombres de pruebas inexistentes como evidencia ejecutada.
+[plan de validación](validation-plan.md) y [tareas](tasks.md). COMPLETE indica pins ejecutados sobre original; las extracciones deberán
+repetirlos. El manifiesto incluye solo nombres observados.
 
 | ID | Historia | Resultado | Prueba | Tarea | Estado |
 | --- | --- | --- | --- | --- | --- |
-| FR-001 | US1 | Preservar contrato observado | nutricion catalogo y migracion conservan valores y unidades | T002 | PENDING |
-| FR-002 | US1 | Preservar contrato observado | nutricion alimentos conservan crud conversiones orden y deduplicacion | T003 | PENDING |
-| FR-003 | US1 | Preservar contrato observado | nutricion recetas conservan ingredientes porciones y snapshots | T004 | PENDING |
-| FR-004 | US1 | Preservar contrato observado | nutricion busqueda conserva fuentes limites recientes y navegacion | T005 | PENDING |
-| FR-005 | US1 | Preservar contrato observado | nutricion cantidad conserva validacion escalado guardado y retorno | T006 | PENDING |
-| FR-006 | US1 | Preservar contrato observado | nutricion diario nutricional conserva totales grupos fechas y borrado | T007 | PENDING |
-| FR-007 | US2 | Preservar contrato observado | nutricion proteina conserva clamps reparto etiquetas y redondeos | T008 | PENDING |
-| FR-008 | US2 | Preservar contrato observado | nutricion objetivos conservan referencia actividad direccion y sugerencia | T009 | PENDING |
-| FR-009 | US2 | Preservar contrato observado | nutricion objetivos conservan edicion efecto automatico y montaje | T010 | PENDING |
-| FR-010 | US2 | Preservar contrato observado | nutricion adherencia conserva ventana dias registrados y umbral | T011 | PENDING |
-| FR-011 | US3 | Preservar contrato observado | nutricion alertas conservan mantenimiento proteina y otras metricas | T012 | PENDING |
-| FR-012 | US3 | Preservar contrato observado | nutricion metricas conservan series medias ventanas y macros | T013 | PENDING |
-| FR-013 | US3 | Preservar contrato observado | nutricion ritmo conserva guardas ventana limites y redondeos | T014 | PENDING |
-| FR-014 | US3 | Preservar contrato observado | nutricion ritmo conserva aplicar descartar snapshot y deshacer | T015 | PENDING |
-| FR-015 | US3 | Preservar contrato observado | nutricion real esperado conserva ancla direccion y proyeccion | T016 | PENDING |
-| FR-016 | US3 | Preservar contrato observado | nutricion consumidores y previews conservan contratos y fachadas | T017 | PENDING |
-| US1-AS1 | US1 | FR-001, FR-002 | nutricion catalogo y migracion conservan valores y unidades; nutricion alimentos conservan crud conversiones orden y deduplicacion | T002, T003 | PENDING |
-| US1-AS2 | US1 | FR-003 | nutricion recetas conservan ingredientes porciones y snapshots | T004 | PENDING |
-| US1-AS3 | US1 | FR-004 | nutricion busqueda conserva fuentes limites recientes y navegacion | T005 | PENDING |
-| US1-AS4 | US1 | FR-005 | nutricion cantidad conserva validacion escalado guardado y retorno | T006 | PENDING |
-| US1-AS5 | US1 | FR-006 | nutricion diario nutricional conserva totales grupos fechas y borrado | T007 | PENDING |
-| US2-AS1 | US2 | FR-007 | nutricion proteina conserva clamps reparto etiquetas y redondeos | T008 | PENDING |
-| US2-AS2 | US2 | FR-008 | nutricion objetivos conservan referencia actividad direccion y sugerencia | T009 | PENDING |
-| US2-AS3 | US2 | FR-009 | nutricion objetivos conservan edicion efecto automatico y montaje | T010 | PENDING |
-| US2-AS4 | US2 | FR-010 | nutricion adherencia conserva ventana dias registrados y umbral | T011 | PENDING |
-| US3-AS1 | US3 | FR-011 | nutricion alertas conservan mantenimiento proteina y otras metricas | T012 | PENDING |
-| US3-AS2 | US3 | FR-012 | nutricion metricas conservan series medias ventanas y macros | T013 | PENDING |
-| US3-AS3 | US3 | FR-013 | nutricion ritmo conserva guardas ventana limites y redondeos | T014 | PENDING |
-| US3-AS4 | US3 | FR-014 | nutricion ritmo conserva aplicar descartar snapshot y deshacer | T015 | PENDING |
-| US3-AS5 | US3 | FR-015 | nutricion real esperado conserva ancla direccion y proyeccion | T016 | PENDING |
-| US3-AS6 | US3 | FR-016 | nutricion consumidores y previews conservan contratos y fachadas | T017 | PENDING |
+| FR-001 | US1 | Preservar contrato observado | nutricion catalogo y migracion conservan valores y unidades | T002 | COMPLETE (E0) |
+| FR-002 | US1 | Preservar contrato observado | nutricion alimentos conservan crud conversiones orden y deduplicacion | T003 | COMPLETE (E0) |
+| FR-003 | US1 | Preservar contrato observado | nutricion recetas conservan ingredientes porciones y snapshots | T004 | COMPLETE (E0) |
+| FR-004 | US1 | Preservar contrato observado | nutricion busqueda conserva fuentes limites recientes y navegacion | T005 | COMPLETE (E0) |
+| FR-005 | US1 | Preservar contrato observado | nutricion cantidad conserva validacion escalado guardado y retorno | T006 | COMPLETE (E0) |
+| FR-006 | US1 | Preservar contrato observado | nutricion diario nutricional conserva totales grupos fechas y borrado | T007 | COMPLETE (E0) |
+| FR-007 | US2 | Preservar contrato observado | nutricion proteina conserva clamps reparto etiquetas y redondeos | T008 | COMPLETE (E0) |
+| FR-008 | US2 | Preservar contrato observado | nutricion objetivos conservan referencia actividad direccion y sugerencia | T009 | COMPLETE (E0) |
+| FR-009 | US2 | Preservar contrato observado | nutricion objetivos conservan edicion efecto automatico y montaje | T010 | COMPLETE (E0) |
+| FR-010 | US2 | Preservar contrato observado | nutricion adherencia conserva ventana dias registrados y umbral | T011 | COMPLETE (E0) |
+| FR-011 | US3 | Preservar contrato observado | nutricion alertas conservan mantenimiento proteina y otras metricas | T012 | COMPLETE (E0) |
+| FR-012 | US3 | Preservar contrato observado | nutricion metricas conservan series medias ventanas y macros | T013 | COMPLETE (E0) |
+| FR-013 | US3 | Preservar contrato observado | nutricion ritmo conserva guardas ventana limites y redondeos | T014 | COMPLETE (E0) |
+| FR-014 | US3 | Preservar contrato observado | nutricion ritmo conserva aplicar descartar snapshot y deshacer | T015 | COMPLETE (E0) |
+| FR-015 | US3 | Preservar contrato observado | nutricion real esperado conserva ancla direccion y proyeccion | T016 | COMPLETE (E0) |
+| FR-016 | US3 | Preservar contrato observado | nutricion consumidores y previews conservan contratos y fachadas | T017 | COMPLETE (E0) |
+| US1-AS1 | US1 | FR-001, FR-002 | nutricion catalogo y migracion conservan valores y unidades; nutricion alimentos conservan crud conversiones orden y deduplicacion | T002, T003 | COMPLETE (E0) |
+| US1-AS2 | US1 | FR-003 | nutricion recetas conservan ingredientes porciones y snapshots | T004 | COMPLETE (E0) |
+| US1-AS3 | US1 | FR-004 | nutricion busqueda conserva fuentes limites recientes y navegacion | T005 | COMPLETE (E0) |
+| US1-AS4 | US1 | FR-005 | nutricion cantidad conserva validacion escalado guardado y retorno | T006 | COMPLETE (E0) |
+| US1-AS5 | US1 | FR-006 | nutricion diario nutricional conserva totales grupos fechas y borrado | T007 | COMPLETE (E0) |
+| US2-AS1 | US2 | FR-007 | nutricion proteina conserva clamps reparto etiquetas y redondeos | T008 | COMPLETE (E0) |
+| US2-AS2 | US2 | FR-008 | nutricion objetivos conservan referencia actividad direccion y sugerencia | T009 | COMPLETE (E0) |
+| US2-AS3 | US2 | FR-009 | nutricion objetivos conservan edicion efecto automatico y montaje | T010 | COMPLETE (E0) |
+| US2-AS4 | US2 | FR-010 | nutricion adherencia conserva ventana dias registrados y umbral | T011 | COMPLETE (E0) |
+| US3-AS1 | US3 | FR-011 | nutricion alertas conservan mantenimiento proteina y otras metricas | T012 | COMPLETE (E0) |
+| US3-AS2 | US3 | FR-012 | nutricion metricas conservan series medias ventanas y macros | T013 | COMPLETE (E0) |
+| US3-AS3 | US3 | FR-013 | nutricion ritmo conserva guardas ventana limites y redondeos | T014 | COMPLETE (E0) |
+| US3-AS4 | US3 | FR-014 | nutricion ritmo conserva aplicar descartar snapshot y deshacer | T015 | COMPLETE (E0) |
+| US3-AS5 | US3 | FR-015 | nutricion real esperado conserva ancla direccion y proyeccion | T016 | COMPLETE (E0) |
+| US3-AS6 | US3 | FR-016 | nutricion consumidores y previews conservan contratos y fachadas | T017 | COMPLETE (E0) |
 
 ## Aprobación
 
 El 2026-10-18 el propietario respondió «Aprobar alcance y las tres aclaraciones»
 a la propuesta de 16 FR AS-IS y 15 escenarios. Alcance y C-001/002/003 aprobados.
-Plan, tareas, analyze, implementación e integración sujetos a sus puertas posteriores.
+El 2026-10-18 el propietario aprobó plan, tareas y revisión y autorizó ejecución
+local E0–E5 antes del merge documental. Integración/despliegue no autorizados.

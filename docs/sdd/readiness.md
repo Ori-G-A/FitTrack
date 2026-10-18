@@ -108,3 +108,10 @@ El piloto no equivale a los pins completos de los 11 FR y 10 escenarios.
 actual. La revisión humana aún debe comprobar cada cláusula del contrato.
 El plan revisado espera aprobación; tareas, analyze, PR documental y extracción
 productiva permanecen pendientes. No se declara M0 ni M1 completado.
+
+## Baseline 004 — 2026-10-18
+
+Plan aprobado y ejecución local autorizada. Sobre src original2a70042:260 Node,
+9 Chromium,31/31 contratos004 y build verdes. Cuatro mutaciones detectadas,
+22 pins anteriores intactos. [Baseline](../../specs/004-nutricion-objetivos/evidence/baseline.json).
+No se declara implementación004 completa ni RLS renovada; T020–T028 pendientes.

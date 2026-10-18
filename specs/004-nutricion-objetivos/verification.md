@@ -33,3 +33,10 @@ La propuesta inicial comprobó seis enlaces en su selección mínima; la revisi�
 ampliada posterior comprobó 57. Son checkpoints documentales anteriores al plan.
 BASE: 2a7004277bd75d87fdf9746c90853b4c34eac044. CI y Production del PR9 son
 evidencia de integración003 y no se reutilizan como contrato004.
+
+## E0 ejecutada — 2026-10-18
+
+Plan y ejecución local aprobados en5b5fb83. Baseline original:260/260 Node,
+9/9 Chromium,31/31 IDs completos, build correcto y22 hashes previos intactos.
+Cuatro mutaciones en memoria detectadas; no se escribieron cambios mutados en src.
+[Baseline inmutable](evidence/baseline.json). RLS se renovará en cierre T026.

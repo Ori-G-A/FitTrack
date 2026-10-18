@@ -1,0 +1,202 @@
+{
+  "status": "G-PIN passed before production extraction",
+  "generatedAt": "2026-10-18T15:11:33.421Z",
+  "codeRevision": "2a7004277bd75d87fdf9746c90853b4c34eac044",
+  "approvalRevision": "5b5fb83072ce4b1eaa88e1ea4f8d400c8f37defd",
+  "node": "v24.21.0",
+  "sourceHash": "fdc3035ffa97ba1af277c5bcb87565f0a03d65a2dbdb9c6242d6917d67d797bd",
+  "nodeTests": 260,
+  "nodePassed": 260,
+  "browserPassed": 9,
+  "traceability": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 31
+  },
+  "pinHashEncoding": "UTF-8 with CRLF normalized to LF",
+  "pins": [
+    {
+      "file": "test/nutrition-adherence.test.js",
+      "sha256": "9a76f7f47030722b98a114f01b9e04be3474fcde65823072650acc7af6600c6f"
+    },
+    {
+      "file": "test/nutrition-alerts.test.js",
+      "sha256": "9a5111383bf015d4943b791f56dba29f48a5c4fe56744af7b668c0dbe72223d4"
+    },
+    {
+      "file": "test/nutrition-amount.test.js",
+      "sha256": "cdf91809f34200e42480e3d4952ebaed344e91da9371551caf4d4f5e49033ca6"
+    },
+    {
+      "file": "test/nutrition-auto-goals.test.js",
+      "sha256": "2c35254019a6f6810aef8c4bf6801ad6345fb5de191d0aa9af858d3c76a2b805"
+    },
+    {
+      "file": "test/nutrition-catalog.test.js",
+      "sha256": "3fdbe7c3b788ef03488e0df5055b324a21242ff38a65f53f6c2c33230d8105a7"
+    },
+    {
+      "file": "test/nutrition-compatibility.test.js",
+      "sha256": "ce09db733b5bb411c7ef26f7530531f176c009cdbe76f808a48d219659996e55"
+    },
+    {
+      "file": "test/nutrition-dashboard.test.js",
+      "sha256": "3295012641d6110973656023177cc5183a3950eb4dc861c6ad793a795080c6f3"
+    },
+    {
+      "file": "test/nutrition-day.test.js",
+      "sha256": "90080d6a5a994a4c95de76c736957f06ee471275ed0426e1c8b3d0cda13ae5c0"
+    },
+    {
+      "file": "test/nutrition-expected.test.js",
+      "sha256": "16cf2112a5cffc64322766ed5333848e0f391b936919da330062efdaa128bd32"
+    },
+    {
+      "file": "test/nutrition-foods.test.js",
+      "sha256": "56c464f2175c851bcf98994ac879091fe2f05b44128f81fa43f75f604ffe1795"
+    },
+    {
+      "file": "test/nutrition-goals.test.js",
+      "sha256": "2a60db9cbc18d144554f2de7802d641340555287f5d5636a53915bce131f3641"
+    },
+    {
+      "file": "test/nutrition-pace-actions.test.js",
+      "sha256": "9e25400ebf95d255bb177c0448c052f82e465119548674adb88169093c51529c"
+    },
+    {
+      "file": "test/nutrition-pace.test.js",
+      "sha256": "5871e6df81c2677c95804e1ea2f6addeb086ef8f95f1c8bfe2030326c18dec13"
+    },
+    {
+      "file": "test/nutrition-protein.test.js",
+      "sha256": "c220561440589e5333dabd7476951305a67688b2654ac09ea56d335408506f28"
+    },
+    {
+      "file": "test/nutrition-recipes.test.js",
+      "sha256": "b1cb18bb46794d0f560e69b22734b81935583dfb78c2e9e442afeec9a797ab75"
+    },
+    {
+      "file": "test/nutrition-search.test.js",
+      "sha256": "a2f69c3af8fc5c0aa3f983530ed4c7c72de2198ef2ba29de3026682c7d7fbf69"
+    },
+    {
+      "file": "test/nutrition-sensitivity.test.js",
+      "sha256": "069a8b60974933deac3d4e386de20ab470c31238f237f0f4a65f7479dbf09d3b"
+    },
+    {
+      "file": "browser-tests/nutrition.spec.js",
+      "sha256": "6f773eb85a56d7f2ff1a4f17ab306bf185e7ea067c4e199184637d4cf4fb01af"
+    }
+  ],
+  "previousPinsVerified": [
+    {
+      "file": "test/training-compatibility.test.js",
+      "sha256": "7c999dfdcb0e39a75c52fbbe795daaf51ece1632f056f6d5b50d9c2baeb12ad8"
+    },
+    {
+      "file": "test/training-duration.test.js",
+      "sha256": "78cc73cd495ebd161e068585a6cd87f865ae6bae8b76dfd804783da0a2252a1d"
+    },
+    {
+      "file": "test/training-guided.test.js",
+      "sha256": "7fd9241f87316fc9b413595403b2a6a489542029159b072dd6b9e40467354b9b"
+    },
+    {
+      "file": "test/training-metrics.test.js",
+      "sha256": "95639b1822b632b612972ee2a1592f16e14f9b126f76b9d7df67cb90889f65e7"
+    },
+    {
+      "file": "test/training-mutants.test.js",
+      "sha256": "805653ac9e95508107452180002311bbb75f7f346fb383bab0ab949aaee87257"
+    },
+    {
+      "file": "test/training-plan.test.js",
+      "sha256": "efaf128dc9f3e4474fbb33270714e44465d384020f74676f520d4d5b6a239dfa"
+    },
+    {
+      "file": "test/training-records.test.js",
+      "sha256": "7eb36d93b9815385058a0482ef255e70d89c43354d2021ef83c92e8bf03c6630"
+    },
+    {
+      "file": "test/training-routines.test.js",
+      "sha256": "e2e399e4687b00dce34b3176f6517a4d282b208ce70f4622ed76db9081c7996e"
+    },
+    {
+      "file": "test/training-timer.test.js",
+      "sha256": "43290d78000726ef3d9866b285aa80e8dd36fd4bf421a26f286f00fc3fafdb8e"
+    },
+    {
+      "file": "test/training-trace.test.js",
+      "sha256": "c077c3f4025db4d15eb8e7668eb14f032366126abaf7b79352c7577f7212e91a"
+    },
+    {
+      "file": "browser-tests/training-journeys.spec.js",
+      "sha256": "871bf0d0d7b6b2f5abdbfee22bb35afae6a15caeb1623541c29c7c00f0c8c217"
+    },
+    {
+      "file": "test/data-backup.test.js",
+      "sha256": "2470c825c95980c7222221726a60c1618adb8f4a7e46c0fcd2daa3ee481c32de"
+    },
+    {
+      "file": "test/data-delete.test.js",
+      "sha256": "a9c636f883e932f7b3320c4b281ae40ec1da6d51bb8add042e2ecbdb79d25cd7"
+    },
+    {
+      "file": "test/data-lifecycle.test.js",
+      "sha256": "3e3d05a0335e3abc0eea810014946b7cb3a82e1514cbe6da08d430d5f62ff920"
+    },
+    {
+      "file": "test/data-operations.test.js",
+      "sha256": "3c7f2a9f1fc894cae009187a915a258c22261502bd50a47e03fb48f183d7a6db"
+    },
+    {
+      "file": "test/data-sync-hooks.test.js",
+      "sha256": "5b825bc66fe3015eb4d96f24443c7b42d02d8917abc8d9eb2fd786c4a56bf5e6"
+    },
+    {
+      "file": "test/data-sync.test.js",
+      "sha256": "faff2b66e94c9d0c8711dc2e17edea5ac6bbee7a612e37ce75d78531b2b6f5dd"
+    },
+    {
+      "file": "test/identity-auth.test.js",
+      "sha256": "f1c86293737a4e4e7cc3296541ae8406f640098adf8afb702daff9cda11e1374"
+    },
+    {
+      "file": "test/identity-diagnostics.test.js",
+      "sha256": "5487267be2445f5139a9d9ae47e7c27651bf325ed4cad7b898ed95141f8a9092"
+    },
+    {
+      "file": "test/identity-photos.test.js",
+      "sha256": "5271ff038be539e89dc6046aad62b7569ae05bba92e112e3e76b95a72ca8da7c"
+    },
+    {
+      "file": "test/identity-recovery.test.js",
+      "sha256": "40cbbb6945192e1e615b9d9837b96c8a6438aae650579b3fb3d9f26ae16472e0"
+    },
+    {
+      "file": "test/identity-session.test.js",
+      "sha256": "e39c2a783a1a84d1dec61a824d278f16557ce3165b432a63a05ff9d4e0109bff"
+    }
+  ],
+  "build": {
+    "passed": true,
+    "log": "test-results/nutrition-base-build.log",
+    "warning": "Existing chunk size over 500 kB"
+  },
+  "commands": [
+    "pnpm exec node --version",
+    "pnpm exec node --test --test-isolation=none test/nutrition-*.test.js",
+    "pnpm exec playwright test browser-tests/nutrition.spec.js",
+    "pnpm run test:sdd:complete --spec=004-nutricion-objetivos",
+    "pnpm run build"
+  ],
+  "limitations": [
+    "NUTR-001: Infinity passes amount > 0; numeric conversions remain unequal",
+    "NUTR-002: metrics preserve unequal windows and future-entry handling",
+    "NUTR-003: automatic goals run only while Settings is mounted, including datos",
+    "Old preview/maqueta retains its nutrition placeholder; main preview mounts Nutrition",
+    "RLS not renewed in E0; required at T026; no real backend used"
+  ],
+  "mutationsDetected": 4,
+  "remoteCI": "not_observed"
+}
