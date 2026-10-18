@@ -30,7 +30,14 @@ se evalúan después; esta revisión no certifica resultados runtime.
 ## Revisión de implementación
 
 E1–E4 verificadas; arquitectura, consumidores, ventanas, callbacks y pins
-comprobados en E5. CI004 configurado, sin resultado remoto observado.
+comprobados en E5. CI 004 configurado, sin resultado remoto observado.
 El [converge](converge.md) mantiene abierto T029/RLS y G-CLOSE; no hay
 aceptación final ni integración declaradas. La tabla inicial describe el plan
 antes de ejecutar; la evidencia vigente se enlaza desde converge.
+
+## Cierre local posterior
+
+GAP-001 resuelto: fixture anterior retirado con guardas y RLS renovada3/3 con
+cleanup. Gate002 completo 23/23; cuatro contratos completos sobre el mismo
+hash. 29 tareas completadas y converge sin gaps locales. La sección anterior
+conserva el checkpoint bloqueado; [resumen vigente](evidence/final.json).

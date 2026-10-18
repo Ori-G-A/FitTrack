@@ -219,3 +219,12 @@ El propietario respondió «Aprobar plan, tareas y revisión; autorizar ejecuci�
 a la propuesta concreta en 3d3e20b. Autoriza E0–E5 antes de integrar el PR
 documental, con baseline original bloqueante y RLS real desechable en cierre.
 No autoriza CHANGE, publicación, integración ni despliegue de004.
+
+## Continuación y cierre local 004 — 2026-10-18
+
+El propietario indicó «continua» después de informar que revisaría Docker.
+El motor volvió a responder; se retomó T029 dentro de E0–E5 ya autorizada.
+Fixture anterior retirado con guardas, nueva RLS 3/3 y cleanup verificado;
+gate 002 repetido íntegro y cuatro contratos completos.
+[Resumen final](../../specs/004-nutricion-objetivos/evidence/final.json).
+No se infiere aceptación final ni autorización para publicar, integrar o desplegar.

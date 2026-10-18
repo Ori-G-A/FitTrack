@@ -1,55 +1,42 @@
-# Verificación documental — 004
+# Verificación — 004
 
-Fecha: 2026-10-18. Alcance y C-001/002/003 aprobados en 1de618b;
-plan/tareas/analyze y ejecución local aprobados en 5b5fb83. Cierre pendiente de RLS.
-[Spec](spec.md), [checklist](checklist.md), [survey](../../docs/sdd/nutricion-objetivos-survey.md).
+Fecha: 2026-10-18. Estado: verificación local completa; pendiente de revisión del
+propietario e integración. Alcance/plan y ejecución local autorizados; sin CHANGE.
+[Resumen final](evidence/final.json), [converge](converge.md), [tareas](tasks.md).
 
-## Comprobación del plan (checkpoint documental histórico)
+## Resultados actuales
 
-Se ejecutó un verificador documental con assert y los módulos existentes
-scripts/sdd-contract.js y scripts/sdd-trace.js, usando Node global v26.5.0.
-No es una ejecución de la suite con Node 24.21.0 ni una baseline runtime.
+- Node 24.21.0, pnpm 11.11.0 declarados; Supabase CLI 2.121.0 para fixture local.
+- Gate002 repetido íntegramente tras recuperar Docker:23/23 contratos.
+- Suite: 263/263 pruebas Node; Chromium: 9/9, sin omisiones/reintentos.
+- RLS real:3/3; fixture nuevo retirado y cleanup confirmado. Fixture anterior
+  también retirado con verificación de propietario/ruta/nonce y cero contenedores.
+- Manifiestos001/002/003/004 completos:21/23/21/31 IDs respectivamente, usando
+  la misma colección fresca de resultados y sourceHash; verificador original.
+- Build correcto; aviso heredado de chunk>500kB. Sin SQL ni dependencias nuevas.
+- Ocho módulos puros y negativos transitivos; inferencia tras guardas;40 hashes
+  congelados intactos. NUTR-001/002/003 preservados.
+- 29 tareas completas, sin gaps locales; CI 004 configurado, sin resultado remoto.
 
-- Selector 004 válido; 31 IDs únicos: 16 FR y 15 escenarios.
-- Una fila individual por ID en manifiesto y tabla Traceability.
-- 16 grupos Node previstos, con nombres exactos/casos y tareas concretas;
-  tres recorridos Chromium y cuatro mutaciones descritos en validation-plan.
-- 28 tareas únicas; dependencias existentes, anteriores a la tarea y acíclicas.
-- plannedTests/plannedTaskIds corresponden a validación, tareas y matriz.
-- Manifiesto: 31 pending, tests vacíos; modo parcial sin errores.
-- Modo completo rechazado con 31 errores de cobertura incompleta, esperado.
-- 68 enlaces locales existentes entre propuesta, survey y registros revisados.
-- Sin placeholders de plantilla ni aclaraciones pendientes en artefactos004.
-- Diff contra BASE vacío en src, test, test-support, browser-tests, scripts,
-  supabase, package.json y lockfile. git diff --check correcto.
+## Comandos y evidencia
 
-Reporte diagnóstico ignorado: test-results/sdd-004-plan-check.json.
-No se ejecutaron pins004, suite, build, Chromium, instalación, auditoría ni RLS
-en esta entrega documental. No hay evidencia/baseline ni cobertura completa004.
+pnpm test:rls; pnpm run test:sdd:complete --spec=002-identidad-fotos; pnpm run build.
+Contraste de los cuatro manifiestos con scripts/sdd-trace.js y sdd-contract.js,
+misma colección y hash, sin repetir innecesariamente todas las pruebas por spec.
 
-## Evidencia histórica
+[Baseline previa a src](evidence/baseline.json), checkpoints
+[E1](evidence/e1.json), [E2](evidence/e2.json), [E3](evidence/e3.json),
+[E4](evidence/e4.json), [E5 histórico](evidence/e5.json),
+[RLS renovada](evidence/rls-final.json), [recuperación](evidence/recovery.json).
+Las evidencias fallidas previas no se reescriben como éxitos.
 
-La propuesta inicial comprobó seis enlaces en su selección mínima; la revisión
-ampliada posterior comprobó 57. Son checkpoints documentales anteriores al plan.
-BASE: 2a7004277bd75d87fdf9746c90853b4c34eac044. CI y Production del PR9 son
-evidencia de integración003 y no se reutilizan como contrato004.
+## Límites
 
-## E0 ejecutada — 2026-10-18
+No instalación limpia/auditoría nuevas: no cambió el lockfile. RLS es local
+con guardas, no contra backend real ni .env.local. No se declaró aprobación
+clínica. KD-002 sigue para el resto del proyecto. Sin publicación, merge ni
+despliegue004, ni aceptación final del propietario inferida desde «continua».
 
-Plan y ejecución local aprobados en 5b5fb83. Baseline original: 260/260 Node,
-9/9 Chromium, 31/31 IDs completos, build correcto y22 hashes previos intactos.
-Cuatro mutaciones en memoria detectadas; no se escribieron cambios mutados en src.
-[Baseline inmutable](evidence/baseline.json). RLS se renovará en cierre T026.
-
-## Checkpoint actual de código
-
-E1–E4 pasaron suite, build y Chromium. E5: 263/263 Node, 9/9 Chromium, 31/31
-contratos de 004, ocho módulos puros y 40 hashes de pins intactos.001 y003:21/21
-cada una, verificados con los mismos resultados y sourceHash; 002 bloqueada
-por RLS actual fallida. [Detalle](converge.md), [E5](evidence/e5.json),
-[regresiones](evidence/regressions.json), [RLS](evidence/rls-local.json).
-No hay instalación/auditoría nuevas: dependencias y SQL no cambiaron.
-
-Revisión documental posterior:85 enlaces locales existentes,29 tareas únicas
-con dependencias acíclicas (T029 añadida), manifiesto31/31 frente a resultados
-actuales y git diff --check correcto. T026 y cierre global siguen bloqueados.
+Revisión documental final:110 enlaces locales existentes,29 tareas completas
+con dependencias acíclicas y git diff --check correcto. Sin cambios de runtime
+después del checkpoint final; las evidencias históricas permanecen intactas.

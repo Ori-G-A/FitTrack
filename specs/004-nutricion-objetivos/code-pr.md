@@ -1,24 +1,30 @@
-# Borrador de revisión — no listo para integración
+# Título previsto
 
-Título previsto: Separar nutrición, objetivos y métricas preservando su comportamiento
+Separar nutrición, objetivos y métricas preservando su comportamiento
 
-Nutrición, Biblioteca, Ajustes, Diario y Métricas mezclaban cálculo y coordinación.
-La extracción lleva catálogo/proteína, normalización, registros, objetivos y
-métricas a ocho módulos puros, manteniendo las APIs anteriores y el momento de
-actualización de cada pantalla. Cantidades y recetas conservan snapshots,
-conversiones y diferencias de validación y fechas del comportamiento existente.
+# Cuerpo preparado para revisión
 
-Validación: baseline previa a src;18 archivos de pins propios y 22 anteriores
-intactos. Checkpoint actual: 263 Node, 9 Chromium, 31/31 contratos de 004 y build verde.
-001/003:21/21 cada una sobre los mismos resultados. Límites transitivos y cuatro
-mutaciones comprobados; CI de 004 configurado, sin resultado remoto observado.
+Nutrición, Biblioteca, Ajustes, Diario y Métricas mezclaban cálculos con
+coordinación. La extracción lleva catálogo/proteína, normalización, registros,
+objetivos y métricas a ocho módulos puros y conserva las APIs anteriores.
+Por ejemplo, una receta sigue guardando snapshots y grams=null; autoMacros
+continúa ejecutándose solo mientras Ajustes está montado, también en datos.
 
-Bloqueo: RLS real desechable no ejecutada por fallo de arranque Docker; cleanup
-sin confirmar. 002 y G-CLOSE no están aprobados. [Converge](converge.md),
-[evidencia](evidence/e5.json), [RLS](evidence/rls-local.json). Resolver T029 y
-repetir el checkpoint002 antes de convertir este borrador en entrega final.
+Validación local: baseline previa a src;18 archivos de pins propios y 22 anteriores
+intactos;263 Node, 9 Chromium, build correcto y 3 contratos RLS reales con
+cleanup. Gate002 repetido íntegro; manifiestos 001/002/003/004:21/23/21/31 IDs
+completos sobre los mismos resultados/hash. Cuatro mutaciones detectadas y
+límites transitivos comprobados. Las 29 tareas completadas, converge sin gaps locales.
+[Resumen final](evidence/final.json), [converge](converge.md),
+[RLS renovada](evidence/rls-final.json), [recuperación previa](evidence/recovery.json).
 
-Sin SQL ni dependencias nuevas. NUTR preservados; algoritmos de peso/ciclo y
-rediseño visual fuera. Rollback revierte código por entrega sin migrar datos.
-Publicación, aceptación final, integración y despliegue requieren sus decisiones
-posteriores; no se han solicitado como si RLS estuviera completa.
+CI 004 añadido conservando los gates anteriores; todavía sin resultado remoto.
+Sin SQL ni dependencias nuevas. NUTR preservados; inferencia de peso/ciclo y
+rediseño visual fuera. El build conserva aviso de chunk>500kB; la maqueta antigua
+mantiene su marcador de Nutrición. No se afirma prueba RLS sobre producción.
+
+Orden previsto: revisión del propietario, autorización/publicación de la rama y PR,
+CI remoto verde sobre el head revisado, decisión de integración y autorización
+expresa del despliegue automático de Vercel. No hay autorización permanente de
+entregas anteriores. Rollback revierte código por entrega sin migrar datos.
+PR preparado; no publicado, fusionado ni desplegado004.

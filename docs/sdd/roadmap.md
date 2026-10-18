@@ -275,3 +275,13 @@ E1–E4 verificadas por entrega; checkpoint actual: 263 Node, 9 Chromium, 31/31 
 acceso al socket dockerInference denegado. Intento RLS actual fallido, cleanup
 sin confirmar y fixture propio conservado para recuperación. T029 añadida;
 [converge](../../specs/004-nutricion-objetivos/converge.md). No hay integración de 004.
+
+## Verificación local 004 completa — 2026-10-18
+
+T029 resuelta al volver a responder Docker. Fixture anterior retirado con
+guardas y nuevo RLS 3/3, cleanup confirmado. Gate002 repetido íntegramente;
+263 Node, 9 Chromium, build y contratos 001/002/003/004 completos sobre el mismo
+hash. 29 tareas completadas, sin gaps locales.
+[Converge](../../specs/004-nutricion-objetivos/converge.md),
+[PR preparado](../../specs/004-nutricion-objetivos/code-pr.md).
+M5 sigue pendiente de revisión e integración; KD-002 continúa para áreas restantes.

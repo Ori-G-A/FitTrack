@@ -30,9 +30,9 @@ Estado: APROBADAS para ejecución local E0–E5 el 2026-10-18. [Plan](plan.md), 
 | T023 | US2/US3; FR-010/011/012/016; US2-AS4, US3-AS1/2/6 | E4: métricas y consumidores; ventanas y avisos ajenos intactos; checkpoint. | T022 | Completada |
 | T024 | US3; FR-016; US3-AS6; capas de todos los FR | Prueba de arquitectura transitiva y negativos; APIs/consumidores, inventario de llamadas y revisión de diferencias. | T023 | Completada |
 | T025 | US1/US2/US3; todos los FR/escenarios | Añadir gate 004 a CI conservando001/002/003 y RLS; contrastar manifiesto con resultados reales completos. | T024 | Completada |
-| T026 | US1/US2/US3; todos los FR/escenarios | G-CLOSE: renovar RLS desechable con limpieza, suite/build/Chromium y gates001/002/003/004 del mismo src; hashes congelados. | T025,T029 | Bloqueada por RLS |
-| T027 | US1/US2/US3; todos los FR/escenarios | Converge contra spec/plan/constitución; añadir tareas ante gaps, revisar NUTR y KD-002 sin retirar esta globalmente. | T026 | Pendiente |
-| T028 | US1/US2/US3; todos los FR/escenarios | Preparar PR de código con evidencia, omisiones y rollback; entregar revisión al propietario, sin publicar/fusionar/desplegar. | T027 | Pendiente |
+| T026 | US1/US2/US3; todos los FR/escenarios | G-CLOSE: renovar RLS desechable con limpieza, suite/build/Chromium y gates001/002/003/004 del mismo src; hashes congelados. | T025,T029 | Completada |
+| T027 | US1/US2/US3; todos los FR/escenarios | Converge contra spec/plan/constitución; añadir tareas ante gaps, revisar NUTR y KD-002 sin retirar esta globalmente. | T026 | Completada |
+| T028 | US1/US2/US3; todos los FR/escenarios | Preparar PR de código con evidencia, omisiones y rollback; entregar revisión al propietario, sin publicar/fusionar/desplegar. | T027 | Completada |
 
 ## Dependencias y revisión inicial
 
@@ -58,12 +58,13 @@ Node 24.21.0. Fallos iniciales de fixtures/selectores corregidos y checkpoints r
 
 | ID | Historia y contrato | Resultado/tarea añadida | Depende de | Estado |
 | --- | --- | --- | --- | --- |
-| T029 | US3; FR-016, US3-AS6; G-CLOSE y regresión de 002 | Recuperar motor Docker local; verificar propietario y retirar fixture previo conservado; renovar RLS con 3 resultados reales y cleanup; repetir íntegramente gate 002. | T025 | Bloqueada por entorno |
+| T029 | US3; FR-016, US3-AS6; G-CLOSE y regresión de 002 | Recuperar motor Docker local; verificar propietario y retirar fixture previo conservado; renovar RLS con 3 resultados reales y cleanup; repetir íntegramente gate 002. | T025 | Completada |
 
-T029 se añade sin reescribir tareas completadas. Bloquea T026 y, por tanto,
-aceptación final T027 y PR de código listo T028. No se restaura evidencia RLS antigua.
+T029 se añadió sin reescribir tareas completadas. Su bloqueo quedó resuelto
+al volver a responder Docker; la evidencia fallida anterior se conserva.
+T026/T027/T028 completadas localmente; aceptación del propietario e integración pendientes.
 
-## Checkpoint E1–E5 — 2026-10-18
+## Checkpoint E1–E5 — 2026-10-18 (antes de recuperar RLS)
 
 E1–E4 completadas en 1ae9aa4/f4c055b/6671a77/32bdae8, con 260 Node y 9 Chromium
 por entrega y build correcto. T024 comprobó ocho módulos puros, negativos,
@@ -72,3 +73,13 @@ orden de inferencia y 40 hashes congelados. T025 configuró CI de 004 conservand
 31/31 IDs de 004; 001 y 003: 21/21 sobre los mismos resultados/hash. 002 no se declara
 completo: su intento RLS actual falló antes de ejecutar contratos y no permite
 confirmar cleanup. [Estado de cierre](converge.md), [evidencia](evidence/e5.json).
+
+## Cierre de T029 y verificación local completa
+
+Motor Docker disponible; fixture anterior retirado con propietario, nonce y
+ruta verificados, cero contenedores y temporal eliminado. Nuevo RLS:3/3, cleanup
+correcto. Gate002 repetido íntegro:23/23 IDs, 263 Node, 9 Chromium.
+Los cuatro manifiestos se verificaron con esa misma colección/hash:001: 21/21,
+002: 23/23,003: 21/21,004: 31/31. Build correcto y 40 hashes intactos. Las 29 tareas
+quedan completadas; converge sin gaps locales y PR preparado para revisión
+del propietario. [Resumen final](evidence/final.json). Sin publicación/integración/despliegue.

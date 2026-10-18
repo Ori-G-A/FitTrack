@@ -182,3 +182,10 @@ El 2026-10-18 el propietario respondió «Aprobar alcance y las tres aclaracione
 a la propuesta de 16 FR AS-IS y 15 escenarios. Alcance y C-001/002/003 aprobados.
 El 2026-10-18 el propietario aprobó plan, tareas y revisión y autorizó ejecución
 local E0–E5 antes del merge documental. Integración/despliegue no autorizados.
+
+## Verificación local final
+
+E0–E5 y recuperación T029 verificadas:263 Node, 9 Chromium,3 RLS reales con
+cleanup.004: 31/31 IDs y regresiones001/002/003 completas con el mismo hash.
+[Resumen vigente](evidence/final.json). Sin aceptación final, publicación,
+integración ni despliegue inferidos.

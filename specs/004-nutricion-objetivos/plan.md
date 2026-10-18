@@ -87,3 +87,10 @@ omitidas/reintentadas, revisión de aserciones, build y límites de arquitectura
 plannedTests no equivale a tests ejecutados. KD-002 sigue para el resto del proyecto.
 NUTR-001/002/003 se reproducen y preservan; discrepancias de caracterización se
 documentan antes de extraer y cualquier cambio de conducta necesita CHANGE.
+
+## Estado de ejecución
+
+E0–E5 y T029 verificadas localmente; cierre RLS renovado y gate 002 repetido
+íntegramente. [Converge final](converge.md), [evidencia](evidence/final.json).
+La ejecución local previa al merge documental fue autorizada en 5b5fb83.
+Revisión del propietario e integración pendientes.

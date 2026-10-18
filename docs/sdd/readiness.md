@@ -124,3 +124,12 @@ La ejecución RLS actual falló por motor Docker inaccesible (socket de inferenc
 cleanup no confirmado. No se restaura evidencia previa ni se declara completo002.
 [Acción pendiente](../../specs/004-nutricion-objetivos/converge.md):T029 y repetición
 íntegra de 002 con RLS. Sin cambios SQL/dependencias ni publicación/integración/despliegue.
+
+## Cierre local 004 completo — 2026-10-18
+
+Docker volvió a responder; T029 resuelta con recuperación del fixture previo
+y RLS renovada3/3 con cleanup. Gate002 repetido íntegramente:23/23 IDs,
+263 Node, 9 Chromium y build correcto. Contratos001/002/003/004:21/23/21/31
+completos sobre los mismos resultados/hash;40 pins intactos.
+[Resumen final](../../specs/004-nutricion-objetivos/evidence/final.json).
+Las 29 tareas completas; revisión del propietario e integración pendientes.

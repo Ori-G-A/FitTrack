@@ -1,6 +1,6 @@
 {
   "spec": "004-nutricion-objetivos",
-  "note": "E0–E4 ejecutados y pins conservados. Checkpoint de código E5:263 Node,9 Chromium y31 IDs completos. G-CLOSE pendiente de renovar RLS y gate002; CI remoto no observado.",
+  "note": "E0–E5 y T029 verificados localmente:263 Node,9 Chromium,3 RLS con cleanup;31 IDs completos. Cuatro contratos verdes y40 hashes intactos. Integración y CI remoto pendientes.",
   "requirements": [
     {
       "id": "FR-001",
