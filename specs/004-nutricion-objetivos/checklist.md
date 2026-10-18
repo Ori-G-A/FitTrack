@@ -13,7 +13,7 @@ Fecha: 2026-10-18. Revisión documental del agente, no aceptación del propietar
 - [x] Manifiesto inicial pending, sin nombres fingidos de pruebas ejecutadas.
 - [x] Propietario aprueba alcance y C-001/002/003.
 - [x] Plan, tareas y analyze preparados para revisión.
-- [ ] Plan, tareas y analyze aprobados; ejecución local autorizada.
+- [x] Plan, tareas y analyze aprobados; ejecución local autorizada.
 - [ ] Pins completos ejecutados sobre original antes de extraer.
 
 El alcance aprobado autoriza preparar el plan; este aún no autoriza código productivo ni integración.

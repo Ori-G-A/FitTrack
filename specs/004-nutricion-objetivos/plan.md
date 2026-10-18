@@ -1,6 +1,6 @@
 # Plan técnico — 004-nutricion-objetivos
 
-Estado: PROPUESTO; pendiente de aprobación de plan/tareas/analyze y ejecución local.
+Estado: APROBADO para ejecución local E0–E5 el 2026-10-18.
 Alcance aprobado el 2026-10-18 en 1de618b. [Spec](spec.md), [research](research.md),
 [validación](validation-plan.md), [tareas](tasks.md), [revisión](analyze.md).
 BASE productiva: 2a7004277bd75d87fdf9746c90853b4c34eac044. Los commits documentales

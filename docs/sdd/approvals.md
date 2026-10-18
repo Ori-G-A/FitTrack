@@ -212,3 +212,10 @@ concreta de aprobar 16 FR AS-IS, 15 escenarios y C-001/002/003. Se autoriza
 preparar plan, tareas y analyze. Se preservan diferencias numéricas y temporales
 y quedan fuera cambios clínicos y algoritmos de peso/ciclo. No se infiere
 aprobación del plan, ejecución local, publicación, integración ni despliegue.
+
+## Plan 004 aprobado y ejecución local autorizada — 2026-10-18
+
+El propietario respondió «Aprobar plan, tareas y revisión; autorizar ejecución local»
+a la propuesta concreta en 3d3e20b. Autoriza E0–E5 antes de integrar el PR
+documental, con baseline original bloqueante y RLS real desechable en cierre.
+No autoriza CHANGE, publicación, integración ni despliegue de004.

@@ -1,7 +1,7 @@
 # Revisión cruzada — 004
 
-Fecha: 2026-10-18. Revisión documental del agente; pendiente de aceptación del
-propietario. [Spec](spec.md), [plan](plan.md), [tareas](tasks.md),
+Fecha: 2026-10-18. Revisión documental del agente; aprobada por el
+propietario junto al plan y tareas. [Spec](spec.md), [plan](plan.md), [tareas](tasks.md),
 [validación](validation-plan.md), [research](research.md).
 
 | Control | Resultado documental | Límite |

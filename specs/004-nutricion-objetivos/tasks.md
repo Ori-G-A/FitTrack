@@ -1,6 +1,6 @@
 # Tareas — 004-nutricion-objetivos
 
-Estado: PROPUESTAS; ninguna ejecutada. [Plan](plan.md), [validación](validation-plan.md),
+Estado: APROBADAS para ejecución local E0–E5 el 2026-10-18. [Plan](plan.md), [validación](validation-plan.md),
 [analyze](analyze.md). Adaptación de la plantilla local de tareas. Todas AS-IS.
 
 | ID | Historia y contrato | Resultado/tarea | Depende de | Estado |
