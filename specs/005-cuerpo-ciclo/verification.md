@@ -1,6 +1,7 @@
 # Verificación documental de propuesta 005
 
-Fecha: 2026-10-18. Alcance y aclaraciones aún pendientes.
+Checkpoint inicial: 2026-10-18, antes de aprobar alcance y aclaraciones.
+Actualización de planificación al final de este informe.
 BASE: 02ab5193f9d01e0037e9640626b25742e5224a5a.
 
 Se revisaron survey, spec, checklist y manifiesto, además de la sincronización
@@ -29,3 +30,30 @@ Chromium, build ni RLS nuevos por tratarse de documentación. Los resultados
 
 Siguiente puerta: aprobación del propietario del alcance y C-001/002/003;
 plan, tareas y analyze se prepararán después para aprobación separada.
+
+## Planificación tras aprobar alcance — 2026-10-18
+
+El propietario respondió «continua» a la pregunta explícita de alcance y
+C-001/002/003. Se registró aprobación y se prepararon plan, research, 33 tareas,
+validación, analyze y borrador de PR documental. Plan y ejecución local pendientes.
+
+Comprobaciones documentales ejecutadas con Node global mediante assertions:
+
+- 40 IDs únicos y 40 filas individuales coincidentes con el manifiesto.
+- 20 nombres de pruebas previstos distintos; cada FR y escenario enlaza archivo,
+  nombre y tarea; el contrato aparece en esa tarea y en validation-plan.
+- 33 tareas con referencias existentes y grafo acíclico; ninguna completada.
+- Cuatro recorridos Chromium previstos, sin declararlos implementados.
+- 40 filas pending con tests vacíos; verificador acepta modo documental y
+  rechaza modo completo con exactamente 40 errores de cobertura incompleta.
+- 108 enlaces locales comprobados en 12 documentos, incluyendo archivos nuevos.
+- git diff --check correcto y diff de producto vacío frente a BASE en src, test,
+  test-support, browser-tests, scripts, SQL, CI, package.json y lockfile.
+
+No se ejecutó pnpm, suite, build, navegador, RLS, instalación ni auditoría en
+esta etapa documental. El análisis cruzado no sustituye la baseline ni prueba
+que los módulos propuestos existan. Registro de aprobación no equivale a aceptar
+plan, publicar un PR, integrar ni desplegar.
+
+[Plan](plan.md), [tareas](tasks.md), [research](research.md),
+[validación](validation-plan.md), [analyze](analyze.md), [PR preparado](doc-pr.md).

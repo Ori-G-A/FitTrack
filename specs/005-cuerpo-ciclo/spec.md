@@ -1,6 +1,6 @@
 # Spec 005: Cuerpo y ciclo
 
-Estado: PROPUESTA, alcance y aclaraciones pendientes | Propietario: propietario de FitTrack | Fecha: 2026-10-18
+Estado: ALCANCE Y ACLARACIONES APROBADOS; plan pendiente | Propietario: propietario de FitTrack | Fecha: 2026-10-18
 Constitución: [1.0.2 ratificada](../../.specify/memory/constitution.md).
 BASE de observación: 02ab5193f9d01e0037e9640626b25742e5224a5a.
 [Survey](../../docs/sdd/cuerpo-ciclo-survey.md). No autoriza implementación.
@@ -137,60 +137,64 @@ cierre M6; una corrección posterior tendrá CHANGE separado y aprobación expl�
 
 ### Sesión 2026-10-18
 
-- C-001 [NEEDS CLARIFICATION]: ¿Incluir registros, motor y consumidores necesarios descritos, preservando las áreas dueñas 001–004? Recomendación: sí; permite una frontera completa sin trasladar reglas compartidas fuera del inventario.
-- C-002 [NEEDS CLARIFICATION]: ¿Conservar las diferencias numéricas, temporales, de borrador, visibilidad y claves BODY-001–005, separando correcciones? Recomendación: sí; evita cambios silenciosos durante extracción. Revisar al cierre M6.
-- C-003 [NEEDS CLARIFICATION]: ¿Preservar fórmulas, textos, confianza, desconocidos y provisionalidad actuales, sin validar clínicamente ni introducir consejo o fuentes nuevos? Recomendación: sí.
+- C-001 [APROBADA]: ¿Incluir registros, motor y consumidores necesarios descritos, preservando las áreas dueñas 001–004? Recomendación: sí; permite una frontera completa sin trasladar reglas compartidas fuera del inventario.
+- C-002 [APROBADA]: ¿Conservar las diferencias numéricas, temporales, de borrador, visibilidad y claves BODY-001–005, separando correcciones? Recomendación: sí; evita cambios silenciosos durante extracción. Revisar al cierre M6.
+- C-003 [APROBADA]: ¿Preservar fórmulas, textos, confianza, desconocidos y provisionalidad actuales, sin validar clínicamente ni introducir consejo o fuentes nuevos? Recomendación: sí.
 
-Estas respuestas y el alcance condicionan el plan; no hay decisión del dueño registrada todavía.
+Decisión: alcance y las tres recomendaciones aprobados mediante «continua» el
+2026-10-18, en respuesta directa a la solicitud conjunta de aprobación.
+Esto permite preparar el plan; su ejecución requiere aprobación separada.
 
 ## Traceability
 
-Archivo y prueba exacta se fijarán en el plan tras aprobar alcance. Las tareas aún
-no existen; PENDING aquí no equivale a una ejecución aprobada.
+Archivo, prueba prevista y tarea se enumeran en el plan propuesto. PENDING
+indica ausencia de ejecución; plannedTests no es evidencia de descubrimiento.
 
 | FR o escenario | Historia | Resultado | Archivo :: prueba | Tarea | Estado/evidencia |
 | --- | --- | --- | --- | --- | --- |
-| FR-001 | US1 | guardar un peso | PENDING | PENDING | PENDING |
-| FR-002 | US1 | registrar medidas | PENDING | PENDING | PENDING |
-| FR-003 | US1 | registrar bienestar | PENDING | PENDING | PENDING |
-| FR-004 | US1 | guardar check-in y conservar legado | PENDING | PENDING | PENDING |
-| FR-005 | US1 | abrir el registro correcto | PENDING | PENDING | PENDING |
-| FR-006 | US2 | reconstruir contexto de ciclo | PENDING | PENDING | PENDING |
-| FR-007 | US2 | estimar ovulación con procedencia | PENDING | PENDING | PENDING |
-| FR-008 | US2 | inferir fase e incertidumbre | PENDING | PENDING | PENDING |
-| FR-009 | US2 | resumir ciclos y segmentos | PENDING | PENDING | PENDING |
-| FR-010 | US2 | distribuir síntomas | PENDING | PENDING | PENDING |
-| FR-011 | US2 | recalcular y construir timeline | PENDING | PENDING | PENDING |
-| FR-012 | US2 | consultar guía y lecturas | PENDING | PENDING | PENDING |
-| FR-013 | US2 | ver ciclo en sus consumidores | PENDING | PENDING | PENDING |
-| FR-014 | US3 | consultar tendencia bruta | PENDING | PENDING | PENDING |
-| FR-015 | US3 | consultar ajuste de creatina | PENDING | PENDING | PENDING |
-| FR-016 | US3 | estimar retención lútea | PENDING | PENDING | PENDING |
-| FR-017 | US3 | consultar peso suavizado y proyección | PENDING | PENDING | PENDING |
-| FR-018 | US3 | interpretar avisos de cuerpo y fatiga | PENDING | PENDING | PENDING |
-| FR-019 | US3 | consultar métricas y diario de cuerpo | PENDING | PENDING | PENDING |
-| FR-020 | US3 | mantener integraciones previas | PENDING | PENDING | PENDING |
-| US1-AS1 | US1 | guardar un peso | PENDING | PENDING | PENDING |
-| US1-AS2 | US1 | registrar medidas | PENDING | PENDING | PENDING |
-| US1-AS3 | US1 | registrar bienestar | PENDING | PENDING | PENDING |
-| US1-AS4 | US1 | guardar check-in y conservar legado | PENDING | PENDING | PENDING |
-| US1-AS5 | US1 | abrir el registro correcto | PENDING | PENDING | PENDING |
-| US2-AS1 | US2 | reconstruir contexto de ciclo | PENDING | PENDING | PENDING |
-| US2-AS2 | US2 | estimar ovulación con procedencia | PENDING | PENDING | PENDING |
-| US2-AS3 | US2 | inferir fase e incertidumbre | PENDING | PENDING | PENDING |
-| US2-AS4 | US2 | resumir ciclos y segmentos | PENDING | PENDING | PENDING |
-| US2-AS5 | US2 | distribuir síntomas | PENDING | PENDING | PENDING |
-| US2-AS6 | US2 | recalcular y construir timeline | PENDING | PENDING | PENDING |
-| US2-AS7 | US2 | consultar guía y lecturas | PENDING | PENDING | PENDING |
-| US2-AS8 | US2 | ver ciclo en sus consumidores | PENDING | PENDING | PENDING |
-| US3-AS1 | US3 | consultar tendencia bruta | PENDING | PENDING | PENDING |
-| US3-AS2 | US3 | consultar ajuste de creatina | PENDING | PENDING | PENDING |
-| US3-AS3 | US3 | estimar retención lútea | PENDING | PENDING | PENDING |
-| US3-AS4 | US3 | consultar peso suavizado y proyección | PENDING | PENDING | PENDING |
-| US3-AS5 | US3 | interpretar avisos de cuerpo y fatiga | PENDING | PENDING | PENDING |
-| US3-AS6 | US3 | consultar métricas y diario de cuerpo | PENDING | PENDING | PENDING |
-| US3-AS7 | US3 | mantener integraciones previas | PENDING | PENDING | PENDING |
+| FR-001 | US1 | guardar un peso | test/body-weight.test.js :: cuerpo peso conserva conversiones reemplazo pasos e historial (prevista) | T002 | PENDING |
+| FR-002 | US1 | registrar medidas | test/body-measurements.test.js :: cuerpo medidas conservan campos null conversiones y reemplazo (prevista) | T003 | PENDING |
+| FR-003 | US1 | registrar bienestar | test/body-wellness.test.js :: cuerpo bienestar conserva borrador fecha guardas y guardado (prevista) | T004 | PENDING |
+| FR-004 | US1 | guardar check-in y conservar legado | test/body-logs.test.js :: cuerpo checkin conserva normalizacion identidad timestamps y legado (prevista) | T005 | PENDING |
+| FR-005 | US1 | abrir el registro correcto | test/body-routing.test.js :: cuerpo conserva seccion fecha montaje y visibilidad (prevista) | T006 | PENDING |
+| FR-006 | US2 | reconstruir contexto de ciclo | test/body-context.test.js :: cuerpo ciclo conserva comienzos longitudes y contexto (prevista) | T007 | PENDING |
+| FR-007 | US2 | estimar ovulación con procedencia | test/body-ovulation.test.js :: cuerpo ciclo conserva ovulacion flujo calendario y confianza (prevista) | T008 | PENDING |
+| FR-008 | US2 | inferir fase e incertidumbre | test/body-phase.test.js :: cuerpo ciclo conserva precedencia fases y desconocido tardio (prevista) | T009 | PENDING |
+| FR-009 | US2 | resumir ciclos y segmentos | test/body-summary.test.js :: cuerpo ciclo conserva resumen sangrado segmentos y outliers (prevista) | T010 | PENDING |
+| FR-010 | US2 | distribuir síntomas | test/body-distribution.test.js :: cuerpo ciclo conserva distribucion escalas bins y picos (prevista) | T011 | PENDING |
+| FR-011 | US2 | recalcular y construir timeline | test/body-timeline.test.js :: cuerpo ciclo conserva recalculo timeline duplicados y timestamps (prevista) | T012 | PENDING |
+| FR-012 | US2 | consultar guía y lecturas | test/body-guidance.test.js :: cuerpo ciclo conserva guia insights provisionalidad y textos (prevista) | T013 | PENDING |
+| FR-013 | US2 | ver ciclo en sus consumidores | test/body-consumers.test.js :: cuerpo ciclo consumidores conservan confianza limites y cautela (prevista) | T014 | PENDING |
+| FR-014 | US3 | consultar tendencia bruta | test/body-trend.test.js :: cuerpo peso conserva regresion tendencia y callbacks de objetivos (prevista) | T015 | PENDING |
+| FR-015 | US3 | consultar ajuste de creatina | test/body-creatine.test.js :: cuerpo peso conserva creatina saturacion y edicion de objetivo (prevista) | T016 | PENDING |
+| FR-016 | US3 | estimar retención lútea | test/body-retention.test.js :: cuerpo peso conserva retencion detrending umbral y cap (prevista) | T017 | PENDING |
+| FR-017 | US3 | consultar peso suavizado y proyección | test/body-metrics.test.js :: cuerpo peso conserva medias correcciones tendencia y proyeccion (prevista) | T018 | PENDING |
+| FR-018 | US3 | interpretar avisos de cuerpo y fatiga | test/body-alerts.test.js :: cuerpo avisos conservan fatiga textos umbrales y claves (prevista) | T019 | PENDING |
+| FR-019 | US3 | consultar métricas y diario de cuerpo | test/body-dashboard.test.js :: cuerpo metricas y diario conservan selectores y formatos (prevista) | T020 | PENDING |
+| FR-020 | US3 | mantener integraciones previas | test/body-compatibility.test.js :: cuerpo consumidores conservan fachadas fotos y contratos previos (prevista) | T021 | PENDING |
+| US1-AS1 | US1 | guardar un peso | test/body-weight.test.js :: cuerpo peso conserva conversiones reemplazo pasos e historial (prevista) | T002 | PENDING |
+| US1-AS2 | US1 | registrar medidas | test/body-measurements.test.js :: cuerpo medidas conservan campos null conversiones y reemplazo (prevista) | T003 | PENDING |
+| US1-AS3 | US1 | registrar bienestar | test/body-wellness.test.js :: cuerpo bienestar conserva borrador fecha guardas y guardado (prevista) | T004 | PENDING |
+| US1-AS4 | US1 | guardar check-in y conservar legado | test/body-logs.test.js :: cuerpo checkin conserva normalizacion identidad timestamps y legado (prevista) | T005 | PENDING |
+| US1-AS5 | US1 | abrir el registro correcto | test/body-routing.test.js :: cuerpo conserva seccion fecha montaje y visibilidad (prevista) | T006 | PENDING |
+| US2-AS1 | US2 | reconstruir contexto de ciclo | test/body-context.test.js :: cuerpo ciclo conserva comienzos longitudes y contexto (prevista) | T007 | PENDING |
+| US2-AS2 | US2 | estimar ovulación con procedencia | test/body-ovulation.test.js :: cuerpo ciclo conserva ovulacion flujo calendario y confianza (prevista) | T008 | PENDING |
+| US2-AS3 | US2 | inferir fase e incertidumbre | test/body-phase.test.js :: cuerpo ciclo conserva precedencia fases y desconocido tardio (prevista) | T009 | PENDING |
+| US2-AS4 | US2 | resumir ciclos y segmentos | test/body-summary.test.js :: cuerpo ciclo conserva resumen sangrado segmentos y outliers (prevista) | T010 | PENDING |
+| US2-AS5 | US2 | distribuir síntomas | test/body-distribution.test.js :: cuerpo ciclo conserva distribucion escalas bins y picos (prevista) | T011 | PENDING |
+| US2-AS6 | US2 | recalcular y construir timeline | test/body-timeline.test.js :: cuerpo ciclo conserva recalculo timeline duplicados y timestamps (prevista) | T012 | PENDING |
+| US2-AS7 | US2 | consultar guía y lecturas | test/body-guidance.test.js :: cuerpo ciclo conserva guia insights provisionalidad y textos (prevista) | T013 | PENDING |
+| US2-AS8 | US2 | ver ciclo en sus consumidores | test/body-consumers.test.js :: cuerpo ciclo consumidores conservan confianza limites y cautela (prevista) | T014 | PENDING |
+| US3-AS1 | US3 | consultar tendencia bruta | test/body-trend.test.js :: cuerpo peso conserva regresion tendencia y callbacks de objetivos (prevista) | T015 | PENDING |
+| US3-AS2 | US3 | consultar ajuste de creatina | test/body-creatine.test.js :: cuerpo peso conserva creatina saturacion y edicion de objetivo (prevista) | T016 | PENDING |
+| US3-AS3 | US3 | estimar retención lútea | test/body-retention.test.js :: cuerpo peso conserva retencion detrending umbral y cap (prevista) | T017 | PENDING |
+| US3-AS4 | US3 | consultar peso suavizado y proyección | test/body-metrics.test.js :: cuerpo peso conserva medias correcciones tendencia y proyeccion (prevista) | T018 | PENDING |
+| US3-AS5 | US3 | interpretar avisos de cuerpo y fatiga | test/body-alerts.test.js :: cuerpo avisos conservan fatiga textos umbrales y claves (prevista) | T019 | PENDING |
+| US3-AS6 | US3 | consultar métricas y diario de cuerpo | test/body-dashboard.test.js :: cuerpo metricas y diario conservan selectores y formatos (prevista) | T020 | PENDING |
+| US3-AS7 | US3 | mantener integraciones previas | test/body-compatibility.test.js :: cuerpo consumidores conservan fachadas fotos y contratos previos (prevista) | T021 | PENDING |
 
 ## Aprobación
 
-Pendiente: alcance y C-001/C-002/C-003. La instrucción «continua» autoriza preparar esta propuesta, sin sustituir esas puertas ni aprobar plan o implementación.
+Alcance y C-001/C-002/C-003 aprobados el 2026-10-18 mediante «continua»,
+en respuesta directa a la solicitud de aprobación de esta spec. Plan, tareas,
+analyze, ejecución, publicación, integración y despliegue aún no aprobados.

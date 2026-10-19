@@ -248,3 +248,21 @@ individual responde 200 con login de Vercel, sin prueba funcional con datos real
 [Evidencia remota](../../specs/004-nutricion-objetivos/evidence/integration.json).
 El propietario indicó después «continua»: autoriza preparar survey/propuesta 005,
 sin aprobar anticipadamente alcance, aclaraciones, plan, código ni despliegue.
+
+## Alcance y aclaraciones 005 aprobados — 2026-10-18
+
+El propietario respondió «continua» a la solicitud explícita de aprobar la spec
+005 (20 FR, 20 escenarios) y C-001/002/003: registros y consumidores necesarios,
+preservación de diferencias actuales BODY-001–005 y fórmulas/incertidumbre sin
+cambios clínicos. Se autoriza preparar plan, tareas y analyze. La respuesta no
+aprueba anticipadamente el plan ni ejecución local, publicación, merge o despliegue.
+
+## Plan 005 preparado para revisión — 2026-10-18
+
+Se prepararon plan, research, validación, 33 tareas, analyze y borrador de PR
+sobre el alcance aprobado. Veinte grupos de pins y cuatro recorridos Chromium,
+G-PIN previo a src y cierre con cinco contratos y RLS local. Revisión documental:
+40 IDs trazados, tareas acíclicas y enlaces válidos; sin ejecución de producto.
+[Plan](../../specs/005-cuerpo-ciclo/plan.md),
+[verificación](../../specs/005-cuerpo-ciclo/verification.md).
+Plan/tareas/analyze y ejecución local E0–E6 permanecen pendientes de aprobación.
