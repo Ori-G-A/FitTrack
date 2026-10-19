@@ -1,0 +1,2 @@
+# Los harnesses congelados buscan anclas del código fuente con saltos LF.
+src/** text eol=lf

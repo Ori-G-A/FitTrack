@@ -1,0 +1,2100 @@
+{
+  "base": "02ab5193f9d01e0037e9640626b25742e5224a5a",
+  "phase": [
+    {
+      "input": {
+        "date": "2026-09-23",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-23",
+        "phase": "menstruation",
+        "confidence": "medium",
+        "reason": "La fecha cae dentro de un periodo registrado por ti."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-23",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-09-23",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-23",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-23",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-23",
+        "phase": "menstruation",
+        "confidence": "medium",
+        "reason": "La fecha cae dentro de un periodo registrado por ti."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-24",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-24",
+        "phase": "menstruation",
+        "confidence": "medium",
+        "reason": "La fecha cae dentro de un periodo registrado por ti."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-24",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-09-24",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-24",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-24",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-24",
+        "phase": "menstruation",
+        "confidence": "medium",
+        "reason": "La fecha cae dentro de un periodo registrado por ti."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-28",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-28",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-28",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-09-28",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-28",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-09-28",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-09-28",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-01",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-01",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-01",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-01",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-01",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-01",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-01",
+        "phase": "follicular_early",
+        "confidence": "medium",
+        "reason": "Estas despues del periodo y al inicio del ciclo segun tus registros."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-02",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-02",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-02",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-02",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-02",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-02",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-02",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-05",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-05",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-05",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-05",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-05",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-05",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-05",
+        "phase": "ovulation_probable",
+        "confidence": "high",
+        "reason": "Ultimo dia de flujo fertil seguido de cambio a flujo menos fertil, con dolor pelvico registrado. Se muestra como probable, no como confirmacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-06",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-06",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-06",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-06",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-06",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-06",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-06",
+        "phase": "luteal_early",
+        "confidence": "high",
+        "reason": "Han pasado 1 dias desde una ovulacion probable segun el flujo registrado."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-09",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-09",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-09",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-09",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-09",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-09",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-09",
+        "phase": "luteal_early",
+        "confidence": "high",
+        "reason": "Han pasado 4 dias desde una ovulacion probable segun el flujo registrado."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-10",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-10",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-10",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-10",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-10",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-10",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-10",
+        "phase": "luteal_mid",
+        "confidence": "high",
+        "reason": "Han pasado 5 dias desde una ovulacion probable y aun no estas cerca del periodo esperado."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-14",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-14",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-14",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-14",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-14",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-14",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-14",
+        "phase": "luteal_mid",
+        "confidence": "high",
+        "reason": "Han pasado 9 dias desde una ovulacion probable y aun no estas cerca del periodo esperado."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-15",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-15",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-15",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-15",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-15",
+        "phase": "luteal_late",
+        "confidence": "medium",
+        "reason": "Estas cerca del periodo esperado segun tus ciclos registrados."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-15",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-15",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-16",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-16",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-16",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-16",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-16",
+        "phase": "luteal_late",
+        "confidence": "medium",
+        "reason": "Estas cerca del periodo esperado segun tus ciclos registrados."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-16",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-16",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-18",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-18",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-18",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-18",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-18",
+        "phase": "luteal_late",
+        "confidence": "medium",
+        "reason": "Estas cerca del periodo esperado segun tus ciclos registrados."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-18",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-18",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-21",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-21",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-21",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-21",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-21",
+        "phase": "luteal_late",
+        "confidence": "medium",
+        "reason": "Estas cerca del periodo esperado segun tus ciclos registrados."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-21",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-21",
+        "phase": "unknown",
+        "confidence": "low",
+        "reason": "Estas cerca del periodo esperado, pero ningun check-in reciente dice si ya sangraste: si tu periodo ya llego, registralo y la fase se recalcula."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-22",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-22",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-22",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "date": "2026-10-22",
+            "bleedingLevel": "none"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-22",
+        "phase": "follicular_mid_late",
+        "confidence": "medium",
+        "reason": "Estas antes de una ventana fertil clara; faltan mas datos de flujo para afinar la estimacion."
+      }
+    },
+    {
+      "input": {
+        "date": "2026-10-22",
+        "periods": [
+          {
+            "id": "p1",
+            "date": "2026-07-01",
+            "duration": 5
+          },
+          {
+            "id": "p2",
+            "date": "2026-07-29",
+            "duration": 5
+          },
+          {
+            "id": "p3",
+            "date": "2026-08-26",
+            "duration": 5
+          },
+          {
+            "id": "p4",
+            "date": "2026-09-23",
+            "duration": 5
+          }
+        ],
+        "menstrualLogs": [
+          {
+            "id": "dry",
+            "date": "2026-10-03",
+            "cervicalFluid": "dry"
+          },
+          {
+            "id": "cream",
+            "date": "2026-10-04",
+            "cervicalFluid": "creamy"
+          },
+          {
+            "id": "peak",
+            "date": "2026-10-05",
+            "cervicalFluid": "slippery_eggwhite",
+            "pelvicPain": "left"
+          },
+          {
+            "id": "after",
+            "date": "2026-10-06",
+            "cervicalFluid": "dry"
+          }
+        ],
+        "wellness": []
+      },
+      "expected": {
+        "date": "2026-10-22",
+        "phase": "luteal_late",
+        "confidence": "high",
+        "reason": "Estas despues de la lutea media y antes del siguiente periodo estimado."
+      }
+    }
+  ],
+  "guidance": {
+    "menstruation": {
+      "hormones": "Estrogeno y progesterona en su punto mas bajo: el sangrado empieza justo cuando caen.",
+      "expected": "Colicos los primeros dias, energia variable y algo mas de peso por agua. Que la fuerza se sienta igual que siempre tambien es normal.",
+      "training": "Entrena tu sesion habitual si te sientes bien; el calentamiento no se salta. Con colicos o energia baja usa la version minima de la plantilla, no la suspendas.",
+      "nutrition": "Sosten la proteina en el extremo alto de tu rango (1.6-2.2 g/kg, alto por el deficit) y sube liquidos mientras sangras."
+    },
+    "follicular_early": {
+      "hormones": "Estrogeno empezando a subir desde el minimo, progesterona baja.",
+      "expected": "La energia suele ir en recuperacion y los sintomas del sangrado se apagan.",
+      "training": "Buena ventana para volver a tu carga habitual. Sube algo solo si ya completaste 2+ sesiones al RPE objetivo.",
+      "nutrition": "Sin ajustes especiales: manten kcal y proteina en tu objetivo del dia."
+    },
+    "follicular_mid_late": {
+      "hormones": "Estrogeno en ascenso hacia su pico.",
+      "expected": "Suele ser cuando mejor se tolera el trabajo duro y mejor se recupera entre series.",
+      "training": "Ventana para los top sets exigentes (RPE 8-9 en el principal) con backoff despues; el resto de series no van al fallo.",
+      "nutrition": "Aprovecha para cubrir bien los carbohidratos alrededor de la sesion; la proteina sigue en su rango."
+    },
+    "fertile_window_probable": {
+      "hormones": "Estrogeno alto y moco cervical fertil; el pico de LH esta cerca.",
+      "expected": "Energia alta y, en algunas personas, mas laxitud articular.",
+      "training": "Puedes empujar carga, pero cuida especialmente la tecnica en los ejercicios pesados.",
+      "nutrition": "Sin cambios: kcal y proteina en tu objetivo."
+    },
+    "ovulation_probable": {
+      "hormones": "Pico de LH y estrogeno; despues ambos caen y empieza a subir la progesterona.",
+      "expected": "Pico frecuente de energia, a veces dolor pelvico de un lado que dura horas.",
+      "training": "Dia valido para intensidad alta. Si hay dolor pelvico agudo, baja rango antes que carga.",
+      "nutrition": "Sin cambios: kcal y proteina en tu objetivo."
+    },
+    "luteal_early": {
+      "hormones": "Progesterona subiendo, con un rebote de estrogeno detras.",
+      "expected": "Temperatura basal algo mas alta y percepcion de esfuerzo que puede subir con el mismo peso.",
+      "training": "Manten la carga y autoregula por RPE: si el mismo peso se siente mas pesado, esa es la lectura, no un retroceso.",
+      "nutrition": "El gasto en reposo sube un poco; si aparece mas hambre, cubrela con proteina y volumen antes que con extras."
+    },
+    "luteal_mid": {
+      "hormones": "Progesterona en meseta alta, estrogeno intermedio.",
+      "expected": "Apetito mas alto, sueno algo mas ligero y retencion de agua incipiente.",
+      "training": "Sesion normal. Si el sueno cae por debajo de 6 h varios dias, cuenta como fatiga acumulada, no como falta de ganas.",
+      "nutrition": "Proteina en el extremo alto del rango: ayuda a la saciedad sin tocar el deficit."
+    },
+    "luteal_late": {
+      "hormones": "Progesterona y estrogeno cayendo juntos: es la caida que dispara el sindrome premenstrual.",
+      "expected": "Hinchazon, antojos, peor recuperacion y peso mas alto por agua. Que el rendimiento fluctue aqui es normal.",
+      "training": "Con sintomas marcados o energia baja, la version minima de la plantilla es la opcion correcta; no intentes un top set nuevo.",
+      "nutrition": "Los antojos dulces o salados son esperables y no son un fallo del deficit. El peso de estos dias es agua: leelo en la tendencia, no en el dato suelto."
+    },
+    "unknown": {
+      "hormones": "Faltan registros para ubicar la fase hormonal del dia.",
+      "expected": "Con unos dias de check-in seguidos la estimacion se afina sola.",
+      "training": "Entrena por sensaciones y RPE, como cualquier dia sin dato.",
+      "nutrition": "Manten kcal y proteina en tu objetivo del dia."
+    }
+  },
+  "guideInput": {
+    "date": "2026-10-18",
+    "periods": [
+      {
+        "id": "p1",
+        "date": "2026-07-01",
+        "duration": 5
+      },
+      {
+        "id": "p2",
+        "date": "2026-07-29",
+        "duration": 5
+      },
+      {
+        "id": "p3",
+        "date": "2026-08-26",
+        "duration": 5
+      },
+      {
+        "id": "p4",
+        "date": "2026-09-23",
+        "duration": 5
+      }
+    ],
+    "menstrualLogs": [
+      {
+        "date": "2026-10-18",
+        "bleedingLevel": "heavy",
+        "crampsLevel": 5,
+        "cervicalFluid": "watery",
+        "breastSensitivity": 3
+      }
+    ],
+    "wellness": [
+      {
+        "date": "2026-10-18",
+        "sleep": 5,
+        "energy": 2
+      }
+    ]
+  },
+  "guideExpected": {
+    "hormones": "Estrogeno y progesterona en su punto mas bajo: el sangrado empieza justo cuando caen.",
+    "expected": "Colicos los primeros dias, energia variable y algo mas de peso por agua. Que la fuerza se sienta igual que siempre tambien es normal.",
+    "training": "Entrena tu sesion habitual si te sientes bien; el calentamiento no se salta. Con colicos o energia baja usa la version minima de la plantilla, no la suspendas.",
+    "nutrition": "Sosten la proteina en el extremo alto de tu rango (1.6-2.2 g/kg, alto por el deficit) y sube liquidos mientras sangras.",
+    "phase": "menstruation",
+    "confidence": "high",
+    "reason": "Registraste sangrado menstrual claro; esto cuenta como menstruacion estimada.",
+    "notes": [
+      "Registraste sangrado claro hoy: el peso de estos dias carga agua, no lo leas como tendencia.",
+      "Colicos 5+: hoy toca la version minima de la sesion, no una progresion de carga.",
+      "Flujo acuoso o elastico: compatible con estrogeno alto, la ventana donde mejor se tolera el trabajo duro.",
+      "Sintomas acumulados: si el mismo peso se siente mas pesado, autoregula por RPE en vez de forzar la carga.",
+      "Energia 2/5 hoy: version minima de la plantilla antes que saltarte la sesion.",
+      "Menos de 6 h de sueno: parte del bajon de hoy puede ser descanso, no fase del ciclo."
+    ],
+    "provisional": false
+  }
+}

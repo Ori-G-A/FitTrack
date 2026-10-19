@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mountBody,plain} from '../test-support/body-dom.js';
+import {today,periods,fertile,weight,blankWell} from '../test-support/body-fixtures.js';
+test("cuerpo ciclo consumidores conservan confianza limites y cautela",async()=>{
+const h=await mountBody({section:'checkin',periods,menstrualLogs:fertile});try{
+ assert.equal(h.b.guidance.provisional,false);assert.equal(h.b.cycleSummary.samples,3);assert(h.b.cycleInsights.every(x=>!x.phase||x.phase===h.b.phaseEstimate.phase));assert.match(h.text,/confianza|Confianza/);assert.match(h.text,/calendario|flujo/);
+ await h.call(h.state.setView,'perfil');assert.equal(h.perfil.tracksCycle,true);assert.equal(h.perfil.summary.samples,3);assert.match(h.text,/estimación/);await h.call(h.state.setView,'dashboard');assert.equal(h.dashboard.cyc.start,'2026-09-23');assert.equal(h.dashboard.cyc.logged,4);assert.equal(h.dashboard.cyc.ovulation.source,'flujo');await h.call(h.state.setPeriods,[]);await h.call(h.state.setMenstrualLogs,[]);assert.equal(h.dashboard.cyc,null);
+ await h.call(h.state.setMenstrualLogs,fertile);await h.call(h.state.setDate,'2026-10-05');await h.call(h.state.setView,'train');assert.equal(h.training.phaseCaution.phase,'ovulation_probable');assert.equal(h.training.phaseCaution.confidence,'high');await h.call(h.state.setWorkouts,[{id:'w',date:'2026-10-05',exercises:[{id:'ex',name:'Sentadilla',primary:'Cuádriceps',sets:[{id:'s',kg:20,reps:8}]}]}]);assert.equal(h.w.document.querySelectorAll('[title="Fase de mayor laxitud articular: cuidá técnica y rango con carga"]').length,1);await h.call(h.state.setWorkouts,[{id:'w',date:'2026-10-05',exercises:[{id:'ex',name:'Sentadilla',primary:'Cuádriceps',sets:[{id:'s',kg:0,reps:8}]}]}]);assert.equal(h.w.document.querySelectorAll('[title="Fase de mayor laxitud articular: cuidá técnica y rango con carga"]').length,0);await h.call(h.state.setMenstrualLogs,fertile.slice(2).map(x=>({...x,pelvicPain:'none'})));assert.equal(h.training.phaseCaution,null);
+await h.call(h.state.setWorkouts,[]);await h.call(h.state.setMenstrualLogs,[]);await h.call(h.state.setPeriods,Array.from({length:9},(_,i)=>({id:'p'+i,date:h.modules.app.addDays('2026-01-01',i*28),duration:5})));await h.call(h.state.setView,'body');assert.equal(h.w.document.querySelectorAll('.ft-li .ft-trash').length,8);await h.call(h.state.setView,'perfil');assert.equal(h.w.document.querySelectorAll('.ft-dc-list .ft-dc-row').length,6);
+ }finally{h.close();}
+});

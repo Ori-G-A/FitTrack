@@ -57,3 +57,15 @@ plan, publicar un PR, integrar ni desplegar.
 
 [Plan](plan.md), [tareas](tasks.md), [research](research.md),
 [validación](validation-plan.md), [analyze](analyze.md), [PR preparado](doc-pr.md).
+
+## E0 verificada — 2026-10-19
+
+284/284 Node, 13/13 Chromium, build correcto, 40/40 IDs completos; cuatro
+mutaciones detectadas con controles originales. 28 pins/infraestructura nuevos
+y 40 anteriores verificados y congelados. src conserva el árbol de BASE 02ab519.
+La regla LF de .gitattributes resuelve anclas de checkout sin editar pins previos;
+sourceHash efectivo d04e2330abbe5a8348d12cd3e6d505c87bdaeec9c8cd08bd6fc798004090a3f5.
+[Baseline](evidence/baseline.json), [intentos](evidence/e0-attempts.json),
+[aserciones](assertion-review.md). RLS fresco se exige en G-CLOSE. Sin cambios de
+dependencias ni instalación/auditoría nuevas. Revisión de aserciones del agente,
+sin afirmar aceptación clínica o revisión humana del propietario.

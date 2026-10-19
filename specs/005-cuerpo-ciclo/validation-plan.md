@@ -61,7 +61,7 @@ Añadir negativos del verificador por nombre inexistente, skipped, retried y est
 partial/pending en modo completo, reutilizando scripts originales sin debilitarlos.
 
 G-PIN exige suite Node, cuatro recorridos Chromium nuevos y los anteriores,
-build, 40/40 IDs completos y revisión humana de aserciones contra cada cláusula.
+build, 40/40 IDs completos y revisión de aserciones realizada por el agente, separada del verificador contra cada cláusula.
 Congelar archivos nuevos de pins, fixtures/harness y browser, más los 40 previos;
 registrar lista exacta/hashes SHA256 con normalización de saltos igual al proyecto,
 sourceHash, revisión src, runtime, comandos/resultados y mutaciones. Cualquier

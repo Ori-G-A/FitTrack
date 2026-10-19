@@ -42,9 +42,9 @@ Cualquier checkpoint fallido se repite íntegramente tras corregirlo.
 | --- | --- | --- |
 | src/body-config.js | Opciones y etiquetas locales de Cuerpo; CYCLE_PHASES/PHASE_GROUPS/tracksCycle si se trasladan manteniendo app-config como fachada | Constantes y datos; sin E/S |
 | src/cycle-context.js | Normalización/defaults, helpers internos, comienzos, contexto, score, detección y estimación de ovulación | date-utils y constantes puras; no summaries ni facade |
-| src/cycle-phase.js | inferCyclePhase, confianza y motivos con bienestar | cycle-context, date-utils |
+| src/cycle-phase.js | inferCyclePhase, buildCycleTimeline, confianza y motivos con bienestar | cycle-context, date-utils |
 | src/cycle-summary.js | phaseSegments, summarizeCycles y symptomDistribution | cycle-context, cycle-phase, date-utils |
-| src/cycle-readings.js | PHASE_GUIDANCE, dailyGuidance, recálculo, timeline e insights | context, phase, summary, date-utils |
+| src/cycle-readings.js | PHASE_GUIDANCE, dailyGuidance, recálculo e insights | context, phase, summary, date-utils |
 | src/body-records.js | Transformaciones de peso/medidas/bienestar/check-in y borrados | cycle-context, date-utils; ID y now recibidos como funciones/valores explícitos |
 | src/weight-model.js | creatineWaterKg, slopePerDay, lutealRetentionKg, weightTrendHighlight | date-utils; ninguna dependencia de UI, alerts o goals-model |
 | src/weight-metrics.js | Medias móviles, ajuste por fase, tendencia de avisos, proyección y contexto de ciclo de alertMetrics | weight-model, cycle-context/phase, body-config, date-utils |

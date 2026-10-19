@@ -13,7 +13,7 @@ Fecha: 2026-10-18. Revisión del agente; no aceptación del propietario.
 - [x] Propietario aprueba alcance y C-001/002/003 mediante «continua» el 2026-10-18.
 - [x] Plan, 33 tareas, research, validación, analyze y PR documental preparados.
 - [x] Plan, tareas y analyze aprobados por separado mediante «aprobado»; ejecución local E0–E6 autorizada.
-- [ ] Baseline de 005 ejecutada antes de transformar src.
+- [x] Baseline de 005 ejecutada antes de transformar src: 284 Node, 13 Chromium, build, 40 IDs.
 
 Las casillas pendientes son puertas posteriores, no evidencia omitida que
 se pueda declarar completa. Ejecución local 005 autorizada; baseline previa a extracción pendiente.

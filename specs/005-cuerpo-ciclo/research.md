@@ -22,3 +22,21 @@ resuelven con un rename o una abstracción: requieren CHANGE aprobado.
 Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
 autorización de ejecución local E0–E6 antes de integrar el PR documental.
 No autoriza publicación, merge ni despliegue.
+
+## Ajuste técnico observado en E0
+
+phaseSegments llama a buildCycleTimeline, que usa inferCyclePhase. Para evitar
+un ciclo summary/readings, buildCycleTimeline se ubicará junto a inferCyclePhase
+en cycle-phase; readings lo consumirá desde allí y la fachada conservará el export.
+No cambia API ni comportamiento. Los pins de duplicados fijan que un registro
+posterior puede crear el inicio mientras el primer registro determina la fase.
+
+R-009: E0 reprodujo 13 fallos de anclas congeladas tras checkout CRLF. Se añade
+.gitattributes limitado a src/** text eol=lf para reproducir el código original
+en Windows y Linux, sin editar pins ni configuración global. La normalización
+de bytes no cambia blobs fuente de Git; el nuevo sourceHash se registra en baseline.
+
+R-010: precisión de evidencia: la revisión de aserciones de E0 la realiza el
+agente autorizado, aparte del verificador; no se presenta como revisión humana
+ni aceptación final del propietario. Se corrige esa denominación del documento
+de validación, manteniendo la revisión cláusula a cláusula y las puertas aprobadas.

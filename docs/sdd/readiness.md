@@ -134,3 +134,10 @@ y RLS renovada3/3 con cleanup. Gate002 repetido íntegramente:23/23 IDs,
 completos sobre los mismos resultados/hash;40 pins intactos.
 [Resumen final](../../specs/004-nutricion-objetivos/evidence/final.json).
 Las 29 tareas completas; revisión del propietario e integración pendientes.
+
+## Baseline 005 — 2026-10-19
+
+E0 sobre original: 284 Node, 13 Chromium, build y 40/40 IDs completos. 28 archivos
+nuevos congelados y 40 anteriores intactos. [Evidencia](../../specs/005-cuerpo-ciclo/evidence/baseline.json).
+Regla LF versionada para reproducir anclas congeladas en Windows/Linux; no hay
+cambio de contenido src. Implementación y RLS fresco de cierre pendientes.
