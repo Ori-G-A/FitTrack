@@ -1,3 +1,4 @@
+import { replaceWeightRecord, measurementValues, replaceMeasurementRecord, wellnessDraft, replaceWellnessRecord, prepareMenstrualRecord, replaceMenstrualRecord, removeBodyRecord } from "./body-records.js";
 import { BLEEDING_OPTIONS, FLUID_OPTIONS, APPETITE_OPTIONS, PAIN_OPTIONS, PHASE_SHADE, PHASE_NAMES, CONFIDENCE_NAMES } from "./body-config.js";
 import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
@@ -23,8 +24,8 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   // La coma decimal es la convencion de la app: escribirla no puede invalidar
   // el pesaje.
   const parseKg = (value) => Number(String(value).replace(",", "."));
-  const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => [...p.filter((w) => w.date !== wDate), { id: uid(), date: wDate, kg: value }].sort((a, b) => a.date.localeCompare(b.date))); setKg(""); toast(`Peso guardado: ${kg1(value)} kg el ${fmtDate(wDate)}`); };
-  const delW = (id) => setWeights((p) => p.filter((w) => w.id !== id));
+  const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => replaceWeightRecord(p, wDate, value, uid)); setKg(""); toast(`Peso guardado: ${kg1(value)} kg el ${fmtDate(wDate)}`); };
+  const delW = (id) => setWeights((p) => removeBodyRecord(p, id));
   const wSorted = [...weights].sort((a, b) => b.date.localeCompare(a.date));
   const trend = weightTrendHighlight(weights, todayISO());
   const wChart = [...weights].sort((a, b) => a.date.localeCompare(b.date)).map((w) => ({ date: fmtDate(w.date), kg: w.kg }));
@@ -35,13 +36,13 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   const [mDate, setMDate] = useState(initialDate || todayISO());
   const [meas, setMeas] = useState({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
   const addM = () => {
-    const vals = Object.fromEntries(Object.entries(meas).map(([k, v]) => [k, v === "" ? null : Number(v)]));
+    const vals = measurementValues(meas);
     if (Object.values(vals).every((v) => v === null)) return;
-    setMeasurements((p) => [...p.filter((x) => x.date !== mDate), { id: uid(), date: mDate, ...vals }].sort((a, b) => a.date.localeCompare(b.date)));
+    setMeasurements((p) => replaceMeasurementRecord(p, mDate, vals, uid));
     setMeas({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
     toast(`Medidas guardadas del ${fmtDate(mDate)}`);
   };
-  const delM = (id) => setMeasurements((p) => p.filter((x) => x.id !== id));
+  const delM = (id) => setMeasurements((p) => removeBodyRecord(p, id));
   const mSorted = [...measurements].sort((a, b) => b.date.localeCompare(a.date));
   const cinturaChart = [...measurements].filter((m) => m.cintura != null).sort((a, b) => a.date.localeCompare(b.date)).map((m) => ({ date: fmtDate(m.date), cintura: m.cintura }));
 
@@ -51,15 +52,15 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   // fecha, mismo guardado y misma sincronizacion. No hace falta una tabla aparte
   // ni una integracion con el reloj para poder mirarlos en el Diario.
   const [wel, setWel] = useState({ sleep: "", restingHr: "", steps: "", energy: 0, notes: "" });
-  useEffect(() => { setWel(existingWel ? { sleep: existingWel.sleep ?? "", restingHr: existingWel.restingHr ?? "", steps: existingWel.steps ?? "", energy: existingWel.energy ?? 0, notes: existingWel.notes ?? "" } : { sleep: "", restingHr: "", steps: "", energy: 0, notes: "" }); }, [welDate]); // eslint-disable-line
+  useEffect(() => { setWel(wellnessDraft(existingWel)); }, [welDate]); // eslint-disable-line
   const saveWel = () => {
     if (wel.sleep === "" && wel.restingHr === "" && wel.steps === "" && !wel.energy && !wel.notes.trim()) return;
     toast(`Nota del ${fmtDate(welDate)} guardada`);
-    setWellness((p) => [...p.filter((x) => x.date !== welDate), { id: uid(), date: welDate, sleep: wel.sleep === "" ? null : Number(wel.sleep), restingHr: wel.restingHr === "" ? null : Number(wel.restingHr), steps: wel.steps === "" ? null : Number(wel.steps), energy: wel.energy || null, notes: wel.notes.trim() }].sort((a, b) => a.date.localeCompare(b.date)));
+    setWellness((p) => replaceWellnessRecord(p, welDate, wel, uid));
   };
   const welSorted = [...wellness].sort((a, b) => b.date.localeCompare(a.date));
 
-  const delPeriod = (id) => setPeriods((p) => p.filter((x) => x.id !== id));
+  const delPeriod = (id) => setPeriods((p) => removeBodyRecord(p, id));
   const fmtNext = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long" });
   const [cycleDate, setCycleDate] = useState(initialDate || todayISO());
   const existingCycleLog = menstrualLogs.find((log) => log.date === cycleDate);
@@ -82,11 +83,11 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   const saveCycleLog = () => {
     if (!cycleDate) return;
     const now = new Date();
-    const normalized = normalizeMenstrualLog({ ...cycleLog, id: existingCycleLog?.id || cycleLog.id || uid(), date: cycleDate, createdAt: existingCycleLog?.createdAt }, now);
-    setMenstrualLogs((prev) => [...prev.filter((item) => item.date !== cycleDate), normalized].sort((a, b) => a.date.localeCompare(b.date)));
+    const normalized = prepareMenstrualRecord(cycleLog, existingCycleLog, cycleDate, now, uid);
+    setMenstrualLogs((prev) => replaceMenstrualRecord(prev, cycleDate, normalized));
     toast(`Check-in del ${fmtDate(cycleDate)} guardado`);
   };
-  const delCycleLog = (id) => setMenstrualLogs((prev) => prev.filter((item) => item.id !== id));
+  const delCycleLog = (id) => setMenstrualLogs((prev) => removeBodyRecord(prev, id));
 
   const photoRef = useRef();
   const [photoBusy, setPhotoBusy] = useState(false);

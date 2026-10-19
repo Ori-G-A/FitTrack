@@ -83,3 +83,10 @@ Contratos001/003/004/005 completos sobre los mismos resultados; 68 pins intactos
 Fase/timeline, resúmenes y lecturas separados. La fachada conserva exactamente
 sus exports y el grafo es acíclico. 286 Node, 13 Chromium, build y contratos
 001/003/004/005 completos con 68 pins intactos. [Evidencia E2](evidence/e2.json).
+
+## E3 verificada — 2026-10-19
+
+CRUD y formas de registros separados en body-records. La pantalla conserva
+hooks/dependencias, guardas, borradores, orden de efectos y generación de IDs
+dentro/fuera del updater según el original. 286 Node, 13 Chromium, build y
+cuatro gates completos; 68 pins intactos. [Evidencia E3](evidence/e3.json).
