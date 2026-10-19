@@ -1,6 +1,6 @@
 # Plan de validación — 005
 
-Estado: PROPUESTO; no hay ejecución ni baseline 005. [Spec](spec.md), [tareas](tasks.md).
+Estado: APROBADO; no hay ejecución ni baseline 005. [Spec](spec.md), [tareas](tasks.md).
 BASE src: 02ab5193f9d01e0037e9640626b25742e5224a5a.
 
 ## Pins completos antes de extraer
@@ -83,3 +83,7 @@ registrar fallo y conservar pendiente; reparar/retirar fixture solo con guardas 
 propietario, ruta y nonce. No usar .env.local ni evidencia antigua como cierre nuevo.
 Repetir íntegro un checkpoint fallido tras corregirlo. Reportar omisiones y reintentos;
 para cierre se exige cero skipped/retried en pruebas contractuales.
+
+Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
+autorización de ejecución local E0–E6 antes de integrar el PR documental.
+No autoriza publicación, merge ni despliegue.

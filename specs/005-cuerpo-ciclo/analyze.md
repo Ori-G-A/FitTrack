@@ -1,6 +1,6 @@
 # Revisión cruzada — 005
 
-Fecha: 2026-10-18. Revisión documental del agente; pendiente aprobación del dueño.
+Fecha: 2026-10-18. Revisión documental del agente, aprobada por el dueño.
 [Spec](spec.md), [plan](plan.md), [tareas](tasks.md), [validación](validation-plan.md).
 No es converge de implementación ni resultado de pruebas de producto.
 
@@ -39,3 +39,7 @@ esto no demuestra todavía los 40 contratos ni las fronteras propuestas.
 
 Siguiente puerta: aprobar plan/tareas/analyze y decidir autorización de ejecución
 local E0–E6 previa a integración documental. No se inicia E0 mientras falte.
+
+Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
+autorización de ejecución local E0–E6 antes de integrar el PR documental.
+No autoriza publicación, merge ni despliegue.

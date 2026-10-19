@@ -266,3 +266,10 @@ G-PIN previo a src y cierre con cinco contratos y RLS local. Revisión documenta
 [Plan](../../specs/005-cuerpo-ciclo/plan.md),
 [verificación](../../specs/005-cuerpo-ciclo/verification.md).
 Plan/tareas/analyze y ejecución local E0–E6 permanecen pendientes de aprobación.
+
+## Plan y ejecución local 005 aprobados — 2026-10-18
+
+El propietario respondió «aprobado» a la solicitud explícita de aprobar plan,
+33 tareas y revisión, y autorizar ejecución local E0–E6 antes de integrar el PR
+documental. Se permite iniciar caracterización sobre original y después extraer
+solo tras G-PIN completo verde. No autoriza publicación, merge ni despliegue.

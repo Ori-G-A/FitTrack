@@ -1,6 +1,6 @@
 # Decisiones técnicas propuestas — 005
 
-Estado: pendientes de aprobación con el plan. Lectura del BASE 02ab519; sin
+Estado: APROBADAS con el plan. Lectura del BASE 02ab519; sin
 experimentos, runtime ni baseline nuevos. [Plan](plan.md), [survey](../../docs/sdd/cuerpo-ciclo-survey.md).
 
 | Decisión | Evidencia y alternativa | Elección propuesta y consecuencia |
@@ -18,3 +18,7 @@ Nombres de módulos son propuesta técnica: ajustar solo si G-PIN demuestra una
 frontera innecesaria o dependencia no prevista, registrando motivo e impacto sin
 cambiar alcance, contrato ni baseline fijada. Decisiones de comportamiento no se
 resuelven con un rename o una abstracción: requieren CHANGE aprobado.
+
+Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
+autorización de ejecución local E0–E6 antes de integrar el PR documental.
+No autoriza publicación, merge ni despliegue.

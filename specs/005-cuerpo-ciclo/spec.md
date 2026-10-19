@@ -1,6 +1,6 @@
 # Spec 005: Cuerpo y ciclo
 
-Estado: ALCANCE Y ACLARACIONES APROBADOS; plan pendiente | Propietario: propietario de FitTrack | Fecha: 2026-10-18
+Estado: ALCANCE Y ACLARACIONES APROBADOS; plan aprobado para ejecución local | Propietario: propietario de FitTrack | Fecha: 2026-10-18
 Constitución: [1.0.2 ratificada](../../.specify/memory/constitution.md).
 BASE de observación: 02ab5193f9d01e0037e9640626b25742e5224a5a.
 [Survey](../../docs/sdd/cuerpo-ciclo-survey.md). No autoriza implementación.
@@ -196,5 +196,5 @@ indica ausencia de ejecución; plannedTests no es evidencia de descubrimiento.
 ## Aprobación
 
 Alcance y C-001/C-002/C-003 aprobados el 2026-10-18 mediante «continua»,
-en respuesta directa a la solicitud de aprobación de esta spec. Plan, tareas,
-analyze, ejecución, publicación, integración y despliegue aún no aprobados.
+en respuesta directa a la solicitud de aprobación de esta spec. Plan, tareas, analyze y ejecución local E0–E6 aprobados después mediante
+«aprobado» el 2026-10-18. Publicación, integración y despliegue no autorizados.

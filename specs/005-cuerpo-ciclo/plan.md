@@ -1,6 +1,6 @@
 # Plan técnico — 005-cuerpo-ciclo
 
-Estado: PROPUESTO; aprobación y ejecución local pendientes. Fecha: 2026-10-18.
+Estado: APROBADO para ejecución local E0–E6. Fecha: 2026-10-18.
 [Spec aprobada](spec.md), [research](research.md), [validación](validation-plan.md),
 [tareas](tasks.md), [analyze](analyze.md), [PR documental preparado](doc-pr.md).
 BASE src: 02ab5193f9d01e0037e9640626b25742e5224a5a; los commits posteriores son documentales.
@@ -116,3 +116,7 @@ Converge revisa 40/40 IDs completos, cláusulas enteras, hashes, arquitectura,
 BODY-001–005 y constitución/KD-002. La deuda global no se retira al cerrar solo 005.
 Si aparece gap, añadir tarea sin reescribir completadas. Preparar PR con resultados,
 omisiones, orden de merge y rollback de código por entrega, sin migración de datos.
+
+Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
+autorización de ejecución local E0–E6 antes de integrar el PR documental.
+No autoriza publicación, merge ni despliegue.

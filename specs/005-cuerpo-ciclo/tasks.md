@@ -1,6 +1,6 @@
 # Tareas — 005-cuerpo-ciclo
 
-Estado: PROPUESTAS; ninguna ejecutada. Fecha: 2026-10-18. Adaptación de plantilla
+Estado: APROBADAS para ejecución local E0–E6; ejecución pendiente. Fecha: 2026-10-18. Adaptación de plantilla
 local. [Plan](plan.md), [validación](validation-plan.md), [analyze](analyze.md).
 Todas AS-IS; el alcance aprobado no aprueba estas tareas.
 
@@ -53,3 +53,7 @@ Ninguna prueba prevista se declara descubierta/ejecutada.
 
 No hay tareas añadidas ni completadas. Si aparecen discrepancias se registrarán
 aquí con ID nuevo, dependencia, evidencia y estado, sin reescribir completadas.
+
+Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
+autorización de ejecución local E0–E6 antes de integrar el PR documental.
+No autoriza publicación, merge ni despliegue.
