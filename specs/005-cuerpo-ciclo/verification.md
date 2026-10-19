@@ -90,3 +90,10 @@ CRUD y formas de registros separados en body-records. La pantalla conserva
 hooks/dependencias, guardas, borradores, orden de efectos y generación de IDs
 dentro/fuera del updater según el original. 286 Node, 13 Chromium, build y
 cuatro gates completos; 68 pins intactos. [Evidencia E3](evidence/e3.json).
+
+## E4 verificada — 2026-10-19
+
+Regresión/tendencia bruta, creatina y retención en weight-model; medias,
+corrección, tendencia y proyección en weight-metrics. Fachadas y callbacks 004
+conservados; ciclo/avisos compartidos siguen en alerts. 286 Node, 13 Chromium,
+build, cuatro gates y 68 hashes aprobados. [Evidencia E4](evidence/e4.json).
