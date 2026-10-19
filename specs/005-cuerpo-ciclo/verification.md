@@ -69,3 +69,11 @@ sourceHash efectivo d04e2330abbe5a8348d12cd3e6d505c87bdaeec9c8cd08bd6fc798004090
 [aserciones](assertion-review.md). RLS fresco se exige en G-CLOSE. Sin cambios de
 dependencias ni instalación/auditoría nuevas. Revisión de aserciones del agente,
 sin afirmar aceptación clínica o revisión humana del propietario.
+
+## E1 verificada — 2026-10-19
+
+Contexto y constantes separados, fachadas conservadas; cycle-inference importa
+fechas puras y pierde dependencia transitiva de app-utils. Negativos de capas
+y exportaciones públicas correctos; 286 Node, 13 Chromium y build aprobados.
+Contratos001/003/004/005 completos sobre los mismos resultados; 68 pins intactos.
+[Evidencia E1](evidence/e1.json). RLS fresco se mantiene pendiente para G-CLOSE.

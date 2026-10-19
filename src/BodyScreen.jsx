@@ -1,3 +1,4 @@
+import { BLEEDING_OPTIONS, FLUID_OPTIONS, APPETITE_OPTIONS, PAIN_OPTIONS, PHASE_SHADE, PHASE_NAMES, CONFIDENCE_NAMES } from "./body-config.js";
 import React, { useEffect, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -11,63 +12,6 @@ import { toast } from "./toast.jsx";
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
-const BLEEDING_OPTIONS = [
-  ["not_logged", "Sin registrar"],
-  ["none", "No hubo"],
-  ["spotting", "Manchado"],
-  ["light", "Leve"],
-  ["medium", "Medio"],
-  ["heavy", "Abundante"],
-];
-const FLUID_OPTIONS = [
-  ["not_checked", "No revise"],
-  ["dry", "Seco"],
-  ["sticky", "Pegajoso"],
-  ["creamy", "Cremoso"],
-  ["watery", "Acuoso"],
-  ["slippery_eggwhite", "Elastico / resbaladizo"],
-  ["unknown", "No se"],
-];
-const APPETITE_OPTIONS = [
-  ["not_logged", "Sin registrar"],
-  ["normal", "Normal"],
-  ["increased", "Mas hambre"],
-  ["decreased", "Menos hambre"],
-  ["sweet_cravings", "Antojos dulces"],
-  ["salty_cravings", "Antojos salados"],
-];
-const PAIN_OPTIONS = [
-  ["not_logged", "Sin registrar"],
-  ["none", "No"],
-  ["left", "Izquierdo"],
-  ["right", "Derecho"],
-  ["center", "Centro"],
-  ["general", "General"],
-];
-const PHASE_SHADE = {
-  menstruation: 1,
-  follicular_early: 0.4,
-  follicular_mid_late: 0.75,
-  fertile_window_probable: 0.6,
-  ovulation_probable: 1,
-  luteal_early: 0.4,
-  luteal_mid: 0.7,
-  luteal_late: 1,
-  unknown: 0.15,
-};
-const PHASE_NAMES = {
-  menstruation: "menstruacion",
-  follicular_early: "folicular temprana",
-  follicular_mid_late: "folicular media/tardia",
-  fertile_window_probable: "ventana fertil probable",
-  ovulation_probable: "ovulacion probable",
-  luteal_early: "lutea temprana",
-  luteal_mid: "lutea media",
-  luteal_late: "lutea tardia",
-  unknown: "por estimar",
-};
-const CONFIDENCE_NAMES = { low: "baja", medium: "media", high: "alta" };
-
 export default function BodyScreen({ section: initialSection = "peso", weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
   const creatineStart = goals?.creatineStart || "";
   const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
