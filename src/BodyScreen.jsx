@@ -1,3 +1,4 @@
+import { descendingWeights, weightPoints, descendingMeasurements, waistPoints, descendingWellness } from "./body-metrics.js";
 import { replaceWeightRecord, measurementValues, replaceMeasurementRecord, wellnessDraft, replaceWellnessRecord, prepareMenstrualRecord, replaceMenstrualRecord, removeBodyRecord } from "./body-records.js";
 import { BLEEDING_OPTIONS, FLUID_OPTIONS, APPETITE_OPTIONS, PAIN_OPTIONS, PHASE_SHADE, PHASE_NAMES, CONFIDENCE_NAMES } from "./body-config.js";
 import React, { useEffect, useRef, useState } from "react";
@@ -26,9 +27,9 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   const parseKg = (value) => Number(String(value).replace(",", "."));
   const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => replaceWeightRecord(p, wDate, value, uid)); setKg(""); toast(`Peso guardado: ${kg1(value)} kg el ${fmtDate(wDate)}`); };
   const delW = (id) => setWeights((p) => removeBodyRecord(p, id));
-  const wSorted = [...weights].sort((a, b) => b.date.localeCompare(a.date));
+  const wSorted = descendingWeights(weights);
   const trend = weightTrendHighlight(weights, todayISO());
-  const wChart = [...weights].sort((a, b) => a.date.localeCompare(b.date)).map((w) => ({ date: fmtDate(w.date), kg: w.kg }));
+  const wChart = weightPoints(weights, fmtDate);
   const lastKg = wSorted[0]?.kg ?? null;
   const kg1 = (value) => value.toFixed(1).replace(".", ",");
   const bumpKg = (delta) => setKg(kg1(Math.round(((parseKg(kg) || lastKg || 0) + delta) * 10) / 10));
@@ -43,8 +44,8 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
     toast(`Medidas guardadas del ${fmtDate(mDate)}`);
   };
   const delM = (id) => setMeasurements((p) => removeBodyRecord(p, id));
-  const mSorted = [...measurements].sort((a, b) => b.date.localeCompare(a.date));
-  const cinturaChart = [...measurements].filter((m) => m.cintura != null).sort((a, b) => a.date.localeCompare(b.date)).map((m) => ({ date: fmtDate(m.date), cintura: m.cintura }));
+  const mSorted = descendingMeasurements(measurements);
+  const cinturaChart = waistPoints(measurements, fmtDate);
 
   const [welDate, setWelDate] = useState(initialDate || todayISO());
   const existingWel = wellness.find((w) => w.date === welDate);
@@ -58,7 +59,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
     toast(`Nota del ${fmtDate(welDate)} guardada`);
     setWellness((p) => replaceWellnessRecord(p, welDate, wel, uid));
   };
-  const welSorted = [...wellness].sort((a, b) => b.date.localeCompare(a.date));
+  const welSorted = descendingWellness(wellness);
 
   const delPeriod = (id) => setPeriods((p) => removeBodyRecord(p, id));
   const fmtNext = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long" });

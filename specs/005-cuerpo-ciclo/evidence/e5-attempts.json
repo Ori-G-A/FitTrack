@@ -1,0 +1,28 @@
+{
+  "fr": [
+    "FR-019",
+    "FR-020"
+  ],
+  "failedCheckpoint": {
+    "nodeTests": 286,
+    "passed": 285,
+    "failed": 1,
+    "browserPassed": 13,
+    "buildPassed": true
+  },
+  "cause": "Prueba no congelada inspecciona literales tab dentro de app-utils; las salidas reales no cambiaron",
+  "resolution": "La prueba usa dayFeed con fixtures y preserva la misma lista esperada de destinos",
+  "originalBase": "02ab5193f9d01e0037e9640626b25742e5224a5a",
+  "originalAssertionPassed": true,
+  "currentAssertionPassed": true,
+  "expected": [
+    "entrenar",
+    "medidas",
+    "nota",
+    "nutricion",
+    "peso"
+  ],
+  "node": "v24.21.0",
+  "frozenPinsChanged": false,
+  "fullCheckpointRepeat": "Aprobado: 286 Node,13 Chromium,build; sin cambiar 68 pins"
+}

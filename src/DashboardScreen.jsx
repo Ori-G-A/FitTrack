@@ -1,3 +1,4 @@
+import { targetWeightSeries, weightChange7, ascendingMeasurements, measurementDelta, currentCycleOverview } from "./body-metrics.js";
 import { nutritionKcalSeries, positiveKcalAverage, nutritionMacroAverage, nutritionTrainingDays, nutritionMacroTargets, nutritionDayCount } from "./nutrition-metrics.js";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
@@ -5,7 +6,6 @@ import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, Responsiv
 import { CYCLE_PHASES, KCAL_PER_KG, PHASE_GROUPS, tracksCycle } from "./app-config.js";
 import { alertMetrics } from "./alerts.js";
 import { daysBetween, localISO } from "./app-utils.js";
-import { CLEAR_BLEEDING_LEVELS, cycleContext, inferCyclePhase, ovulationEstimate, phaseSegments, symptomScore } from "./cycle-inference.js";
 import { planCompliance } from "./app-utils.js";
 import DetailSheet from "./DetailSheet.jsx";
 import { weightVsExpected } from "./settings-utils.js";
@@ -279,13 +279,9 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     rpeSeries, deloadSignal, maintenance, protAvg7, lastTrain, projection,
   } = m;
   const vsExpected = useMemo(() => weightVsExpected(weights, goals), [weights, goals]);
-  const weightChart = useMemo(() => {
-    if (!maSeries.length) return [];
-    const start = maSeries[0]; const startKg = goals.startWeight ? Number(goals.startWeight) : start.real;
-    return maSeries.map((p) => ({ ...p, objetivo: Number((startKg + goals.weeklyChange * (daysBetween(start.iso, p.iso) / 7)).toFixed(2)) }));
-  }, [maSeries, goals]);
+  const weightChart = useMemo(() => targetWeightSeries(maSeries, goals), [maSeries, goals]);
   const currentW = sortedW.length ? sortedW[sortedW.length - 1].kg : null;
-  const change7 = useMemo(() => { if (sortedW.length < 2) return null; const last = sortedW[sortedW.length - 1]; const ref = [...sortedW].reverse().find((w) => daysBetween(w.date, last.date) >= 7); return ref ? round1(last.kg - ref.kg) : null; }, [sortedW]);
+  const change7 = useMemo(() => weightChange7(sortedW), [sortedW]);
 
   const trackable = useMemo(() => Object.keys(exHistory).filter((n) => exHistory[n].length >= 2), [exHistory]);
   const muscleOptions = useMemo(() => [...new Set(trackable.map((n) => exHistory[n][0].muscle))].sort(), [trackable, exHistory]);
@@ -339,10 +335,10 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
 
   const kcalChart = useMemo(() => nutritionKcalSeries(nutrition, isoMinus, fmtDate), [nutrition]);
   const kcalAvg = useMemo(() => positiveKcalAverage(kcalChart), [kcalChart]);
-  const measSorted = useMemo(() => [...measurements].sort((a, b) => a.date.localeCompare(b.date)), [measurements]);
+  const measSorted = useMemo(() => ascendingMeasurements(measurements), [measurements]);
   const measLatest = measSorted[measSorted.length - 1] || null;
   const MEAS_FIELDS = [["cintura", "Cintura"], ["cadera", "Cadera"], ["pecho", "Pecho"], ["brazo", "Brazo"], ["muslo", "Muslo"]];
-  const measDelta = (k) => { const s = measSorted.filter((m) => m[k] != null); return s.length >= 2 ? s[s.length - 1][k] - s[0][k] : null; };
+  const measDelta = (k) => measurementDelta(measSorted, k);
   const macro14 = useMemo(() => nutritionMacroAverage(nutrition.filter((n) => n.date >= isoMinus(13))), [nutrition]);
   const trainingDays7 = useMemo(() => nutritionTrainingDays(workouts, isoMinus), [workouts]);
   // Periodizado: más carbo en días de entreno (glucógeno/rendimiento), más grasa en
@@ -376,22 +372,7 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
   // Resumen del ciclo EN MARCHA, no solo la fase de hoy: cuanto llevas, que
   // fases han pasado, cuanto sangrado y cuantos dias con sintomas altos. Es lo
   // que Cuerpo ya sabe del historico, contado del ciclo que estas viviendo.
-  const cyc = useMemo(() => {
-    const date = todayISO();
-    const ctx = cycleContext(date, periods, menstrualLogs);
-    if (!ctx.currentStart) return null;
-    const phase = PHASE_GROUPS[inferCyclePhase({ date, menstrualLogs, periods, wellness }).phase];
-    const logs = menstrualLogs.filter((log) => log.date >= ctx.currentStart && log.date <= date);
-    return {
-      phase, day: ctx.cycleDay, daysToNext: ctx.daysToNext, avgCycle: ctx.avgCycle, samples: ctx.samples,
-      start: ctx.currentStart, nextPeriod: ctx.nextPeriod,
-      segments: phaseSegments(ctx.currentStart, date, periods, menstrualLogs),
-      logged: logs.length,
-      bleedDays: logs.filter((log) => CLEAR_BLEEDING_LEVELS.includes(log.bleedingLevel)).length,
-      symptomDays: logs.filter((log) => symptomScore(log) >= 3).length,
-      ovulation: ovulationEstimate({ date, periods, menstrualLogs }),
-    };
-  }, [periods, menstrualLogs, wellness]);
+  const cyc = useMemo(() => currentCycleOverview({ date: todayISO(), periods, menstrualLogs, wellness }), [periods, menstrualLogs, wellness]);
 
   // Sueno: ya se registra en el check-in de Cuerpo y no se veia en ningun lado.
   const sleep = useMemo(() => {

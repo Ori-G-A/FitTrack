@@ -97,3 +97,12 @@ Regresión/tendencia bruta, creatina y retención en weight-model; medias,
 corrección, tendencia y proyección en weight-metrics. Fachadas y callbacks 004
 conservados; ciclo/avisos compartidos siguen en alerts. 286 Node, 13 Chromium,
 build, cuatro gates y 68 hashes aprobados. [Evidencia E4](evidence/e4.json).
+
+## E5 verificada — 2026-10-19
+
+Selectores corporales y entradas de Diario extraídos; navegación, filtros y
+ventanas conservados. Prueba no congelada de rutas pasa con salidas originales
+y actuales; se repitió íntegro el checkpoint: 286 Node, 13 Chromium, build y
+contratos001/003/004/005 completos; 68 hashes intactos.
+[Evidencia E5](evidence/e5.json), [aserción ajustada](evidence/e5-attempts.json),
+[inventario de llamadores](callers.md). RLS fresco/gate002 pendientes de G-CLOSE.

@@ -9,8 +9,10 @@ Estado de adopción y decisiones: [roadmap](docs/sdd/roadmap.md).
 - `src/main.jsx`: arranque y error boundary.
 - `src/FitTrack.jsx`: composición principal, estado y adaptadores de navegador.
 - `src/*Screen.jsx`: pantallas; revisar llamadores antes de extraer símbolos.
-- `src/app-utils.js`, `settings-utils.js`, `cycle-inference.js`, `fase1Config.js`:
-  cálculos y utilidades; hay responsabilidades compartidas que deben inventariarse.
+- `src/app-utils.js`, `settings-utils.js`, `cycle-inference.js`, `fase1Config.js`: fachadas y responsabilidades compartidas; revisar sus llamadores.
+- `src/cycle-context.js`, `cycle-phase.js`, `cycle-summary.js`, `cycle-readings.js`: contexto, fase, resumen y lecturas puras de ciclo.
+- `src/body-config.js`, `body-records.js`, `body-metrics.js`: constantes, transformaciones y selectores de cuerpo.
+- `src/weight-model.js`, `weight-metrics.js`: algoritmos y métricas puras de peso.
 - `src/data-operations.js`, `data-sync.js`: acceso a app_data y sincronización.
 - `src/save-coordinator.js`: cola, bus y suspensión con persistencia inyectada.
 - `src/app-data-lifecycle.js`: coordinación de carga, copias y borrado con dependencias explícitas.

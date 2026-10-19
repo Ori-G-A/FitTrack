@@ -33,7 +33,7 @@ Todas AS-IS; el alcance aprobado no aprueba estas tareas.
 | T025 | US2; FR-008/009/010/011/012/013/020; US2-AS3/4/5/6/7/8, US3-AS7 | E2: fase, resúmenes, lecturas y fachada acíclica; conservar precedencia/duplicados/timestamps/textos y ejecutar checkpoint. | T024 | Completada |
 | T026 | US1; FR-001/002/003/004/005/015/020; US1-AS1/2/3/4/5, US3-AS2/7 | E3: transformaciones de registros y selectores de BodyScreen; IDs/estado/effects/toast/fotos intactos; checkpoint. | T025 | Completada |
 | T027 | US2/US3; FR-006/007/008/014/015/016/017/018/020; US2-AS1/2/3, US3-AS1/2/3/4/5/7 | E4: weight-model/weight-metrics y composición de alerts; conservar callbacks 004, guardas, ventanas y claves; checkpoint. | T026 | Completada |
-| T028 | US1/US2/US3; FR-005/013/019/020; US1-AS5, US2-AS8, US3-AS6/7 | E5: body-metrics, consumidores, Diario/Plan y previews; proteger sueño/pulso sin extraer y reglas ajenas; checkpoint. | T027 | Pendiente |
+| T028 | US1/US2/US3; FR-005/013/019/020; US1-AS5, US2-AS8, US3-AS6/7 | E5: body-metrics, consumidores, Diario/Plan y previews; proteger sueño/pulso sin extraer y reglas ajenas; checkpoint. | T027 | Completada |
 | T029 | US1/US2/US3; FR-020, US3-AS7; capas de todos los contratos | Cerrar prueba de arquitectura con grafo transitivo, negativos y hashes; verificar exports/consumidores y ausencia de ciclos. Mantener los checks incrementales desde T024. | T028 | Pendiente |
 | T030 | US1/US2/US3; todos los FR/escenarios | Añadir gate y artifacts 005 a CI manteniendo gates previos y job RLS; cruzar manifiesto con descubrimiento y aserciones reales. | T029 | Pendiente |
 | T031 | US1/US2/US3; todos los FR/escenarios | G-CLOSE: RLS real local desechable fresco con cleanup; suite/build/Chromium, cinco contratos completos sobre mismo src/resultados, hashes congelados y límites documentados. | T030 | Pendiente |
@@ -80,3 +80,9 @@ frontera, toast/setter y IDs conservados. 286 Node, 13 Chromium, build y gates
 E4 / T027 completada: algoritmos y métricas de peso separados, callbacks 004
 y condiciones/retorno de alerts intactos. 286 Node, 13 Chromium, build y cuatro
 gates completos; 68 pins intactos. [Evidencia E4](evidence/e4.json).
+
+E5 / T028 completada y checkpoint fallido repetido íntegramente: 286 Node,
+13 Chromium, build, cuatro gates y 68 hashes aprobados. Selectores separados
+sin mover sueño/pulso ni algoritmos ajenos. FR-019/020: prueba no congelada
+de rutas usa salidas reales, comprobadas también sobre original.
+[Evidencia E5](evidence/e5.json), [intento y corrección](evidence/e5-attempts.json).

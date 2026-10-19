@@ -1,3 +1,5 @@
+import { bodyFeedEntries } from "./body-metrics.js";
+export { stepsToday } from "./body-metrics.js";
 export { creatineWaterKg, lutealRetentionKg, slopePerDay, weightTrendHighlight } from "./weight-model.js";
 export { applyAdjustments } from "./training-records.js";
 export { canonExercise, matchedLoadRpeTrend, epley, loadProgressHighlight } from "./training-metrics.js";
@@ -95,17 +97,6 @@ export function migrateWorkouts(workouts, defaultMuscle) {
 // Pasos de un dia y la media de los 7 anteriores, que es contra lo que se lee
 // si el dia va bien o flojo. Sin dato de hoy devuelve `today: null`, no un cero:
 // no haber registrado no es haberse quedado quieta.
-export function stepsToday(wellness = [], date = localISO()) {
-  const day = wellness.find((w) => w.date === date);
-  const from = addDays(date, -7);
-  const week = wellness.filter((w) => w.date >= from && w.date < date && Number(w.steps) > 0).map((w) => Number(w.steps));
-  return {
-    today: Number(day?.steps) > 0 ? Number(day.steps) : null,
-    avg: week.length ? Math.round(week.reduce((sum, n) => sum + n, 0) / week.length) : null,
-    days: week.length,
-  };
-}
-
 export function dayFeed(date, { workouts = [], nutrition = [], weights = [], measurements = [], wellness = [] } = {}) {
   const entries = [];
 
@@ -145,27 +136,7 @@ export function dayFeed(date, { workouts = [], nutrition = [], weights = [], mea
     tab: "nutricion", done: true,
   }));
 
-  const weight = weights.find((w) => w.date === date);
-  if (weight) entries.push({ id: `p-${weight.id || date}`, kind: "peso", title: `${String(weight.kg).replace(".", ",")} kg`, meta: "peso corporal", tab: "peso", done: true });
-
-  const measure = measurements.find((m) => m.date === date);
-  if (measure) {
-    const parts = ["cintura", "cadera", "pecho", "brazo", "muslo"]
-      .filter((key) => Number(measure[key]) > 0)
-      .map((key) => `${key} ${String(measure[key]).replace(".", ",")}`);
-    if (parts.length) entries.push({ id: `m-${measure.id || date}`, kind: "medidas", title: "Medidas", meta: `${parts.join(" · ")} cm`, tab: "medidas", done: true });
-  }
-
-  const note = wellness.find((w) => w.date === date);
-  if (note && (note.sleep != null || note.steps != null || note.energy || (note.notes || "").trim())) {
-    const meta = [
-      note.sleep != null ? `${String(note.sleep).replace(".", ",")} h de sueño` : null,
-      note.steps ? `${Number(note.steps).toLocaleString("es-ES")} pasos` : null,
-      note.energy ? `energía ${note.energy}` : null,
-      (note.notes || "").trim() || null,
-    ].filter(Boolean).join(" · ");
-    entries.push({ id: `s-${note.id || date}`, kind: "nota", title: "Nota del día", meta, tab: "nota", done: true, search: note.notes || "" });
-  }
+  entries.push(...bodyFeedEntries(date, { weights, measurements, wellness }));
 
   // Todo lo que se pinta es buscable; `search` solo anade lo que no se ve.
   // `date` viaja con la entrada para que pulsarla pueda abrir la pantalla
