@@ -194,4 +194,3 @@ no existen; PENDING aquí no equivale a una ejecución aprobada.
 ## Aprobación
 
 Pendiente: alcance y C-001/C-002/C-003. La instrucción «continua» autoriza preparar esta propuesta, sin sustituir esas puertas ni aprobar plan o implementación.
-
