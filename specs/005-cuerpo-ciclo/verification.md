@@ -1,4 +1,8 @@
-# Verificación documental de propuesta 005
+# Verificación de 005 — historia y cierre local
+
+Estado vigente 2026-10-19: E0–E6 completas; 286 Node, 13 Chromium, 3 RLS con
+cleanup y build; cinco contratos completos, 68 pins intactos. Aceptación e
+integración pendientes. [Converge](converge.md), [evidencia final](evidence/final.json).
 
 Checkpoint inicial: 2026-10-18, antes de aprobar alcance y aclaraciones.
 Actualización de planificación al final de este informe.
@@ -106,3 +110,23 @@ y actuales; se repitió íntegro el checkpoint: 286 Node, 13 Chromium, build y
 contratos001/003/004/005 completos; 68 hashes intactos.
 [Evidencia E5](evidence/e5.json), [aserción ajustada](evidence/e5-attempts.json),
 [inventario de llamadores](callers.md). RLS fresco/gate002 pendientes de G-CLOSE.
+
+## G-CLOSE y revisión final — 2026-10-19
+
+Runner original de005 aprobado: 286 Node y 13 Chromium, sin omisiones/reintentos.
+RLS fresco:3/3 con guardas y fixture retirado; validateRlsEvidence comprobó
+runtime, entorno y hashes actuales. Los cinco manifiestos se cruzaron con esa
+misma colección:21/23/21/31/40 completos,136 IDs, sourceHash único
+be5259ebe677376b1c80317600c727481813a0ed225d9ddaa268147844541d87.
+Build correcto; 68 pins intactos. Nueve módulos puros, negativos transitivos y
+exports originales comprobados. T034 documenta default/comparación FR-016 sin
+cambiar conducta ni pins. 34 tareas completas, converge sin gaps locales.
+
+[Resumen](evidence/final.json), [RLS real](evidence/rls-final.json),
+[PR de código](code-pr.md), [PR documental](doc-pr.md). No instalación limpia
+ni auditoría nuevas, SQL/dependencias intactos. Sin publicación, merge, despliegue
+ni recorrido autenticado en producción. CI configurado, sin ejecución remota005.
+
+Revisión documental final: 157 enlaces locales válidos en 17 documentos,
+34 tareas únicas con dependencias acíclicas, 40 filas de trazabilidad y
+git diff --check correcto. Sin cambios de runtime tras el checkpoint final.

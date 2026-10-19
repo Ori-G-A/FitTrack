@@ -1,6 +1,6 @@
 {
   "spec": "005-cuerpo-ciclo",
-  "note": "E0 sobre original: 284 Node,13 Chromium,build;40 IDs completos antes de extraer. RLS fresco y cierre de implementación pendientes.",
+  "note": "E0–E6 verificadas localmente:286 Node,13 Chromium,3 RLS con cleanup;40 IDs de005 y cinco contratos completos (136 IDs),68 hashes intactos. Aceptación e integración pendientes.",
   "requirements": [
     {
       "id": "FR-001",

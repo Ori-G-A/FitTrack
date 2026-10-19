@@ -1,6 +1,6 @@
 # Plan de validación — 005
 
-Estado: APROBADO; no hay ejecución ni baseline 005. [Spec](spec.md), [tareas](tasks.md).
+Estado: APROBADO y ejecutado localmente E0–E6; resultados en verification.md. [Spec](spec.md), [tareas](tasks.md).
 BASE src: 02ab5193f9d01e0037e9640626b25742e5224a5a.
 
 ## Pins completos antes de extraer

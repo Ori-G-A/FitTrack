@@ -1,29 +1,22 @@
 # PR documental preparado — 005
 
-Estado: borrador local; plan pendiente de aprobación. No publicado.
-Rama: codex/005-cuerpo-ciclo. Base: main (02ab519).
+Estado: alcance/clarificaciones/plan/tareas/analyze aprobados; publicación pendiente.
+Revisión aprobada anterior a implementación: e949c08. Base: main (02ab519).
+Rama documental local: codex/005-cuerpo-ciclo-docs desde e949c08.
 
-Título propuesto: Definir contratos y plan de refactorización de cuerpo y ciclo 005
-
-## Problema y resultado
+Título: Definir contratos y plan de cuerpo y ciclo 005
 
 Cuerpo, inferencias y métricas comparten cálculos y efectos entre pantallas.
-La propuesta documenta 20 requisitos AS-IS y 20 escenarios para preservar
-registros, incertidumbre y resultados al separar responsabilidades. Alcance y
-C-001/002/003 aprobados; plan, 33 tareas y revisión preparados para aprobación.
-No modifica src, SQL, dependencias, tests ni CI.
+El contrato aprobado fija 20 requisitos AS-IS y 20 escenarios para preservar
+registros, incertidumbre y resultados al separar responsabilidades. El plan
+aprobado incluye baseline previa y entregas pequeñas; no autoriza cambios clínicos.
 
-## Validación y límites
+Ese snapshot es documental: src, SQL, dependencias, tests y CI coinciden con
+main. El manifiesto permanece pending en esa revisión, como corresponde antes
+de ejecutar pins; los resultados posteriores están en el [PR de código](code-pr.md).
+La ejecución local antes de integrar documentación fue autorizada por el dueño.
 
-Revisión de fuente y consumidores; matriz/manifiesto con 40 IDs pending y
-pruebas previstas, dependencias acíclicas y enlaces locales comprobados.
-No se ejecutaron suite/build/Chromium/RLS nuevos en esta preparación documental.
-[Verificación](verification.md). Los resultados de 004 son evidencia histórica,
-no una baseline de 005. No hay validación clínica ni correcciones BODY implícitas.
-
-## Orden de integración
-
-004 ya integrada en main. Este PR documental va antes del PR de código 005.
-El propietario abre y fusiona; cualquier ejecución local antes del merge requiere
-autorización expresa, y publicar/fusionar/desplegar código requerirá su decisión.
-Rollback documental revierte estos documentos, sin cambios de datos.
+Orden: publicar/integrar este PR primero y luego el de código. La rama principal
+de trabajo contiene ambas etapas; el snapshot e949c08 permite separarlas sin
+reescribir commits. El propietario autoriza publicación/fusión y Vercel asociado.
+No se declara ningún PR remoto creado ni CI remoto aprobado para005.

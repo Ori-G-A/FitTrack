@@ -15,5 +15,9 @@ Fecha: 2026-10-18. Revisión del agente; no aceptación del propietario.
 - [x] Plan, tareas y analyze aprobados por separado mediante «aprobado»; ejecución local E0–E6 autorizada.
 - [x] Baseline de 005 ejecutada antes de transformar src: 284 Node, 13 Chromium, build, 40 IDs.
 
-Las casillas pendientes son puertas posteriores, no evidencia omitida que
-se pueda declarar completa. Ejecución local 005 autorizada; baseline previa a extracción pendiente.
+E0–E6 verificadas localmente, 34 tareas completas y revisión de aserciones del agente.
+Aceptación final/publicación/integración pendientes; [converge](converge.md).
+
+- [x] Cinco contratos completos y RLS real fresco con limpieza.
+- [x] 68 hashes congelados intactos y nueve módulos puros con negativos transitivos.
+- [x] CI extendido, revisión constitucional/KD y PRs preparados.

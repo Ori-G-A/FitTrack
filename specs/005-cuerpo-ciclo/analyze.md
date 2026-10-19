@@ -43,3 +43,12 @@ local E0–E6 previa a integración documental. No se inicia E0 mientras falte.
 Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
 autorización de ejecución local E0–E6 antes de integrar el PR documental.
 No autoriza publicación, merge ni despliegue.
+
+## Contraste final — 2026-10-19
+
+E0–E6 ejecutadas, T001–T034 completas. Los pendientes de la tabla inicial
+corresponden a planificación; quedan superados por [converge](converge.md) y
+[evidencia final](evidence/final.json). No hay CRITICAL ni gaps locales abiertos.
+T034 precisa documentación del default/umbral FR-016, sin cambiar conducta.
+RLS real fresco y cinco manifiestos completos comprobados sobre el mismo src.
+Sin revisión humana/aceptación final inferidas y sin ejecución remota de005.

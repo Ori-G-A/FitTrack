@@ -1,6 +1,6 @@
 # Tareas — 005-cuerpo-ciclo
 
-Estado: APROBADAS para ejecución local E0–E6; ejecución pendiente. Fecha: 2026-10-18. Adaptación de plantilla
+Estado: APROBADAS para ejecución local E0–E6; ejecución local completada. Fecha: 2026-10-18. Adaptación de plantilla
 local. [Plan](plan.md), [validación](validation-plan.md), [analyze](analyze.md).
 Todas AS-IS; el alcance aprobado no aprueba estas tareas.
 
@@ -34,11 +34,11 @@ Todas AS-IS; el alcance aprobado no aprueba estas tareas.
 | T026 | US1; FR-001/002/003/004/005/015/020; US1-AS1/2/3/4/5, US3-AS2/7 | E3: transformaciones de registros y selectores de BodyScreen; IDs/estado/effects/toast/fotos intactos; checkpoint. | T025 | Completada |
 | T027 | US2/US3; FR-006/007/008/014/015/016/017/018/020; US2-AS1/2/3, US3-AS1/2/3/4/5/7 | E4: weight-model/weight-metrics y composición de alerts; conservar callbacks 004, guardas, ventanas y claves; checkpoint. | T026 | Completada |
 | T028 | US1/US2/US3; FR-005/013/019/020; US1-AS5, US2-AS8, US3-AS6/7 | E5: body-metrics, consumidores, Diario/Plan y previews; proteger sueño/pulso sin extraer y reglas ajenas; checkpoint. | T027 | Completada |
-| T029 | US1/US2/US3; FR-020, US3-AS7; capas de todos los contratos | Cerrar prueba de arquitectura con grafo transitivo, negativos y hashes; verificar exports/consumidores y ausencia de ciclos. Mantener los checks incrementales desde T024. | T028 | Pendiente |
-| T030 | US1/US2/US3; todos los FR/escenarios | Añadir gate y artifacts 005 a CI manteniendo gates previos y job RLS; cruzar manifiesto con descubrimiento y aserciones reales. | T029 | Pendiente |
-| T031 | US1/US2/US3; todos los FR/escenarios | G-CLOSE: RLS real local desechable fresco con cleanup; suite/build/Chromium, cinco contratos completos sobre mismo src/resultados, hashes congelados y límites documentados. | T030 | Pendiente |
-| T032 | US1/US2/US3; todos los FR/escenarios | Converge contra spec/plan/constitución; revisar BODY y KD-002, añadir tareas para gaps sin reescribir completadas; no declarar aceptación clínica ni retirar deuda global. | T031 | Pendiente |
-| T033 | US1/US2/US3; todos los FR/escenarios | Preparar PR de código con alcance, comandos/resultados, omisiones, orden de integración y rollback; entregar al propietario sin publicar, fusionar o desplegar. | T032 | Pendiente |
+| T029 | US1/US2/US3; FR-020, US3-AS7; capas de todos los contratos | Cerrar prueba de arquitectura con grafo transitivo, negativos y hashes; verificar exports/consumidores y ausencia de ciclos. Mantener los checks incrementales desde T024. | T028 | Completada |
+| T030 | US1/US2/US3; todos los FR/escenarios | Añadir gate y artifacts 005 a CI manteniendo gates previos y job RLS; cruzar manifiesto con descubrimiento y aserciones reales. | T029 | Completada |
+| T031 | US1/US2/US3; todos los FR/escenarios | G-CLOSE: RLS real local desechable fresco con cleanup; suite/build/Chromium, cinco contratos completos sobre mismo src/resultados, hashes congelados y límites documentados. | T030 | Completada |
+| T032 | US1/US2/US3; todos los FR/escenarios | Converge contra spec/plan/constitución; revisar BODY y KD-002, añadir tareas para gaps sin reescribir completadas; no declarar aceptación clínica ni retirar deuda global. | T031 | Completada |
+| T033 | US1/US2/US3; todos los FR/escenarios | Preparar PR de código con alcance, comandos/resultados, omisiones, orden de integración y rollback; entregar al propietario sin publicar, fusionar o desplegar. | T032 | Completada |
 
 ## Revisión inicial de tareas
 
@@ -51,8 +51,12 @@ Ninguna prueba prevista se declara descubierta/ejecutada.
 
 ## Convergencia — solo añadir
 
-No hay tareas añadidas ni completadas. Si aparecen discrepancias se registrarán
-aquí con ID nuevo, dependencia, evidencia y estado, sin reescribir completadas.
+Estado inicial: no había tareas añadidas. La convergencia añadió T034 sin
+reescribir tareas completadas.
+
+| ID | Historia y contrato | Resultado/tarea añadida | Depende de | Estado |
+| --- | --- | --- | --- | --- |
+| T034 | US3; FR-016/020, US3-AS3/7 | Precisar default de minPerPhase y comparación del residuo JS en FR-016, conservando algoritmo, C-002 y pins originales de frontera; enlazar evidencia. | T031 | Completada |
 
 Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
 autorización de ejecución local E0–E6 antes de integrar el PR documental.
@@ -86,3 +90,15 @@ E5 / T028 completada y checkpoint fallido repetido íntegramente: 286 Node,
 sin mover sueño/pulso ni algoritmos ajenos. FR-019/020: prueba no congelada
 de rutas usa salidas reales, comprobadas también sobre original.
 [Evidencia E5](evidence/e5.json), [intento y corrección](evidence/e5-attempts.json).
+
+E6 / T029–T030: arquitectura de nueve módulos puros y fachada, negativos,
+exports y llamadores revisados en E5; gate/artifacts 005 añadidos a CI, con
+jobs y gates previos conservados. T031 (cierre fresco) en ejecución.
+
+## Cierre local E6 — 2026-10-19
+
+T031–T034 completadas. RLS real fresco 3/3 con limpieza; gate005 ejecutado por
+el runner original; 286 Node, 13 Chromium y build. Los cinco manifiestos completos
+(21/23/21/31/40 IDs) comparten sourceHash y resultados; 68 pins intactos.
+34 tareas completas. [Converge](converge.md), [PR de código preparado](code-pr.md).
+Aceptación final, publicación, integración y despliegue quedan para el propietario.

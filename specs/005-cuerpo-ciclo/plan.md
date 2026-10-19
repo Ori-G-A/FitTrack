@@ -120,3 +120,10 @@ omisiones, orden de merge y rollback de código por entrega, sin migración de d
 Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
 autorización de ejecución local E0–E6 antes de integrar el PR documental.
 No autoriza publicación, merge ni despliegue.
+
+## Resultado de ejecución local — 2026-10-19
+
+E0–E6 verificadas. Nueve módulos puros creados; fachada pública y efectos
+conservados. 286 Node, 13 Chromium, 3 RLS con cleanup y build; cinco gates
+completos y 68 pins intactos. [Converge](converge.md), [cierre](evidence/final.json).
+La autorización local previa al PR documental no concede publicación ni merge.

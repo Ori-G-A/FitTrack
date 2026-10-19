@@ -1,14 +1,13 @@
 # Preparación verificada de SDD
 
-Actualización 2026-10-18: 004 integrada en 02ab519 mediante PR #10, con CI
-remoto del PR/main y Vercel Production exitosos. Verificación local de cierre:
-263 Node, 9 Chromium, 3 RLS con limpieza; contratos 001/002/003/004 completos
-(21/23/21/31 IDs), mismo sourceHash y 40 archivos de pins congelados intactos.
-[Verificación 004](../../specs/004-nutricion-objetivos/verification.md) y
-[evidencia remota](../../specs/004-nutricion-objetivos/evidence/integration.json).
-La respuesta HTTP 200 del despliegue individual muestra login de Vercel; no es
-un recorrido funcional con datos reales. 005 está en documentación de alcance,
-sin ejecución ni baseline propia. Los apartados siguientes conservan evidencia histórica.
+Actualización 2026-10-19: 005 verificada localmente E0–E6: 286 Node,
+13 Chromium, 3 RLS reales con guardas/cleanup y build correcto. Cinco contratos
+completos (21/23/21/31/40 IDs), mismo src/resultados y 68 hashes congelados.
+Nueve módulos puros y fachadas conservadas. [Cierre 005](../../specs/005-cuerpo-ciclo/converge.md),
+[evidencia](../../specs/005-cuerpo-ciclo/evidence/final.json).
+001–004 siguen integradas; 005 espera aceptación/publicación e integración.
+No instalación limpia/auditoría nuevas: dependencias intactas. Los apartados
+siguientes conservan evidencia histórica; sus pendientes no sustituyen este estado.
 
 Revisión: 2026-10-15. Autorización: «aplica tus sugerencias y revisa el estado
 actual de lo aprobado». Estado de decisiones: [aprobaciones](approvals.md).

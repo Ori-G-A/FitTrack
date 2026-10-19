@@ -1,6 +1,6 @@
 # Spec 005: Cuerpo y ciclo
 
-Estado: ALCANCE Y ACLARACIONES APROBADOS; plan aprobado para ejecución local | Propietario: propietario de FitTrack | Fecha: 2026-10-18
+Estado: IMPLEMENTADA Y VERIFICADA LOCALMENTE; aceptación e integración pendientes | Propietario: propietario de FitTrack | Fecha: 2026-10-18
 Constitución: [1.0.2 ratificada](../../.specify/memory/constitution.md).
 BASE de observación: 02ab5193f9d01e0037e9640626b25742e5224a5a.
 [Survey](../../docs/sdd/cuerpo-ciclo-survey.md). No autoriza implementación.
@@ -77,7 +77,7 @@ Todos son AS-IS; cualquier corrección semántica exigirá CHANGE aprobado y pru
 - FR-013 [AS-IS] Donde se muestre ciclo, el sistema deberá conservar ocho filas en Cuerpo y seis en Perfil, resumen del ciclo actual en Métricas, etiquetas, motivos, procedencia y aviso existente de incertidumbre; en Entrenamiento deberá mantener la cautela solo para fases fértiles/ovulación probable con confianza distinta de baja, sin introducir un filtro de sexo nuevo.
 - FR-014 [AS-IS] Cuando se calcule regresión y tendencia de peso, el sistema deberá conservar mínimo de dos puntos para pendiente y null con denominador cero; tendencia con al menos tres pesos positivos, ventana inclusiva de 21 días hasta hoy y redondeo semanal a dos decimales, manteniendo el contrato de callbacks de objetivos 004.
 - FR-015 [AS-IS] Donde haya fecha de inicio de creatina, el sistema deberá conservar la curva exponencial con tau 7 y máximo 1,5 kg, cero antes del inicio o sin fecha y la presentación de saturación, horizonte de 28 días y umbral 98%; editar inicio deberá preservar otros objetivos.
-- FR-016 [AS-IS] Cuando se estime retención, el sistema deberá conservar pesos positivos, al menos tres muestras por grupo folicular/lútea tardía, detrending folicular, rechazo de diferencias hasta 0,2 kg, techo 2,5 y bandera capped; el consumidor deberá aplicar el ajuste solo con al menos tres ciclos completos.
+- FR-016 [AS-IS] Cuando se estime retención, el sistema deberá conservar pesos positivos, mínimo configurable minPerPhase por grupo folicular/lútea tardía (tres por defecto), detrending folicular y rechazo cuando la diferencia calculada en JavaScript es <= 0,2 kg, techo 2,5 y bandera capped; el consumidor deberá aplicar el ajuste solo con al menos tres ciclos completos.
 - FR-017 [AS-IS] Cuando se calculen métricas de avisos, el sistema deberá conservar medias móviles de siete días, ajuste por creatina/fase, ventana de tendencia con futuros y fallback de seis puntos, pendiente semanal y proyección con umbral 0,02, signo de alejamiento y redondeo por semanas, sin añadir el límite de 104 semanas de otro consumidor.
 - FR-018 [AS-IS] Cuando se construyan avisos, el sistema deberá conservar umbral 0,25, confusión de ciclo con dos ciclos completos y score 3, meta de tres ciclos y ventana de energía baja sin límite superior de fecha. Deberá mantener textos y condiciones compartidas de fatiga/nutrición, así como el retorno sin claves de avisos cuando ciclo está desactivado.
 - FR-019 [AS-IS] Cuando se consulten métricas, pasos o diario, el sistema deberá conservar línea objetivo de peso y cambio a siete días, diferencias de medidas, media de pasos positivos de los siete días previos y filtros/formato de entradas de cuerpo; una nota solo con pulso seguirá sin crear entrada en el diario.
@@ -85,9 +85,9 @@ Todos son AS-IS; cualquier corrección semántica exigirá CHANGE aprobado y pru
 
 ## Evidencia AS-IS
 
-Las líneas corresponden al BASE indicado. PENDING significa pin previo aún no ejecutado para 005; las pruebas existentes son evidencia parcial, no contrato completo.
+Las líneas corresponden al BASE indicado. Los pins se ejecutaron sobre ese original antes de extraer; evidencia y límites en baseline y verification.
 
-| FR | Código file:line | Prueba actual o pin pendiente | Límite de evidencia |
+| FR | Código file:line | Prueba ejecutada en E0 | Límite de evidencia |
 | --- | --- | --- | --- |
 | FR-001 | [BodyScreen.jsx:71](../../src/BodyScreen.jsx) | test/body-weight.test.js :: cuerpo peso conserva conversiones reemplazo pasos e historial | Ejecutada sobre original; baseline y revisión de aserciones |
 | FR-002 | [BodyScreen.jsx:96](../../src/BodyScreen.jsx) | test/body-measurements.test.js :: cuerpo medidas conservan campos null conversiones y reemplazo | Ejecutada sobre original; baseline y revisión de aserciones |
@@ -129,7 +129,7 @@ sin una necesidad y decisión separadas. No se usarán credenciales ni datos rea
 ## Compatibilidad temporal
 
 Los hallazgos BODY-001–005 del [survey](../../docs/sdd/cuerpo-ciclo-survey.md)
-son observaciones por lectura, pendientes de reproducción. No se declaran todos
+se reprodujeron mediante pins y se preservaron. No se declaran todos
 defectos. Se propone conservarlos para esta extracción y revisar cada uno al
 cierre M6; una corrección posterior tendrá CHANGE separado y aprobación explícita.
 
@@ -147,8 +147,8 @@ Esto permite preparar el plan; su ejecución requiere aprobación separada.
 
 ## Traceability
 
-Archivo, prueba prevista y tarea se enumeran en el plan propuesto. PENDING
-indicaba ausencia de ejecución en planificación; E0 ya cruzó los nombres con resultados reales.
+Archivo, prueba y tarea se enumeran por contrato. E0 fijó los pins sobre original;
+E1–E6 volvieron a cruzar los nombres con resultados reales, sin modificar los pins.
 
 | FR o escenario | Historia | Resultado | Archivo :: prueba | Tarea | Estado/evidencia |
 | --- | --- | --- | --- | --- | --- |
@@ -198,3 +198,11 @@ indicaba ausencia de ejecución en planificación; E0 ya cruzó los nombres con 
 Alcance y C-001/C-002/C-003 aprobados el 2026-10-18 mediante «continua»,
 en respuesta directa a la solicitud de aprobación de esta spec. Plan, tareas, analyze y ejecución local E0–E6 aprobados después mediante
 «aprobado» el 2026-10-18. Publicación, integración y despliegue no autorizados.
+
+## Convergencia local — 2026-10-19
+
+T034 precisa FR-016 conforme al AS-IS/C-002 y compatibilidad FR-020: tres es el
+default del parámetro existente, y el umbral compara el residuo calculado, sin
+redondear primero. Los pins originales ya fijaban el parámetro y las diferencias
+de punto flotante. No es CHANGE ni una corrección del algoritmo.
+[Cierre local](converge.md), [evidencia final](evidence/final.json).

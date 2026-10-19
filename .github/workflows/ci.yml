@@ -25,6 +25,7 @@ jobs:
       - run: pnpm test:sdd:complete
       - run: pnpm run test:sdd:complete --spec=003-entrenamiento
       - run: pnpm run test:sdd:complete --spec=004-nutricion-objetivos
+      - run: pnpm run test:sdd:complete --spec=005-cuerpo-ciclo
       - uses: actions/upload-artifact@v6
         if: always()
         with:
@@ -43,6 +44,16 @@ jobs:
             test-results/sdd-004-nutricion-objetivos-evidence.json
             test-results/sdd-004-nutricion-objetivos-pilot.tap
             test-results/sdd-004-nutricion-objetivos-browser.json
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: evidencia-sdd-005
+          path: |
+            test-results/sdd-005-cuerpo-ciclo-evidence.json
+            test-results/sdd-005-cuerpo-ciclo-pilot.tap
+            test-results/sdd-005-cuerpo-ciclo-browser.json
           if-no-files-found: ignore
 
   rls-and-sdd-002:
