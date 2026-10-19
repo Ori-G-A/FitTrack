@@ -40,3 +40,15 @@ despliegue004, ni aceptación final del propietario inferida desde «continua».
 Revisión documental final:110 enlaces locales existentes,29 tareas completas
 con dependencias acíclicas y git diff --check correcto. Sin cambios de runtime
 después del checkpoint final; las evidencias históricas permanecen intactas.
+
+## Integración posterior comprobada — 2026-10-18
+
+La autorización específica quedó ejecutada: [PR #10](https://github.com/Ori-G-A/FitTrack/pull/10),
+head 25f64de, merge 02ab5193f9d01e0037e9640626b25742e5224a5a.
+CI del PR 39182872610 y de main 39183165576: ambos jobs obligatorios exitosos.
+Vercel Production 7163298676 exitoso sobre el SHA de merge. El árbol src de
+main coincide con el revisado. HTTP 200 de la URL individual corresponde al
+login de Vercel, sin recorrido autenticado con datos reales.
+[Evidencia remota](evidence/integration.json). Los límites de publicación de los
+apartados anteriores describen el checkpoint local previo y quedan superados
+para esta integración; no autorizan otras áreas.

@@ -237,3 +237,14 @@ fusionar con CI remoto aprobado y permitir Vercel asociado. Esta autorización
 sustituye para esta entrega la reserva de apertura/fusión por el propietario.
 La verificación local quedó cerrada enef44f9b. No se concede permiso permanente
 para otras áreas ni se declara aún publicación, merge o despliegue completados.
+
+## Integración 004 comprobada y preparación 005 — 2026-10-18
+
+La autorización «Autorizar publicación, integración con CI verde y despliegue
+automático» se ejecutó mediante PR #10. Head 25f64de; CI del PR 39182872610
+aprobado. Merge 02ab5193f9d01e0037e9640626b25742e5224a5a; CI de main 39183165576
+aprobado. Vercel Production 7163298676 exitoso sobre el mismo SHA. La URL
+individual responde 200 con login de Vercel, sin prueba funcional con datos reales.
+[Evidencia remota](../../specs/004-nutricion-objetivos/evidence/integration.json).
+El propietario indicó después «continua»: autoriza preparar survey/propuesta 005,
+sin aprobar anticipadamente alcance, aclaraciones, plan, código ni despliegue.
