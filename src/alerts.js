@@ -1,4 +1,5 @@
-import { KCAL_PER_KG, tracksCycle } from "./app-config.js";
+import { maintenanceFromNutrition, meanNutritionProtein } from "./nutrition-metrics.js";
+import { tracksCycle } from "./app-config.js";
 import { canonExercise, creatineWaterKg, daysBetween, epley, localISO, lutealRetentionKg, matchedLoadRpeTrend, selectFreshRecords, slopePerDay } from "./app-utils.js";
 import { buildCycleStarts, inferCyclePhase, symptomScore } from "./cycle-inference.js";
 
@@ -116,21 +117,8 @@ export function alertMetrics({ workouts = [], nutrition = [], weights = [], well
     return rising && jump >= 1 ? { from: recent[0].rpe, to: recent[2].rpe } : null;
   })();
 
-  const maintenance = (() => {
-    const byDay = {};
-    nutrition.filter((n) => n.date >= isoMinus(28)).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.kcal || 0); });
-    const loggedDays = Object.values(byDay).filter((v) => v > 50);
-    if (loggedDays.length < 10 || trend === null) return null;
-    const avgKcal = loggedDays.reduce((s, v) => s + v, 0) / loggedDays.length;
-    return { maint: Math.round(avgKcal - (trend / 7) * KCAL_PER_KG), days: loggedDays.length, avgKcal: Math.round(avgKcal) };
-  })();
-
-  const protAvg7 = (() => {
-    const byDay = {};
-    nutrition.filter((n) => n.date >= isoMinus(7)).forEach((n) => { byDay[n.date] = (byDay[n.date] || 0) + (+n.protein || 0); });
-    const vals = Object.values(byDay);
-    return vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : null;
-  })();
+  const maintenance = maintenanceFromNutrition(nutrition.filter((n) => n.date >= isoMinus(28)), trend);
+  const protAvg7 = meanNutritionProtein(nutrition.filter((n) => n.date >= isoMinus(7)));
 
   const trainedDates = workouts.filter((w) => w.exercises.length || (w.cardio || []).length).map((w) => w.date).sort();
   const lastTrain = trainedDates.length ? trainedDates[trainedDates.length - 1] : null;

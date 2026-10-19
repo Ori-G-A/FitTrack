@@ -188,3 +188,52 @@ para esta entrega la reserva anterior de apertura/fusión por el propietario.
 La fusión se ejecutará con ambos jobs CI aprobados y SHA de head comprobado.
 No se declara aún PR publicado, merge ni despliegue completado, y no se
 concede permiso permanente para futuras áreas.
+
+
+## Integración 003 comprobada y preparación 004 — 2026-10-18
+
+La autorización «continua e integra», con confirmación «Autorizar integración
+y despliegue automático», se ejecutó mediante PR #9. Head 28bd509, CI del PR
+39090760297 aprobado; merge 2a7004277bd75d87fdf9746c90853b4c34eac044, CI
+de main 39090941895 aprobado; Vercel Production 7148987435 exitoso sobre ese SHA.
+La URL individual exige login de Vercel: no se afirma prueba funcional con datos
+productivos. El [PR #9](https://github.com/Ori-G-A/FitTrack/pull/9) conserva la
+evidencia remota posterior al checkpoint local. M4 queda integrado; KD-002 sigue.
+
+El propietario indicó después «continua». Autoriza preparar survey/propuesta
+de la siguiente área del roadmap, 004-nutricion-objetivos. Se proponen 16 FR
+AS-IS y 15 escenarios con C-001/002/003 pendientes. No se interpreta como
+aprobación anticipada del alcance nuevo, su plan, código ni integración.
+
+## Alcance 004 aprobado — 2026-10-18
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a la petición
+concreta de aprobar 16 FR AS-IS, 15 escenarios y C-001/002/003. Se autoriza
+preparar plan, tareas y analyze. Se preservan diferencias numéricas y temporales
+y quedan fuera cambios clínicos y algoritmos de peso/ciclo. No se infiere
+aprobación del plan, ejecución local, publicación, integración ni despliegue.
+
+## Plan 004 aprobado y ejecución local autorizada — 2026-10-18
+
+El propietario respondió «Aprobar plan, tareas y revisión; autorizar ejecución local»
+a la propuesta concreta en 3d3e20b. Autoriza E0–E5 antes de integrar el PR
+documental, con baseline original bloqueante y RLS real desechable en cierre.
+No autoriza CHANGE, publicación, integración ni despliegue de004.
+
+## Continuación y cierre local 004 — 2026-10-18
+
+El propietario indicó «continua» después de informar que revisaría Docker.
+El motor volvió a responder; se retomó T029 dentro de E0–E5 ya autorizada.
+Fixture anterior retirado con guardas, nueva RLS 3/3 y cleanup verificado;
+gate 002 repetido íntegro y cuatro contratos completos.
+[Resumen final](../../specs/004-nutricion-objetivos/evidence/final.json).
+No se infiere aceptación final ni autorización para publicar, integrar o desplegar.
+
+## Integración 004 autorizada — 2026-10-18
+
+El propietario respondió «Autorizar publicación, integración con CI verde y
+despliegue automático» a la propuesta concreta de publicar rama/PR de004,
+fusionar con CI remoto aprobado y permitir Vercel asociado. Esta autorización
+sustituye para esta entrega la reserva de apertura/fusión por el propietario.
+La verificación local quedó cerrada enef44f9b. No se concede permiso permanente
+para otras áreas ni se declara aún publicación, merge o despliegue completados.

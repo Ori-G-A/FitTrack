@@ -5,7 +5,8 @@ inicial. 001/002 ya se integraron; 003 ejecutó E0–E4 con baseline y checkpoin
 Resultado actual: 242/242 Node, 6/6 Chromium, build correcto, 21/21 contratos
 en los gates finales 001 y 003. T025 resuelta: Docker respondió, RLS renovada
 3/3 con limpieza y gate 002 completo 23/23. Los tres gates coinciden con src
-actual. Verificación local de 003 completa; revisión e integración pendientes.
+actual. 003 integrada mediante PR #9 en 2a70042: CI del PR/main y Vercel Production
+aprobados, observados el 2026-10-18. Los checkpoints locales se conservan.
 [Estado y evidencia actual de 003](../../specs/003-entrenamiento/verification.md).
 
 Revisión: 2026-10-15. Autorización: «aplica tus sugerencias y revisa el estado
@@ -107,3 +108,28 @@ El piloto no equivale a los pins completos de los 11 FR y 10 escenarios.
 actual. La revisión humana aún debe comprobar cada cláusula del contrato.
 El plan revisado espera aprobación; tareas, analyze, PR documental y extracción
 productiva permanecen pendientes. No se declara M0 ni M1 completado.
+
+## Baseline 004 — 2026-10-18
+
+Plan aprobado y ejecución local autorizada. Sobre src original2a70042: 260 Node,
+9 Chromium, 31/31 contratos de 004 y build verdes. Cuatro mutaciones detectadas,
+22 pins anteriores intactos. [Baseline](../../specs/004-nutricion-objetivos/evidence/baseline.json).
+No se declara implementación004 completa ni RLS renovada; T020–T028 pendientes en este checkpoint inicial.
+
+## Implementación 004 y cierre pendiente — 2026-10-18
+
+[Checkpoint](../../specs/004-nutricion-objetivos/evidence/e5.json): 263 Node, 9 Chromium,
+31/31 contratos de 004, build y 40 hashes intactos.001/003: 21/21 sobre la misma colección.
+La ejecución RLS actual falló por motor Docker inaccesible (socket de inferencia);
+cleanup no confirmado. No se restaura evidencia previa ni se declara completo002.
+[Acción pendiente](../../specs/004-nutricion-objetivos/converge.md):T029 y repetición
+íntegra de 002 con RLS. Sin cambios SQL/dependencias ni publicación/integración/despliegue.
+
+## Cierre local 004 completo — 2026-10-18
+
+Docker volvió a responder; T029 resuelta con recuperación del fixture previo
+y RLS renovada3/3 con cleanup. Gate002 repetido íntegramente:23/23 IDs,
+263 Node, 9 Chromium y build correcto. Contratos001/002/003/004:21/23/21/31
+completos sobre los mismos resultados/hash;40 pins intactos.
+[Resumen final](../../specs/004-nutricion-objetivos/evidence/final.json).
+Las 29 tareas completas; revisión del propietario e integración pendientes.

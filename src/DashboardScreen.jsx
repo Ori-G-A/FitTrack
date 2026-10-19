@@ -1,3 +1,4 @@
+import { nutritionKcalSeries, positiveKcalAverage, nutritionMacroAverage, nutritionTrainingDays, nutritionMacroTargets, nutritionDayCount } from "./nutrition-metrics.js";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -336,35 +337,21 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
     return Object.entries(src).map(([label, vol]) => ({ label, vol: Math.round(vol), effPct: muscleRelative[label] ?? null })).sort((a, b) => b.vol - a.vol).slice(0, 8);
   }, [weeklyMuscle, muscleVolAll, muscleRelative]);
 
-  const kcalChart = useMemo(() => { const days = []; for (let i = 13; i >= 0; i--) { const iso = isoMinus(i); const kcal = nutrition.filter((n) => n.date === iso).reduce((t, n) => t + (+n.kcal || 0), 0); days.push({ date: fmtDate(iso), kcal: Math.round(kcal) }); } return days; }, [nutrition]);
-  const kcalAvg = useMemo(() => { const vals = kcalChart.map((d) => d.kcal).filter((v) => v > 0); return vals.length ? Math.round(vals.reduce((s, v) => s + v, 0) / vals.length) : null; }, [kcalChart]);
+  const kcalChart = useMemo(() => nutritionKcalSeries(nutrition, isoMinus, fmtDate), [nutrition]);
+  const kcalAvg = useMemo(() => positiveKcalAverage(kcalChart), [kcalChart]);
   const measSorted = useMemo(() => [...measurements].sort((a, b) => a.date.localeCompare(b.date)), [measurements]);
   const measLatest = measSorted[measSorted.length - 1] || null;
   const MEAS_FIELDS = [["cintura", "Cintura"], ["cadera", "Cadera"], ["pecho", "Pecho"], ["brazo", "Brazo"], ["muslo", "Muslo"]];
   const measDelta = (k) => { const s = measSorted.filter((m) => m[k] != null); return s.length >= 2 ? s[s.length - 1][k] - s[0][k] : null; };
-  const macro14 = useMemo(() => {
-    const since = isoMinus(13); const byDay = {};
-    nutrition.filter((n) => n.date >= since).forEach((n) => { const d = byDay[n.date] || (byDay[n.date] = { p: 0, c: 0, f: 0, k: 0 }); d.p += +n.protein || 0; d.c += +n.carbs || 0; d.f += +n.fat || 0; d.k += +n.kcal || 0; });
-    const ds = Object.values(byDay); if (!ds.length) return null;
-    const avg = (k) => ds.reduce((s, d) => s + d[k], 0) / ds.length;
-    return { p: avg("p"), c: avg("c"), f: avg("f"), k: avg("k"), days: ds.length };
-  }, [nutrition]);
-  const trainingDays7 = useMemo(() => new Set(workouts.filter((w) => w.date >= isoMinus(7) && (w.exercises.length || (w.cardio || []).length)).map((w) => w.date)).size, [workouts]);
+  const macro14 = useMemo(() => nutritionMacroAverage(nutrition.filter((n) => n.date >= isoMinus(13))), [nutrition]);
+  const trainingDays7 = useMemo(() => nutritionTrainingDays(workouts, isoMinus), [workouts]);
   // Periodizado: más carbo en días de entreno (glucógeno/rendimiento), más grasa en
   // descanso, mismo total de kcal/proteína. Como el objetivo se compara contra un
   // PROMEDIO de 14 días (no un día puntual), se pondera por tu frecuencia real de
   // entreno en vez de asumir un día concreto.
-  const macroTargets = useMemo(() => {
-    const pt = Number(goals.proteinTarget) || null, kt = Number(goals.kcalTarget) || null;
-    if (!kt) return { p: pt, c: null, f: null };
-    const rem = Math.max(0, kt - (pt || 0) * 4);
-    const CARB_RATIO_TRAIN = 0.60, CARB_RATIO_REST = 0.45;
-    const trainFrac = Math.min(1, trainingDays7 / 7);
-    const carbRatio = CARB_RATIO_REST + (CARB_RATIO_TRAIN - CARB_RATIO_REST) * trainFrac;
-    return { p: pt, c: rem * carbRatio / 4, f: rem * (1 - carbRatio) / 9 };
-  }, [goals, trainingDays7]);
+  const macroTargets = useMemo(() => nutritionMacroTargets(goals, trainingDays7), [goals, trainingDays7]);
 
-  const nutDays7 = useMemo(() => new Set(nutrition.filter((n) => n.date >= isoMinus(7)).map((n) => n.date)).size, [nutrition]);
+  const nutDays7 = useMemo(() => nutritionDayCount(nutrition.filter((n) => n.date >= isoMinus(7))), [nutrition]);
   const totalMin = workouts.reduce((t, w) => t + (w.durationMin || 0), 0);
   const timed = workouts.filter((w) => w.durationMin > 0).length;
   const avgMin = timed ? Math.round(totalMin / timed) : 0;

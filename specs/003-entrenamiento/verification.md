@@ -1,10 +1,10 @@
 # Verificación — 003
 
-Estado actual, 2026-10-17: verificación local E0–E5 completa. Gates 001/002/003
-verdes, 242/242 Node, 6/6 Chromium, 3/3 RLS reales con cleanup y build correcto.
-Los tres gates corresponden al mismo hash de src. T025 resuelta. Revisión del
-propietario e integración pendientes. [Resumen final](evidence/final.json).
-Las secciones fechadas conservan el historial de evidencia.
+Estado actual, 2026-10-18: integrado mediante [PR #9](https://github.com/Ori-G-A/FitTrack/pull/9)
+en main 2a70042. CI del PR y de main aprobados; Vercel Production confirmado.
+La verificación local E0–E5 conserva su [resumen](evidence/final.json).
+La URL individual exige login de Vercel; no hay prueba funcional con datos de
+producción. Las secciones fechadas conservan el historial de evidencia.
 
 Fecha: 2026-10-16. Alcance aprobado en d22d608. Plan/tareas aún propuestos.
 
@@ -158,3 +158,13 @@ despliegue. El resultado no cierra M4 integrado ni la adopción global de SDD.
 
 Comprobación documental de cierre: 72 enlaces locales existentes, 25 tareas
 únicas completadas y grafo acíclico; evidencia RLS archivada sin credenciales.
+
+
+## Integración observada — 2026-10-18
+
+PR #9 fusionado con head 28bd509 tras CI 39090760297 exitoso. Commit de main
+2a7004277bd75d87fdf9746c90853b4c34eac044, CI de main 39090941895 exitoso,
+ambos jobs aprobados. Vercel Production, deployment 7148987435, estado success
+para el mismo commit. [Registro remoto](https://github.com/Ori-G-A/FitTrack/pull/9).
+La autorización incluye esta fusión/despliegue, no nuevas áreas. Los checkpoints
+locales archivados no se reescriben como resultados remotos.

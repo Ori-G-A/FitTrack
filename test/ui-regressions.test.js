@@ -16,11 +16,13 @@ test("manual duration saves on Enter, on blur and by itself", async () => {
 
 test("el aviso de ritmo persiste su decisión en goals, no en estado local", async () => {
   const source = await readFile(new URL("../src/DiarioScreen.jsx", import.meta.url), "utf8");
-  // Sin paceCheckedAt en goals, el aviso reaparece a cada montaje del Diario
-  // pidiendo otro ajuste sobre el objetivo que acaba de subir.
-  assert.match(source, /setGoals\(\(current\) => \(\{ \.\.\.current, \.\.\.patch, paceCheckedAt: today \}\)\)/);
-  // Deshacer tiene que devolver también la marca, o el aviso queda mudo 3 semanas.
-  assert.match(source, /previous = \{[^}]*paceCheckedAt: goals\.paceCheckedAt[^}]*\}/);
+  const operations = await readFile(new URL("../src/goals-operations.js", import.meta.url), "utf8");
+  // FR-014: comprobar composición y los mismos tres campos tras la extracción.
+  assert.match(source, /setGoals\(\(current\) => markPaceGoals\(current, patch, today\)\)/);
+  assert.match(operations, /markPaceGoals = \(current, patch, today\) => \(\{ \.\.\.current, \.\.\.patch, paceCheckedAt: today \}\)/);
+  assert.match(source, /previous = paceSnapshot\(goals\)/);
+  assert.match(operations, /paceSnapshot = [^\n]*paceCheckedAt: goals\.paceCheckedAt/);
+  assert.match(source, /undoPaceGoals\(current, paceDone\.previous\)/);
   assert.doesNotMatch(source, /useState\(false\);\s*\n\s*const \[previous/);
 });
 

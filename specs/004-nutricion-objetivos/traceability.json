@@ -1,0 +1,431 @@
+{
+  "spec": "004-nutricion-objetivos",
+  "note": "E0–E5 y T029 verificados localmente:263 Node,9 Chromium,3 RLS con cleanup;31 IDs completos. Cuatro contratos verdes y40 hashes intactos. Integración y CI remoto pendientes.",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "status": "complete",
+      "tests": [
+        "nutricion catalogo y migracion conservan valores y unidades",
+        "nutricion navegador biblioteca recetas y snapshots"
+      ],
+      "plannedTests": [
+        "nutricion catalogo y migracion conservan valores y unidades"
+      ],
+      "plannedTaskIds": [
+        "T002"
+      ]
+    },
+    {
+      "id": "FR-002",
+      "status": "complete",
+      "tests": [
+        "nutricion alimentos conservan crud conversiones orden y deduplicacion",
+        "nutricion navegador biblioteca recetas y snapshots"
+      ],
+      "plannedTests": [
+        "nutricion alimentos conservan crud conversiones orden y deduplicacion"
+      ],
+      "plannedTaskIds": [
+        "T003"
+      ]
+    },
+    {
+      "id": "FR-003",
+      "status": "complete",
+      "tests": [
+        "nutricion recetas conservan ingredientes porciones y snapshots",
+        "nutricion navegador biblioteca recetas y snapshots"
+      ],
+      "plannedTests": [
+        "nutricion recetas conservan ingredientes porciones y snapshots"
+      ],
+      "plannedTaskIds": [
+        "T004"
+      ]
+    },
+    {
+      "id": "FR-004",
+      "status": "complete",
+      "tests": [
+        "nutricion busqueda conserva fuentes limites recientes y navegacion",
+        "nutricion navegador registrar cantidades y corregir dia"
+      ],
+      "plannedTests": [
+        "nutricion busqueda conserva fuentes limites recientes y navegacion"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "FR-005",
+      "status": "complete",
+      "tests": [
+        "nutricion cantidad conserva validacion escalado guardado y retorno",
+        "nutricion navegador registrar cantidades y corregir dia"
+      ],
+      "plannedTests": [
+        "nutricion cantidad conserva validacion escalado guardado y retorno"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "FR-006",
+      "status": "complete",
+      "tests": [
+        "nutricion diario nutricional conserva totales grupos fechas y borrado",
+        "nutricion navegador registrar cantidades y corregir dia"
+      ],
+      "plannedTests": [
+        "nutricion diario nutricional conserva totales grupos fechas y borrado"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "FR-007",
+      "status": "complete",
+      "tests": [
+        "nutricion proteina conserva clamps reparto etiquetas y redondeos"
+      ],
+      "plannedTests": [
+        "nutricion proteina conserva clamps reparto etiquetas y redondeos"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "FR-008",
+      "status": "complete",
+      "tests": [
+        "nutricion objetivos conservan referencia actividad direccion y sugerencia",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion objetivos conservan referencia actividad direccion y sugerencia"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "FR-009",
+      "status": "complete",
+      "tests": [
+        "nutricion objetivos conservan edicion efecto automatico y montaje",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion objetivos conservan edicion efecto automatico y montaje"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "FR-010",
+      "status": "complete",
+      "tests": [
+        "nutricion adherencia conserva ventana dias registrados y umbral"
+      ],
+      "plannedTests": [
+        "nutricion adherencia conserva ventana dias registrados y umbral"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "FR-011",
+      "status": "complete",
+      "tests": [
+        "nutricion alertas conservan mantenimiento proteina y otras metricas"
+      ],
+      "plannedTests": [
+        "nutricion alertas conservan mantenimiento proteina y otras metricas"
+      ],
+      "plannedTaskIds": [
+        "T012"
+      ]
+    },
+    {
+      "id": "FR-012",
+      "status": "complete",
+      "tests": [
+        "nutricion metricas conservan series medias ventanas y macros"
+      ],
+      "plannedTests": [
+        "nutricion metricas conservan series medias ventanas y macros"
+      ],
+      "plannedTaskIds": [
+        "T013"
+      ]
+    },
+    {
+      "id": "FR-013",
+      "status": "complete",
+      "tests": [
+        "nutricion ritmo conserva guardas ventana limites y redondeos",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion ritmo conserva guardas ventana limites y redondeos"
+      ],
+      "plannedTaskIds": [
+        "T014"
+      ]
+    },
+    {
+      "id": "FR-014",
+      "status": "complete",
+      "tests": [
+        "nutricion ritmo conserva aplicar descartar snapshot y deshacer",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion ritmo conserva aplicar descartar snapshot y deshacer"
+      ],
+      "plannedTaskIds": [
+        "T015"
+      ]
+    },
+    {
+      "id": "FR-015",
+      "status": "complete",
+      "tests": [
+        "nutricion real esperado conserva ancla direccion y proyeccion"
+      ],
+      "plannedTests": [
+        "nutricion real esperado conserva ancla direccion y proyeccion"
+      ],
+      "plannedTaskIds": [
+        "T016"
+      ]
+    },
+    {
+      "id": "FR-016",
+      "status": "complete",
+      "tests": [
+        "nutricion consumidores y previews conservan contratos y fachadas"
+      ],
+      "plannedTests": [
+        "nutricion consumidores y previews conservan contratos y fachadas"
+      ],
+      "plannedTaskIds": [
+        "T017"
+      ]
+    },
+    {
+      "id": "US1-AS1",
+      "status": "complete",
+      "tests": [
+        "nutricion catalogo y migracion conservan valores y unidades",
+        "nutricion alimentos conservan crud conversiones orden y deduplicacion",
+        "nutricion navegador biblioteca recetas y snapshots"
+      ],
+      "plannedTests": [
+        "nutricion catalogo y migracion conservan valores y unidades",
+        "nutricion alimentos conservan crud conversiones orden y deduplicacion"
+      ],
+      "plannedTaskIds": [
+        "T002",
+        "T003"
+      ]
+    },
+    {
+      "id": "US1-AS2",
+      "status": "complete",
+      "tests": [
+        "nutricion recetas conservan ingredientes porciones y snapshots",
+        "nutricion navegador biblioteca recetas y snapshots"
+      ],
+      "plannedTests": [
+        "nutricion recetas conservan ingredientes porciones y snapshots"
+      ],
+      "plannedTaskIds": [
+        "T004"
+      ]
+    },
+    {
+      "id": "US1-AS3",
+      "status": "complete",
+      "tests": [
+        "nutricion busqueda conserva fuentes limites recientes y navegacion",
+        "nutricion navegador registrar cantidades y corregir dia"
+      ],
+      "plannedTests": [
+        "nutricion busqueda conserva fuentes limites recientes y navegacion"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "US1-AS4",
+      "status": "complete",
+      "tests": [
+        "nutricion cantidad conserva validacion escalado guardado y retorno",
+        "nutricion navegador registrar cantidades y corregir dia"
+      ],
+      "plannedTests": [
+        "nutricion cantidad conserva validacion escalado guardado y retorno"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "US1-AS5",
+      "status": "complete",
+      "tests": [
+        "nutricion diario nutricional conserva totales grupos fechas y borrado",
+        "nutricion navegador registrar cantidades y corregir dia"
+      ],
+      "plannedTests": [
+        "nutricion diario nutricional conserva totales grupos fechas y borrado"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "US2-AS1",
+      "status": "complete",
+      "tests": [
+        "nutricion proteina conserva clamps reparto etiquetas y redondeos"
+      ],
+      "plannedTests": [
+        "nutricion proteina conserva clamps reparto etiquetas y redondeos"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "US2-AS2",
+      "status": "complete",
+      "tests": [
+        "nutricion objetivos conservan referencia actividad direccion y sugerencia",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion objetivos conservan referencia actividad direccion y sugerencia"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "US2-AS3",
+      "status": "complete",
+      "tests": [
+        "nutricion objetivos conservan edicion efecto automatico y montaje",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion objetivos conservan edicion efecto automatico y montaje"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "US2-AS4",
+      "status": "complete",
+      "tests": [
+        "nutricion adherencia conserva ventana dias registrados y umbral"
+      ],
+      "plannedTests": [
+        "nutricion adherencia conserva ventana dias registrados y umbral"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "US3-AS1",
+      "status": "complete",
+      "tests": [
+        "nutricion alertas conservan mantenimiento proteina y otras metricas"
+      ],
+      "plannedTests": [
+        "nutricion alertas conservan mantenimiento proteina y otras metricas"
+      ],
+      "plannedTaskIds": [
+        "T012"
+      ]
+    },
+    {
+      "id": "US3-AS2",
+      "status": "complete",
+      "tests": [
+        "nutricion metricas conservan series medias ventanas y macros"
+      ],
+      "plannedTests": [
+        "nutricion metricas conservan series medias ventanas y macros"
+      ],
+      "plannedTaskIds": [
+        "T013"
+      ]
+    },
+    {
+      "id": "US3-AS3",
+      "status": "complete",
+      "tests": [
+        "nutricion ritmo conserva guardas ventana limites y redondeos",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion ritmo conserva guardas ventana limites y redondeos"
+      ],
+      "plannedTaskIds": [
+        "T014"
+      ]
+    },
+    {
+      "id": "US3-AS4",
+      "status": "complete",
+      "tests": [
+        "nutricion ritmo conserva aplicar descartar snapshot y deshacer",
+        "nutricion navegador objetivos automaticos y aviso"
+      ],
+      "plannedTests": [
+        "nutricion ritmo conserva aplicar descartar snapshot y deshacer"
+      ],
+      "plannedTaskIds": [
+        "T015"
+      ]
+    },
+    {
+      "id": "US3-AS5",
+      "status": "complete",
+      "tests": [
+        "nutricion real esperado conserva ancla direccion y proyeccion"
+      ],
+      "plannedTests": [
+        "nutricion real esperado conserva ancla direccion y proyeccion"
+      ],
+      "plannedTaskIds": [
+        "T016"
+      ]
+    },
+    {
+      "id": "US3-AS6",
+      "status": "complete",
+      "tests": [
+        "nutricion consumidores y previews conservan contratos y fachadas"
+      ],
+      "plannedTests": [
+        "nutricion consumidores y previews conservan contratos y fachadas"
+      ],
+      "plannedTaskIds": [
+        "T017"
+      ]
+    }
+  ]
+}

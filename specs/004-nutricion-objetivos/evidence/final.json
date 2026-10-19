@@ -1,0 +1,79 @@
+{
+  "status": "local_verification_complete_pending_owner_review_and_remote_integration",
+  "generatedAt": "2026-10-18T23:52:42.929Z",
+  "codeRevision": "799747dd6b9f158ffb5f3e22f7e0df7b5e638d06",
+  "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+  "sourceHashEncoding": "git ls-files src ordered names and current bytes; same source hash for all evaluated gates",
+  "node": "v24.21.0",
+  "nodeTests": 263,
+  "nodePassed": 263,
+  "browserPassed": 9,
+  "rlsPassed": 3,
+  "rlsCleanupPassed": true,
+  "rlsGeneratedAt": "2026-10-18T23:50:43.456Z",
+  "oldFixtureRecoveryVerified": true,
+  "currentFixtureContainersRemaining": 0,
+  "gates": [
+    {
+      "spec": "001-datos",
+      "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+      "generatedAt": "2026-10-18T23:52:31.745Z",
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      "passed": true
+    },
+    {
+      "spec": "002-identidad-fotos",
+      "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+      "generatedAt": "2026-10-18T23:52:31.745Z",
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 23
+      },
+      "passed": true
+    },
+    {
+      "spec": "003-entrenamiento",
+      "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+      "generatedAt": "2026-10-18T23:52:31.745Z",
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      "passed": true
+    },
+    {
+      "spec": "004-nutricion-objetivos",
+      "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+      "generatedAt": "2026-10-18T23:52:31.745Z",
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 31
+      },
+      "passed": true
+    }
+  ],
+  "pinsVerified": 18,
+  "previousPinsVerified": 22,
+  "build": {
+    "passed": true,
+    "log": "test-results/nutrition-final-build.log",
+    "warning": "Existing chunk size over 500 kB"
+  },
+  "collection": "Full checkpoint002 rerun after RLS recovery; other manifests evaluated using the original verifier and exactly the same TAP/Chromium/RLS results",
+  "remoteCI": "not_observed",
+  "published": false,
+  "deployed": false,
+  "limitations": [
+    "NUTR-001/002/003 reproduced and preserved AS-IS",
+    "Old preview/maqueta retains nutrition placeholder; main preview mounts Nutrition",
+    "RLS evidence is from disposable local Supabase, not production",
+    "KD-002 remains active for remaining project areas"
+  ]
+}

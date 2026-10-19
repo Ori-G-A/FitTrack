@@ -1,0 +1,28 @@
+{
+  "stage": "e5",
+  "status": "code checkpoint passed; G-CLOSE blocked by RLS",
+  "generatedAt": "2026-10-18T21:21:00.037Z",
+  "parentRevision": "32bdae8dbdbc3e6ddfc40e03cbf2a1a2fb27bc8c",
+  "sourceHash": "4cf9e9e62bcc62d4f6b13a828b5b0c22bf5713d49a9611e713ed9d122315aef6",
+  "node": "v24.21.0",
+  "nodeTests": 263,
+  "nodePassed": 263,
+  "browserPassed": 9,
+  "traceability": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 31
+  },
+  "pinsVerified": 18,
+  "previousPinsVerified": 22,
+  "build": {
+    "passed": true,
+    "log": "test-results/nutrition-e5-build.log"
+  },
+  "commands": [
+    "pnpm run test:sdd:complete --spec=004-nutricion-objetivos",
+    "pnpm run build"
+  ],
+  "remoteCI": "not_observed",
+  "rlsRenewed": false
+}

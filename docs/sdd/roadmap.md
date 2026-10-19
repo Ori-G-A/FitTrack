@@ -1,10 +1,11 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-17: PATCH 1.0.2 y 001/002 integradas previamente.
-003 tiene alcance/plan/ejecución local aprobados, baseline fijada y E1–E4
-verificadas. E5 y RLS renovada también verificadas: gates 001/002/003 verdes.
-Cierre M4 pendiente de revisión del propietario e integración remota. Los registros siguientes
-conservan la evolución anterior. [Verificación 003](../../specs/003-entrenamiento/verification.md).
+Estado actual, 2026-10-18: 001/002/003 integradas y PATCH 1.0.2 ratificada.
+M4 integrado mediante [PR #9](https://github.com/Ori-G-A/FitTrack/pull/9), con
+CI del PR/main y Vercel Production aprobados sobre 2a70042. La propuesta 004
+está preparada; alcance y aclaraciones pendientes. Los registros siguientes
+conservan el historial. [Survey 004](nutricion-objetivos-survey.md).
+
 
 Estado: constitución y comienzo por 001-datos aprobados el 2026-10-14;
 fechas y estimaciones continúan siendo tentativas.
@@ -226,3 +227,61 @@ el código actual: 001 21/21, 002 23/23, 003 21/21, 242 Node, 6 Chromium y build
 correcto. Converge local sin gaps; 25 tareas completadas y cuerpo de PR preparado.
 M4 aún requiere revisión e integración por el propietario; KD-002 sigue activa
 para el resto del proyecto. [Resumen final](../../specs/003-entrenamiento/evidence/final.json).
+
+
+## Preparación de 004 — 2026-10-18
+
+003 integrado en 2a70042 con CI y despliegue aprobados. M4 integrado sin
+retirar KD-002 para el resto del proyecto. La comprobación funcional con datos
+de producción no se ejecutó; URL individual protegida por login de Vercel.
+
+[Survey](nutricion-objetivos-survey.md) y [alcance propuesto](../../specs/004-nutricion-objetivos/spec.md):
+16 AS-IS, 15 escenarios y 31 filas pending. Incluye alimentos/recetas, cantidades,
+objetivos, métricas nutricionales y avisos de ritmo; conserva algoritmos de
+peso/ciclo de 005 y contratos de 001/002/003. Sin cambios productivos ni pruebas
+runtime nuevas. Alcance y tres aclaraciones pendientes antes del plan.
+
+| ID | Observación por lectura en BASE 2a70042 | Tratamiento propuesto |
+| --- | --- | --- |
+| NUTR-001 | Guardas numéricas distintas; amount > 0 no exige finitud y Biblioteca admite negativos en distintas entradas | Reproducir en E0; preservar AS-IS y reservar corrección para CHANGE |
+| NUTR-002 | Ventanas de métricas distintas; algunos filtros no excluyen registros futuros | Caracterizar y no unificar filtros al extraer |
+| NUTR-003 | AutoMacros depende del montaje/actualización de Ajustes, también en section datos | Caracterizar timing/cleanup; no trasladar a un efecto global sin CHANGE |
+
+## Alcance 004 aprobado — 2026-10-18
+
+Respuesta explícita «Aprobar alcance y las tres aclaraciones». C-001/002/003
+resueltas en la spec; siguiente etapa: plan técnico, tareas y revisión cruzada.
+NUTR-001/002/003 se preservan AS-IS, con reproducción pendiente en E0.
+
+## Plan 004 preparado — 2026-10-18
+
+[Plan](../../specs/004-nutricion-objetivos/plan.md), validación, research, 28 tareas
+y analyze propuestos. 16 grupos de pins y tres recorridos Chromium; E0 exige
+31 contratos completos sobre original antes de E1–E4. No hay código ni pruebas
+runtime nuevos. Plan/tareas/revisión y ejecución local pendientes de aprobación.
+
+## Caracterización 004: límite de maqueta — 2026-10-18
+
+El preview principal monta Nutrición; preview/maqueta.jsx conserva un marcador
+para esa pestaña y no importa esa pantalla. El pin FR-016 abre ambos y verifica
+su conducta actual; no se añade funcionalidad al preview antiguo. Posible mejora
+futura de006, fuera de esta extracción AS-IS.
+
+## Implementación local 004 — 2026-10-18
+
+E1–E4 verificadas por entrega; checkpoint actual: 263 Node, 9 Chromium, 31/31 IDs de 004,
+40 hashes congelados y build correcto. CI de 004 añadido; sin CI remoto observado.
+001/003: 21/21 sobre los mismos resultados; 002/G-CLOSE bloqueados por Docker:
+acceso al socket dockerInference denegado. Intento RLS actual fallido, cleanup
+sin confirmar y fixture propio conservado para recuperación. T029 añadida;
+[converge](../../specs/004-nutricion-objetivos/converge.md). No hay integración de 004.
+
+## Verificación local 004 completa — 2026-10-18
+
+T029 resuelta al volver a responder Docker. Fixture anterior retirado con
+guardas y nuevo RLS 3/3, cleanup confirmado. Gate002 repetido íntegramente;
+263 Node, 9 Chromium, build y contratos 001/002/003/004 completos sobre el mismo
+hash. 29 tareas completadas, sin gaps locales.
+[Converge](../../specs/004-nutricion-objetivos/converge.md),
+[PR preparado](../../specs/004-nutricion-objetivos/code-pr.md).
+M5 sigue pendiente de revisión e integración; KD-002 continúa para áreas restantes.
