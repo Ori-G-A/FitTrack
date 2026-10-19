@@ -228,3 +228,12 @@ Fixture anterior retirado con guardas, nueva RLS 3/3 y cleanup verificado;
 gate 002 repetido íntegro y cuatro contratos completos.
 [Resumen final](../../specs/004-nutricion-objetivos/evidence/final.json).
 No se infiere aceptación final ni autorización para publicar, integrar o desplegar.
+
+## Integración 004 autorizada — 2026-10-18
+
+El propietario respondió «Autorizar publicación, integración con CI verde y
+despliegue automático» a la propuesta concreta de publicar rama/PR de004,
+fusionar con CI remoto aprobado y permitir Vercel asociado. Esta autorización
+sustituye para esta entrega la reserva de apertura/fusión por el propietario.
+La verificación local quedó cerrada enef44f9b. No se concede permiso permanente
+para otras áreas ni se declara aún publicación, merge o despliegue completados.
