@@ -77,3 +77,9 @@ fechas puras y pierde dependencia transitiva de app-utils. Negativos de capas
 y exportaciones públicas correctos; 286 Node, 13 Chromium y build aprobados.
 Contratos001/003/004/005 completos sobre los mismos resultados; 68 pins intactos.
 [Evidencia E1](evidence/e1.json). RLS fresco se mantiene pendiente para G-CLOSE.
+
+## E2 verificada — 2026-10-19
+
+Fase/timeline, resúmenes y lecturas separados. La fachada conserva exactamente
+sus exports y el grafo es acíclico. 286 Node, 13 Chromium, build y contratos
+001/003/004/005 completos con 68 pins intactos. [Evidencia E2](evidence/e2.json).

@@ -30,7 +30,7 @@ Todas AS-IS; el alcance aprobado no aprueba estas tareas.
 | T022 | US1/US2/US3; todos los FR/escenarios | Cuatro recorridos Chromium, cuatro mutaciones controladas con control original y negativos del verificador; documentar aserción que detecta cada mutación. | T002,T003,T004,T005,T006,T007,T008,T009,T010,T011,T012,T013,T014,T015,T016,T017,T018,T019,T020,T021 | Completada |
 | T023 | US1/US2/US3; todos los FR/escenarios | G-PIN: original idéntico a BASE; suite/build/Chromium, 40/40 IDs, revisión de cláusulas/aserciones, sourceHash/runtime y congelación de pins/fixtures/harness; comprobar los 40 hashes anteriores. | T022 | Completada |
 | T024 | US1/US2; FR-004/006/007/008/013/020; US1-AS4, US2-AS1/2/3/8, US3-AS7 | E1: context/config y facades con fechas puras; negativos de la frontera introducida y checkpoint de entrega. | T023 | Completada |
-| T025 | US2; FR-008/009/010/011/012/013/020; US2-AS3/4/5/6/7/8, US3-AS7 | E2: fase, resúmenes, lecturas y fachada acíclica; conservar precedencia/duplicados/timestamps/textos y ejecutar checkpoint. | T024 | Pendiente |
+| T025 | US2; FR-008/009/010/011/012/013/020; US2-AS3/4/5/6/7/8, US3-AS7 | E2: fase, resúmenes, lecturas y fachada acíclica; conservar precedencia/duplicados/timestamps/textos y ejecutar checkpoint. | T024 | Completada |
 | T026 | US1; FR-001/002/003/004/005/015/020; US1-AS1/2/3/4/5, US3-AS2/7 | E3: transformaciones de registros y selectores de BodyScreen; IDs/estado/effects/toast/fotos intactos; checkpoint. | T025 | Pendiente |
 | T027 | US2/US3; FR-006/007/008/014/015/016/017/018/020; US2-AS1/2/3, US3-AS1/2/3/4/5/7 | E4: weight-model/weight-metrics y composición de alerts; conservar callbacks 004, guardas, ventanas y claves; checkpoint. | T026 | Pendiente |
 | T028 | US1/US2/US3; FR-005/013/019/020; US1-AS5, US2-AS8, US3-AS6/7 | E5: body-metrics, consumidores, Diario/Plan y previews; proteger sueño/pulso sin extraer y reglas ajenas; checkpoint. | T027 | Pendiente |
@@ -68,3 +68,7 @@ completos sobre original. 28 archivos nuevos de pins/infraestructura congelados;
 E1 / T024 completada: 286 Node, 13 Chromium, build, 40 IDs de005 y gates
 001/003/004 completos con los mismos resultados; 68 hashes intactos.
 [Evidencia E1](evidence/e1.json). RLS fresco/gate002 pendientes para cierre.
+
+E2 / T025 completada: fase, timeline, resúmenes y lecturas separados sin ciclos;
+286 Node, 13 Chromium, build y cuatro gates completos, 68 hashes intactos.
+[Evidencia E2](evidence/e2.json).
