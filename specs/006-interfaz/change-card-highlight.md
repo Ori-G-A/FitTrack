@@ -91,3 +91,8 @@ aprobadas anteriormente y sus pruebas independientes pueden continuar.
 
 Decisión registrada: «Aprobar alcance FR-024 y precisión de FR-008». La segunda
 pregunta sobre la extensión técnica sigue pendiente; no se infiere su respuesta.
+
+## Extensión aprobada — 2026-10-20
+
+«aprobado. continua» aprueba la extensión técnica y ejecución local T040–T043.
+Ambas puertas de esta adenda están satisfechas. No autoriza operaciones remotas.

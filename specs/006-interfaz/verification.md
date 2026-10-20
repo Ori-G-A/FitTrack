@@ -73,3 +73,55 @@ completo. No se modificó producto, contrato ni aserciones para resolverlo.
 
 El propietario aprobó plan, 39 tareas y analyze y autorizó explícitamente E0–E6
 local antes del merge documental. Publicación, fusión y despliegue no autorizados.
+
+## E0 parcial y CHANGE de resaltado propuesto — 2026-10-20
+
+Producto original intacto. 21 grupos Node pasaron tras corregir tres selectores
+incorrectos de fixtures; la suite inicial completa pasó 307 pruebas antes de
+incorporar dos casos adicionales de mutaciones/verificador. Build aprobado,
+index 504,38 kB / gzip 146,51 kB; se conserva warning de chunk. Cuatro mutaciones
+AS-IS detectadas y negativos del verificador aprobados. No se presentan estos
+resultados como checkpoint final ni como instalación limpia/auditoría.
+
+Cinco CHANGE de accesibilidad fallan por las carencias esperadas, sin skips:
+[evidencia roja](evidence/change-red.json). Chromium AS-IS pasó seis de siete
+recorridos; el de Métricas encontró resaltado persistente en App al consumirse
+focusCard, mientras el caso aislado retira la clase a 2200 ms. G-PIN no superado,
+sin pins nuevos congelados ni modificaciones de src.
+
+El propietario eligió proponer un CHANGE separado, no ratificó conservar ese
+defecto. [Propuesta FR-024](change-card-highlight.md): alcance y cuatro tareas
+adicionales sujetos a aprobación. Sus dos regresiones fallan específicamente
+por resaltado permanente y por conservar el de la tarjeta anterior;
+[prueba revisable](evidence/highlight-proposal-red.json). La propuesta no altera
+los 46 IDs aprobados ni autoriza implementación del comportamiento nuevo.
+
+## Decisión posterior de alcance — 2026-10-20
+
+El propietario aprobó FR-024 y la precisión de FR-008; spec/manifiesto suman
+ahora 48 IDs. El estado de 46 IDs y propuesta pendiente descrito arriba es
+histórico. La extensión técnica T040–T043 y su ejecución esperan la segunda
+respuesta; no se infiere de la aprobación de alcance. La aserción temporal se
+trasladó conservándola a la suite CHANGE roja y se repite el recorrido AS-IS.
+
+## Repetición independiente completada — 2026-10-20
+
+309 pruebas Node aprobadas y build verde; 20 recorridos Chromium aprobados,
+sin skips ni reintentos. 68 pins anteriores intactos; sourceHash conserva
+be5259ebe677376b1c80317600c727481813a0ed225d9ddaa268147844541d87.
+[Evidencia parcial](evidence/e0-partial.json). La primera repetición de 309 casos
+falló en el pin previo «datos debounce y suscripciones» (valor 1 frente a 2);
+no se editó su aserción y se repitieron suite/build completos, sin Chromium
+simultáneo, con éxito. El fallo y la repetición se conservan en e0-attempts.
+
+Los siete CHANGE rojos están observados; aún no se implementó ninguno.
+Los 48 IDs permanecen pending hasta completar revisión contractual/G-PIN.
+La extensión técnica T040–T043 sigue esperando su aprobación separada; el
+alcance aprobado no suple esa decisión. No hay pins nuevos congelados ni src
+modificado. No se renovó RLS en E0: se mantiene como requisito del cierre final.
+
+## Extensión aprobada — 2026-10-20
+
+El propietario aprobó la segunda decisión pendiente (T040–T043 y ejecución
+local). La autorización completa de 43 tareas se registra en approvals.md.
+La evidencia anterior conserva sus estados históricos; no implica G-PIN verde.

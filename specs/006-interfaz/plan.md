@@ -158,3 +158,18 @@ autorización específica; la anterior cubría exclusivamente 005.
 Reversión: entregas independientes E5→E1, sin migraciones de datos. No revertir
 evidencia ni congelados para esconder fallos. Un cambio del alcance o un AS-IS
 demostrablemente incorrecto se resuelve con el propietario antes de modificarlo.
+
+## Estado vigente de ejecución — 2026-10-20
+
+El plan original de 39 tareas quedó aprobado en e06f105 y E0 está en ejecución.
+La precisión FR-008 y FR-024 quedaron aprobadas en acafd25, sumando 48 IDs.
+La [extensión técnica](change-card-highlight.md) T040–T043 sigue pendiente de
+la segunda respuesta del propietario; los conteos y aristas ampliados no se
+consideran un plan aprobado por la decisión de alcance. G-PIN no superado.
+
+## Extensión aprobada — 2026-10-20
+
+El propietario aprobó T040–T043 y su ejecución local mediante «aprobado. continua».
+Se incorporan estas tareas y aristas: T028 depende también de T040/T041;
+T034 de T042; T037 de T043. Total43 tareas; G-PIN42 AS-IS completos y seis
+CHANGE pending, siete rojos; cierre184 IDs en seis contratos.

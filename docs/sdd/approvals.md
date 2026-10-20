@@ -350,3 +350,10 @@ primera pregunta explícita de la adenda. Quedan aprobados FR-024/US1-AS9 y la
 referencia de duración/limpieza desde FR-008, sin corregir tarjeta ausente.
 El alcance vigente suma 48 IDs. La segunda pregunta sobre T040–T043 y ejecución
 sigue pendiente; no se interpreta aprobación de alcance como aprobación técnica.
+
+## Extensión técnica T040–T043 aprobada — 2026-10-20
+
+El propietario respondió «aprobado. continua» a la solicitud pendiente de aprobar
+la extensión técnica T040–T043. Autoriza esas cuatro tareas, las dependencias
+adicionales y su ejecución local en E0–E6 antes del merge documental. No autoriza
+publicación, fusión ni despliegue. FR-024 y precisión FR-008 ya aprobados.
