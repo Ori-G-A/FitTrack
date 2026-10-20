@@ -40,3 +40,12 @@ requieren autorización propia de 006; la autorización de 005 no se reutiliza.
 KD-002 permanece activa: eventual retirada exige evidencia, informe PATCH y
 ratificación separada. Fuera: rediseño, nuevas validaciones/fórmulas, optimización
 sin objetivo, backend real y certificación global de accesibilidad.
+
+Estado actualizado 2026-10-20: el plan original sí fue aprobado en e06f105;
+el snapshot documental codex/006-interfaz-docs permanece local. E0 solo prueba
+el original. FR-024 aprobado amplía alcance a 48 IDs; T040–T043 pendientes de
+aprobación separada. No hay PR, fusión ni despliegue 006 autorizados.
+
+## Estado vigente — 2026-10-20
+
+Snapshot documental aprobado e06f105 y extensión3d542bc preservados. Ejecución local previa autorizada: E0/G-PIN completada, sin src modificado. [Baseline](evidence/baseline.json); no se ha publicado este PR ni se autoriza Vercel por esta evidencia.

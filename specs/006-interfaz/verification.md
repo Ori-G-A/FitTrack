@@ -125,3 +125,7 @@ modificado. No se renovó RLS en E0: se mantiene como requisito del cierre final
 El propietario aprobó la segunda decisión pendiente (T040–T043 y ejecución
 local). La autorización completa de 43 tareas se registra en approvals.md.
 La evidencia anterior conserva sus estados históricos; no implica G-PIN verde.
+
+## Estado vigente — 2026-10-20
+
+G-PIN superado sobre original:309/309 Node,20/20 Chromium y build verdes; siete CHANGE fallan por el motivo esperado.42 AS-IS completos y seis CHANGE pendientes.33 pins nuevos y68 anteriores verificados. La extensión técnica ya fue aprobada; E1–E6 habilitadas localmente. Evidencia: [baseline](evidence/baseline.json) y [revisión](assertion-review.md). RLS fresco reservado al cierre E6.

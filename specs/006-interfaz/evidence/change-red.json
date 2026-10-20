@@ -1,0 +1,62 @@
+{
+  "status": "five_expected_change_failures_observed_before_src",
+  "generatedAt": "2026-10-20T04:22:14.193Z",
+  "sourceBase": "86299a4497e3c19180c30a640598a1358d61cc8f",
+  "sourceHash": "be5259ebe677376b1c80317600c727481813a0ed225d9ddaa268147844541d87",
+  "command": "pnpm exec playwright test --config=playwright.interface-change.config.js --reporter=json",
+  "files": [
+    {
+      "file": "change-tests/interface-accessibility.spec.js",
+      "sha256": "19c5e7a4363ed34db97f12a54c858ec75c9e9b5aa8093cb0f9850d85327226a1"
+    },
+    {
+      "file": "playwright.interface-change.config.js",
+      "sha256": "408a001ecc45d47c3a38d68966e601ef0ef0786723942f970641d16557bf2020"
+    },
+    {
+      "file": "test-support/interface-build.js",
+      "sha256": "de3ba59d2fe784ea74a3a2bff2e2fe35407027c5350008439669037da9ba338f"
+    },
+    {
+      "file": "test-support/interface-browser.js",
+      "sha256": "351ba25e84f3124d8dcbfec6cb5f0f36e71ab44e10de030824bda6f8c8c7b550"
+    },
+    {
+      "file": "test-support/interface-entry.jsx",
+      "sha256": "5539bb12b313d1d49b5fae1cbb1c73c6d031965239ac9b7bfdafa3821e3591be"
+    }
+  ],
+  "results": [
+    {
+      "name": "interfaz cambio Registrar teclado y foco",
+      "status": "failed",
+      "expectedReason": "el overlay debe exponer un diálogo con nombre",
+      "attempts": 1
+    },
+    {
+      "name": "interfaz cambio DetailSheet teclado y foco",
+      "status": "failed",
+      "expectedReason": "el foco inicial debe entrar al diálogo",
+      "attempts": 1
+    },
+    {
+      "name": "interfaz cambio campo Peso en kg",
+      "status": "failed",
+      "expectedReason": "el input de peso debe tener nombre accesible inequívoco",
+      "attempts": 1
+    },
+    {
+      "name": "interfaz cambio campo Correo electrónico",
+      "status": "failed",
+      "expectedReason": "el input Correo electrónico debe tener nombre accesible inequívoco",
+      "attempts": 1
+    },
+    {
+      "name": "interfaz cambio campo Contraseña",
+      "status": "failed",
+      "expectedReason": "el input Contraseña debe tener nombre accesible inequívoco",
+      "attempts": 1
+    }
+  ],
+  "contractComplete": false
+}

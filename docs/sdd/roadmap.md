@@ -379,3 +379,19 @@ Alcance y C-001/002/003 aprobados explícitamente. [Plan](../../specs/006-interf
 completos y cuatro CHANGE pending con cinco rojos específicos; cierre con
 182 IDs completos y RLS fresco. Estado de implementación: no iniciada.
 KD-002 sigue activa; retirada normativa requiere informe y ratificación propios.
+
+UI-006-007 — 2026-10-20: App consume focusCard y cleanup cancela el timer,
+conservando la clase de resaltado; instancia aislada la retira a 2200 ms.
+Reproducido durante E0 sobre BASE86299a4. El propietario eligió «Proponer un
+CHANGE separado para corregir el resaltado». [Propuesta](../../specs/006-interfaz/change-card-highlight.md)
+FR-024/US1-AS9 con cuatro tareas adicionales; ambas aprobaciones pendientes.
+No se cambia el producto ni se declara G-PIN verde para ocultar la discrepancia.
+
+2026-10-20: FR-024 y precisión de FR-008 aprobados explícitamente. Se actualiza
+la spec a 48 IDs; extensión del plan T040–T043 pendiente de segunda decisión.
+La aserción temporal fallida se conserva como CHANGE rojo independiente, sin
+modificar src ni borrar el fallo original de evidencia E0.
+
+## Estado vigente — 2026-10-20
+
+Extensión T040–T043 aprobada en3d542bc. G-PIN006 superado sobre original:42 AS-IS completos, seis CHANGE pendientes,309 Node/20 Chromium verdes y siete rojos específicos. [Baseline](../../specs/006-interfaz/evidence/baseline.json). E1–E6 locales habilitadas. KD-002 permanece activa; publicación, integración y despliegue006 pendientes de autorización específica.

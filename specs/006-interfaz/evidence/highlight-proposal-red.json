@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-20",
+  "status": "scope_approved_extension_plan_pending",
+  "requestedByOwner": "Proponer un CHANGE separado para corregir el resaltado",
+  "base": "86299a4497e3c19180c30a640598a1358d61cc8f",
+  "newRequirement": "FR-024",
+  "newScenario": "US1-AS9",
+  "results": [
+    {
+      "name": "interfaz cambio resaltado temporal tras consumo de focusCard",
+      "status": "failed",
+      "expectedReason": "FR-024: consumir focusCard no debe dejar el resaltado permanente",
+      "attempts": 1
+    },
+    {
+      "name": "interfaz cambio resaltado reemplazo y desmontaje",
+      "status": "failed",
+      "expectedReason": "FR-024: una nueva tarjeta debe retirar el resaltado anterior",
+      "attempts": 1
+    }
+  ],
+  "files": [
+    {
+      "file": "change-tests/interface-highlight.spec.js",
+      "sha256": "e69c6ef7fb0f3a6d2d0492ece2e372a0b502c7848d54263587c0c05963670b5d"
+    },
+    {
+      "file": "test-support/interface-build.js",
+      "sha256": "de3ba59d2fe784ea74a3a2bff2e2fe35407027c5350008439669037da9ba338f"
+    },
+    {
+      "file": "test-support/interface-entry.jsx",
+      "sha256": "5539bb12b313d1d49b5fae1cbb1c73c6d031965239ac9b7bfdafa3821e3591be"
+    },
+    {
+      "file": "test-support/interface-browser.js",
+      "sha256": "351ba25e84f3124d8dcbfec6cb5f0f36e71ab44e10de030824bda6f8c8c7b550"
+    }
+  ],
+  "proposedTaskCount": 43,
+  "proposedGraph": "acyclic",
+  "currentApprovedIds": 48,
+  "proposedIds": 48,
+  "proposedFinalTotalIds": 184,
+  "localLinksChecked": 3,
+  "productUntouched": true,
+  "gPinPassed": false,
+  "scopeApproval": "2026-10-20: Aprobar alcance FR-024 y precisión de FR-008"
+}

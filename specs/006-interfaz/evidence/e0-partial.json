@@ -1,0 +1,56 @@
+{
+  "status": "e0_partial_independent_checks_passed_extension_plan_pending",
+  "generatedAt": "2026-10-20T15:14:53.744Z",
+  "sourceBase": "86299a4497e3c19180c30a640598a1358d61cc8f",
+  "scopeCommit": "acafd25",
+  "originalPlanCommit": "e06f105",
+  "runtime": "v24.21.0",
+  "pnpm": "11.11.0",
+  "sourceHash": "be5259ebe677376b1c80317600c727481813a0ed225d9ddaa268147844541d87",
+  "sourceUntouched": true,
+  "nodeTests": 309,
+  "nodePassed": 309,
+  "nodeFailed": 0,
+  "browserTests": 20,
+  "browserPassed": 20,
+  "browserSkipped": 0,
+  "browserRetries": 0,
+  "build": "passed",
+  "previousPinsVerified": 68,
+  "newPinsFrozen": false,
+  "gPinPassed": false,
+  "manifest": {
+    "pending": 48,
+    "partial": 0,
+    "complete": 0
+  },
+  "changeRedObserved": {
+    "accessibility": 5,
+    "highlight": 2,
+    "implementationStarted": false
+  },
+  "scopeApproval": "FR-024 y precisión FR-008 aprobados",
+  "extensionPlanApproval": "T040–T043 pendiente de segunda respuesta",
+  "limits": [
+    "Sin baseline contractual completo ni G-PIN",
+    "Sin src, SQL, dependencias o despliegues modificados",
+    "RLS real no renovada en este checkpoint E0; se exigirá al cierre",
+    "Sin instalación limpia o auditoría nuevas"
+  ],
+  "failedAttempt": {
+    "nodeAttempt2": {
+      "tests": 309,
+      "passed": 308,
+      "failed": 1,
+      "test": "datos debounce y suscripciones",
+      "assertion": "valor esperado 2; observado 1",
+      "pinEdited": false
+    },
+    "repair": "Se repitió la suite completa sin Chromium en paralelo;309/309 y build verdes. No se atribuye causalidad demostrada a la concurrencia."
+  },
+  "logs": {
+    "node": "test-results/interface-e0-full-node-attempt3.log",
+    "browser": "test-results/interface-e0-all-browser.json",
+    "build": "test-results/interface-e0-build-repeat.log"
+  }
+}
