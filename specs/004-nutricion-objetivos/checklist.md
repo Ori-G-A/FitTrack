@@ -17,3 +17,5 @@ Fecha: 2026-10-18. Revisión documental del agente, no aceptación del propietar
 - [x] Pins completos ejecutados sobre original antes de extraer.
 
 Plan y ejecución local aprobados. Verificación local completa, incluida RLS; revisión final del propietario pendiente. Integración y despliegue no autorizados.
+
+Actualización posterior 2026-10-18: publicación, integración y despliegue fueron autorizados y comprobados; [evidencia de integración](evidence/integration.json). La reserva anterior corresponde al checkpoint local histórico.

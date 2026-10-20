@@ -1,13 +1,14 @@
 # Preparación verificada de SDD
 
-Actualización 2026-10-17: los resultados siguientes documentan la preparación
-inicial. 001/002 ya se integraron; 003 ejecutó E0–E4 con baseline y checkpoints.
-Resultado actual: 242/242 Node, 6/6 Chromium, build correcto, 21/21 contratos
-en los gates finales 001 y 003. T025 resuelta: Docker respondió, RLS renovada
-3/3 con limpieza y gate 002 completo 23/23. Los tres gates coinciden con src
-actual. 003 integrada mediante PR #9 en 2a70042: CI del PR/main y Vercel Production
-aprobados, observados el 2026-10-18. Los checkpoints locales se conservan.
-[Estado y evidencia actual de 003](../../specs/003-entrenamiento/verification.md).
+Actualización 2026-10-18: 004 integrada en 02ab519 mediante PR #10, con CI
+remoto del PR/main y Vercel Production exitosos. Verificación local de cierre:
+263 Node, 9 Chromium, 3 RLS con limpieza; contratos 001/002/003/004 completos
+(21/23/21/31 IDs), mismo sourceHash y 40 archivos de pins congelados intactos.
+[Verificación 004](../../specs/004-nutricion-objetivos/verification.md) y
+[evidencia remota](../../specs/004-nutricion-objetivos/evidence/integration.json).
+La respuesta HTTP 200 del despliegue individual muestra login de Vercel; no es
+un recorrido funcional con datos reales. 005 está en documentación de alcance,
+sin ejecución ni baseline propia. Los apartados siguientes conservan evidencia histórica.
 
 Revisión: 2026-10-15. Autorización: «aplica tus sugerencias y revisa el estado
 actual de lo aprobado». Estado de decisiones: [aprobaciones](approvals.md).

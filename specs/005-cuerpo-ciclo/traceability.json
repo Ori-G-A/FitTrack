@@ -1,0 +1,446 @@
+{
+  "spec": "005-cuerpo-ciclo",
+  "note": "Alcance aprobado; plan propuesto. 40 IDs pending, sin pruebas ejecutadas de 005; plannedTests y plannedTaskIds describen trabajo futuro.",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva conversiones reemplazo pasos e historial"
+      ],
+      "plannedTaskIds": [
+        "T002"
+      ]
+    },
+    {
+      "id": "FR-002",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo medidas conservan campos null conversiones y reemplazo"
+      ],
+      "plannedTaskIds": [
+        "T003"
+      ]
+    },
+    {
+      "id": "FR-003",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo bienestar conserva borrador fecha guardas y guardado"
+      ],
+      "plannedTaskIds": [
+        "T004"
+      ]
+    },
+    {
+      "id": "FR-004",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo checkin conserva normalizacion identidad timestamps y legado"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "FR-005",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo conserva seccion fecha montaje y visibilidad"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "FR-006",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva comienzos longitudes y contexto"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "FR-007",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva ovulacion flujo calendario y confianza"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "FR-008",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva precedencia fases y desconocido tardio"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "FR-009",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva resumen sangrado segmentos y outliers"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "FR-010",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva distribucion escalas bins y picos"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "FR-011",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva recalculo timeline duplicados y timestamps"
+      ],
+      "plannedTaskIds": [
+        "T012"
+      ]
+    },
+    {
+      "id": "FR-012",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva guia insights provisionalidad y textos"
+      ],
+      "plannedTaskIds": [
+        "T013"
+      ]
+    },
+    {
+      "id": "FR-013",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo consumidores conservan confianza limites y cautela"
+      ],
+      "plannedTaskIds": [
+        "T014"
+      ]
+    },
+    {
+      "id": "FR-014",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva regresion tendencia y callbacks de objetivos"
+      ],
+      "plannedTaskIds": [
+        "T015"
+      ]
+    },
+    {
+      "id": "FR-015",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva creatina saturacion y edicion de objetivo"
+      ],
+      "plannedTaskIds": [
+        "T016"
+      ]
+    },
+    {
+      "id": "FR-016",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva retencion detrending umbral y cap"
+      ],
+      "plannedTaskIds": [
+        "T017"
+      ]
+    },
+    {
+      "id": "FR-017",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva medias correcciones tendencia y proyeccion"
+      ],
+      "plannedTaskIds": [
+        "T018"
+      ]
+    },
+    {
+      "id": "FR-018",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo avisos conservan fatiga textos umbrales y claves"
+      ],
+      "plannedTaskIds": [
+        "T019"
+      ]
+    },
+    {
+      "id": "FR-019",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo metricas y diario conservan selectores y formatos"
+      ],
+      "plannedTaskIds": [
+        "T020"
+      ]
+    },
+    {
+      "id": "FR-020",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo consumidores conservan fachadas fotos y contratos previos"
+      ],
+      "plannedTaskIds": [
+        "T021"
+      ]
+    },
+    {
+      "id": "US1-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva conversiones reemplazo pasos e historial"
+      ],
+      "plannedTaskIds": [
+        "T002"
+      ]
+    },
+    {
+      "id": "US1-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo medidas conservan campos null conversiones y reemplazo"
+      ],
+      "plannedTaskIds": [
+        "T003"
+      ]
+    },
+    {
+      "id": "US1-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo bienestar conserva borrador fecha guardas y guardado"
+      ],
+      "plannedTaskIds": [
+        "T004"
+      ]
+    },
+    {
+      "id": "US1-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo checkin conserva normalizacion identidad timestamps y legado"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "US1-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo conserva seccion fecha montaje y visibilidad"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "US2-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva comienzos longitudes y contexto"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "US2-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva ovulacion flujo calendario y confianza"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "US2-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva precedencia fases y desconocido tardio"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "US2-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva resumen sangrado segmentos y outliers"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "US2-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva distribucion escalas bins y picos"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "US2-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva recalculo timeline duplicados y timestamps"
+      ],
+      "plannedTaskIds": [
+        "T012"
+      ]
+    },
+    {
+      "id": "US2-AS7",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo conserva guia insights provisionalidad y textos"
+      ],
+      "plannedTaskIds": [
+        "T013"
+      ]
+    },
+    {
+      "id": "US2-AS8",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo ciclo consumidores conservan confianza limites y cautela"
+      ],
+      "plannedTaskIds": [
+        "T014"
+      ]
+    },
+    {
+      "id": "US3-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva regresion tendencia y callbacks de objetivos"
+      ],
+      "plannedTaskIds": [
+        "T015"
+      ]
+    },
+    {
+      "id": "US3-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva creatina saturacion y edicion de objetivo"
+      ],
+      "plannedTaskIds": [
+        "T016"
+      ]
+    },
+    {
+      "id": "US3-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva retencion detrending umbral y cap"
+      ],
+      "plannedTaskIds": [
+        "T017"
+      ]
+    },
+    {
+      "id": "US3-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo peso conserva medias correcciones tendencia y proyeccion"
+      ],
+      "plannedTaskIds": [
+        "T018"
+      ]
+    },
+    {
+      "id": "US3-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo avisos conservan fatiga textos umbrales y claves"
+      ],
+      "plannedTaskIds": [
+        "T019"
+      ]
+    },
+    {
+      "id": "US3-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo metricas y diario conservan selectores y formatos"
+      ],
+      "plannedTaskIds": [
+        "T020"
+      ]
+    },
+    {
+      "id": "US3-AS7",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "cuerpo consumidores conservan fachadas fotos y contratos previos"
+      ],
+      "plannedTaskIds": [
+        "T021"
+      ]
+    }
+  ]
+}

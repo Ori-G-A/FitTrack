@@ -1,0 +1,54 @@
+{
+  "pr": 10,
+  "url": "https://github.com/Ori-G-A/FitTrack/pull/10",
+  "head": "25f64dedc5893194b774c422b117d5e700271083",
+  "base": "2a7004277bd75d87fdf9746c90853b4c34eac044",
+  "prRun": 39182872610,
+  "status": "integrated_and_production_confirmed",
+  "authorization": "Publicación, integración con CI verde y despliegue automático autorizados",
+  "merged": true,
+  "merge": "02ab5193f9d01e0037e9640626b25742e5224a5a",
+  "prCI": "success",
+  "mainRun": 39183165576,
+  "production": {
+    "id": 7163298676,
+    "sha": "02ab5193f9d01e0037e9640626b25742e5224a5a",
+    "environment": "Production",
+    "state": "success",
+    "url": "https://fit-track-ez4ni8zku-orianag40-7859s-projects.vercel.app",
+    "dashboard": "https://vercel.com/orianag40-7859s-projects/fit-track/FfTCvhpSEMaf8EhDq8iwqJqnnbBq"
+  },
+  "mainSourceMatchesReviewedHead": true,
+  "httpCheck": {
+    "status": 200,
+    "title": "Login – Vercel",
+    "limitation": "La URL individual requiere autenticación Vercel; no se realizó prueba funcional con datos productivos"
+  },
+  "mainCI": "success",
+  "prJobs": [
+    {
+      "id": 117839177479,
+      "name": "rls-and-sdd-002",
+      "conclusion": "success"
+    },
+    {
+      "id": 117839177644,
+      "name": "test-and-build",
+      "conclusion": "success"
+    }
+  ],
+  "mainJobs": [
+    {
+      "id": 117840043987,
+      "name": "rls-and-sdd-002",
+      "conclusion": "success"
+    },
+    {
+      "id": 117840044196,
+      "name": "test-and-build",
+      "conclusion": "success"
+    }
+  ],
+  "remoteEvidencePublishedInPR": true,
+  "completedAt": "2026-10-19T01:02:31.621Z"
+}

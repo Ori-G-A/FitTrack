@@ -1,10 +1,12 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-18: 001/002/003 integradas y PATCH 1.0.2 ratificada.
-M4 integrado mediante [PR #9](https://github.com/Ori-G-A/FitTrack/pull/9), con
-CI del PR/main y Vercel Production aprobados sobre 2a70042. La propuesta 004
-está preparada; alcance y aclaraciones pendientes. Los registros siguientes
-conservan el historial. [Survey 004](nutricion-objetivos-survey.md).
+Estado actual, 2026-10-18: 001/002/003/004 integradas; PATCH 1.0.2 ratificada.
+M5 integrado mediante [PR #10](https://github.com/Ori-G-A/FitTrack/pull/10),
+merge 02ab519, CI del PR/main y Vercel Production aprobados sobre el mismo SHA.
+[Evidencia remota 004](../../specs/004-nutricion-objetivos/evidence/integration.json).
+005 tiene alcance y aclaraciones aprobados; plan pendiente: [survey](cuerpo-ciclo-survey.md) y
+[spec](../../specs/005-cuerpo-ciclo/spec.md); plan, tareas y ejecución pendientes.
+Los registros siguientes conservan el historial.
 
 
 Estado: constitución y comienzo por 001-datos aprobados el 2026-10-14;
@@ -285,3 +287,22 @@ hash. 29 tareas completadas, sin gaps locales.
 [Converge](../../specs/004-nutricion-objetivos/converge.md),
 [PR preparado](../../specs/004-nutricion-objetivos/code-pr.md).
 M5 sigue pendiente de revisión e integración; KD-002 continúa para áreas restantes.
+
+
+## Preparación 005 — 2026-10-18
+
+M5 integrado y verificado remotamente. M6 comienza con
+[survey de cuerpo/ciclo](cuerpo-ciclo-survey.md) y
+[propuesta de alcance](../../specs/005-cuerpo-ciclo/spec.md): 20 FR y 20 escenarios.
+BODY-001/002/003/004/005 registran diferencias numéricas, hidratación de borrador,
+visibilidad, claves de avisos y ventanas/duplicados; son observaciones por lectura,
+pendientes de reproducción, con revisión propuesta en M6. No se corrigen dentro
+de una extracción sin CHANGE aprobado. Alcance y C-001/002/003 pendientes.
+
+## Planificación 005 — 2026-10-18
+
+Alcance y C-001/002/003 aprobados mediante «continua» en respuesta a su solicitud
+explícita. [Plan técnico](../../specs/005-cuerpo-ciclo/plan.md), 33 tareas y analyze
+preparados: 20 grupos de pins, cuatro recorridos Chromium y extracciones por
+entregas con baseline bloqueante. Plan y autorización de ejecución local pendientes;
+src, SQL, dependencias y CI intactos. Los registros anteriores conservan historia.

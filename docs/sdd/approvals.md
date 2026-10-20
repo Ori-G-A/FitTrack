@@ -237,3 +237,39 @@ fusionar con CI remoto aprobado y permitir Vercel asociado. Esta autorización
 sustituye para esta entrega la reserva de apertura/fusión por el propietario.
 La verificación local quedó cerrada enef44f9b. No se concede permiso permanente
 para otras áreas ni se declara aún publicación, merge o despliegue completados.
+
+## Integración 004 comprobada y preparación 005 — 2026-10-18
+
+La autorización «Autorizar publicación, integración con CI verde y despliegue
+automático» se ejecutó mediante PR #10. Head 25f64de; CI del PR 39182872610
+aprobado. Merge 02ab5193f9d01e0037e9640626b25742e5224a5a; CI de main 39183165576
+aprobado. Vercel Production 7163298676 exitoso sobre el mismo SHA. La URL
+individual responde 200 con login de Vercel, sin prueba funcional con datos reales.
+[Evidencia remota](../../specs/004-nutricion-objetivos/evidence/integration.json).
+El propietario indicó después «continua»: autoriza preparar survey/propuesta 005,
+sin aprobar anticipadamente alcance, aclaraciones, plan, código ni despliegue.
+
+## Alcance y aclaraciones 005 aprobados — 2026-10-18
+
+El propietario respondió «continua» a la solicitud explícita de aprobar la spec
+005 (20 FR, 20 escenarios) y C-001/002/003: registros y consumidores necesarios,
+preservación de diferencias actuales BODY-001–005 y fórmulas/incertidumbre sin
+cambios clínicos. Se autoriza preparar plan, tareas y analyze. La respuesta no
+aprueba anticipadamente el plan ni ejecución local, publicación, merge o despliegue.
+
+## Plan 005 preparado para revisión — 2026-10-18
+
+Se prepararon plan, research, validación, 33 tareas, analyze y borrador de PR
+sobre el alcance aprobado. Veinte grupos de pins y cuatro recorridos Chromium,
+G-PIN previo a src y cierre con cinco contratos y RLS local. Revisión documental:
+40 IDs trazados, tareas acíclicas y enlaces válidos; sin ejecución de producto.
+[Plan](../../specs/005-cuerpo-ciclo/plan.md),
+[verificación](../../specs/005-cuerpo-ciclo/verification.md).
+Plan/tareas/analyze y ejecución local E0–E6 permanecen pendientes de aprobación.
+
+## Plan y ejecución local 005 aprobados — 2026-10-18
+
+El propietario respondió «aprobado» a la solicitud explícita de aprobar plan,
+33 tareas y revisión, y autorizar ejecución local E0–E6 antes de integrar el PR
+documental. Se permite iniciar caracterización sobre original y después extraer
+solo tras G-PIN completo verde. No autoriza publicación, merge ni despliegue.
