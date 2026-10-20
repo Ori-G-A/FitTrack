@@ -1,3 +1,4 @@
+import { ACCOUNT_TABS, BODY_TABS, NAV as NAV_ITEMS, registrationRows } from "./app-navigation.js";
 import { migrateFoodUnits } from "./nutrition-records.js";
 import { CATALOG, CATALOG_CATS } from "./nutrition-config.js";
 export { CATALOG, CATALOG_CATS } from "./nutrition-config.js";
@@ -676,40 +677,10 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [sheet, setSheet] = useState(null);
 
-  // La barra inferior lleva 5 destinos; lo que no cabe vive en la pantalla "Mas",
-  // que ademas es la unica que muestra de quien es la cuenta.
-  const ACCOUNT_TABS = ["cuenta", "perfil", "ajustes"];
-  const ADD_ROWS = [
-    { id: "entrenar", label: "Entreno", sub: "series y RPE", icon: Dumbbell },
-    { id: "nutricion", label: "Comida", sub: "kcal y macros", icon: Utensils },
-    { id: "peso", label: "Peso", sub: "báscula del día", icon: Scale },
-    { id: "nota", label: "Nota del día", sub: "sueño · pasos · energía", icon: Moon },
-    { id: "medidas", label: "Medidas", sub: "cintura · cadera · fotos", icon: Ruler },
-    // El check-in solo existe si hay ciclo que seguir.
-    ...(tracksCycle(goals) ? [{ id: "checkin", label: "Check-in de ciclo", sub: "sangrado y síntomas", icon: Droplet }] : []),
-  ].filter(Boolean);
-
-  // Cuerpo se registra en cuatro sitios distintos; los cuatro son la misma
-  // pantalla con una seccion activa, y el rail solo lleva al primero.
-  const BODY_TABS = ["cuerpo", "peso", "medidas", "nota", "checkin"];
-  // El rail listaba en plano tres cosas distintas —consultar, registrar y
-  // configurar— y por eso Mas duplicaba: no habia donde poner lo de configurar
-  // que no estuviera ya arriba. Ahora sigue el mismo modelo que la barra movil:
-  // Anadir para registrar, tres raices para consultar, y Mas para el resto. Es
-  // exactamente la barra inferior del movil, asi que no hay dos modelos que
-  // mantener ni nada que aparezca en dos sitios: Biblioteca vive en Mas, como en
-  // Y lo de configurar dejo de ser una pestana: es la cuenta, y se entra por el
-  // nombre al pie del rail, que es donde se busca en cualquier app.
-  //
-  // Entrenar, Cuerpo y Nutricion salen de la lista pero no se pierden: se llega
-  // por Anadir, por las filas del Diario, por el dia del Plan y por los huecos
-  // por llenar, que es de donde se llega de verdad.
-  const NAV = [
-    { id: "diario", label: "Diario", icon: Newspaper },
-    { id: "plan", label: "Plan", icon: CalendarDays },
-    { id: "dashboard", label: "Métricas", icon: LayoutDashboard },
-    { id: "biblioteca", label: "Biblioteca", icon: Apple },
-  ];
+  const icons = { Dumbbell, Utensils, Scale, Moon, Ruler, Droplet, Newspaper, CalendarDays, LayoutDashboard, Apple };
+  const withIcon = (row) => ({ ...row, icon: icons[row.icon] });
+  const ADD_ROWS = registrationRows(tracksCycle(goals)).map(withIcon);
+  const NAV = NAV_ITEMS.map(withIcon);
 
   return (
     <div className="ft-root" data-theme={theme}>

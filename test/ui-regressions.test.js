@@ -1,6 +1,26 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { cases as interfaceCases } from "../test-support/interface-cases.js";
+
+// 006 FR-020: inspeccionar solo módulos extraídos alcanzables desde App.
+// Las mismas aserciones se comprueban sobre original y candidato; no se leen
+// copias muertas. La interacción está cubierta por los pins funcionales 006.
+async function readAppSource() {
+  const allowed = new Set(["app-navigation.js", "AppNavigation.jsx", "app-styles.js"]);
+  const seen = new Set();
+  async function visit(file) {
+    if (seen.has(file)) return "";
+    seen.add(file);
+    const source = await readFile(new URL(`../src/${file}`, import.meta.url), "utf8");
+    let result = source;
+    for (const match of source.matchAll(/(?:import|export)[^;]*?from\s+["']\.\/([^"']+)["']/g)) {
+      if (allowed.has(match[1])) result += "\n" + await visit(match[1]);
+    }
+    return result;
+  }
+  return visit("FitTrack.jsx");
+}
 
 test("manual duration saves on Enter, on blur and by itself", async () => {
   const source = await readFile(new URL("../src/TrainingScreen.jsx", import.meta.url), "utf8");
@@ -33,7 +53,7 @@ test("el arranque pinta el tema antes de que React monte", async () => {
   assert.match(html, /localStorage\.getItem\("ft-theme"\) \|\| "dark"/);
   // El @import de las fuentes tiene que seguir siendo la primera regla de CSS,
   // o el navegador lo descarta y la app pierde Archivo e IBM Plex Mono.
-  const source = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const source = await readAppSource();
   const css = source.slice(source.indexOf("export const CSS = `"));
   assert.match(css.slice(0, 260), /^export const CSS = `\r?\n@import url\(/);
 });
@@ -56,7 +76,7 @@ test("cada fila del diario aterriza en la pantalla de su tipo", async () => {
 
   // La app tiene que renderizar los tres, y el banco de pruebas tiene que
   // enrutarlos por separado: colapsarlos mandaba toda fila a Entrenar.
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   const bench = await readFile(new URL("../src/preview-main.jsx", import.meta.url), "utf8");
   const mapa = bench.match(/const TAB_TO_SCREEN = \{[^}]*\}/)?.[0] || "";
   // Los cuatro de Cuerpo son la misma pantalla con una sección activa.
@@ -82,7 +102,7 @@ test("el día del Plan recibe todo el día, no solo el entreno", async () => {
   assert.match(plan, /setTab\(option\.tab, selected\.iso\)/);
   assert.match(plan, /setTab\("entrenar", selected\.iso\)/);
 
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   const uso = app.match(/<PlanScreen[^>]*\/>/)?.[0] || "";
   for (const prop of ["nutrition=", "weights=", "measurements=", "wellness="]) {
     assert.match(uso, new RegExp(prop), `Plan no recibe ${prop}`);
@@ -118,7 +138,7 @@ test("los avisos se leen en el Diario y saltan a su tarjeta de Métricas", async
 });
 
 test("la cuenta es una pantalla con dos pestañas y se entra por el nombre", async () => {
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   const account = await readFile(new URL("../src/AccountScreen.jsx", import.meta.url), "utf8");
 
   // Más era un cajón: repetía entradas del rail y mezclaba navegación con
@@ -136,7 +156,7 @@ test("la cuenta es una pantalla con dos pestañas y se entra por el nombre", asy
 });
 test("Biblioteca abre con la lista y la ficha vive en el panel derecho", async () => {
   const lib = await readFile(new URL("../src/LibraryScreen.jsx", import.meta.url), "utf8");
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
 
   // Lo que se repintaba: el formulario de alta era lo primero de la pantalla.
   // Ahora el alta es un botón y la ficha solo existe cuando hay algo abierto.
@@ -156,7 +176,7 @@ test("Biblioteca abre con la lista y la ficha vive en el panel derecho", async (
 
 test("registrar comida son tres pantallas y la cantidad es obligatoria", async () => {
   const screen = await readFile(new URL("../src/NutritionScreen.jsx", import.meta.url), "utf8");
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
 
   // El día, elegir qué y cuánto: cada una ocupa la pantalla y trae su salida.
   // Con paneles colgando al lado hacía falta pegar cabeceras por encima para
@@ -184,7 +204,7 @@ test("registrar comida son tres pantallas y la cantidad es obligatoria", async (
 
 test("Cuerpo se registra en cuatro pantallas, no en una pila de formularios", async () => {
   const body = await readFile(new URL("../src/BodyScreen.jsx", import.meta.url), "utf8");
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
 
   // Una sección activa por vez: seis tarjetas apiladas hacían el trabajo de
   // cuatro pantallas del prototipo.
@@ -207,7 +227,7 @@ test("Cuerpo se registra en cuatro pantallas, no en una pila de formularios", as
 test("un perfil de hombre no ve nada del ciclo", async () => {
   const body = await readFile(new URL("../src/BodyScreen.jsx", import.meta.url), "utf8");
   const dash = await readFile(new URL("../src/DashboardScreen.jsx", import.meta.url), "utf8");
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
 
   // El check-in, la fase en la tira de peso, la tarjeta de Métricas y la fila de
   // Añadir se apagan con el mismo criterio, no cada una por su cuenta.
@@ -215,7 +235,8 @@ test("un perfil de hombre no ve nada del ciclo", async () => {
   assert.match(body, /\.\.\.\(cycle \? \[\["checkin"/);
   assert.match(body, /\{cycle && \(\s*\n\s*<div>\s*\n\s*<span className="k">FASE ESTIMADA/);
   assert.match(dash, /on\("cuerpo"\) && tracksCycle\(goals\) && cyc/);
-  assert.match(app, /tracksCycle\(goals\) \? \[\{ id: "checkin"/);
+  // 006 FR-002/020: mismo contrato funcional antes y después de extraer datos.
+  await interfaceCases.registration();
 });
 
 test("sin ciclo no salen avisos de ciclo ni corrección por fase", async () => {
@@ -228,7 +249,7 @@ test("sin ciclo no salen avisos de ciclo ni corrección por fase", async () => {
 });
 
 test("guardar confirma: hay toast en las cuatro pantallas que escriben", async () => {
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   // Un solo <Toast /> montado en App; las pantallas solo emiten.
   assert.match(app, /<Toast \/>/);
   assert.match(app, /\.ft-toast\{position:fixed;right:18px;bottom:18px/);
@@ -245,7 +266,7 @@ test("guardar confirma: hay toast en las cuatro pantallas que escriben", async (
 });
 
 test("la rejilla de Métricas es fluida y no parte los gráficos", async () => {
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   // auto-fill en vez del salto seco a dos columnas en 860 px.
   assert.match(app, /\.ft-dc-grid\{display:grid;grid-template-columns:repeat\(auto-fill,minmax\(380px,1fr\)\)/);
   assert.doesNotMatch(app, /@media \(min-width:860px\)\{\.ft-dc-grid/);
@@ -255,7 +276,7 @@ test("la rejilla de Métricas es fluida y no parte los gráficos", async () => {
 
 test("el modo sesión va a pantalla completa, sin rail ni barra inferior", async () => {
   const session = await readFile(new URL("../src/SessionScreen.jsx", import.meta.url), "utf8");
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
 
   // Es la única pantalla que se usa de pie, con el móvil en la mano: el handoff
   // la marca como intocable y se había perdido al montarla dentro del marco.
@@ -269,7 +290,7 @@ test("el modo sesión va a pantalla completa, sin rail ni barra inferior", async
 });
 
 test("en móvil la ficha reemplaza la lista y las cifras no se aprietan", async () => {
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   const nutrition = await readFile(new URL("../src/NutritionScreen.jsx", import.meta.url), "utf8");
 
   // Biblioteca: apilada debajo era la solución de escritorio encogida.
@@ -281,7 +302,7 @@ test("en móvil la ficha reemplaza la lista y las cifras no se aprietan", async 
 });
 
 test("el rail y la barra móvil llevan a lo mismo, y nada queda huérfano", async () => {
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   const nav = app.match(/const NAV = \[[\s\S]*?\];/)?.[0] || "";
   const railIds = [...nav.matchAll(/id: "([a-z]+)"/g)].map((m) => m[1]);
 
@@ -292,7 +313,8 @@ test("el rail y la barra móvil llevan a lo mismo, y nada queda huérfano", asyn
 
   // Lo que sale del rail tiene que seguir teniendo camino. Registrar va por
   // Añadir; el resto, por las pantallas que ya enlazaban.
-  const addIds = [...(app.match(/const ADD_ROWS = \[[\s\S]*?\];/)?.[0] || "").matchAll(/id: "([a-z]+)"/g)].map((m) => m[1]);
+  // 006 FR-002/020: acotar la misma lista aunque termine en filter(Boolean).
+  const addIds = [...(app.match(/const ADD_ROWS = \[[\s\S]*?\](?:\.filter\(Boolean\))?;/)?.[0] || "").matchAll(/id: "([a-z]+)"/g)].map((m) => m[1]);
   for (const id of ["entrenar", "nutricion", "peso", "nota", "medidas"]) {
     assert.ok(addIds.includes(id), `${id} salió del rail y no está en Añadir`);
   }
@@ -312,7 +334,7 @@ test("planificar otro día no son ocho flechas", async () => {
 });
 
 test("en móvil los controles se pueden tocar con el dedo", async () => {
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   const dash = await readFile(new URL("../src/DashboardScreen.jsx", import.meta.url), "utf8");
 
   // La app se usa entrenando, con una mano ocupada: por debajo de 32 px se falla
@@ -331,7 +353,7 @@ test("en móvil los controles se pueden tocar con el dedo", async () => {
 });
 
 test("la acción principal de cada pantalla no se va al desplazarse", async () => {
-  const app = await readFile(new URL("../src/FitTrack.jsx", import.meta.url), "utf8");
+  const app = await readAppSource();
   // La cabecera lleva la acción principal —Nuevo alimento, Registrar, Añadir
   // comida—. Con 136 alimentos la página mide 7500 px: sin sticky había que
   // volver arriba del todo para crear algo.

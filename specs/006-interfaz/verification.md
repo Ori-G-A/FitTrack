@@ -129,3 +129,7 @@ La evidencia anterior conserva sus estados históricos; no implica G-PIN verde.
 ## Estado vigente — 2026-10-20
 
 G-PIN superado sobre original:309/309 Node,20/20 Chromium y build verdes; siete CHANGE fallan por el motivo esperado.42 AS-IS completos y seis CHANGE pendientes.33 pins nuevos y68 anteriores verificados. La extensión técnica ya fue aprobada; E1–E6 habilitadas localmente. Evidencia: [baseline](evidence/baseline.json) y [revisión](assertion-review.md). RLS fresco reservado al cierre E6.
+
+## E1 — 2026-10-20
+
+Checkpoint completo verde: 311 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e1.json).
