@@ -1,0 +1,50 @@
+{
+  "stage": "e2",
+  "generatedAt": "2026-10-20T21:13:54.979Z",
+  "reviewRevision": "39227061c94433ea7aff2090c0ca392bd04856ae",
+  "node": "v24.21.0",
+  "sourceHash": "ea28cdb80b868d4857cb6990eb0f20ccdfc714a7ec0bdc5e5130ee85322a9316",
+  "nodeTests": 312,
+  "nodePassed": 312,
+  "browser": {
+    "startTime": "2026-10-20T15:42:29.015Z",
+    "duration": 71164.914,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "trace": {
+    "counts": {
+      "pending": 6,
+      "partial": 0,
+      "complete": 42
+    },
+    "errors": []
+  },
+  "pinsVerified": 101,
+  "build": {
+    "passed": true,
+    "output": [
+      "dist/assets/LineChart-la0W5TWc.js          393.31 kB │ gzip: 107.99 kB",
+      "dist/assets/index-t06qtPtQ.js              504.82 kB │ gzip: 146.75 kB",
+      "(!) Some chunks are larger than 500 kB after minification. Consider:",
+      "✓ built in 21.61s"
+    ]
+  },
+  "limits": [
+    "Seis IDs CHANGE pendientes de implementación",
+    "RLS fresco pendiente de E6",
+    "Sin publicación, integración ni despliegue"
+  ],
+  "previousAttempt": {
+    "nodePassed": 311,
+    "nodeTests": 312,
+    "test": "entrenamiento arquitectura detecta React DOM y cliente transitivos",
+    "expected": "dependencia impura",
+    "observed": "API de navegador en src/ui-theme.js",
+    "pinEdited": false,
+    "repair": "Lectura inyectada; regla de validación única, fachada pública compatible y checkpoint completo repetido",
+    "decision": "R-013"
+  }
+}

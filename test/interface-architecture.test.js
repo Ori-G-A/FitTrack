@@ -29,3 +29,16 @@ test('interfaz verifica todos los pins congelados de E0',async()=>{
  assert.equal(baseline.pins.length,33);assert.equal(baseline.previousPinsVerified.length,68);
  for(const pin of [...baseline.pins,...baseline.previousPinsVerified])assert.equal(createHash('sha256').update((await readFile(pin.file,'utf8')).replace(/\r\n/g,'\n')).digest('hex'),pin.sha256,pin.file);
 });
+
+async function themeGraph(contents) {
+ const result=await build({stdin:{contents,resolveDir:resolve('.'),sourcefile:'interface-theme-fixture.js'},bundle:true,write:false,metafile:true,format:'esm',platform:'browser',define:{'import.meta.env':'{}'},logLevel:'silent'});
+ for(const file of Object.keys(result.metafile.inputs)){
+  if(file.startsWith('src/'))assert(['src/ui-theme.js','src/use-app-theme.js'].includes(file),'dependencia ajena al tema '+file);
+  if(file.includes('node_modules'))assert.match(file,/node_modules\/(?:\.pnpm\/react@[^/]+\/node_modules\/)?react\//,'servicio externo al tema '+file);
+ }
+}
+
+test('interfaz tema aislado y negativos de dependencias',async()=>{
+ await themeGraph('export * from "./src/use-app-theme.js";');
+ for(const source of ['export * from "./src/app-utils.js";','export * from "./src/supabase.js";','export * from "./src/body-metrics.js";'])await assert.rejects(()=>themeGraph(source),{name:'AssertionError'});
+});

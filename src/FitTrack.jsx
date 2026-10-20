@@ -1,3 +1,4 @@
+import { useAppTheme } from "./use-app-theme.js";
 import { ACCOUNT_TABS, BODY_TABS, NAV as NAV_ITEMS, registrationRows } from "./app-navigation.js";
 import { migrateFoodUnits } from "./nutrition-records.js";
 import { CATALOG, CATALOG_CATS } from "./nutrition-config.js";
@@ -17,8 +18,8 @@ import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
 import { Toast } from "./toast.jsx";
 import {
   authUserChanged, localISO, mergePhotoUrls,
-  migrateWorkouts as migrateWorkoutData, proteinAdherence, readThemePref, resolveTheme,
-  THEME_KEY, validateBackup as validateBackupData, WEEK_ORDER,
+  migrateWorkouts as migrateWorkoutData, proteinAdherence,
+  validateBackup as validateBackupData, WEEK_ORDER,
 } from "./app-utils.js";
 import { latestWeight } from "./settings-utils.js";
 import {
@@ -515,20 +516,7 @@ export default function App() {
   // Tema: oscuro por defecto, que es el aspecto del prototipo. "auto" sigue al
   // sistema (y reacciona si el sistema cambia); "light" y "dark" son eleccion
   // explicita y mandan sobre el sistema.
-  const [themePref, setThemePref] = useState(readThemePref);
-  const [systemDark, setSystemDark] = useState(() => typeof matchMedia === "function" && matchMedia("(prefers-color-scheme: dark)").matches);
-  useEffect(() => {
-    if (typeof matchMedia !== "function") return undefined;
-    const query = matchMedia("(prefers-color-scheme: dark)");
-    const update = (event) => setSystemDark(event.matches);
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-  useEffect(() => { try { localStorage.setItem(THEME_KEY, themePref); } catch { /* almacenamiento bloqueado */ } }, [themePref]);
-  const theme = resolveTheme(themePref, systemDark);
-  // El fondo del documento tambien: .ft-root solo pinta lo que ocupa, y al hacer
-  // overscroll o con la pantalla a medias asomaba el blanco del navegador.
-  useEffect(() => { document.documentElement.setAttribute("data-theme", theme); }, [theme]);
+  const { themePref, setThemePref, theme } = useAppTheme();
   const [session, setSession] = useState(undefined); // undefined = cargando, null = sin sesión
   const [sessionError, setSessionError] = useState("");
   const [sessionAttempt, setSessionAttempt] = useState(0);

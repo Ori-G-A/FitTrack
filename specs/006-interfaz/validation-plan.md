@@ -225,7 +225,7 @@ la cláusula afectada. Matriz de anchos y lista larga no se sustituyen por
 setViewport sin comprobar cajas o por DOM simulado. Capturar screenshots como
 apoyo de revisión, no como único oráculo.
 
-Las cinco pruebas CHANGE viven fuera del descubrimiento verde inicial; ejecutar
+Las siete pruebas CHANGE viven fuera del descubrimiento verde inicial; ejecutar
 con playwright.interface-change.config.js y reporter JSON sin skips ni test.fail.
 Cada rojo debe identificar la carencia real de su overlay/campo; fallos de
 montaje/red/import/fixtures se reparan y se repite el conjunto. Tras E4/E5 se
@@ -235,11 +235,11 @@ hacerlas pasar. En E6 se incorporan a la ejecución ordinaria una sola vez.
 ## G-PIN y evidencia por checkpoint
 
 - Comparar src e index.html con BASE; no basta nombre de rama. Baseline identifica revisión exacta, runtime, comandos, resultados Node/Chromium y hash de todo src tracked.
-- Registrar 42 IDs AS-IS completos y cuatro CHANGE pending, cinco rojos individuales, cuatro mutaciones AS-IS y negativos del verificador. El modo completo debe rechazar los cuatro IDs.
+- Registrar 42 IDs AS-IS completos y seis CHANGE pending, siete rojos individuales, cuatro mutaciones AS-IS y negativos del verificador. El modo completo debe rechazar los seis IDs.
 - Congelar hashes LF de archivos de prueba nuevos, fixture/harness, config CHANGE y oráculos CSS/geometría sobre original. Registrar los 68 previos. Las pruebas de arquitectura de módulos futuros son guardas añadidas, no oráculos fingidos de E0.
 - Revisión del agente por cláusula/aserción; distinguirla de aceptación humana. El conteo mecánico no demuestra cobertura semántica.
 - Cada entrega E1–E5: pins + Node completo + Chromium AS-IS + CHANGE ya verdes + build + hashes + matriz vigente. Repetir entero el checkpoint fallido tras corregirlo.
-- Cierre: mismos TAP/JSON/sourceHash para seis manifiestos (182 IDs), cero pending/partial/skip/retry, RLS real fresco con cleanup y tamaños del build; no reutilizar un RLS viejo.
+- Cierre: mismos TAP/JSON/sourceHash para seis manifiestos (184 IDs), cero pending/partial/skip/retry, RLS real fresco con cleanup y tamaños del build; no reutilizar un RLS viejo.
 
 ## Negativos y casos límite transversales
 
@@ -257,3 +257,13 @@ constante, con tolerancia explícita ≤1 CSS px. Un desborde existente se conse
 y registra hasta CHANGE, sin convertir un baseline en promesa de corrección.
 BODY-001–005 y UI-006-003–006 conservados; resultados y evidencia de dominio
 anterior no sustituyen recorridos de interfaz todavía no probados.
+
+## Extensión aprobada FR-024 / US1-AS9 — 2026-10-20
+
+Dos casos congelados en change-tests/interface-highlight.spec.js: «interfaz
+cambio resaltado temporal tras consumo de focusCard» e «interfaz cambio
+resaltado reemplazo y desmontaje». Plazo2199/2200, consumo en App, sustitución
+por otra tarjeta válida, limpieza de clase/temporizador al desmontar y retorno
+sin clase obsoleta. Los pins FR-008 mantienen el retorno temprano si falta la
+tarjeta; no se añade un reintento. Ambos rojos y el plan T040–T043 aprobados se
+registran en baseline. T043 exige un negativo del plazo después de corregir.

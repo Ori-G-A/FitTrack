@@ -133,3 +133,7 @@ G-PIN superado sobre original:309/309 Node,20/20 Chromium y build verdes; siete 
 ## E1 — 2026-10-20
 
 Checkpoint completo verde: 311 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e1.json).
+
+## E2 — 2026-10-20
+
+Checkpoint completo verde: 312 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e2.json).

@@ -22,3 +22,18 @@ Se basa en lectura y exploración ya documentada; no hay experimentos nuevos.
 Si E0 descubre que el contrato AS-IS no describe BASE, registrar el caso y
 obtener decisión antes de alterar FR/aserciones. Los nombres de módulos pueden
 ajustarse por necesidad técnica demostrada y registrada sin ampliar alcance.
+
+## R-013 — Lectura de almacenamiento inyectada (E2, 2026-10-20)
+
+El primer checkpoint E2 pasó311 de312 pruebas. El negativo congelado de
+arquitectura003 espera rechazar la fachada app-utils como dependencia impura;
+la extracción directa hizo que esbuild visitara primero ui-theme y rechazara
+su API de navegador. La separación seguía prohibiendo ese acceso, pero cambió
+el motivo exacto fijado por el pin. No se modifica su aserción ni su hash.
+
+ui-theme recibe una función de lectura y valida su resultado dentro del mismo
+try/catch. La fachada pública y use-app-theme inyectan la lectura original de
+localStorage. Se conserva API, valores válidos, dark por defecto y tratamiento
+de fallos; el validador queda independiente del navegador. No introduce otra
+regla de producto ni requiere una nueva decisión de alcance. El checkpoint E2
+se repite completo después del ajuste; su evidencia se registra al concluir.

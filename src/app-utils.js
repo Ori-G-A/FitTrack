@@ -1,4 +1,5 @@
 import { bodyFeedEntries } from "./body-metrics.js";
+import { THEME_KEY, readThemePref as readUiThemePref } from "./ui-theme.js";
 export { stepsToday } from "./body-metrics.js";
 export { creatineWaterKg, lutealRetentionKg, slopePerDay, weightTrendHighlight } from "./weight-model.js";
 export { applyAdjustments } from "./training-records.js";
@@ -193,19 +194,10 @@ export function searchFeed(query, data = {}, { limit = 40, maxDays = 460 } = {})
 // eleccion manda sobre el sistema.
 // ponytail: sin migracion. Una preferencia guardada antigua ("auto" o "light")
 // se respeta tal cual; solo cambia lo que ve quien nunca ha elegido.
-export const THEME_KEY = "ft-theme";
-
+export { THEME_KEY, resolveTheme } from "./ui-theme.js";
+// Fachada compatible: conserva la lectura del navegador y delega su validación.
 export function readThemePref() {
-  try {
-    const stored = localStorage.getItem(THEME_KEY);
-    return stored === "auto" || stored === "light" || stored === "dark" ? stored : "dark";
-  } catch {
-    return "dark";
-  }
-}
-
-export function resolveTheme(pref, systemDark) {
-  return pref === "auto" ? (systemDark ? "dark" : "light") : pref;
+  return readUiThemePref(() => localStorage.getItem(THEME_KEY));
 }
 
 // ============================================================================
