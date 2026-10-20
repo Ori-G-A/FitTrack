@@ -154,3 +154,10 @@ PR documental #11 publicado; confirmación remota de cierre pendiente.
 PRs #11/#12 y CI de PR/main aprobados; Production exitoso en 86299a4.
 [Evidencia](../../specs/005-cuerpo-ciclo/evidence/integration.json).
 Árbol src idéntico al cierre local. Sin prueba funcional autenticada real.
+
+## Preparación documental 006 — 2026-10-19
+
+Alcance y dos cambios aprobados; plan/tasks/analyze propuestos. 46 IDs pending,
+33 nombres únicos de pruebas previstas, 39 tareas con dependencias verificadas.
+[Verificación de propuesta](../../specs/006-interfaz/verification.md).
+Sin cambios de producto ni ejecución contractual, instalación o auditoría nueva.

@@ -44,3 +44,32 @@ FR-008 para no prometer foco de una tarjeta ausente en el efecto inicial.
 Spec y C-001/002/003 aprobadas explícitamente mediante «Aprobar alcance, ambos
 cambios y las tres aclaraciones». El registro anterior conserva el diagnóstico.
 Se prepara el plan; todavía no hay ejecución contractual, implementación o despliegue.
+
+## Plan técnico propuesto — 2026-10-19
+
+Se prepararon plan, research, validación, 39 tareas acíclicas, mapa individual de
+21 regresiones y analyze. [Plan](plan.md), [tareas](tasks.md), [revisión](analyze.md).
+46 IDs enlazados a tareas y 33 nombres únicos de pruebas previstas: 21 grupos
+Node AS-IS, siete recorridos Chromium y cinco casos CHANGE. Tests ejecutados
+siguen vacíos y todas las filas pending; no hay baseline contractual 006.
+
+node test-results/review-interface-plan.mjs comprobó IDs, tareas/dependencias,
+trazabilidad, enlaces, ausencia de placeholders y diff. También verificó en
+memoria que verifyTrace rechaza los 46 pending en modo completo; esto no se
+presenta como ejecución de pnpm test:sdd:complete o de pruebas de producto.
+[Reporte documental](evidence/plan-review.json). Código/estilos/pruebas/CI,
+index.html, dependencias y SQL permanecen sin cambios respecto de BASE.
+
+La revisión del agente no halló CRITICAL documentales abiertos; no hubo revisión
+por otro agente ni aceptación humana del plan. Falta aprobación separada y
+resolver autorización expresa para ejecutar E0–E6 antes del merge documental.
+No se publicó, fusionó ni desplegó 006.
+
+La primera repetición documental detectó una línea vacía adicional al final de
+checklist.md; se corrigió el formato y se repitió el verificador documental
+completo. No se modificó producto, contrato ni aserciones para resolverlo.
+
+## Aprobación de plan — 2026-10-19
+
+El propietario aprobó plan, 39 tareas y analyze y autorizó explícitamente E0–E6
+local antes del merge documental. Publicación, fusión y despliegue no autorizados.

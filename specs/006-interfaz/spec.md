@@ -165,57 +165,57 @@ registrará con prioridad y propuesta CHANGE; 006 no equivale a conformidad glob
 
 ## Traceability
 
-Una fila por FR y escenario; nombres y tareas se definirán en el plan. PENDING
+Una fila por FR y escenario; nombres y tareas propuestos en el plan. PENDING
 es deliberado en esta propuesta. La tabla no presenta pruebas futuras como ejecutadas.
 
 | FR o escenario | Historia | Resultado | Archivo :: prueba | Tarea | Estado/evidencia |
 | --- | --- | --- | --- | --- | --- |
-| FR-001 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS1 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-002 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS2 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-003 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS3 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-004 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS4 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-005 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS5 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-006 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS6 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-007 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS7 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-008 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| US1-AS8 | US1 | Navegar conservando contexto | PENDING | PENDING | PENDING; AS-IS |
-| FR-009 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| US2-AS1 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| FR-010 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| US2-AS2 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| FR-011 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| US2-AS3 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| FR-012 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| US2-AS4 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| FR-013 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| US2-AS5 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| FR-014 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| US3-AS1 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| FR-015 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| US3-AS2 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| FR-016 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| US3-AS3 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| FR-017 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| US3-AS4 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| FR-018 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| US3-AS5 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| FR-019 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| US3-AS6 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| FR-020 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| US3-AS7 | US3 | Completar tareas en mis pantallas | PENDING | PENDING | PENDING; AS-IS |
-| FR-021 | US4 | Usar los controles delimitados con teclado | PENDING | PENDING | PENDING; CHANGE |
-| US4-AS1 | US4 | Usar los controles delimitados con teclado | PENDING | PENDING | PENDING; CHANGE |
-| FR-022 | US4 | Usar los controles delimitados con teclado | PENDING | PENDING | PENDING; CHANGE |
-| US4-AS2 | US4 | Usar los controles delimitados con teclado | PENDING | PENDING | PENDING; CHANGE |
-| FR-023 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
-| US2-AS6 | US2 | Entender estado y apariencia | PENDING | PENDING | PENDING; AS-IS |
+| FR-001 | US1 | Navegar conservando contexto | test/interface-navigation.test.js :: interfaz conserva raices activas y entradas de shell; browser-tests/interface.spec.js :: interfaz navegador raices registrar y fechas | T003 | PENDING; AS-IS, pruebas previstas |
+| US1-AS1 | US1 | Navegar conservando contexto | test/interface-navigation.test.js :: interfaz conserva raices activas y entradas de shell; browser-tests/interface.spec.js :: interfaz navegador raices registrar y fechas | T003 | PENDING; AS-IS, pruebas previstas |
+| FR-002 | US1 | Navegar conservando contexto | test/interface-registration.test.js :: interfaz conserva destinos de registrar segun ciclo; browser-tests/interface.spec.js :: interfaz navegador raices registrar y fechas | T004 | PENDING; AS-IS, pruebas previstas |
+| US1-AS2 | US1 | Navegar conservando contexto | test/interface-registration.test.js :: interfaz conserva destinos de registrar segun ciclo; browser-tests/interface.spec.js :: interfaz navegador raices registrar y fechas | T004 | PENDING; AS-IS, pruebas previstas |
+| FR-003 | US1 | Navegar conservando contexto | test/interface-routing.test.js :: interfaz conserva fecha enfocada y tarjeta solicitada; browser-tests/interface.spec.js :: interfaz navegador raices registrar y fechas | T005 | PENDING; AS-IS, pruebas previstas |
+| US1-AS3 | US1 | Navegar conservando contexto | test/interface-routing.test.js :: interfaz conserva fecha enfocada y tarjeta solicitada; browser-tests/interface.spec.js :: interfaz navegador raices registrar y fechas | T005 | PENDING; AS-IS, pruebas previstas |
+| FR-004 | US1 | Navegar conservando contexto | test/interface-account.test.js :: interfaz conserva alias de cuenta y seleccion local; browser-tests/interface.spec.js :: interfaz navegador cuenta cuerpo y plan | T006 | PENDING; AS-IS, pruebas previstas |
+| US1-AS4 | US1 | Navegar conservando contexto | test/interface-account.test.js :: interfaz conserva alias de cuenta y seleccion local; browser-tests/interface.spec.js :: interfaz navegador cuenta cuerpo y plan | T006 | PENDING; AS-IS, pruebas previstas |
+| FR-005 | US1 | Navegar conservando contexto | test/interface-body-routing.test.js :: interfaz conserva alias seccion fecha y montaje de cuerpo; browser-tests/interface.spec.js :: interfaz navegador cuenta cuerpo y plan | T007 | PENDING; AS-IS, pruebas previstas |
+| US1-AS5 | US1 | Navegar conservando contexto | test/interface-body-routing.test.js :: interfaz conserva alias seccion fecha y montaje de cuerpo; browser-tests/interface.spec.js :: interfaz navegador cuenta cuerpo y plan | T007 | PENDING; AS-IS, pruebas previstas |
+| FR-006 | US1 | Navegar conservando contexto | test/interface-diary.test.js :: interfaz conserva busqueda filtros limites y vacios de diario; browser-tests/interface.spec.js :: interfaz navegador diario busqueda y descartes | T008 | PENDING; AS-IS, pruebas previstas |
+| US1-AS6 | US1 | Navegar conservando contexto | test/interface-diary.test.js :: interfaz conserva busqueda filtros limites y vacios de diario; browser-tests/interface.spec.js :: interfaz navegador diario busqueda y descartes | T008 | PENDING; AS-IS, pruebas previstas |
+| FR-007 | US1 | Navegar conservando contexto | test/interface-plan.test.js :: interfaz conserva destinos y fecha del dia del plan; browser-tests/interface.spec.js :: interfaz navegador cuenta cuerpo y plan | T009 | PENDING; AS-IS, pruebas previstas |
+| US1-AS7 | US1 | Navegar conservando contexto | test/interface-plan.test.js :: interfaz conserva destinos y fecha del dia del plan; browser-tests/interface.spec.js :: interfaz navegador cuenta cuerpo y plan | T009 | PENDING; AS-IS, pruebas previstas |
+| FR-008 | US1 | Navegar conservando contexto | test/interface-metric-focus.test.js :: interfaz conserva filtro ancla resaltado y retorno temprano; browser-tests/interface.spec.js :: interfaz navegador metricas tarjeta y desglose | T010 | PENDING; AS-IS, pruebas previstas |
+| US1-AS8 | US1 | Navegar conservando contexto | test/interface-metric-focus.test.js :: interfaz conserva filtro ancla resaltado y retorno temprano; browser-tests/interface.spec.js :: interfaz navegador metricas tarjeta y desglose | T010 | PENDING; AS-IS, pruebas previstas |
+| FR-009 | US2 | Entender estado y apariencia | test/interface-theme.test.js :: interfaz conserva preferencia y fallos de almacenamiento; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T011 | PENDING; AS-IS, pruebas previstas |
+| US2-AS1 | US2 | Entender estado y apariencia | test/interface-theme.test.js :: interfaz conserva preferencia y fallos de almacenamiento; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T011 | PENDING; AS-IS, pruebas previstas |
+| FR-010 | US2 | Entender estado y apariencia | test/interface-theme-lifecycle.test.js :: interfaz conserva tema de sistema primer render y limpieza; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T012 | PENDING; AS-IS, pruebas previstas |
+| US2-AS2 | US2 | Entender estado y apariencia | test/interface-theme-lifecycle.test.js :: interfaz conserva tema de sistema primer render y limpieza; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T012 | PENDING; AS-IS, pruebas previstas |
+| FR-011 | US2 | Entender estado y apariencia | test/interface-toast.test.js :: interfaz conserva toast ultimo mensaje plazo y limpieza; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T013 | PENDING; AS-IS, pruebas previstas |
+| US2-AS3 | US2 | Entender estado y apariencia | test/interface-toast.test.js :: interfaz conserva toast ultimo mensaje plazo y limpieza; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T013 | PENDING; AS-IS, pruebas previstas |
+| FR-012 | US2 | Entender estado y apariencia | test/interface-boot.test.js :: interfaz conserva cargas reintentos errores y estado de guardado; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T014 | PENDING; AS-IS, pruebas previstas |
+| US2-AS4 | US2 | Entender estado y apariencia | test/interface-boot.test.js :: interfaz conserva cargas reintentos errores y estado de guardado; browser-tests/interface.spec.js :: interfaz navegador temas carga y errores | T014 | PENDING; AS-IS, pruebas previstas |
+| FR-013 | US2 | Entender estado y apariencia | test/interface-detail.test.js :: interfaz conserva contenido y cierres de desglose; browser-tests/interface.spec.js :: interfaz navegador metricas tarjeta y desglose | T015 | PENDING; AS-IS, pruebas previstas |
+| US2-AS5 | US2 | Entender estado y apariencia | test/interface-detail.test.js :: interfaz conserva contenido y cierres de desglose; browser-tests/interface.spec.js :: interfaz navegador metricas tarjeta y desglose | T015 | PENDING; AS-IS, pruebas previstas |
+| FR-014 | US3 | Completar tareas en mis pantallas | test/interface-responsive.test.js :: interfaz conserva CSS y matriz responsive original; browser-tests/interface.spec.js :: interfaz navegador responsive geometria y tacto | T016 | PENDING; AS-IS, pruebas previstas |
+| US3-AS1 | US3 | Completar tareas en mis pantallas | test/interface-responsive.test.js :: interfaz conserva CSS y matriz responsive original; browser-tests/interface.spec.js :: interfaz navegador responsive geometria y tacto | T016 | PENDING; AS-IS, pruebas previstas |
+| FR-015 | US3 | Completar tareas en mis pantallas | test/interface-session.test.js :: interfaz conserva foco visual de sesion y salida limpia; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T017 | PENDING; AS-IS, pruebas previstas |
+| US3-AS2 | US3 | Completar tareas en mis pantallas | test/interface-session.test.js :: interfaz conserva foco visual de sesion y salida limpia; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T017 | PENDING; AS-IS, pruebas previstas |
+| FR-016 | US3 | Completar tareas en mis pantallas | test/interface-touch.test.js :: interfaz conserva cabecera sticky y medidas tactiles; browser-tests/interface.spec.js :: interfaz navegador responsive geometria y tacto | T018 | PENDING; AS-IS, pruebas previstas |
+| US3-AS3 | US3 | Completar tareas en mis pantallas | test/interface-touch.test.js :: interfaz conserva cabecera sticky y medidas tactiles; browser-tests/interface.spec.js :: interfaz navegador responsive geometria y tacto | T018 | PENDING; AS-IS, pruebas previstas |
+| FR-017 | US3 | Completar tareas en mis pantallas | test/interface-screens.test.js :: interfaz conserva recorridos y salidas de registro; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T019 | PENDING; AS-IS, pruebas previstas |
+| US3-AS4 | US3 | Completar tareas en mis pantallas | test/interface-screens.test.js :: interfaz conserva recorridos y salidas de registro; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T019 | PENDING; AS-IS, pruebas previstas |
+| FR-018 | US3 | Completar tareas en mis pantallas | test/interface-editorial.test.js :: interfaz conserva componentes fechas movimiento y cleanup; browser-tests/interface.spec.js :: interfaz navegador responsive geometria y tacto | T020 | PENDING; AS-IS, pruebas previstas |
+| US3-AS5 | US3 | Completar tareas en mis pantallas | test/interface-editorial.test.js :: interfaz conserva componentes fechas movimiento y cleanup; browser-tests/interface.spec.js :: interfaz navegador responsive geometria y tacto | T020 | PENDING; AS-IS, pruebas previstas |
+| FR-019 | US3 | Completar tareas en mis pantallas | test/interface-previews.test.js :: interfaz conserva contratos diferentes de ambos previews; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T021 | PENDING; AS-IS, pruebas previstas |
+| US3-AS6 | US3 | Completar tareas en mis pantallas | test/interface-previews.test.js :: interfaz conserva contratos diferentes de ambos previews; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T021 | PENDING; AS-IS, pruebas previstas |
+| FR-020 | US3 | Completar tareas en mis pantallas | test/interface-compatibility.test.js :: interfaz conserva fachadas CSS y contratos anteriores; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T022 | PENDING; AS-IS, pruebas previstas |
+| US3-AS7 | US3 | Completar tareas en mis pantallas | test/interface-compatibility.test.js :: interfaz conserva fachadas CSS y contratos anteriores; browser-tests/interface.spec.js :: interfaz navegador sesion biblioteca nutricion y previews | T022 | PENDING; AS-IS, pruebas previstas |
+| FR-021 | US4 | Usar los controles delimitados con teclado | change-tests/interface-accessibility.spec.js :: interfaz cambio Registrar teclado y foco; change-tests/interface-accessibility.spec.js :: interfaz cambio DetailSheet teclado y foco | T023 | PENDING; CHANGE, pruebas previstas |
+| US4-AS1 | US4 | Usar los controles delimitados con teclado | change-tests/interface-accessibility.spec.js :: interfaz cambio Registrar teclado y foco; change-tests/interface-accessibility.spec.js :: interfaz cambio DetailSheet teclado y foco | T023 | PENDING; CHANGE, pruebas previstas |
+| FR-022 | US4 | Usar los controles delimitados con teclado | change-tests/interface-accessibility.spec.js :: interfaz cambio campo Peso en kg; change-tests/interface-accessibility.spec.js :: interfaz cambio campo Correo electrónico; change-tests/interface-accessibility.spec.js :: interfaz cambio campo Contraseña | T024 | PENDING; CHANGE, pruebas previstas |
+| US4-AS2 | US4 | Usar los controles delimitados con teclado | change-tests/interface-accessibility.spec.js :: interfaz cambio campo Peso en kg; change-tests/interface-accessibility.spec.js :: interfaz cambio campo Correo electrónico; change-tests/interface-accessibility.spec.js :: interfaz cambio campo Contraseña | T024 | PENDING; CHANGE, pruebas previstas |
+| FR-023 | US2 | Entender estado y apariencia | test/interface-dismiss.test.js :: interfaz conserva descarte general siete dias y deshacer; browser-tests/interface.spec.js :: interfaz navegador diario busqueda y descartes | T025 | PENDING; AS-IS, pruebas previstas |
+| US2-AS6 | US2 | Entender estado y apariencia | test/interface-dismiss.test.js :: interfaz conserva descarte general siete dias y deshacer; browser-tests/interface.spec.js :: interfaz navegador diario busqueda y descartes | T025 | PENDING; AS-IS, pruebas previstas |
 
 ## Aprobación
 

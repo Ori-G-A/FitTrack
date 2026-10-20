@@ -371,3 +371,11 @@ deshacer a siete días, distinto del aviso de ritmo 004.
 
 21 AS-IS, dos CHANGE y 23 escenarios aprobados junto con C-001/002/003.
 Se prepara el plan técnico; implementación, publicación y despliegue pendientes.
+
+## Planificación 006 — 2026-10-19
+
+Alcance y C-001/002/003 aprobados explícitamente. [Plan](../../specs/006-interfaz/plan.md),
+39 tareas y analyze preparados para aprobación separada. G-PIN exige 42 AS-IS
+completos y cuatro CHANGE pending con cinco rojos específicos; cierre con
+182 IDs completos y RLS fresco. Estado de implementación: no iniciada.
+KD-002 sigue activa; retirada normativa requiere informe y ratificación propios.

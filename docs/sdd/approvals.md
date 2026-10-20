@@ -317,3 +317,20 @@ dos CHANGE (FR-021/022) y 23 escenarios; conserva compatibilidades temporales,
 medición sin optimización y revisión KD-002 con ratificación separada.
 Autoriza preparar plan/tasks/analyze; no anticipa su aprobación, ejecución local,
 publicación, integración ni despliegue de 006.
+
+## Plan 006 preparado para revisión — 2026-10-19
+
+Sobre alcance aprobado se prepararon plan, research, validación, 39 tareas,
+mapa de regresiones, analyze y borrador de PR documental. 46 IDs pending;
+21 grupos AS-IS, siete recorridos Chromium y cinco rojos CHANGE previstos.
+Revisión documental: tareas acíclicas, matriz coherente, enlaces válidos y
+producto intacto. [Plan](../../specs/006-interfaz/plan.md).
+Plan/tareas/analyze y ejecución local E0–E6 previos al merge siguen pendientes
+de aprobación. No se anticipan publicación, integración ni despliegue de 006.
+
+## Plan y ejecución local 006 aprobados — 2026-10-19
+
+El propietario respondió «Aprobar plan, tareas y revisión; autorizar ejecución
+local E0–E6» a la solicitud explícita sobre plan/tasks/analyze y ejecución local
+antes de integrar el PR documental. Se autoriza E0 y las entregas posteriores
+solo tras G-PIN. No autoriza publicar, fusionar ni desplegar 006.

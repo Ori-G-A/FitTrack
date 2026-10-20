@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-19",
+  "status": "plan_proposed_pending_owner_approval",
+  "scopeCommit": "25230b7",
+  "ids": 46,
+  "asIs": 21,
+  "change": 2,
+  "scenarios": 23,
+  "tasks": 39,
+  "taskGraph": "acyclic",
+  "plannedUniqueTests": 33,
+  "plannedNodeGroups": 21,
+  "plannedBrowserJourneys": 7,
+  "plannedChangeTests": 5,
+  "allManifestRowsPending": true,
+  "executedNewContractTests": 0,
+  "staticCasesInventoried": 21,
+  "localLinksChecked": 169,
+  "documentsChecked": 14,
+  "runtimeDiff": "empty",
+  "completeRejectionFor46PendingRows": "verified_in_memory_not_runtime_checkpoint"
+}
