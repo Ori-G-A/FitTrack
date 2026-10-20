@@ -1,0 +1,49 @@
+{
+  "stage": "e3",
+  "generatedAt": "2026-10-20T21:29:36.482Z",
+  "reviewRevision": "2181be69f091088204bde5b681ab4d48b45ba638",
+  "node": "v24.21.0",
+  "sourceHash": "d4d54a9260ac7ed6ea54dee6285188731cf860241d8f5fcd380627d52ba86fbc",
+  "nodeTests": 313,
+  "nodePassed": 313,
+  "browser": {
+    "startTime": "2026-10-20T21:26:33.353Z",
+    "duration": 110415.89199999999,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "trace": {
+    "counts": {
+      "pending": 6,
+      "partial": 0,
+      "complete": 42
+    },
+    "errors": []
+  },
+  "pinsVerified": 101,
+  "build": {
+    "passed": true,
+    "output": [
+      "dist/assets/LineChart-tICq9XZ9.js          393.31 kB │ gzip: 107.99 kB",
+      "dist/assets/index-O0STbBXd.js              505.10 kB │ gzip: 146.47 kB",
+      "(!) Some chunks are larger than 500 kB after minification. Consider:",
+      "✓ built in 18.51s"
+    ]
+  },
+  "limits": [
+    "Seis IDs CHANGE pendientes de implementación",
+    "RLS fresco pendiente de E6",
+    "Sin publicación, integración ni despliegue"
+  ],
+  "previousAttempt": {
+    "nodePassed": 312,
+    "nodeTests": 313,
+    "test": "datos debounce y suscripciones",
+    "observed": "Timeout: estado",
+    "pinEdited": false,
+    "targetedControlsPassed": 6,
+    "repeat": "Checkpoint completo repetido; no se atribuye causalidad demostrada a concurrencia o recursos"
+  }
+}

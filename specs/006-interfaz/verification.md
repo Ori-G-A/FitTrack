@@ -137,3 +137,7 @@ Checkpoint completo verde: 311 Node/20 Chromium, build, trazabilidad parcial sin
 ## E2 — 2026-10-20
 
 Checkpoint completo verde: 312 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e2.json).
+
+## E3 — 2026-10-20
+
+Checkpoint completo verde: 313 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e3.json).

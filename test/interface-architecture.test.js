@@ -42,3 +42,20 @@ test('interfaz tema aislado y negativos de dependencias',async()=>{
  await themeGraph('export * from "./src/use-app-theme.js";');
  for(const source of ['export * from "./src/app-utils.js";','export * from "./src/supabase.js";','export * from "./src/body-metrics.js";'])await assert.rejects(()=>themeGraph(source),{name:'AssertionError'});
 });
+
+async function shellGraph(contents) {
+ const result=await build({stdin:{contents,resolveDir:resolve('.'),sourcefile:'interface-shell-fixture.js'},bundle:true,write:false,metafile:true,format:'esm',platform:'browser',define:{'import.meta.env':'{}'},logLevel:'silent'});
+ const allowed=new Set(['src/AppNavigation.jsx','src/app-navigation.js','src/app-styles.js']);
+ for(const file of Object.keys(result.metafile.inputs)){
+  if(file.startsWith('src/'))assert(allowed.has(file),'dependencia ajena al shell '+file);
+  if(file.includes('node_modules'))assert.match(file,/node_modules\/(?:\.pnpm\/[^/]+\/node_modules\/)?(?:react|lucide-react)\//,'servicio externo al shell '+file);
+ }
+ const visiting=new Set(),done=new Set();
+ function walk(file){assert(!visiting.has(file),'ciclo '+file);if(done.has(file))return;visiting.add(file);for(const edge of result.metafile.inputs[file]?.imports||[])if(result.metafile.inputs[edge.path])walk(edge.path);visiting.delete(file);done.add(file);}
+ for(const file of Object.keys(result.metafile.inputs))walk(file);
+}
+
+test('interfaz shell presenta sin dominio ni servicios y sin ciclos',async()=>{
+ await shellGraph('export * from "./src/AppNavigation.jsx"; export * from "./src/app-styles.js";');
+ for(const source of ['export * from "./src/app-utils.js";','export * from "./src/supabase.js";','export * from "./src/body-metrics.js";','export * from "./src/data-sync.js";'])await assert.rejects(()=>shellGraph(source),{name:'AssertionError'});
+});
