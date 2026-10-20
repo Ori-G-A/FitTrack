@@ -1,14 +1,13 @@
 # Preparación verificada de SDD
 
-Actualización 2026-10-18: 004 integrada en 02ab519 mediante PR #10, con CI
-remoto del PR/main y Vercel Production exitosos. Verificación local de cierre:
-263 Node, 9 Chromium, 3 RLS con limpieza; contratos 001/002/003/004 completos
-(21/23/21/31 IDs), mismo sourceHash y 40 archivos de pins congelados intactos.
-[Verificación 004](../../specs/004-nutricion-objetivos/verification.md) y
-[evidencia remota](../../specs/004-nutricion-objetivos/evidence/integration.json).
-La respuesta HTTP 200 del despliegue individual muestra login de Vercel; no es
-un recorrido funcional con datos reales. 005 está en documentación de alcance,
-sin ejecución ni baseline propia. Los apartados siguientes conservan evidencia histórica.
+Actualización 2026-10-19: 005 verificada localmente E0–E6: 286 Node,
+13 Chromium, 3 RLS reales con guardas/cleanup y build correcto. Cinco contratos
+completos (21/23/21/31/40 IDs), mismo src/resultados y 68 hashes congelados.
+Nueve módulos puros y fachadas conservadas. [Cierre 005](../../specs/005-cuerpo-ciclo/converge.md),
+[evidencia](../../specs/005-cuerpo-ciclo/evidence/final.json).
+001–004 siguen integradas; 005 espera aceptación/publicación e integración.
+No instalación limpia/auditoría nuevas: dependencias intactas. Los apartados
+siguientes conservan evidencia histórica; sus pendientes no sustituyen este estado.
 
 Revisión: 2026-10-15. Autorización: «aplica tus sugerencias y revisa el estado
 actual de lo aprobado». Estado de decisiones: [aprobaciones](approvals.md).
@@ -134,3 +133,18 @@ y RLS renovada3/3 con cleanup. Gate002 repetido íntegramente:23/23 IDs,
 completos sobre los mismos resultados/hash;40 pins intactos.
 [Resumen final](../../specs/004-nutricion-objetivos/evidence/final.json).
 Las 29 tareas completas; revisión del propietario e integración pendientes.
+
+## Baseline 005 — 2026-10-19
+
+E0 sobre original: 284 Node, 13 Chromium, build y 40/40 IDs completos. 28 archivos
+nuevos congelados y 40 anteriores intactos. [Evidencia](../../specs/005-cuerpo-ciclo/evidence/baseline.json).
+Regla LF versionada para reproducir anclas congeladas en Windows/Linux; no hay
+cambio de contenido src. Implementación y RLS fresco de cierre pendientes.
+
+## Cierre local 005 y publicación autorizada — 2026-10-19
+
+286 pruebas Node, 13 Chromium y tres RLS con limpieza; build aprobado.
+Los cinco contratos suman 136 IDs completos sobre el mismo src; 68 pins intactos.
+[Evidencia final](../../specs/005-cuerpo-ciclo/evidence/final.json).
+El propietario autorizó publicar e integrar con CI verde y desplegar automáticamente.
+PR documental #11 publicado; confirmación remota de cierre pendiente.

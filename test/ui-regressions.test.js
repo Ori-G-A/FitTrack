@@ -39,9 +39,17 @@ test("el arranque pinta el tema antes de que React monte", async () => {
 });
 
 test("cada fila del diario aterriza en la pantalla de su tipo", async () => {
-  const utils = await readFile(new URL("../src/app-utils.js", import.meta.url), "utf8");
-  const feed = utils.slice(utils.indexOf("export function dayFeed"), utils.indexOf("export function searchFeed"));
-  const destinos = [...new Set([...feed.matchAll(/tab: "([a-z]+)"/g)].map((m) => m[1]))];
+  // FR-019/FR-020: comprobar salidas, sin depender del archivo que contiene cada selector.
+  const { dayFeed } = await import("../src/app-utils.js");
+  const date = "2026-10-18";
+  const entries = dayFeed(date, {
+    workouts: [{ id: "w", date, exercises: [{ name: "Remo", sets: [] }] }],
+    nutrition: [{ id: "n", date, name: "Comida", kcal: 100 }],
+    weights: [{ id: "p", date, kg: 70 }],
+    measurements: [{ id: "m", date, cintura: 80 }],
+    wellness: [{ id: "s", date, sleep: 7 }],
+  });
+  const destinos = [...new Set(entries.map((entry) => entry.tab))];
   // Si dayFeed inventa un destino nuevo, esto avisa antes de que la fila caiga
   // en el `|| "Diario"` de turno y el usuario acabe en otra pantalla.
   assert.deepEqual(destinos.sort(), ["entrenar", "medidas", "nota", "nutricion", "peso"]);

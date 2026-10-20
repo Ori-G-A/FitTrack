@@ -42,9 +42,9 @@ Cualquier checkpoint fallido se repite íntegramente tras corregirlo.
 | --- | --- | --- |
 | src/body-config.js | Opciones y etiquetas locales de Cuerpo; CYCLE_PHASES/PHASE_GROUPS/tracksCycle si se trasladan manteniendo app-config como fachada | Constantes y datos; sin E/S |
 | src/cycle-context.js | Normalización/defaults, helpers internos, comienzos, contexto, score, detección y estimación de ovulación | date-utils y constantes puras; no summaries ni facade |
-| src/cycle-phase.js | inferCyclePhase, confianza y motivos con bienestar | cycle-context, date-utils |
+| src/cycle-phase.js | inferCyclePhase, buildCycleTimeline, confianza y motivos con bienestar | cycle-context, date-utils |
 | src/cycle-summary.js | phaseSegments, summarizeCycles y symptomDistribution | cycle-context, cycle-phase, date-utils |
-| src/cycle-readings.js | PHASE_GUIDANCE, dailyGuidance, recálculo, timeline e insights | context, phase, summary, date-utils |
+| src/cycle-readings.js | PHASE_GUIDANCE, dailyGuidance, recálculo e insights | context, phase, summary, date-utils |
 | src/body-records.js | Transformaciones de peso/medidas/bienestar/check-in y borrados | cycle-context, date-utils; ID y now recibidos como funciones/valores explícitos |
 | src/weight-model.js | creatineWaterKg, slopePerDay, lutealRetentionKg, weightTrendHighlight | date-utils; ninguna dependencia de UI, alerts o goals-model |
 | src/weight-metrics.js | Medias móviles, ajuste por fase, tendencia de avisos, proyección y contexto de ciclo de alertMetrics | weight-model, cycle-context/phase, body-config, date-utils |
@@ -120,3 +120,10 @@ omisiones, orden de merge y rollback de código por entrega, sin migración de d
 Aprobación 2026-10-18: «aprobado», respuesta directa a plan/tasks/analyze y
 autorización de ejecución local E0–E6 antes de integrar el PR documental.
 No autoriza publicación, merge ni despliegue.
+
+## Resultado de ejecución local — 2026-10-19
+
+E0–E6 verificadas. Nueve módulos puros creados; fachada pública y efectos
+conservados. 286 Node, 13 Chromium, 3 RLS con cleanup y build; cinco gates
+completos y 68 pins intactos. [Converge](converge.md), [cierre](evidence/final.json).
+La autorización local previa al PR documental no concede publicación ni merge.

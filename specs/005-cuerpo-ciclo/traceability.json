@@ -1,11 +1,14 @@
 {
   "spec": "005-cuerpo-ciclo",
-  "note": "Alcance aprobado; plan propuesto. 40 IDs pending, sin pruebas ejecutadas de 005; plannedTests y plannedTaskIds describen trabajo futuro.",
+  "note": "E0–E6 verificadas localmente:286 Node,13 Chromium,3 RLS con cleanup;40 IDs de005 y cinco contratos completos (136 IDs),68 hashes intactos. Aceptación e integración pendientes.",
   "requirements": [
     {
       "id": "FR-001",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva conversiones reemplazo pasos e historial",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "cuerpo peso conserva conversiones reemplazo pasos e historial"
       ],
@@ -15,8 +18,11 @@
     },
     {
       "id": "FR-002",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo medidas conservan campos null conversiones y reemplazo",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "cuerpo medidas conservan campos null conversiones y reemplazo"
       ],
@@ -26,8 +32,11 @@
     },
     {
       "id": "FR-003",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo bienestar conserva borrador fecha guardas y guardado",
+        "cuerpo navegador bienestar fecha y persistencia de borrador"
+      ],
       "plannedTests": [
         "cuerpo bienestar conserva borrador fecha guardas y guardado"
       ],
@@ -37,8 +46,11 @@
     },
     {
       "id": "FR-004",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo checkin conserva normalizacion identidad timestamps y legado",
+        "cuerpo navegador checkin incertidumbre y consumidores"
+      ],
       "plannedTests": [
         "cuerpo checkin conserva normalizacion identidad timestamps y legado"
       ],
@@ -48,8 +60,11 @@
     },
     {
       "id": "FR-005",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo conserva seccion fecha montaje y visibilidad",
+        "cuerpo navegador rutas perfiles previews y fotos"
+      ],
       "plannedTests": [
         "cuerpo conserva seccion fecha montaje y visibilidad"
       ],
@@ -59,8 +74,10 @@
     },
     {
       "id": "FR-006",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva comienzos longitudes y contexto"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva comienzos longitudes y contexto"
       ],
@@ -70,8 +87,10 @@
     },
     {
       "id": "FR-007",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva ovulacion flujo calendario y confianza"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva ovulacion flujo calendario y confianza"
       ],
@@ -81,8 +100,10 @@
     },
     {
       "id": "FR-008",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva precedencia fases y desconocido tardio"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva precedencia fases y desconocido tardio"
       ],
@@ -92,8 +113,10 @@
     },
     {
       "id": "FR-009",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva resumen sangrado segmentos y outliers"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva resumen sangrado segmentos y outliers"
       ],
@@ -103,8 +126,10 @@
     },
     {
       "id": "FR-010",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva distribucion escalas bins y picos"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva distribucion escalas bins y picos"
       ],
@@ -114,8 +139,10 @@
     },
     {
       "id": "FR-011",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva recalculo timeline duplicados y timestamps"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva recalculo timeline duplicados y timestamps"
       ],
@@ -125,8 +152,10 @@
     },
     {
       "id": "FR-012",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva guia insights provisionalidad y textos"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva guia insights provisionalidad y textos"
       ],
@@ -136,8 +165,11 @@
     },
     {
       "id": "FR-013",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo consumidores conservan confianza limites y cautela",
+        "cuerpo navegador checkin incertidumbre y consumidores"
+      ],
       "plannedTests": [
         "cuerpo ciclo consumidores conservan confianza limites y cautela"
       ],
@@ -147,8 +179,10 @@
     },
     {
       "id": "FR-014",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva regresion tendencia y callbacks de objetivos"
+      ],
       "plannedTests": [
         "cuerpo peso conserva regresion tendencia y callbacks de objetivos"
       ],
@@ -158,8 +192,11 @@
     },
     {
       "id": "FR-015",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva creatina saturacion y edicion de objetivo",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "cuerpo peso conserva creatina saturacion y edicion de objetivo"
       ],
@@ -169,8 +206,10 @@
     },
     {
       "id": "FR-016",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva retencion detrending umbral y cap"
+      ],
       "plannedTests": [
         "cuerpo peso conserva retencion detrending umbral y cap"
       ],
@@ -180,8 +219,10 @@
     },
     {
       "id": "FR-017",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva medias correcciones tendencia y proyeccion"
+      ],
       "plannedTests": [
         "cuerpo peso conserva medias correcciones tendencia y proyeccion"
       ],
@@ -191,8 +232,10 @@
     },
     {
       "id": "FR-018",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo avisos conservan fatiga textos umbrales y claves"
+      ],
       "plannedTests": [
         "cuerpo avisos conservan fatiga textos umbrales y claves"
       ],
@@ -202,8 +245,11 @@
     },
     {
       "id": "FR-019",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo metricas y diario conservan selectores y formatos",
+        "cuerpo navegador bienestar fecha y persistencia de borrador"
+      ],
       "plannedTests": [
         "cuerpo metricas y diario conservan selectores y formatos"
       ],
@@ -213,8 +259,11 @@
     },
     {
       "id": "FR-020",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo consumidores conservan fachadas fotos y contratos previos",
+        "cuerpo navegador rutas perfiles previews y fotos"
+      ],
       "plannedTests": [
         "cuerpo consumidores conservan fachadas fotos y contratos previos"
       ],
@@ -224,8 +273,11 @@
     },
     {
       "id": "US1-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva conversiones reemplazo pasos e historial",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "cuerpo peso conserva conversiones reemplazo pasos e historial"
       ],
@@ -235,8 +287,11 @@
     },
     {
       "id": "US1-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo medidas conservan campos null conversiones y reemplazo",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "cuerpo medidas conservan campos null conversiones y reemplazo"
       ],
@@ -246,8 +301,11 @@
     },
     {
       "id": "US1-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo bienestar conserva borrador fecha guardas y guardado",
+        "cuerpo navegador bienestar fecha y persistencia de borrador"
+      ],
       "plannedTests": [
         "cuerpo bienestar conserva borrador fecha guardas y guardado"
       ],
@@ -257,8 +315,11 @@
     },
     {
       "id": "US1-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo checkin conserva normalizacion identidad timestamps y legado",
+        "cuerpo navegador checkin incertidumbre y consumidores"
+      ],
       "plannedTests": [
         "cuerpo checkin conserva normalizacion identidad timestamps y legado"
       ],
@@ -268,8 +329,11 @@
     },
     {
       "id": "US1-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo conserva seccion fecha montaje y visibilidad",
+        "cuerpo navegador rutas perfiles previews y fotos"
+      ],
       "plannedTests": [
         "cuerpo conserva seccion fecha montaje y visibilidad"
       ],
@@ -279,8 +343,10 @@
     },
     {
       "id": "US2-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva comienzos longitudes y contexto"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva comienzos longitudes y contexto"
       ],
@@ -290,8 +356,10 @@
     },
     {
       "id": "US2-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva ovulacion flujo calendario y confianza"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva ovulacion flujo calendario y confianza"
       ],
@@ -301,8 +369,10 @@
     },
     {
       "id": "US2-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva precedencia fases y desconocido tardio"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva precedencia fases y desconocido tardio"
       ],
@@ -312,8 +382,10 @@
     },
     {
       "id": "US2-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva resumen sangrado segmentos y outliers"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva resumen sangrado segmentos y outliers"
       ],
@@ -323,8 +395,10 @@
     },
     {
       "id": "US2-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva distribucion escalas bins y picos"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva distribucion escalas bins y picos"
       ],
@@ -334,8 +408,10 @@
     },
     {
       "id": "US2-AS6",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva recalculo timeline duplicados y timestamps"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva recalculo timeline duplicados y timestamps"
       ],
@@ -345,8 +421,10 @@
     },
     {
       "id": "US2-AS7",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo conserva guia insights provisionalidad y textos"
+      ],
       "plannedTests": [
         "cuerpo ciclo conserva guia insights provisionalidad y textos"
       ],
@@ -356,8 +434,11 @@
     },
     {
       "id": "US2-AS8",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo ciclo consumidores conservan confianza limites y cautela",
+        "cuerpo navegador checkin incertidumbre y consumidores"
+      ],
       "plannedTests": [
         "cuerpo ciclo consumidores conservan confianza limites y cautela"
       ],
@@ -367,8 +448,10 @@
     },
     {
       "id": "US3-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva regresion tendencia y callbacks de objetivos"
+      ],
       "plannedTests": [
         "cuerpo peso conserva regresion tendencia y callbacks de objetivos"
       ],
@@ -378,8 +461,11 @@
     },
     {
       "id": "US3-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva creatina saturacion y edicion de objetivo",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "cuerpo peso conserva creatina saturacion y edicion de objetivo"
       ],
@@ -389,8 +475,10 @@
     },
     {
       "id": "US3-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva retencion detrending umbral y cap"
+      ],
       "plannedTests": [
         "cuerpo peso conserva retencion detrending umbral y cap"
       ],
@@ -400,8 +488,10 @@
     },
     {
       "id": "US3-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo peso conserva medias correcciones tendencia y proyeccion"
+      ],
       "plannedTests": [
         "cuerpo peso conserva medias correcciones tendencia y proyeccion"
       ],
@@ -411,8 +501,10 @@
     },
     {
       "id": "US3-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo avisos conservan fatiga textos umbrales y claves"
+      ],
       "plannedTests": [
         "cuerpo avisos conservan fatiga textos umbrales y claves"
       ],
@@ -422,8 +514,11 @@
     },
     {
       "id": "US3-AS6",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo metricas y diario conservan selectores y formatos",
+        "cuerpo navegador bienestar fecha y persistencia de borrador"
+      ],
       "plannedTests": [
         "cuerpo metricas y diario conservan selectores y formatos"
       ],
@@ -433,8 +528,11 @@
     },
     {
       "id": "US3-AS7",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo consumidores conservan fachadas fotos y contratos previos",
+        "cuerpo navegador rutas perfiles previews y fotos"
+      ],
       "plannedTests": [
         "cuerpo consumidores conservan fachadas fotos y contratos previos"
       ],

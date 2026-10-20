@@ -1,6 +1,6 @@
 # Plan de validación — 005
 
-Estado: APROBADO; no hay ejecución ni baseline 005. [Spec](spec.md), [tareas](tasks.md).
+Estado: APROBADO y ejecutado localmente E0–E6; resultados en verification.md. [Spec](spec.md), [tareas](tasks.md).
 BASE src: 02ab5193f9d01e0037e9640626b25742e5224a5a.
 
 ## Pins completos antes de extraer
@@ -61,7 +61,7 @@ Añadir negativos del verificador por nombre inexistente, skipped, retried y est
 partial/pending en modo completo, reutilizando scripts originales sin debilitarlos.
 
 G-PIN exige suite Node, cuatro recorridos Chromium nuevos y los anteriores,
-build, 40/40 IDs completos y revisión humana de aserciones contra cada cláusula.
+build, 40/40 IDs completos y revisión de aserciones realizada por el agente, separada del verificador contra cada cláusula.
 Congelar archivos nuevos de pins, fixtures/harness y browser, más los 40 previos;
 registrar lista exacta/hashes SHA256 con normalización de saltos igual al proyecto,
 sourceHash, revisión src, runtime, comandos/resultados y mutaciones. Cualquier

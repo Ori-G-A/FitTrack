@@ -1,0 +1,1286 @@
+{
+  "spec": "005-cuerpo-ciclo",
+  "stage": "E0 / G-PIN",
+  "status": "passed_before_refactor",
+  "generatedAt": "2026-10-19T13:27:59.329Z",
+  "base": "02ab5193f9d01e0037e9640626b25742e5224a5a",
+  "reviewRevision": "e949c08c0e65d7081894ca563bc52a0223ae1fac",
+  "originalSourceTree": "582e62c3dab2bdaa4feb3f8b20fcc21060b702a8",
+  "sourceHash": "d04e2330abbe5a8348d12cd3e6d505c87bdaeec9c8cd08bd6fc798004090a3f5",
+  "sourceFiles": 55,
+  "runtime": {
+    "node": "24.21.0",
+    "pnpm": "11.11.0"
+  },
+  "node": {
+    "tests": 284,
+    "passed": 284,
+    "failed": 0,
+    "skipped": 0,
+    "topLevel": 224
+  },
+  "browser": {
+    "startTime": "2026-10-19T02:35:13.016Z",
+    "duration": 78944.954,
+    "expected": 13,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "build": {
+    "passed": true,
+    "warning": "Chunk heredado >500 kB"
+  },
+  "trace": {
+    "errors": [],
+    "counts": {
+      "pending": 0,
+      "partial": 0,
+      "complete": 40
+    }
+  },
+  "mutations": {
+    "detected": 4,
+    "originalControlsPassed": 4,
+    "test": "cuerpo pins detectan mutaciones controladas"
+  },
+  "pins": [
+    {
+      "file": ".gitattributes",
+      "sha256": "4e14828ae37396a15a48f0b83f5b6e974c7f61a84b6a7228b706f1e8bcc8ab9e"
+    },
+    {
+      "file": "browser-tests/body.spec.js",
+      "sha256": "8431bbebb7393981f1e916e2675d17c3777e1073fe2e4343507895a6dc1a7689"
+    },
+    {
+      "file": "test-support/body-build.js",
+      "sha256": "45d8c14efa2b918c9982b783fee694118754812c8370596ab77020aa340d9d9d"
+    },
+    {
+      "file": "test-support/body-dom.js",
+      "sha256": "48209ae73675cdb3659d141ba449612278b66ff9b337fb5297a36609bd8b6424"
+    },
+    {
+      "file": "test-support/body-entry.jsx",
+      "sha256": "149dc33ac73b6f92381425a8d17bbc1d6466c854ab7cd1e383f8cce7b9e35aef"
+    },
+    {
+      "file": "test-support/body-fixtures.js",
+      "sha256": "c5a6cc039c378f1fb4db5b66045c70426327da5001154ccbf368ea4c61281819"
+    },
+    {
+      "file": "test-support/body-golden.json",
+      "sha256": "954d5ab801238439055545e9159008f668018232b3b495271697eb0ae1208c6d"
+    },
+    {
+      "file": "test/body-alerts.test.js",
+      "sha256": "a78dd9fcb498b48e0610c65fe9cbae59ad55e8a07eb0a5dbd10ed5d80da52eea"
+    },
+    {
+      "file": "test/body-compatibility.test.js",
+      "sha256": "aba8a992e9088cd2932048d2c201ba48a5f6ca7d7157b6ff1d946ce7e64140fe"
+    },
+    {
+      "file": "test/body-consumers.test.js",
+      "sha256": "64d749292f6504b8a29acefb57dd45c13280c57836f95c6198aa9ba03305c984"
+    },
+    {
+      "file": "test/body-context.test.js",
+      "sha256": "f1c546a4ada338bf2ab5092cfa9249af5976987fb92e14e46ed1fa6edd5a011a"
+    },
+    {
+      "file": "test/body-creatine.test.js",
+      "sha256": "80ef40eb6202b4f84bd82936ff520f4ea5f5d8fd55b1a81678ea023c14dc6cd8"
+    },
+    {
+      "file": "test/body-dashboard.test.js",
+      "sha256": "159321bacd52738971d7e9c365db5d0e8770ef560a38f2eef4f0009822f3efab"
+    },
+    {
+      "file": "test/body-distribution.test.js",
+      "sha256": "09b21afa5b825e1370cd04bcffedae229af8c77f4988197d798c93a6581d48a1"
+    },
+    {
+      "file": "test/body-guidance.test.js",
+      "sha256": "52bc10f5cc9b9dd2f48ca2a01719e429b84eb2312ec94ee24d4e4fd11e18b2c5"
+    },
+    {
+      "file": "test/body-logs.test.js",
+      "sha256": "62c48705e55129a4be3e33372fd979dade3c2a73974136c608af113d23161956"
+    },
+    {
+      "file": "test/body-measurements.test.js",
+      "sha256": "0a40deaede9b030d0335756d15247bb00ecbf7e666f1cb498051643a30d920e9"
+    },
+    {
+      "file": "test/body-metrics.test.js",
+      "sha256": "3c04184881b33df5a6be1c678786ddb9ccbe4eafe57a62e1ee3d26b31841ced7"
+    },
+    {
+      "file": "test/body-ovulation.test.js",
+      "sha256": "c394a0ed8ac4f4e6ef3c25bb36dfc18914972dd3d523b4d02274686f48178131"
+    },
+    {
+      "file": "test/body-phase.test.js",
+      "sha256": "c59ac0feaa24887febb28d3048d73a94302a531301db31c4694d330b2c8e0c7d"
+    },
+    {
+      "file": "test/body-retention.test.js",
+      "sha256": "a0077d927f93bc9a32f4b55af17fee85e72d7947f742b23789ccf37554d4c02d"
+    },
+    {
+      "file": "test/body-routing.test.js",
+      "sha256": "f3e71c1a8f2f3804ed2b373ed9f3b009f530c2ecbf36ff5672f26fd6f52f2561"
+    },
+    {
+      "file": "test/body-sensitivity.test.js",
+      "sha256": "62fa7203bc870f3b742ede295876c9ee160b499c4c9d68c187b11741eb926761"
+    },
+    {
+      "file": "test/body-summary.test.js",
+      "sha256": "107ad1ee3404617fcbde473d20a0f92e5cf541fff24faeae39e71e0f38f3430c"
+    },
+    {
+      "file": "test/body-timeline.test.js",
+      "sha256": "7c158520a8e5105695ccd8e104ce66fecafeaab01c8c15cf5722a5602d728083"
+    },
+    {
+      "file": "test/body-trend.test.js",
+      "sha256": "aa46076190826a6485f7c61090a0bbc734c9a98bc3a881a015fa415f37890681"
+    },
+    {
+      "file": "test/body-weight.test.js",
+      "sha256": "c58489431bdd25014f2510b92fe965eba65c5be8c235e0dd90988f2e23114972"
+    },
+    {
+      "file": "test/body-wellness.test.js",
+      "sha256": "cee5bc7581aa789758291741b6b95f96ec8765786bfe783b5240b273a91b6ff3"
+    }
+  ],
+  "previousPinsVerified": [
+    {
+      "file": "test/nutrition-adherence.test.js",
+      "sha256": "9a76f7f47030722b98a114f01b9e04be3474fcde65823072650acc7af6600c6f"
+    },
+    {
+      "file": "test/nutrition-alerts.test.js",
+      "sha256": "9a5111383bf015d4943b791f56dba29f48a5c4fe56744af7b668c0dbe72223d4"
+    },
+    {
+      "file": "test/nutrition-amount.test.js",
+      "sha256": "cdf91809f34200e42480e3d4952ebaed344e91da9371551caf4d4f5e49033ca6"
+    },
+    {
+      "file": "test/nutrition-auto-goals.test.js",
+      "sha256": "2c35254019a6f6810aef8c4bf6801ad6345fb5de191d0aa9af858d3c76a2b805"
+    },
+    {
+      "file": "test/nutrition-catalog.test.js",
+      "sha256": "3fdbe7c3b788ef03488e0df5055b324a21242ff38a65f53f6c2c33230d8105a7"
+    },
+    {
+      "file": "test/nutrition-compatibility.test.js",
+      "sha256": "ce09db733b5bb411c7ef26f7530531f176c009cdbe76f808a48d219659996e55"
+    },
+    {
+      "file": "test/nutrition-dashboard.test.js",
+      "sha256": "3295012641d6110973656023177cc5183a3950eb4dc861c6ad793a795080c6f3"
+    },
+    {
+      "file": "test/nutrition-day.test.js",
+      "sha256": "90080d6a5a994a4c95de76c736957f06ee471275ed0426e1c8b3d0cda13ae5c0"
+    },
+    {
+      "file": "test/nutrition-expected.test.js",
+      "sha256": "16cf2112a5cffc64322766ed5333848e0f391b936919da330062efdaa128bd32"
+    },
+    {
+      "file": "test/nutrition-foods.test.js",
+      "sha256": "56c464f2175c851bcf98994ac879091fe2f05b44128f81fa43f75f604ffe1795"
+    },
+    {
+      "file": "test/nutrition-goals.test.js",
+      "sha256": "2a60db9cbc18d144554f2de7802d641340555287f5d5636a53915bce131f3641"
+    },
+    {
+      "file": "test/nutrition-pace-actions.test.js",
+      "sha256": "9e25400ebf95d255bb177c0448c052f82e465119548674adb88169093c51529c"
+    },
+    {
+      "file": "test/nutrition-pace.test.js",
+      "sha256": "5871e6df81c2677c95804e1ea2f6addeb086ef8f95f1c8bfe2030326c18dec13"
+    },
+    {
+      "file": "test/nutrition-protein.test.js",
+      "sha256": "c220561440589e5333dabd7476951305a67688b2654ac09ea56d335408506f28"
+    },
+    {
+      "file": "test/nutrition-recipes.test.js",
+      "sha256": "b1cb18bb46794d0f560e69b22734b81935583dfb78c2e9e442afeec9a797ab75"
+    },
+    {
+      "file": "test/nutrition-search.test.js",
+      "sha256": "a2f69c3af8fc5c0aa3f983530ed4c7c72de2198ef2ba29de3026682c7d7fbf69"
+    },
+    {
+      "file": "test/nutrition-sensitivity.test.js",
+      "sha256": "069a8b60974933deac3d4e386de20ab470c31238f237f0f4a65f7479dbf09d3b"
+    },
+    {
+      "file": "browser-tests/nutrition.spec.js",
+      "sha256": "6f773eb85a56d7f2ff1a4f17ab306bf185e7ea067c4e199184637d4cf4fb01af"
+    },
+    {
+      "file": "test/training-compatibility.test.js",
+      "sha256": "7c999dfdcb0e39a75c52fbbe795daaf51ece1632f056f6d5b50d9c2baeb12ad8"
+    },
+    {
+      "file": "test/training-duration.test.js",
+      "sha256": "78cc73cd495ebd161e068585a6cd87f865ae6bae8b76dfd804783da0a2252a1d"
+    },
+    {
+      "file": "test/training-guided.test.js",
+      "sha256": "7fd9241f87316fc9b413595403b2a6a489542029159b072dd6b9e40467354b9b"
+    },
+    {
+      "file": "test/training-metrics.test.js",
+      "sha256": "95639b1822b632b612972ee2a1592f16e14f9b126f76b9d7df67cb90889f65e7"
+    },
+    {
+      "file": "test/training-mutants.test.js",
+      "sha256": "805653ac9e95508107452180002311bbb75f7f346fb383bab0ab949aaee87257"
+    },
+    {
+      "file": "test/training-plan.test.js",
+      "sha256": "efaf128dc9f3e4474fbb33270714e44465d384020f74676f520d4d5b6a239dfa"
+    },
+    {
+      "file": "test/training-records.test.js",
+      "sha256": "7eb36d93b9815385058a0482ef255e70d89c43354d2021ef83c92e8bf03c6630"
+    },
+    {
+      "file": "test/training-routines.test.js",
+      "sha256": "e2e399e4687b00dce34b3176f6517a4d282b208ce70f4622ed76db9081c7996e"
+    },
+    {
+      "file": "test/training-timer.test.js",
+      "sha256": "43290d78000726ef3d9866b285aa80e8dd36fd4bf421a26f286f00fc3fafdb8e"
+    },
+    {
+      "file": "test/training-trace.test.js",
+      "sha256": "c077c3f4025db4d15eb8e7668eb14f032366126abaf7b79352c7577f7212e91a"
+    },
+    {
+      "file": "browser-tests/training-journeys.spec.js",
+      "sha256": "871bf0d0d7b6b2f5abdbfee22bb35afae6a15caeb1623541c29c7c00f0c8c217"
+    },
+    {
+      "file": "test/data-backup.test.js",
+      "sha256": "2470c825c95980c7222221726a60c1618adb8f4a7e46c0fcd2daa3ee481c32de"
+    },
+    {
+      "file": "test/data-delete.test.js",
+      "sha256": "a9c636f883e932f7b3320c4b281ae40ec1da6d51bb8add042e2ecbdb79d25cd7"
+    },
+    {
+      "file": "test/data-lifecycle.test.js",
+      "sha256": "3e3d05a0335e3abc0eea810014946b7cb3a82e1514cbe6da08d430d5f62ff920"
+    },
+    {
+      "file": "test/data-operations.test.js",
+      "sha256": "3c7f2a9f1fc894cae009187a915a258c22261502bd50a47e03fb48f183d7a6db"
+    },
+    {
+      "file": "test/data-sync-hooks.test.js",
+      "sha256": "5b825bc66fe3015eb4d96f24443c7b42d02d8917abc8d9eb2fd786c4a56bf5e6"
+    },
+    {
+      "file": "test/data-sync.test.js",
+      "sha256": "faff2b66e94c9d0c8711dc2e17edea5ac6bbee7a612e37ce75d78531b2b6f5dd"
+    },
+    {
+      "file": "test/identity-auth.test.js",
+      "sha256": "f1c86293737a4e4e7cc3296541ae8406f640098adf8afb702daff9cda11e1374"
+    },
+    {
+      "file": "test/identity-diagnostics.test.js",
+      "sha256": "5487267be2445f5139a9d9ae47e7c27651bf325ed4cad7b898ed95141f8a9092"
+    },
+    {
+      "file": "test/identity-photos.test.js",
+      "sha256": "5271ff038be539e89dc6046aad62b7569ae05bba92e112e3e76b95a72ca8da7c"
+    },
+    {
+      "file": "test/identity-recovery.test.js",
+      "sha256": "40cbbb6945192e1e615b9d9837b96c8a6438aae650579b3fb3d9f26ae16472e0"
+    },
+    {
+      "file": "test/identity-session.test.js",
+      "sha256": "e39c2a783a1a84d1dec61a824d278f16557ce3165b432a63a05ff9d4e0109bff"
+    }
+  ],
+  "commands": [
+    "pnpm exec node --version",
+    "pnpm exec node --test --test-isolation=none --test-reporter=tap",
+    "pnpm exec playwright test --reporter=json",
+    "pnpm run build"
+  ],
+  "limitations": [
+    "Fixtures sintéticos; sin backend ni datos reales",
+    "RLS fresco pendiente para G-CLOSE",
+    "Sin instalación/auditoría nuevas: dependencias intactas",
+    "src mantiene el árbol de BASE; bytes LF fijados para reproducibilidad"
+  ],
+  "results": [
+    {
+      "name": "localISO uses local calendar fields",
+      "status": "passed"
+    },
+    {
+      "name": "authUserChanged ignores token refreshes for the same user",
+      "status": "passed"
+    },
+    {
+      "name": "fresh record alerts expire after three days and are capped",
+      "status": "passed"
+    },
+    {
+      "name": "mergePhotoUrls updates existing photos without restoring deleted ones",
+      "status": "passed"
+    },
+    {
+      "name": "date helpers handle month boundaries",
+      "status": "passed"
+    },
+    {
+      "name": "slopePerDay computes a linear trend",
+      "status": "passed"
+    },
+    {
+      "name": "validateBackup rejects malformed collections and fills goal defaults",
+      "status": "passed"
+    },
+    {
+      "name": "validateBackup accepts image data and workout structure",
+      "status": "passed"
+    },
+    {
+      "name": "lutealRetentionKg recovers the retention offset",
+      "status": "passed"
+    },
+    {
+      "name": "lutealRetentionKg detrends so a cut is not read as less retention",
+      "status": "passed"
+    },
+    {
+      "name": "lutealRetentionKg ignores noise, thin phases and caps implausible values",
+      "status": "passed"
+    },
+    {
+      "name": "lutealRetentionKg returns null when weight loss looks like the luteal phase is lighter",
+      "status": "passed"
+    },
+    {
+      "name": "matchedLoadRpeTrend detects rising RPE at equal load as fatigue",
+      "status": "passed"
+    },
+    {
+      "name": "matchedLoadRpeTrend counts distinct fatigued exercises, not combos",
+      "status": "passed"
+    },
+    {
+      "name": "matchedLoadRpeTrend detects falling RPE at equal load as progress",
+      "status": "passed"
+    },
+    {
+      "name": "matchedLoadRpeTrend ignores noise, short streaks and mismatched loads",
+      "status": "passed"
+    },
+    {
+      "name": "matchedLoadRpeTrend merges tool variants via canonExercise and averages sets per day",
+      "status": "passed"
+    },
+    {
+      "name": "migrateWorkouts supplies legacy defaults",
+      "status": "passed"
+    },
+    {
+      "name": "el destacado de fuerza usa el 1RM estimado de la sesion",
+      "status": "passed"
+    },
+    {
+      "name": "la tendencia de peso se mide por semana sobre la ventana pedida",
+      "status": "passed"
+    },
+    {
+      "name": "la adherencia de proteina solo cuenta los dias registrados",
+      "status": "passed"
+    },
+    {
+      "name": "dayFeed reúne entreno, comidas y cuerpo del día en una sola lista",
+      "status": "passed"
+    },
+    {
+      "name": "dayFeed ignora el ruido: sesión vacía, nota en blanco y días ajenos",
+      "status": "passed"
+    },
+    {
+      "name": "parseRpeTarget entiende rangos y valores sueltos",
+      "status": "passed"
+    },
+    {
+      "name": "pasarse un punto del objetivo pide backoff, no progresión",
+      "status": "passed"
+    },
+    {
+      "name": "una serie al fallo en un accesorio también pide backoff",
+      "status": "passed"
+    },
+    {
+      "name": "quedarse corta sube más en tren inferior que en superior",
+      "status": "passed"
+    },
+    {
+      "name": "dentro del rango objetivo se repite la carga",
+      "status": "passed"
+    },
+    {
+      "name": "sin RPE registrado no se aconseja nada",
+      "status": "passed"
+    },
+    {
+      "name": "el tema por defecto es oscuro, que es el aspecto del prototipo",
+      "status": "passed"
+    },
+    {
+      "name": "la búsqueda encuentra ejercicios que la fila no llega a mostrar",
+      "status": "passed"
+    },
+    {
+      "name": "la búsqueda cubre alimentos, notas y cardio, y ordena por fecha",
+      "status": "passed"
+    },
+    {
+      "name": "la búsqueda calla con menos de dos caracteres y no inventa resultados",
+      "status": "passed"
+    },
+    {
+      "name": "la búsqueda respeta el tope de resultados",
+      "status": "passed"
+    },
+    {
+      "name": "la semana empieza en lunes, venga de donde venga la fecha",
+      "status": "passed"
+    },
+    {
+      "name": "cada día del plan sabe si está hecho, pendiente o perdido",
+      "status": "passed"
+    },
+    {
+      "name": "un día con serie registrada cuenta como hecho aunque no estuviera planificado",
+      "status": "passed"
+    },
+    {
+      "name": "el cumplimiento mide semanas completas, no la que está en curso",
+      "status": "passed"
+    },
+    {
+      "name": "sin días asignados el cumplimiento no inventa un porcentaje",
+      "status": "passed"
+    },
+    {
+      "name": "el número de semana cuenta desde la primera sesión registrada",
+      "status": "passed"
+    },
+    {
+      "name": "ajustar la carga solo reescribe las series que faltan por hacer",
+      "status": "passed"
+    },
+    {
+      "name": "un ejercicio con todo registrado no cambia aunque se pida otra carga",
+      "status": "passed"
+    },
+    {
+      "name": "quitar un ejercicio lo saca de la sesión y deja intactos los demás",
+      "status": "passed"
+    },
+    {
+      "name": "sin carga se vacía el kilaje de las series pendientes, no se pone un cero",
+      "status": "passed"
+    },
+    {
+      "name": "un día de descanso sigue teniendo contenido: el Plan lo lee con dayFeed",
+      "status": "passed"
+    },
+    {
+      "name": "los pasos de hoy se leen contra la media de los 7 días anteriores",
+      "status": "passed"
+    },
+    {
+      "name": "cada aviso sabe a qué tarjeta de Métricas lleva y respeta la coma decimal",
+      "status": "passed"
+    },
+    {
+      "name": "las comidas del día salen del reparto elegido, no de una lista fija",
+      "status": "passed"
+    },
+    {
+      "name": "con perfil de hombre no se calcula ni se avisa nada del ciclo",
+      "status": "passed"
+    },
+    {
+      "name": "cada aviso trae una clave estable para poder descartarlo",
+      "status": "passed"
+    },
+    {
+      "name": "withTimeout returns operations that finish in time",
+      "status": "passed"
+    },
+    {
+      "name": "withTimeout rejects stalled operations with a recognizable error",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo avisos conservan fatiga textos umbrales y claves",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo consumidores conservan fachadas fotos y contratos previos",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo consumidores conservan confianza limites y cautela",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo conserva comienzos longitudes y contexto",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo peso conserva creatina saturacion y edicion de objetivo",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo metricas y diario conservan selectores y formatos",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo conserva distribucion escalas bins y picos",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo conserva guia insights provisionalidad y textos",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo checkin conserva normalizacion identidad timestamps y legado",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo medidas conservan campos null conversiones y reemplazo",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo peso conserva medias correcciones tendencia y proyeccion",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo conserva ovulacion flujo calendario y confianza",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo conserva precedencia fases y desconocido tardio",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo peso conserva retencion detrending umbral y cap",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo conserva seccion fecha montaje y visibilidad",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo pins detectan mutaciones controladas",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo conserva resumen sangrado segmentos y outliers",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo ciclo conserva recalculo timeline duplicados y timestamps",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo peso conserva regresion tendencia y callbacks de objetivos",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo peso conserva conversiones reemplazo pasos e historial",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo bienestar conserva borrador fecha guardas y guardado",
+      "status": "passed"
+    },
+    {
+      "name": "un nuevo periodo corta la influencia de la ovulacion del ciclo anterior",
+      "status": "passed"
+    },
+    {
+      "name": "un registro de sintomas sin campo de sangrado no cancela un periodo",
+      "status": "passed"
+    },
+    {
+      "name": "menstrual logs do not duplicate sleep or energy fields",
+      "status": "passed"
+    },
+    {
+      "name": "clear menstrual bleeding estimates menstruation",
+      "status": "passed"
+    },
+    {
+      "name": "spotting does not restart a cycle",
+      "status": "passed"
+    },
+    {
+      "name": "fertile cervical fluid marks a probable fertile window",
+      "status": "passed"
+    },
+    {
+      "name": "flow peak followed by dry fluid marks probable ovulation and early luteal",
+      "status": "passed"
+    },
+    {
+      "name": "luteal early and mid use days after probable ovulation",
+      "status": "passed"
+    },
+    {
+      "name": "luteal late is inferred near the next period",
+      "status": "passed"
+    },
+    {
+      "name": "recalculation reclassifies days before a newly logged period",
+      "status": "passed"
+    },
+    {
+      "name": "insights read sleep and energy from wellness records",
+      "status": "passed"
+    },
+    {
+      "name": "un check-in sin sangrado gana a la duracion asumida del periodo",
+      "status": "passed"
+    },
+    {
+      "name": "el resumen agrupa por ciclo, no por dia, y mide el sangrado",
+      "status": "passed"
+    },
+    {
+      "name": "un ciclo fuera de rango no entra en la media",
+      "status": "passed"
+    },
+    {
+      "name": "la distribucion ubica cada sintoma en su tramo del ciclo",
+      "status": "passed"
+    },
+    {
+      "name": "las lecturas de energia por fase vienen etiquetadas con su fase",
+      "status": "passed"
+    },
+    {
+      "name": "cada ciclo se segmenta en fases consecutivas, sin repetir tramo",
+      "status": "passed"
+    },
+    {
+      "name": "la guia del dia cambia con la fase y con lo que registraste",
+      "status": "passed"
+    },
+    {
+      "name": "sin dos ciclos completos la guia se marca como orientativa",
+      "status": "passed"
+    },
+    {
+      "name": "la ovulacion se estima por calendario y el flujo la corrige",
+      "status": "passed"
+    },
+    {
+      "name": "sin ciclos registrados no se inventa una ovulacion",
+      "status": "passed"
+    },
+    {
+      "name": "no afirma lútea tardía cuando el periodo pudo llegar sin registrarse",
+      "status": "passed"
+    },
+    {
+      "name": "datos limites de dependencia",
+      "status": "passed"
+    },
+    {
+      "name": "datos exportacion completa o error",
+      "status": "passed"
+    },
+    {
+      "name": "datos importacion validacion y aplicacion parcial",
+      "status": "passed"
+    },
+    {
+      "name": "datos borrado orden y recuperacion",
+      "status": "passed"
+    },
+    {
+      "name": "datos carga y descarte de resultados",
+      "status": "passed"
+    },
+    {
+      "name": "datos claves sincronizadas y timer",
+      "status": "passed"
+    },
+    {
+      "name": "datos lectura y escritura por usuario y clave",
+      "status": "passed"
+    },
+    {
+      "name": "datos humo de previews con cliente sintetico",
+      "status": "passed"
+    },
+    {
+      "name": "datos debounce y suscripciones",
+      "status": "passed"
+    },
+    {
+      "name": "datos cola orden concurrencia y referencia",
+      "status": "passed"
+    },
+    {
+      "name": "datos eventos y promesas de guardado",
+      "status": "passed"
+    },
+    {
+      "name": "datos suspension y espera capturada",
+      "status": "passed"
+    },
+    {
+      "name": "sanitizeDiagnostic removes common identifiers and URL parameters",
+      "status": "passed"
+    },
+    {
+      "name": "errorDetails limits diagnostic sizes",
+      "status": "passed"
+    },
+    {
+      "name": "computeProteinTargets calculates and clamps grams per kilogram",
+      "status": "passed"
+    },
+    {
+      "name": "distributeProtein supports four and five meals",
+      "status": "passed"
+    },
+    {
+      "name": "routine selectors expose all templates without restricting the day",
+      "status": "passed"
+    },
+    {
+      "name": "guessPrimaryMuscle maps common exercise names",
+      "status": "passed"
+    },
+    {
+      "name": "templateToAppRoutine preserves routine and minimal-version targets",
+      "status": "passed"
+    },
+    {
+      "name": "el equipo se infiere del nombre, y lo explícito gana a lo mencionado de paso",
+      "status": "passed"
+    },
+    {
+      "name": "una rutina vale para el nivel de su ejercicio más exigente",
+      "status": "passed"
+    },
+    {
+      "name": "las plantillas reales se reparten como es su programa",
+      "status": "passed"
+    },
+    {
+      "name": "el reparto de proteína suma el objetivo y ninguna toma se queda corta",
+      "status": "passed"
+    },
+    {
+      "name": "identidad capas de fotos sin React DOM ni cliente global",
+      "status": "passed"
+    },
+    {
+      "name": "identidad autenticacion credenciales errores y plazo",
+      "status": "passed"
+    },
+    {
+      "name": "identidad CHANGE configuracion antes de crear cliente",
+      "status": "passed"
+    },
+    {
+      "name": "identidad diagnosticos activacion deduplicacion y privacidad",
+      "status": "passed"
+    },
+    {
+      "name": "identidad fotos validacion firma subida y recuperacion",
+      "status": "passed"
+    },
+    {
+      "name": "identidad fotos borrado paginacion orden y fallos",
+      "status": "passed"
+    },
+    {
+      "name": "identidad fotos compresion y materializacion de copia",
+      "status": "passed"
+    },
+    {
+      "name": "identidad fotos recuperacion visible intervalo y merge concurrente",
+      "status": "passed"
+    },
+    {
+      "name": "identidad CHANGE reporting degradado sin filtrar datos",
+      "status": "passed"
+    },
+    {
+      "name": "identidad sesion consulta eventos reintento y limpieza",
+      "status": "passed"
+    },
+    {
+      "name": "identidad acceso interfaz validacion mensajes y espera",
+      "status": "passed"
+    },
+    {
+      "name": "RLS Docker acepta sockets locales y rechaza pipes de otra maquina",
+      "status": "passed"
+    },
+    {
+      "name": "RLS guarda admite solo destino desechable local explícito sin conectar",
+      "status": "passed"
+    },
+    {
+      "name": "RLS guarda rechaza hosts remotos aliases y confusiones de URL",
+      "status": "passed"
+    },
+    {
+      "name": "RLS guarda rechaza configuración ambigua y no expone valores en errores",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion adherencia conserva ventana dias registrados y umbral",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion alertas conservan mantenimiento proteina y otras metricas",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion cantidad conserva validacion escalado guardado y retorno",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion capas puras y negativos transitivos",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion inferencia se invoca despues de guardas con entradas originales",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion mantiene hashes congelados propios y anteriores",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion objetivos conservan edicion efecto automatico y montaje",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion catalogo y migracion conservan valores y unidades",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion consumidores y previews conservan contratos y fachadas",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion metricas conservan series medias ventanas y macros",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion diario nutricional conserva totales grupos fechas y borrado",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion real esperado conserva ancla direccion y proyeccion",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion alimentos conservan crud conversiones orden y deduplicacion",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion objetivos conservan referencia actividad direccion y sugerencia",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion ritmo conserva aplicar descartar snapshot y deshacer",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion ritmo conserva guardas ventana limites y redondeos",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion proteina conserva clamps reparto etiquetas y redondeos",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion recetas conservan ingredientes porciones y snapshots",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion busqueda conserva fuentes limites recientes y navegacion",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion mutaciones detectan gramos redondeo montaje y snapshot",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion manifiesto rechaza cobertura incompleta y resultados invalidos",
+      "status": "passed"
+    },
+    {
+      "name": "RLS evidencia acepta solo resultados reales completos del contrato esperado",
+      "status": "passed"
+    },
+    {
+      "name": "RLS evidencia rechaza obsolescencia omission duplicados y limpieza fallida",
+      "status": "passed"
+    },
+    {
+      "name": "RLS fixture rechaza destino remoto antes de crear cualquier cliente",
+      "status": "passed"
+    },
+    {
+      "name": "RLS fixture exige marcador antes de crear cliente privilegiado",
+      "status": "passed"
+    },
+    {
+      "name": "RLS intento rechazado invalida evidencia previa sin conectar Docker remoto",
+      "status": "passed"
+    },
+    {
+      "name": "SDD seleccion de spec mantiene default y rechaza rutas o argumentos ambiguos",
+      "status": "passed"
+    },
+    {
+      "name": "SDD contrato incluye CHANGE propuesto y escenarios de varios digitos sin duplicados",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-MUT-002 detecta quitar aislamiento por usuario",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-MUT-003 detecta romper orden de escrituras",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-PILOT-001 App original carga y guarda con servicios simulados",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-PILOT-002 carga pendiente impide escrituras",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-MUT-001 el contrato detecta guardar antes de cargar",
+      "status": "passed"
+    },
+    {
+      "name": "trazabilidad rechaza prueba inexistente u omitida",
+      "status": "passed"
+    },
+    {
+      "name": "trazabilidad completa no acepta evidencia parcial ni filas faltantes",
+      "status": "passed"
+    },
+    {
+      "name": "trazabilidad rechaza IDs duplicados y pruebas fallidas",
+      "status": "passed"
+    },
+    {
+      "name": "Vercel applies the required security headers to every route",
+      "status": "passed"
+    },
+    {
+      "name": "latestWeight returns the newest dated measurement",
+      "status": "passed"
+    },
+    {
+      "name": "goalDirection classifies weight goals",
+      "status": "passed"
+    },
+    {
+      "name": "goalSuggestion uses activity, weekly change and protein settings",
+      "status": "passed"
+    },
+    {
+      "name": "el aviso de ritmo calla cuando la desviación cabe en el error de medida",
+      "status": "passed"
+    },
+    {
+      "name": "el aviso de ritmo calla sin pesajes suficientes o sin ventana completa",
+      "status": "passed"
+    },
+    {
+      "name": "bajar más rápido de lo previsto sube las kcal, redondeadas a 50",
+      "status": "passed"
+    },
+    {
+      "name": "bajar más lento de lo previsto baja las kcal, pero nunca bajo el suelo de 22 kcal/kg",
+      "status": "passed"
+    },
+    {
+      "name": "aplicar o descartar el aviso lo calla hasta que haya pesajes nuevos",
+      "status": "passed"
+    },
+    {
+      "name": "real vs esperado mide contra la recta del objetivo y marca si vas por delante",
+      "status": "passed"
+    },
+    {
+      "name": "la proyección usa el ritmo real y desaparece si te alejas de la meta",
+      "status": "passed"
+    },
+    {
+      "name": "real vs esperado calla con un solo pesaje",
+      "status": "passed"
+    },
+    {
+      "name": "real vs esperado ancla en la ventana de 12 semanas, no en el primer pesaje",
+      "status": "passed"
+    },
+    {
+      "name": "authentication normalizes email and calls the selected Supabase method",
+      "status": "passed"
+    },
+    {
+      "name": "app data reads and writes remain scoped to user and key",
+      "status": "passed"
+    },
+    {
+      "name": "photo uploads use the private bucket and an owner-prefixed path",
+      "status": "passed"
+    },
+    {
+      "name": "RLS migrations keep app data and progress photos owner-only",
+      "status": "passed"
+    },
+    {
+      "name": "error reports are insert-only and scoped to the authenticated owner",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento capas puras y coordinacion sin ciclos",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento arquitectura detecta React DOM y cliente transitivos",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento conserva los pins fijados antes de extraer",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento consumidores y previews compatibles",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento duracion manual eventos y limpieza",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento sesion guiada registro correccion y salida",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento metricas historial y fronteras",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento consejo y ajustes conservan registros",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento mutaciones detectan contrato roto",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento semana cumplimiento y asignacion",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento sesion por fecha orden y vaciado",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento carga completa minima y calentamiento",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento edicion series ejercicios y cardio",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento rutinas plantillas y biblioteca",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento timer persistencia reloj y transiciones",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento trazabilidad rechaza evidencia incompleta",
+      "status": "passed"
+    },
+    {
+      "name": "manual duration saves on Enter, on blur and by itself",
+      "status": "passed"
+    },
+    {
+      "name": "el aviso de ritmo persiste su decisión en goals, no en estado local",
+      "status": "passed"
+    },
+    {
+      "name": "el arranque pinta el tema antes de que React monte",
+      "status": "passed"
+    },
+    {
+      "name": "cada fila del diario aterriza en la pantalla de su tipo",
+      "status": "passed"
+    },
+    {
+      "name": "el día del Plan recibe todo el día, no solo el entreno",
+      "status": "passed"
+    },
+    {
+      "name": "los avisos se leen en el Diario y saltan a su tarjeta de Métricas",
+      "status": "passed"
+    },
+    {
+      "name": "la cuenta es una pantalla con dos pestañas y se entra por el nombre",
+      "status": "passed"
+    },
+    {
+      "name": "Biblioteca abre con la lista y la ficha vive en el panel derecho",
+      "status": "passed"
+    },
+    {
+      "name": "registrar comida son tres pantallas y la cantidad es obligatoria",
+      "status": "passed"
+    },
+    {
+      "name": "Cuerpo se registra en cuatro pantallas, no en una pila de formularios",
+      "status": "passed"
+    },
+    {
+      "name": "un perfil de hombre no ve nada del ciclo",
+      "status": "passed"
+    },
+    {
+      "name": "sin ciclo no salen avisos de ciclo ni corrección por fase",
+      "status": "passed"
+    },
+    {
+      "name": "guardar confirma: hay toast en las cuatro pantallas que escriben",
+      "status": "passed"
+    },
+    {
+      "name": "la rejilla de Métricas es fluida y no parte los gráficos",
+      "status": "passed"
+    },
+    {
+      "name": "el modo sesión va a pantalla completa, sin rail ni barra inferior",
+      "status": "passed"
+    },
+    {
+      "name": "en móvil la ficha reemplaza la lista y las cifras no se aprietan",
+      "status": "passed"
+    },
+    {
+      "name": "el rail y la barra móvil llevan a lo mismo, y nada queda huérfano",
+      "status": "passed"
+    },
+    {
+      "name": "planificar otro día no son ocho flechas",
+      "status": "passed"
+    },
+    {
+      "name": "en móvil los controles se pueden tocar con el dedo",
+      "status": "passed"
+    },
+    {
+      "name": "la acción principal de cada pantalla no se va al desplazarse",
+      "status": "passed"
+    },
+    {
+      "name": "los avisos se pueden descartar, y vuelven si la causa sigue",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo navegador peso medidas y creatina",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo navegador bienestar fecha y persistencia de borrador",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo navegador checkin incertidumbre y consumidores",
+      "status": "passed"
+    },
+    {
+      "name": "cuerpo navegador rutas perfiles previews y fotos",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-E2E-001 cargar y guardar objetivo desde interfaz",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-E2E-002 exportar y reimportar copia desde interfaz",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-E2E-003 fallo de guardado visible y dato remoto conservado",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion navegador registrar cantidades y corregir dia",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion navegador biblioteca recetas y snapshots",
+      "status": "passed"
+    },
+    {
+      "name": "nutricion navegador objetivos automaticos y aviso",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento navegador registrar y corregir serie",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento navegador timer y duracion",
+      "status": "passed"
+    },
+    {
+      "name": "entrenamiento navegador biblioteca y plan",
+      "status": "passed"
+    }
+  ],
+  "formatting": "FR-020: solo se retiró una línea vacía final de body-fixtures antes de guardar baseline; sin cambios de valores ni aserciones."
+}

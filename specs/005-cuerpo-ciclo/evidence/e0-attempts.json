@@ -1,0 +1,39 @@
+{
+  "base": "02ab5193f9d01e0037e9640626b25742e5224a5a",
+  "attempts": [
+    {
+      "kind": "environment",
+      "result": "pnpm sandbox unable to open database file; runtime exterior 24.21.0"
+    },
+    {
+      "kind": "pin-authoring",
+      "result": "Regex mal escapada y expectativa de duplicado corregidas antes de congelar; original no modificado"
+    },
+    {
+      "kind": "suite",
+      "tests": 284,
+      "passed": 271,
+      "failed": 13,
+      "result": "Anclas LF del harness congelado 004 no coinciden con checkout CRLF; restaurado LF sin diff de contenido src; repetición obligatoria"
+    },
+    {
+      "kind": "browser",
+      "result": "Selectores del input y fixture de objetivos incompleto corregidos; no cambios de producto"
+    },
+    {
+      "kind": "suite-after-LF",
+      "tests": 284,
+      "passed": 284,
+      "failed": 0,
+      "result": "Suite completa aprobada; revisión posterior añadió aserciones y exige nuevo checkpoint final"
+    },
+    {
+      "kind": "browser-after-fixture",
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "result": "Cuatro nuevos y nueve previos, sin reintentos; zona America/Bogota para nuevos"
+    }
+  ],
+  "limitation": "Registro de intentos, no baseline ni autorización para comenzar extracción; resultados finales separados."
+}

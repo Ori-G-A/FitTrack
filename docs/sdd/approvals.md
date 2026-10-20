@@ -273,3 +273,19 @@ El propietario respondió «aprobado» a la solicitud explícita de aprobar plan
 33 tareas y revisión, y autorizar ejecución local E0–E6 antes de integrar el PR
 documental. Se permite iniciar caracterización sobre original y después extraer
 solo tras G-PIN completo verde. No autoriza publicación, merge ni despliegue.
+
+## Ejecución local 005 verificada — 2026-10-19
+
+La autorización del plan/E0–E6 se ejecutó: 34 tareas completas (T034 añadida
+por convergencia para precisar FR-016 sin cambiar conducta), 286 Node,13 Chromium,
+3 RLS con limpieza, build y cinco manifiestos completos sobre el mismo src.
+68 pins intactos; revisión de aserciones del agente. [Cierre](../../specs/005-cuerpo-ciclo/converge.md).
+No se infiere aceptación final ni autorización de publicar, integrar o desplegar005.
+
+## Publicación e integración 005 autorizadas — 2026-10-19
+
+El propietario respondió «autorizo. continua» a la solicitud explícita de
+publicar los PRs documental y de código, integrarlos con CI verde y permitir
+el despliegue automático de Vercel. Se autoriza ejecutar esas acciones en ese
+orden; los resultados remotos se registrarán al comprobarlos. La autorización
+no cambia el contrato ni equivale a una prueba funcional con datos reales.

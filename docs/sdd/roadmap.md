@@ -1,11 +1,13 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-18: 001/002/003/004 integradas; PATCH 1.0.2 ratificada.
+Estado actual, 2026-10-19: 001/002/003/004 integradas; PATCH 1.0.2 ratificada.
 M5 integrado mediante [PR #10](https://github.com/Ori-G-A/FitTrack/pull/10),
-merge 02ab519, CI del PR/main y Vercel Production aprobados sobre el mismo SHA.
-[Evidencia remota 004](../../specs/004-nutricion-objetivos/evidence/integration.json).
-005 tiene alcance y aclaraciones aprobados; plan pendiente: [survey](cuerpo-ciclo-survey.md) y
-[spec](../../specs/005-cuerpo-ciclo/spec.md); plan, tareas y ejecución pendientes.
+con CI del PR/main y Vercel Production aprobados sobre 02ab519.
+005 está implementada y verificada localmente: 286 Node, 13 Chromium, 3 RLS
+con limpieza y build; cinco contratos completos, 136 IDs y 68 pins intactos.
+[Converge 005](../../specs/005-cuerpo-ciclo/converge.md),
+[evidencia final](../../specs/005-cuerpo-ciclo/evidence/final.json).
+Aceptación, publicación, integración y despliegue005 pendientes del propietario.
 Los registros siguientes conservan el historial.
 
 
@@ -306,3 +308,37 @@ explícita. [Plan técnico](../../specs/005-cuerpo-ciclo/plan.md), 33 tareas y a
 preparados: 20 grupos de pins, cuatro recorridos Chromium y extracciones por
 entregas con baseline bloqueante. Plan y autorización de ejecución local pendientes;
 src, SQL, dependencias y CI intactos. Los registros anteriores conservan historia.
+
+### Hallazgo de interfaz durante E0 de 005
+
+UI-005-001: el input de peso está dentro de un label con botones intermedios;
+Chromium no lo resuelve por «Peso en kg». Observado funcionalmente en un
+selector de prueba fallido; se usa un selector de control existente para 005.
+Revisar asociación accesible de formularios en 006; no corregirla silenciosamente
+durante la refactorización AS-IS.
+
+ENV-005-002: checkout de main con CRLF rompe anclas LF del harness congelado de
+004; se reprodujeron 13 fallos de instrumentación sin cambios semánticos de src.
+Se restauraron finales LF del código original, con diff de Git vacío; se repite
+la suite completa antes de baseline. No se editan pins congelados ni configuración
+global de Git. Los hashes de evidencia se recalculan sobre los bytes efectivos.
+
+Resolución de ENV-005-002: regla versionada src/** text eol=lf en .gitattributes,
+conservando contenido de blobs y pins. Evita repetir la reparación en futuros
+checkouts; suite completa repetida antes de declarar el cierre de E0.
+
+## Cierre local 005 — 2026-10-19
+
+E0–E6 verificadas, 34 tareas completas y nueve módulos puros. BODY-001–005
+reproducidos/preservados; T034 precisa FR-016 según parámetro y aritmética
+existentes, sin CHANGE. UI-005-001 se mantiene para006; KD-002 sigue global.
+ENV-005-002 resuelto con LF; Docker recuperado por CLI y RLS fresco3/3 con
+fixture retirado. [PRs preparados](../../specs/005-cuerpo-ciclo/code-pr.md).
+No se declara M6 integrado hasta aceptación/publicación/CI remoto/fusión.
+
+## Integración 005 en curso — 2026-10-19
+
+Publicación, fusiones con CI verde y despliegue automático autorizados expresamente.
+[PR documental #11](https://github.com/Ori-G-A/FitTrack/pull/11) publicado desde
+la revisión aprobada e949c08. Después se publica el PR de código con el cierre local.
+M6 integrado se declarará únicamente tras verificar CI y fusión del código.
