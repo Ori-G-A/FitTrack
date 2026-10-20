@@ -39,3 +39,9 @@ la interfaz; 005 no retira esa deuda global ni ratifica fórmulas clínicamente.
 limpia ni auditoría nuevas (dependencias intactas). Aviso heredado de chunk>500kB.
 Publicación, merge, despliegue y prueba autenticada en producción no realizados.
 La revisión local del agente no constituye aceptación final del propietario.
+
+## Decisión del propietario — 2026-10-19
+
+Publicación de ambos PRs, integración con CI verde y despliegue automático
+expresamente autorizados mediante «autorizo. continua». El estado anterior
+registra el cierre local; la evidencia remota se añadirá tras comprobarla.

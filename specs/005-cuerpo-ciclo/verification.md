@@ -130,3 +130,9 @@ ni recorrido autenticado en producción. CI configurado, sin ejecución remota00
 Revisión documental final: 157 enlaces locales válidos en 17 documentos,
 34 tareas únicas con dependencias acíclicas, 40 filas de trazabilidad y
 git diff --check correcto. Sin cambios de runtime tras el checkpoint final.
+
+## Integración autorizada — 2026-10-19
+
+El propietario autorizó publicación, fusiones con CI verde y despliegue automático.
+PR documental: https://github.com/Ori-G-A/FitTrack/pull/11, snapshot e949c08.
+Se integra antes de publicar el PR de código; resultados remotos pendientes.
