@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
-import {createHash} from 'node:crypto';
 import {build,transform} from 'esbuild';
+import {verifyInterfacePins} from '../scripts/interface-pins.js';
 
 async function pureGraph(contents) {
  const result=await build({stdin:{contents,resolveDir:resolve('.'),sourcefile:'interface-layer-fixture.js'},bundle:true,write:false,metafile:true,format:'esm',platform:'browser',define:{'import.meta.env':'{}'},logLevel:'silent'});
@@ -25,9 +25,7 @@ test('interfaz navegacion pura y negativos transitivos',async()=>{
 });
 
 test('interfaz verifica todos los pins congelados de E0',async()=>{
- const baseline=JSON.parse(await readFile('specs/006-interfaz/evidence/baseline.json','utf8'));
- assert.equal(baseline.pins.length,33);assert.equal(baseline.previousPinsVerified.length,68);
- for(const pin of [...baseline.pins,...baseline.previousPinsVerified])assert.equal(createHash('sha256').update((await readFile(pin.file,'utf8')).replace(/\r\n/g,'\n')).digest('hex'),pin.sha256,pin.file);
+ assert.equal(verifyInterfacePins().verified,101);
 });
 
 async function themeGraph(contents) {

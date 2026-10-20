@@ -149,3 +149,7 @@ T032: 313 pruebas Node,20 Chromium AS-IS y2 CHANGE verdes; build aprobado y101 p
 ## E5 completada — 2026-10-20
 
 T033: 313 pruebas Node,20 Chromium AS-IS y5 CHANGE verdes; build aprobado y101 pins intactos. Trazabilidad:46 IDs completos y2 pendientes. [Evidencia](evidence/e5.json). No se modificaron aserciones congeladas. RLS y cierre E6 siguen pendientes.
+
+## E5B completada — 2026-10-20
+
+T042: 313 pruebas Node,20 Chromium AS-IS y7 CHANGE verdes; build aprobado y101 firmas verificadas con PIN-006-001. Trazabilidad:48 IDs completos y0 pendientes. [Evidencia](evidence/e5b.json). No se modificaron aserciones congeladas; los68 pins anteriores siguen intactos. RLS y cierre E6 siguen pendientes.

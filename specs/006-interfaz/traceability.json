@@ -1,6 +1,6 @@
 {
   "spec": "006-interfaz",
-  "note": "Checkpoint e5 completo: 46 IDs completos y 2 pendientes; E6 conserva las puertas de cierre y RLS.",
+  "note": "Checkpoint e5b completo: 48 IDs completos y 0 pendientes; E6 conserva las puertas de cierre y RLS.",
   "requirements": [
     {
       "id": "FR-001",
@@ -708,8 +708,11 @@
     },
     {
       "id": "FR-024",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
       "plannedTests": [
         "interfaz cambio resaltado temporal tras consumo de focusCard",
         "interfaz cambio resaltado reemplazo y desmontaje"
@@ -720,8 +723,11 @@
     },
     {
       "id": "US1-AS9",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
       "plannedTests": [
         "interfaz cambio resaltado temporal tras consumo de focusCard",
         "interfaz cambio resaltado reemplazo y desmontaje"

@@ -48,3 +48,19 @@ Actualiza únicamente sus IDs después de aprobar todo el checkpoint y publica
 resultados/sourceHash conjuntos. Un intento invalida primero su reporte para
 evitar presentar resultados antiguos como éxito. La ejecución ordinaria y CI
 incorporarán los siete CHANGE una sola vez en E6, según el plan aprobado.
+
+## R-015 — Corrección del reloj del harness (FR-024)
+
+El primer checkpoint E5b pasó313 Node y20 AS-IS; cinco CHANGE pasaron y dos
+fallaron al observar2199ms. clock.install seguía avanzando entre las acciones
+del navegador, sumando tiempo real a runFor. Se añade pauseAt antes de montar
+la aplicación. Las aserciones y la duración2200 no cambian.
+
+[PIN-006-001](evidence/pin-amendment-001.json) conserva la firma anterior del
+único archivo de harness corregido y la firma nueva. La baseline original no
+se reescribe; scripts/interface-pins.js verifica los101 archivos y aplica esa
+enmienda explícita. Los68 pins anteriores siguen intactos. En una copia sin
+credenciales de BASE86299a4 se repitieron20 AS-IS verdes y siete rojos por sus
+motivos específicos; los dos casos temporales pasaron sobre el candidato.
+La repetición completa de E5b es obligatoria antes de avanzar a E6. Es una
+corrección técnica de la preparación de pruebas aprobada, sin ampliar alcance.

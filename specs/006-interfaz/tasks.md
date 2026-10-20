@@ -76,7 +76,7 @@ T028 no superada. FR-024 aprobado; T040–T043 aún no se consideran aprobadas.
 | --- | --- | --- | --- | --- |
 | T040 | US1; FR-008/024; US1-AS8/9 | Registrar precisión aprobada y observación App/aislada; conservar fallo y control AS-IS | T002 | Completada (alcance acafd25) |
 | T041 | US1; FR-024; US1-AS9 | Ejecutar dos CHANGE rojos sobre BASE y revisar motivos específicos | T040 | Completada (G-PIN; registro inferior) |
-| T042 | US1; FR-008/024; US1-AS8/9 | E5b: implementar vida del resaltado independiente del consumo, reemplazo y cleanup; checkpoint completo | T033, T041 | Pendiente |
+| T042 | US1; FR-008/024; US1-AS8/9 | E5b: implementar vida del resaltado independiente del consumo, reemplazo y cleanup; checkpoint completo | T033, T041 | Completada (E5B; registro inferior) |
 | T043 | US1/US3; FR-020/024; US3-AS7, US1-AS9 | Negativo de temporizador, descubrimiento y revisión final de aserciones | T036, T042 | Pendiente |
 
 Las aristas adicionales de T028/T034/T037 están incorporadas a sus filas aún
@@ -115,3 +115,7 @@ T032: 313 pruebas Node,20 Chromium AS-IS y2 CHANGE verdes; build aprobado y101 p
 ## E5 completada — 2026-10-20
 
 T033: 313 pruebas Node,20 Chromium AS-IS y5 CHANGE verdes; build aprobado y101 pins intactos. Trazabilidad:46 IDs completos y2 pendientes. [Evidencia](evidence/e5.json). No se modificaron aserciones congeladas. RLS y cierre E6 siguen pendientes.
+
+## E5B completada — 2026-10-20
+
+T042: 313 pruebas Node,20 Chromium AS-IS y7 CHANGE verdes; build aprobado y101 firmas verificadas con PIN-006-001. Trazabilidad:48 IDs completos y0 pendientes. [Evidencia](evidence/e5b.json). No se modificaron aserciones congeladas; los68 pins anteriores siguen intactos. RLS y cierre E6 siguen pendientes.

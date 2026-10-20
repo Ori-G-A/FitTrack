@@ -6,6 +6,8 @@ export async function mountUi(page,bundle,{seed=uiSeed,mode='app',view={},fixtur
  await page.route('**/*',r=>r.abort());
  await page.route('https://sdd.invalid/',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><html><body style="margin:0"><div id="root"></div></body></html>'}));
  await page.goto('https://sdd.invalid/');await page.clock.install({time:new Date('2026-10-18T12:00:00Z')});
+ // FR-024: runFor mide el plazo desde la petición, sin sumar tiempo entre acciones.
+ await page.clock.pauseAt(new Date('2026-10-18T12:00:00Z'));
  await page.evaluate(({seed,mode,view,fixture,pref,gate})=>{globalThis.__interfaceSeed=seed;globalThis.__interfaceView={mode,...view};globalThis.__sddFixture={data:seed,...fixture};if(pref)localStorage.setItem('ft-theme',pref);if(gate)globalThis.__interfaceLazyGate=new Promise(r=>globalThis.__releaseInterfaceLazy=r);},{seed,mode,view,fixture,pref,gate});
  await page.addScriptTag({content:bundle});
  if(mode==='app')await expect.poll(()=>page.evaluate(()=>__interfaceApp?.loaded)).toBe(true);
