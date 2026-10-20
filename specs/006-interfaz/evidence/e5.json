@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "stage": "e5",
+  "generatedAt": "2026-10-20T21:38:54.978Z",
+  "node": "v24.21.0",
+  "sourceHash": "dc70f1176553b9266c693cc562f1b898c81ab42c9a8fb2bb4c9d1fe8cc0e2644",
+  "nodeTests": 313,
+  "nodePassed": 313,
+  "browser": {
+    "startTime": "2026-10-20T21:37:36.696Z",
+    "duration": 60142.04,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "change": {
+    "startTime": "2026-10-20T21:38:37.765Z",
+    "duration": 8419.781,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "counts": {
+    "pending": 2,
+    "partial": 0,
+    "complete": 46
+  },
+  "build": {
+    "passed": true,
+    "output": [
+      "dist/assets/LineChart-DJzaHPa6.js          393.31 kB │ gzip: 107.99 kB",
+      "dist/assets/index-Netf7a0r.js              506.49 kB │ gzip: 147.09 kB",
+      "✓ built in 7.58s"
+    ]
+  },
+  "pinsVerified": 101,
+  "reviewRevision": "470404dd60f09db27d996ce1138b773707109b1d",
+  "command": "pnpm exec node scripts/run-interface-checkpoint.js e5",
+  "limits": [
+    "RLS fresco y cierre de seis contratos pendientes de E6",
+    "Sin publicación, fusión o despliegue006"
+  ]
+}

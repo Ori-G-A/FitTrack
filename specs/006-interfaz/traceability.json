@@ -1,6 +1,6 @@
 {
   "spec": "006-interfaz",
-  "note": "Checkpoint e4 completo: 44 IDs completos y 4 pendientes; E6 conserva las puertas de cierre y RLS.",
+  "note": "Checkpoint e5 completo: 46 IDs completos y 2 pendientes; E6 conserva las puertas de cierre y RLS.",
   "requirements": [
     {
       "id": "FR-001",
@@ -644,8 +644,12 @@
     },
     {
       "id": "FR-022",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio campo Peso en kg",
+        "interfaz cambio campo Correo electrónico",
+        "interfaz cambio campo Contraseña"
+      ],
       "plannedTests": [
         "interfaz cambio campo Peso en kg",
         "interfaz cambio campo Correo electrónico",
@@ -657,8 +661,12 @@
     },
     {
       "id": "US4-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio campo Peso en kg",
+        "interfaz cambio campo Correo electrónico",
+        "interfaz cambio campo Contraseña"
+      ],
       "plannedTests": [
         "interfaz cambio campo Peso en kg",
         "interfaz cambio campo Correo electrónico",

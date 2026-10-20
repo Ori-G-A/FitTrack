@@ -145,3 +145,7 @@ Checkpoint completo verde: 313 Node/20 Chromium, build, trazabilidad parcial sin
 ## E4 completada — 2026-10-20
 
 T032: 313 pruebas Node,20 Chromium AS-IS y2 CHANGE verdes; build aprobado y101 pins intactos. Trazabilidad:44 IDs completos y4 pendientes. [Evidencia](evidence/e4.json). No se modificaron aserciones congeladas. RLS y cierre E6 siguen pendientes.
+
+## E5 completada — 2026-10-20
+
+T033: 313 pruebas Node,20 Chromium AS-IS y5 CHANGE verdes; build aprobado y101 pins intactos. Trazabilidad:46 IDs completos y2 pendientes. [Evidencia](evidence/e5.json). No se modificaron aserciones congeladas. RLS y cierre E6 siguen pendientes.
