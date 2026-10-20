@@ -1,0 +1,328 @@
+{
+  "spec": "006-interfaz",
+  "note": "Borrador de alcance:21 AS-IS y 2 CHANGE;23 escenarios;46 IDs pendientes. Sin plan ni baseline 006.",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-002",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-003",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-004",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-005",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-006",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-007",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS7",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-008",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS8",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-009",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-010",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-011",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-012",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-013",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-014",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-015",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-016",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-017",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-018",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-019",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-020",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS7",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-021",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US4-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-022",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US4-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-023",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedTaskIds": []
+    }
+  ]
+}

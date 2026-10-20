@@ -1,0 +1,31 @@
+{
+  "kind": "exploratory_not_baseline",
+  "base": "86299a4497e3c19180c30a640598a1358d61cc8f",
+  "runtime": "v24.21.0",
+  "externalNetwork": "aborted",
+  "fixtures": "synthetic",
+  "viewports": [
+    {
+      "width": 390,
+      "dialogRole": null,
+      "focusInside": false,
+      "activeClass": "add",
+      "overflow": false,
+      "escapeCloses": false,
+      "weightAccessibleLabelCount": 0,
+      "weightControlCount": 1,
+      "bodyOverflow": false
+    },
+    {
+      "width": 1280,
+      "dialogRole": null,
+      "focusInside": false,
+      "activeClass": "ft-nav-add",
+      "overflow": false,
+      "escapeCloses": false,
+      "weightAccessibleLabelCount": 0,
+      "weightControlCount": 1,
+      "bodyOverflow": false
+    }
+  ]
+}

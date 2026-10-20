@@ -301,3 +301,19 @@ exitoso sobre sus respectivos merges. Árbol src idéntico al validado localment
 HTTP 200 muestra Login de Vercel; no hay prueba funcional autenticada.
 El posterior «continua» autoriza preparar diagnóstico y propuesta 006; no aprueba
 anticipadamente alcance, cambios, plan, implementación ni despliegue de esa área.
+
+## Propuesta 006 preparada, sin aprobación — 2026-10-19
+
+El posterior «continua» autoriza preparar survey y alcance de interfaz.
+Se proponen 21 FR AS-IS y dos CHANGE (FR-021/022), 23 escenarios y C-001/002/003.
+[Propuesta](../../specs/006-interfaz/spec.md). Los artefactos son borradores;
+no se crea commit como etapa aprobada, plan ni implementación anticipada.
+
+## Alcance y aclaraciones 006 aprobados — 2026-10-19
+
+El propietario respondió «Aprobar alcance, ambos cambios y las tres aclaraciones»
+a la pregunta explícita sobre la spec 006 y C-001/002/003. Aprueba 21 AS-IS,
+dos CHANGE (FR-021/022) y 23 escenarios; conserva compatibilidades temporales,
+medición sin optimización y revisión KD-002 con ratificación separada.
+Autoriza preparar plan/tasks/analyze; no anticipa su aprobación, ejecución local,
+publicación, integración ni despliegue de 006.

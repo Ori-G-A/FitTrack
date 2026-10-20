@@ -343,3 +343,31 @@ Publicación, fusiones con CI verde y despliegue automático autorizados expresa
 [PR documental #11](https://github.com/Ori-G-A/FitTrack/pull/11) publicado desde
 la revisión aprobada e949c08. Después se publica el PR de código con el cierre local.
 M6 integrado se declarará únicamente tras verificar CI y fusión del código.
+
+## Diagnóstico y propuesta 006 — 2026-10-19
+
+M6 integrado con evidencia remota de 005. [Survey de interfaz](interfaz-survey.md)
+y [spec 006](../../specs/006-interfaz/spec.md) preparados como borradores:
+21 requisitos AS-IS, dos CHANGE propuestos y 23 escenarios (46 IDs pending).
+La exploración sintética Chromium a 390/1280 reproduce falta de foco/Escape y
+role en Registrar, y falta del nombre accesible esperado del input de peso.
+FR-021 propone teclado/foco para Registrar/DetailSheet; FR-022 nombres accesibles
+para peso/correo/contraseña. Alcance y C-001/002/003 pendientes; sin plan ni src.
+
+UI-006-003: script inicial interpreta tema inválido distinto de React; lectura,
+pendiente de pin. UI-006-004: reduced-motion parcial; no prometer cobertura global.
+UI-006-005: Cuenta inicializa selección una vez; conservar hasta CHANGE separado.
+Revisar al cierre M7 junto con BODY-001–005 y barreras accesibles adicionales.
+PERF-001: medir baseline/final; no hay objetivo de optimización aprobado.
+KD-002 requiere mapear las 21 regresiones textuales y pruebas funcionales por
+cada afirmación de interacción/visual; retirada solo mediante PATCH ratificada.
+
+UI-006-006: búsqueda del nodo de Métricas antes del siguiente render de filtro;
+retorno temprano si falta, observado por lectura. FR-008 lo caracteriza; revisión
+M7 sin corrección implícita. FR-023 incorpora descarte general de avisos y
+deshacer a siete días, distinto del aviso de ritmo 004.
+
+## Alcance 006 aprobado — 2026-10-19
+
+21 AS-IS, dos CHANGE y 23 escenarios aprobados junto con C-001/002/003.
+Se prepara el plan técnico; implementación, publicación y despliegue pendientes.
