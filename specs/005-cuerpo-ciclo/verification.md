@@ -136,3 +136,10 @@ git diff --check correcto. Sin cambios de runtime tras el checkpoint final.
 El propietario autorizó publicación, fusiones con CI verde y despliegue automático.
 PR documental: https://github.com/Ori-G-A/FitTrack/pull/11, snapshot e949c08.
 Se integra antes de publicar el PR de código; resultados remotos pendientes.
+
+## PR documental integrado — 2026-10-19
+
+PR #11 integrado con head e949c08c0e65d7081894ca563bc52a0223ae1fac y ambos
+jobs de CI 39364246304 aprobados. Merge documental:
+73e02a1fd6121fd2c7ce7ca7bb9f0baf31e24439. No modifica src respecto de 004.
+El PR de código conserva el árbol src validado localmente; CI remoto pendiente.

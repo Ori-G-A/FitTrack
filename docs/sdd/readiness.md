@@ -140,3 +140,11 @@ E0 sobre original: 284 Node, 13 Chromium, build y 40/40 IDs completos. 28 archiv
 nuevos congelados y 40 anteriores intactos. [Evidencia](../../specs/005-cuerpo-ciclo/evidence/baseline.json).
 Regla LF versionada para reproducir anclas congeladas en Windows/Linux; no hay
 cambio de contenido src. Implementación y RLS fresco de cierre pendientes.
+
+## Cierre local 005 y publicación autorizada — 2026-10-19
+
+286 pruebas Node, 13 Chromium y tres RLS con limpieza; build aprobado.
+Los cinco contratos suman 136 IDs completos sobre el mismo src; 68 pins intactos.
+[Evidencia final](../../specs/005-cuerpo-ciclo/evidence/final.json).
+El propietario autorizó publicar e integrar con CI verde y desplegar automáticamente.
+PR documental #11 publicado; confirmación remota de cierre pendiente.

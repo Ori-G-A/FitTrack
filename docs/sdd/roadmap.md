@@ -335,3 +335,10 @@ existentes, sin CHANGE. UI-005-001 se mantiene para006; KD-002 sigue global.
 ENV-005-002 resuelto con LF; Docker recuperado por CLI y RLS fresco3/3 con
 fixture retirado. [PRs preparados](../../specs/005-cuerpo-ciclo/code-pr.md).
 No se declara M6 integrado hasta aceptación/publicación/CI remoto/fusión.
+
+## Integración 005 en curso — 2026-10-19
+
+Publicación, fusiones con CI verde y despliegue automático autorizados expresamente.
+[PR documental #11](https://github.com/Ori-G-A/FitTrack/pull/11) publicado desde
+la revisión aprobada e949c08. Después se publica el PR de código con el cierre local.
+M6 integrado se declarará únicamente tras verificar CI y fusión del código.
