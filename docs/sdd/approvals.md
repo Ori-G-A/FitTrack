@@ -334,3 +334,19 @@ El propietario respondió «Aprobar plan, tareas y revisión; autorizar ejecuci�
 local E0–E6» a la solicitud explícita sobre plan/tasks/analyze y ejecución local
 antes de integrar el PR documental. Se autoriza E0 y las entregas posteriores
 solo tras G-PIN. No autoriza publicar, fusionar ni desplegar 006.
+
+## Solicitud de CHANGE de resaltado — 2026-10-20
+
+El propietario eligió «Proponer un CHANGE separado para corregir el resaltado»
+ante la discrepancia FR-008 detectada en E0. Se preparó FR-024/US1-AS9, precisión
+propuesta de FR-008 y extensión T040–T043. La respuesta autoriza preparar la
+propuesta; alcance y extensión técnica siguen pendientes de aprobación expresa.
+Las 39 tareas ya aprobadas conservan su autorización dentro de sus puertas.
+
+## Alcance adicional FR-024 aprobado — 2026-10-20
+
+El propietario respondió «Aprobar alcance FR-024 y precisión de FR-008» a la
+primera pregunta explícita de la adenda. Quedan aprobados FR-024/US1-AS9 y la
+referencia de duración/limpieza desde FR-008, sin corregir tarjeta ausente.
+El alcance vigente suma 48 IDs. La segunda pregunta sobre T040–T043 y ejecución
+sigue pendiente; no se interpreta aprobación de alcance como aprobación técnica.

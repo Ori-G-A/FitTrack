@@ -1,6 +1,6 @@
 {
   "spec": "006-interfaz",
-  "note": "Alcance aprobado; plan propuesto:46 IDs pending,21 grupos AS-IS y cinco pruebas CHANGE rojas previstas; ningún test nuevo ejecutado.",
+  "note": "Alcance ampliado aprobado:48 IDs (21 AS-IS,3 CHANGE y24 escenarios). E0 parcial; extensión T040–T043 y ejecución pendientes de segunda aprobación. No G-PIN ni src modificado.",
   "requirements": [
     {
       "id": "FR-001",
@@ -554,6 +554,30 @@
       ],
       "plannedTaskIds": [
         "T025"
+      ]
+    },
+    {
+      "id": "FR-024",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
+      "plannedTaskIds": [
+        "T041"
+      ]
+    },
+    {
+      "id": "US1-AS9",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
+      "plannedTaskIds": [
+        "T041"
       ]
     }
   ]

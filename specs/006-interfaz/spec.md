@@ -1,6 +1,6 @@
 # Spec 006: Interfaz y accesibilidad
 
-Estado: ALCANCE Y CAMBIOS APROBADOS; plan e implementación pendientes | Propietario: propietario de FitTrack | Fecha: 2026-10-19
+Estado: ALCANCE Y CAMBIOS APROBADOS; plan original aprobado, extensión T040–T043 pendiente | Propietario: propietario de FitTrack | Fecha: 2026-10-19
 Constitución: [1.0.2 ratificada](../../.specify/memory/constitution.md).
 BASE: 86299a4497e3c19180c30a640598a1358d61cc8f.
 [Survey](../../docs/sdd/interfaz-survey.md), [checklist](checklist.md).
@@ -35,7 +35,8 @@ Como usuario, quiero abrir la pantalla y fecha que elegí para registrar y consu
 - US1-AS5: Dados los alias de Cuerpo, cuando se cambie de destino o sección, entonces se mostrarán las secciones y fechas actuales sin ampliar las reglas de visibilidad de ciclo.
 - US1-AS6: Dadas entradas de varios tipos y fechas, cuando se busque, se oculte un tipo y se limpie el texto, entonces resultados, límites, vacíos y filtros coincidirán con el original.
 - US1-AS7: Dado un día distinto de hoy con sesión, comida y medidas, cuando se activen filas y huecos del Plan, entonces cada editor recibirá la fecha seleccionada y su destino actual.
-- US1-AS8: Dadas una tarjeta ya montada, otra oculta por filtro y un ID inexistente, cuando se solicite cada una, entonces se seleccionará all y se conservarán por separado resaltado/consumo o retorno temprano, sin prometer desplazamiento de una tarjeta ausente en el efecto inicial.
+- US1-AS8: Dadas una tarjeta ya montada, otra oculta por filtro y un ID inexistente, cuando se solicite cada una, entonces se seleccionará all y se conservarán por separado activación/consumo o retorno temprano, sin prometer desplazamiento de una tarjeta ausente en el efecto inicial; FR-024 rige el plazo del resaltado.
+- US1-AS9: Dada una tarjeta montada abierta desde App, cuando se consuma focusCard y avance el reloj, entonces seguirá resaltada antes de 2200 ms y dejará de estarlo al cumplirse el plazo; una segunda petición sustituirá el resaltado anterior y salir de Métricas limpiará sus efectos.
 
 ### US2 — Entender estado y apariencia (prioridad P1)
 
@@ -76,7 +77,7 @@ Como usuario de teclado o tecnología de asistencia, quiero reconocer los campos
 - FR-005 [AS-IS] Cuando se navegue a cuerpo, peso, medidas, nota o checkin, el sistema deberá conservar BodyScreen con key por tab, su sección inicial y la fecha enfocada; las secciones visibles seguirán las condiciones del dominio 005.
 - FR-006 [AS-IS] Cuando se busque en Diario, el sistema deberá conservar trim/minúsculas, mínimo de dos caracteres, límite de 40 resultados y 460 fechas distintas como máximo, orden reciente, metadatos de coincidencia y filtros por tipo aplicados a la lista resultante; limpiar la búsqueda conservará los filtros.
 - FR-007 [AS-IS] Cuando se consulte un día del Plan, el sistema deberá presentar sus registros y huecos disponibles y abrir cada editor en selected.iso; la navegación a rutinas conservará el destino actual.
-- FR-008 [AS-IS] Cuando se reciba focusCard en Métricas, el sistema deberá seleccionar all y buscar el nodo en ese mismo efecto; si ya existe, desplazará a su ancla, aplicará resaltado de 2200 ms y consumirá la petición con la limpieza actual. Si no existe aún, conservará el retorno temprano sin resaltado ni consumo; no garantizará un reintento al aparecer después del cambio de filtro.
+- FR-008 [AS-IS] Cuando se reciba focusCard en Métricas, el sistema deberá seleccionar all y buscar el nodo en ese mismo efecto; si ya existe, desplazará a su ancla, activará el resaltado y consumirá la petición. Su duración y limpieza se rigen por FR-024. Si no existe aún, conservará el retorno temprano sin resaltado ni consumo; no garantizará un reintento al aparecer después del cambio de filtro.
 - FR-009 [AS-IS] Cuando se lea o cambie la preferencia de tema, el sistema deberá conservar ft-theme, los valores dark/light/auto, dark por defecto o lectura inválida/bloqueada, y la escritura tolerante a fallos de almacenamiento.
 - FR-010 [AS-IS] Mientras se use auto, el sistema deberá reaccionar a cambios de prefers-color-scheme y retirar su listener al desmontar; dark/light explícitos prevalecerán. El tema se aplicará a html y ft-root; antes de React se conservarán el fondo y la interpretación actual del script, incluida la diferencia ante valores inválidos.
 - FR-011 [AS-IS] Cuando se emita una confirmación toast no vacía con el suscriptor montado, el sistema deberá mostrar la más reciente como status/polite durante 2600 ms por defecto, reiniciar el plazo al reemplazarla y limpiar temporizadores y suscripción; no encolará ni repetirá emisiones anteriores al montaje.
@@ -88,10 +89,12 @@ Como usuario de teclado o tecnología de asistencia, quiero reconocer los campos
 - FR-017 [AS-IS] Cuando se recorran Biblioteca, Nutrición o Cuerpo, el sistema deberá conservar lista/ficha, pantallas día/búsqueda/cantidad y una sección de cuerpo por vez, con sus acciones de salida; seguirán vigentes validaciones, registros y formatos de 003–005.
 - FR-018 [AS-IS] Cuando se rendericen componentes editoriales y movimiento, el sistema deberá conservar etiquetas/fechas, sparkline decorativo, reveal, breakpoint 640 de KpiStrip, limpieza de efectos y las excepciones actuales de reduced-motion para toast/resaltado; no convertirá estas excepciones en una garantía global.
 - FR-019 [AS-IS] Cuando se utilicen ambos previews, el sistema deberá conservar sus destinos admitidos, secciones y fecha donde ya se transmite; conservará las diferencias explícitas de tema y estado sintético frente a App, sin conectarlos al backend real.
-- FR-020 [AS-IS] Cuando se reorganicen responsabilidades de interfaz, el sistema deberá conservar las firmas públicas y resultados de los contratos 001–005, el orden CSS observado, los destinos compartidos y los pins congelados, salvo el cambio de interacción expresamente descrito en FR-021/022.
+- FR-020 [AS-IS] Cuando se reorganicen responsabilidades de interfaz, el sistema deberá conservar las firmas públicas y resultados de los contratos 001–005, el orden CSS observado, los destinos compartidos y los pins congelados, salvo el cambio de interacción expresamente descrito en FR-021/022/024.
 - FR-021 [CHANGE] Cuando se abran Registrar o DetailSheet, el sistema deberá exponer un diálogo modal con nombre accesible y mover el foco a un control interior; Tab/Shift+Tab permanecerán dentro, Escape cerrará y el cierre por cancelación restaurará el disparador si sigue conectado y visible. Si no hay control interior se enfocará el contenedor; al elegir una ruta se conservará la navegación y no se intentará enfocar un disparador desmontado.
 - FR-022 [CHANGE] Cuando se presenten los controles de peso, correo y contraseña, el sistema deberá asociar de forma inequívoca sus nombres accesibles Peso en kg, Correo electrónico y Contraseña con el input correspondiente, sin incluir los botones adyacentes en la etiqueta ni modificar tipo, conversión, validación, fecha, envío o persistencia.
 - FR-023 [AS-IS] Cuando se descarte un aviso general del Diario, el sistema deberá conservar goals.dismissedAlerts por clave y fecha local, ocultarlo hasta que la fecha guardada más siete días sea menor o igual a hoy, y ofrecer deshacer el último descarte borrando esa clave sin perder las demás; no modificará la fórmula ni la clave que produce el dominio.
+
+- FR-024 [CHANGE] Cuando una petición encuentre una tarjeta montada y active su resaltado en Métricas, el sistema deberá mantenerlo durante 2200 ms desde esa activación y retirarlo después, aunque App consuma focusCard o se produzcan renders que no sean otra petición. Si otra petición válida activa una tarjeta antes de vencer, deberá retirar el resaltado anterior y comenzar un plazo de 2200 ms para la nueva. Al desmontar Métricas deberá cancelar los temporizadores y retirar las clases que administra, sin volver a actuar sobre nodos desmontados.
 
 ## Evidencia AS-IS y situación CHANGE
 
@@ -129,12 +132,14 @@ Para FR-021/022 el plan exigirá pruebas que fallen en BASE por el motivo
 específico antes de cambiar src y pasen después. La exploración no cumple
 esa puerta. Para los AS-IS los pins deberán pasar antes de transformar.
 
+| FR-024 | src/DashboardScreen.jsx:432–441; src/FitTrack.jsx:811 | evidence/highlight-proposal-red.json; dos rojos observados, sin implementación |
+
 ## Criterios medibles de aceptación
 
-- SC-001: 23 FR y 23 escenarios (46 IDs) completos, sin partial/pending y con nombres de pruebas descubiertos; revisión de aserciones por ID.
+- SC-001: 24 FR y 24 escenarios (48 IDs) completos, sin partial/pending y con nombres de pruebas descubiertos; revisión de aserciones por ID.
 - SC-002: Caracterización del original antes de src y controles negativos que demuestren detectar pérdida de fecha, tema, cierre/foco y asociación de campos; el plan definirá mutaciones y checkpoint.
 - SC-003: Chromium sobre App real con servicios sintéticos: navegación a 390/720/721/1280 px; geometría también en 420/959/960 px. Red externa bloqueada; fechas y datos deterministas. Un fallo existente se registra, no se convierte en un CHANGE implícito.
-- SC-004: FR-021/022 rojos sobre BASE y verdes después, con teclado real de Chromium, nombres accesibles exactos y limpieza al desmontar; regresiones de clic y de guardado intactas.
+- SC-004: FR-021/022/024 rojos sobre BASE y verdes después, con teclado real de Chromium, nombres accesibles exactos y limpieza al desmontar; regresiones de clic y de guardado intactas.
 - SC-005: Seis manifiestos completos sobre el mismo src/resultados, suite Node, Chromium, build, límites de arquitectura y RLS real fresco con retirada del entorno local desechable. No backend real. Si cambian dependencias, auditoría; sin actualización preventiva.
 - SC-006: Los 21 casos de ui-regressions.test.js inventariados individualmente con dueño, FR/escenario y prueba funcional equivalente para cada afirmación de interacción/visual. Una inspección textual sola no cierra esa afirmación. Proponer retirada KD-002 solo después de revisar las brechas y con PATCH separado ratificado.
 - SC-007: Medir bundles minificados/gzip del build original y final bajo el mismo entorno; explicar variaciones. No inventar presupuesto de rendimiento ni afirmar mejora sin objetivo y medición aprobados.
@@ -216,6 +221,8 @@ es deliberado en esta propuesta. La tabla no presenta pruebas futuras como ejecu
 | US4-AS2 | US4 | Usar los controles delimitados con teclado | change-tests/interface-accessibility.spec.js :: interfaz cambio campo Peso en kg; change-tests/interface-accessibility.spec.js :: interfaz cambio campo Correo electrónico; change-tests/interface-accessibility.spec.js :: interfaz cambio campo Contraseña | T024 | PENDING; CHANGE, pruebas previstas |
 | FR-023 | US2 | Entender estado y apariencia | test/interface-dismiss.test.js :: interfaz conserva descarte general siete dias y deshacer; browser-tests/interface.spec.js :: interfaz navegador diario busqueda y descartes | T025 | PENDING; AS-IS, pruebas previstas |
 | US2-AS6 | US2 | Entender estado y apariencia | test/interface-dismiss.test.js :: interfaz conserva descarte general siete dias y deshacer; browser-tests/interface.spec.js :: interfaz navegador diario busqueda y descartes | T025 | PENDING; AS-IS, pruebas previstas |
+| FR-024 | US1 | Resaltado temporal y limpieza | change-tests/interface-highlight.spec.js :: interfaz cambio resaltado temporal tras consumo de focusCard; change-tests/interface-highlight.spec.js :: interfaz cambio resaltado reemplazo y desmontaje | T041 (extensión pendiente de aprobación) | PENDING; CHANGE, rojo observado; sin implementación |
+| US1-AS9 | US1 | Resaltado temporal y limpieza | change-tests/interface-highlight.spec.js :: interfaz cambio resaltado temporal tras consumo de focusCard; change-tests/interface-highlight.spec.js :: interfaz cambio resaltado reemplazo y desmontaje | T041 (extensión pendiente de aprobación) | PENDING; CHANGE, rojo observado; sin implementación |
 
 ## Aprobación
 
@@ -223,3 +230,9 @@ es deliberado en esta propuesta. La tabla no presenta pruebas futuras como ejecu
 aclaraciones» a la solicitud explícita de aprobar esta spec y C-001/002/003.
 Quedan aprobados 21 AS-IS, dos CHANGE y 23 escenarios. Se autoriza preparar
 plan/tareas/analyze; su aprobación y la ejecución local son puertas separadas.
+
+
+2026-10-20: el propietario aprobó explícitamente FR-024/US1-AS9 y la precisión
+de FR-008. Total vigente: 21 AS-IS, tres CHANGE y 24 escenarios (48 IDs).
+T040–T043 y su ejecución permanecen pendientes de aprobación separada;
+no se extiende autorización a publicación, fusión ni despliegue.
