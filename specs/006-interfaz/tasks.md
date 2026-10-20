@@ -37,7 +37,7 @@ Adaptación de [plantilla local](../../.specify/templates/tasks-template.md).
 | T029 | US1/US3; FR-001/002/003/004/005/007/019/020; US1-AS1/2/3/4/5/7, US3-AS6/7 | E1: extraer configuración pura de navegación y adaptar callers; conservar estados, alias, key por tab y orden de setters. Introducir prueba de capa/negativos y ejecutar checkpoint completo. | T028 | Completada (E1; registro inferior) |
 | T030 | US2/US3; FR-009/010/012/019/020; US2-AS1/2/4, US3-AS6/7 | E2: separar ui-theme/use-app-theme y mantener fachada app-utils. Listener/persistencia/primer render conservados; negativos de dependencias y checkpoint completo. | T029 | Completada (E2; registro inferior) |
 | T031 | US1/US2/US3; FR-001/002/004/011/012/013/014/015/016/017/018/019/020; escenarios correspondientes | E3: extraer CSS íntegro y presentación AppNavigation con dependencias inyectadas; conservar CSS/Train exports, anclas y geometría. Adaptar solo pruebas no congeladas de ubicación con mismo contrato original; checkpoint completo. | T030 | Completada (E3; registro inferior) |
-| T032 | US1/US2/US4; FR-002/003/013/021; US1-AS2/3, US2-AS5, US4-AS1 | E4: implementar ModalSheet y usarlo en Registrar/DetailSheet solo tras los dos rojos; probar foco/teclado/cleanup/cancelación/navegación. Actualizar solo FR-021 y US4-AS1 a complete tras todas sus cláusulas verdes. Checkpoint completo. | T031, T023 | Pendiente |
+| T032 | US1/US2/US4; FR-002/003/013/021; US1-AS2/3, US2-AS5, US4-AS1 | E4: implementar ModalSheet y usarlo en Registrar/DetailSheet solo tras los dos rojos; probar foco/teclado/cleanup/cancelación/navegación. Actualizar solo FR-021 y US4-AS1 a complete tras todas sus cláusulas verdes. Checkpoint completo. | T031, T023 | Completada (E4; registro inferior) |
 | T033 | US2/US4; FR-012/022; US2-AS4, US4-AS2 | E5: asociar solo peso/correo/contraseña tras sus tres rojos; preservar validación/submit/guardado y pasar regresiones 002/005. Completar FR-022/US4-AS2 y checkpoint completo. | T032, T024 | Pendiente |
 | T034 | US1/US2/US3/US4; FR-020 y todos los consumidores | E6: cerrar límites transitivos/exports y sus fixtures negativos, comprobar ausencia de ciclos e import de dominio/backend en shell/modal. Registrar hash final del guard, sin reescribir pins E0. | T033, T042 | Pendiente |
 | T035 | US1/US2/US3/US4; todos los FR/escenarios | Incluir suite CHANGE verde en descubrimiento Playwright por proyectos sin duplicar existentes; extender CI con gate/artifacts006 y conservar jobs/gates previos. Probar verificador y cero skips/retries. | T034 | Pendiente |
@@ -107,3 +107,7 @@ T030: checkpoint completo aprobado: 312 Node,20 Chromium, build y101 pins verifi
 ## E3 completada — 2026-10-20
 
 T031: checkpoint completo aprobado: 313 Node,20 Chromium, build y101 pins verificados.42 AS-IS completos; seis CHANGE siguen pendientes. [Evidencia](evidence/e3.json). Sin cambios de datos, SQL o dependencias.
+
+## E4 completada — 2026-10-20
+
+T032: 313 pruebas Node,20 Chromium AS-IS y2 CHANGE verdes; build aprobado y101 pins intactos. Trazabilidad:44 IDs completos y4 pendientes. [Evidencia](evidence/e4.json). No se modificaron aserciones congeladas. RLS y cierre E6 siguen pendientes.

@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "stage": "e4",
+  "generatedAt": "2026-10-20T21:34:54.807Z",
+  "node": "v24.21.0",
+  "sourceHash": "d567a3533f2a5899d9f6e2c98f7653c1cafb4cd96b4f0fa30abc523a5be4e223",
+  "nodeTests": 313,
+  "nodePassed": 313,
+  "browser": {
+    "startTime": "2026-10-20T21:33:32.844Z",
+    "duration": 62305.35,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "change": {
+    "startTime": "2026-10-20T21:34:36.302Z",
+    "duration": 9276.800000000001,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "counts": {
+    "pending": 4,
+    "partial": 0,
+    "complete": 44
+  },
+  "build": {
+    "passed": true,
+    "output": [
+      "dist/assets/LineChart-BmioC4d4.js          393.31 kB │ gzip: 107.99 kB",
+      "dist/assets/index-Dr3BdDWR.js              506.43 kB │ gzip: 147.05 kB",
+      "✓ built in 7.75s"
+    ]
+  },
+  "pinsVerified": 101,
+  "reviewRevision": "40d882ce6c6030b1ecd23164261bcfd4c50b8e5a",
+  "command": "pnpm exec node scripts/run-interface-checkpoint.js e4",
+  "limits": [
+    "RLS fresco y cierre de seis contratos pendientes de E6",
+    "Sin publicación, fusión o despliegue006"
+  ]
+}

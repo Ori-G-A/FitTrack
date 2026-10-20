@@ -1,3 +1,4 @@
+import ModalSheet from "./ModalSheet.jsx";
 import { CSS } from "./app-styles.js";
 import { SideNavigation, BottomNavigation } from "./AppNavigation.jsx";
 import { useAppTheme } from "./use-app-theme.js";
@@ -371,16 +372,16 @@ export default function App() {
           <Toast />
 
           {sheet && (
-            <div className="ft-sheet" onClick={() => setSheet(null)}>
-              <div className="ft-sheet-panel" onClick={(e) => e.stopPropagation()}>
+            <ModalSheet title="Registrar" onClose={() => setSheet(null)}>
+              {({ closeForNavigation }) => <>
                 <h3>Registrar<button onClick={() => setSheet(null)} aria-label="Cerrar"><X size={18} /></button></h3>
                 {ADD_ROWS.map(({ id, label, sub, icon: Ic }) => (
-                  <button key={id} className="ft-sheet-row" onClick={() => { goTo(id); setSheet(null); }}>
+                  <button key={id} className="ft-sheet-row" onClick={() => { goTo(id); closeForNavigation(); }}>
                     <Ic size={17} />{label}<span className="sub">{sub}</span>
                   </button>
                 ))}
-              </div>
-            </div>
+              </>}
+            </ModalSheet>
           )}
         </div>
       )}

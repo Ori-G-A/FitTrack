@@ -45,7 +45,7 @@ test('interfaz tema aislado y negativos de dependencias',async()=>{
 
 async function shellGraph(contents) {
  const result=await build({stdin:{contents,resolveDir:resolve('.'),sourcefile:'interface-shell-fixture.js'},bundle:true,write:false,metafile:true,format:'esm',platform:'browser',define:{'import.meta.env':'{}'},logLevel:'silent'});
- const allowed=new Set(['src/AppNavigation.jsx','src/app-navigation.js','src/app-styles.js']);
+ const allowed=new Set(['src/AppNavigation.jsx','src/app-navigation.js','src/app-styles.js','src/ModalSheet.jsx']);
  for(const file of Object.keys(result.metafile.inputs)){
   if(file.startsWith('src/'))assert(allowed.has(file),'dependencia ajena al shell '+file);
   if(file.includes('node_modules'))assert.match(file,/node_modules\/(?:\.pnpm\/[^/]+\/node_modules\/)?(?:react|lucide-react)\//,'servicio externo al shell '+file);
@@ -56,6 +56,6 @@ async function shellGraph(contents) {
 }
 
 test('interfaz shell presenta sin dominio ni servicios y sin ciclos',async()=>{
- await shellGraph('export * from "./src/AppNavigation.jsx"; export * from "./src/app-styles.js";');
+ await shellGraph('export * from "./src/AppNavigation.jsx"; export * from "./src/app-styles.js"; export { default as ModalSheet } from "./src/ModalSheet.jsx";');
  for(const source of ['export * from "./src/app-utils.js";','export * from "./src/supabase.js";','export * from "./src/body-metrics.js";','export * from "./src/data-sync.js";'])await assert.rejects(()=>shellGraph(source),{name:'AssertionError'});
 });

@@ -1,6 +1,6 @@
 {
   "spec": "006-interfaz",
-  "note": "G-PIN original verificado:42 IDs AS-IS completos y seis CHANGE pendientes; baseline congela pruebas, fixtures y oráculos antes de modificar src.",
+  "note": "Checkpoint e4 completo: 44 IDs completos y 4 pendientes; E6 conserva las puertas de cierre y RLS.",
   "requirements": [
     {
       "id": "FR-001",
@@ -614,8 +614,11 @@
     },
     {
       "id": "FR-021",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio Registrar teclado y foco",
+        "interfaz cambio DetailSheet teclado y foco"
+      ],
       "plannedTests": [
         "interfaz cambio Registrar teclado y foco",
         "interfaz cambio DetailSheet teclado y foco"
@@ -626,8 +629,11 @@
     },
     {
       "id": "US4-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio Registrar teclado y foco",
+        "interfaz cambio DetailSheet teclado y foco"
+      ],
       "plannedTests": [
         "interfaz cambio Registrar teclado y foco",
         "interfaz cambio DetailSheet teclado y foco"

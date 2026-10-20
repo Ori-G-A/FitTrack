@@ -37,3 +37,14 @@ localStorage. Se conserva API, valores válidos, dark por defecto y tratamiento
 de fallos; el validador queda independiente del navegador. No introduce otra
 regla de producto ni requiere una nueva decisión de alcance. El checkpoint E2
 se repite completo después del ajuste; su evidencia se registra al concluir.
+
+## R-014 — Checkpoint incremental de CHANGE (E4–E5b)
+
+scripts/run-interface-checkpoint.js ejecuta la suite Node completa, los20
+recorridos AS-IS, los CHANGE ya implementados y build; reutiliza verifyTrace.
+E4 selecciona dos casos de teclado/foco; E5 añade tres campos; E5b incorpora
+los dos casos de resaltado. Conserva la configuración congelada de los rojos.
+Actualiza únicamente sus IDs después de aprobar todo el checkpoint y publica
+resultados/sourceHash conjuntos. Un intento invalida primero su reporte para
+evitar presentar resultados antiguos como éxito. La ejecución ordinaria y CI
+incorporarán los siete CHANGE una sola vez en E6, según el plan aprobado.
