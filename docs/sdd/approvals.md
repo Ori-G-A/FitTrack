@@ -289,3 +289,15 @@ publicar los PRs documental y de código, integrarlos con CI verde y permitir
 el despliegue automático de Vercel. Se autoriza ejecutar esas acciones en ese
 orden; los resultados remotos se registrarán al comprobarlos. La autorización
 no cambia el contrato ni equivale a una prueba funcional con datos reales.
+
+## Integración 005 comprobada y comienzo de diagnóstico 006 — 2026-10-19
+
+Autorización ejecutada en orden: PR documental #11 (e949c08, CI 39364246304)
+y PR de código #12 (ce7e123, CI 39364579779), ambos con los dos jobs aprobados.
+Merge documental 73e02a1; merge de código 86299a4497e3c19180c30a640598a1358d61cc8f.
+CI de main 39364536428/39365039074 verde y Production 7190788024/7190866939
+exitoso sobre sus respectivos merges. Árbol src idéntico al validado localmente.
+[Evidencia](../../specs/005-cuerpo-ciclo/evidence/integration.json).
+HTTP 200 muestra Login de Vercel; no hay prueba funcional autenticada.
+El posterior «continua» autoriza preparar diagnóstico y propuesta 006; no aprueba
+anticipadamente alcance, cambios, plan, implementación ni despliegue de esa área.

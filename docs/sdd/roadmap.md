@@ -1,13 +1,14 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-19: 001/002/003/004 integradas; PATCH 1.0.2 ratificada.
-M5 integrado mediante [PR #10](https://github.com/Ori-G-A/FitTrack/pull/10),
-con CI del PR/main y Vercel Production aprobados sobre 02ab519.
-005 está implementada y verificada localmente: 286 Node, 13 Chromium, 3 RLS
-con limpieza y build; cinco contratos completos, 136 IDs y 68 pins intactos.
+Estado actual, 2026-10-19: 001–005 integradas; PATCH 1.0.2 ratificada.
+M6 integrado mediante [PR #11](https://github.com/Ori-G-A/FitTrack/pull/11) y
+[PR #12](https://github.com/Ori-G-A/FitTrack/pull/12), con CI de PR/main y
+Vercel Production aprobados sobre 86299a4. 005 conserva 286 Node, 13 Chromium,
+3 RLS con limpieza y build; cinco contratos completos, 136 IDs y 68 pins intactos.
 [Converge 005](../../specs/005-cuerpo-ciclo/converge.md),
 [evidencia final](../../specs/005-cuerpo-ciclo/evidence/final.json).
-Aceptación, publicación, integración y despliegue005 pendientes del propietario.
+[Evidencia remota](../../specs/005-cuerpo-ciclo/evidence/integration.json).
+Sin prueba funcional autenticada en producción. KD-002 sigue para 006.
 Los registros siguientes conservan el historial.
 
 

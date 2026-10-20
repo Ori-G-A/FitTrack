@@ -148,3 +148,9 @@ Los cinco contratos suman 136 IDs completos sobre el mismo src; 68 pins intactos
 [Evidencia final](../../specs/005-cuerpo-ciclo/evidence/final.json).
 El propietario autorizó publicar e integrar con CI verde y desplegar automáticamente.
 PR documental #11 publicado; confirmación remota de cierre pendiente.
+
+## Integración 005 comprobada — 2026-10-19
+
+PRs #11/#12 y CI de PR/main aprobados; Production exitoso en 86299a4.
+[Evidencia](../../specs/005-cuerpo-ciclo/evidence/integration.json).
+Árbol src idéntico al cierre local. Sin prueba funcional autenticada real.

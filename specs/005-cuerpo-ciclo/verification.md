@@ -143,3 +143,11 @@ PR #11 integrado con head e949c08c0e65d7081894ca563bc52a0223ae1fac y ambos
 jobs de CI 39364246304 aprobados. Merge documental:
 73e02a1fd6121fd2c7ce7ca7bb9f0baf31e24439. No modifica src respecto de 004.
 El PR de código conserva el árbol src validado localmente; CI remoto pendiente.
+
+## Integración remota comprobada — 2026-10-19
+
+PRs #11/#12 fusionados en orden y con CI verde. Código en 86299a4; CI de main
+39365039074 aprobado en ambos jobs. Vercel Production 7190866939 exitoso sobre
+ese mismo SHA. [Evidencia remota](evidence/integration.json). Árbol src conservado;
+main local sincronizado. HTTP 200 de la URL individual devuelve acceso de Vercel,
+sin prueba funcional autenticada. La autorización no constituye validación clínica.
