@@ -2,6 +2,12 @@
 
 Estado: listo para revisión local; sin publicar.
 
+Actualización de gobierno — 2026-10-20: publicación, integración con CI remoto
+verde y despliegue automático de Vercel autorizados expresamente. El PR
+documental [#13](https://github.com/Ori-G-A/FitTrack/pull/13) ya está abierto;
+este PR de código se publicará después de integrarlo. La evidencia local se
+conserva y los resultados remotos se registrarán por separado.
+
 Título: Separar shell de interfaz y corregir foco, etiquetas y resaltado
 
 FitTrack concentraba navegación, CSS y tema en su composición. Registrar y DetailSheet tenían recorridos de teclado incompletos, tres campos carecían de asociación accesible y el resaltado de Métricas persistía al consumirse focusCard. La implementación separa esas responsabilidades y aplica los tres CHANGE aprobados, con un temporizador de 2200 ms independiente de la petición.

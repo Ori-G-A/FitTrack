@@ -1,5 +1,12 @@
 # PR documental preparado — 006
 
+Estado vigente — 2026-10-20: publicado como
+[#13](https://github.com/Ori-G-A/FitTrack/pull/13), desde codex/006-interfaz-docs
+en 3d542bc. Alcance y plan completos aprobados: 21 AS-IS, tres CHANGE,
+24 escenarios y 43 tareas. Publicación, integración con CI verde y Vercel
+autorizados expresamente. Los apartados originales siguientes conservan el
+historial de preparación; sus decisiones pendientes ya fueron resueltas.
+
 Estado: alcance aprobado; plan/tareas/analyze propuestos y pendientes.
 Rama: codex/006-interfaz. Base: main, 86299a4. No hay PR remoto creado.
 
