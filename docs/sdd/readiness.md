@@ -161,3 +161,27 @@ Alcance y dos cambios aprobados; plan/tasks/analyze propuestos. 46 IDs pending,
 33 nombres únicos de pruebas previstas, 39 tareas con dependencias verificadas.
 [Verificación de propuesta](../../specs/006-interfaz/verification.md).
 Sin cambios de producto ni ejecución contractual, instalación o auditoría nueva.
+
+## E0 006 en ejecución — 2026-10-20
+
+Plan/E0–E6 local autorizado, snapshot documental e06f105 conservado sin publicar.
+E0: 21 grupos Node verdes; suite inicial 307/307, build y cuatro controles de
+mutación aprobados; cinco rojos de accesibilidad válidos. Chromium 6/7: diferencia
+de resaltado en App. El propietario pidió proponer CHANGE separado.
+[FR-024 propuesto](../../specs/006-interfaz/change-card-highlight.md), cuatro tareas
+adicionales y dos rojos específicos; alcance/plan de esa extensión pendientes.
+G-PIN no superado; src intacto. Sin publicación, integración ni despliegue006.
+
+Actualización E0 — 2026-10-20: repetición completa Node 309/309 y build verdes;
+Chromium 20/20 sin skips/retries y 68 pins anteriores intactos. Se conserva el
+fallo previo de debounce y su repetición íntegra sin editar la aserción.
+[Avance parcial](../../specs/006-interfaz/evidence/e0-partial.json).
+48 IDs aún pending, G-PIN no superado y extensión T040–T043 pendiente de aprobación.
+
+## Estado vigente — 2026-10-20
+
+G-PIN006 superado:309 Node y20 Chromium aprobados; siete CHANGE rojos específicos, build verde,33 pins nuevos y68 anteriores intactos.42 IDs AS-IS completos y seis CHANGE pendientes. Plan completo43 tareas aprobado; ejecución local E1–E6 habilitada. [Baseline](../../specs/006-interfaz/evidence/baseline.json). RLS fresco pendiente del cierre E6.
+
+## Cierre local006 — 2026-10-20
+
+E0–E6 completas:314 Node/27 Chromium,184 IDs en seis contratos, RLS real fresco con cleanup y tres negativos postverde detectados.68 pins anteriores intactos;33 firmas006 con enmienda técnica PIN-006-001. [Evidencia](../../specs/006-interfaz/evidence/final.json) y [PR preparado](../../specs/006-interfaz/code-pr.md). Publicación/CI remoto/integración/Vercel pendientes de autorización específica. KD-002 sigue activa hasta ratificación propia.

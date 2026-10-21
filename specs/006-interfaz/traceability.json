@@ -1,11 +1,14 @@
 {
   "spec": "006-interfaz",
-  "note": "Alcance ampliado aprobado:48 IDs (21 AS-IS,3 CHANGE y24 escenarios). E0 parcial; extensión T040–T043 y ejecución pendientes de segunda aprobación. No G-PIN ni src modificado.",
+  "note": "Checkpoint e5b completo: 48 IDs completos y 0 pendientes; E6 conserva las puertas de cierre y RLS.",
   "requirements": [
     {
       "id": "FR-001",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva raices activas y entradas de shell",
+        "interfaz navegador raices registrar y fechas"
+      ],
       "plannedTests": [
         "interfaz conserva raices activas y entradas de shell",
         "interfaz navegador raices registrar y fechas"
@@ -16,8 +19,11 @@
     },
     {
       "id": "US1-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva raices activas y entradas de shell",
+        "interfaz navegador raices registrar y fechas"
+      ],
       "plannedTests": [
         "interfaz conserva raices activas y entradas de shell",
         "interfaz navegador raices registrar y fechas"
@@ -28,8 +34,11 @@
     },
     {
       "id": "FR-002",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva destinos de registrar segun ciclo",
+        "interfaz navegador raices registrar y fechas"
+      ],
       "plannedTests": [
         "interfaz conserva destinos de registrar segun ciclo",
         "interfaz navegador raices registrar y fechas"
@@ -40,8 +49,11 @@
     },
     {
       "id": "US1-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva destinos de registrar segun ciclo",
+        "interfaz navegador raices registrar y fechas"
+      ],
       "plannedTests": [
         "interfaz conserva destinos de registrar segun ciclo",
         "interfaz navegador raices registrar y fechas"
@@ -52,8 +64,11 @@
     },
     {
       "id": "FR-003",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva fecha enfocada y tarjeta solicitada",
+        "interfaz navegador raices registrar y fechas"
+      ],
       "plannedTests": [
         "interfaz conserva fecha enfocada y tarjeta solicitada",
         "interfaz navegador raices registrar y fechas"
@@ -64,8 +79,11 @@
     },
     {
       "id": "US1-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva fecha enfocada y tarjeta solicitada",
+        "interfaz navegador raices registrar y fechas"
+      ],
       "plannedTests": [
         "interfaz conserva fecha enfocada y tarjeta solicitada",
         "interfaz navegador raices registrar y fechas"
@@ -76,8 +94,11 @@
     },
     {
       "id": "FR-004",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva alias de cuenta y seleccion local",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
       "plannedTests": [
         "interfaz conserva alias de cuenta y seleccion local",
         "interfaz navegador cuenta cuerpo y plan"
@@ -88,8 +109,11 @@
     },
     {
       "id": "US1-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva alias de cuenta y seleccion local",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
       "plannedTests": [
         "interfaz conserva alias de cuenta y seleccion local",
         "interfaz navegador cuenta cuerpo y plan"
@@ -100,8 +124,11 @@
     },
     {
       "id": "FR-005",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva alias seccion fecha y montaje de cuerpo",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
       "plannedTests": [
         "interfaz conserva alias seccion fecha y montaje de cuerpo",
         "interfaz navegador cuenta cuerpo y plan"
@@ -112,8 +139,11 @@
     },
     {
       "id": "US1-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva alias seccion fecha y montaje de cuerpo",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
       "plannedTests": [
         "interfaz conserva alias seccion fecha y montaje de cuerpo",
         "interfaz navegador cuenta cuerpo y plan"
@@ -124,8 +154,11 @@
     },
     {
       "id": "FR-006",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva busqueda filtros limites y vacios de diario",
+        "interfaz navegador diario busqueda y descartes"
+      ],
       "plannedTests": [
         "interfaz conserva busqueda filtros limites y vacios de diario",
         "interfaz navegador diario busqueda y descartes"
@@ -136,8 +169,11 @@
     },
     {
       "id": "US1-AS6",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva busqueda filtros limites y vacios de diario",
+        "interfaz navegador diario busqueda y descartes"
+      ],
       "plannedTests": [
         "interfaz conserva busqueda filtros limites y vacios de diario",
         "interfaz navegador diario busqueda y descartes"
@@ -148,8 +184,11 @@
     },
     {
       "id": "FR-007",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva destinos y fecha del dia del plan",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
       "plannedTests": [
         "interfaz conserva destinos y fecha del dia del plan",
         "interfaz navegador cuenta cuerpo y plan"
@@ -160,8 +199,11 @@
     },
     {
       "id": "US1-AS7",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva destinos y fecha del dia del plan",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
       "plannedTests": [
         "interfaz conserva destinos y fecha del dia del plan",
         "interfaz navegador cuenta cuerpo y plan"
@@ -172,8 +214,11 @@
     },
     {
       "id": "FR-008",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva filtro ancla resaltado y retorno temprano",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
       "plannedTests": [
         "interfaz conserva filtro ancla resaltado y retorno temprano",
         "interfaz navegador metricas tarjeta y desglose"
@@ -184,8 +229,11 @@
     },
     {
       "id": "US1-AS8",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva filtro ancla resaltado y retorno temprano",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
       "plannedTests": [
         "interfaz conserva filtro ancla resaltado y retorno temprano",
         "interfaz navegador metricas tarjeta y desglose"
@@ -196,8 +244,11 @@
     },
     {
       "id": "FR-009",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva preferencia y fallos de almacenamiento",
+        "interfaz navegador temas carga y errores"
+      ],
       "plannedTests": [
         "interfaz conserva preferencia y fallos de almacenamiento",
         "interfaz navegador temas carga y errores"
@@ -208,8 +259,11 @@
     },
     {
       "id": "US2-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva preferencia y fallos de almacenamiento",
+        "interfaz navegador temas carga y errores"
+      ],
       "plannedTests": [
         "interfaz conserva preferencia y fallos de almacenamiento",
         "interfaz navegador temas carga y errores"
@@ -220,8 +274,11 @@
     },
     {
       "id": "FR-010",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva tema de sistema primer render y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
       "plannedTests": [
         "interfaz conserva tema de sistema primer render y limpieza",
         "interfaz navegador temas carga y errores"
@@ -232,8 +289,11 @@
     },
     {
       "id": "US2-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva tema de sistema primer render y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
       "plannedTests": [
         "interfaz conserva tema de sistema primer render y limpieza",
         "interfaz navegador temas carga y errores"
@@ -244,8 +304,11 @@
     },
     {
       "id": "FR-011",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva toast ultimo mensaje plazo y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
       "plannedTests": [
         "interfaz conserva toast ultimo mensaje plazo y limpieza",
         "interfaz navegador temas carga y errores"
@@ -256,8 +319,11 @@
     },
     {
       "id": "US2-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva toast ultimo mensaje plazo y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
       "plannedTests": [
         "interfaz conserva toast ultimo mensaje plazo y limpieza",
         "interfaz navegador temas carga y errores"
@@ -268,8 +334,13 @@
     },
     {
       "id": "FR-012",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva cargas reintentos errores y estado de guardado",
+        "interfaz navegador temas carga y errores",
+        "SDD-E2E-001 cargar y guardar objetivo desde interfaz",
+        "SDD-E2E-003 fallo de guardado visible y dato remoto conservado"
+      ],
       "plannedTests": [
         "interfaz conserva cargas reintentos errores y estado de guardado",
         "interfaz navegador temas carga y errores"
@@ -280,8 +351,13 @@
     },
     {
       "id": "US2-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva cargas reintentos errores y estado de guardado",
+        "interfaz navegador temas carga y errores",
+        "SDD-E2E-001 cargar y guardar objetivo desde interfaz",
+        "SDD-E2E-003 fallo de guardado visible y dato remoto conservado"
+      ],
       "plannedTests": [
         "interfaz conserva cargas reintentos errores y estado de guardado",
         "interfaz navegador temas carga y errores"
@@ -292,8 +368,11 @@
     },
     {
       "id": "FR-013",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva contenido y cierres de desglose",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
       "plannedTests": [
         "interfaz conserva contenido y cierres de desglose",
         "interfaz navegador metricas tarjeta y desglose"
@@ -304,8 +383,11 @@
     },
     {
       "id": "US2-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva contenido y cierres de desglose",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
       "plannedTests": [
         "interfaz conserva contenido y cierres de desglose",
         "interfaz navegador metricas tarjeta y desglose"
@@ -316,8 +398,11 @@
     },
     {
       "id": "FR-014",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva CSS y matriz responsive original",
+        "interfaz navegador responsive geometria y tacto"
+      ],
       "plannedTests": [
         "interfaz conserva CSS y matriz responsive original",
         "interfaz navegador responsive geometria y tacto"
@@ -328,8 +413,11 @@
     },
     {
       "id": "US3-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva CSS y matriz responsive original",
+        "interfaz navegador responsive geometria y tacto"
+      ],
       "plannedTests": [
         "interfaz conserva CSS y matriz responsive original",
         "interfaz navegador responsive geometria y tacto"
@@ -340,8 +428,11 @@
     },
     {
       "id": "FR-015",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva foco visual de sesion y salida limpia",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
       "plannedTests": [
         "interfaz conserva foco visual de sesion y salida limpia",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -352,8 +443,11 @@
     },
     {
       "id": "US3-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva foco visual de sesion y salida limpia",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
       "plannedTests": [
         "interfaz conserva foco visual de sesion y salida limpia",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -364,8 +458,11 @@
     },
     {
       "id": "FR-016",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva cabecera sticky y medidas tactiles",
+        "interfaz navegador responsive geometria y tacto"
+      ],
       "plannedTests": [
         "interfaz conserva cabecera sticky y medidas tactiles",
         "interfaz navegador responsive geometria y tacto"
@@ -376,8 +473,11 @@
     },
     {
       "id": "US3-AS3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva cabecera sticky y medidas tactiles",
+        "interfaz navegador responsive geometria y tacto"
+      ],
       "plannedTests": [
         "interfaz conserva cabecera sticky y medidas tactiles",
         "interfaz navegador responsive geometria y tacto"
@@ -388,8 +488,14 @@
     },
     {
       "id": "FR-017",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva recorridos y salidas de registro",
+        "interfaz navegador sesion biblioteca nutricion y previews",
+        "nutricion navegador registrar cantidades y corregir dia",
+        "nutricion navegador biblioteca recetas y snapshots",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "interfaz conserva recorridos y salidas de registro",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -400,8 +506,14 @@
     },
     {
       "id": "US3-AS4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva recorridos y salidas de registro",
+        "interfaz navegador sesion biblioteca nutricion y previews",
+        "nutricion navegador registrar cantidades y corregir dia",
+        "nutricion navegador biblioteca recetas y snapshots",
+        "cuerpo navegador peso medidas y creatina"
+      ],
       "plannedTests": [
         "interfaz conserva recorridos y salidas de registro",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -412,8 +524,11 @@
     },
     {
       "id": "FR-018",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva componentes fechas movimiento y cleanup",
+        "interfaz navegador responsive geometria y tacto"
+      ],
       "plannedTests": [
         "interfaz conserva componentes fechas movimiento y cleanup",
         "interfaz navegador responsive geometria y tacto"
@@ -424,8 +539,11 @@
     },
     {
       "id": "US3-AS5",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva componentes fechas movimiento y cleanup",
+        "interfaz navegador responsive geometria y tacto"
+      ],
       "plannedTests": [
         "interfaz conserva componentes fechas movimiento y cleanup",
         "interfaz navegador responsive geometria y tacto"
@@ -436,8 +554,11 @@
     },
     {
       "id": "FR-019",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva contratos diferentes de ambos previews",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
       "plannedTests": [
         "interfaz conserva contratos diferentes de ambos previews",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -448,8 +569,11 @@
     },
     {
       "id": "US3-AS6",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva contratos diferentes de ambos previews",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
       "plannedTests": [
         "interfaz conserva contratos diferentes de ambos previews",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -460,8 +584,11 @@
     },
     {
       "id": "FR-020",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva fachadas CSS y contratos anteriores",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
       "plannedTests": [
         "interfaz conserva fachadas CSS y contratos anteriores",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -472,8 +599,11 @@
     },
     {
       "id": "US3-AS7",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva fachadas CSS y contratos anteriores",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
       "plannedTests": [
         "interfaz conserva fachadas CSS y contratos anteriores",
         "interfaz navegador sesion biblioteca nutricion y previews"
@@ -484,8 +614,11 @@
     },
     {
       "id": "FR-021",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio Registrar teclado y foco",
+        "interfaz cambio DetailSheet teclado y foco"
+      ],
       "plannedTests": [
         "interfaz cambio Registrar teclado y foco",
         "interfaz cambio DetailSheet teclado y foco"
@@ -496,8 +629,11 @@
     },
     {
       "id": "US4-AS1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio Registrar teclado y foco",
+        "interfaz cambio DetailSheet teclado y foco"
+      ],
       "plannedTests": [
         "interfaz cambio Registrar teclado y foco",
         "interfaz cambio DetailSheet teclado y foco"
@@ -508,8 +644,12 @@
     },
     {
       "id": "FR-022",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio campo Peso en kg",
+        "interfaz cambio campo Correo electrónico",
+        "interfaz cambio campo Contraseña"
+      ],
       "plannedTests": [
         "interfaz cambio campo Peso en kg",
         "interfaz cambio campo Correo electrónico",
@@ -521,8 +661,12 @@
     },
     {
       "id": "US4-AS2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio campo Peso en kg",
+        "interfaz cambio campo Correo electrónico",
+        "interfaz cambio campo Contraseña"
+      ],
       "plannedTests": [
         "interfaz cambio campo Peso en kg",
         "interfaz cambio campo Correo electrónico",
@@ -534,8 +678,11 @@
     },
     {
       "id": "FR-023",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva descarte general siete dias y deshacer",
+        "interfaz navegador diario busqueda y descartes"
+      ],
       "plannedTests": [
         "interfaz conserva descarte general siete dias y deshacer",
         "interfaz navegador diario busqueda y descartes"
@@ -546,8 +693,11 @@
     },
     {
       "id": "US2-AS6",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz conserva descarte general siete dias y deshacer",
+        "interfaz navegador diario busqueda y descartes"
+      ],
       "plannedTests": [
         "interfaz conserva descarte general siete dias y deshacer",
         "interfaz navegador diario busqueda y descartes"
@@ -558,8 +708,11 @@
     },
     {
       "id": "FR-024",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
       "plannedTests": [
         "interfaz cambio resaltado temporal tras consumo de focusCard",
         "interfaz cambio resaltado reemplazo y desmontaje"
@@ -570,8 +723,11 @@
     },
     {
       "id": "US1-AS9",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
       "plannedTests": [
         "interfaz cambio resaltado temporal tras consumo de focusCard",
         "interfaz cambio resaltado reemplazo y desmontaje"

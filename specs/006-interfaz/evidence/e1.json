@@ -1,0 +1,50 @@
+{
+  "stage": "e1",
+  "generatedAt": "2026-10-20T15:38:48.297Z",
+  "reviewRevision": "eeb71e8d75c3690c67ad4459dc6dbcfc021ebb63",
+  "node": "v24.21.0",
+  "sourceHash": "799ffb84b885d2885cdfff4e03ee0fbae81ee64116904e2601457bdeaa266c9e",
+  "nodeTests": 311,
+  "nodePassed": 311,
+  "browser": {
+    "startTime": "2026-10-20T15:37:10.410Z",
+    "duration": 58794.288,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "trace": {
+    "counts": {
+      "pending": 6,
+      "partial": 0,
+      "complete": 42
+    },
+    "errors": []
+  },
+  "pinsVerified": 101,
+  "build": {
+    "passed": true,
+    "output": [
+      "dist/assets/LineChart-DnZn3v0V.js          393.31 kB │ gzip: 107.99 kB",
+      "dist/assets/index-CEu1mUeH.js              504.67 kB │ gzip: 146.69 kB",
+      "(!) Some chunks are larger than 500 kB after minification. Consider:",
+      "✓ built in 8.13s"
+    ]
+  },
+  "limits": [
+    "Seis IDs CHANGE pendientes de implementación",
+    "RLS fresco pendiente de E6",
+    "Sin publicación, integración ni despliegue"
+  ],
+  "locationAssertions": {
+    "originalPassed": 21,
+    "candidateIncludedInFullSuite": true,
+    "FR": [
+      "FR-002",
+      "FR-020"
+    ],
+    "adjustment": "Lectura de módulos alcanzables y lista con filter(Boolean); condición ciclo probada con el mismo pin funcional sobre original y candidato",
+    "targetedFailure": "La expresión antigua atravesaba el final de ADD_ROWS hasta BODY_TABS; se acotó a ambos finales válidos antes del checkpoint completo"
+  }
+}

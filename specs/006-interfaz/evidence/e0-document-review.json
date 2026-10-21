@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-20",
+  "scope": "48 IDs aprobados; FR-024 y precisión FR-008 en acafd25",
+  "originalPlan": "39 tareas aprobadas en e06f105",
+  "extensionPlan": "T040–T043 pendiente de segunda respuesta; no inferir aprobación",
+  "ids": 48,
+  "manifestCounts": {
+    "pending": 48,
+    "partial": 0,
+    "complete": 0
+  },
+  "newPinsFrozen": false,
+  "gPinPassed": false,
+  "sourceUntouched": true,
+  "localLinksChecked": 69
+}

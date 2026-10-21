@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "stage": "e5b",
+  "generatedAt": "2026-10-20T21:51:01.500Z",
+  "node": "v24.21.0",
+  "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+  "nodeTests": 313,
+  "nodePassed": 313,
+  "browser": {
+    "startTime": "2026-10-20T21:49:19.873Z",
+    "duration": 73494.39,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "change": {
+    "startTime": "2026-10-20T21:50:34.657Z",
+    "duration": 16219.005999999998,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "counts": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 48
+  },
+  "build": {
+    "passed": true,
+    "output": [
+      "dist/assets/LineChart-B84pXdRb.js          393.31 kB │ gzip: 107.99 kB",
+      "dist/assets/index-CdCT67pr.js              506.49 kB │ gzip: 147.10 kB",
+      "✓ built in 9.20s"
+    ]
+  },
+  "pinsVerified": 101,
+  "pinVerification": {
+    "verified": 101,
+    "originalPins": 68,
+    "newPins": 33,
+    "amendments": 1
+  },
+  "reviewRevision": "ee2a6e0fe9e32f78fe262ae3ac211bc492d74809",
+  "command": "pnpm exec node scripts/run-interface-checkpoint.js e5b",
+  "limits": [
+    "RLS fresco y cierre de seis contratos pendientes de E6",
+    "Sin publicación, fusión o despliegue006"
+  ]
+}

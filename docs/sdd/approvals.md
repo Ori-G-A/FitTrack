@@ -357,3 +357,16 @@ El propietario respondió «aprobado. continua» a la solicitud pendiente de apr
 la extensión técnica T040–T043. Autoriza esas cuatro tareas, las dependencias
 adicionales y su ejecución local en E0–E6 antes del merge documental. No autoriza
 publicación, fusión ni despliegue. FR-024 y precisión FR-008 ya aprobados.
+
+## Evidencia de ejecución006 — 2026-10-20
+
+El alcance y el plan local previamente aprobados se ejecutaron E0–E6. [Cierre local](../../specs/006-interfaz/converge.md). Esta anotación registra evidencia del agente y no una nueva aceptación humana. Publicación, fusión y despliegue006 siguen pendientes de autorización específica; KD-002 conserva su decisión separada.
+
+## Publicación, integración y Vercel de 006 autorizados — 2026-10-20
+
+El propietario respondió «Autorizar publicación, integración con CI verde y
+Vercel» tras revisar el cierre local 55cdd20 y los dos PRs preparados. Autoriza
+publicar las ramas y PRs documental y de código, integrarlos en ese orden al
+aprobar CI remoto y permitir los despliegues automáticos asociados. No cambia
+la constitución ni ratifica la retirada de KD-002. El PR documental es
+[#13](https://github.com/Ori-G-A/FitTrack/pull/13), snapshot 3d542bc.

@@ -428,16 +428,31 @@ export default function DashboardScreen({ workouts, weights, nutrition, measurem
 
   // Un aviso del Diario apunta a la tarjeta que lo disparo. Si el filtro activo
   // la esconde no hay nada a lo que desplazarse, asi que primero se quita.
+  // El plazo pertenece al resaltado activo, no a la petición ya consumida.
+  const activeHighlight = useRef(null);
+  const clearHighlight = () => {
+    const active = activeHighlight.current;
+    if (!active) return;
+    clearTimeout(active.timer);
+    active.node.classList.remove("ft-dc-focus");
+    activeHighlight.current = null;
+  };
+  useEffect(() => () => clearHighlight(), []);
   useEffect(() => {
     if (!focusCard) return;
     setFilter("all");
     const node = document.getElementById(`card-${focusCard}`);
     if (!node) return;
+    clearHighlight();
     node.scrollIntoView({ behavior: "smooth", block: "center" });
     node.classList.add("ft-dc-focus");
-    const clear = setTimeout(() => node.classList.remove("ft-dc-focus"), 2200);
+    const active = { node, timer: null };
+    active.timer = setTimeout(() => {
+      node.classList.remove("ft-dc-focus");
+      if (activeHighlight.current === active) activeHighlight.current = null;
+    }, 2200);
+    activeHighlight.current = active;
     onFocused?.();
-    return () => clearTimeout(clear);
   }, [focusCard, onFocused]);
 
   const noData = weights.length === 0 && workouts.length === 0 && nutrition.length === 0;

@@ -1,0 +1,377 @@
+{
+  "stage": "E6 / cierre local",
+  "passed": true,
+  "generatedAt": "2026-10-20T21:58:54.070Z",
+  "reviewRevision": "c542a31aafb7c11eff0d369ce10fd00180132a64",
+  "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+  "runtime": {
+    "node": "v24.21.0",
+    "pnpm": "11.11.0"
+  },
+  "node": {
+    "tests": 314,
+    "passed": 314,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "startTime": "2026-10-20T21:56:18.741Z",
+    "duration": 78145.12700000001,
+    "expected": 27,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "contracts": [
+    {
+      "spec": "001-datos",
+      "ids": 21,
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34"
+    },
+    {
+      "spec": "002-identidad-fotos",
+      "ids": 23,
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 23
+      },
+      "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34"
+    },
+    {
+      "spec": "003-entrenamiento",
+      "ids": 21,
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34"
+    },
+    {
+      "spec": "004-nutricion-objetivos",
+      "ids": 31,
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 31
+      },
+      "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34"
+    },
+    {
+      "spec": "005-cuerpo-ciclo",
+      "ids": 40,
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 40
+      },
+      "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34"
+    },
+    {
+      "spec": "006-interfaz",
+      "ids": 48,
+      "errors": [],
+      "counts": {
+        "pending": 0,
+        "partial": 0,
+        "complete": 48
+      },
+      "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34"
+    }
+  ],
+  "totalIds": 184,
+  "pins": {
+    "verified": 101,
+    "originalPins": 68,
+    "newPins": 33,
+    "amendments": 1
+  },
+  "guards": [
+    {
+      "file": "test/interface-architecture.test.js",
+      "sha256": "d45a64b1d759a5b508a928e33540332dc8c5de0f50aa38b8d2f99a04a427f499"
+    },
+    {
+      "file": "scripts/interface-pins.js",
+      "sha256": "d0ba4c1cc144991d5ea6225baef65380735f074cc88874b643f7337110582154"
+    },
+    {
+      "file": "scripts/run-interface-checkpoint.js",
+      "sha256": "1cd39b17e6e5bc797764b49e9e9060cdaea97afd961f68daf8661869c161e3d5"
+    },
+    {
+      "file": "scripts/check-interface-mutations.js",
+      "sha256": "493af18e9bba818b4c2aec698e9c3198e8e1fb1e67e68ef844ce3ccef22eff5c"
+    },
+    {
+      "file": "playwright.config.js",
+      "sha256": "7421de634b7a69eefc52f98c4c9b13c88158ff87fd34fa599e37cd58eede8f79"
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "sha256": "6e069d638805ffd1b7eec4c3af03651f7ad7c6b6c3726f55667bc9660b782f1b"
+    }
+  ],
+  "collectionHashes": [
+    {
+      "file": "test-results/sdd-006-interfaz-pilot.tap",
+      "sha256": "f47db93ba14b0cd1b0764793ff344e6131fc30efac53ac4a2ef055e1f946a6f8"
+    },
+    {
+      "file": "test-results/sdd-006-interfaz-browser.json",
+      "sha256": "530ee17f3c9ca8f65e3aa992bec9d6a837b765422350298c36f7262b382bcbcd"
+    },
+    {
+      "file": "test-results/rls-evidence.json",
+      "sha256": "7d05c778415f6efd884c95c164989d30c82da7f777fd78d60b0e1e7da20248e6"
+    }
+  ],
+  "rls": {
+    "generatedAt": "2026-10-20T21:52:58.638Z",
+    "passed": true,
+    "cleanupPassed": true,
+    "apiOrigin": "http://127.0.0.1:59321",
+    "results": [
+      {
+        "name": "SDD-RLS-001 app_data dos propietarios y anonimo",
+        "status": "passed"
+      },
+      {
+        "name": "SDD-RLS-002 Storage privado permite solo prefijo propio",
+        "status": "passed"
+      },
+      {
+        "name": "SDD-RLS-003 diagnosticos insert-only sin suplantacion",
+        "status": "passed"
+      }
+    ],
+    "hashes": {
+      "rls-tests/ownership.js": "117a1e1facb347d6d77b3decb396796c6acbfbb5aceb323ee3ad5a0aa05d43ae",
+      "scripts/run-local-rls.js": "d661067fa0f89d2d1a147d6e206ca2f38f4b01942c8ccdc23f08d5efe419d16a",
+      "scripts/local-rls-guard.js": "1ba82a5d80ffe888934f128310e0932be6bd1e548ca87eedab3f26f96d2f60ea",
+      "test-support/rls/fixture-client.js": "957c1cf72e1f64c73e431fae2354ee87db862e6886053e11b7273c37aa5b7b13",
+      "pnpm-lock.yaml": "e94a3105f8ba84ace02221f012cc8c7cd65a8be7cdf6e4229d06b8f5fe624d87",
+      "supabase/migrations/20260614000000_secure_app_data_rls.sql": "6c8fc101c348bb8645fa78a74a594cb61f604ac4307edfe696e0ef9565a33bbf",
+      "supabase/migrations/20260614010000_private_progress_photos.sql": "83d1f764cefd61a4a47382028c5653a1629070c2629cece855162ac4f1402702",
+      "supabase/migrations/20260615000000_client_error_reports.sql": "f1989ef377df89e9454274d8357e9c8e770ab72b0069025e61f60e4309f0cd99"
+    }
+  },
+  "postgreenMutations": {
+    "passed": true,
+    "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+    "generatedAt": "2026-10-20T21:53:31.205Z",
+    "mutations": [
+      {
+        "name": "escape",
+        "test": "interfaz cambio Registrar teclado y foco",
+        "detected": true,
+        "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByRole('dialog', { name: 'Registrar', exact: true })\nExpected: 0\nReceived: 1\nTimeout:  3000ms\n\nCall log:\n  - Expect \"toHaveCount\" getByRole('dialog', { name: 'Registrar', exact: true }) with timeout 3000ms\n  - waiting for getByRole('dialog', { name: 'Registrar', exact: true })\n    10 × locator resolved to 1 element\n       - unexpected value \"1\"\n"
+      },
+      {
+        "name": "label",
+        "test": "interfaz cambio campo Peso en kg",
+        "detected": true,
+        "error": "Error: el input de peso debe tener nombre accesible inequívoco\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByLabel('Peso en kg', { exact: true })\nExpected: 1\nReceived: 0\nTimeout:  3000ms\n\nCall log:\n  - el input de peso debe tener nombre accesible inequívoco getByLabel('Peso en kg', { exact: true }) with timeout 3000ms\n  - waiting for getByLabel('Peso en kg', { exact: true })\n    10 × locator resolved to 0 elements\n       - unexpected value \"0\"\n"
+      },
+      {
+        "name": "highlight",
+        "test": "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "detected": true,
+        "error": "Error: FR-024: consumir focusCard no debe dejar el resaltado permanente\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: locator('#card-peso')\nExpected pattern: not /ft-dc-focus/\nReceived string: \"ft-dc-card span2 ft-dc-focus\"\nTimeout: 3000ms\n\nCall log:\n  - FR-024: consumir focusCard no debe dejar el resaltado permanente locator('#card-peso') with timeout 3000ms\n  - waiting for locator('#card-peso')\n    10 × locator resolved to <div id=\"card-peso\" class=\"ft-dc-card span2 ft-dc-focus\">…</div>\n       - unexpected value \"ft-dc-card span2 ft-dc-focus\"\n"
+      }
+    ],
+    "positiveControls": 3,
+    "cleanupPassed": true
+  },
+  "build": {
+    "passed": true,
+    "base": {
+      "goals-operations": {
+        "minKB": 0.29,
+        "gzipKB": 0.17
+      },
+      "weight-model": {
+        "minKB": 1.36,
+        "gzipKB": 0.68
+      },
+      "training-plan": {
+        "minKB": 1.5,
+        "gzipKB": 0.82
+      },
+      "nutrition-metrics": {
+        "minKB": 1.98,
+        "gzipKB": 0.95
+      },
+      "nutrition-model": {
+        "minKB": 2.43,
+        "gzipKB": 1.07
+      },
+      "cycle-readings": {
+        "minKB": 6.62,
+        "gzipKB": 2.89
+      },
+      "PlanScreen": {
+        "minKB": 7.05,
+        "gzipKB": 2.69
+      },
+      "SessionScreen": {
+        "minKB": 8.15,
+        "gzipKB": 3.03
+      },
+      "NutritionScreen": {
+        "minKB": 9.89,
+        "gzipKB": 3.49
+      },
+      "alerts": {
+        "minKB": 10.25,
+        "gzipKB": 4.72
+      },
+      "DiarioScreen": {
+        "minKB": 12.45,
+        "gzipKB": 4.73
+      },
+      "LibraryScreen": {
+        "minKB": 15.65,
+        "gzipKB": 4.52
+      },
+      "AccountScreen": {
+        "minKB": 20.12,
+        "gzipKB": 6.63
+      },
+      "BodyScreen": {
+        "minKB": 25.53,
+        "gzipKB": 7.47
+      },
+      "DashboardScreen": {
+        "minKB": 31.72,
+        "gzipKB": 11.25
+      },
+      "LineChart": {
+        "minKB": 393.31,
+        "gzipKB": 107.99
+      },
+      "index": {
+        "minKB": 504.38,
+        "gzipKB": 146.51
+      }
+    },
+    "final": {
+      "goals-operations": {
+        "minKB": 0.29,
+        "gzipKB": 0.17
+      },
+      "weight-model": {
+        "minKB": 1.36,
+        "gzipKB": 0.68
+      },
+      "training-plan": {
+        "minKB": 1.5,
+        "gzipKB": 0.82
+      },
+      "nutrition-metrics": {
+        "minKB": 1.98,
+        "gzipKB": 0.95
+      },
+      "nutrition-model": {
+        "minKB": 2.43,
+        "gzipKB": 1.07
+      },
+      "cycle-readings": {
+        "minKB": 6.62,
+        "gzipKB": 2.89
+      },
+      "PlanScreen": {
+        "minKB": 7.05,
+        "gzipKB": 2.69
+      },
+      "SessionScreen": {
+        "minKB": 8.15,
+        "gzipKB": 3.03
+      },
+      "NutritionScreen": {
+        "minKB": 9.89,
+        "gzipKB": 3.49
+      },
+      "alerts": {
+        "minKB": 10.11,
+        "gzipKB": 4.68
+      },
+      "DiarioScreen": {
+        "minKB": 12.45,
+        "gzipKB": 4.73
+      },
+      "LibraryScreen": {
+        "minKB": 15.65,
+        "gzipKB": 4.52
+      },
+      "AccountScreen": {
+        "minKB": 20.12,
+        "gzipKB": 6.63
+      },
+      "BodyScreen": {
+        "minKB": 25.58,
+        "gzipKB": 7.5
+      },
+      "DashboardScreen": {
+        "minKB": 31.93,
+        "gzipKB": 11.33
+      },
+      "LineChart": {
+        "minKB": 393.31,
+        "gzipKB": 107.99
+      },
+      "index": {
+        "minKB": 506.49,
+        "gzipKB": 147.1
+      }
+    },
+    "indexDeltaKB": 2.11,
+    "indexGzipDeltaKB": 0.59,
+    "explanation": "Foco/teclado compartido, etiquetas y coordinación de resaltado; CSS original íntegro. Warning heredado de chunk >500 kB."
+  },
+  "commands": [
+    "pnpm test:rls (CLI local 2.121.0)",
+    "pnpm exec node scripts/check-interface-mutations.js",
+    "pnpm run test:sdd:complete --spec=006-interfaz",
+    "pnpm run build",
+    "verifyTrace complete de seis manifiestos sobre la misma colección fresca"
+  ],
+  "limits": [
+    "CI remoto006 todavía no ejecutado",
+    "Sin publicación, fusión ni despliegue006",
+    "Sin smoke autenticado de producción",
+    "Sin nueva instalación limpia o auditoría; dependencias intactas",
+    "KD-002 requiere decisión normativa separada"
+  ],
+  "visualSupport": {
+    "reviewed": true,
+    "scope": "Capturas sintéticas con red/fuentes remotas bloqueadas; revisión de distribución y hoja móvil, complementaria a geometría congelada.",
+    "files": [
+      {
+        "file": "test-results/interface-final-desktop.png",
+        "sha256": "d293413d9122aaa6306caae54f496f0aa17e6c1450de03eb50b8d1c8ce17d8b9"
+      },
+      {
+        "file": "test-results/interface-final-mobile.png",
+        "sha256": "3a8bdb50005e92d917836316818422a0de45e250e01413fd6c52c2d65e8572fa"
+      }
+    ]
+  },
+  "documentation": {
+    "localLinksChecked": 16,
+    "tasksComplete": 43,
+    "dependencyGraphAcyclic": true,
+    "assertionCasesReviewed": 21
+  }
+}

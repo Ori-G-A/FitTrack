@@ -1,5 +1,12 @@
 # PR documental preparado — 006
 
+Estado vigente — 2026-10-20: publicado como
+[#13](https://github.com/Ori-G-A/FitTrack/pull/13), desde codex/006-interfaz-docs
+en 3d542bc. Alcance y plan completos aprobados: 21 AS-IS, tres CHANGE,
+24 escenarios y 43 tareas. Publicación, integración con CI verde y Vercel
+autorizados expresamente. Los apartados originales siguientes conservan el
+historial de preparación; sus decisiones pendientes ya fueron resueltas.
+
 Estado: alcance aprobado; plan/tareas/analyze propuestos y pendientes.
 Rama: codex/006-interfaz. Base: main, 86299a4. No hay PR remoto creado.
 
@@ -40,3 +47,12 @@ requieren autorización propia de 006; la autorización de 005 no se reutiliza.
 KD-002 permanece activa: eventual retirada exige evidencia, informe PATCH y
 ratificación separada. Fuera: rediseño, nuevas validaciones/fórmulas, optimización
 sin objetivo, backend real y certificación global de accesibilidad.
+
+Estado actualizado 2026-10-20: el plan original sí fue aprobado en e06f105;
+el snapshot documental codex/006-interfaz-docs permanece local. E0 solo prueba
+el original. FR-024 aprobado amplía alcance a 48 IDs; T040–T043 pendientes de
+aprobación separada. No hay PR, fusión ni despliegue 006 autorizados.
+
+## Estado vigente — 2026-10-20
+
+Snapshot documental aprobado e06f105 y extensión3d542bc preservados. Ejecución local previa autorizada: E0/G-PIN completada, sin src modificado. [Baseline](evidence/baseline.json); no se ha publicado este PR ni se autoriza Vercel por esta evidencia.

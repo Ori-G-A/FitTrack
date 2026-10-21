@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { Dumbbell, Lock } from "lucide-react";
 import { authenticate } from "./auth-service.js";
 import { onSaveStatus } from "./data-sync.js";
@@ -29,6 +29,8 @@ export function SaveIndicator() {
 }
 
 export function AuthScreen() {
+  const emailInputId = useId();
+  const passwordInputId = useId();
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,8 +78,9 @@ export function AuthScreen() {
           <button className={mode === "register" ? "on" : ""} onClick={() => changeMode("register")}>Registrarse</button>
         </div>
         <div className="ft-field" style={{ marginBottom: 12 }}>
-          <label>Correo electrónico</label>
+          <label htmlFor={emailInputId}>Correo electrónico</label>
           <input
+            id={emailInputId}
             className="ft-input"
             type="email"
             autoComplete="email"
@@ -90,8 +93,9 @@ export function AuthScreen() {
           />
         </div>
         <div className="ft-field" style={{ marginBottom: 16 }}>
-          <label>Contraseña</label>
+          <label htmlFor={passwordInputId}>Contraseña</label>
           <input
+            id={passwordInputId}
             className="ft-input"
             type="password"
             autoComplete={mode === "login" ? "current-password" : "new-password"}

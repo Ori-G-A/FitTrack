@@ -1,6 +1,6 @@
 # Plan técnico — 006-interfaz
 
-Estado: APROBADO para ejecución local E0–E6; ejecución pendiente. Fecha: 2026-10-19.
+Estado: APROBADO y ejecutado localmente E0–E6; cierre2026-10-20. Integración pendiente.
 [Spec aprobada](spec.md), [research](research.md), [validación](validation-plan.md),
 [tareas](tasks.md), [analyze](analyze.md), [PR documental preparado](doc-pr.md).
 BASE de producto: 86299a4497e3c19180c30a640598a1358d61cc8f.

@@ -1,0 +1,105 @@
+{
+  "status": "e0_partial_independent_checks_passed_extension_plan_pending",
+  "sourceUntouched": true,
+  "productBase": "86299a4497e3c19180c30a640598a1358d61cc8f",
+  "sourceHash": "be5259ebe677376b1c80317600c727481813a0ed225d9ddaa268147844541d87",
+  "nodeAttempt1": {
+    "groups": 21,
+    "passed": 18,
+    "failed": 3,
+    "reasons": [
+      "Selector de Deshacer asumía texto completo igual a DESHACER",
+      "Cuenta no tiene h1 Tu cuenta",
+      "Biblioteca usa h1 Bibliotecas"
+    ]
+  },
+  "nodeAttempt2": {
+    "groups": 21,
+    "passed": 21,
+    "failed": 0
+  },
+  "initialFullSuite": {
+    "tests": 307,
+    "passed": 307,
+    "failed": 0,
+    "note": "Antes de incorporar dos casos de mutaciones/verificador; no checkpoint final"
+  },
+  "mutants": {
+    "asIsMutationsDetected": 4,
+    "controlCasesPassed": 4,
+    "verifierNegativesPassed": true
+  },
+  "browserAttempt1": [
+    {
+      "name": "interfaz navegador raices registrar y fechas",
+      "status": "passed"
+    },
+    {
+      "name": "interfaz navegador cuenta cuerpo y plan",
+      "status": "passed"
+    },
+    {
+      "name": "interfaz navegador diario busqueda y descartes",
+      "status": "passed"
+    },
+    {
+      "name": "interfaz navegador metricas tarjeta y desglose",
+      "status": "failed",
+      "reason": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed"
+    },
+    {
+      "name": "interfaz navegador temas carga y errores",
+      "status": "passed"
+    },
+    {
+      "name": "interfaz navegador responsive geometria y tacto",
+      "status": "passed"
+    },
+    {
+      "name": "interfaz navegador sesion biblioteca nutricion y previews",
+      "status": "passed"
+    }
+  ],
+  "changeFailures": 5,
+  "build": {
+    "status": "passed",
+    "indexMinKb": 504.38,
+    "indexGzipKb": 146.51,
+    "lineChartMinKb": 393.31,
+    "lineChartGzipKb": 107.99,
+    "warning": "chunk >500 kB heredado"
+  },
+  "newPinsFrozen": false,
+  "gPinPassed": false,
+  "clarification": {
+    "id": "UI-006-007",
+    "fr": "FR-008",
+    "observed": "App consume focusCard, cleanup cancela timeout y conserva ft-dc-focus; aislado sin callback que altere prop retira clase a 2200 ms.",
+    "ownerDecision": "FR-024 y precisión FR-008 aprobados; extensión técnica pendiente",
+    "sourceChanged": false
+  },
+  "fullNodeAttempt2": {
+    "tests": 309,
+    "passed": 308,
+    "failed": 1,
+    "test": "datos debounce y suscripciones",
+    "assertion": "valor esperado 2; observado 1",
+    "pinEdited": false
+  },
+  "fullNodeAttempt3": {
+    "tests": 309,
+    "passed": 309,
+    "failed": 0
+  },
+  "browserAttempt2": {
+    "tests": 7,
+    "passed": 7,
+    "failed": 0
+  },
+  "allBrowserRepeat": {
+    "tests": 20,
+    "passed": 20,
+    "skipped": 0,
+    "retries": 0
+  }
+}

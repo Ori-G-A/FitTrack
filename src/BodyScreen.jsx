@@ -1,7 +1,7 @@
 import { descendingWeights, weightPoints, descendingMeasurements, waistPoints, descendingWellness } from "./body-metrics.js";
 import { replaceWeightRecord, measurementValues, replaceMeasurementRecord, wellnessDraft, replaceWellnessRecord, prepareMenstrualRecord, replaceMenstrualRecord, removeBodyRecord } from "./body-records.js";
 import { BLEEDING_OPTIONS, FLUID_OPTIONS, APPETITE_OPTIONS, PAIN_OPTIONS, PHASE_SHADE, PHASE_NAMES, CONFIDENCE_NAMES } from "./body-config.js";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CYCLE_PHASES, PHASE_GROUPS, tracksCycle } from "./app-config.js";
@@ -15,6 +15,7 @@ const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
 export default function BodyScreen({ section: initialSection = "peso", weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
+  const weightInputId = useId();
   const creatineStart = goals?.creatineStart || "";
   const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
   const creaWaterKg = creatineStart ? creatineWaterKg(creatineStart, todayISO()) : null;
@@ -172,16 +173,16 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
           <label className="ft-lib-field"><span>Fecha</span>
             <input className="ft-input ft-mono" type="date" value={wDate} onChange={(e) => setWDate(e.target.value)} />
           </label>
-          <label className="ft-lib-field" style={{ gridColumn: "span 2" }}><span>Peso en kg</span>
+          <div className="ft-lib-field" style={{ gridColumn: "span 2" }}><span><label htmlFor={weightInputId}>Peso en kg</label></span>
             {/* Stepper de 0,1 kg: es el salto real entre dos pesajes, y escribir
                 el numero sigue disponible para cuando la bascula da otra cosa. */}
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <button className="ft-dc-step" aria-label="Bajar 0,1 kg" onClick={() => bumpKg(-0.1)}>−</button>
-              <input className="ft-input ft-mono" style={{ textAlign: "center" }} inputMode="decimal" placeholder={lastKg ? kg1(lastKg) : "0,0"}
+              <input id={weightInputId} className="ft-input ft-mono" style={{ textAlign: "center" }} inputMode="decimal" placeholder={lastKg ? kg1(lastKg) : "0,0"}
                 value={kg} onChange={(e) => setKg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addW()} />
               <button className="ft-dc-step" aria-label="Subir 0,1 kg" onClick={() => bumpKg(0.1)}>+</button>
             </div>
-          </label>
+          </div>
         </div>
         {lastKg != null && (
           <div className="ft-dc-chips" style={{ paddingTop: 0 }}>

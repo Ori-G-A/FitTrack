@@ -22,10 +22,24 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm exec node scripts/check-interface-mutations.js
       - run: pnpm test:sdd:complete
       - run: pnpm run test:sdd:complete --spec=003-entrenamiento
       - run: pnpm run test:sdd:complete --spec=004-nutricion-objetivos
       - run: pnpm run test:sdd:complete --spec=005-cuerpo-ciclo
+      - run: pnpm run test:sdd:complete --spec=006-interfaz
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: evidencia-sdd-006
+          path: |
+            test-results/sdd-006-interfaz-evidence.json
+            test-results/sdd-006-interfaz-pilot.tap
+            test-results/sdd-006-interfaz-browser.json
+            test-results/interface-postgreen-mutations.json
+            test-results/sdd-browser.json
+            test-results/sdd-pilot.tap
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v6
         if: always()
         with:

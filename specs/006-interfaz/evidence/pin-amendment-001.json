@@ -1,0 +1,80 @@
+{
+  "id": "PIN-006-001",
+  "generatedAt": "2026-10-20T21:47:29.190Z",
+  "file": "test-support/interface-browser.js",
+  "fr": "FR-024",
+  "assertionsChanged": false,
+  "before": "351ba25e84f3124d8dcbfec6cb5f0f36e71ab44e10de030824bda6f8c8c7b550",
+  "after": "94989d588f5af8a6e8c12cd06b27983bb27f8935275562b2521e0204fd84ad63",
+  "reason": "El reloj instalado avanzaba entre acciones; pauseAt fija el origen de runFor sin cambiar la duración contractual ni las aserciones.",
+  "originalBaselineUnchanged": true,
+  "originalProof": {
+    "passed": true,
+    "base": "86299a4497e3c19180c30a640598a1358d61cc8f",
+    "generatedAt": "2026-10-20T21:44:51.166Z",
+    "sourceHash": "be5259ebe677376b1c80317600c727481813a0ed225d9ddaa268147844541d87",
+    "asis": {
+      "startTime": "2026-10-20T21:45:00.586Z",
+      "duration": 73129.72,
+      "expected": 20,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "red": {
+      "startTime": "2026-10-20T21:46:14.899Z",
+      "duration": 49176.319,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 7,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "name": "interfaz cambio Registrar teclado y foco",
+        "error": "Error: el overlay debe exponer un diálogo con nombre\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('dialog', { name: 'Registrar', exact: true })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n  - el overlay debe exponer un diálogo con nombre getByRole('dialog', { name: 'Registrar', exact: true }) with timeout 3000ms\n  - waiting for getByRole('dialog', { name: 'Registrar', exact: true })\n"
+      },
+      {
+        "name": "interfaz cambio DetailSheet teclado y foco",
+        "error": "Error: el foco inicial debe entrar al diálogo\n\nel foco inicial debe entrar al diálogo\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 3000ms exceeded while waiting on the predicate"
+      },
+      {
+        "name": "interfaz cambio campo Peso en kg",
+        "error": "Error: el input de peso debe tener nombre accesible inequívoco\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByLabel('Peso en kg', { exact: true })\nExpected: 1\nReceived: 0\nTimeout:  3000ms\n\nCall log:\n  - el input de peso debe tener nombre accesible inequívoco getByLabel('Peso en kg', { exact: true }) with timeout 3000ms\n  - waiting for getByLabel('Peso en kg', { exact: true })\n    10 × locator resolved to 0 elements\n       - unexpected value \"0\"\n"
+      },
+      {
+        "name": "interfaz cambio campo Correo electrónico",
+        "error": "Error: el input Correo electrónico debe tener nombre accesible inequívoco\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByLabel('Correo electrónico', { exact: true })\nExpected: 1\nReceived: 0\nTimeout:  3000ms\n\nCall log:\n  - el input Correo electrónico debe tener nombre accesible inequívoco getByLabel('Correo electrónico', { exact: true }) with timeout 3000ms\n  - waiting for getByLabel('Correo electrónico', { exact: true })\n    10 × locator resolved to 0 elements\n       - unexpected value \"0\"\n"
+      },
+      {
+        "name": "interfaz cambio campo Contraseña",
+        "error": "Error: el input Contraseña debe tener nombre accesible inequívoco\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByLabel('Contraseña', { exact: true })\nExpected: 1\nReceived: 0\nTimeout:  3000ms\n\nCall log:\n  - el input Contraseña debe tener nombre accesible inequívoco getByLabel('Contraseña', { exact: true }) with timeout 3000ms\n  - waiting for getByLabel('Contraseña', { exact: true })\n    10 × locator resolved to 0 elements\n       - unexpected value \"0\"\n"
+      },
+      {
+        "name": "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "error": "Error: FR-024: consumir focusCard no debe dejar el resaltado permanente\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: locator('#card-peso')\nExpected pattern: not /ft-dc-focus/\nReceived string: \"ft-dc-card span2 ft-dc-focus\"\nTimeout: 3000ms\n\nCall log:\n  - FR-024: consumir focusCard no debe dejar el resaltado permanente locator('#card-peso') with timeout 3000ms\n  - waiting for locator('#card-peso')\n    10 × locator resolved to <div id=\"card-peso\" class=\"ft-dc-card span2 ft-dc-focus\">…</div>\n       - unexpected value \"ft-dc-card span2 ft-dc-focus\"\n"
+      },
+      {
+        "name": "interfaz cambio resaltado reemplazo y desmontaje",
+        "error": "Error: FR-024: una nueva tarjeta debe retirar el resaltado anterior\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: locator('#card-peso')\nExpected pattern: not /ft-dc-focus/\nReceived string: \"ft-dc-card span2 ft-dc-focus\"\nTimeout: 3000ms\n\nCall log:\n  - FR-024: una nueva tarjeta debe retirar el resaltado anterior locator('#card-peso') with timeout 3000ms\n  - waiting for locator('#card-peso')\n    10 × locator resolved to <div id=\"card-peso\" class=\"ft-dc-card span2 ft-dc-focus\">…</div>\n       - unexpected value \"ft-dc-card span2 ft-dc-focus\"\n"
+      }
+    ],
+    "cleanupPassed": true
+  },
+  "candidateTargeted": {
+    "startTime": "2026-10-20T21:43:57.752Z",
+    "duration": 10932.649,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "failedAttempt": {
+    "stage": "e5b",
+    "node": 313,
+    "browserAsis": 20,
+    "changePassed": 5,
+    "changeFailed": 2,
+    "location": "2199ms: el tiempo entre acciones había superado2200"
+  }
+}

@@ -1,3 +1,4 @@
+import ModalSheet from "./ModalSheet.jsx";
 import React from "react";
 import { X } from "lucide-react";
 
@@ -13,8 +14,7 @@ import { X } from "lucide-react";
 // más allá del ancho máximo.
 export default function DetailSheet({ kicker, title, sub, rows = [], note, source, onClose }) {
   return (
-    <div className="ft-sheet" onClick={onClose} role="dialog" aria-modal="true" aria-label={title}>
-      <div className="ft-sheet-panel" onClick={(event) => event.stopPropagation()}>
+    <ModalSheet title={title} onClose={onClose}>
         {kicker && <div className="ft-dc-kicker" style={{ marginBottom: 8 }}>{kicker}</div>}
         <h3>
           {title}
@@ -43,7 +43,6 @@ export default function DetailSheet({ kicker, title, sub, rows = [], note, sourc
 
         {note && <div style={{ fontSize: 13, lineHeight: 1.5 }}>{note}</div>}
         {source && <div className="n" style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--hair)" }}>{source}</div>}
-      </div>
-    </div>
+    </ModalSheet>
   );
 }

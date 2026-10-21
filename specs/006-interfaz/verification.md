@@ -125,3 +125,37 @@ modificado. No se renovó RLS en E0: se mantiene como requisito del cierre final
 El propietario aprobó la segunda decisión pendiente (T040–T043 y ejecución
 local). La autorización completa de 43 tareas se registra en approvals.md.
 La evidencia anterior conserva sus estados históricos; no implica G-PIN verde.
+
+## Estado vigente — 2026-10-20
+
+G-PIN superado sobre original:309/309 Node,20/20 Chromium y build verdes; siete CHANGE fallan por el motivo esperado.42 AS-IS completos y seis CHANGE pendientes.33 pins nuevos y68 anteriores verificados. La extensión técnica ya fue aprobada; E1–E6 habilitadas localmente. Evidencia: [baseline](evidence/baseline.json) y [revisión](assertion-review.md). RLS fresco reservado al cierre E6.
+
+## E1 — 2026-10-20
+
+Checkpoint completo verde: 311 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e1.json).
+
+## E2 — 2026-10-20
+
+Checkpoint completo verde: 312 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e2.json).
+
+## E3 — 2026-10-20
+
+Checkpoint completo verde: 313 Node/20 Chromium, build, trazabilidad parcial sin errores y101 pins intactos. [Evidencia](evidence/e3.json).
+
+## E4 completada — 2026-10-20
+
+T032: 313 pruebas Node,20 Chromium AS-IS y2 CHANGE verdes; build aprobado y101 pins intactos. Trazabilidad:44 IDs completos y4 pendientes. [Evidencia](evidence/e4.json). No se modificaron aserciones congeladas. RLS y cierre E6 siguen pendientes.
+
+## E5 completada — 2026-10-20
+
+T033: 313 pruebas Node,20 Chromium AS-IS y5 CHANGE verdes; build aprobado y101 pins intactos. Trazabilidad:46 IDs completos y2 pendientes. [Evidencia](evidence/e5.json). No se modificaron aserciones congeladas. RLS y cierre E6 siguen pendientes.
+
+## E5B completada — 2026-10-20
+
+T042: 313 pruebas Node,20 Chromium AS-IS y7 CHANGE verdes; build aprobado y101 firmas verificadas con PIN-006-001. Trazabilidad:48 IDs completos y0 pendientes. [Evidencia](evidence/e5b.json). No se modificaron aserciones congeladas; los68 pins anteriores siguen intactos. RLS y cierre E6 siguen pendientes.
+
+## Cierre local E6 — 2026-10-20
+
+T034–T039 y T043 completadas:314 Node,27 Chromium,184 IDs completos en seis contratos sobre la misma colección/sourceHash, tres RLS reales con cleanup y tres negativos postverde detectados con controles positivos.101 firmas verificadas;68 previas intactas y PIN-006-001 explícita. Build aprobado. [Evidencia](evidence/final.json), [auditoría](assertion-audit.md), [converge](converge.md) y [PR preparado](code-pr.md). Sin nuevas tareas de producto;43 tareas locales completas. El propietario conserva las decisiones de publicación, fusión, despliegue y enmienda KD-002.
+
+Revisión visual de apoyo: capturas sintéticas desktop1280 y móvil390, con red y fuentes remotas bloqueadas. Distribución de tarjetas y hoja Registrar revisadas; no certifica fuentes de producción. Enlaces locales y dependencias de43 tareas comprobados.

@@ -55,3 +55,15 @@ arquitectura ni cobertura semántica todavía. No hubo revisión por otro agente
 
 Siguiente puerta: aprobación de plan/tasks/analyze y decisión explícita sobre
 ejecución local E0–E6 antes de integrar el PR documental. No iniciar E0 sin ella.
+
+## Estado posterior de alcance — 2026-10-20
+
+La adenda FR-024 y precisión FR-008 están aprobadas; el plan original de 39
+tareas estaba aprobado en e06f105. La extensión a 43 tareas todavía espera su
+aprobación separada. La discrepancia AS-IS está documentada y las dos regresiones
+CHANGE conservan las aserciones temporales originales como rojos. No se declara
+converge ni G-PIN mientras falte esa puerta y la revisión íntegra de E0.
+
+## Estado vigente — 2026-10-20
+
+G-PIN superado;42 AS-IS completos y seis CHANGE pending con siete rojos específicos.33 pins nuevos congelados,68 previos verificados;309 Node/20 Chromium y build verdes. [Baseline](evidence/baseline.json). Sin cambio de src/index. No se infiere cierre E6 ni ratificación de KD-002.

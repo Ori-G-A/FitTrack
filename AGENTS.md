@@ -8,6 +8,9 @@ Estado de adopción y decisiones: [roadmap](docs/sdd/roadmap.md).
 
 - `src/main.jsx`: arranque y error boundary.
 - `src/FitTrack.jsx`: composición principal, estado y adaptadores de navegador.
+- `src/app-navigation.js`, `AppNavigation.jsx`, `app-styles.js`: destinos puros, presentación del shell y cadena CSS compatible.
+- `src/ui-theme.js`, `use-app-theme.js`: validación de preferencia con lectura inyectada y coordinación de tema.
+- `src/ModalSheet.jsx`: foco, teclado y restauración de las hojas compartidas.
 - `src/*Screen.jsx`: pantallas; revisar llamadores antes de extraer símbolos.
 - `src/app-utils.js`, `settings-utils.js`, `cycle-inference.js`, `fase1Config.js`: fachadas y responsabilidades compartidas; revisar sus llamadores.
 - `src/cycle-context.js`, `cycle-phase.js`, `cycle-summary.js`, `cycle-readings.js`: contexto, fase, resumen y lecturas puras de ciclo.
