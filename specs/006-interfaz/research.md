@@ -64,3 +64,20 @@ credenciales de BASE86299a4 se repitieron20 AS-IS verdes y siete rojos por sus
 motivos específicos; los dos casos temporales pasaron sobre el candidato.
 La repetición completa de E5b es obligatoria antes de avanzar a E6. Es una
 corrección técnica de la preparación de pruebas aprobada, sin ampliar alcance.
+
+## R-016 — Sincronización de fixture de descartes en CI
+
+El diagnóstico compacto de CI `39536424492` identificó una carrera en
+`interfaz navegador diario busqueda y descartes` (FR-023): `setGoals` programa
+el render, pero el primer botón ya era visible con la configuración anterior.
+El conteo podía leer tres avisos, aplicar la configuración de mujer (cuatro)
+y descartar uno (tres), esperando incorrectamente dos. No falló la operación
+de dominio. Se espera explícitamente `goals.sex === 'mujer'` antes del conteo.
+Las comprobaciones existentes de número, fecha, deshacer y otras claves
+permanecen idénticas; se añade una aserción de preparación, sin relajar ninguna.
+
+La firma original de `browser-tests/interface.spec.js` queda en baseline y la
+enmienda PIN-006-002 registra ambas firmas y la reproducción sobre BASE86299a4.
+Una primera copia de reproducción omitió `preview/`: falló por resolución de
+archivos, retiró su entorno y se repitió completa incluyendo esa carpeta.
+No hay cambios en src ni en los 68 pins de contratos anteriores.

@@ -29,7 +29,10 @@ test('interfaz navegador cuenta cuerpo y plan',async({page})=>{
 
 test('interfaz navegador diario busqueda y descartes',async({page})=>{
  await mountUi(page,bundle);const query=page.getByLabel('Buscar en el diario');await query.fill('69 kg');await expect(page.locator('.ft-dc-row').filter({hasText:'69 kg'})).toHaveCount(1);await page.locator('.ft-dc-chips').getByRole('button',{name:'PESO',exact:true}).click();await expect(page.locator('.ft-dc-row').filter({hasText:'69 kg'})).toHaveCount(0);await page.getByLabel('Limpiar búsqueda').click();await expect(page.locator('.ft-dc-chips').getByRole('button',{name:'PESO',exact:true})).toHaveAttribute('aria-pressed','false');
- await page.evaluate(()=>__interfaceApp.setGoals(g=>({...g,sex:'mujer',dismissedAlerts:{other:'2026-10-01'}})));const dismiss=page.locator('.ft-dc-x');await expect(dismiss.first()).toBeVisible();const count=await dismiss.count();await dismiss.first().click();await expect(dismiss).toHaveCount(count-1);expect(await page.evaluate(()=>Object.values(__interfaceApp.goals.dismissedAlerts))).toContain(today);await page.getByRole('button',{name:/Descartado.*DESHACER/}).click();await expect(dismiss).toHaveCount(count);expect(await page.evaluate(()=>__interfaceApp.goals.dismissedAlerts)).toEqual({other:'2026-10-01'});
+ await page.evaluate(()=>__interfaceApp.setGoals(g=>({...g,sex:'mujer',dismissedAlerts:{other:'2026-10-01'}})));
+ // FR-023: observar la fixture ya aplicada antes de contar avisos descartables.
+ await expect.poll(()=>page.evaluate(()=>__interfaceApp.goals.sex)).toBe('mujer');
+ const dismiss=page.locator('.ft-dc-x');await expect(dismiss.first()).toBeVisible();const count=await dismiss.count();await dismiss.first().click();await expect(dismiss).toHaveCount(count-1);expect(await page.evaluate(()=>Object.values(__interfaceApp.goals.dismissedAlerts))).toContain(today);await page.getByRole('button',{name:/Descartado.*DESHACER/}).click();await expect(dismiss).toHaveCount(count);expect(await page.evaluate(()=>__interfaceApp.goals.dismissedAlerts)).toEqual({other:'2026-10-01'});
 });
 
 test('interfaz navegador metricas tarjeta y desglose',async({page})=>{

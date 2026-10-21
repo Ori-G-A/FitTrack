@@ -9,3 +9,11 @@ Se conservaron 68 pins; las 33 firmas de 006 se verifican con la enmienda técni
 Las diferencias BODY y UI documentadas en roadmap se conservan; el defecto de resaltado aprobado queda corregido por FR-024. Se mantienen los límites de títulos antiguos detallados en la auditoría. No se certifican Safari/Firefox, lectores de pantalla ni producción autenticada. KD-002 se revisa en [informe separado](kd-002-review.md); este converge no cambia la constitución.
 
 No se añaden tareas de producto. Pendientes externos: autorización específica, publicación, CI remoto, integración y despliegue; [PR preparado](code-pr.md).
+
+Actualización de integración — 2026-10-20 (Bogotá): publicación, fusión con CI
+verde y Vercel autorizados. PR documental #13 integrado; código en PR #14.
+La preparación remota requirió crear test-results antes de las mutaciones y
+mostrar diagnósticos compactos. PIN-006-002 sincroniza la fixture FR-023 antes
+del conteo: mantiene las aserciones previas y registra 20 AS-IS originales,
+siete rojos originales y 27 verdes del candidato. Los 68 pins anteriores y
+src permanecen intactos. [Enmienda](evidence/pin-amendment-002.json).

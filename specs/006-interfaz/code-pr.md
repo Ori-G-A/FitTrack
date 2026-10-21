@@ -26,6 +26,15 @@ el diff que Playwright adjunta al JSON, antes del detalle de casos. Se conserva
 el JSON completo en disco y se añade diagnóstico compacto de fallos y subida
 del reporte 001; no se modifica ninguna aserción para ocultar el fallo.
 
+El diagnóstico de `39536424492` identificó una carrera de preparación de la
+fixture de descartes FR-023. Se añade espera por `goals.sex` antes del conteo;
+las aserciones existentes se conservan. R-016 y PIN-006-002 registran motivos,
+firmas y reproducción sobre el original; la baseline no se reescribe.
+La reproducción renovada aprobó 20 AS-IS sobre el original y siete CHANGE
+rojos por los motivos esperados, sin omisiones; el candidato aprobó 27/27.
+[Evidencia de la enmienda](evidence/pin-amendment-002.json). El hash de src
+permanece igual al cierre local E6.
+
 Actualización de gobierno — 2026-10-20: publicación, integración con CI remoto
 verde y despliegue automático de Vercel autorizados expresamente. El PR
 documental [#13](https://github.com/Ori-G-A/FitTrack/pull/13) ya está abierto;
