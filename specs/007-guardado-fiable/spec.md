@@ -1,6 +1,6 @@
 # Spec 007 — estado de guardado fiable
 
-Estado: ALCANCE APROBADO; plan técnico pendiente de aprobación separada.
+Estado: ALCANCE Y PLAN APROBADOS; ejecución local E0–E3 autorizada.
 Propietario: usuario del proyecto. Fecha: 2026-10-21 (Bogotá).
 Gobierno: [constitución 1.0.3](../../.specify/memory/constitution.md).
 Evidencia inicial: [survey](../../docs/sdd/guardado-fiable-survey.md).
@@ -161,31 +161,32 @@ Los 184 IDs de 001–006 no se presentan como evidencia completa de 007.
 
 ## Trazabilidad propuesta
 
-Pruebas exactas y tareas se fijarán en el plan aprobado; estas filas siguen PENDING.
+Los nombres y tareas propuestos se detallan en [validación](validation-plan.md)
+y [manifiesto](traceability.json). Todas las filas siguen PENDING; plan no aprobado.
 
-| ID | Historia | Resultado | Estado |
-| --- | --- | --- | --- |
-| FR-001 | US3 | Orden y concurrencia preservados | PENDING |
-| FR-002 | US3 | Debounce preservado | PENDING |
-| FR-003 | US3 | Promesa no promete éxito remoto | PENDING |
-| FR-004 | US3 | Ausencia/suspensión preservadas | PENDING |
-| FR-005 | US1 | No perder un fallo | PENDING |
-| FR-006 | US1 | Recuperación por clave | PENDING |
-| FR-007 | US2 | Aislamiento por sesión | PENDING |
-| FR-008 | US2 | Estado vigente al montar | PENDING |
-| FR-009 | US4 | Error visible y accesible | PENDING |
-| US1-AS1 | US1 | Fallo y otras escrituras | PENDING |
-| US1-AS2 | US1 | Recuperación correcta | PENDING |
-| US1-AS3 | US1 | Varios errores | PENDING |
-| US1-AS4 | US1 | Nuevo fallo conserva error | PENDING |
-| US2-AS1 | US2 | Cambio de cuenta | PENDING |
-| US2-AS2 | US2 | Resultado tardío | PENDING |
-| US2-AS3 | US2 | Remontaje | PENDING |
-| US3-AS1 | US3 | Cola y payloads | PENDING |
-| US3-AS2 | US3 | Timer y limpieza | PENDING |
-| US3-AS3 | US3 | Guardas existentes | PENDING |
-| US4-AS1 | US4 | Visibilidad móvil/escritorio | PENDING |
-| US4-AS2 | US4 | Estado accesible sin éxito falso | PENDING |
+| ID | Historia | Prueba prevista | Tareas | Estado |
+| --- | --- | --- | --- | --- |
+| FR-001 | US3 | guardado007 cola mantiene orden concurrencia y referencia | T004 | PENDING |
+| FR-002 | US3 | guardado007 debounce conserva 600ms y cleanup | T005 | PENDING |
+| FR-003 | US3 | guardado007 promesa conserva resolucion ante fallo | T006 | PENDING |
+| FR-004 | US3 | guardado007 conserva ausencia suspension y espera capturada | T006 | PENDING |
+| FR-005 | US1 | guardado007 error persiste entre claves y nuevos intentos | T007, T011 | PENDING |
+| FR-006 | US1 | guardado007 recuperacion selectiva conserva otros errores | T007, T011 | PENDING |
+| FR-007 | US2 | guardado007 sesiones y resultados tardios aislados | T008, T011 | PENDING |
+| FR-008 | US2 | guardado007 indicador recupera estado al remontar | T008, T015 | PENDING |
+| FR-009 | US4 | guardado007 navegador error visible en movil y escritorio; guardado007 navegador estado accesible y sin exito falso | T009, T016 | PENDING |
+| US1-AS1 | US1 | guardado007 error persiste entre claves y nuevos intentos | T007 | PENDING |
+| US1-AS2 | US1 | guardado007 recuperacion selectiva conserva otros errores | T007 | PENDING |
+| US1-AS3 | US1 | guardado007 recuperacion selectiva conserva otros errores | T007 | PENDING |
+| US1-AS4 | US1 | guardado007 error persiste entre claves y nuevos intentos | T007 | PENDING |
+| US2-AS1 | US2 | guardado007 sesiones y resultados tardios aislados | T008 | PENDING |
+| US2-AS2 | US2 | guardado007 sesiones y resultados tardios aislados | T008 | PENDING |
+| US2-AS3 | US2 | guardado007 indicador recupera estado al remontar | T008, T015 | PENDING |
+| US3-AS1 | US3 | guardado007 cola mantiene orden concurrencia y referencia | T004 | PENDING |
+| US3-AS2 | US3 | guardado007 debounce conserva 600ms y cleanup | T005 | PENDING |
+| US3-AS3 | US3 | guardado007 conserva ausencia suspension y espera capturada | T006 | PENDING |
+| US4-AS1 | US4 | guardado007 navegador error visible en movil y escritorio | T009, T016 | PENDING |
+| US4-AS2 | US4 | guardado007 navegador estado accesible y sin exito falso | T009, T016 | PENDING |
 
 ## Aprobación
 

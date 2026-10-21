@@ -440,3 +440,14 @@ de cuatro AS-IS, cinco CHANGE y doce escenarios. C-001/002/003 aprobadas:
 error retenido por usuario:clave, recuperación solo del mismo par, estado
 aislado por sesión y perceptible al montar en móvil/escritorio. Se prepara
 plan, tareas y análisis; sin implementación ni publicación autorizadas.
+
+## Planificación 007 preparada — 2026-10-21
+
+[Plan](../../specs/007-guardado-fiable/plan.md), 24 tareas E0–E3,
+validación y análisis preparados para aprobación separada. G-PIN exige
+siete IDs AS-IS completos y catorce CHANGE pending con seis rojos específicos;
+E1 prevé tres CHANGE verdes y tres UI todavía rojos; cierre con 21 IDs de 007,
+205 en siete contratos y RLS local fresco. Se proponen PIN-007-001/002 para
+dos expectativas heredadas contradictorias, sin modificar otros 99 pins.
+No hay código modificado ni aprobación del plan. Ejecución local previa al
+PR documental, publicación, integración y Vercel no se infieren del alcance.
