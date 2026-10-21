@@ -1,6 +1,12 @@
 # PR de código preparado — 006
 
-Estado: listo para revisión local; sin publicar.
+Estado: implementación validada localmente; publicación autorizada.
+
+Integración documental — 2026-10-20 (Bogotá): el PR #13 se fusionó en
+`41c73b410498f460b4e559e53ea9902c26f66ceb` tras aprobar ambos jobs de
+[CI documental](https://github.com/Ori-G-A/FitTrack/actions/runs/39534948800)
+y el estado Vercel del head `3d542bcfd85c2dfad28f6c82dd3a03bcb197d887`.
+Esto habilita la publicación del PR de código según el orden aprobado.
 
 Actualización de gobierno — 2026-10-20: publicación, integración con CI remoto
 verde y despliegue automático de Vercel autorizados expresamente. El PR
