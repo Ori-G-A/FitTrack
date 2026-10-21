@@ -3,7 +3,8 @@
 Estado: guía operativa preparada tras integrar 001–006. La constitución vigente
 es [1.0.3](../../.specify/memory/constitution.md), ratificada el 2026-10-20;
 la [enmienda](amendment-1.0.3.md) satisface la puerta normativa M7 y su
-integración documental espera CI verde. No hay alcance nuevo aprobado aquí.
+integración documental se verifica en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
+No hay alcance nuevo aprobado aquí.
 
 ## Punto de partida verificable
 

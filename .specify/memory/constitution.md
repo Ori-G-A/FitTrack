@@ -176,8 +176,8 @@ se conservan identificadores y no se hace traducción masiva. D-001 resuelta.
 - Versión anterior ratificada: 1.0.2. Esta PATCH actualiza hechos
   de 001–006 y retira KD-002; conserva los principios.
 - Ratificación: «Ratificar PATCH y autorizar publicación, integración con CI
-  verde y Vercel», 2026-10-20. M7 cumple la puerta normativa; esta entrega
-  documental queda pendiente de integración con CI verde.
+  verde y Vercel», 2026-10-20. M7 cumple la puerta normativa; la integración
+  documental se verifica en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
 - Roadmap, aprobaciones, revisión KD-002 y guía de continuidad enlazan el cierre.
 - Plantillas y AGENTS: sin cambios de reglas; runtime, SQL, tests y dependencias intactos.
 - Informe vigente: [1.0.3](../../docs/sdd/amendment-1.0.3.md).

@@ -1,7 +1,8 @@
 # Roadmap de adopción SDD
 
 Estado actual, 2026-10-20 (Bogotá): 001–006 integradas; PATCH 1.0.3 ratificada
-y aplicada localmente, pendiente de integración documental con CI verde.
+y aplicada. La integración documental y sus verificaciones se registran en el
+[PR #15](https://github.com/Ori-G-A/FitTrack/pull/15), con CI verde como requisito.
 006 integrada mediante PRs [#13](https://github.com/Ori-G-A/FitTrack/pull/13) y
 [#14](https://github.com/Ori-G-A/FitTrack/pull/14), con CI de PR/main y
 Vercel Production aprobados sobre `492be5d`. Cierre: 314 Node, 27 Chromium,

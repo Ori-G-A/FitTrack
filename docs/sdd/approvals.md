@@ -8,7 +8,8 @@ su alcance. La [PATCH 1.0.3](amendment-1.0.3.md) fue ratificada mediante
 «Ratificar PATCH y autorizar publicación, integración con CI verde y Vercel».
 Autoriza su aplicación, publicación, fusión con CI verde y despliegue asociado.
 El «continua» anterior autorizó preparar la entrega; la decisión posterior
-expresa ratifica la retirada de KD-002. Integración documental pendiente de CI.
+expresa ratifica la retirada de KD-002. La integración documental y sus
+verificaciones se registran en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
 
 | Elemento | Evidencia de autorización | Estado actual |
 | --- | --- | --- |

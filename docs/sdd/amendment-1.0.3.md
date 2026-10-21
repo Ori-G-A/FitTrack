@@ -1,6 +1,7 @@
 # Enmienda PATCH 1.0.3 — cierre de adopción 001–006
 
-Estado: RATIFICADA y aplicada localmente; integración pendiente de CI remoto.
+Estado: RATIFICADA y aplicada. [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15)
+registra CI remoto, integración y verificación de main/Production.
 Fecha: 2026-10-20 (Bogotá). Rama propia: `codex/sdd-constitution-1.0.3`.
 Constitución vigente en esta entrega: [1.0.3](../../.specify/memory/constitution.md).
 El propietario respondió «Ratificar PATCH y autorizar publicación, integración

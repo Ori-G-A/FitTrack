@@ -1,8 +1,9 @@
 # Revisión de KD-002 — candidata tras integración006
 
 Estado: revisión local y remota completada; retirada ratificada mediante
-PATCH 1.0.3 el 2026-10-20. Aplicada localmente, con integración documental
-pendiente de CI verde. Los párrafos siguientes conservan la revisión previa.
+PATCH 1.0.3 el 2026-10-20. Aplicada; integración documental y verificaciones
+en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
+Los párrafos siguientes conservan la revisión previa.
 
 La evidencia local cubre184 IDs en seis contratos, cada cláusula006 y las aserciones de los21 casos estáticos. La lectura textual complementa pruebas funcionales; los títulos generales conservan los límites explícitos de assertion-audit.md. Los negativos, pins y RLS respaldan el cierre local.
 

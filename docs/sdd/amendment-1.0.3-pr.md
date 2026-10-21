@@ -1,6 +1,7 @@
 # PR preparado — PATCH 1.0.3
 
-Estado: RATIFICADA; aplicación local lista para publicar e integrar con CI verde.
+Estado: RATIFICADA; publicada en [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
+El PR registra los resultados de CI, integración y verificación de Production.
 Rama: `codex/sdd-constitution-1.0.3`. Base prevista: main `492be5d`.
 
 Título: Cerrar adopción SDD 001–006 y retirar KD-002 mediante PATCH 1.0.3
