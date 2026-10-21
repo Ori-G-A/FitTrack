@@ -1,6 +1,6 @@
 # Tareas — 006-interfaz
 
-Estado: APROBADAS para ejecución local E0–E6; E0 completada; E1–E6 pendientes. Actualización: 2026-10-20.
+Estado: E0–E6 completadas localmente. Fecha de cierre: 2026-10-20. Publicación e integración pendientes de autorización específica.
 Adaptación de [plantilla local](../../.specify/templates/tasks-template.md).
 [Plan](plan.md), [validación](validation-plan.md), [analyze](analyze.md), [research](research.md).
 
@@ -39,12 +39,12 @@ Adaptación de [plantilla local](../../.specify/templates/tasks-template.md).
 | T031 | US1/US2/US3; FR-001/002/004/011/012/013/014/015/016/017/018/019/020; escenarios correspondientes | E3: extraer CSS íntegro y presentación AppNavigation con dependencias inyectadas; conservar CSS/Train exports, anclas y geometría. Adaptar solo pruebas no congeladas de ubicación con mismo contrato original; checkpoint completo. | T030 | Completada (E3; registro inferior) |
 | T032 | US1/US2/US4; FR-002/003/013/021; US1-AS2/3, US2-AS5, US4-AS1 | E4: implementar ModalSheet y usarlo en Registrar/DetailSheet solo tras los dos rojos; probar foco/teclado/cleanup/cancelación/navegación. Actualizar solo FR-021 y US4-AS1 a complete tras todas sus cláusulas verdes. Checkpoint completo. | T031, T023 | Completada (E4; registro inferior) |
 | T033 | US2/US4; FR-012/022; US2-AS4, US4-AS2 | E5: asociar solo peso/correo/contraseña tras sus tres rojos; preservar validación/submit/guardado y pasar regresiones 002/005. Completar FR-022/US4-AS2 y checkpoint completo. | T032, T024 | Completada (E5; registro inferior) |
-| T034 | US1/US2/US3/US4; FR-020 y todos los consumidores | E6: cerrar límites transitivos/exports y sus fixtures negativos, comprobar ausencia de ciclos e import de dominio/backend en shell/modal. Registrar hash final del guard, sin reescribir pins E0. | T033, T042 | Pendiente |
-| T035 | US1/US2/US3/US4; todos los FR/escenarios | Incluir suite CHANGE verde en descubrimiento Playwright por proyectos sin duplicar existentes; extender CI con gate/artifacts006 y conservar jobs/gates previos. Probar verificador y cero skips/retries. | T034 | Pendiente |
-| T036 | US1/US2/US3/US4; FR-021/022 y 21 regresiones relacionadas | Ejecutar negativos postverde: quitar Escape y quitar asociación de etiqueta; exigir detección por pruebas correspondientes. Revisar individualmente las aserciones de 21 casos y vincular cada afirmación visual/interactiva a prueba funcional exacta; inventariar también asserts UI fuera de ese archivo y sus dueños. No basta copiar títulos ni declarar KD-002 cerrada con brechas. | T035 | Pendiente |
-| T037 | US1/US2/US3/US4; todos los FR/escenarios | Checkpoint final: Node/Chromium/build, seis manifiestos sobre mismos resultados/src (184 IDs), 68 pins previos y nuevos congelados intactos, RLS local fresco con cleanup, tamaños min/gzip BASE/final y diferencias explicadas. | T036, T043 | Pendiente |
-| T038 | US1/US2/US3/US4; todos los FR/escenarios; SC-006 | Converge spec/plan/tareas/constitución y revisión de aserciones; cero gaps locales. Preparar informe de eventual retirada KD-002 solo si evidencia completa, pendiente de PATCH/ratificación separadas; registrar límites/hallazgos restantes. | T037 | Pendiente |
-| T039 | US1/US2/US3/US4; todos los FR/escenarios | Preparar PR de código con pruebas/omisiones/orden/reversión y estado real. Publicación, fusión y Vercel solo con autorización específica. | T038 | Pendiente |
+| T034 | US1/US2/US3/US4; FR-020 y todos los consumidores | E6: cerrar límites transitivos/exports y sus fixtures negativos, comprobar ausencia de ciclos e import de dominio/backend en shell/modal. Registrar hash final del guard, sin reescribir pins E0. | T033, T042 | Completada (E6; registro inferior) |
+| T035 | US1/US2/US3/US4; todos los FR/escenarios | Incluir suite CHANGE verde en descubrimiento Playwright por proyectos sin duplicar existentes; extender CI con gate/artifacts006 y conservar jobs/gates previos. Probar verificador y cero skips/retries. | T034 | Completada (E6; registro inferior) |
+| T036 | US1/US2/US3/US4; FR-021/022 y 21 regresiones relacionadas | Ejecutar negativos postverde: quitar Escape y quitar asociación de etiqueta; exigir detección por pruebas correspondientes. Revisar individualmente las aserciones de 21 casos y vincular cada afirmación visual/interactiva a prueba funcional exacta; inventariar también asserts UI fuera de ese archivo y sus dueños. No basta copiar títulos ni declarar KD-002 cerrada con brechas. | T035 | Completada (E6; registro inferior) |
+| T037 | US1/US2/US3/US4; todos los FR/escenarios | Checkpoint final: Node/Chromium/build, seis manifiestos sobre mismos resultados/src (184 IDs), 68 pins previos y nuevos congelados intactos, RLS local fresco con cleanup, tamaños min/gzip BASE/final y diferencias explicadas. | T036, T043 | Completada (E6; registro inferior) |
+| T038 | US1/US2/US3/US4; todos los FR/escenarios; SC-006 | Converge spec/plan/tareas/constitución y revisión de aserciones; cero gaps locales. Preparar informe de eventual retirada KD-002 solo si evidencia completa, pendiente de PATCH/ratificación separadas; registrar límites/hallazgos restantes. | T037 | Completada (E6; registro inferior) |
+| T039 | US1/US2/US3/US4; todos los FR/escenarios | Preparar PR de código con pruebas/omisiones/orden/reversión y estado real. Publicación, fusión y Vercel solo con autorización específica. | T038 | Completada (E6; registro inferior) |
 
 ## Revisión inicial de tareas
 
@@ -77,7 +77,7 @@ T028 no superada. FR-024 aprobado; T040–T043 aún no se consideran aprobadas.
 | T040 | US1; FR-008/024; US1-AS8/9 | Registrar precisión aprobada y observación App/aislada; conservar fallo y control AS-IS | T002 | Completada (alcance acafd25) |
 | T041 | US1; FR-024; US1-AS9 | Ejecutar dos CHANGE rojos sobre BASE y revisar motivos específicos | T040 | Completada (G-PIN; registro inferior) |
 | T042 | US1; FR-008/024; US1-AS8/9 | E5b: implementar vida del resaltado independiente del consumo, reemplazo y cleanup; checkpoint completo | T033, T041 | Completada (E5B; registro inferior) |
-| T043 | US1/US3; FR-020/024; US3-AS7, US1-AS9 | Negativo de temporizador, descubrimiento y revisión final de aserciones | T036, T042 | Pendiente |
+| T043 | US1/US3; FR-020/024; US3-AS7, US1-AS9 | Negativo de temporizador, descubrimiento y revisión final de aserciones | T036, T042 | Completada (E6; registro inferior) |
 
 Las aristas adicionales de T028/T034/T037 están incorporadas a sus filas aún
 pendientes; no se reescribe ninguna tarea completada. Total43 tareas aprobadas.
@@ -119,3 +119,7 @@ T033: 313 pruebas Node,20 Chromium AS-IS y5 CHANGE verdes; build aprobado y101 p
 ## E5B completada — 2026-10-20
 
 T042: 313 pruebas Node,20 Chromium AS-IS y7 CHANGE verdes; build aprobado y101 firmas verificadas con PIN-006-001. Trazabilidad:48 IDs completos y0 pendientes. [Evidencia](evidence/e5b.json). No se modificaron aserciones congeladas; los68 pins anteriores siguen intactos. RLS y cierre E6 siguen pendientes.
+
+## Cierre local E6 — 2026-10-20
+
+T034–T039 y T043 completadas:314 Node,27 Chromium,184 IDs completos en seis contratos sobre la misma colección/sourceHash, tres RLS reales con cleanup y tres negativos postverde detectados con controles positivos.101 firmas verificadas;68 previas intactas y PIN-006-001 explícita. Build aprobado. [Evidencia](evidence/final.json), [auditoría](assertion-audit.md), [converge](converge.md) y [PR preparado](code-pr.md). Sin nuevas tareas de producto;43 tareas locales completas. El propietario conserva las decisiones de publicación, fusión, despliegue y enmienda KD-002.

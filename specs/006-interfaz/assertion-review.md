@@ -1,6 +1,6 @@
 # Revisión de aserciones — 006
 
-Estado: revisión del agente sobre original; ejecución fresca G-PIN aprobada; baseline enlazada.
+Estado: revisión del agente sobre original y candidato; cierre E6 verificado.
 No es aceptación humana ni revisión independiente de otro agente.
 [Validación](validation-plan.md), [matriz](traceability.json), [contrato](spec.md).
 
@@ -31,10 +31,10 @@ modificaron aserciones de los 68 archivos previos.
 | FR-018 | interfaz conserva componentes fechas movimiento y cleanup; interfaz navegador responsive geometria y tacto | Cláusulas revisadas y verdes sobre original |
 | FR-019 | interfaz conserva contratos diferentes de ambos previews; interfaz navegador sesion biblioteca nutricion y previews | Cláusulas revisadas y verdes sobre original |
 | FR-020 | interfaz conserva fachadas CSS y contratos anteriores; interfaz navegador sesion biblioteca nutricion y previews | Cláusulas revisadas y verdes sobre original |
-| FR-021 | interfaz cambio Registrar teclado y foco; interfaz cambio DetailSheet teclado y foco | Rojo observado; no implementado |
-| FR-022 | interfaz cambio campo Peso en kg; interfaz cambio campo Correo electrónico; interfaz cambio campo Contraseña | Rojo observado; no implementado |
+| FR-021 | interfaz cambio Registrar teclado y foco; interfaz cambio DetailSheet teclado y foco | Rojo original archivado; verde final E6 |
+| FR-022 | interfaz cambio campo Peso en kg; interfaz cambio campo Correo electrónico; interfaz cambio campo Contraseña | Rojo original archivado; verde final E6 |
 | FR-023 | interfaz conserva descarte general siete dias y deshacer; interfaz navegador diario busqueda y descartes | Cláusulas revisadas y verdes sobre original |
-| FR-024 | interfaz cambio resaltado temporal tras consumo de focusCard; interfaz cambio resaltado reemplazo y desmontaje | Rojo observado; no implementado |
+| FR-024 | interfaz cambio resaltado temporal tras consumo de focusCard; interfaz cambio resaltado reemplazo y desmontaje | Rojo original archivado; verde final E6 |
 
 FR-001: rail/barra, activos, cuenta y expansión hover/focus/clic. FR-003/005:
 fecha histórica/limpieza, key por tab y borrador al remontar. FR-006/007: límites
@@ -54,8 +54,10 @@ sus placeholders y tema distinto. FR-020: exports, 68 pins y CSS; la retirada
 KD-002 requiere todavía revisar el mapa individual al cierre, no esta baseline.
 FR-023: fecha por clave, límite exacto7 días, deshacer sin perder otras claves.
 
-Los CHANGE FR-021/022/024 conservan sus pruebas rojas, sin skips ni test.fail.
+El original conserva los rojos FR-021/022/024, sin skips ni test.fail; el candidato pasa los siete casos.
 G-PIN no ratifica la duración defectuosa ni declara esos seis IDs completos.
 
 Ejecución fresca:309 Node y20 Chromium aprobados; siete rojos específicos
 repetidos con el harness final. [Firmas y resultados](evidence/baseline.json).
+
+Cierre:314 Node/27 Chromium y184 IDs completos en seis contratos. [Evidencia](evidence/final.json). Los plazos se controlan mediante [PIN-006-001](evidence/pin-amendment-001.json), con20 AS-IS y siete rojos repetidos sobre el original. RLS fresco con cleanup y tres negativos postverde detectados.

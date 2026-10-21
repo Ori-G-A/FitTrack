@@ -395,3 +395,7 @@ modificar src ni borrar el fallo original de evidencia E0.
 ## Estado vigente — 2026-10-20
 
 Extensión T040–T043 aprobada en3d542bc. G-PIN006 superado sobre original:42 AS-IS completos, seis CHANGE pendientes,309 Node/20 Chromium verdes y siete rojos específicos. [Baseline](../../specs/006-interfaz/evidence/baseline.json). E1–E6 locales habilitadas. KD-002 permanece activa; publicación, integración y despliegue006 pendientes de autorización específica.
+
+## Cierre local006 — 2026-10-20
+
+E0–E6 completas:314 Node/27 Chromium,184 IDs en seis contratos, RLS real fresco con cleanup y tres negativos postverde detectados.68 pins anteriores intactos;33 firmas006 con enmienda técnica PIN-006-001. [Evidencia](../../specs/006-interfaz/evidence/final.json) y [PR preparado](../../specs/006-interfaz/code-pr.md). Publicación/CI remoto/integración/Vercel pendientes de autorización específica. KD-002 sigue activa hasta ratificación propia.

@@ -153,3 +153,9 @@ T033: 313 pruebas Node,20 Chromium AS-IS y5 CHANGE verdes; build aprobado y101 p
 ## E5B completada — 2026-10-20
 
 T042: 313 pruebas Node,20 Chromium AS-IS y7 CHANGE verdes; build aprobado y101 firmas verificadas con PIN-006-001. Trazabilidad:48 IDs completos y0 pendientes. [Evidencia](evidence/e5b.json). No se modificaron aserciones congeladas; los68 pins anteriores siguen intactos. RLS y cierre E6 siguen pendientes.
+
+## Cierre local E6 — 2026-10-20
+
+T034–T039 y T043 completadas:314 Node,27 Chromium,184 IDs completos en seis contratos sobre la misma colección/sourceHash, tres RLS reales con cleanup y tres negativos postverde detectados con controles positivos.101 firmas verificadas;68 previas intactas y PIN-006-001 explícita. Build aprobado. [Evidencia](evidence/final.json), [auditoría](assertion-audit.md), [converge](converge.md) y [PR preparado](code-pr.md). Sin nuevas tareas de producto;43 tareas locales completas. El propietario conserva las decisiones de publicación, fusión, despliegue y enmienda KD-002.
+
+Revisión visual de apoyo: capturas sintéticas desktop1280 y móvil390, con red y fuentes remotas bloqueadas. Distribución de tarjetas y hoja Registrar revisadas; no certifica fuentes de producción. Enlaces locales y dependencias de43 tareas comprobados.

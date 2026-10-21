@@ -181,3 +181,7 @@ fallo previo de debounce y su repetición íntegra sin editar la aserción.
 ## Estado vigente — 2026-10-20
 
 G-PIN006 superado:309 Node y20 Chromium aprobados; siete CHANGE rojos específicos, build verde,33 pins nuevos y68 anteriores intactos.42 IDs AS-IS completos y seis CHANGE pendientes. Plan completo43 tareas aprobado; ejecución local E1–E6 habilitada. [Baseline](../../specs/006-interfaz/evidence/baseline.json). RLS fresco pendiente del cierre E6.
+
+## Cierre local006 — 2026-10-20
+
+E0–E6 completas:314 Node/27 Chromium,184 IDs en seis contratos, RLS real fresco con cleanup y tres negativos postverde detectados.68 pins anteriores intactos;33 firmas006 con enmienda técnica PIN-006-001. [Evidencia](../../specs/006-interfaz/evidence/final.json) y [PR preparado](../../specs/006-interfaz/code-pr.md). Publicación/CI remoto/integración/Vercel pendientes de autorización específica. KD-002 sigue activa hasta ratificación propia.

@@ -357,3 +357,7 @@ El propietario respondió «aprobado. continua» a la solicitud pendiente de apr
 la extensión técnica T040–T043. Autoriza esas cuatro tareas, las dependencias
 adicionales y su ejecución local en E0–E6 antes del merge documental. No autoriza
 publicación, fusión ni despliegue. FR-024 y precisión FR-008 ya aprobados.
+
+## Evidencia de ejecución006 — 2026-10-20
+
+El alcance y el plan local previamente aprobados se ejecutaron E0–E6. [Cierre local](../../specs/006-interfaz/converge.md). Esta anotación registra evidencia del agente y no una nueva aceptación humana. Publicación, fusión y despliegue006 siguen pendientes de autorización específica; KD-002 conserva su decisión separada.
