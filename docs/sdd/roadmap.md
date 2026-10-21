@@ -417,3 +417,26 @@ PIN-006-002 añade sincronización de fixture FR-023, con reproducción renovada
 sobre el original. Sin prueba autenticada de producción. KD-002 sigue activa
 hasta una PATCH ratificada. Este cierre sustituye los estados históricos pendientes
 de publicación, autorización e integración de 006; no aprueba una etapa nueva.
+
+## Preparación 007 — 2026-10-21 (Bogotá)
+
+La PATCH 1.0.3 se integró mediante PR #15 en `4eee59d`, con CI de PR/main y
+Production aprobados. La adopción 001–006 y M7 están cerrados; KD-002 retirada
+por ratificación. Se conservan los hallazgos pendientes de producto.
+
+Se prioriza DATA-003 para la propuesta [007 guardado fiable](../../specs/007-guardado-fiable/spec.md).
+[Survey](guardado-fiable-survey.md): diagnóstico sintético reproduce que A
+falla y el éxito posterior de B/C termina publicando saved. Node global v26.5.0;
+no equivale a baseline contractual con Node 24.21.0. Alcance propuesto: cuatro
+AS-IS y cinco CHANGE, 12 escenarios, retención de error por usuario:clave,
+recuperación del mismo par, aislamiento por sesión y estado visible/accesible.
+Alcance y C-001/002/003 pendientes. DATA-004/005 se revisarán por separado.
+No hay cambios de runtime, contratos anteriores ni pins, ni plan aprobado.
+
+## Alcance 007 aprobado — 2026-10-21
+
+Respuesta expresa «Aprobar alcance y las tres aclaraciones» a la propuesta
+de cuatro AS-IS, cinco CHANGE y doce escenarios. C-001/002/003 aprobadas:
+error retenido por usuario:clave, recuperación solo del mismo par, estado
+aislado por sesión y perceptible al montar en móvil/escritorio. Se prepara
+plan, tareas y análisis; sin implementación ni publicación autorizadas.
