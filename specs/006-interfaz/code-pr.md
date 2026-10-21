@@ -8,6 +8,18 @@ Integración documental — 2026-10-20 (Bogotá): el PR #13 se fusionó en
 y el estado Vercel del head `3d542bcfd85c2dfad28f6c82dd3a03bcb197d887`.
 Esto habilita la publicación del PR de código según el orden aprobado.
 
+El [PR de código #14](https://github.com/Ori-G-A/FitTrack/pull/14) está publicado.
+La primera [ejecución remota](https://github.com/Ori-G-A/FitTrack/actions/runs/39535414290)
+aprobó Node y build, pero el checkpoint de mutaciones falló antes de ejecutar
+pruebas: `mkdtemp` necesitaba `test-results`, ausente en un checkout limpio.
+Se añade creación idempotente de esa carpeta; las aserciones y src permanecen
+intactos. La repetición local mediante pnpm falló primero por su base de datos
+dentro del sandbox y se volvió a ejecutar fuera con autorización. CI se repetirá
+completa antes de integrar; este registro no declara aprobada esa repetición.
+La repetición local del checkpoint corregido aprobó tres controles positivos,
+detectó las tres mutaciones y retiró su copia; el sourceHash se conserva en
+`d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34`.
+
 Actualización de gobierno — 2026-10-20: publicación, integración con CI remoto
 verde y despliegue automático de Vercel autorizados expresamente. El PR
 documental [#13](https://github.com/Ori-G-A/FitTrack/pull/13) ya está abierto;

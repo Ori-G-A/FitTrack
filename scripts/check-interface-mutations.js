@@ -1,4 +1,4 @@
-import {cpSync,readFileSync,writeFileSync,mkdtempSync,realpathSync,symlinkSync,unlinkSync,rmSync} from 'node:fs';
+import {cpSync,readFileSync,writeFileSync,mkdirSync,mkdtempSync,realpathSync,symlinkSync,unlinkSync,rmSync} from 'node:fs';
 import {resolve,join,relative,basename} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {createRequire} from 'node:module';
@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 // Las mutaciones se ejecutan en una copia sin credenciales. No se cambian los
 // pins ni el árbol src del checkout y se eliminan únicamente archivos propios.
 const root=realpathSync(process.cwd()),out=join(root,'test-results');
+mkdirSync(out,{recursive:true});
 const require=createRequire(import.meta.url),cli=require.resolve('@playwright/test/cli');
 const files=spawnSync('git',['ls-files','src'],{encoding:'utf8'}).stdout.trim().split(/\r?\n/);
 const sourceHash=()=>{const h=createHash('sha256');for(const file of files)h.update(file).update(readFileSync(join(root,file)));return h.digest('hex');};
