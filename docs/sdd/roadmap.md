@@ -1,14 +1,16 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-19: 001–005 integradas; PATCH 1.0.2 ratificada.
-M6 integrado mediante [PR #11](https://github.com/Ori-G-A/FitTrack/pull/11) y
-[PR #12](https://github.com/Ori-G-A/FitTrack/pull/12), con CI de PR/main y
-Vercel Production aprobados sobre 86299a4. 005 conserva 286 Node, 13 Chromium,
-3 RLS con limpieza y build; cinco contratos completos, 136 IDs y 68 pins intactos.
-[Converge 005](../../specs/005-cuerpo-ciclo/converge.md),
-[evidencia final](../../specs/005-cuerpo-ciclo/evidence/final.json).
-[Evidencia remota](../../specs/005-cuerpo-ciclo/evidence/integration.json).
-Sin prueba funcional autenticada en producción. KD-002 sigue para 006.
+Estado actual, 2026-10-20 (Bogotá): 001–006 integradas; PATCH 1.0.3 ratificada
+y aplicada localmente, pendiente de integración documental con CI verde.
+006 integrada mediante PRs [#13](https://github.com/Ori-G-A/FitTrack/pull/13) y
+[#14](https://github.com/Ori-G-A/FitTrack/pull/14), con CI de PR/main y
+Vercel Production aprobados sobre `492be5d`. Cierre: 314 Node, 27 Chromium,
+tres RLS reales con limpieza, tres mutaciones detectadas y seis contratos con
+184 IDs completos. 101 firmas verificadas, con PIN-006-001/002 explícitas.
+[Evidencia remota](../../specs/006-interfaz/evidence/integration.json).
+M7 cumple la puerta normativa con la [PATCH 1.0.3](amendment-1.0.3.md);
+KD-002 retirada por ratificación expresa. [Guía de continuidad](continuity.md) preparada.
+Sin prueba funcional autenticada en producción; hallazgos preservados sin cambios.
 Los registros siguientes conservan el historial.
 
 
