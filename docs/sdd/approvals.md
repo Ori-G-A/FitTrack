@@ -1,8 +1,15 @@
 # Registro de aprobaciones y estado
 
-Revisado: 2026-10-16. Este archivo registra evidencia de decisiones; las reglas
-siguen en la [constitución](../../.specify/memory/constitution.md) y el alcance
-en la [spec 001](../../specs/001-datos/spec.md).
+Revisado: 2026-10-20 (Bogotá). Este archivo conserva cronológicamente las
+decisiones; los estados de tablas antiguas son históricos. El cierre verificado
+de 001–006 figura en la entrada final de integración 006. Las reglas siguen en
+la [constitución](../../.specify/memory/constitution.md) y cada spec es dueña de
+su alcance. La [PATCH 1.0.3](amendment-1.0.3.md) fue ratificada mediante
+«Ratificar PATCH y autorizar publicación, integración con CI verde y Vercel».
+Autoriza su aplicación, publicación, fusión con CI verde y despliegue asociado.
+El «continua» anterior autorizó preparar la entrega; la decisión posterior
+expresa ratifica la retirada de KD-002. La integración documental y sus
+verificaciones se registran en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
 
 | Elemento | Evidencia de autorización | Estado actual |
 | --- | --- | --- |
@@ -370,3 +377,32 @@ publicar las ramas y PRs documental y de código, integrarlos en ese orden al
 aprobar CI remoto y permitir los despliegues automáticos asociados. No cambia
 la constitución ni ratifica la retirada de KD-002. El PR documental es
 [#13](https://github.com/Ori-G-A/FitTrack/pull/13), snapshot 3d542bc.
+
+## Integración 006 verificada — 2026-10-20 (Bogotá)
+
+Los PRs [#13 documental](https://github.com/Ori-G-A/FitTrack/pull/13) y
+[#14 de código](https://github.com/Ori-G-A/FitTrack/pull/14) están integrados.
+El commit resultante `492be5d22a71a885c9be158aa3401f8a229f7326` aprobó
+ambos jobs de [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39538254800),
+con los seis contratos completos, RLS local real y mutaciones. Vercel confirmó
+Production para ese mismo SHA. [Registro verificable](../../specs/006-interfaz/evidence/integration.json).
+
+Las correcciones de preparación remota conservan src y los 68 pins anteriores;
+PIN-006-002 añade sincronización de fixture FR-023, con reproducción renovada
+sobre el original. Sin prueba autenticada de producción. KD-002 sigue activa
+hasta una PATCH ratificada. Este cierre sustituye los estados históricos pendientes
+de publicación, autorización e integración de 006; no aprueba una etapa nueva.
+
+## Ratificación PATCH 1.0.3 — 2026-10-20 (Bogotá)
+
+El propietario respondió «Ratificar PATCH y autorizar publicación, integración
+con CI verde y Vercel» a la propuesta revisable de retirar KD-002 y cerrar M7,
+con informe de impacto, diff y guía de continuidad. Autoriza aplicar 1.0.3,
+publicar el PR documental de esta rama, fusionarlo al aprobar CI remoto y
+permitir el despliegue automático asociado. No es autorización permanente.
+
+La constitución se actualizó localmente y KD-002 se retiró del registro activo.
+M7 satisface la puerta normativa; la integración de esta entrega sigue pendiente
+de CI verde. Los hallazgos y límites de producción no cambian.
+[Informe ratificado](amendment-1.0.3.md). Incluye el registro local de cierre
+006 del commit `7b523f7`, todavía ausente de main al preparar esta entrega.

@@ -1,8 +1,9 @@
 # Constitución de FitTrack
 
-Versión: 1.0.2. Ratificación inicial: 2026-10-14. PATCH ratificada: 2026-10-16.
-Estado: APROBADA; PATCH ratificada mediante «adelante» en respuesta a la
-propuesta de retirar KD-001/003/004/005 y completar la integración del PR #8.
+Versión: 1.0.3. Ratificación inicial: 2026-10-14. PATCH ratificada: 2026-10-20.
+Estado: APROBADA; PATCH ratificada mediante «Ratificar PATCH y autorizar
+publicación, integración con CI verde y Vercel», en respuesta a la propuesta
+de retirar KD-002 y cerrar M7. La integración documental exige CI remoto verde.
 La ratificación no convierte las specs futuras ni los cambios de dominio
 pendientes en decisiones aprobadas.
 
@@ -13,7 +14,9 @@ de autenticación, datos y fotos (`package.json:15`, `src/supabase.js:1`).
 Vercel despliega automáticamente desde main. El propietario autorizó las
 fusiones de #2–#7 y su despliegue de `9a10a54`, confirmado por Vercel, y después
 informó que la aplicación funciona bien. La integración documental del PR #8
-también fue autorizada mediante «adelante». Estas decisiones puntuales no
+también fue autorizada mediante «adelante». Los PRs #13/#14 de 006 se integraron
+con autorización específica de publicación, fusión con CI verde y Vercel;
+Production se confirmó para `492be5d`. Estas decisiones puntuales no
 conceden autorización permanente para futuros despliegues.
 Solo se ha identificado un backend de datos; no se exige paridad entre motores
 inexistentes. Las fórmulas actuales se documentan como software observado,
@@ -26,8 +29,9 @@ sin ratificar su validez clínica.
 Cada área DEBE tener requisitos EARS con IDs estables y etiquetas `[AS-IS]`
 o `[CHANGE]`, resultados de usuario, escenarios, exclusiones y trazabilidad.
 Una modificación de comportamiento DEBE ser un `[CHANGE]` aprobado. La brecha
-inicial de cobertura contractual motiva este principio. 001/002 ya cuentan con
-contratos completos verificados; la adopción continúa en las áreas restantes.
+inicial de cobertura contractual motiva este principio. 001–006 cuentan con
+184 IDs completos verificados en sus seis contratos aprobados. Las funciones
+futuras requieren su propia especificación y evidencia.
 
 ### P2. Datos íntegros y efectos controlados — no negociable
 
@@ -69,15 +73,16 @@ Se DEBEN reportar comandos, resultados, omisiones y límites reales. Optimizar
 exige baseline y objetivo medido. Cada tarea DEBE trazar a una historia y esta
 a un resultado de usuario. No se DEBE imponer una abstracción sin necesidad
 documentada. CI verifica build, pruebas, trazabilidad y límites de arquitectura
-para 001/002; las áreas futuras deben extender esa evidencia.
+para 001–006; las áreas futuras deben extender esa evidencia.
 
-## Invariantes de dominio y propietarios futuros
+## Invariantes de dominio y propietarios
 
-Hasta aprobar sus specs, el código citado es evidencia provisional; esta
-constitución no cambia parámetros. Cada spec futura será el único dueño normativo
-de sus fórmulas y umbrales. Cambiarlos exige `[CHANGE]` y pruebas de fronteras.
+Las specs aprobadas son dueñas normativas de sus fórmulas y umbrales; esta
+constitución no cambia parámetros. Las citas de código conservan su contexto
+histórico de adopción. Cambiar fórmulas o umbrales exige `[CHANGE]` y pruebas
+de fronteras. Las áreas futuras deben establecer su propietario normativo.
 
-| Invariante a preservar | Spec propietaria propuesta | Evidencia |
+| Invariante a preservar | Spec propietaria | Evidencia |
 | --- | --- | --- |
 | Identidad de usuario y clave delimita lecturas/escrituras | 001-datos | `src/data-operations.js:5` |
 | Fotos persistidas excluyen URL firmada transitoria | 002-identidad-fotos | `src/photo-storage.js:47` |
@@ -123,25 +128,30 @@ La reejecución del checkpoint completo que falló es obligatoria tras corregirl
 Aceptadas el 2026-10-14 junto con la constitución y sus hitos límite.
 No deben extenderse a código nuevo. Su cierre requiere evidencia y enmienda PATCH.
 
-| ID | Desviación y evidencia | Principio | Spec correctora | Límite |
-| --- | --- | --- | --- | --- |
-| KD-002 | Sin trazabilidad FR → pruebas; parte de UI es inspección textual (`test/ui-regressions.test.js:3`) | P1, P3 | 006-interfaz y cada área al tocarse | M7 |
+No quedan desviaciones ratificadas activas en el alcance de 001–006 tras
+ratificar la PATCH 1.0.3. Esto no elimina hallazgos preservados ni concede
+excepciones para cambios futuros.
 
 KD-001/003/004/005 retiradas mediante PATCH 1.0.2 tras revisar implementación,
 pins y CI integrado. Evidencia y límites en el
 [informe de enmienda](../../docs/sdd/amendment-1.0.2.md).
-KD-002 sigue activa para las áreas restantes; no invalida la trazabilidad
-completa de 001/002 ni se considera resuelta para todo el proyecto.
+KD-002 retirada mediante PATCH 1.0.3: seis contratos completos,
+mapa individual de 21 regresiones textuales y evidencia funcional por cláusula.
+Los tests de texto se conservan como complemento. El
+[informe 1.0.3](../../docs/sdd/amendment-1.0.3.md) conserva evidencia y límites;
+la retirada fue ratificada expresamente el 2026-10-20.
 
 ## Cumplimiento y automatización
 
-CI de main observado en `9a10a54`: test-and-build y rls-and-sdd-002 aprobados,
-incluidos contratos completos 001/002, límites de capas, Chromium y RLS sobre
-Supabase local desechable con guardas y limpieza. Esa ejecución no prueba RLS
-en el backend productivo ni cubre todos los escenarios de las áreas futuras.
+CI de main observado en `492be5d`: test-and-build y rls-and-sdd-002 aprobados,
+incluidos los seis contratos completos (184 IDs), límites de capas, Chromium,
+mutaciones y RLS sobre Supabase local desechable con guardas y limpieza.
+[Evidencia integrada](../../specs/006-interfaz/evidence/integration.json).
+No prueba RLS en el backend productivo, una sesión autenticada en producción
+ni todos los escenarios de funciones futuras.
 
-AUTO-001–005 tienen evidencia para el alcance integrado; su extensión por área
-y las revisiones pendientes se gestionan en el roadmap. Cobertura y trazabilidad son
+AUTO-001–005 tienen evidencia para 001–006; su extensión a cambios futuros
+y los hallazgos pendientes se gestionan en el roadmap. Cobertura y trazabilidad son
 complementarias; también se revisa que las aserciones prueben el requisito entero.
 
 ## Gobernanza
@@ -163,11 +173,13 @@ se conservan identificadores y no se hace traducción masiva. D-001 resuelta.
 
 ## Informe de impacto de sincronización
 
-- Versión anterior ratificada: 1.0.1. Esta PATCH actualiza hechos y retira
-  KD-001/003/004/005 resueltas; conserva principios y KD-002.
-- Ratificación: «adelante», 2026-10-16, en respuesta a la propuesta concreta
-  de PATCH e integración del PR #8. No aprueba nuevas specs de producto.
-- Roadmap, aprobaciones y converge 001/002 sincronizados con la integración.
-- Plantillas y AGENTS: sin cambios de reglas; runtime, SQL y dependencias intactos.
-- Informe vigente: [1.0.2](../../docs/sdd/amendment-1.0.2.md).
-- Informe histórico conservado: [1.0.1](../../docs/sdd/amendment-1.0.1.md).
+- Versión anterior ratificada: 1.0.2. Esta PATCH actualiza hechos
+  de 001–006 y retira KD-002; conserva los principios.
+- Ratificación: «Ratificar PATCH y autorizar publicación, integración con CI
+  verde y Vercel», 2026-10-20. M7 cumple la puerta normativa; la integración
+  documental se verifica en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
+- Roadmap, aprobaciones, revisión KD-002 y guía de continuidad enlazan el cierre.
+- Plantillas y AGENTS: sin cambios de reglas; runtime, SQL, tests y dependencias intactos.
+- Informe vigente: [1.0.3](../../docs/sdd/amendment-1.0.3.md).
+- Informes históricos: [1.0.2](../../docs/sdd/amendment-1.0.2.md) y
+  [1.0.1](../../docs/sdd/amendment-1.0.1.md).

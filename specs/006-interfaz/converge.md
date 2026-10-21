@@ -1,6 +1,9 @@
 # Converge local — 006
 
-Estado: COMPLETO local; revisión del agente, sin aceptación humana ni CI remoto.
+Estado: COMPLETO local e integrado; publicación/fusión/Vercel autorizados,
+CI del PR y de main verdes, Production confirmado para el SHA integrado.
+[Registro remoto](evidence/integration.json). La autorización no sustituye
+una prueba autenticada de producción ni retira KD-002.
 
 Los 24 FR y 24 escenarios están completos. Las 43 tareas tienen dependencias acíclicas y entregas verificadas. El contrato local está completo y los cambios de comportamiento corresponden a FR-021/022/024. [Resultados](evidence/final.json), [revisión contractual](assertion-review.md) y [auditoría de aserciones](assertion-audit.md).
 

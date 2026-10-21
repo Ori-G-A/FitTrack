@@ -1,0 +1,70 @@
+{
+  "area": "006-interfaz",
+  "verifiedAt": "2026-10-21T03:33:07.629Z",
+  "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+  "documentation": {
+    "pr": 13,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/13",
+    "head": "3d542bcfd85c2dfad28f6c82dd3a03bcb197d887",
+    "merge": "41c73b410498f460b4e559e53ea9902c26f66ceb",
+    "ci": 39534948800,
+    "ciConclusion": "success"
+  },
+  "implementation": {
+    "pr": 14,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/14",
+    "head": "bdba01d01007b2643b41e9fd1f14a72c82034261",
+    "merge": "492be5d22a71a885c9be158aa3401f8a229f7326",
+    "ci": 39537509346,
+    "ciConclusion": "success",
+    "failedRuns": [
+      {
+        "run": 39535414290,
+        "reason": "mkdtemp necesitaba test-results en checkout limpio"
+      },
+      {
+        "run": 39535783794,
+        "reason": "Carrera de fixture FR-023; diagnóstico truncado por metadata de Playwright"
+      },
+      {
+        "run": 39536424492,
+        "reason": "Carrera de fixture FR-023 identificada: conteo anterior al render de setGoals"
+      }
+    ],
+    "pinAmendments": [
+      "PIN-006-001",
+      "PIN-006-002"
+    ]
+  },
+  "main": {
+    "sha": "492be5d22a71a885c9be158aa3401f8a229f7326",
+    "ci": 39538254800,
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "name": "rls-and-sdd-002",
+        "id": 119019822566,
+        "conclusion": "success"
+      },
+      {
+        "name": "test-and-build",
+        "id": 119019822766,
+        "conclusion": "success"
+      }
+    ]
+  },
+  "production": {
+    "deploymentId": 7216837906,
+    "environment": "Production",
+    "sha": "492be5d22a71a885c9be158aa3401f8a229f7326",
+    "state": "success",
+    "createdAt": "2026-10-21T03:23:23Z",
+    "url": "https://fit-track-oj70w18rq-orianag40-7859s-projects.vercel.app"
+  },
+  "limits": [
+    "Sin prueba autenticada de producción",
+    "RLS verificado solo en entorno local desechable; no certifica backend productivo",
+    "KD-002 sigue activa hasta PATCH ratificada",
+    "Aviso heredado de chunk index mayor de 500 kB"
+  ]
+}
