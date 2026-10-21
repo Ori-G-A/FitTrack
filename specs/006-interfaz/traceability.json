@@ -1,0 +1,584 @@
+{
+  "spec": "006-interfaz",
+  "note": "Alcance ampliado aprobado:48 IDs (21 AS-IS,3 CHANGE y24 escenarios). E0 parcial; extensión T040–T043 y ejecución pendientes de segunda aprobación. No G-PIN ni src modificado.",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva raices activas y entradas de shell",
+        "interfaz navegador raices registrar y fechas"
+      ],
+      "plannedTaskIds": [
+        "T003"
+      ]
+    },
+    {
+      "id": "US1-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva raices activas y entradas de shell",
+        "interfaz navegador raices registrar y fechas"
+      ],
+      "plannedTaskIds": [
+        "T003"
+      ]
+    },
+    {
+      "id": "FR-002",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva destinos de registrar segun ciclo",
+        "interfaz navegador raices registrar y fechas"
+      ],
+      "plannedTaskIds": [
+        "T004"
+      ]
+    },
+    {
+      "id": "US1-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva destinos de registrar segun ciclo",
+        "interfaz navegador raices registrar y fechas"
+      ],
+      "plannedTaskIds": [
+        "T004"
+      ]
+    },
+    {
+      "id": "FR-003",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva fecha enfocada y tarjeta solicitada",
+        "interfaz navegador raices registrar y fechas"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "US1-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva fecha enfocada y tarjeta solicitada",
+        "interfaz navegador raices registrar y fechas"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "FR-004",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva alias de cuenta y seleccion local",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "US1-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva alias de cuenta y seleccion local",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "FR-005",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva alias seccion fecha y montaje de cuerpo",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "US1-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva alias seccion fecha y montaje de cuerpo",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "FR-006",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva busqueda filtros limites y vacios de diario",
+        "interfaz navegador diario busqueda y descartes"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "US1-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva busqueda filtros limites y vacios de diario",
+        "interfaz navegador diario busqueda y descartes"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "FR-007",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva destinos y fecha del dia del plan",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "US1-AS7",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva destinos y fecha del dia del plan",
+        "interfaz navegador cuenta cuerpo y plan"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "FR-008",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva filtro ancla resaltado y retorno temprano",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "US1-AS8",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva filtro ancla resaltado y retorno temprano",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "FR-009",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva preferencia y fallos de almacenamiento",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "US2-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva preferencia y fallos de almacenamiento",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "FR-010",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva tema de sistema primer render y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T012"
+      ]
+    },
+    {
+      "id": "US2-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva tema de sistema primer render y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T012"
+      ]
+    },
+    {
+      "id": "FR-011",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva toast ultimo mensaje plazo y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T013"
+      ]
+    },
+    {
+      "id": "US2-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva toast ultimo mensaje plazo y limpieza",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T013"
+      ]
+    },
+    {
+      "id": "FR-012",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva cargas reintentos errores y estado de guardado",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T014"
+      ]
+    },
+    {
+      "id": "US2-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva cargas reintentos errores y estado de guardado",
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedTaskIds": [
+        "T014"
+      ]
+    },
+    {
+      "id": "FR-013",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva contenido y cierres de desglose",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
+      "plannedTaskIds": [
+        "T015"
+      ]
+    },
+    {
+      "id": "US2-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva contenido y cierres de desglose",
+        "interfaz navegador metricas tarjeta y desglose"
+      ],
+      "plannedTaskIds": [
+        "T015"
+      ]
+    },
+    {
+      "id": "FR-014",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva CSS y matriz responsive original",
+        "interfaz navegador responsive geometria y tacto"
+      ],
+      "plannedTaskIds": [
+        "T016"
+      ]
+    },
+    {
+      "id": "US3-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva CSS y matriz responsive original",
+        "interfaz navegador responsive geometria y tacto"
+      ],
+      "plannedTaskIds": [
+        "T016"
+      ]
+    },
+    {
+      "id": "FR-015",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva foco visual de sesion y salida limpia",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T017"
+      ]
+    },
+    {
+      "id": "US3-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva foco visual de sesion y salida limpia",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T017"
+      ]
+    },
+    {
+      "id": "FR-016",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva cabecera sticky y medidas tactiles",
+        "interfaz navegador responsive geometria y tacto"
+      ],
+      "plannedTaskIds": [
+        "T018"
+      ]
+    },
+    {
+      "id": "US3-AS3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva cabecera sticky y medidas tactiles",
+        "interfaz navegador responsive geometria y tacto"
+      ],
+      "plannedTaskIds": [
+        "T018"
+      ]
+    },
+    {
+      "id": "FR-017",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva recorridos y salidas de registro",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T019"
+      ]
+    },
+    {
+      "id": "US3-AS4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva recorridos y salidas de registro",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T019"
+      ]
+    },
+    {
+      "id": "FR-018",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva componentes fechas movimiento y cleanup",
+        "interfaz navegador responsive geometria y tacto"
+      ],
+      "plannedTaskIds": [
+        "T020"
+      ]
+    },
+    {
+      "id": "US3-AS5",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva componentes fechas movimiento y cleanup",
+        "interfaz navegador responsive geometria y tacto"
+      ],
+      "plannedTaskIds": [
+        "T020"
+      ]
+    },
+    {
+      "id": "FR-019",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva contratos diferentes de ambos previews",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T021"
+      ]
+    },
+    {
+      "id": "US3-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva contratos diferentes de ambos previews",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T021"
+      ]
+    },
+    {
+      "id": "FR-020",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva fachadas CSS y contratos anteriores",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T022"
+      ]
+    },
+    {
+      "id": "US3-AS7",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva fachadas CSS y contratos anteriores",
+        "interfaz navegador sesion biblioteca nutricion y previews"
+      ],
+      "plannedTaskIds": [
+        "T022"
+      ]
+    },
+    {
+      "id": "FR-021",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio Registrar teclado y foco",
+        "interfaz cambio DetailSheet teclado y foco"
+      ],
+      "plannedTaskIds": [
+        "T023"
+      ]
+    },
+    {
+      "id": "US4-AS1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio Registrar teclado y foco",
+        "interfaz cambio DetailSheet teclado y foco"
+      ],
+      "plannedTaskIds": [
+        "T023"
+      ]
+    },
+    {
+      "id": "FR-022",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio campo Peso en kg",
+        "interfaz cambio campo Correo electrónico",
+        "interfaz cambio campo Contraseña"
+      ],
+      "plannedTaskIds": [
+        "T024"
+      ]
+    },
+    {
+      "id": "US4-AS2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio campo Peso en kg",
+        "interfaz cambio campo Correo electrónico",
+        "interfaz cambio campo Contraseña"
+      ],
+      "plannedTaskIds": [
+        "T024"
+      ]
+    },
+    {
+      "id": "FR-023",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva descarte general siete dias y deshacer",
+        "interfaz navegador diario busqueda y descartes"
+      ],
+      "plannedTaskIds": [
+        "T025"
+      ]
+    },
+    {
+      "id": "US2-AS6",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz conserva descarte general siete dias y deshacer",
+        "interfaz navegador diario busqueda y descartes"
+      ],
+      "plannedTaskIds": [
+        "T025"
+      ]
+    },
+    {
+      "id": "FR-024",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
+      "plannedTaskIds": [
+        "T041"
+      ]
+    },
+    {
+      "id": "US1-AS9",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
+      "plannedTaskIds": [
+        "T041"
+      ]
+    }
+  ]
+}

@@ -45,3 +45,10 @@ La revisión local del agente no constituye aceptación final del propietario.
 Publicación de ambos PRs, integración con CI verde y despliegue automático
 expresamente autorizados mediante «autorizo. continua». El estado anterior
 registra el cierre local; la evidencia remota se añadirá tras comprobarla.
+
+## Cierre de integración — 2026-10-19
+
+Publicación e integración autorizadas y ejecutadas: PR documental #11 y código
+#12, CI de ambos y de main verde; Production exitoso sobre 86299a4.
+[Evidencia](evidence/integration.json). Sin cambios de contrato ni pins.
+KD-002 continúa para la interfaz restante. No se declara prueba autenticada real.

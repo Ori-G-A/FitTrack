@@ -21,3 +21,5 @@ Aceptación final/publicación/integración pendientes; [converge](converge.md).
 - [x] Cinco contratos completos y RLS real fresco con limpieza.
 - [x] 68 hashes congelados intactos y nueve módulos puros con negativos transitivos.
 - [x] CI extendido, revisión constitucional/KD y PRs preparados.
+
+- [x] PR documental #11 y código #12 integrados con CI verde; CI de main y Production verificados sobre sus merges, según evidence/integration.json.

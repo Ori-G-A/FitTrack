@@ -289,3 +289,71 @@ publicar los PRs documental y de código, integrarlos con CI verde y permitir
 el despliegue automático de Vercel. Se autoriza ejecutar esas acciones en ese
 orden; los resultados remotos se registrarán al comprobarlos. La autorización
 no cambia el contrato ni equivale a una prueba funcional con datos reales.
+
+## Integración 005 comprobada y comienzo de diagnóstico 006 — 2026-10-19
+
+Autorización ejecutada en orden: PR documental #11 (e949c08, CI 39364246304)
+y PR de código #12 (ce7e123, CI 39364579779), ambos con los dos jobs aprobados.
+Merge documental 73e02a1; merge de código 86299a4497e3c19180c30a640598a1358d61cc8f.
+CI de main 39364536428/39365039074 verde y Production 7190788024/7190866939
+exitoso sobre sus respectivos merges. Árbol src idéntico al validado localmente.
+[Evidencia](../../specs/005-cuerpo-ciclo/evidence/integration.json).
+HTTP 200 muestra Login de Vercel; no hay prueba funcional autenticada.
+El posterior «continua» autoriza preparar diagnóstico y propuesta 006; no aprueba
+anticipadamente alcance, cambios, plan, implementación ni despliegue de esa área.
+
+## Propuesta 006 preparada, sin aprobación — 2026-10-19
+
+El posterior «continua» autoriza preparar survey y alcance de interfaz.
+Se proponen 21 FR AS-IS y dos CHANGE (FR-021/022), 23 escenarios y C-001/002/003.
+[Propuesta](../../specs/006-interfaz/spec.md). Los artefactos son borradores;
+no se crea commit como etapa aprobada, plan ni implementación anticipada.
+
+## Alcance y aclaraciones 006 aprobados — 2026-10-19
+
+El propietario respondió «Aprobar alcance, ambos cambios y las tres aclaraciones»
+a la pregunta explícita sobre la spec 006 y C-001/002/003. Aprueba 21 AS-IS,
+dos CHANGE (FR-021/022) y 23 escenarios; conserva compatibilidades temporales,
+medición sin optimización y revisión KD-002 con ratificación separada.
+Autoriza preparar plan/tasks/analyze; no anticipa su aprobación, ejecución local,
+publicación, integración ni despliegue de 006.
+
+## Plan 006 preparado para revisión — 2026-10-19
+
+Sobre alcance aprobado se prepararon plan, research, validación, 39 tareas,
+mapa de regresiones, analyze y borrador de PR documental. 46 IDs pending;
+21 grupos AS-IS, siete recorridos Chromium y cinco rojos CHANGE previstos.
+Revisión documental: tareas acíclicas, matriz coherente, enlaces válidos y
+producto intacto. [Plan](../../specs/006-interfaz/plan.md).
+Plan/tareas/analyze y ejecución local E0–E6 previos al merge siguen pendientes
+de aprobación. No se anticipan publicación, integración ni despliegue de 006.
+
+## Plan y ejecución local 006 aprobados — 2026-10-19
+
+El propietario respondió «Aprobar plan, tareas y revisión; autorizar ejecución
+local E0–E6» a la solicitud explícita sobre plan/tasks/analyze y ejecución local
+antes de integrar el PR documental. Se autoriza E0 y las entregas posteriores
+solo tras G-PIN. No autoriza publicar, fusionar ni desplegar 006.
+
+## Solicitud de CHANGE de resaltado — 2026-10-20
+
+El propietario eligió «Proponer un CHANGE separado para corregir el resaltado»
+ante la discrepancia FR-008 detectada en E0. Se preparó FR-024/US1-AS9, precisión
+propuesta de FR-008 y extensión T040–T043. La respuesta autoriza preparar la
+propuesta; alcance y extensión técnica siguen pendientes de aprobación expresa.
+Las 39 tareas ya aprobadas conservan su autorización dentro de sus puertas.
+
+## Alcance adicional FR-024 aprobado — 2026-10-20
+
+El propietario respondió «Aprobar alcance FR-024 y precisión de FR-008» a la
+primera pregunta explícita de la adenda. Quedan aprobados FR-024/US1-AS9 y la
+referencia de duración/limpieza desde FR-008, sin corregir tarjeta ausente.
+El alcance vigente suma 48 IDs. La segunda pregunta sobre T040–T043 y ejecución
+sigue pendiente; no se interpreta aprobación de alcance como aprobación técnica.
+
+## Extensión técnica T040–T043 aprobada — 2026-10-20
+
+El propietario respondió «aprobado. continua» a la solicitud pendiente de aprobar
+la extensión técnica T040–T043. Autoriza esas cuatro tareas, las dependencias
+adicionales y su ejecución local en E0–E6 antes del merge documental. No autoriza
+publicación, fusión ni despliegue. FR-024 y precisión FR-008 ya aprobados.

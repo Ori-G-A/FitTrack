@@ -1,13 +1,14 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-19: 001/002/003/004 integradas; PATCH 1.0.2 ratificada.
-M5 integrado mediante [PR #10](https://github.com/Ori-G-A/FitTrack/pull/10),
-con CI del PR/main y Vercel Production aprobados sobre 02ab519.
-005 está implementada y verificada localmente: 286 Node, 13 Chromium, 3 RLS
-con limpieza y build; cinco contratos completos, 136 IDs y 68 pins intactos.
+Estado actual, 2026-10-19: 001–005 integradas; PATCH 1.0.2 ratificada.
+M6 integrado mediante [PR #11](https://github.com/Ori-G-A/FitTrack/pull/11) y
+[PR #12](https://github.com/Ori-G-A/FitTrack/pull/12), con CI de PR/main y
+Vercel Production aprobados sobre 86299a4. 005 conserva 286 Node, 13 Chromium,
+3 RLS con limpieza y build; cinco contratos completos, 136 IDs y 68 pins intactos.
 [Converge 005](../../specs/005-cuerpo-ciclo/converge.md),
 [evidencia final](../../specs/005-cuerpo-ciclo/evidence/final.json).
-Aceptación, publicación, integración y despliegue005 pendientes del propietario.
+[Evidencia remota](../../specs/005-cuerpo-ciclo/evidence/integration.json).
+Sin prueba funcional autenticada en producción. KD-002 sigue para 006.
 Los registros siguientes conservan el historial.
 
 
@@ -342,3 +343,39 @@ Publicación, fusiones con CI verde y despliegue automático autorizados expresa
 [PR documental #11](https://github.com/Ori-G-A/FitTrack/pull/11) publicado desde
 la revisión aprobada e949c08. Después se publica el PR de código con el cierre local.
 M6 integrado se declarará únicamente tras verificar CI y fusión del código.
+
+## Diagnóstico y propuesta 006 — 2026-10-19
+
+M6 integrado con evidencia remota de 005. [Survey de interfaz](interfaz-survey.md)
+y [spec 006](../../specs/006-interfaz/spec.md) preparados como borradores:
+21 requisitos AS-IS, dos CHANGE propuestos y 23 escenarios (46 IDs pending).
+La exploración sintética Chromium a 390/1280 reproduce falta de foco/Escape y
+role en Registrar, y falta del nombre accesible esperado del input de peso.
+FR-021 propone teclado/foco para Registrar/DetailSheet; FR-022 nombres accesibles
+para peso/correo/contraseña. Alcance y C-001/002/003 pendientes; sin plan ni src.
+
+UI-006-003: script inicial interpreta tema inválido distinto de React; lectura,
+pendiente de pin. UI-006-004: reduced-motion parcial; no prometer cobertura global.
+UI-006-005: Cuenta inicializa selección una vez; conservar hasta CHANGE separado.
+Revisar al cierre M7 junto con BODY-001–005 y barreras accesibles adicionales.
+PERF-001: medir baseline/final; no hay objetivo de optimización aprobado.
+KD-002 requiere mapear las 21 regresiones textuales y pruebas funcionales por
+cada afirmación de interacción/visual; retirada solo mediante PATCH ratificada.
+
+UI-006-006: búsqueda del nodo de Métricas antes del siguiente render de filtro;
+retorno temprano si falta, observado por lectura. FR-008 lo caracteriza; revisión
+M7 sin corrección implícita. FR-023 incorpora descarte general de avisos y
+deshacer a siete días, distinto del aviso de ritmo 004.
+
+## Alcance 006 aprobado — 2026-10-19
+
+21 AS-IS, dos CHANGE y 23 escenarios aprobados junto con C-001/002/003.
+Se prepara el plan técnico; implementación, publicación y despliegue pendientes.
+
+## Planificación 006 — 2026-10-19
+
+Alcance y C-001/002/003 aprobados explícitamente. [Plan](../../specs/006-interfaz/plan.md),
+39 tareas y analyze preparados para aprobación separada. G-PIN exige 42 AS-IS
+completos y cuatro CHANGE pending con cinco rojos específicos; cierre con
+182 IDs completos y RLS fresco. Estado de implementación: no iniciada.
+KD-002 sigue activa; retirada normativa requiere informe y ratificación propios.

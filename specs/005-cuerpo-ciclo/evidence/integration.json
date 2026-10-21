@@ -1,0 +1,59 @@
+{
+  "area": "005-cuerpo-ciclo",
+  "status": "integrated_ci_and_production_verified",
+  "authorizationDate": "2026-10-19",
+  "authorization": "autorizo. continua: publicar ambos PRs, integrar con CI verde y permitir despliegue automático",
+  "documentation": {
+    "pr": "https://github.com/Ori-G-A/FitTrack/pull/11",
+    "head": "e949c08c0e65d7081894ca563bc52a0223ae1fac",
+    "ci": 39364246304,
+    "ciJobs": {
+      "test-and-build": "success",
+      "rls-and-sdd-002": "success"
+    },
+    "merge": "73e02a1fd6121fd2c7ce7ca7bb9f0baf31e24439",
+    "mainCi": 39364536428,
+    "deployment": {
+      "id": 7190788024,
+      "environment": "Production",
+      "state": "success",
+      "sha": "73e02a1fd6121fd2c7ce7ca7bb9f0baf31e24439",
+      "url": "https://fit-track-myurctn82-orianag40-7859s-projects.vercel.app"
+    },
+    "mainCiJobs": {
+      "test-and-build": "success",
+      "rls-and-sdd-002": "success"
+    }
+  },
+  "code": {
+    "pr": "https://github.com/Ori-G-A/FitTrack/pull/12",
+    "head": "ce7e123b6aeb9dbb26dac8a64d95d61f4b82aee8",
+    "ci": 39364579779,
+    "sourceTree": "47c3544c771345576b43311b2dd848abb89dfa62",
+    "ciJobs": {
+      "test-and-build": "success",
+      "rls-and-sdd-002": "success"
+    },
+    "merge": "86299a4497e3c19180c30a640598a1358d61cc8f",
+    "mainCi": 39365039074,
+    "deployment": {
+      "environment": "Production",
+      "id": 7190866939,
+      "sha": "86299a4497e3c19180c30a640598a1358d61cc8f",
+      "url": "https://fit-track-109bq326t-orianag40-7859s-projects.vercel.app",
+      "state": "success"
+    },
+    "mainCiJobs": {
+      "rls-and-sdd-002": "success",
+      "test-and-build": "success"
+    }
+  },
+  "productionFunctionalSmoke": "not_performed",
+  "httpProbe": {
+    "status": 200,
+    "functionalSmoke": false,
+    "title": "Login – Vercel"
+  },
+  "sourceTreeMatchesLocal": true,
+  "verifiedAt": "2026-10-20T03:39:38.8168810Z"
+}
