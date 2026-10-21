@@ -19,7 +19,28 @@ function run(args, output) {
   writeFileSync(output, result.stdout || '');
   if (result.error || result.status !== 0) {
     process.stderr.write(result.stderr || '');
-    process.stderr.write(result.stdout || '');
+    // El JSON completo queda en el archivo; el diff de Git adjunto por
+    // Playwright puede ocultar el error al truncarse el log remoto.
+    if (output.endsWith('-browser.json')) {
+      try {
+        const report = JSON.parse(result.stdout);
+        const failures = [];
+        function inspect(suites) {
+          for (const suite of suites || []) {
+            for (const spec of suite.specs || []) for (const test of spec.tests || []) {
+              for (const attempt of test.results || []) if (attempt.status !== 'passed') {
+                failures.push({ title: spec.title, status: attempt.status, errors: attempt.errors });
+              }
+            }
+            inspect(suite.suites);
+          }
+        }
+        inspect(report.suites);
+        process.stderr.write(JSON.stringify({ errors: report.errors, failures }, null, 2) + '\n');
+      } catch {
+        process.stderr.write(result.stdout || '');
+      }
+    } else process.stderr.write(result.stdout || '');
     throw result.error || new Error(`Checkpoint falló (${result.status}): ${args.join(' ')}`);
   }
   return result.stdout;

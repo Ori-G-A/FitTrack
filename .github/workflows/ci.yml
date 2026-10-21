@@ -37,6 +37,8 @@ jobs:
             test-results/sdd-006-interfaz-pilot.tap
             test-results/sdd-006-interfaz-browser.json
             test-results/interface-postgreen-mutations.json
+            test-results/sdd-browser.json
+            test-results/sdd-pilot.tap
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v6
         if: always()

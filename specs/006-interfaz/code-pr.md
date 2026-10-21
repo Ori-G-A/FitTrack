@@ -20,6 +20,12 @@ La repetición local del checkpoint corregido aprobó tres controles positivos,
 detectó las tres mutaciones y retiró su copia; el sourceHash se conserva en
 `d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34`.
 
+La segunda ejecución remota (`39535783794`) aprobó mutaciones, Node y build,
+pero falló durante Chromium en ambos jobs. El log obtenido quedó truncado por
+el diff que Playwright adjunta al JSON, antes del detalle de casos. Se conserva
+el JSON completo en disco y se añade diagnóstico compacto de fallos y subida
+del reporte 001; no se modifica ninguna aserción para ocultar el fallo.
+
 Actualización de gobierno — 2026-10-20: publicación, integración con CI remoto
 verde y despliegue automático de Vercel autorizados expresamente. El PR
 documental [#13](https://github.com/Ori-G-A/FitTrack/pull/13) ya está abierto;
