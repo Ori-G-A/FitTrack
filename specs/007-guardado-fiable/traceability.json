@@ -5,8 +5,10 @@
     {
       "id": "FR-001",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 cola mantiene orden concurrencia y referencia"
+      ],
       "plannedTests": [
         "guardado007 cola mantiene orden concurrencia y referencia"
       ],
@@ -20,8 +22,10 @@
     {
       "id": "FR-002",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 debounce conserva 600ms y cleanup"
+      ],
       "plannedTests": [
         "guardado007 debounce conserva 600ms y cleanup"
       ],
@@ -35,8 +39,10 @@
     {
       "id": "FR-003",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 promesa conserva resolucion ante fallo"
+      ],
       "plannedTests": [
         "guardado007 promesa conserva resolucion ante fallo"
       ],
@@ -50,8 +56,10 @@
     {
       "id": "FR-004",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 conserva ausencia suspension y espera capturada"
+      ],
       "plannedTests": [
         "guardado007 conserva ausencia suspension y espera capturada"
       ],
@@ -252,8 +260,10 @@
     {
       "id": "US3-AS1",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 cola mantiene orden concurrencia y referencia"
+      ],
       "plannedTests": [
         "guardado007 cola mantiene orden concurrencia y referencia"
       ],
@@ -267,8 +277,10 @@
     {
       "id": "US3-AS2",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 debounce conserva 600ms y cleanup"
+      ],
       "plannedTests": [
         "guardado007 debounce conserva 600ms y cleanup"
       ],
@@ -282,8 +294,10 @@
     {
       "id": "US3-AS3",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 conserva ausencia suspension y espera capturada"
+      ],
       "plannedTests": [
         "guardado007 conserva ausencia suspension y espera capturada"
       ],

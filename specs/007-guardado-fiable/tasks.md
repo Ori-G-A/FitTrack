@@ -6,16 +6,16 @@ solo añade tareas: no reescribir tareas completadas ni ocultar fallos.
 
 | ID | Historia / requisitos | Entrega y resultado verificable | Depende de | Estado |
 | --- | --- | --- | --- | --- |
-| T001 | US1–4; todos | E0: registrar aprobación del plan, BASE, Node 24.21.0 y pnpm 11.11.0; preparar snapshot documental y ejecución local autorizada | — | Pendiente |
-| T002 | US3; FR-001–004; US3-AS1/2/3 | E0: repetir Node/Chromium/build heredados sobre original y verificar 101 firmas con dos enmiendas 006 | T001 | Pendiente |
-| T003 | US1/2/3/4; todos | E0: crear fixtures sintéticas y harness 007 que no alcance cliente real; lista explícita de descubrimiento por etapa | T002 | Pendiente |
-| T004 | US3; FR-001; US3-AS1 | E0: pin de cola, concurrencia y referencia verde sobre original | T003 | Pendiente |
-| T005 | US3; FR-002; US3-AS2 | E0: pin de demora 600 ms, cambio de valor y cleanup verde sobre original | T003 | Pendiente |
-| T006 | US3; FR-003/004; US3-AS3 | E0: pins de promesa resuelta, usuario ausente, suspensión y espera capturada verdes | T003 | Pendiente |
-| T007 | US1; FR-005/006; US1-AS1/2/3/4 | E0: dos CHANGE rojos por pérdida de error y recuperación incorrecta, ambos órdenes de resolución | T004,T006 | Pendiente |
-| T008 | US2; FR-007/008; US2-AS1/2/3 | E0: dos CHANGE rojos de cuenta/resultado tardío y remontaje real; no aceptar TypeError por API ausente | T003,T006 | Pendiente |
-| T009 | US4; FR-009; US4-AS1/2 | E0: dos Chromium rojos de visibilidad/accesibilidad en 390/1280, con región única como oráculo previsto | T003 | Pendiente |
-| T010 | US1–4; todos | E0: congelar pruebas/fixtures; G-PIN con siete IDs complete, catorce pending, seis rojos específicos y original sin cambios | T004,T005,T006,T007,T008,T009 | Pendiente |
+| T001 | US1–4; todos | E0: registrar aprobación del plan, BASE, Node 24.21.0 y pnpm 11.11.0; preparar snapshot documental y ejecución local autorizada | — | Completada E0 |
+| T002 | US3; FR-001–004; US3-AS1/2/3 | E0: repetir Node/Chromium/build heredados sobre original y verificar 101 firmas con dos enmiendas 006 | T001 | Completada E0 |
+| T003 | US1/2/3/4; todos | E0: crear fixtures sintéticas y harness 007 que no alcance cliente real; lista explícita de descubrimiento por etapa | T002 | Completada E0 |
+| T004 | US3; FR-001; US3-AS1 | E0: pin de cola, concurrencia y referencia verde sobre original | T003 | Completada E0 |
+| T005 | US3; FR-002; US3-AS2 | E0: pin de demora 600 ms, cambio de valor y cleanup verde sobre original | T003 | Completada E0 |
+| T006 | US3; FR-003/004; US3-AS3 | E0: pins de promesa resuelta, usuario ausente, suspensión y espera capturada verdes | T003 | Completada E0 |
+| T007 | US1; FR-005/006; US1-AS1/2/3/4 | E0: dos CHANGE rojos por pérdida de error y recuperación incorrecta, ambos órdenes de resolución | T004,T006 | Completada E0 |
+| T008 | US2; FR-007/008; US2-AS1/2/3 | E0: dos CHANGE rojos de cuenta/resultado tardío y remontaje real; no aceptar TypeError por API ausente | T003,T006 | Completada E0 |
+| T009 | US4; FR-009; US4-AS1/2 | E0: dos Chromium rojos de visibilidad/accesibilidad en 390/1280, con región única como oráculo previsto | T003 | Completada E0 |
+| T010 | US1–4; todos | E0: congelar pruebas/fixtures; G-PIN con siete IDs complete, catorce pending, seis rojos específicos y original sin cambios | T004,T005,T006,T007,T008,T009 | Completada E0 |
 | T011 | US1/2; FR-005/006/007; US1-AS1/2/3/4, US2-AS1/2 | E1: ampliar coordinador con ledger por usuario:clave, snapshot estable y suscripción con filtro; misma cola y promesas | T010 | Pendiente |
 | T012 | US1/2; FR-005/006/007 | E1: conservar originales de ambos pins, aplicar PIN-007-001 solo a data-sync.test.js y adenda 001; preparar adenda 006 sin cambiar aún el assert de role=status | T011 | Pendiente |
 | T013 | US1/2; FR-005/006/007 | E1: negativos de aislamiento del coordinador y getter estable; verificar ausencia de efectos React/DOM/backend nuevos | T011 | Pendiente |
