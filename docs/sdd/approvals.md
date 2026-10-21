@@ -370,3 +370,18 @@ publicar las ramas y PRs documental y de código, integrarlos en ese orden al
 aprobar CI remoto y permitir los despliegues automáticos asociados. No cambia
 la constitución ni ratifica la retirada de KD-002. El PR documental es
 [#13](https://github.com/Ori-G-A/FitTrack/pull/13), snapshot 3d542bc.
+
+## Integración 006 verificada — 2026-10-20 (Bogotá)
+
+Los PRs [#13 documental](https://github.com/Ori-G-A/FitTrack/pull/13) y
+[#14 de código](https://github.com/Ori-G-A/FitTrack/pull/14) están integrados.
+El commit resultante `492be5d22a71a885c9be158aa3401f8a229f7326` aprobó
+ambos jobs de [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39538254800),
+con los seis contratos completos, RLS local real y mutaciones. Vercel confirmó
+Production para ese mismo SHA. [Registro verificable](../../specs/006-interfaz/evidence/integration.json).
+
+Las correcciones de preparación remota conservan src y los 68 pins anteriores;
+PIN-006-002 añade sincronización de fixture FR-023, con reproducción renovada
+sobre el original. Sin prueba autenticada de producción. KD-002 sigue activa
+hasta una PATCH ratificada. Este cierre sustituye los estados históricos pendientes
+de publicación, autorización e integración de 006; no aprueba una etapa nueva.

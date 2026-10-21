@@ -1,6 +1,15 @@
 # PR de código preparado — 006
 
-Estado: implementación validada localmente; publicación autorizada.
+Estado: PR #14 integrado en main y Production; CI del PR y de main en verde.
+
+Cierre remoto: commit `492be5d22a71a885c9be158aa3401f8a229f7326`.
+[CI del PR](https://github.com/Ori-G-A/FitTrack/actions/runs/39537509346) y
+[CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39538254800)
+aprobaron ambos jobs y los seis contratos. Vercel confirmó Production para
+el mismo SHA. [Registro de cierre](evidence/integration.json). Los párrafos
+siguientes conservan el historial de preparación; los estados pendientes
+anteriores quedan sustituidos por este cierre. Sin prueba autenticada de
+producción; KD-002 conserva su ratificación separada.
 
 Integración documental — 2026-10-20 (Bogotá): el PR #13 se fusionó en
 `41c73b410498f460b4e559e53ea9902c26f66ceb` tras aprobar ambos jobs de
