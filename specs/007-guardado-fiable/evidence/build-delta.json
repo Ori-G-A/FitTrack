@@ -1,0 +1,12 @@
+{
+  "original": {
+    "indexKB": 506.49,
+    "gzipKB": 147.1
+  },
+  "candidate": {
+    "indexKB": 507.26,
+    "gzipKB": 147.38
+  },
+  "deltaKB": 0.77,
+  "deltaGzipKB": 0.28
+}

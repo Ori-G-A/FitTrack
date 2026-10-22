@@ -421,3 +421,10 @@ El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecuci�
 local E0–E3». Aprueba las 24 tareas, decisiones, puertas y enmiendas controladas
 de dos pins descritas en el plan; autoriza ejecución local antes de integrar
 el PR documental. No autoriza publicar, fusionar ni desplegar 007.
+
+## Cierre local 007 — 2026-10-21 (Bogotá)
+
+E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build aprobado, siete contratos y 205 IDs completos sobre el mismo sourceHash. RLS local fresco: tres contratos reales y limpieza confirmada. Tres mutaciones detectadas con cuatro controles positivos. 97 de 101 archivos anteriores intactos, cuatro archivos con cinco enmiendas explícitas; seis archivos E0 intactos y prueba suplementaria de cambio de cuenta con rojo original/verde candidato.
+[Evidencia](../../specs/007-guardado-fiable/verification.md).
+La autorización local del plan está cumplida; publicación, integración y Vercel
+siguen pendientes de decisión específica. DATA-004/005 y producción quedan fuera.

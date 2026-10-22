@@ -1,6 +1,6 @@
 # Tareas 007 — estado de guardado fiable
 
-Estado: APROBADAS para ejecución local E0–E3 el 2026-10-21. Ejecución iniciada.
+Estado: 27 tareas completadas localmente, incluidas tres añadidas por converge.
 Los comandos, resultados, hashes y firmas se registrarán por entrega. Converge
 solo añade tareas: no reescribir tareas completadas ni ocultar fallos.
 
@@ -24,12 +24,12 @@ solo añade tareas: no reescribir tareas completadas ni ocultar fallos.
 | T016 | US4; FR-009; US4-AS1/2 | E2: una región visible fuera del rail, texto fijo y estilos locales; aplicar PIN-007-002 al assert de role=status y adenda 006; sin duplicar Toast ni alterar CSS histórico | T015 | Completada E2 |
 | T017 | US3/4; FR-001/002/004/009 | E2: comprobar siete anchos, foco/overlays, ft-focus, navegación y guardas; no adaptar oráculos geométricos para ocultar regresiones | T016 | Completada E2 |
 | T018 | US1–4; todos | E2: checkpoint sin filtros: Node y Chromium ordinarios, seis CHANGE verdes, 21 IDs completos y build; verificar PIN-007-001/002 | T017,T027 | Completada E2 |
-| T019 | US1/2/4; FR-005/007/009 | E3: tres mutaciones postverde con controles positivos, error esperado, copia aislada y limpieza; src del checkout intacto | T018 | Pendiente |
-| T020 | US3; FR-001/003/004 | E3: RLS local desechable fresco A/B/anónimo, guardas de destino, hashes y limpieza; no backend real | T018 | Pendiente |
-| T021 | US1–4; todos | E3: validar siete contratos y 205 IDs con sourceHash común; revisar cláusulas y enmiendas contra resultados y baseline | T019,T020,T026 | Pendiente |
-| T022 | US1–4; todos | E3: añadir CI completa 007 y artefactos conservando las seis puertas y mutaciones previas; verificar descubrimiento y negativos del manifiesto | T021 | Pendiente |
-| T023 | US1–4; todos | E3: checkpoint final Node/Chromium/build, manifiestos completos, pins, build delta y límites; repetir completo si falla | T022 | Pendiente |
-| T024 | US1–4; todos | E3: converge, revisión de spec/plan/adendas, registro de aprobación y PR de código preparado con orden, omisiones y reversión; sin publicar | T023 | Pendiente |
+| T019 | US1/2/4; FR-005/007/009 | E3: tres mutaciones postverde con controles positivos, error esperado, copia aislada y limpieza; src del checkout intacto | T018 | Completada E3 |
+| T020 | US3; FR-001/003/004 | E3: RLS local desechable fresco A/B/anónimo, guardas de destino, hashes y limpieza; no backend real | T018 | Completada E3 |
+| T021 | US1–4; todos | E3: validar siete contratos y 205 IDs con sourceHash común; revisar cláusulas y enmiendas contra resultados y baseline | T019,T020,T026 | Completada E3 |
+| T022 | US1–4; todos | E3: añadir CI completa 007 y artefactos conservando las seis puertas y mutaciones previas; verificar descubrimiento y negativos del manifiesto | T021 | Completada E3 |
+| T023 | US1–4; todos | E3: checkpoint final Node/Chromium/build, manifiestos completos, pins, build delta y límites; repetir completo si falla | T022 | Completada E3 |
+| T024 | US1–4; todos | E3: converge, revisión de spec/plan/adendas, registro de aprobación y PR de código preparado con orden, omisiones y reversión; sin publicar | T023 | Completada E3 |
 
 Cada implementación depende de T010 y su G-PIN real. No se deriva aprobación
 del plan a partir de la aprobación del alcance. Publicación, fusión y Vercel

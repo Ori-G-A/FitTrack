@@ -87,7 +87,7 @@ El estado actual de 001 está en verification.md de su spec.
 | PERF-001 | Build inicial avisa chunk index 507,04 kB | Medir coste y decidir presupuesto antes de optimizar; no basta ocultar warning | Survey 006 |
 | DATA-001 | Importación aplica setters antes de esperar hidratación; hydratePhotos captura fallos individuales y conserva originales (`src/FitTrack.jsx:814`, `src/photo-storage.js:57`) | Caracterizar secuencia y foto no hidratada; no asumir que falla toda importación por un fallo individual; dueño decide semántica | Clarify 001 |
 | DATA-002 | Borrado elimina fotos antes de app_data sin transacción común (`src/FitTrack.jsx:783`) | Caracterizar fallos de cada paso y aprobar política explícita de recuperación | Clarify 001 |
-| DATA-003 | Bus global puede sobrescribir error al comenzar otro guardado (`src/data-sync.js:9`, `25`) | En un CHANGE posterior, aprobar política de agregación y escribir regresión determinista antes de corregir | Después de 001; priorizar en cierre M2 |
+| DATA-003 | Bus global podía sobrescribir error al comenzar otro guardado; reproducción histórica en 007 | 007 aprobada e implementada localmente con regresiones originales y recuperación por usuario:clave; publicación/integración pendientes de autorización | Cierre local 007 verificado; pendiente de entrega remota |
 | DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | En un CHANGE posterior, decidir resultado visible y probar retorno error separado de rechazo de promesa | Después de 001; priorizar en cierre M2 |
 | DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | Reproducir con Storage diferido y rechazo; decidir feedback visible persistente y escribir regresión antes de corregir | Revisión al cierre M2; no se cambia en refactor AS-IS |
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
@@ -451,3 +451,22 @@ E1 prevé tres CHANGE verdes y tres UI todavía rojos; cierre con 21 IDs de 007,
 dos expectativas heredadas contradictorias, sin modificar otros 99 pins.
 No hay código modificado ni aprobación del plan. Ejecución local previa al
 PR documental, publicación, integración y Vercel no se infieren del alcance.
+
+## Hallazgo de estabilidad durante 007 — TEST-001
+
+`test-support/interface-browser.js` instala el reloj y llama pauseAt con la misma
+fecha en dos acciones separadas. El tercer checkpoint E2 registró «Cannot
+fast-forward to the past» antes de montar App y un segundo montaje agotó su
+espera. Se conserva el [reporte de fallos](../../specs/007-guardado-fiable/evidence/e2-failures.json).
+Una repetición verde no demuestra que esta preparación sea inmune a demoras del
+host. Revisar el arranque determinista del reloj en una tarea técnica con prueba
+sobre el original, conservando los plazos medidos desde la petición y las firmas.
+No atribuir este error de preparación a la semántica de guardado ni ocultarlo
+mediante retries de Playwright.
+
+## Cierre local 007 — 2026-10-21 (Bogotá)
+
+E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build aprobado, siete contratos y 205 IDs completos sobre el mismo sourceHash. RLS local fresco: tres contratos reales y limpieza confirmada. Tres mutaciones detectadas con cuatro controles positivos. 97 de 101 archivos anteriores intactos, cuatro archivos con cinco enmiendas explícitas; seis archivos E0 intactos y prueba suplementaria de cambio de cuenta con rojo original/verde candidato.
+[Evidencia](../../specs/007-guardado-fiable/verification.md).
+La autorización local del plan está cumplida; publicación, integración y Vercel
+siguen pendientes de decisión específica. DATA-004/005 y producción quedan fuera.

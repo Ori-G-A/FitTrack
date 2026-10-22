@@ -42,3 +42,27 @@ modificar los seis archivos fijados en E0. 97 de 101 archivos anteriores intacto
 cuatro archivos con cinco enmiendas explícitas. La suite conserva las dos
 enmiendas 006. RLS fresco y mutaciones ya ejecutados; cierre E3 requiere todavía
 checkpoint final de los siete contratos y converge documental.
+
+## E3 — cierre local, 2026-10-21 (Bogotá)
+
+E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build aprobado, siete contratos y 205 IDs completos sobre el mismo sourceHash. RLS local fresco: tres contratos reales y limpieza confirmada. Tres mutaciones detectadas con cuatro controles positivos. 97 de 101 archivos anteriores intactos, cuatro archivos con cinco enmiendas explícitas; seis archivos E0 intactos y prueba suplementaria de cambio de cuenta con rojo original/verde candidato.
+[Checkpoint final](evidence/final.json), [RLS](evidence/rls.json),
+[mutaciones](evidence/mutations.json), [prueba suplementaria](evidence/supplementary-race.json)
+y [revisión por cláusula](clause-review.md).
+
+Comandos ejecutados con Node 24.21.0: checkpoint e2 y final,
+check-save-state-mutations.js, check-save-state-race.js y pnpm test:rls con CLI
+local fijada. CI añade la puerta completa 007 y artefactos, conservando las seis
+puertas y las mutaciones previas. No se ejecutó CI remoto.
+
+Bundle index: 506.49 → 507.26 kB
+(delta +0.77); gzip 147.1 → 147.38 kB
+(delta +0.28). Persiste el aviso >500 kB; no se incluyó optimización.
+Sin cambios de dependencias, instalación limpia nueva ni auditoría en esta entrega.
+
+No certifica producción, caché durable ni lectores de pantalla reales. DATA-004/005
+siguen pendientes. Ramas locales conservadas; no se publicó, fusionó ni desplegó 007.
+
+TEST-001 del [roadmap](../../docs/sdd/roadmap.md) conserva el incidente de
+preparación del reloj. Los resultados finales sin retries internos no borran las
+ejecuciones fallidas ni prueban inmunidad del harness a demoras del host.

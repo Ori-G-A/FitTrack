@@ -1,4 +1,4 @@
-# Decisiones técnicas propuestas — 007
+# Decisiones técnicas — 007
 
 Estado: decisiones aprobadas junto al plan el 2026-10-21; ejecución local autorizada.
 

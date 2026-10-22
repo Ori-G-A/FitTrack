@@ -200,3 +200,10 @@ PIN-006-002 añade sincronización de fixture FR-023, con reproducción renovada
 sobre el original. Sin prueba autenticada de producción. KD-002 sigue activa
 hasta una PATCH ratificada. Este cierre sustituye los estados históricos pendientes
 de publicación, autorización e integración de 006; no aprueba una etapa nueva.
+
+## Cierre local 007 — 2026-10-21 (Bogotá)
+
+E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build aprobado, siete contratos y 205 IDs completos sobre el mismo sourceHash. RLS local fresco: tres contratos reales y limpieza confirmada. Tres mutaciones detectadas con cuatro controles positivos. 97 de 101 archivos anteriores intactos, cuatro archivos con cinco enmiendas explícitas; seis archivos E0 intactos y prueba suplementaria de cambio de cuenta con rojo original/verde candidato.
+[Evidencia](../../specs/007-guardado-fiable/verification.md).
+La autorización local del plan está cumplida; publicación, integración y Vercel
+siguen pendientes de decisión específica. DATA-004/005 y producción quedan fuera.

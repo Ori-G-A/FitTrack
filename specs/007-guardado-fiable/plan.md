@@ -1,6 +1,6 @@
 # Plan técnico 007 — guardado fiable
 
-Estado: APROBADO para ejecución local E0–E3 el 2026-10-21; ejecución iniciada.
+Estado: plan aprobado y E0–E3 completadas localmente; entrega remota sin autorizar.
 [Alcance aprobado](spec.md), [tareas](tasks.md), [decisiones](research.md),
 [validación](validation-plan.md), [análisis](analyze.md).
 BASE de producto: `4eee59db2efb7ff389acdb5396b4e77ca4094cad`.
