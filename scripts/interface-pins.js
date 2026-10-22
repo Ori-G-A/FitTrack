@@ -1,6 +1,7 @@
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
+import {approvedSavePinHash} from './save-state-evidence.js';
 
 // La baseline original permanece inmutable. Una corrección técnica del harness
 // conserva su firma anterior y requiere evidencia renovada sobre el original.
@@ -27,7 +28,7 @@ export function verifyInterfacePins() {
  }
  for(const pin of [...baseline.pins,...baseline.previousPinsVerified]){
   const expected=synchronization&&pin.file===synchronization.file?synchronization.after:amendment&&pin.file===amendment.file?amendment.after:pin.sha256;
-  assert.equal(createHash('sha256').update(readFileSync(pin.file,'utf8').replace(/\r\n/g,'\n')).digest('hex'),expected,pin.file);
+  assert.equal(createHash('sha256').update(readFileSync(pin.file,'utf8').replace(/\r\n/g,'\n')).digest('hex'),approvedSavePinHash(pin.file,expected),pin.file);
  }
  return {verified:101,originalPins:68,newPins:33,amendments:Number(Boolean(amendment))+Number(Boolean(synchronization))};
 }

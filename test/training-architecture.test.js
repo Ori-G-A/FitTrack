@@ -1,3 +1,4 @@
+import {approvedSavePinHash} from '../scripts/save-state-evidence.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -57,6 +58,6 @@ test('entrenamiento conserva los pins fijados antes de extraer', async () => {
   const base = JSON.parse(await readFile('specs/003-entrenamiento/evidence/baseline.json', 'utf8'));
   for (const pin of [...base.pins, ...base.previousPinsVerified]) {
     const source = (await readFile(pin.file, 'utf8')).replaceAll('\r\n', '\n');
-    assert.equal(createHash('sha256').update(source).digest('hex'), pin.sha256, pin.file);
+    assert.equal(createHash('sha256').update(source).digest('hex'),approvedSavePinHash(pin.file,pin.sha256),pin.file);
   }
 });

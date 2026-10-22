@@ -73,8 +73,10 @@
     {
       "id": "FR-005",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 error persiste entre claves y nuevos intentos"
+      ],
       "plannedTests": [
         "guardado007 error persiste entre claves y nuevos intentos"
       ],
@@ -89,8 +91,10 @@
     {
       "id": "FR-006",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 recuperacion selectiva conserva otros errores"
+      ],
       "plannedTests": [
         "guardado007 recuperacion selectiva conserva otros errores"
       ],
@@ -105,8 +109,10 @@
     {
       "id": "FR-007",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 sesiones y resultados tardios aislados"
+      ],
       "plannedTests": [
         "guardado007 sesiones y resultados tardios aislados"
       ],
@@ -154,8 +160,10 @@
     {
       "id": "US1-AS1",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 error persiste entre claves y nuevos intentos"
+      ],
       "plannedTests": [
         "guardado007 error persiste entre claves y nuevos intentos"
       ],
@@ -169,8 +177,10 @@
     {
       "id": "US1-AS2",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 recuperacion selectiva conserva otros errores"
+      ],
       "plannedTests": [
         "guardado007 recuperacion selectiva conserva otros errores"
       ],
@@ -184,8 +194,10 @@
     {
       "id": "US1-AS3",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 recuperacion selectiva conserva otros errores"
+      ],
       "plannedTests": [
         "guardado007 recuperacion selectiva conserva otros errores"
       ],
@@ -199,8 +211,10 @@
     {
       "id": "US1-AS4",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 error persiste entre claves y nuevos intentos"
+      ],
       "plannedTests": [
         "guardado007 error persiste entre claves y nuevos intentos"
       ],
@@ -214,8 +228,10 @@
     {
       "id": "US2-AS1",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 sesiones y resultados tardios aislados"
+      ],
       "plannedTests": [
         "guardado007 sesiones y resultados tardios aislados"
       ],
@@ -229,8 +245,10 @@
     {
       "id": "US2-AS2",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 sesiones y resultados tardios aislados"
+      ],
       "plannedTests": [
         "guardado007 sesiones y resultados tardios aislados"
       ],

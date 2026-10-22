@@ -1,3 +1,4 @@
+import {approvedSavePinHash} from '../scripts/save-state-evidence.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
@@ -28,5 +29,5 @@ test('nutricion inferencia se invoca despues de guardas con entradas originales'
 });
 test('nutricion mantiene hashes congelados propios y anteriores',async()=>{
  const b=JSON.parse(await readFile('specs/004-nutricion-objetivos/evidence/baseline.json','utf8'));assert.equal(b.pins.length,18);assert.equal(b.previousPinsVerified.length,22);
- for(const p of [...b.pins,...b.previousPinsVerified]){const s=(await readFile(p.file,'utf8')).replace(/\r\n/g,'\n');assert.equal(createHash('sha256').update(s).digest('hex'),p.sha256,p.file);}
+ for(const p of [...b.pins,...b.previousPinsVerified]){const s=(await readFile(p.file,'utf8')).replace(/\r\n/g,'\n');assert.equal(createHash('sha256').update(s).digest('hex'),approvedSavePinHash(p.file,p.sha256),p.file);}
 });

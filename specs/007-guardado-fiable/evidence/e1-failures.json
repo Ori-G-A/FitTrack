@@ -1,0 +1,30 @@
+[
+  {
+    "attempt": 1,
+    "reason": "Cinco validadores independientes rechazan la firma de data-sync aprobada en PIN-007-001",
+    "tests": [
+      "test-support/interface-cases.js",
+      "test/body-architecture.test.js",
+      "test/body-compatibility.test.js",
+      "test/nutrition-architecture.test.js",
+      "test/training-architecture.test.js"
+    ],
+    "runtimeRegression": false,
+    "action": "T025, conservar baselines y resolver enmiendas explícitas; repetir E1 completo"
+  },
+  {
+    "attempt": 2,
+    "reason": "Preparacion incompleta del adaptador: referencias a pin no perteneciente al conjunto; repeticion no aceptada",
+    "action": "Clasificar todos los validadores y conservar originales"
+  },
+  {
+    "attempt": 3,
+    "reason": "PIN-007-005 no estaba cargado al iniciar el proceso de tests; hash de body-compatibility rechazado",
+    "action": "Repeticion entera con registro completo desde el inicio"
+  },
+  {
+    "attempt": 4,
+    "passed": true,
+    "evidence": "e1.json"
+  }
+]

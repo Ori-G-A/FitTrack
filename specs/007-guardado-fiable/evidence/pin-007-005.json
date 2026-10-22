@@ -1,0 +1,30 @@
+{
+  "id": "PIN-007-005",
+  "file": "test/body-compatibility.test.js",
+  "generatedAt": "2026-10-21T21:04:59.055Z",
+  "approvedPlan": "e5df628",
+  "convergeTask": "T025",
+  "fr": [
+    "FR-005",
+    "FR-006",
+    "FR-009"
+  ],
+  "originalHash": "aba8a992e9088cd2932048d2c201ba48a5f6ca7d7157b6ff1d946ce7e64140fe",
+  "before": "aba8a992e9088cd2932048d2c201ba48a5f6ca7d7157b6ff1d946ce7e64140fe",
+  "after": "9387fe60ffbc9f58caf63a9d2209e72211b0f494c708c446ea19550fac089e4e",
+  "assertionsChanged": false,
+  "reason": "Verificador de integridad reconoce únicamente la enmienda explícita aprobada; baseline y oráculos de comportamiento intactos.",
+  "originalContent": "original-pins-extension.json",
+  "originalProof": {
+    "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+    "node": 314,
+    "browser": 27
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "tests": 3,
+    "kind": "product-core",
+    "sourceHash": "4642c0baf38b720dabcb0032b39971cc248a63537b9e9d8815cb9c34f1f940e6"
+  },
+  "fullCheckpointRequired": true
+}

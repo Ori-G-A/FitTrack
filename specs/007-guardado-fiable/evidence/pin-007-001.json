@@ -1,0 +1,28 @@
+{
+  "id": "PIN-007-001",
+  "file": "test/data-sync.test.js",
+  "generatedAt": "2026-10-21T21:00:46.530Z",
+  "approvedPlan": "e5df628",
+  "fr": [
+    "FR-005",
+    "FR-006",
+    "FR-007"
+  ],
+  "before": "faff2b66e94c9d0c8711dc2e17edea5ac6bbee7a612e37ce75d78531b2b6f5dd",
+  "after": "09b30fa9050566d9b54c6ae0bc407579b2db707ceaed0cd76761b3b4122773db",
+  "assertionsChanged": true,
+  "reason": "FR-005/006 conserva fallo A: evento error inmediato, error al terminar B/C y éxito solo tras recuperar A.",
+  "originalContent": "original-pins.json",
+  "originalProof": {
+    "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+    "node": 314,
+    "browser": 27
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "tests": 3,
+    "sourceHash": "4642c0baf38b720dabcb0032b39971cc248a63537b9e9d8815cb9c34f1f940e6",
+    "node": 3
+  },
+  "originalHash": "faff2b66e94c9d0c8711dc2e17edea5ac6bbee7a612e37ce75d78531b2b6f5dd"
+}

@@ -1,5 +1,14 @@
 # Spec 001 — Persistencia y ciclo de vida de datos
 
+Adenda vigente de ejecución local 007 — 2026-10-21: el alcance y plan aprobados
+de [007](../007-guardado-fiable/spec.md) sustituyen la agregación defectuosa de
+FR-004 por errores retenidos por usuario:clave y resolución solo del mismo par.
+FR-006 conserva la suscripción heredada sin replay y añade consulta/suscripción
+por usuario para el indicador. Cola, payloads, debounce y promesas permanecen.
+El texto y checkpoints siguientes conservan el contrato histórico de 001;
+[PIN-007-001](../007-guardado-fiable/evidence/pin-007-001.json) documenta las
+aserciones sustituidas con evidencia original y nueva. Sin integración remota aún.
+
 Estado: ALCANCE APROBADO, 2026-10-14. Propietario: usuario del proyecto.
 Gobierno: [constitución](../../.specify/memory/constitution.md).
 Evidencia: [survey](../../docs/sdd/datos-survey.md).

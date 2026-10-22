@@ -14,3 +14,20 @@ La matriz 007 contiene siete IDs completos y catorce pending; no es contrato
 completo ni se usa modo completo para fingir que los CHANGE están implementados.
 Los contenidos originales de los dos pins que se enmendarán permanecen en
 [archivo separado](evidence/original-pins.json). No hay publicación autorizada.
+
+## E1 — 2026-10-21
+
+T011–T014 y T025 completadas: 323 Node, 27 Chromium heredados compatibles,
+build y tres CHANGE del coordinador verdes. Los tres CHANGE del indicador
+siguen rojos por sus motivos esperados. Matriz 007: 16 completos y cinco pending.
+[Checkpoint](evidence/e1.json). RLS fresco se exige en E3; 002 no se certifica
+de nuevo en esta entrega parcial.
+
+Los verificadores históricos necesitaban reconocer las enmiendas aprobadas.
+T025 preserva las baselines y archiva sus originales; PIN-007-003/005 adaptan
+los dos archivos congelados afectados y tres validadores no congelados conservan
+sus guardas. PIN-007-001 cambia solo la expectativa de pérdida de error de 001.
+98 de las 101 firmas siguen intactas; la verificación estricta rechaza firmas
+falsas. [Fallos y repeticiones](evidence/e1-failures.json) conservados. E1 se
+repitió completo después de corregir la integración de firmas; no se aceptó
+una ejecución con adaptadores incompletos.
