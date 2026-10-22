@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-22T01:54:40.948Z",
+  "supplementary": true,
+  "base": "4eee59db2efb7ff389acdb5396b4e77ca4094cad",
+  "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+  "file": "test/save-state-race.test.js",
+  "sha256": "c5ebf1a058ac00078dbede9b269dae3d6e8ae5346fdcf862080be4005df15894",
+  "candidatePassed": true,
+  "originalFailedForExpectedReason": true,
+  "cleanupPassed": true
+}

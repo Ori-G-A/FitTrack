@@ -10,12 +10,12 @@ export function browserCases(json){const out=[];function visit(suites){for(const
 export function verifySaveStatePins(){const b=JSON.parse(readFileSync(directory+'baseline.json'));for(const pin of b.pins)assert.equal(digest(pin.file),pin.sha256,pin.file);return b.pins.length;}
 export function markRows(ids){const file='specs/007-guardado-fiable/traceability.json',m=JSON.parse(readFileSync(file));for(const row of m.requirements)if(ids.includes(row.id)){row.status='complete';row.tests=row.plannedTests;}writeFileSync(file,JSON.stringify(m,null,2)+'\n');}
 export function approvedSavePinHash(file,originalHash){
- const allowed=[['PIN-007-001','test/data-sync.test.js'],['PIN-007-003','test-support/interface-cases.js'],['PIN-007-005','test/body-compatibility.test.js'],['PIN-007-002','test-support/interface-cases.js']];
+ const allowed=[['PIN-007-001','test/data-sync.test.js',3],['PIN-007-003','test-support/interface-cases.js',3],['PIN-007-005','test/body-compatibility.test.js',3],['PIN-007-002','test-support/interface-cases.js',3],['PIN-007-006','browser-tests/interface.spec.js',1]];
  let expected=originalHash;
- for(const [id,target] of allowed){const path=directory+id.toLowerCase()+'.json';if(file!==target||!existsSync(path))continue;
+ for(const [id,target,tests] of allowed){const path=directory+id.toLowerCase()+'.json';if(file!==target||!existsSync(path))continue;
   const a=JSON.parse(readFileSync(path)),b=JSON.parse(readFileSync(directory+'baseline.json'));
   assert.equal(a.id,id);assert.equal(a.file,target);assert.equal(a.before,expected);assert.equal(a.originalHash,b.previousPins.find(p=>p.file===target).sha256);
-  assert.equal(a.approvedPlan,'e5df628');assert.ok(a.fr.every(fr=>['FR-005','FR-006','FR-007','FR-008','FR-009'].includes(fr)));assert.equal(a.originalProof.sourceHash,b.sourceHash);assert.equal(a.originalProof.node,314);assert.equal(a.originalProof.browser,27);assert.equal(a.candidateTargeted.passed,true);assert.equal(a.candidateTargeted.tests,3);
+  assert.equal(a.approvedPlan,'e5df628');assert.ok(a.fr.every(fr=>['FR-005','FR-006','FR-007','FR-008','FR-009'].includes(fr)));assert.equal(a.originalProof.sourceHash,b.sourceHash);assert.equal(a.originalProof.node,314);assert.equal(a.originalProof.browser,27);assert.equal(a.candidateTargeted.passed,true);assert.equal(a.candidateTargeted.tests,tests);
   expected=a.after;
  }
  return expected;

@@ -1,0 +1,39 @@
+{
+  "stage": "e2",
+  "attempts": [
+    {
+      "checkpoint": "targeted-ui",
+      "report": "test-results/save007-e2-target-failed-001.json",
+      "failure": "El display inline del indicador prevalecía sobre la regla ft-focus y dejaba visible la región durante la sesión.",
+      "correction": "Retirar display del estilo inline y declararlo en la regla local de la clase; conservar el oráculo de ocultación.",
+      "targetedRepeat": "test-results/save007-e2-target-browser.json",
+      "targetedPassed": true
+    },
+    {
+      "checkpoint": "e2-full-attempt-1",
+      "report": "test-results/save007-e2-failed-001.tap",
+      "completed": false,
+      "failure": "interfaz conserva cargas reintentos errores y estado de guardado: RangeError Array buffer allocation failed; quedaba una segunda negativa de role=status sin enmendar en cases.boot.",
+      "interpretation": "La expansión del DOM en el diagnóstico de assert es una posible causa del RangeError; no está demostrada por este reporte.",
+      "correction": "Completar PIN-007-002 para las dos negativas de la región de guardado, sin cambiar las cuatro negativas de Toast ni otros oráculos.",
+      "previousAmendment": "pin-007-002-attempt-1.json",
+      "repeatRequired": "Checkpoint E2 completo, no solo la prueba que falló."
+    },
+    {
+      "checkpoint": "e2-full-attempt-2",
+      "report": "test-results/save007-e2-failed-002-browser.json",
+      "nodePassed": 324,
+      "failure": "interfaz navegador temas carga y errores: selector global getByRole(status) encuentra dos regiones al mostrar Toast.",
+      "correction": "T027/PIN-007-006 acota tres selectores al Toast con role=status; conserva textos, tiempos y desaparición.",
+      "repeatRequired": "Checkpoint E2 completo con descubrimiento ordinario."
+    }
+    ,{
+      "checkpoint": "e2-full-attempt-3",
+      "report": "test-results/save007-e2-failed-003-browser.json",
+      "nodePassed": 325,
+      "failure": "Chromium: clock.pauseAt Cannot fast-forward to the past antes de montar App; otro montaje agotó expect.poll de 5000 ms.",
+      "interpretation": "Fallos de preparación temporal; no demuestran un defecto del producto. No se cambian oráculos ni se aceptan como pruebas aprobadas.",
+      "action": "Repetir E2 entero con las otras verificaciones pesadas ya finalizadas, sin ampliar tiempos ni reintentar casos dentro de Playwright."
+    }
+  ]
+}

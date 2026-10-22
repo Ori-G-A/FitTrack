@@ -1,6 +1,6 @@
 # Decisiones técnicas propuestas — 007
 
-Estado: pendientes de aprobación del plan; alcance ya aprobado.
+Estado: decisiones aprobadas junto al plan el 2026-10-21; ejecución local autorizada.
 
 | ID | Decisión | Motivo y alternativa descartada |
 | --- | --- | --- |
@@ -29,3 +29,12 @@ forman parte de las 101 firmas; interface-cases añade PIN-007-003 antes de
 PIN-007-002 y body-compatibility añade PIN-007-005. Se mantienen 98 pins intactos.
 No se eliminan verificaciones
 ni se aceptan hashes arbitrarios. Repetición completa de E1 obligatoria.
+
+## R-009 — selector de Toast tras FR-009
+
+El segundo checkpoint E2 pasó 324 Node, pero Chromium detectó dos regiones
+status al mostrar Toast: la notificación y el indicador nuevo. El selector
+global suponía una única región. T027/PIN-007-006 acota los tres selectores
+a `.ft-toast` con role=status, conservando texto, temporizadores y ausencia final.
+No cambia Toast ni se elimina el indicador accesible para satisfacer una prueba.
+Se conservan el original y el fallo, con repetición completa de E2.

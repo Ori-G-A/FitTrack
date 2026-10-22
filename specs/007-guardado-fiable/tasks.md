@@ -20,13 +20,13 @@ solo añade tareas: no reescribir tareas completadas ni ocultar fallos.
 | T012 | US1/2; FR-005/006/007 | E1: conservar originales de ambos pins, aplicar PIN-007-001 solo a data-sync.test.js y adenda 001; preparar adenda 006 sin cambiar aún el assert de role=status | T011 | Completada E1 |
 | T013 | US1/2; FR-005/006/007 | E1: negativos de aislamiento del coordinador y getter estable; verificar ausencia de efectos React/DOM/backend nuevos | T011 | Completada E1 |
 | T014 | US1/2/3; FR-001–007 | E1: checkpoint completo de etapa: Node/Chromium heredados compatibles, AS-IS, tres CHANGE del coordinador verdes, tres UI rojos, build y 16/5 IDs | T012,T013 | Completada E1 |
-| T015 | US2; FR-007/008; US2-AS1/2/3 | E2: integrar userId y useSyncExternalStore, cambiar snapshot durante render y limpiar listeners; probar carrera de suscripción | T014 | Pendiente |
-| T016 | US4; FR-009; US4-AS1/2 | E2: una región visible fuera del rail, texto fijo y estilos locales; aplicar PIN-007-002 al assert de role=status y adenda 006; sin duplicar Toast ni alterar CSS histórico | T015 | Pendiente |
-| T017 | US3/4; FR-001/002/004/009 | E2: comprobar siete anchos, foco/overlays, ft-focus, navegación y guardas; no adaptar oráculos geométricos para ocultar regresiones | T016 | Pendiente |
-| T018 | US1–4; todos | E2: checkpoint sin filtros: Node y Chromium ordinarios, seis CHANGE verdes, 21 IDs completos y build; verificar PIN-007-001/002 | T017 | Pendiente |
+| T015 | US2; FR-007/008; US2-AS1/2/3 | E2: integrar userId y useSyncExternalStore, cambiar snapshot durante render y limpiar listeners; probar carrera de suscripción | T014 | Completada E2 |
+| T016 | US4; FR-009; US4-AS1/2 | E2: una región visible fuera del rail, texto fijo y estilos locales; aplicar PIN-007-002 al assert de role=status y adenda 006; sin duplicar Toast ni alterar CSS histórico | T015 | Completada E2 |
+| T017 | US3/4; FR-001/002/004/009 | E2: comprobar siete anchos, foco/overlays, ft-focus, navegación y guardas; no adaptar oráculos geométricos para ocultar regresiones | T016 | Completada E2 |
+| T018 | US1–4; todos | E2: checkpoint sin filtros: Node y Chromium ordinarios, seis CHANGE verdes, 21 IDs completos y build; verificar PIN-007-001/002 | T017,T027 | Completada E2 |
 | T019 | US1/2/4; FR-005/007/009 | E3: tres mutaciones postverde con controles positivos, error esperado, copia aislada y limpieza; src del checkout intacto | T018 | Pendiente |
 | T020 | US3; FR-001/003/004 | E3: RLS local desechable fresco A/B/anónimo, guardas de destino, hashes y limpieza; no backend real | T018 | Pendiente |
-| T021 | US1–4; todos | E3: validar siete contratos y 205 IDs con sourceHash común; revisar cláusulas y enmiendas contra resultados y baseline | T019,T020 | Pendiente |
+| T021 | US1–4; todos | E3: validar siete contratos y 205 IDs con sourceHash común; revisar cláusulas y enmiendas contra resultados y baseline | T019,T020,T026 | Pendiente |
 | T022 | US1–4; todos | E3: añadir CI completa 007 y artefactos conservando las seis puertas y mutaciones previas; verificar descubrimiento y negativos del manifiesto | T021 | Pendiente |
 | T023 | US1–4; todos | E3: checkpoint final Node/Chromium/build, manifiestos completos, pins, build delta y límites; repetir completo si falla | T022 | Pendiente |
 | T024 | US1–4; todos | E3: converge, revisión de spec/plan/adendas, registro de aprobación y PR de código preparado con orden, omisiones y reversión; sin publicar | T023 | Pendiente |
@@ -49,3 +49,22 @@ y requiere PIN-007-005; tres validadores de arquitectura no pertenecen a los
 para adaptar el verificador, sin cambiar su oráculo de comportamiento.
 interface-cases encadena adaptación del verificador
 en E1 y región accesible en E2; la aserción de UI no se adelanta.
+
+## Converge de revisión E3 — tarea añadida
+
+| ID | Historia / requisitos | Resultado verificable | Depende de | Estado |
+| --- | --- | --- | --- | --- |
+| T026 | US2; FR-007/008; US2-AS1/2 | Añadir comprobación suplementaria del DOM en layout antes del efecto al cambiar usuario y resolver A tarde; demostrar rojo sobre copia de BASE y verde candidato, conservando los seis casos E0 | T018 | Completada E2 |
+
+Esta comprobación refuerza el escenario ya aprobado; no añade comportamiento
+de producto ni modifica oráculos congelados. T021 depende también de T026.
+
+## Converge E2 — región Toast
+
+| ID | Historia / requisitos | Resultado verificable | Depende de | Estado |
+| --- | --- | --- | --- | --- |
+| T027 | US4; FR-009 y adenda 006 FR-012 | Archivar browser-tests/interface.spec.js original; PIN-007-006 limita los tres selectores genéricos de status al Toast, conservando texto y tiempos; control dirigido y repetición E2 entera | T016 | Completada E2 |
+
+T018 depende además de T027. La nueva región aprobada vuelve ambiguo el selector
+global del Toast, sin cambiar su comportamiento. Este cuarto archivo enmendado
+reduce a 97 los pins anteriores intactos; no altera la baseline histórica.

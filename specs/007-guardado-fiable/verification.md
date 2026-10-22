@@ -31,3 +31,14 @@ sus guardas. PIN-007-001 cambia solo la expectativa de pérdida de error de 001.
 falsas. [Fallos y repeticiones](evidence/e1-failures.json) conservados. E1 se
 repitió completo después de corregir la integración de firmas; no se aceptó
 una ejecución con adaptadores incompletos.
+
+## E2 — 2026-10-21
+
+325 Node, 29 Chromium y build aprobados, sin skips/retries, después de repetir
+E2 completo con PIN-007-002/006 finales. Matriz 007: 21 completos, cero pending.
+[Checkpoint](evidence/e2.json), [fallos previos](evidence/e2-failures.json).
+La revisión añadió T026 con rojo específico sobre BASE y verde candidato, sin
+modificar los seis archivos fijados en E0. 97 de 101 archivos anteriores intactos;
+cuatro archivos con cinco enmiendas explícitas. La suite conserva las dos
+enmiendas 006. RLS fresco y mutaciones ya ejecutados; cierre E3 requiere todavía
+checkpoint final de los siete contratos y converge documental.

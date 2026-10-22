@@ -138,3 +138,14 @@ No se garantiza persistencia tras recargar ni que el ledger refleje escrituras
 desde otras pestañas/dispositivos. DATA-004/005 y prueba autenticada de producción
 quedan fuera. Al cierre preparar doc-pr/code-pr con orden de integración, pruebas,
 omisiones y reversión; no publicar, fusionar ni desplegar por esta aprobación local.
+
+## Converge durante la ejecución
+
+El plan aprobado anterior se conserva como previsión histórica. T025 añadió
+adaptación estricta de verificadores de firmas; T026 añadió una prueba suplementaria
+del primer commit al cambiar cuenta. T027 acota los tres selectores de Toast
+en Chromium porque FR-009 añade otra región de estado. Conserva los textos,
+tiempos y desaparición de Toast; PIN-007-006 archiva su original.
+El resultado previsto tras estas tareas es 97 de 101 archivos anteriores intactos,
+cuatro archivos con cinco enmiendas explícitas; interface-cases tiene dos en cadena.
+Las seis pruebas/fixtures nuevas fijadas en E0 permanecen intactas.

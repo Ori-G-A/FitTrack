@@ -1,13 +1,13 @@
-import React, { useEffect, useId, useState } from "react";
+import React, { useCallback, useId, useState, useSyncExternalStore } from "react";
 import { Dumbbell, Lock } from "lucide-react";
 import { authenticate } from "./auth-service.js";
-import { onSaveStatus } from "./data-sync.js";
+import { getSaveStatus, onSaveStatus } from "./data-sync.js";
 import { supabase } from "./supabase.js";
 
-export function SaveIndicator() {
-  const [state, setState] = useState({ status: "idle", error: null });
-
-  useEffect(() => onSaveStatus(setState), []);
+export function SaveIndicator({ userId = null }) {
+  const subscribe = useCallback(callback => onSaveStatus(callback, userId), [userId]);
+  const getSnapshot = useCallback(() => getSaveStatus(userId), [userId]);
+  const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 
   const states = {
     idle: { text: "Sin cambios", color: "var(--muted)", dot: "var(--muted)" },
@@ -17,15 +17,17 @@ export function SaveIndicator() {
   };
   const current = states[state.status] || states.idle;
 
-  return (
+  return (<>
+    <style>{`.ft-root .ft-save-status{display:inline-flex}.ft-root.ft-focus .ft-save-status{display:none}`}</style>
     <div
-      title={state.error || (state.status === "saved" ? "Tus datos se guardaron en Supabase" : "Estado de sincronización con Supabase")}
-      style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "'IBM Plex Mono'", fontSize: 11, color: current.color, padding: "0 8px", whiteSpace: "nowrap" }}
+      className="ft-save-status" data-save-status role="status" aria-live="polite" aria-atomic="true"
+      title={state.status === "error" ? "Hay cambios que no se han guardado" : state.status === "saved" ? "Tus datos se guardaron en Supabase" : "Estado de sincronización con Supabase"}
+      style={{ alignItems: "center", gap: 7, fontFamily: "'IBM Plex Mono'", fontSize: 11, color: current.color, padding: "0 8px", marginBottom: 12, whiteSpace: "nowrap" }}
     >
       <span style={{ width: 8, height: 8, borderRadius: 999, background: current.dot, flexShrink: 0 }} />
       {current.text}
     </div>
-  );
+  </>);
 }
 
 export function AuthScreen() {

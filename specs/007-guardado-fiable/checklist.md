@@ -11,6 +11,7 @@ Estado: revisión documental del agente; no aprobación del propietario.
 - [x] Aislamiento de usuario, resultados tardíos, remontaje y recuperación por clave incluidos.
 - [x] Exclusiones: borrado, reintentos automáticos, caché durable, producción y despliegue.
 - [x] Alcance y C-001/002/003 aprobados por el propietario el 2026-10-21.
-- [ ] Plan, tareas y análisis preparados y aprobados por separado antes de implementar.
+- [x] Plan, tareas y análisis preparados y aprobados por separado antes de implementar.
 
-Se puede registrar el alcance aprobado; no hay implementación ni PR de 007.
+E0 y E1 están verificadas; E2/E3 están en ejecución local autorizada.
+La publicación de 007 sigue pendiente de autorización específica.
