@@ -428,3 +428,12 @@ E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build
 [Evidencia](../../specs/007-guardado-fiable/verification.md).
 La autorización local del plan está cumplida; publicación, integración y Vercel
 siguen pendientes de decisión específica. DATA-004/005 y producción quedan fuera.
+
+## Entrega remota 007 autorizada — 2026-10-21 (Bogotá)
+
+Sobre el cierre local `5f8334e`, el propietario respondió «Autorizar publicación,
+integración con CI verde y Vercel». Autoriza publicar ambas ramas y PRs,
+integrarlos con CI remoto verde y permitir el despliegue automático asociado.
+Se integra primero el snapshot documental aprobado y después el código.
+La evidencia de integración se registrará por SHA; esta autorización no convierte
+el cierre local en CI remoto ni certifica una sesión autenticada de producción.

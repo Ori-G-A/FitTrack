@@ -1,6 +1,7 @@
 # PR de código preparado — 007
 
-Estado: cierre local verificado; sin publicar.
+Estado: cierre local verificado; publicación, integración con CI verde y Vercel
+autorizadas expresamente el 2026-10-21. Pendiente de ejecución remota.
 Rama: codex/007-guardado-fiable. Base prevista: documental
 codex/007-guardado-fiable-docs (snapshot e5df628), antes de main.
 
