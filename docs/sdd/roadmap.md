@@ -87,7 +87,7 @@ El estado actual de 001 está en verification.md de su spec.
 | PERF-001 | Build inicial avisa chunk index 507,04 kB | Medir coste y decidir presupuesto antes de optimizar; no basta ocultar warning | Survey 006 |
 | DATA-001 | Importación aplica setters antes de esperar hidratación; hydratePhotos captura fallos individuales y conserva originales (`src/FitTrack.jsx:814`, `src/photo-storage.js:57`) | Caracterizar secuencia y foto no hidratada; no asumir que falla toda importación por un fallo individual; dueño decide semántica | Clarify 001 |
 | DATA-002 | Borrado elimina fotos antes de app_data sin transacción común (`src/FitTrack.jsx:783`) | Caracterizar fallos de cada paso y aprobar política explícita de recuperación | Clarify 001 |
-| DATA-003 | Bus global podía sobrescribir error al comenzar otro guardado; reproducción histórica en 007 | 007 aprobada e implementada localmente con regresiones originales y recuperación por usuario:clave; publicación/integración pendientes de autorización | Cierre local 007 verificado; pendiente de entrega remota |
+| DATA-003 | Bus global podía sobrescribir error al comenzar otro guardado; reproducción histórica en 007 | 007 integrada en main con CI verde y Production verificados; regresiones originales y recuperación por usuario:clave conservadas | Cerrado por 007 en 0617764; evidencia de integración disponible |
 | DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | En un CHANGE posterior, decidir resultado visible y probar retorno error separado de rechazo de promesa | Después de 001; priorizar en cierre M2 |
 | DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | Reproducir con Storage diferido y rechazo; decidir feedback visible persistente y escribir regresión antes de corregir | Revisión al cierre M2; no se cambia en refactor AS-IS |
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
@@ -470,3 +470,18 @@ E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build
 [Evidencia](../../specs/007-guardado-fiable/verification.md).
 La autorización local del plan está cumplida; publicación, integración y Vercel
 siguen pendientes de decisión específica. DATA-004/005 y producción quedan fuera.
+
+## Integración 007 verificada — 2026-10-22 (Bogotá)
+
+Los PRs [#16 documental](https://github.com/Ori-G-A/FitTrack/pull/16) y
+[#17 de código](https://github.com/Ori-G-A/FitTrack/pull/17) están integrados,
+en ese orden, tras aprobar ambos jobs de CI de cada PR. El resultado `0617764`
+aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39881154170)
+y Vercel confirmó Production para ese mismo SHA. Siete contratos, 205 IDs,
+325 pruebas Node, mutaciones y RLS local real con limpieza confirmados.
+[Registro](../../specs/007-guardado-fiable/evidence/integration.json).
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 007. No certifica una sesión autenticada de producción: la URL
+técnica redirige al acceso de Vercel. TEST-001, DATA-004/005 y el aviso de bundle
+siguen documentados. No se amplía el alcance de producto aprobado.

@@ -437,3 +437,18 @@ integrarlos con CI remoto verde y permitir el despliegue automático asociado.
 Se integra primero el snapshot documental aprobado y después el código.
 La evidencia de integración se registrará por SHA; esta autorización no convierte
 el cierre local en CI remoto ni certifica una sesión autenticada de producción.
+
+## Integración 007 verificada — 2026-10-22 (Bogotá)
+
+Los PRs [#16 documental](https://github.com/Ori-G-A/FitTrack/pull/16) y
+[#17 de código](https://github.com/Ori-G-A/FitTrack/pull/17) están integrados,
+en ese orden, tras aprobar ambos jobs de CI de cada PR. El resultado `0617764`
+aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39881154170)
+y Vercel confirmó Production para ese mismo SHA. Siete contratos, 205 IDs,
+325 pruebas Node, mutaciones y RLS local real con limpieza confirmados.
+[Registro](../../specs/007-guardado-fiable/evidence/integration.json).
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 007. No certifica una sesión autenticada de producción: la URL
+técnica redirige al acceso de Vercel. TEST-001, DATA-004/005 y el aviso de bundle
+siguen documentados. No se amplía el alcance de producto aprobado.

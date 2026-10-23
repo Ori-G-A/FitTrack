@@ -25,3 +25,8 @@ El propietario aprobó plan/tareas/análisis y ejecución local E0–E3 antes de
 documental. Publicación, integración y Vercel requieren decisión posterior.
 Integrar primero este snapshot y después el PR de código cuando se autorice
 la entrega remota. La evidencia posterior está en [verificación](verification.md).
+
+Estado final: [PR #16](https://github.com/Ori-G-A/FitTrack/pull/16) integrado.
+CI de PR/main y Production del resultado 0617764 verificados;
+[registro](evidence/integration.json). Las instrucciones de entrega anteriores
+se conservan como preparación histórica y ya están cumplidas.

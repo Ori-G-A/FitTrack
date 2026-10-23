@@ -55,4 +55,4 @@ E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build
 
 La tabla inicial conserva el análisis documental previo; la evidencia vigente está
 en [verificación](verification.md). Las tres tareas añadidas están cerradas.
-Publicación, integración y Vercel no están autorizadas para 007.
+La entrega remota se autorizó posteriormente y quedó integrada con CI y Production verificados.

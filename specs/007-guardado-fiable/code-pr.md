@@ -32,3 +32,8 @@ TEST-001 permanece documentado en el [roadmap](../../docs/sdd/roadmap.md): una
 ejecución falló al preparar el reloj heredado antes de montar App. Se conservan
 los reportes; E2 y el checkpoint final posteriores pasaron completos sin retries
 internos. Esa repetición verde no demuestra inmunidad a demoras del host.
+
+Estado final: [PR #17](https://github.com/Ori-G-A/FitTrack/pull/17) integrado.
+CI de PR/main y Production del resultado 0617764 verificados;
+[registro](evidence/integration.json). Las instrucciones de entrega anteriores
+se conservan como preparación histórica y ya están cumplidas.
