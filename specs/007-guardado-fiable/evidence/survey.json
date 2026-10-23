@@ -1,0 +1,37 @@
+{
+  "stage": "survey no contractual",
+  "base": "4eee59db2efb7ff389acdb5396b4e77ca4094cad",
+  "node": "v26.5.0",
+  "generatedAt": "2026-10-21T20:48:20.375Z",
+  "fixture": "usuario u y claves sintéticas a/b/c; sin backend",
+  "afterFailure": [
+    {
+      "status": "saving",
+      "error": null
+    },
+    {
+      "status": "saving",
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "status": "saving",
+      "error": null
+    },
+    {
+      "status": "saving",
+      "error": null
+    },
+    {
+      "status": "saving",
+      "error": null
+    },
+    {
+      "status": "saved",
+      "error": null
+    }
+  ],
+  "observed": "A falla; C empieza mientras B sigue pendiente; B/C terminan y se anuncia saved aunque A no fue guardada",
+  "scope": "DATA-003; reproduce comportamiento actual, no demuestra todavía el CHANGE deseado"
+}

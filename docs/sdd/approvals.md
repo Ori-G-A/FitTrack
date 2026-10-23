@@ -406,3 +406,18 @@ M7 satisface la puerta normativa; la integración de esta entrega sigue pendient
 de CI verde. Los hallazgos y límites de producción no cambian.
 [Informe ratificado](amendment-1.0.3.md). Incluye el registro local de cierre
 006 del commit `7b523f7`, todavía ausente de main al preparar esta entrega.
+
+## Alcance 007 aprobado — 2026-10-21 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a la pregunta
+de aprobar [007](../../specs/007-guardado-fiable/spec.md): cuatro AS-IS, cinco
+CHANGE, doce escenarios y C-001/002/003. Autoriza preparar plan, tareas y análisis.
+No autoriza implementar ni publicar/fusionar/desplegar. La reproducción del
+survey con Node global es diagnóstica; G-PIN exige runtime fijado y evidencia nueva.
+
+## Plan 007 aprobado — 2026-10-21 (Bogotá)
+
+El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecución
+local E0–E3». Aprueba las 24 tareas, decisiones, puertas y enmiendas controladas
+de dos pins descritas en el plan; autoriza ejecución local antes de integrar
+el PR documental. No autoriza publicar, fusionar ni desplegar 007.
