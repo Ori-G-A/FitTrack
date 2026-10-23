@@ -1,7 +1,7 @@
 # Análisis cruzado 007
 
-Estado: revisión documental del agente aprobada junto al plan el 2026-10-21;
-ejecución local E0–E3 autorizada. No es todavía evidencia de implementación.
+Estado: análisis inicial aprobado junto al plan el 2026-10-21 y converge local
+completado. La tabla inicial conserva la revisión anterior a implementar.
 [Spec](spec.md), [plan](plan.md), [tareas](tasks.md), [validación](validation-plan.md).
 No es una revisión independiente de otro agente ni evidencia de ejecución.
 
@@ -17,6 +17,10 @@ No es una revisión independiente de otro agente ni evidencia de ejecución.
 | UI | Una región, móvil/escritorio, medición real, ft-focus y siete anchos preservados |
 | Seguridad | Sin credenciales/backend real; RLS local fresco obligatorio para cerrar |
 | Gobierno | Alcance aprobado no autoriza plan; ejecución local y publicación tienen puertas separadas |
+
+La tabla anterior describe la revisión previa a E0. La aprobación separada del
+plan y la ejecución autorizada están en [aprobaciones](../../docs/sdd/approvals.md).
+Los resultados posteriores se registran por etapa en [verificación](verification.md).
 
 ## Hallazgos resueltos en la planificación
 
@@ -44,3 +48,11 @@ en modo completo, como corresponde antes de ejecutar. Se validaron 11 documentos
 92 enlaces locales y las 101 firmas heredadas. Diff de runtime, pruebas, SQL,
 dependencias y constitución vacío respecto a main. No se reinstalaron dependencias
 ni se ejecutó una suite de runtime para estos cambios documentales.
+
+## Converge final
+
+E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build aprobado, siete contratos y 205 IDs completos sobre el mismo sourceHash. RLS local fresco: tres contratos reales y limpieza confirmada. Tres mutaciones detectadas con cuatro controles positivos. 97 de 101 archivos anteriores intactos, cuatro archivos con cinco enmiendas explícitas; seis archivos E0 intactos y prueba suplementaria de cambio de cuenta con rojo original/verde candidato.
+
+La tabla inicial conserva el análisis documental previo; la evidencia vigente está
+en [verificación](verification.md). Las tres tareas añadidas están cerradas.
+Publicación, integración y Vercel no están autorizadas para 007.

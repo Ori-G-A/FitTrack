@@ -1,0 +1,33 @@
+{
+  "id": "PIN-007-006",
+  "file": "browser-tests/interface.spec.js",
+  "generatedAt": "2026-10-22T02:00:21.326Z",
+  "approvedPlan": "e5df628",
+  "fr": [
+    "FR-009"
+  ],
+  "originalHash": "b72d084c5d29c093d36a4f15b553632471e2e339e0efe383ddacc2be9cfc743a",
+  "before": "b72d084c5d29c093d36a4f15b553632471e2e339e0efe383ddacc2be9cfc743a",
+  "after": "6d52acdd2932f3b46037bac9b00cf7f7d520237bb3f00e898dcf8e097690b6fe",
+  "assertionsChanged": false,
+  "reason": "FR-009 añade una región: acotar los tres selectores de status al Toast conserva sus textos, tiempos y desaparición.",
+  "originalContent": "original-toast-pin.json",
+  "originalProof": {
+    "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+    "node": 314,
+    "browser": 27
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "tests": 1,
+    "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+    "browser": {
+      "startTime": "2026-10-22T01:59:39.101Z",
+      "duration": 22364.989999999998,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  }
+}

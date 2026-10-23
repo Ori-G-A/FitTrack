@@ -314,9 +314,9 @@ export default function App() {
       ) : (
         <div className="ft-wrap with-side">
           <SideNavigation tab={tab} NAV={NAV} menuOpen={menuOpen} setMenuOpen={setMenuOpen} setSheet={setSheet} goTo={goTo} userEmail={session.user.email} profileLine={profileLine}>
-            <SaveIndicator />
             <input ref={fileRef} type="file" accept="application/json" hidden onChange={importData} />
           </SideNavigation>
+          <SaveIndicator userId={userId} />
           {tab === "diario" && (
             <Suspense fallback={<div className="ft-empty">Cargando Diario…</div>}>
               <DiarioScreen workouts={workouts} nutrition={nutrition} weights={weights} measurements={measurements} wellness={wellness} periods={periods} menstrualLogs={menstrualLogs} goals={goals} setGoals={setGoals} setTab={goTo} openCard={openCard} userEmail={session.user.email} />

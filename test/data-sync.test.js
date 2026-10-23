@@ -29,10 +29,14 @@ test('datos eventos y promesas de guardado', async () => {
   const pa = subject.saveKey('u', 'a', []), pb = subject.saveKey('u', 'b', []);
   await settle(); assert.deepEqual(events.map(e => e.status), ['saving', 'saving']);
   a.resolve({ error: { message: 'falló A' } }); await pa;
-  assert.equal(events.length, 2);
+  assert.equal(events.length, 3); // 007 FR-005: fallo inmediato aunque B siga pendiente.
+  assert.equal(events.at(-1).status, 'error');
   const pc = subject.saveKey('u', 'c', []); await settle();
-  b.resolve({ error: null }); await pb; assert.equal(events.at(-1).status, 'saving');
+  b.resolve({ error: null }); await pb; assert.equal(events.at(-1).status, 'error');
   c.resolve({ error: null }); await pc;
+  assert.deepEqual(events.at(-1), { status: 'error', error: 'falló A' });
+  a.promise = Promise.resolve({ error: null });
+  await subject.saveKey('u', 'a', []);
   assert.deepEqual(events.at(-1), { status: 'saved', error: null });
   assert.equal(errors.length, 1);
   const isolated = await loadModule('src/data-sync.js', clientFor(async () => ({ error: {} })));

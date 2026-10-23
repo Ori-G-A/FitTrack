@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "total": 101,
+  "unchanged": 97,
+  "changed": [
+    "browser-tests/interface.spec.js",
+    "test-support/interface-cases.js",
+    "test/body-compatibility.test.js",
+    "test/data-sync.test.js"
+  ],
+  "amendments": [
+    {
+      "id": "PIN-007-001",
+      "file": "test/data-sync.test.js",
+      "before": "faff2b66e94c9d0c8711dc2e17edea5ac6bbee7a612e37ce75d78531b2b6f5dd",
+      "after": "09b30fa9050566d9b54c6ae0bc407579b2db707ceaed0cd76761b3b4122773db"
+    },
+    {
+      "id": "PIN-007-003",
+      "file": "test-support/interface-cases.js",
+      "before": "8716d10c54dd321f7bf5b3b135de3fd08b7d9041f6a644dbc0ea264c3361696c",
+      "after": "3f8a4cb03f30ad12ec3b794a60dfd775cf154ae82afe4f2b9f9847d27a4b9f0f"
+    },
+    {
+      "id": "PIN-007-005",
+      "file": "test/body-compatibility.test.js",
+      "before": "aba8a992e9088cd2932048d2c201ba48a5f6ca7d7157b6ff1d946ce7e64140fe",
+      "after": "9387fe60ffbc9f58caf63a9d2209e72211b0f494c708c446ea19550fac089e4e"
+    },
+    {
+      "id": "PIN-007-002",
+      "file": "test-support/interface-cases.js",
+      "before": "3f8a4cb03f30ad12ec3b794a60dfd775cf154ae82afe4f2b9f9847d27a4b9f0f",
+      "after": "dd79ef99290fb081c727d21129cafc365105cf761e48d2026b936044022323a6"
+    },
+    {
+      "id": "PIN-007-006",
+      "file": "browser-tests/interface.spec.js",
+      "before": "b72d084c5d29c093d36a4f15b553632471e2e339e0efe383ddacc2be9cfc743a",
+      "after": "6d52acdd2932f3b46037bac9b00cf7f7d520237bb3f00e898dcf8e097690b6fe"
+    }
+  ],
+  "newPins": 6
+}

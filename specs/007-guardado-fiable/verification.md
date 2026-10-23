@@ -1,0 +1,68 @@
+# Verificación 007
+
+## E0 / G-PIN — 2026-10-21
+
+T001–T010 completadas con Node 24.21.0. Original: 314 Node, 27 Chromium y
+build aprobados; cuatro AS-IS nuevos verdes y seis CHANGE rojos específicos.
+[Baseline y firmas](evidence/baseline.json). 101 firmas anteriores intactas,
+incluidas las dos enmiendas 006. Se congelan seis archivos nuevos de pruebas,
+harness y configuración. SourceHash coincide con el cierre de 006; src intacto.
+
+Los cuatro rojos Node fallan por FR-005/006/007/008, sin TypeError por API nueva.
+Los dos de Chromium fallan por texto oculto y ausencia de región accesible.
+La matriz 007 contiene siete IDs completos y catorce pending; no es contrato
+completo ni se usa modo completo para fingir que los CHANGE están implementados.
+Los contenidos originales de los dos pins que se enmendarán permanecen en
+[archivo separado](evidence/original-pins.json). No hay publicación autorizada.
+
+## E1 — 2026-10-21
+
+T011–T014 y T025 completadas: 323 Node, 27 Chromium heredados compatibles,
+build y tres CHANGE del coordinador verdes. Los tres CHANGE del indicador
+siguen rojos por sus motivos esperados. Matriz 007: 16 completos y cinco pending.
+[Checkpoint](evidence/e1.json). RLS fresco se exige en E3; 002 no se certifica
+de nuevo en esta entrega parcial.
+
+Los verificadores históricos necesitaban reconocer las enmiendas aprobadas.
+T025 preserva las baselines y archiva sus originales; PIN-007-003/005 adaptan
+los dos archivos congelados afectados y tres validadores no congelados conservan
+sus guardas. PIN-007-001 cambia solo la expectativa de pérdida de error de 001.
+98 de las 101 firmas siguen intactas; la verificación estricta rechaza firmas
+falsas. [Fallos y repeticiones](evidence/e1-failures.json) conservados. E1 se
+repitió completo después de corregir la integración de firmas; no se aceptó
+una ejecución con adaptadores incompletos.
+
+## E2 — 2026-10-21
+
+325 Node, 29 Chromium y build aprobados, sin skips/retries, después de repetir
+E2 completo con PIN-007-002/006 finales. Matriz 007: 21 completos, cero pending.
+[Checkpoint](evidence/e2.json), [fallos previos](evidence/e2-failures.json).
+La revisión añadió T026 con rojo específico sobre BASE y verde candidato, sin
+modificar los seis archivos fijados en E0. 97 de 101 archivos anteriores intactos;
+cuatro archivos con cinco enmiendas explícitas. La suite conserva las dos
+enmiendas 006. RLS fresco y mutaciones ya ejecutados; cierre E3 requiere todavía
+checkpoint final de los siete contratos y converge documental.
+
+## E3 — cierre local, 2026-10-21 (Bogotá)
+
+E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build aprobado, siete contratos y 205 IDs completos sobre el mismo sourceHash. RLS local fresco: tres contratos reales y limpieza confirmada. Tres mutaciones detectadas con cuatro controles positivos. 97 de 101 archivos anteriores intactos, cuatro archivos con cinco enmiendas explícitas; seis archivos E0 intactos y prueba suplementaria de cambio de cuenta con rojo original/verde candidato.
+[Checkpoint final](evidence/final.json), [RLS](evidence/rls.json),
+[mutaciones](evidence/mutations.json), [prueba suplementaria](evidence/supplementary-race.json)
+y [revisión por cláusula](clause-review.md).
+
+Comandos ejecutados con Node 24.21.0: checkpoint e2 y final,
+check-save-state-mutations.js, check-save-state-race.js y pnpm test:rls con CLI
+local fijada. CI añade la puerta completa 007 y artefactos, conservando las seis
+puertas y las mutaciones previas. No se ejecutó CI remoto.
+
+Bundle index: 506.49 → 507.26 kB
+(delta +0.77); gzip 147.1 → 147.38 kB
+(delta +0.28). Persiste el aviso >500 kB; no se incluyó optimización.
+Sin cambios de dependencias, instalación limpia nueva ni auditoría en esta entrega.
+
+No certifica producción, caché durable ni lectores de pantalla reales. DATA-004/005
+siguen pendientes. Ramas locales conservadas; no se publicó, fusionó ni desplegó 007.
+
+TEST-001 del [roadmap](../../docs/sdd/roadmap.md) conserva el incidente de
+preparación del reloj. Los resultados finales sin retries internos no borran las
+ejecuciones fallidas ni prueban inmunidad del harness a demoras del host.

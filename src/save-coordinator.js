@@ -1,35 +1,51 @@
 // Instancia única en la fachada productiva; instancias independientes en pruebas.
 export function createSaveCoordinator(persist, logger = console) {
-  const saveBus = { status: 'idle', error: null, at: null, pending: 0, listeners: new Set() };
+  const idle = Object.freeze({ status: 'idle', error: null });
+  const users = new Map();
+  const listeners = new Set();
   const saveQueues = new Map();
   const suspendedUsers = new Set();
-  function emitSave(status, error = null) {
-    saveBus.status = status;
-    saveBus.error = error;
-    saveBus.at = Date.now();
-    saveBus.listeners.forEach(listener => listener({ status, error }));
+  function stateFor(userId) {
+    if (!users.has(userId)) users.set(userId, { pending: 0, errors: new Map(), snapshot: idle });
+    return users.get(userId);
   }
-  function onSaveStatus(callback) {
-    saveBus.listeners.add(callback);
-    return () => saveBus.listeners.delete(callback);
+  const getSaveStatus = userId => userId ? users.get(userId)?.snapshot || idle : idle;
+  function emitSave(userId) {
+    const state = stateFor(userId);
+    const error = state.errors.size ? state.errors.values().next().value : null;
+    const status = error !== null ? 'error' : state.pending > 0 ? 'saving' : 'saved';
+    if (state.snapshot.status !== status || state.snapshot.error !== error) {
+      state.snapshot = Object.freeze({ status, error });
+    }
+    for (const listener of listeners) {
+      if (listener.userId === undefined || listener.userId === userId) listener.callback(state.snapshot);
+    }
+  }
+  function onSaveStatus(callback, userId) {
+    const listener = { callback, userId };
+    listeners.add(listener);
+    return () => listeners.delete(listener);
   }
   async function persistKey(userId, key, value) {
-    if (saveBus.pending === 0) saveBus.error = null;
-    saveBus.pending += 1;
-    emitSave('saving');
+    const state = stateFor(userId);
+    state.pending += 1;
+    emitSave(userId);
     try {
       await persist(userId, key, value);
+      state.errors.delete(key);
     } catch (error) {
       logger.error('saveKey', key, error);
-      saveBus.error = error.message || 'Error al guardar';
+      state.errors.set(key, error?.message || 'Error al guardar');
     } finally {
-      saveBus.pending = Math.max(0, saveBus.pending - 1);
-      if (saveBus.pending === 0) emitSave(saveBus.error ? 'error' : 'saved', saveBus.error);
+      state.pending = Math.max(0, state.pending - 1);
+      emitSave(userId);
     }
   }
   function saveKey(userId, key, value) {
     if (!userId) {
-      emitSave('error', 'Sin sesion activa');
+      for (const listener of listeners) {
+        if (listener.userId === undefined) listener.callback({ status: 'error', error: 'Sin sesion activa' });
+      }
       return Promise.resolve();
     }
     if (suspendedUsers.has(userId)) return Promise.resolve();
@@ -47,5 +63,5 @@ export function createSaveCoordinator(persist, logger = console) {
   );
   const suspendUserSaves = userId => suspendedUsers.add(userId);
   const resumeUserSaves = userId => suspendedUsers.delete(userId);
-  return { onSaveStatus, saveKey, waitForUserSaves, suspendUserSaves, resumeUserSaves };
+  return { onSaveStatus, getSaveStatus, saveKey, waitForUserSaves, suspendUserSaves, resumeUserSaves };
 }

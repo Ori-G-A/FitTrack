@@ -1,5 +1,13 @@
 # Spec 006: Interfaz y accesibilidad
 
+Adenda vigente de ejecución local 007 — 2026-10-21: [007 FR-008/009](../007-guardado-fiable/spec.md)
+amplía FR-012 con snapshot del usuario actual y una única región de estado
+visible en móvil/escritorio. La cadena CSS heredada, Toast y modo ft-focus
+permanecen. PIN-007-002 sustituye la negativa histórica de role=status por
+la región de guardado; PIN-007-003 adapta el verificador de integridad.
+Los párrafos y evidencias siguientes conservan la historia de 006. Ejecución
+local autorizada, sin integración remota de 007 todavía.
+
 Estado: ALCANCE Y CAMBIOS APROBADOS; plan original aprobado, extensión T040–T043 pendiente | Propietario: propietario de FitTrack | Fecha: 2026-10-19
 Constitución: [1.0.2 ratificada](../../.specify/memory/constitution.md).
 BASE: 86299a4497e3c19180c30a640598a1358d61cc8f.

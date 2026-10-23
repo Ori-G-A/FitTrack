@@ -1,0 +1,35 @@
+{
+  "id": "PIN-007-002",
+  "file": "test-support/interface-cases.js",
+  "generatedAt": "2026-10-22T01:39:22.062Z",
+  "approvedPlan": "e5df628",
+  "fr": [
+    "FR-008",
+    "FR-009"
+  ],
+  "originalHash": "8716d10c54dd321f7bf5b3b135de3fd08b7d9041f6a644dbc0ea264c3361696c",
+  "before": "3f8a4cb03f30ad12ec3b794a60dfd775cf154ae82afe4f2b9f9847d27a4b9f0f",
+  "after": "94b6b7f69aaf373e241f9726736b2f7167d8d56226f074a0f02e6f28c07c2823",
+  "assertionsChanged": true,
+  "reason": "FR-009 añade región de estado: sustituir ausencia role=status por región de guardado; conservar Toast y demás asserts.",
+  "originalContent": "original-pins.json",
+  "originalProof": {
+    "sourceHash": "d860ad3be401f44be83859acbfbeb71811909ac1b3fe656e85be50d7f7daad34",
+    "node": 314,
+    "browser": 27
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "tests": 3,
+    "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+    "node": 1,
+    "browser": {
+      "startTime": "2026-10-22T01:38:10.270Z",
+      "duration": 24567.556,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  }
+}

@@ -1,7 +1,7 @@
 # Validación y trazabilidad prevista — 007
 
-Estado: pruebas previstas, no creadas ni ejecutadas. Nombres únicos propuestos.
-La matriz completa se conserva en traceability.json; todas las filas pending.
+Plan aprobado; pruebas congeladas en E0 y ejecución por etapas registrada en
+[verificación](verification.md). La matriz vigente se conserva en traceability.json.
 
 | Nombre exacto | Tipo y archivo previsto | FR / escenarios |
 | --- | --- | --- |
@@ -57,3 +57,12 @@ E2/E3: 21 IDs complete y cero pending/partial; total siete contratos, 205 IDs.
 No inferir resultados de totales previos. Exigir TAP/JSON, sourceHash común,
 firmas nuevas congeladas, enmienda de dos pins, RLS local fresco y cleanup.
 Registrar build y delta frente al original. Sin pruebas de producción ni credenciales reales.
+
+## Comprobación suplementaria T026
+
+`guardado007 cambio de usuario no pinta error ajeno antes del efecto`, en
+`test/save-state-race.test.js`, observa el DOM en layout antes del efecto pasivo.
+Comprueba el primer commit de B y un fallo tardío de A, además del retorno a A.
+Es una prueba de revisión añadida después de implementar, con rojo específico
+sobre una copia de BASE y verde candidato; no forma parte de los seis rojos E0
+ni altera sus archivos congelados. [Evidencia](evidence/supplementary-race.json).

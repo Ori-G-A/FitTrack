@@ -4,7 +4,7 @@ import { createSaveCoordinator } from "./save-coordinator.js";
 import { supabase } from "./supabase.js";
 
 const coordinator = createSaveCoordinator((userId, key, value) => upsertAppDataKey(supabase, userId, key, value));
-export const { onSaveStatus, saveKey, waitForUserSaves, suspendUserSaves, resumeUserSaves } = coordinator;
+export const { onSaveStatus, getSaveStatus, saveKey, waitForUserSaves, suspendUserSaves, resumeUserSaves } = coordinator;
 
 export async function loadKey(userId, key, fallback, client = supabase) {
   return loadAppDataKey(client, userId, key, fallback);

@@ -1,6 +1,6 @@
-# Decisiones técnicas propuestas — 007
+# Decisiones técnicas — 007
 
-Estado: pendientes de aprobación del plan; alcance ya aprobado.
+Estado: decisiones aprobadas junto al plan el 2026-10-21; ejecución local autorizada.
 
 | ID | Decisión | Motivo y alternativa descartada |
 | --- | --- | --- |
@@ -16,3 +16,25 @@ La inspección encontró `test/data-sync.test.js` esperando pérdida del error y
 `test-support/interface-cases.js` esperando que no haya role=status. Ambos se
 reprobarán sin cambios sobre BASE antes de enmendar. No se presuponen otros pins
 afectados; nuevos conflictos requieren un informe concreto antes de adaptar asserts.
+
+## R-008 — verificadores históricos independientes
+
+El primer E1 falló en cinco comprobaciones de hashes: body-architecture,
+body-compatibility, nutrition-architecture, training-architecture y compatibility
+de interface-cases. Todas comparan el pin data-sync contra baselines inmutables.
+T025 conserva esas baselines y añade resolución estricta de la enmienda aprobada
+antes de comparar hashes. Se archiva el contenido anterior de los adaptadores y
+se les asigna trazabilidad de adaptación. Tres validadores de arquitectura no
+forman parte de las 101 firmas; interface-cases añade PIN-007-003 antes de
+PIN-007-002 y body-compatibility añade PIN-007-005. Se mantienen 98 pins intactos.
+No se eliminan verificaciones
+ni se aceptan hashes arbitrarios. Repetición completa de E1 obligatoria.
+
+## R-009 — selector de Toast tras FR-009
+
+El segundo checkpoint E2 pasó 324 Node, pero Chromium detectó dos regiones
+status al mostrar Toast: la notificación y el indicador nuevo. El selector
+global suponía una única región. T027/PIN-007-006 acota los tres selectores
+a `.ft-toast` con role=status, conservando texto, temporizadores y ausencia final.
+No cambia Toast ni se elimina el indicador accesible para satisfacer una prueba.
+Se conservan el original y el fallo, con repetición completa de E2.

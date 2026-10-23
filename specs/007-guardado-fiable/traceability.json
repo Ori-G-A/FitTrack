@@ -1,12 +1,14 @@
 {
   "spec": "007-guardado-fiable",
-  "note": "Alcance aprobado; plan pendiente. Nombres previstos, sin pruebas creadas ni evidencia contractual.",
+  "note": "Plan aprobado; estado contractual verificado por entrega en evidence. Los nombres son pruebas ejecutables, no sustituyen revisión de aserciones.",
   "requirements": [
     {
       "id": "FR-001",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 cola mantiene orden concurrencia y referencia"
+      ],
       "plannedTests": [
         "guardado007 cola mantiene orden concurrencia y referencia"
       ],
@@ -20,8 +22,10 @@
     {
       "id": "FR-002",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 debounce conserva 600ms y cleanup"
+      ],
       "plannedTests": [
         "guardado007 debounce conserva 600ms y cleanup"
       ],
@@ -35,8 +39,10 @@
     {
       "id": "FR-003",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 promesa conserva resolucion ante fallo"
+      ],
       "plannedTests": [
         "guardado007 promesa conserva resolucion ante fallo"
       ],
@@ -50,8 +56,10 @@
     {
       "id": "FR-004",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 conserva ausencia suspension y espera capturada"
+      ],
       "plannedTests": [
         "guardado007 conserva ausencia suspension y espera capturada"
       ],
@@ -65,8 +73,10 @@
     {
       "id": "FR-005",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 error persiste entre claves y nuevos intentos"
+      ],
       "plannedTests": [
         "guardado007 error persiste entre claves y nuevos intentos"
       ],
@@ -81,8 +91,10 @@
     {
       "id": "FR-006",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 recuperacion selectiva conserva otros errores"
+      ],
       "plannedTests": [
         "guardado007 recuperacion selectiva conserva otros errores"
       ],
@@ -97,24 +109,32 @@
     {
       "id": "FR-007",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 sesiones y resultados tardios aislados",
+        "guardado007 cambio de usuario no pinta error ajeno antes del efecto"
+      ],
       "plannedTests": [
-        "guardado007 sesiones y resultados tardios aislados"
+        "guardado007 sesiones y resultados tardios aislados",
+        "guardado007 cambio de usuario no pinta error ajeno antes del efecto"
       ],
       "plannedFiles": [
-        "test/save-state-change.test.js"
+        "test/save-state-change.test.js",
+        "test/save-state-race.test.js"
       ],
       "plannedTaskIds": [
         "T008",
-        "T011"
+        "T011",
+        "T026"
       ]
     },
     {
       "id": "FR-008",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 indicador recupera estado al remontar"
+      ],
       "plannedTests": [
         "guardado007 indicador recupera estado al remontar"
       ],
@@ -129,8 +149,11 @@
     {
       "id": "FR-009",
       "story": "US4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 navegador error visible en movil y escritorio",
+        "guardado007 navegador estado accesible y sin exito falso"
+      ],
       "plannedTests": [
         "guardado007 navegador error visible en movil y escritorio",
         "guardado007 navegador estado accesible y sin exito falso"
@@ -146,8 +169,10 @@
     {
       "id": "US1-AS1",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 error persiste entre claves y nuevos intentos"
+      ],
       "plannedTests": [
         "guardado007 error persiste entre claves y nuevos intentos"
       ],
@@ -161,8 +186,10 @@
     {
       "id": "US1-AS2",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 recuperacion selectiva conserva otros errores"
+      ],
       "plannedTests": [
         "guardado007 recuperacion selectiva conserva otros errores"
       ],
@@ -176,8 +203,10 @@
     {
       "id": "US1-AS3",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 recuperacion selectiva conserva otros errores"
+      ],
       "plannedTests": [
         "guardado007 recuperacion selectiva conserva otros errores"
       ],
@@ -191,8 +220,10 @@
     {
       "id": "US1-AS4",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 error persiste entre claves y nuevos intentos"
+      ],
       "plannedTests": [
         "guardado007 error persiste entre claves y nuevos intentos"
       ],
@@ -206,38 +237,52 @@
     {
       "id": "US2-AS1",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 sesiones y resultados tardios aislados",
+        "guardado007 cambio de usuario no pinta error ajeno antes del efecto"
+      ],
       "plannedTests": [
-        "guardado007 sesiones y resultados tardios aislados"
+        "guardado007 sesiones y resultados tardios aislados",
+        "guardado007 cambio de usuario no pinta error ajeno antes del efecto"
       ],
       "plannedFiles": [
-        "test/save-state-change.test.js"
+        "test/save-state-change.test.js",
+        "test/save-state-race.test.js"
       ],
       "plannedTaskIds": [
-        "T008"
+        "T008",
+        "T026"
       ]
     },
     {
       "id": "US2-AS2",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 sesiones y resultados tardios aislados",
+        "guardado007 cambio de usuario no pinta error ajeno antes del efecto"
+      ],
       "plannedTests": [
-        "guardado007 sesiones y resultados tardios aislados"
+        "guardado007 sesiones y resultados tardios aislados",
+        "guardado007 cambio de usuario no pinta error ajeno antes del efecto"
       ],
       "plannedFiles": [
-        "test/save-state-change.test.js"
+        "test/save-state-change.test.js",
+        "test/save-state-race.test.js"
       ],
       "plannedTaskIds": [
-        "T008"
+        "T008",
+        "T026"
       ]
     },
     {
       "id": "US2-AS3",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 indicador recupera estado al remontar"
+      ],
       "plannedTests": [
         "guardado007 indicador recupera estado al remontar"
       ],
@@ -252,8 +297,10 @@
     {
       "id": "US3-AS1",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 cola mantiene orden concurrencia y referencia"
+      ],
       "plannedTests": [
         "guardado007 cola mantiene orden concurrencia y referencia"
       ],
@@ -267,8 +314,10 @@
     {
       "id": "US3-AS2",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 debounce conserva 600ms y cleanup"
+      ],
       "plannedTests": [
         "guardado007 debounce conserva 600ms y cleanup"
       ],
@@ -282,8 +331,10 @@
     {
       "id": "US3-AS3",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 conserva ausencia suspension y espera capturada"
+      ],
       "plannedTests": [
         "guardado007 conserva ausencia suspension y espera capturada"
       ],
@@ -297,8 +348,10 @@
     {
       "id": "US4-AS1",
       "story": "US4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 navegador error visible en movil y escritorio"
+      ],
       "plannedTests": [
         "guardado007 navegador error visible en movil y escritorio"
       ],
@@ -313,8 +366,10 @@
     {
       "id": "US4-AS2",
       "story": "US4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 navegador estado accesible y sin exito falso"
+      ],
       "plannedTests": [
         "guardado007 navegador estado accesible y sin exito falso"
       ],

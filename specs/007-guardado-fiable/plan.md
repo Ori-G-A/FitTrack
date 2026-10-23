@@ -1,6 +1,6 @@
 # Plan técnico 007 — guardado fiable
 
-Estado: APROBADO para ejecución local E0–E3 el 2026-10-21; ejecución iniciada.
+Estado: plan aprobado y E0–E3 completadas localmente; entrega remota sin autorizar.
 [Alcance aprobado](spec.md), [tareas](tasks.md), [decisiones](research.md),
 [validación](validation-plan.md), [análisis](analyze.md).
 BASE de producto: `4eee59db2efb7ff389acdb5396b4e77ca4094cad`.
@@ -138,3 +138,14 @@ No se garantiza persistencia tras recargar ni que el ledger refleje escrituras
 desde otras pestañas/dispositivos. DATA-004/005 y prueba autenticada de producción
 quedan fuera. Al cierre preparar doc-pr/code-pr con orden de integración, pruebas,
 omisiones y reversión; no publicar, fusionar ni desplegar por esta aprobación local.
+
+## Converge durante la ejecución
+
+El plan aprobado anterior se conserva como previsión histórica. T025 añadió
+adaptación estricta de verificadores de firmas; T026 añadió una prueba suplementaria
+del primer commit al cambiar cuenta. T027 acota los tres selectores de Toast
+en Chromium porque FR-009 añade otra región de estado. Conserva los textos,
+tiempos y desaparición de Toast; PIN-007-006 archiva su original.
+El resultado previsto tras estas tareas es 97 de 101 archivos anteriores intactos,
+cuatro archivos con cinco enmiendas explícitas; interface-cases tiene dos en cadena.
+Las seis pruebas/fixtures nuevas fijadas en E0 permanecen intactas.
