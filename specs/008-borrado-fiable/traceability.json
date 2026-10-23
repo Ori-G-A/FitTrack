@@ -1,6 +1,6 @@
 {
   "spec": "008-borrado-fiable",
-  "note": "Alcance y aclaraciones aprobados; sin plan aprobado. Todos pending. El survey es diagnóstico, no evidencia contractual.",
+  "note": "Alcance y aclaraciones aprobados; plan de 36 tareas preparado, pendiente de aprobación. Archivos/tareas previstos no son evidencia. Todos pending.",
   "requirements": [
     {
       "id": "FR-001",
@@ -9,6 +9,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 confirmacion exacta y cancelacion no producen efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
       ]
     },
     {
@@ -18,6 +24,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 usuario ausente rechaza antes de efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
       ]
     },
     {
@@ -27,6 +39,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 conserva orden cola fotos registros y propietario"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T006"
       ]
     },
     {
@@ -36,6 +54,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 conserva efectos parciales sin rollback"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T006"
       ]
     },
     {
@@ -45,6 +69,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 cierre distingue retorno error y rechazo"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
       ]
     },
     {
@@ -54,6 +84,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 navegador fallo persiste visible y accesible"
+      ],
+      "plannedFiles": [
+        "change-tests/delete-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T012"
       ]
     },
     {
@@ -65,6 +101,14 @@
         "borrado008 feedback sobrevive al desmontaje de Ajustes",
         "borrado008 resultado de borrado no confirmado conserva bloqueo",
         "borrado008 no recrea datos tras fallo de cierre"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js",
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008",
+        "T007"
       ]
     },
     {
@@ -75,6 +119,14 @@
       "plannedTests": [
         "borrado008 no recrea datos tras fallo de cierre",
         "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js",
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007",
+        "T009"
       ]
     },
     {
@@ -85,6 +137,12 @@
       "plannedTests": [
         "borrado008 recarga temprana fallida conserva bloqueo",
         "borrado008 recarga temprana completa precede a nuevos guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T010"
       ]
     },
     {
@@ -96,6 +154,14 @@
         "borrado008 resultado de borrado no confirmado conserva bloqueo",
         "borrado008 no recrea datos tras fallo de cierre",
         "borrado008 reintento manual solo cierra sesion"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js",
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007",
+        "T008"
       ]
     },
     {
@@ -107,6 +173,12 @@
         "borrado008 fallo tardio de A no habilita ni escribe B",
         "borrado008 respuesta de A no cierra ni continua B",
         "borrado008 cambio A B A invalida el intento anterior"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
       ]
     },
     {
@@ -116,6 +188,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 feedback sobrevive al desmontaje de Ajustes"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
       ]
     },
     {
@@ -125,6 +203,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 intento y recuperacion no se duplican"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
       ]
     },
     {
@@ -134,6 +218,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 confirmacion exacta y cancelacion no producen efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
       ]
     },
     {
@@ -143,6 +233,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 usuario ausente rechaza antes de efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
       ]
     },
     {
@@ -152,6 +248,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 conserva orden cola fotos registros y propietario"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T006"
       ]
     },
     {
@@ -161,6 +263,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 intento y recuperacion no se duplican"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
       ]
     },
     {
@@ -171,6 +279,14 @@
       "plannedTests": [
         "borrado008 navegador fallo persiste visible y accesible",
         "borrado008 feedback sobrevive al desmontaje de Ajustes"
+      ],
+      "plannedFiles": [
+        "change-tests/delete-state.spec.js",
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T012",
+        "T008"
       ]
     },
     {
@@ -180,6 +296,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 resultado de borrado no confirmado conserva bloqueo"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
       ]
     },
     {
@@ -190,6 +312,12 @@
       "plannedTests": [
         "borrado008 cierre distingue retorno error y rechazo",
         "borrado008 no recrea datos tras fallo de cierre"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
       ]
     },
     {
@@ -200,6 +328,12 @@
       "plannedTests": [
         "borrado008 cierre distingue retorno error y rechazo",
         "borrado008 no recrea datos tras fallo de cierre"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
       ]
     },
     {
@@ -209,6 +343,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 reintento manual solo cierra sesion"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
       ]
     },
     {
@@ -218,6 +358,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T009"
       ]
     },
     {
@@ -227,6 +373,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T009"
       ]
     },
     {
@@ -236,6 +388,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 recarga temprana fallida conserva bloqueo"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T010"
       ]
     },
     {
@@ -245,6 +403,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 recarga temprana completa precede a nuevos guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T010"
       ]
     },
     {
@@ -254,6 +418,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 fallo tardio de A no habilita ni escribe B"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
       ]
     },
     {
@@ -263,6 +433,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 respuesta de A no cierra ni continua B"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
       ]
     },
     {
@@ -272,6 +448,12 @@
       "tests": [],
       "plannedTests": [
         "borrado008 cambio A B A invalida el intento anterior"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
       ]
     }
   ]

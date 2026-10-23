@@ -5,7 +5,9 @@ CI de PR/main y Vercel Production verificados. Siete contratos/205 IDs,
 325 Node, 29 Chromium, RLS real desechable y mutaciones aprobados.
 [Cierre 007](../../specs/007-guardado-fiable/evidence/integration.json).
 008 [borrado fiable](../../specs/008-borrado-fiable/spec.md) tiene alcance y
-C-001/002/003 aprobados; se prepara el plan técnico, sin implementación autorizada.
+C-001/002/003 aprobados; [plan técnico](../../specs/008-borrado-fiable/plan.md),
+36 tareas y análisis aprobados por separado; ejecución local E0–E3 autorizada,
+sin autorización de publicar, fusionar ni desplegar 008.
 
 Estado histórico, 2026-10-20 (Bogotá): 001–006 integradas; PATCH 1.0.3 ratificada
 y aplicada. La integración documental y sus verificaciones se registran en el

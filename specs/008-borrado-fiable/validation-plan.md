@@ -45,9 +45,42 @@ es diagnóstico independiente, no una baseline ni G-PIN aprobado.
 
 Las pruebas AS-IS deberán pasar sobre BASE; las CHANGE deberán fallar por el
 comportamiento concreto antes de implementar, sin aceptar errores del harness
-o APIs inexistentes como rojo válido. El plan fijará archivos, tareas y firmas.
+o APIs inexistentes como rojo válido. El plan propone los archivos y tareas siguientes.
 Las expectativas heredadas contradictorias requerirán enmiendas explícitas por FR.
 
 El cierre futuro exige manifestación completa real, suite/build y RLS fresco
 según el plan que se apruebe. No se añaden ahora puertas CI de 008 ni se ejecutan
 pruebas contra backend real. No hay evidencia contractual nueva por proponer nombres.
+
+## Archivos y congelación propuestos
+
+| Archivo previsto | Casos por nombre | Tareas E0 |
+| --- | --- | --- |
+| test/delete-state-asis.test.js | 4 AS-IS | T005, T006 |
+| test/delete-state-core-change.test.js | 3 CHANGE: cierre, DELETE incierto, no recreación | T007 |
+| test/delete-state-app-change.test.js | 9 CHANGE: duplicados, desmontaje, cierre manual, disparadores, recarga y sesiones | T008, T009, T010, T011 |
+| change-tests/delete-state.spec.js | 1 CHANGE Chromium, con subcasos 390/1280 | T012 |
+| test-support/delete-state-fixtures.js | Datos, callbacks y diferidos propios; DELETE con efectos explícitos | T004 |
+| test-support/delete-state-browser.js | Bootstrap propio, reloj detenido antes de montar y acciones por UI | T004, T012 |
+| playwright.delete-state.config.js | Caso Chromium nuevo aislado, sin retries | T012 |
+| playwright.delete-state-legacy.config.js | 29 casos heredados durante E0/E1 | T003, T012 |
+
+Los ocho archivos se congelan juntos en T012; ninguno existe aún por este plan.
+Los suplementos posteriores de coordinador/arquitectura no se presentarán como
+rojos originales. El manifiesto conserva tests vacío y pending, añadiendo solo
+plannedFiles/plannedTaskIds. Cada nombre conserva su escritura aprobada.
+
+## Matriz por entrega
+
+| Puerta | Complete 008 | Pending 008 | Evidencia que permite la transición |
+| --- | --- | --- | --- |
+| Preparación actual | 0 | 29 | Solo revisión documental; no evidencia contractual |
+| E0 / G-PIN | 7 | 22 | FR-001–004 y US1-AS1–AS3 verdes; 13 CHANGE rojos de negocio, ocho archivos firmados |
+| E1 | 8 | 21 | Añadir FR-005 con núcleo verde; no atribuir a App resultados no reevaluados |
+| E2 | 29 | 0 | Todos los casos propios y heredados, Node/Chromium/build completos |
+| E3 | 29 | 0 | Cinco mutaciones, ocho contratos/234 IDs y RLS local fresco con limpieza |
+
+La prueba de recarga exitosa debe observar el primer payload permitido y la
+barrera de commit; loadUserData puede absorber errores, por lo que resolver su
+promesa no prueba éxito. Mutaciones y controles están definidos en el
+[plan](plan.md); las firmas/adendas se tramitan por T002/T015/T016/T023.

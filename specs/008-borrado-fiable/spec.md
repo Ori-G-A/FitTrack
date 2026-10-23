@@ -188,7 +188,7 @@ Permiten preparar el plan; no autorizan implementar sin su aprobación separada.
 
 Una fila por FR y escenario en [manifiesto](traceability.json), todos pending.
 Los nombres previstos se detallan en [validación propuesta](validation-plan.md).
-No hay tareas ni plan técnico aprobados; la matriz no afirma pruebas ejecutadas.
+Plan y tareas aprobados por separado el 2026-10-22; la matriz no afirma pruebas ejecutadas.
 
 ## Aprobación
 

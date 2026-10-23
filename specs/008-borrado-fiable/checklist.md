@@ -14,7 +14,8 @@ Revisión documental del agente; alcance y aclaraciones aprobados por el propiet
 - [x] Recuperación ordinaria, duplicados y cuenta A→B→A incluidos.
 - [x] Exclusiones de SQL, algoritmos, reintentos automáticos y despliegues explícitas.
 - [x] Alcance y C-001/002/003 aprobados por el propietario el 2026-10-22.
-- [ ] Plan/tareas/análisis preparados y aprobados por separado antes de implementar.
+- [x] Plan, 36 tareas, decisiones y análisis preparados para revisión separada.
+- [x] Plan/tareas/análisis aprobados por separado antes de implementar, el 2026-10-22.
 
 No hay implementación ni PR 008. No se hicieron commits de borradores como
 etapas aprobadas ni se infirió aprobación desde el diagnóstico.

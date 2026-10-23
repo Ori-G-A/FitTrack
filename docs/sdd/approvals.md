@@ -462,3 +462,11 @@ despacho de DELETE y bloqueo hasta salir de la sesión después; resultado de da
 separado del cierre; aislamiento por sesión y prevención de duplicados y
 reactivación ordinaria. No promete rollback ni reintentos destructivos automáticos.
 Autoriza preparar plan, tareas y análisis; no implementar ni publicar/integrar/Vercel.
+
+## Plan 008 aprobado — 2026-10-22 (Bogotá)
+
+El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecución
+local E0–E3». Aprueba las 36 tareas, decisiones, puertas y enmienda controlada
+del pin contradictorio descritas en el plan. Autoriza ejecución local antes de
+integrar el PR documental, conservando un snapshot aprobado. No autoriza publicar,
+fusionar ni desplegar 008. El cierre exige ocho contratos/234 IDs y RLS local fresco.
