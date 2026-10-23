@@ -452,3 +452,13 @@ Este estado sustituye las esperas históricas de autorización, publicación e
 integración de 007. No certifica una sesión autenticada de producción: la URL
 técnica redirige al acceso de Vercel. TEST-001, DATA-004/005 y el aviso de bundle
 siguen documentados. No se amplía el alcance de producto aprobado.
+
+## Alcance 008 aprobado — 2026-10-22 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a la propuesta
+[008](../../specs/008-borrado-fiable/spec.md): cuatro AS-IS, nueve CHANGE,
+dieciséis escenarios y C-001/002/003. Aprueba recuperación manual antes del
+despacho de DELETE y bloqueo hasta salir de la sesión después; resultado de datos
+separado del cierre; aislamiento por sesión y prevención de duplicados y
+reactivación ordinaria. No promete rollback ni reintentos destructivos automáticos.
+Autoriza preparar plan, tareas y análisis; no implementar ni publicar/integrar/Vercel.
