@@ -1,6 +1,6 @@
 # Spec 008 — borrado fiable y recuperación visible
 
-Estado: ALCANCE y C-001/002/003 APROBADOS; plan técnico pendiente.
+Estado: alcance, C-001/002/003 y plan técnico APROBADOS; ejecución local E0–E3 autorizada.
 Propietario: usuario del proyecto. Fecha: 2026-10-22 (Bogotá).
 Gobierno: [constitución 1.0.3](../../.specify/memory/constitution.md).
 Evidencia: [survey](../../docs/sdd/borrado-fiable-survey.md) y

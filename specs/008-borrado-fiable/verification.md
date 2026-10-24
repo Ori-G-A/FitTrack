@@ -32,3 +32,21 @@ pnpm exec playwright test --config playwright.delete-state.config.js
 ```
 
 Publicación, integración y Vercel no están autorizados por este plan local.
+
+## E1 — 2026-10-24 (Bogotá)
+
+[Checkpoint](evidence/e1.json): 342 Node, 29 Chromium heredados y build aprobados.
+Núcleo, suplementos y heredados verdes; ocho IDs completos y veintiuno pending.
+Los nueve casos nuevos de App y el Chromium propio no se reevaluaron en E1.
+No es cierre de 008 ni recertificación RLS.
+
+Motor sin recuperación automática y coordinador puro por actor/intento, con
+barrera de commit, exclusión y limpieza. 107/108 firmas históricas intactas;
+una enmienda [PIN-008-001](evidence/pin-008-001.json), original archivado y adenda
+001 explícita. Ocho pins E0 intactos. Resolutores 006/007 conservados mediante
+composición central y controles negativos; ningún validador histórico debilitado.
+
+Primera verificación dirigida: la nueva aserción del pin observó loaded antes
+del commit. Se añadió espera de ese commit conservando loaded=false y se repitió
+la verificación dirigida íntegra: 24/24. Checkpoint completo posterior: 342/342.
+E1 sourceHash: `afec0c08616a1a19cd932907cb6dc40f7d090bad6bc92bf632b0374d8a36a571`.

@@ -39,19 +39,22 @@ test('datos borrado orden y recuperacion', async t => {
       try {
         await app.account();
         await assert.rejects(app.current.actions.deleteAllData(), caught => caught === error);
-        await app.ready();
+        await waitFor(() => !app.current.state.loaded);
         if (['deleteData', 'signOut'].includes(stage)) assert.equal(app.fixture.storageFiles.length, 0);
         await app.w.__sddSync.saveKey('sdd-user-001', 'probe', []);
-        assert.ok(app.fixture.writes.some(write => write.payload.key === 'probe'));
-        assert.equal(app.current.state.loaded, true);
+        assert.equal(app.fixture.writes.some(write => write.payload.key === 'probe'), false);
+        assert.equal(app.current.state.loaded, false);
       } finally { app.close(); }
     });
   }
   await t.test('FR-011 retorno error de signOut no dispara recuperación', async () => {
-    const app = await mountApp({ onSignOut: () => ({ error: new Error('retorno, no rechazo') }) });
+    const error = new Error('retorno, no rechazo');
+    const app = await mountApp({ onSignOut: () => ({ error }) });
     try {
-      await app.account(); await app.button('Eliminar todos mis datos');
+      await app.account();
+      await assert.rejects(app.current.actions.deleteAllData(), caught => caught === error);
       await waitFor(() => app.fixture.events.includes('signOut'));
+      await waitFor(() => !app.current.state.loaded);
       assert.equal(app.current.state.loaded, false);
       await app.w.__sddSync.saveKey('sdd-user-001', 'blocked', []);
       assert.equal(app.fixture.writes.length, 0);

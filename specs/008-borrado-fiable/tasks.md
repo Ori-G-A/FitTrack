@@ -1,7 +1,7 @@
 # Tareas 008 — borrado fiable
 
 Estado: plan y 36 tareas aprobados el 2026-10-22. Ejecución local autorizada;
-ninguna caracteriza evidencia contractual ya ejecutada. [Plan](plan.md),
+evidencia ejecutada registrada por entrega al pie. [Plan](plan.md),
 [spec](spec.md), [validación](validation-plan.md), [análisis](analyze.md).
 Cada fila enlaza historias y requisitos; las tareas comunes conservan esos vínculos
 porque verifican el mismo resultado: borrar sin reescritura ni efectos sobre otra sesión.
@@ -28,13 +28,13 @@ Las dependencias son necesarias, no autorización para saltar puertas.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T013 | pendiente | US1/US2/US4 / FR-002–005/007/011 | Evolucionar motor inyectado: fases, inspección de retorno de cierre, vigencia antes/después de cada espera; fallo conserva bloqueo y error original | T012 |
-| T014 | pendiente | US1–US4 / FR-007–013 | Añadir coordinador puro con actor, intento, exclusión, recuperación manual y confirmación de commit; sin segundo camino destructivo | T013 |
-| T015 | pendiente | US1/US2/US3 / FR-003/005/008/010 | PIN-008-001 con original/hash/rojo/verde: enmendar solo expectativas contradictorias de data-delete y añadir adenda 001 FR-011/US3-AS2 | T013, T014 |
-| T016 | pendiente | US1–US4 / FR-003/005/008/011 | Resolutor 008 independiente compuesto desde helper 007; conservar cadenas 006/007 y rechazar hashes/enmiendas falsos | T015 |
-| T017 | pendiente | US1–US4 / FR-007–013 | Pruebas suplementarias de coordinador y arquitectura, incluidos StrictMode, finally obsoleto y negativos React/DOM/SDK; no sustituyen rojos E0 | T014, T016 |
-| T018 | pendiente | US1–US4 / FR-001–013 | Revisar llamadores, firmas, anclas y grafo; preservar props y dependencias; verificar que no se amplíen allowlists históricas | T013, T014, T015, T016, T017 |
-| T019 | pendiente | US1–US4 / FR-001–013 | Checkpoint E1 íntegro: heredados, 4 AS-IS, 3 CHANGE de núcleo y suplementos verdes, 29 Chromium heredados/build; 8 complete/21 pending, App nuevo aún pendiente | T018 |
+| T013 | completada | US1/US2/US4 / FR-002–005/007/011 | Evolucionar motor inyectado: fases, inspección de retorno de cierre, vigencia antes/después de cada espera; fallo conserva bloqueo y error original | T012 |
+| T014 | completada | US1–US4 / FR-007–013 | Añadir coordinador puro con actor, intento, exclusión, recuperación manual y confirmación de commit; sin segundo camino destructivo | T013 |
+| T015 | completada | US1/US2/US3 / FR-003/005/008/010 | PIN-008-001 con original/hash/rojo/verde: enmendar solo expectativas contradictorias de data-delete y añadir adenda 001 FR-011/US3-AS2 | T013, T014 |
+| T016 | completada | US1–US4 / FR-003/005/008/011 | Resolutor 008 independiente compuesto desde helper 007; conservar cadenas 006/007 y rechazar hashes/enmiendas falsos | T015 |
+| T017 | completada | US1–US4 / FR-007–013 | Pruebas suplementarias de coordinador y arquitectura, incluidos StrictMode, finally obsoleto y negativos React/DOM/SDK; no sustituyen rojos E0 | T014, T016 |
+| T018 | completada | US1–US4 / FR-001–013 | Revisar llamadores, firmas, anclas y grafo; preservar props y dependencias; verificar que no se amplíen allowlists históricas | T013, T014, T015, T016, T017 |
+| T019 | completada | US1–US4 / FR-001–013 | Checkpoint E1 íntegro: heredados, 4 AS-IS, 3 CHANGE de núcleo y suplementos verdes, 29 Chromium heredados/build; 8 complete/21 pending, App nuevo aún pendiente | T018 |
 
 ## E2 — App y experiencia de recuperación
 
@@ -71,3 +71,5 @@ fresco de T029 solo si conserva el mismo sourceHash y destino válido; si cambi�
 el candidato o dejó de ser fresco, lo repite. No modifica la tarea completada.
 
 E0 completada el 2026-10-24: [baseline](evidence/baseline.json), original 325 Node/29 Chromium/build y cuatro AS-IS verdes + trece CHANGE rojos específicos. Ocho archivos congelados; src sin cambios.
+
+E1 completada el 2026-10-24: [checkpoint](evidence/e1.json), ocho complete/veintiuno pending. Núcleo y heredados verdes; App nuevo pendiente E2.

@@ -121,6 +121,15 @@ Sus pruebas pendientes bloquean cualquier refactor. No hay CHANGE aprobado.
 
 ## Evidencia AS-IS
 
+Adenda aprobada por 008, alcance `462a344` y plan `2ee8edc`: FR-011 y US3-AS2
+conservan orden, propietario, espera de cola, ausencia de rollback y rechazo sin
+usuario. Se sustituye únicamente la recuperación automática y el retorno error
+ignorado: retorno `{error}` y rechazo de signOut son fallos; no se reanudan
+guardados ni se restaura loaded en catch. La recuperación manual según despacho,
+feedback y aislamiento de sesión se rigen por [008](../008-borrado-fiable/spec.md).
+El texto anterior conserva el AS-IS histórico; esta adenda prevalece sobre esas
+dos expectativas. Enmienda de prueba: PIN-008-001, con original archivado.
+
 Las citas de esta tabla corresponden a BASE
 `46697650f18043319a7c96ccdf93ebbdf29e2d75`, usada para fijar comportamiento.
 La ubicación final y su verificación están en [converge](converge.md).

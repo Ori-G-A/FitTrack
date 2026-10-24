@@ -1,6 +1,6 @@
 {
   "spec": "008-borrado-fiable",
-  "note": "Plan aprobado; E0/G-PIN completado sobre original: siete AS-IS completos, veintidós pending. CHANGE rojos esperados; implementación aún no iniciada.",
+  "note": "E1 completada: ocho complete, veintiuno pending; núcleo y heredados verdes. Integración App/Chromium nueva pendiente E2, sin atribuirle resultados no reevaluados.",
   "requirements": [
     {
       "id": "FR-001",
@@ -73,8 +73,10 @@
     {
       "id": "FR-005",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 cierre distingue retorno error y rechazo"
+      ],
       "plannedTests": [
         "borrado008 cierre distingue retorno error y rechazo"
       ],

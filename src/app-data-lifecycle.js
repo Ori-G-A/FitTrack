@@ -77,18 +77,27 @@ export function importUserData(event, { userId, createReader, validateBackup,
 }
 
 export async function deleteUserData({ userId, suspendUserSaves, waitForUserSaves,
-  deleteUserPhotos, deleteAppData, signOut, resumeUserSaves, setLoaded }) {
+  deleteUserPhotos, deleteAppData, signOut, setLoaded,
+  isCurrent = () => true, onPhase = () => {} }) {
   if (!userId) throw new Error('No hay una sesión activa');
+  const checkCurrent = () => {
+    if (!isCurrent()) throw new Error('El intento pertenece a una sesión anterior');
+  };
+  checkCurrent();
   suspendUserSaves(userId);
   setLoaded(false);
-  try {
-    await waitForUserSaves(userId);
-    await deleteUserPhotos(userId);
-    await deleteAppData(userId);
-    await signOut();
-  } catch (error) {
-    resumeUserSaves(userId);
-    setLoaded(true);
-    throw error;
-  }
+  onPhase('waiting');
+  await waitForUserSaves(userId);
+  checkCurrent();
+  onPhase('photos');
+  await deleteUserPhotos(userId);
+  checkCurrent();
+  // El despacho no demuestra que la respuesta vaya a confirmar el efecto remoto.
+  onPhase('deleting');
+  await deleteAppData(userId);
+  checkCurrent();
+  onPhase('closing');
+  const result = await signOut();
+  if (result?.error) throw result.error;
+  checkCurrent();
 }
