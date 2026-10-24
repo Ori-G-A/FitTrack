@@ -1,0 +1,440 @@
+TAP version 13
+# Subtest: borrado008 intento y recuperacion no se duplican
+not ok 1 - borrado008 intento y recuperacion no se duplican
+  ---
+  duration_ms: 3484.6279
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:5:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    FR-013: segundo intento pendiente no despacha otra secuencia
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:8:136
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:7:2)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: borrado008 feedback sobrevive al desmontaje de Ajustes
+not ok 2 - borrado008 feedback sobrevive al desmontaje de Ajustes
+  ---
+  duration_ms: 1126.523
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:15:1'
+  failureType: 'testCodeFailure'
+  error: 'FR-012/007: error persistente fuera de Ajustes'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:18:68
+    runNextTicks (node:internal/process/task_queues:65:5)
+    process.processTimers (node:internal/timers:615:9)
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:16:24)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 reintento manual solo cierra sesion
+not ok 3 - borrado008 reintento manual solo cierra sesion
+  ---
+  duration_ms: 576.4607
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:22:1'
+  failureType: 'testCodeFailure'
+  error: 'FR-010: acción manual Cerrar sesión disponible'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    action (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:18:9)
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:26:31
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:24:2)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 visibilidad e intervalo no reactivan guardados
+    # Subtest: visibility pendiente
+    not ok 1 - visibility pendiente
+      ---
+      duration_ms: 731.9621
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:31:97'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-008: recuperación ordinaria no carga durante pendiente
+        
+        24 !== 12
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 12
+      actual: 24
+      operator: 'strictEqual'
+      stack: |-
+        withDeleteApp.captureIntervals (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:34:86)
+        runNextTicks (node:internal/process/task_queues:65:5)
+        process.processTimers (node:internal/timers:615:9)
+        async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:32:32)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:31:89)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: visibility fallido
+    not ok 2 - visibility fallido
+      ---
+      duration_ms: 531.7181
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:31:97'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-008: recuperación ordinaria no carga durante fallido
+        
+        24 !== 12
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 12
+      actual: 24
+      operator: 'strictEqual'
+      stack: |-
+        withDeleteApp.captureIntervals (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:34:86)
+        runNextTicks (node:internal/process/task_queues:65:5)
+        process.processTimers (node:internal/timers:615:9)
+        async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:32:32)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:31:89)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: interval pendiente
+    not ok 3 - interval pendiente
+      ---
+      duration_ms: 515.1984
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:31:97'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-008: recuperación ordinaria no carga durante pendiente
+        
+        24 !== 12
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 12
+      actual: 24
+      operator: 'strictEqual'
+      stack: |-
+        withDeleteApp.captureIntervals (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:34:86)
+        runNextTicks (node:internal/process/task_queues:65:5)
+        process.processTimers (node:internal/timers:615:9)
+        async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:32:32)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:31:89)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: interval fallido
+    not ok 4 - interval fallido
+      ---
+      duration_ms: 636.8624
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:31:97'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-008: recuperación ordinaria no carga durante fallido
+        
+        24 !== 12
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 12
+      actual: 24
+      operator: 'strictEqual'
+      stack: |-
+        withDeleteApp.captureIntervals (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:34:86)
+        async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:32:32)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:31:89)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    1..4
+not ok 4 - borrado008 visibilidad e intervalo no reactivan guardados
+  ---
+  duration_ms: 2418.7406
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:30:1'
+  failureType: 'subtestsFailed'
+  error: '4 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: borrado008 recarga temprana fallida conserva bloqueo
+not ok 5 - borrado008 recarga temprana fallida conserva bloqueo
+  ---
+  duration_ms: 467.6568
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:39:1'
+  failureType: 'testCodeFailure'
+  error: 'FR-009: acción manual Recargar datos disponible'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    action (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:18:9)
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:42:3
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:40:2)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 recarga temprana completa precede a nuevos guardados
+not ok 6 - borrado008 recarga temprana completa precede a nuevos guardados
+  ---
+  duration_ms: 344.0804
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:45:1'
+  failureType: 'testCodeFailure'
+  error: 'FR-009: acción manual Recargar datos disponible'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    action (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:18:9)
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:48:44
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:46:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 fallo tardio de A no habilita ni escribe B
+not ok 7 - borrado008 fallo tardio de A no habilita ni escribe B
+  ---
+  duration_ms: 543.6985
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:52:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    FR-011: catch de A no habilita B pendiente
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:54:297
+    runNextTicks (node:internal/process/task_queues:65:5)
+    process.processTimers (node:internal/timers:615:9)
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:53:51)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 respuesta de A no cierra ni continua B
+not ok 8 - borrado008 respuesta de A no cierra ni continua B
+  ---
+  duration_ms: 536.1296
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:58:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    FR-011: resultado A no despacha signOut sobre B
+    + actual - expected
+    
+    + [
+    +   'signOut'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'signOut'
+  operator: 'deepStrictEqual'
+  stack: |-
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:60:317
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:59:35)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 cambio A B A invalida el intento anterior
+not ok 9 - borrado008 cambio A B A invalida el intento anterior
+  ---
+  duration_ms: 507.7746
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-app-change.test.js:64:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    FR-011: generación nueva aunque UID final coincida
+    
+    0 !== 12
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:66:309
+    async withDeleteApp (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-support/delete-state-fixtures.js:13:24)
+    async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-app-change.test.js:65:51)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 confirmacion exacta y cancelacion no producen efectos
+ok 10 - borrado008 confirmacion exacta y cancelacion no producen efectos
+  ---
+  duration_ms: 935.3325
+  type: 'test'
+  ...
+# Subtest: borrado008 usuario ausente rechaza antes de efectos
+ok 11 - borrado008 usuario ausente rechaza antes de efectos
+  ---
+  duration_ms: 1.1833
+  type: 'test'
+  ...
+# Subtest: borrado008 conserva orden cola fotos registros y propietario
+ok 12 - borrado008 conserva orden cola fotos registros y propietario
+  ---
+  duration_ms: 55.5597
+  type: 'test'
+  ...
+# Subtest: borrado008 conserva efectos parciales sin rollback
+ok 13 - borrado008 conserva efectos parciales sin rollback
+  ---
+  duration_ms: 0.8913
+  type: 'test'
+  ...
+# Subtest: borrado008 cierre distingue retorno error y rechazo
+    # Subtest: retorno
+    not ok 1 - retorno
+      ---
+      duration_ms: 1.045
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-core-change.test.js:7:50'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected rejection: FR-005: ambos resultados rechazan con el error original'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: [Function (anonymous)]
+      operator: 'rejects'
+      stack: |-
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-core-change.test.js:9:3)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-core-change.test.js:7:42)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: rechazo
+    ok 2 - rechazo
+      ---
+      duration_ms: 0.3934
+      type: 'test'
+      ...
+    1..2
+not ok 14 - borrado008 cierre distingue retorno error y rechazo
+  ---
+  duration_ms: 2.3743
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-core-change.test.js:6:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: borrado008 resultado de borrado no confirmado conserva bloqueo
+not ok 15 - borrado008 resultado de borrado no confirmado conserva bloqueo
+  ---
+  duration_ms: 1.0503
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-core-change.test.js:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    FR-007/010: resultado incierto no reabre edición
+    + actual - expected
+    
+      [
+        false,
+    +   true
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: false
+  actual:
+    0: false
+    1: true
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-core-change.test.js:15:9)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: borrado008 no recrea datos tras fallo de cierre
+not ok 16 - borrado008 no recrea datos tras fallo de cierre
+  ---
+  duration_ms: 3.6095
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test\\delete-state-core-change.test.js:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    FR-008/010: no se reescribe el estado anterior tras borrar
+    + actual - expected
+    
+    + {
+    +   weights: [
+    +     {
+    +       id: 'anterior',
+    +       kg: 70
+    +     }
+    +   ]
+    + }
+    - {}
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    weights:
+      0:
+        id: 'anterior'
+        kg: 70
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test/delete-state-core-change.test.js:20:9)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..16
+# tests 22
+# suites 0
+# pass 5
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16220.8212

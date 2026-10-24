@@ -11,18 +11,18 @@ Las dependencias son necesarias, no autorización para saltar puertas.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T001 | pendiente | US1–US4 / FR-001–013 | Registrar aprobación separada, runtime fijado y snapshot documental aprobado; conservar BASE y límites de autorización local | — |
-| T002 | pendiente | US1–US4 / FR-003/004/011 | Inventariar 108 firmas efectivas, llamadores y anclas; archivar original de data-delete y helper de firmas | T001 |
-| T003 | pendiente | US1–US4 / FR-001–013 | Repetir 325 Node/29 Chromium y build originales; medir bundle, versiones y sourceHash antes de añadir casos | T002 |
-| T004 | pendiente | US1–US4 / FR-003/007/011 | Preparar fixtures sintéticas: DELETE elimina filas cuando corresponda, auth explícita, diferidos y reloj controlados; no modificar dobles congelados | T003 |
-| T005 | pendiente | US1 / FR-001/002; US1-AS1/AS2 | Dos AS-IS verdes: confirmación exacta/cancelación y rechazo sin usuario antes de efectos | T004 |
-| T006 | pendiente | US1 / FR-003/004; US1-AS3 | Dos AS-IS verdes: orden/propietario/cola y efectos parciales sin rollback | T004 |
-| T007 | pendiente | US2/US3 / FR-005/007/008/010; US2-AS2/AS3/AS4 | Tres CHANGE de núcleo rojos específicos: error de cierre, resultado incierto y ausencia de recreación tras fallo | T004 |
-| T008 | pendiente | US1/US2 / FR-010/012/013; US1-AS4; US2-AS1/AS5 | Tres CHANGE de App rojos: duplicados, feedback tras desmontar Ajustes y cierre manual sin repetir borrado | T004 |
-| T009 | pendiente | US3 / FR-008; US3-AS1/AS2 | Un CHANGE de App rojo, con visibilidad e intervalo comprobados independientemente durante pendiente y error | T004 |
-| T010 | pendiente | US3 / FR-009; US3-AS3/AS4 | Dos CHANGE de App rojos: recarga fallida mantiene bloqueo y recarga exitosa aplica valores antes del primer guardado permitido | T004 |
-| T011 | pendiente | US4 / FR-011; US4-AS1/AS2/AS3 | Tres CHANGE de App rojos: fallo A con B pendiente, cierre tardío A sobre B y A→B→A; comprobar datos y efectos | T004 |
-| T012 | pendiente | US2 / FR-006; US2-AS1 | Un CHANGE Chromium rojo, subcasos 390/1280 con texto seguro, nombre y anuncio accesible; congelar ocho archivos y registrar G-PIN: 7 complete/22 pending | T005, T006, T007, T008, T009, T010, T011 |
+| T001 | completada | US1–US4 / FR-001–013 | Registrar aprobación separada, runtime fijado y snapshot documental aprobado; conservar BASE y límites de autorización local | — |
+| T002 | completada | US1–US4 / FR-003/004/011 | Inventariar 108 firmas efectivas, llamadores y anclas; archivar original de data-delete y helper de firmas | T001 |
+| T003 | completada | US1–US4 / FR-001–013 | Repetir 325 Node/29 Chromium y build originales; medir bundle, versiones y sourceHash antes de añadir casos | T002 |
+| T004 | completada | US1–US4 / FR-003/007/011 | Preparar fixtures sintéticas: DELETE elimina filas cuando corresponda, auth explícita, diferidos y reloj controlados; no modificar dobles congelados | T003 |
+| T005 | completada | US1 / FR-001/002; US1-AS1/AS2 | Dos AS-IS verdes: confirmación exacta/cancelación y rechazo sin usuario antes de efectos | T004 |
+| T006 | completada | US1 / FR-003/004; US1-AS3 | Dos AS-IS verdes: orden/propietario/cola y efectos parciales sin rollback | T004 |
+| T007 | completada | US2/US3 / FR-005/007/008/010; US2-AS2/AS3/AS4 | Tres CHANGE de núcleo rojos específicos: error de cierre, resultado incierto y ausencia de recreación tras fallo | T004 |
+| T008 | completada | US1/US2 / FR-010/012/013; US1-AS4; US2-AS1/AS5 | Tres CHANGE de App rojos: duplicados, feedback tras desmontar Ajustes y cierre manual sin repetir borrado | T004 |
+| T009 | completada | US3 / FR-008; US3-AS1/AS2 | Un CHANGE de App rojo, con visibilidad e intervalo comprobados independientemente durante pendiente y error | T004 |
+| T010 | completada | US3 / FR-009; US3-AS3/AS4 | Dos CHANGE de App rojos: recarga fallida mantiene bloqueo y recarga exitosa aplica valores antes del primer guardado permitido | T004 |
+| T011 | completada | US4 / FR-011; US4-AS1/AS2/AS3 | Tres CHANGE de App rojos: fallo A con B pendiente, cierre tardío A sobre B y A→B→A; comprobar datos y efectos | T004 |
+| T012 | completada | US2 / FR-006; US2-AS1 | Un CHANGE Chromium rojo, subcasos 390/1280 con texto seguro, nombre y anuncio accesible; congelar ocho archivos y registrar G-PIN: 7 complete/22 pending | T005, T006, T007, T008, T009, T010, T011 |
 
 ## E1 — secuencia y coordinación
 
@@ -69,3 +69,5 @@ el original, no por una API nueva ausente o un error del harness. Un checkpoint
 fallido obliga a repetirlo completo después de corregirlo. T033 reutiliza RLS
 fresco de T029 solo si conserva el mismo sourceHash y destino válido; si cambió
 el candidato o dejó de ser fresco, lo repite. No modifica la tarea completada.
+
+E0 completada el 2026-10-24: [baseline](evidence/baseline.json), original 325 Node/29 Chromium/build y cuatro AS-IS verdes + trece CHANGE rojos específicos. Ocho archivos congelados; src sin cambios.
