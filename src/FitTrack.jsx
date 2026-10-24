@@ -2,6 +2,8 @@ import ModalSheet from "./ModalSheet.jsx";
 import { CSS } from "./app-styles.js";
 import { SideNavigation, BottomNavigation } from "./AppNavigation.jsx";
 import { useAppTheme } from "./use-app-theme.js";
+import { useDeleteFlow } from "./use-delete-flow.js";
+import DeleteFeedback from "./DeleteFeedback.jsx";
 import { ACCOUNT_TABS, BODY_TABS, NAV as NAV_ITEMS, registrationRows } from "./app-navigation.js";
 import { migrateFoodUnits } from "./nutrition-records.js";
 import { CATALOG, CATALOG_CATS } from "./nutrition-config.js";
@@ -14,7 +16,7 @@ import { MUSCLES } from "./training-config.js";
 export { MUSCLES, EXERCISE_PRESETS } from "./training-config.js";
 import React, { lazy, Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { withTimeout } from "./async-utils.js";
-import { deleteUserData, exportUserData, importUserData, loadUserData } from "./app-data-lifecycle.js";
+import { exportUserData, importUserData, loadUserData } from "./app-data-lifecycle.js";
 import { deleteAppDataForUser } from "./data-operations.js";
 import { supabase } from "./supabase.js";
 import { DEFAULT_GOALS, tracksCycle } from "./app-config.js";
@@ -149,6 +151,25 @@ export default function App() {
   const [goals, setGoals] = useState(DEFAULT_GOALS);
   const authUserIdRef = useRef(null);
   const photosRef = useRef([]);
+  const dataSetters = { setWorkouts, setWeights, setNutrition, setFoods, setRecipes, setRoutines,
+    setMeasurements, setWellness, setPeriods, setMenstrualLogs, setPhotos, setGoals, setLoaded };
+  const {flow: deleteFlow, state: deleteState} = useDeleteFlow({
+    suspendUserSaves, waitForUserSaves, deleteUserPhotos, resumeUserSaves, setLoaded,
+    deleteAppData: (id) => deleteAppDataForUser(supabase, id),
+    signOut: () => supabase.auth.signOut(),
+    reload: async ({actor, isCurrent}) => {
+      let success = false;
+      setLoaded(false);
+      setLoadError(false);
+      await loadUserData({
+        userId: actor.userId, loadKey, defaultGoals: DEFAULT_GOALS, hydratePhotos, migrateWorkouts, migrateFoodUnits,
+        setters: {...dataSetters, setLoaded: (value) => {success = value; setLoaded(value);}},
+        isCancelled: () => !isCurrent(),
+        onError: () => {success = false;},
+      });
+      return success;
+    },
+  },loaded);
 
   useEffect(() => { photosRef.current = photos; }, [photos]);
 
@@ -164,6 +185,7 @@ export default function App() {
       if (error) throw error;
       if (active) {
         authUserIdRef.current = data.session?.user?.id ?? null;
+        deleteFlow.setActor(authUserIdRef.current);
         setSession(data.session ?? null);
       }
     }).catch((error) => {
@@ -172,6 +194,8 @@ export default function App() {
     });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       const nextUserId = nextSession?.user?.id ?? null;
+      // Invalida el intento antes del render, incluso si A→B→A queda batido.
+      deleteFlow.setActor(nextUserId);
       if (authUserChanged(authUserIdRef.current, nextUserId)) {
         authUserIdRef.current = nextUserId;
         setLoaded(false);
@@ -181,12 +205,14 @@ export default function App() {
       setSession(nextSession ?? null);
     });
     return () => { active = false; subscription.unsubscribe(); };
-  }, [sessionAttempt]);
+  }, [sessionAttempt, deleteFlow]);
 
   // Carga datos cuando hay sesión activa
   useEffect(() => {
     const userId = session?.user?.id;
     if (!userId) { setLoaded(false); setLoadError(false); return; }
+    const actor = deleteFlow.getActor();
+    if (actor.userId !== userId || deleteFlow.isBlocked()) return;
     resumeUserSaves(userId);
     let cancelled = false;
     setLoaded(false);
@@ -195,17 +221,19 @@ export default function App() {
       userId, loadKey, defaultGoals: DEFAULT_GOALS, hydratePhotos, migrateWorkouts, migrateFoodUnits,
       setters: { setWorkouts, setWeights, setNutrition, setFoods, setRecipes, setRoutines,
         setMeasurements, setWellness, setPeriods, setMenstrualLogs, setPhotos, setGoals, setLoaded },
-      isCancelled: () => cancelled,
+      isCancelled: () => cancelled || !deleteFlow.matches(actor) || deleteFlow.isBlocked(),
       onError: (error) => { console.error("loadAppData", error); setLoadError(true); },
     });
     return () => { cancelled = true; };
-  }, [session?.user?.id, loadAttempt]);
+  }, [session?.user?.id, deleteState.generation, loadAttempt, deleteFlow]);
 
   // Recupera cargas suspendidas y renueva las URLs privadas al volver a la app.
   useEffect(() => {
     let active = true;
+    const actor = deleteFlow.getActor();
     const recoverVisibleApp = async () => {
       if (document.visibilityState !== "visible" || !session?.user?.id) return;
+      if (!deleteFlow.matches(actor) || deleteFlow.isBlocked()) return;
       if (!loaded) {
         setLoadAttempt((attempt) => attempt + 1);
         return;
@@ -213,7 +241,7 @@ export default function App() {
       const currentPhotos = photosRef.current;
       if (!currentPhotos.some((photo) => photo.storagePath)) return;
       const refreshed = await refreshPhotoUrls(currentPhotos);
-      if (active) setPhotos((current) => mergePhotoUrls(current, refreshed));
+      if (active && deleteFlow.matches(actor) && !deleteFlow.isBlocked()) setPhotos((current) => mergePhotoUrls(current, refreshed));
     };
     document.addEventListener("visibilitychange", recoverVisibleApp);
     const interval = setInterval(recoverVisibleApp, 12 * 60 * 60 * 1000);
@@ -222,30 +250,27 @@ export default function App() {
       clearInterval(interval);
       document.removeEventListener("visibilitychange", recoverVisibleApp);
     };
-  }, [session?.user?.id, loaded]);
+  }, [session?.user?.id, deleteState.generation, loaded, deleteFlow]);
 
   const userId = session?.user?.id;
-  useSyncedValue(userId, "workouts", workouts, loaded);
-  useSyncedValue(userId, "weights", weights, loaded);
-  useSyncedValue(userId, "nutrition", nutrition, loaded);
-  useSyncedValue(userId, "foods", foods, loaded);
-  useSyncedValue(userId, "recipes", recipes, loaded);
-  useSyncedValue(userId, "routines", routines, loaded);
-  useSyncedValue(userId, "measurements", measurements, loaded);
-  useSyncedValue(userId, "wellness", wellness, loaded);
-  useSyncedValue(userId, "periods", periods, loaded);
-  useSyncedValue(userId, "menstrualLogs", menstrualLogs, loaded);
+  const canSync = loaded && !deleteState.blocked && deleteState.userId === userId;
+  useSyncedValue(userId, "workouts", workouts, canSync);
+  useSyncedValue(userId, "weights", weights, canSync);
+  useSyncedValue(userId, "nutrition", nutrition, canSync);
+  useSyncedValue(userId, "foods", foods, canSync);
+  useSyncedValue(userId, "recipes", recipes, canSync);
+  useSyncedValue(userId, "routines", routines, canSync);
+  useSyncedValue(userId, "measurements", measurements, canSync);
+  useSyncedValue(userId, "wellness", wellness, canSync);
+  useSyncedValue(userId, "periods", periods, canSync);
+  useSyncedValue(userId, "menstrualLogs", menstrualLogs, canSync);
   const storedPhotosJson = useMemo(() => JSON.stringify(photos.map(photoForStorage)), [photos]);
   const storedPhotos = useMemo(() => JSON.parse(storedPhotosJson), [storedPhotosJson]);
-  useSyncedValue(userId, "photos", storedPhotos, loaded);
-  useSyncedValue(userId, "goals", goals, loaded);
+  useSyncedValue(userId, "photos", storedPhotos, canSync);
+  useSyncedValue(userId, "goals", goals, canSync);
 
   const signOut = () => supabase.auth.signOut();
-  const deleteAllData = () => deleteUserData({
-    userId, suspendUserSaves, waitForUserSaves, deleteUserPhotos,
-    deleteAppData: (id) => deleteAppDataForUser(supabase, id),
-    signOut, resumeUserSaves, setLoaded,
-  });
+  const deleteAllData = () => deleteFlow.start();
 
   const exportData = () => exportUserData({
     data: { workouts, weights, nutrition, foods, recipes, routines, measurements, wellness, periods, menstrualLogs, photos, goals },
@@ -299,7 +324,11 @@ export default function App() {
         </div></div>
       ) : !session ? (
         <AuthScreen />
-      ) : !loaded ? (
+      ) : deleteState.blocked && deleteState.userId === userId ? (
+        <DeleteFeedback state={deleteState}
+          onRecover={() => {deleteFlow.recover().catch(() => {});}}
+          onClose={() => {deleteFlow.retryClose().catch(() => {});}} />
+      ) : !loaded || deleteState.userId !== userId ? (
         <div className="ft-wrap"><div className="ft-empty">
           {loadError ? (
             <>

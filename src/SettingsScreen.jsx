@@ -45,8 +45,8 @@ export default function SettingsScreen({ section = "todo", goals, setGoals, weig
     setDeleteError("");
     try {
       await deleteAllData();
-    } catch (error) {
-      setDeleteError(error?.message || "No se pudieron eliminar todos los datos");
+    } catch {
+      setDeleteError("No se pudieron eliminar todos los datos");
       setDeleteBusy(false);
     }
   };

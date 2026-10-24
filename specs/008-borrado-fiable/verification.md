@@ -50,3 +50,24 @@ Primera verificación dirigida: la nueva aserción del pin observó loaded antes
 del commit. Se añadió espera de ese commit conservando loaded=false y se repitió
 la verificación dirigida íntegra: 24/24. Checkpoint completo posterior: 342/342.
 E1 sourceHash: `afec0c08616a1a19cd932907cb6dc40f7d090bad6bc92bf632b0374d8a36a571`.
+
+## E2 — 2026-10-24 (Bogotá)
+
+[Checkpoint](evidence/e2.json): 355 Node, 30 Chromium y build aprobados con
+descubrimiento ordinario, cero skips/retries/cancelaciones. Siete contratos
+verificados desde los mismos resultados, incluidos los 29 IDs 008 completos;
+002 se excluye de recertificación hasta disponer de RLS fresco en E3.
+
+Feedback raíz por fase, recuperación manual y aislamiento de generación conectados.
+107 firmas anteriores intactas, una enmendada y ocho pins E0 intactos. La prueba
+congelada detectó que el reintento de cierre perdía el texto Datos eliminados;
+se corrigió presentación y se repitió todo el conjunto dirigido, después el
+checkpoint ordinario completo. Ningún caso congelado se modificó.
+
+Bundle: 512,62 kB / gzip 149,48 kB frente a 507,26 / 147,38: delta +5,36 / +2,10.
+El aviso >500 kB permanece. SourceHash E2:
+`db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad`.
+
+La revisión añade T037 para reforzar carga ordinaria pendiente y continuidad de
+guardados propios de B frente a A tardío. Es evidencia suplementaria posterior,
+no altera E0 ni sustituye sus rojos. E3, RLS y autorización remota pendientes.

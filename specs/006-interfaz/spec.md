@@ -1,5 +1,12 @@
 # Spec 006: Interfaz y accesibilidad
 
+Adenda de ejecución local 008 — 2026-10-24: alcance `462a344` y plan `2ee8edc`
+amplían la presentación de borrado de FR-012. [008 FR-006/007/012](../008-borrado-fiable/spec.md)
+exige estado por sesión en la raíz, progreso/error accesible y acciones manuales
+según despacho de DELETE, visible a 390/1280 aunque se desmonte Ajustes.
+El fallback genérico de carga y el error local de Ajustes ya no gobiernan ese
+flujo. Se conservan la cadena CSS, Toast, navegación y contratos normales.
+
 Adenda vigente de ejecución local 007 — 2026-10-21: [007 FR-008/009](../007-guardado-fiable/spec.md)
 amplía FR-012 con snapshot del usuario actual y una única región de estado
 visible en móvil/escritorio. La cadena CSS heredada, Toast y modo ft-focus

@@ -40,14 +40,14 @@ Las dependencias son necesarias, no autorización para saltar puertas.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T020 | pendiente | US4 / FR-011; US4-AS1/AS2/AS3 | Actualizar actor en callback auth y publicar generación observable incluso A→B→A batido; refresco del mismo usuario no invalida; cleanup seguro | T019 |
-| T021 | pendiente | US2/US3/US4 / FR-009/011/012 | Adaptador React por raíz: snapshot estable, suscripción, carga con guardas y confirmación posterior al commit de valores frescos | T020 |
-| T022 | pendiente | US3/US4 / FR-008/011 | Proteger doce hooks, carga ordinaria ya iniciada, visibilidad e intervalo; B conserva su carga/guardado independiente | T021 |
-| T023 | pendiente | US1/US2 / FR-001/006/007/012 | Feedback raíz con textos seguros y controles 390/1280; conservar prompt/ancla/props de Settings y añadir adenda 006 FR-012 | T022 |
-| T024 | pendiente | US1/US2/US3 / FR-009/010/013 | Conectar recarga manual temprana y cierre manual posterior, exclusión y barrera de commit; fallo de recarga/cierre mantiene bloqueo | T021, T022, T023 |
-| T025 | pendiente | US1–US4 / FR-001–013 | Pasar nueve CHANGE de App y Chromium nuevo; comprobar regresiones en siete anchos, foco, Toast, previews y ausencia de error crudo | T020, T021, T022, T023, T024 |
-| T026 | pendiente | US1–US4 / FR-001–013 | Checkpoint E2 entero con descubrimiento ordinario Node/Chromium y build: 29 IDs 008 completos, 30 Chromium previstos; no recertificar RLS sin ejecución fresca | T025 |
-| T027 | pendiente | US1–US4 / FR-001–013 | Revisar fases, actor, primer guardado después del commit y sourceHash; añadir tareas de converge ante brechas y repetir checkpoint afectado | T026 |
+| T020 | completada | US4 / FR-011; US4-AS1/AS2/AS3 | Actualizar actor en callback auth y publicar generación observable incluso A→B→A batido; refresco del mismo usuario no invalida; cleanup seguro | T019 |
+| T021 | completada | US2/US3/US4 / FR-009/011/012 | Adaptador React por raíz: snapshot estable, suscripción, carga con guardas y confirmación posterior al commit de valores frescos | T020 |
+| T022 | completada | US3/US4 / FR-008/011 | Proteger doce hooks, carga ordinaria ya iniciada, visibilidad e intervalo; B conserva su carga/guardado independiente | T021 |
+| T023 | completada | US1/US2 / FR-001/006/007/012 | Feedback raíz con textos seguros y controles 390/1280; conservar prompt/ancla/props de Settings y añadir adenda 006 FR-012 | T022 |
+| T024 | completada | US1/US2/US3 / FR-009/010/013 | Conectar recarga manual temprana y cierre manual posterior, exclusión y barrera de commit; fallo de recarga/cierre mantiene bloqueo | T021, T022, T023 |
+| T025 | completada | US1–US4 / FR-001–013 | Pasar nueve CHANGE de App y Chromium nuevo; comprobar regresiones en siete anchos, foco, Toast, previews y ausencia de error crudo | T020, T021, T022, T023, T024 |
+| T026 | completada | US1–US4 / FR-001–013 | Checkpoint E2 entero con descubrimiento ordinario Node/Chromium y build: 29 IDs 008 completos, 30 Chromium previstos; no recertificar RLS sin ejecución fresca | T025 |
+| T027 | completada | US1–US4 / FR-001–013 | Revisar fases, actor, primer guardado después del commit y sourceHash; añadir tareas de converge ante brechas y repetir checkpoint afectado | T026 |
 
 ## E3 — evidencia de cierre local
 
@@ -73,3 +73,14 @@ el candidato o dejó de ser fresco, lo repite. No modifica la tarea completada.
 E0 completada el 2026-10-24: [baseline](evidence/baseline.json), original 325 Node/29 Chromium/build y cuatro AS-IS verdes + trece CHANGE rojos específicos. Ocho archivos congelados; src sin cambios.
 
 E1 completada el 2026-10-24: [checkpoint](evidence/e1.json), ocho complete/veintiuno pending. Núcleo y heredados verdes; App nuevo pendiente E2.
+
+E2 completada el 2026-10-24: [checkpoint](evidence/e2.json), 29 IDs propios completos; E3 y RLS fresco pendientes.
+
+## Converge aditivo — revisión E2
+
+Se conservan las 36 tareas aprobadas. Se añade una tarea suplementaria sin
+reescribir etapas completadas. T028 comenzará tras cerrar también T037.
+
+| ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
+| --- | --- | --- | --- | --- |
+| T037 | pendiente | US3/US4 / FR-008/011 | Dos casos suplementarios App: B carga/guarda valores propios mientras A termina y una carga ordinaria pendiente no aplica setters durante el bloqueo. Registrar firma y resultados sin atribuirles rojo E0 | T027 |

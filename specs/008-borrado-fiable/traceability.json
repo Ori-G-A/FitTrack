@@ -1,6 +1,6 @@
 {
   "spec": "008-borrado-fiable",
-  "note": "E1 completada: ocho complete, veintiuno pending; núcleo y heredados verdes. Integración App/Chromium nueva pendiente E2, sin atribuirle resultados no reevaluados.",
+  "note": "E2 completa: 29 IDs propios completos con casos congelados e integración App/Chromium verdes. Cierre E3, RLS fresco y publicación siguen pendientes.",
   "requirements": [
     {
       "id": "FR-001",
@@ -90,8 +90,10 @@
     {
       "id": "FR-006",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 navegador fallo persiste visible y accesible"
+      ],
       "plannedTests": [
         "borrado008 navegador fallo persiste visible y accesible"
       ],
@@ -105,8 +107,12 @@
     {
       "id": "FR-007",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 feedback sobrevive al desmontaje de Ajustes",
+        "borrado008 resultado de borrado no confirmado conserva bloqueo",
+        "borrado008 no recrea datos tras fallo de cierre"
+      ],
       "plannedTests": [
         "borrado008 feedback sobrevive al desmontaje de Ajustes",
         "borrado008 resultado de borrado no confirmado conserva bloqueo",
@@ -124,8 +130,11 @@
     {
       "id": "FR-008",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 no recrea datos tras fallo de cierre",
+        "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
       "plannedTests": [
         "borrado008 no recrea datos tras fallo de cierre",
         "borrado008 visibilidad e intervalo no reactivan guardados"
@@ -142,8 +151,11 @@
     {
       "id": "FR-009",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 recarga temprana fallida conserva bloqueo",
+        "borrado008 recarga temprana completa precede a nuevos guardados"
+      ],
       "plannedTests": [
         "borrado008 recarga temprana fallida conserva bloqueo",
         "borrado008 recarga temprana completa precede a nuevos guardados"
@@ -158,8 +170,12 @@
     {
       "id": "FR-010",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 resultado de borrado no confirmado conserva bloqueo",
+        "borrado008 no recrea datos tras fallo de cierre",
+        "borrado008 reintento manual solo cierra sesion"
+      ],
       "plannedTests": [
         "borrado008 resultado de borrado no confirmado conserva bloqueo",
         "borrado008 no recrea datos tras fallo de cierre",
@@ -177,8 +193,12 @@
     {
       "id": "FR-011",
       "story": "US4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 fallo tardio de A no habilita ni escribe B",
+        "borrado008 respuesta de A no cierra ni continua B",
+        "borrado008 cambio A B A invalida el intento anterior"
+      ],
       "plannedTests": [
         "borrado008 fallo tardio de A no habilita ni escribe B",
         "borrado008 respuesta de A no cierra ni continua B",
@@ -194,8 +214,10 @@
     {
       "id": "FR-012",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 feedback sobrevive al desmontaje de Ajustes"
+      ],
       "plannedTests": [
         "borrado008 feedback sobrevive al desmontaje de Ajustes"
       ],
@@ -209,8 +231,10 @@
     {
       "id": "FR-013",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 intento y recuperacion no se duplican"
+      ],
       "plannedTests": [
         "borrado008 intento y recuperacion no se duplican"
       ],
@@ -275,8 +299,10 @@
     {
       "id": "US1-AS4",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 intento y recuperacion no se duplican"
+      ],
       "plannedTests": [
         "borrado008 intento y recuperacion no se duplican"
       ],
@@ -290,8 +316,11 @@
     {
       "id": "US2-AS1",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 navegador fallo persiste visible y accesible",
+        "borrado008 feedback sobrevive al desmontaje de Ajustes"
+      ],
       "plannedTests": [
         "borrado008 navegador fallo persiste visible y accesible",
         "borrado008 feedback sobrevive al desmontaje de Ajustes"
@@ -308,8 +337,10 @@
     {
       "id": "US2-AS2",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 resultado de borrado no confirmado conserva bloqueo"
+      ],
       "plannedTests": [
         "borrado008 resultado de borrado no confirmado conserva bloqueo"
       ],
@@ -323,8 +354,11 @@
     {
       "id": "US2-AS3",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 cierre distingue retorno error y rechazo",
+        "borrado008 no recrea datos tras fallo de cierre"
+      ],
       "plannedTests": [
         "borrado008 cierre distingue retorno error y rechazo",
         "borrado008 no recrea datos tras fallo de cierre"
@@ -339,8 +373,11 @@
     {
       "id": "US2-AS4",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 cierre distingue retorno error y rechazo",
+        "borrado008 no recrea datos tras fallo de cierre"
+      ],
       "plannedTests": [
         "borrado008 cierre distingue retorno error y rechazo",
         "borrado008 no recrea datos tras fallo de cierre"
@@ -355,8 +392,10 @@
     {
       "id": "US2-AS5",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 reintento manual solo cierra sesion"
+      ],
       "plannedTests": [
         "borrado008 reintento manual solo cierra sesion"
       ],
@@ -370,8 +409,10 @@
     {
       "id": "US3-AS1",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
       "plannedTests": [
         "borrado008 visibilidad e intervalo no reactivan guardados"
       ],
@@ -385,8 +426,10 @@
     {
       "id": "US3-AS2",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
       "plannedTests": [
         "borrado008 visibilidad e intervalo no reactivan guardados"
       ],
@@ -400,8 +443,10 @@
     {
       "id": "US3-AS3",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 recarga temprana fallida conserva bloqueo"
+      ],
       "plannedTests": [
         "borrado008 recarga temprana fallida conserva bloqueo"
       ],
@@ -415,8 +460,10 @@
     {
       "id": "US3-AS4",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 recarga temprana completa precede a nuevos guardados"
+      ],
       "plannedTests": [
         "borrado008 recarga temprana completa precede a nuevos guardados"
       ],
@@ -430,8 +477,10 @@
     {
       "id": "US4-AS1",
       "story": "US4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 fallo tardio de A no habilita ni escribe B"
+      ],
       "plannedTests": [
         "borrado008 fallo tardio de A no habilita ni escribe B"
       ],
@@ -445,8 +494,10 @@
     {
       "id": "US4-AS2",
       "story": "US4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 respuesta de A no cierra ni continua B"
+      ],
       "plannedTests": [
         "borrado008 respuesta de A no cierra ni continua B"
       ],
@@ -460,8 +511,10 @@
     {
       "id": "US4-AS3",
       "story": "US4",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "borrado008 cambio A B A invalida el intento anterior"
+      ],
       "plannedTests": [
         "borrado008 cambio A B A invalida el intento anterior"
       ],
