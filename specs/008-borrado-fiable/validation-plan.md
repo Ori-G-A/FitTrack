@@ -1,5 +1,9 @@
 # Validación propuesta 008
 
+Cierre local — 2026-10-24 (Bogotá): [370 Node/30 Chromium/build](evidence/final.json),
+29 IDs propios completos, ocho contratos/234 IDs y RLS fresco con limpieza.
+T037/T038 son suplementos posteriores; los ocho archivos E0 permanecen intactos.
+
 Plan aprobado, con nombres conservados en los ocho archivos congelados E0.
 E2 verificó los 29 IDs completos en [trazabilidad](traceability.json);
 [evidencia por etapa](verification.md). El sondeo del survey sigue siendo
@@ -50,7 +54,7 @@ o APIs inexistentes como rojo válido. El plan propone los archivos y tareas sig
 Las expectativas heredadas contradictorias requerirán enmiendas explícitas por FR.
 
 El cierre E3 exige manifestación completa real, suite/build y RLS fresco.
-La puerta CI 008 está preparada, pendiente del cierre de sus dependencias.
+La puerta CI 008 está preparada; ejecución remota pendiente de autorización.
 No se ejecutan pruebas contra backend productivo. Proponer nombres no constituye evidencia.
 
 ## Archivos y congelación propuestos

@@ -7,5 +7,13 @@
   "recoveryDirectory": "C:\\Users\\orian\\AppData\\Local\\Temp\\fittrack-sdd-rls-NF1uif",
   "startInterrupted": true,
   "reason": "Docker Desktop backend se cerró al acceder al socket dockerInference; servicio detenido. Se interrumpió solo el hijo de arranque propio; el runner intentó stop, sin confirmar limpieza.",
-  "nextStep": "Con Engine running, verificar propietario, retirar ese proyecto y confirmar limpieza antes de ejecutar un fixture nuevo. No resetear Docker ni borrar recursos ajenos."
+  "nextStep": "Recuperación completada y cierre local aprobado; el intento fallido se conserva como historia.",
+  "activeBlock": false,
+  "resolved": true,
+  "resolution": {
+    "passed": true,
+    "cleanupConfirmed": true,
+    "evidence": "rls-recovery.json",
+    "completionEvidence": "completion-review.json"
+  }
 }

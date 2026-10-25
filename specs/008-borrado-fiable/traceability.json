@@ -1,6 +1,6 @@
 {
   "spec": "008-borrado-fiable",
-  "note": "E2 completa: 29 IDs propios completos con casos congelados e integración App/Chromium verdes. Cierre E3, RLS fresco y publicación siguen pendientes.",
+  "note": "E0–E3 cerradas localmente: 29 IDs propios y ocho contratos/234 IDs verificados; RLS fresco y limpieza aprobados. Publicación, integración y Vercel no autorizados.",
   "requirements": [
     {
       "id": "FR-001",

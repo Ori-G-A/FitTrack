@@ -1,6 +1,6 @@
 # Spec 008 — borrado fiable y recuperación visible
 
-Estado: alcance, C-001/002/003 y plan técnico APROBADOS; ejecución local E0–E3 autorizada.
+Estado: alcance y plan APROBADOS; E0–E3 completas localmente. Publicación/integración/Vercel pendientes.
 Propietario: usuario del proyecto. Fecha: 2026-10-22 (Bogotá).
 Gobierno: [constitución 1.0.3](../../.specify/memory/constitution.md).
 Evidencia: [survey](../../docs/sdd/borrado-fiable-survey.md) y
@@ -187,7 +187,7 @@ Permiten preparar el plan; no autorizan implementar sin su aprobación separada.
 ## Trazabilidad
 
 Una fila por FR y escenario en [manifiesto](traceability.json): 29 complete tras E2.
-El cierre E3 sigue pendiente de checkpoint final y RLS fresco; véase [verificación](verification.md).
+E3 superó el checkpoint final y RLS fresco: [verificación](verification.md) y [converge](converge.md).
 Los nombres previstos se detallan en [validación propuesta](validation-plan.md).
 Plan y tareas aprobados por separado el 2026-10-22; la matriz no afirma pruebas ejecutadas.
 

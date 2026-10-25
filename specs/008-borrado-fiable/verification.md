@@ -1,5 +1,10 @@
 # Verificación 008
 
+Estado actual — 2026-10-24 (Bogotá): E0–E3 cerradas localmente.
+370 Node, 30 Chromium y build; ocho contratos/234 IDs completos; RLS real fresco (tres contratos) y limpieza confirmados; once mutaciones detectadas. 107 firmas anteriores intactas, una enmendada y ocho E0 intactas.
+[Revisión de cierre](evidence/completion-review.json) y [converge](converge.md).
+Los apartados anteriores conservan la cronología; publicación, integración y Vercel pendientes de autorización.
+
 ## E0 — 2026-10-24 (Bogotá)
 
 Plan aprobado: `2ee8edca15a95012344e0dca3823e8b103b231f3`.
@@ -126,3 +131,24 @@ pnpm exec node scripts/run-delete-state-checkpoint.js final
 T029–T036 conservan sus dependencias pendientes: retirar el fixture propio,
 ejecutar RLS fresco, checkpoint final de ocho contratos, converge y preparación
 definitiva de PRs. CI y los borradores están preparados, sin publicación autorizada.
+
+## Cierre E3 tras T038 — 2026-10-24 (Bogotá)
+
+La revisión final detectó un rechazo falsy que mantenía el error pero impedía
+recuperar. T038 añadió doce rojos específicos sobre el candidato anterior y
+catorce verdes dirigidos después de corregir la guarda booleana; no se alteró E0.
+[Suplemento T038](evidence/rejection-values.json). Se repitieron todas las
+mutaciones, RLS y el checkpoint completo sobre e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377.
+
+370 Node, 30 Chromium y build; ocho contratos/234 IDs completos; RLS real fresco (tres contratos) y limpieza confirmados; once mutaciones detectadas. 107 firmas anteriores intactas, una enmendada y ocho E0 intactas.
+
+El fixture fallido anterior se retiró con propietario comprobado, cero
+contenedores/volúmenes y directorio eliminado. El nuevo ensayo RLS terminó con
+cleanup aprobado: [RLS final](evidence/rls-final.json). El rechazo de cierre
+con RLS incompleta queda como control negativo histórico.
+
+Bundle final 512,58 kB / gzip 149,47 kB; delta 5,32 / 2,09 kB frente a E0. El aviso >500 kB permanece.
+
+38 tareas completas (36 aprobadas más T037/T038 aditivas), sin brechas del
+alcance 008. [Ambos PRs](doc-pr.md) preparados; [código](code-pr.md) pendiente
+de autorización remota y CI verde. No se certifica producción.

@@ -1,31 +1,20 @@
-# PR de código 008 — borrador de cierre
+# PR de código 008 — preparación local completa
 
-Estado: preparado para revisión local; E3 incompleta, RLS y checkpoint final
-pendientes. No publicar ni solicitar integración con este estado.
+Rama: codex/008-borrado-fiable. Dependencia: documental 2ee8edc. Publicación, integración y Vercel pendientes de autorización específica.
+[Verificación](verification.md), [converge](converge.md), [checkpoint final](evidence/final.json).
 
 Título: `fix(datos): conservar bloqueo y recuperación segura del borrado`.
 
-El borrado podía perder su error al desmontar Ajustes, reactivar guardados del
-estado anterior y despachar efectos tardíos sobre otra cuenta. El flujo ahora
-conserva estado por intento/sesión, distingue DELETE despachado de confirmado y
-mantiene bloqueados carga ordinaria y guardados. Antes del despacho ofrece
-recarga manual con confirmación de aplicación; después permite solo cierre
-manual, sin repetir fotos ni DELETE. Feedback accesible a 390/1280.
+## Cuerpo para el PR
 
-Validación ejecutada: E2 355 Node/30 Chromium/build; 29 IDs 008 completos,
-107 firmas previas intactas, una enmienda explícita y ocho pins E0 intactos.
-Cinco mutaciones con cinco controles positivos y limpieza; dos casos suplementarios
-de cargas y controles negativos de trazabilidad. [Evidencia](verification.md).
-El perfil local posterior pasó 358 Node/30 Chromium/build y siete contratos/211 IDs;
-las seis mutaciones heredadas también se renovaron. Falta RLS local fresco con
-limpieza confirmada y el checkpoint final de ocho contratos.
-No se atribuyen 234 IDs/ocho contratos completos hasta superar esa puerta.
+Tras borrar registros, un fallo al cerrar sesión podía reactivar guardados del estado anterior; las respuestas tardías también podían afectar otra cuenta. El flujo mantiene el bloqueo por intento/sesión, distingue DELETE despachado de confirmado y conserva feedback en la raíz aunque Ajustes se desmonte.
 
-Bundle E2 +5,36 kB / +2,10 kB gzip; aviso >500 kB conservado. No se garantiza
-rollback, cancelación de red ni continuidad tras recargar. No se certifica una
-sesión productiva autenticada ni RLS productivo. SQL y dependencias conservados.
+Antes del despacho, ofrece recarga manual y reanuda solo después de aplicar los valores frescos. Después, permite reintentar únicamente el cierre, sin repetir fotos ni DELETE. La generación de sesión invalida A→B→A; los rechazos sin objeto Error también mantienen operativa la recuperación. Feedback visible, con controles accesibles, a 390/1280.
 
-Orden futuro: PR documental del snapshot aprobado `2ee8edc`, después este código
-con converge y CI remoto verdes. Publicación, fusiones y Vercel requieren
-autorización específica posterior. Revert coordinado de código, adendas 001/006
-y PIN-008-001; nunca restauración automática de datos ya eliminados.
+Validación local: 370 Node, 30 Chromium y build; ocho contratos/234 IDs completos, incluidos 29 de 008. RLS real fresco: tres contratos y limpieza confirmada; fixture anterior recuperado. Once mutaciones nuevas/heredadas detectadas con controles positivos y limpieza. 107 firmas anteriores intactas, PIN-008-001 explícita y ocho pins E0 intactos.
+
+Converge añadió T037/T038 dentro del alcance; los suplementos se distinguen de E0 y T038 tiene rojo en candidato previo/verde posterior. Evidencia en specs/008-borrado-fiable/{verification,converge}.md y evidence/final.json.
+
+SQL y dependencias conservados. Se mantiene el aviso de bundle >500 kB. No se promete rollback, cancelación de operaciones ya invocadas en el SDK ni continuidad tras recargar; no se certifica producción ni una sesión autenticada real.
+
+Orden: integrar el documental primero y este código después, con CI remoto verde y autorización de Vercel. Reversión coordinada de código, adendas 001/006 y PIN-008-001; no restaura datos eliminados.

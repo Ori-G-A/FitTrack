@@ -1,20 +1,11 @@
 {
   "passed": true,
-  "generatedAt": "2026-10-25T02:10:25.574Z",
-  "documents": 13,
-  "links": 152,
-  "tasks": 37,
-  "completed": 29,
-  "pending": [
-    "T029",
-    "T030",
-    "T031",
-    "T032",
-    "T033",
-    "T034",
-    "T035",
-    "T036"
-  ],
+  "generatedAt": "2026-10-25T03:35:33.323Z",
+  "documents": 14,
+  "links": 173,
+  "tasks": 38,
+  "completed": 38,
+  "pending": [],
   "dependencyGraphAcyclic": true,
   "pins": {
     "historicalIntact": 107,
@@ -26,6 +17,6 @@
     "partial": 0,
     "complete": 29
   },
-  "executionStage": "E3 parcial, no cierre",
+  "executionStage": "E3 completa, cierre local",
   "remoteAuthorized": false
 }

@@ -480,3 +480,13 @@ RLS fresco sigue pendiente tras fallar Docker; la limpieza del intento propio
 no se confirmó y se conserva su recuperación. No hay aceptación de esta brecha,
 cierre E3 ni autorización de publicar/fusionar/Vercel.
 [Evidencia](../../specs/008-borrado-fiable/verification.md).
+
+## Cierre local 008 — 2026-10-24 (Bogotá)
+
+Ejecución local autorizada E0–E3 completada: 370 Node, 30 Chromium y build; ocho contratos/234 IDs completos; RLS real fresco (tres contratos) y limpieza confirmados; once mutaciones detectadas. 107 firmas anteriores intactas, una enmendada y ocho E0 intactas.
+38 tareas, incluidas T037/T038 dentro de requisitos aprobados. Docker y el
+fixture anterior recuperados; nuevo RLS fresco y cleanup aprobados. Las pruebas
+de T038 se caracterizaron en candidato previo, sin atribuir rojo al original E0.
+[Converge](../../specs/008-borrado-fiable/converge.md).
+La autorización local queda ejecutada; no se autoriza aún publicar, fusionar ni
+desplegar 008. CI remoto y producción no se infieren desde pruebas locales.

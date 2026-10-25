@@ -1,5 +1,10 @@
 # Preparación verificada de SDD
 
+Cierre local 008 — 2026-10-24 (Bogotá): 370 Node, 30 Chromium y build; ocho contratos/234 IDs completos; RLS real fresco (tres contratos) y limpieza confirmados; once mutaciones detectadas. 107 firmas anteriores intactas, una enmendada y ocho E0 intactas.
+38 tareas completas y ambos PRs preparados. El bloqueo Docker se resolvió
+y se confirmó la retirada del fixture anterior antes del ensayo fresco.
+[Revisión 008](../../specs/008-borrado-fiable/converge.md). Sin autorización remota de 008.
+
 Actualización local 2026-10-24: 008 E0–E2 verificadas, E2 con 355 Node,
 30 Chromium y build; 29 IDs propios completos, un pin histórico enmendado y
 ocho nuevos intactos. Cinco mutaciones con cinco controles positivos y limpieza,

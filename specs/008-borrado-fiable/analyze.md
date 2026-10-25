@@ -1,5 +1,10 @@
 # Revisión cruzada 008
 
+Revisión de cierre — 2026-10-24 (Bogotá): E0–E3 completas, 38 tareas
+y 29 IDs propios verificados; ocho contratos/234 IDs con RLS fresco y limpieza.
+T038 corrigió una brecha de rechazo falsy antes de aceptar el cierre.
+[Converge final](converge.md). Los estados pendientes inferiores son históricos.
+
 Estado: revisión documental del agente, aprobada por el propietario el 2026-10-22;
 no es revisión independiente ni prueba de implementación. [Plan](plan.md),
 [tareas](tasks.md), [decisiones](research.md), [spec aprobada](spec.md).

@@ -1,5 +1,9 @@
 # Plan técnico 008 — borrado fiable
 
+Ejecución local completada — 2026-10-24 (Bogotá): E0–E3 y 38 tareas
+(36 aprobadas más T037/T038 aditivas), con RLS fresco y ocho contratos/234 IDs.
+[Converge](converge.md). Las exclusiones de publicación, fusión y Vercel siguen vigentes.
+
 Estado: aprobado el 2026-10-22 (Bogotá), junto con tareas y análisis.
 El propietario autorizó ejecución local E0–E3 antes de integrar el documental.
 No autoriza publicar, fusionar ni desplegar.

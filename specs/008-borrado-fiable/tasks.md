@@ -54,14 +54,14 @@ Las dependencias son necesarias, no autorización para saltar puertas.
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
 | T028 | completada | US2/US3/US4 / FR-005/008/009/011 | Detectar cinco mutaciones con controles positivos, fallo de negocio específico, copias aisladas sin secretos y limpieza verificada | T027 |
-| T029 | pendiente | US1/US4 / FR-003/004/011 | Ejecutar RLS real en Supabase local desechable A/B/anónimo con guardas, CLI fijada y limpieza; no usar .env.local/backend real | T028 |
-| T030 | pendiente | US1–US4 / FR-001–013 | Verificar ocho contratos/234 IDs sobre mismo sourceHash, cláusulas completas, firmas y adendas explícitas | T027, T028, T029 |
-| T031 | pendiente | US1–US4 / FR-001–013 | Extender CI con 008 completa/artefactos; conservar siete puertas anteriores, mutaciones 006/007 y job RLS separado | T030 |
-| T032 | pendiente | US1–US4 / FR-001–013 | Controles negativos del manifiesto: nombre falso/inexistente, duplicado, omitido y partial no pueden aprobar cierre | T031 |
-| T033 | pendiente | US1–US4 / FR-001–013 | Checkpoint final completo Node/Chromium/build, ocho contratos y RLS fresco; registrar counts reales sin skips/retries | T032 |
-| T034 | pendiente | US1–US4 / FR-001–013 | Registrar bundle comparado, readiness, límites, comandos y enlaces; conservar hallazgos ajenos y distinción producción/local | T033 |
-| T035 | pendiente | US1–US4 / FR-001–013 | Converge: revisar requisitos, tareas, aprobaciones y enmiendas; cero brechas abiertas; solo añadir tareas si aparece trabajo nuevo | T034 |
-| T036 | pendiente | US1–US4 / FR-001–013 | Preparar PR documental y código, orden/omisiones/reversión y commits lógicos locales; árbol limpio; sin publicar/fusionar/Vercel | T035 |
+| T029 | completada | US1/US4 / FR-003/004/011 | Ejecutar RLS real en Supabase local desechable A/B/anónimo con guardas, CLI fijada y limpieza; no usar .env.local/backend real | T028 |
+| T030 | completada | US1–US4 / FR-001–013 | Verificar ocho contratos/234 IDs sobre mismo sourceHash, cláusulas completas, firmas y adendas explícitas | T027, T028, T029 |
+| T031 | completada | US1–US4 / FR-001–013 | Extender CI con 008 completa/artefactos; conservar siete puertas anteriores, mutaciones 006/007 y job RLS separado | T030 |
+| T032 | completada | US1–US4 / FR-001–013 | Controles negativos del manifiesto: nombre falso/inexistente, duplicado, omitido y partial no pueden aprobar cierre | T031 |
+| T033 | completada | US1–US4 / FR-001–013 | Checkpoint final completo Node/Chromium/build, ocho contratos y RLS fresco; registrar counts reales sin skips/retries | T032 |
+| T034 | completada | US1–US4 / FR-001–013 | Registrar bundle comparado, readiness, límites, comandos y enlaces; conservar hallazgos ajenos y distinción producción/local | T033 |
+| T035 | completada | US1–US4 / FR-001–013 | Converge: revisar requisitos, tareas, aprobaciones y enmiendas; cero brechas abiertas; solo añadir tareas si aparece trabajo nuevo | T034 |
+| T036 | completada | US1–US4 / FR-001–013 | Preparar PR documental y código, orden/omisiones/reversión y commits lógicos locales; árbol limpio; sin publicar/fusionar/Vercel | T035 |
 
 El conteo por nombre E0 es 4 AS-IS + 13 CHANGE; los subcasos y el total del runner
 se registran aparte. Cada rojo debe fallar por la cláusula y ejecutarse sobre
@@ -102,4 +102,6 @@ Se conserva el historial y se añade la tarea siguiente; T035/T036 requieren su 
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T038 | pendiente | US2/US3 / FR-005/009/010 | Caracterizar rojo en candidato E2 y corregir rechazos sin Error, incluidos valores falsy; conservar identidad del rechazo, permitir recuperación/cierre manual y repetir checkpoint completo, mutaciones y RLS para el nuevo sourceHash | T027 |
+| T038 | completada | US2/US3 / FR-005/009/010 | Caracterizar rojo en candidato E2 y corregir rechazos sin Error, incluidos valores falsy; conservar identidad del rechazo, permitir recuperación/cierre manual y repetir checkpoint completo, mutaciones y RLS para el nuevo sourceHash | T027 |
+
+Cierre E3, 2026-10-24: [revisión de cierre](evidence/completion-review.json). Fixture anterior retirado; RLS fresco real y limpieza aprobados; 370 Node/30 Chromium/build, ocho contratos/234 IDs, 38 tareas completas. Los estados parciales anteriores se conservan como historia. Publicación, integración y Vercel pendientes de autorización específica.

@@ -1,8 +1,8 @@
 {
   "stage": "E3",
-  "complete": false,
-  "generatedAt": "2026-10-25T02:08:56.605Z",
-  "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "complete": true,
+  "generatedAt": "2026-10-25T03:35:23.912Z",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
   "pins": {
     "historicalIntact": 107,
     "amended": 1,
@@ -28,6 +28,36 @@
   "traceControlsPassed": true,
   "ciPrepared": true,
   "rls": {
+    "passed": true,
+    "cleanupConfirmed": true,
+    "projectId": "fittrack-sdd-rls-c9dcac7bad66",
+    "generatedAt": "2026-10-25T03:28:00.700Z",
+    "tests": 3,
+    "previousFixtureRecoveryConfirmed": true
+  },
+  "finalCheckpoint": {
+    "passed": true,
+    "nodeTests": 370,
+    "browser": 30,
+    "contracts": 8,
+    "ids": 234,
+    "closurePassed": true,
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377"
+  },
+  "remoteAuthorization": false,
+  "localCheckpoint": {
+    "passed": true,
+    "nodeTests": 358,
+    "browser": 30,
+    "buildPassed": true,
+    "contracts": 7,
+    "ids": 211,
+    "closurePassed": false,
+    "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad"
+  },
+  "finalGateRejectedIncompleteRls": true,
+  "previousCandidateSourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "earlierRlsAttempt": {
     "generatedAt": "2026-10-24T17:46:09.826Z",
     "runnerFinished": true,
     "passed": false,
@@ -42,18 +72,5 @@
       "available": false,
       "reason": "No existe el pipe dockerDesktopLinuxEngine"
     }
-  },
-  "finalCheckpoint": "pending: RLS fresco y limpieza confirmada antes del modo final",
-  "remoteAuthorization": false,
-  "localCheckpoint": {
-    "passed": true,
-    "nodeTests": 358,
-    "browser": 30,
-    "buildPassed": true,
-    "contracts": 7,
-    "ids": 211,
-    "closurePassed": false,
-    "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad"
-  },
-  "finalGateRejectedIncompleteRls": true
+  }
 }
