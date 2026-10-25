@@ -71,3 +71,58 @@ El aviso >500 kB permanece. SourceHash E2:
 La revisión añade T037 para reforzar carga ordinaria pendiente y continuidad de
 guardados propios de B frente a A tardío. Es evidencia suplementaria posterior,
 no altera E0 ni sustituye sus rojos. E3, RLS y autorización remota pendientes.
+
+## E3 parcial — 2026-10-24 (Bogotá)
+
+[Registro parcial](evidence/e3-progress.json): cinco mutaciones detectadas, cinco
+controles positivos, cero skips/cancelaciones y limpieza confirmada. Se prueba
+el bypass conjunto de las barreras de visibilidad y carga ordinaria, porque
+quitar una sola conserva la otra. Las aserciones observan lecturas y guardados.
+[Mutaciones](evidence/mutations.json).
+
+[T037](evidence/supplementary-load-races.json): dos casos suplementarios verdes,
+firmados; no se atribuye rojo original. Los controles de trazabilidad rechazan
+nombre inexistente o distinto del plan, duplicado, omisión, partial y retried.
+El primer control de firmas detectó que el helper reaplicaba enmiendas 006/007
+sobre firmas ya efectivas; se corrigió el helper y se repitió el control completo.
+Ninguna firma histórica o E0 se cambió para resolverlo.
+
+CI 008 y artefactos preparados, conservando siete puertas anteriores, mutaciones
+006/007 y RLS separado. Falta verificar el checkpoint final con RLS fresco y
+los ocho contratos/234 IDs. [Intento RLS](evidence/rls-attempt.json) terminado
+fallido, sin resultados ni limpieza confirmada. Docker se cerró al acceder a
+dockerInference; el servicio estaba detenido. Se interrumpió únicamente el CLI
+hijo de arranque tras comprobar padre, ruta y propietario; el runner intentó
+retirar su fixture, sin confirmar éxito. Se conserva el directorio de
+[recuperación](evidence/rls-environment.json), cuyo proyecto propio debe retirarse
+con Docker operativo antes de crear otro fixture. La comprobación posterior
+sigue sin encontrar el pipe dockerDesktopLinuxEngine. No se reutiliza evidencia antigua.
+[PR de código en borrador](code-pr.md).
+
+El aislamiento impide invocar pasos posteriores desde un actor obsoleto; no
+cancela operaciones ya invocadas, incluido signOut dentro del SDK. No se promete
+abortar efectos internos de una llamada ya enviada si cambia la cuenta después.
+
+## Checkpoint local posterior de E3 — 2026-10-24
+
+[Perfil local completo](evidence/local.json): 358 Node, 30 Chromium y build
+verdes, sin skips/cancelaciones/retries. Siete contratos/211 IDs completos
+desde los mismos resultados y sourceHash E2. Los 23 IDs de 002 no se recertifican
+sin RLS fresco. El campo closurePassed permanece false.
+
+Mutaciones heredadas [006](evidence/interface-postgreen-mutations.json) y
+[007](evidence/save007-mutations.json) renovadas para este candidato: tres y
+tres detectadas, controles positivos y limpieza. Con las cinco de 008 son once
+mutaciones detectadas. Dos originales archivados y todas las firmas verificadas.
+La [puerta final](evidence/final-gate-negative.json) rechaza expresamente RLS incompleta.
+
+```powershell
+pnpm exec node scripts/check-delete-state-mutations.js
+pnpm exec node scripts/run-delete-state-checkpoint.js local
+# Solo con RLS fresco y limpieza confirmada:
+pnpm exec node scripts/run-delete-state-checkpoint.js final
+```
+
+T029–T036 conservan sus dependencias pendientes: retirar el fixture propio,
+ejecutar RLS fresco, checkpoint final de ocho contratos, converge y preparación
+definitiva de PRs. CI y los borradores están preparados, sin publicación autorizada.

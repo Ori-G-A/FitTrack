@@ -53,7 +53,7 @@ Las dependencias son necesarias, no autorización para saltar puertas.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T028 | pendiente | US2/US3/US4 / FR-005/008/009/011 | Detectar cinco mutaciones con controles positivos, fallo de negocio específico, copias aisladas sin secretos y limpieza verificada | T027 |
+| T028 | completada | US2/US3/US4 / FR-005/008/009/011 | Detectar cinco mutaciones con controles positivos, fallo de negocio específico, copias aisladas sin secretos y limpieza verificada | T027 |
 | T029 | pendiente | US1/US4 / FR-003/004/011 | Ejecutar RLS real en Supabase local desechable A/B/anónimo con guardas, CLI fijada y limpieza; no usar .env.local/backend real | T028 |
 | T030 | pendiente | US1–US4 / FR-001–013 | Verificar ocho contratos/234 IDs sobre mismo sourceHash, cláusulas completas, firmas y adendas explícitas | T027, T028, T029 |
 | T031 | pendiente | US1–US4 / FR-001–013 | Extender CI con 008 completa/artefactos; conservar siete puertas anteriores, mutaciones 006/007 y job RLS separado | T030 |
@@ -83,4 +83,12 @@ reescribir etapas completadas. T028 comenzará tras cerrar también T037.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T037 | pendiente | US3/US4 / FR-008/011 | Dos casos suplementarios App: B carga/guarda valores propios mientras A termina y una carga ordinaria pendiente no aplica setters durante el bloqueo. Registrar firma y resultados sin atribuirles rojo E0 | T027 |
+| T037 | completada | US3/US4 / FR-008/011 | Dos casos suplementarios App: B carga/guarda valores propios mientras A termina y una carga ordinaria pendiente no aplica setters durante el bloqueo. Registrar firma y resultados sin atribuirles rojo E0 | T027 |
+
+Avance E3, 2026-10-24: [registro parcial](evidence/e3-progress.json). T028 y T037 verificadas. CI y controles T032 preparados técnicamente; su cierre sigue condicionado a las dependencias. RLS fresco y checkpoint final pendientes.
+
+Perfil local posterior: [358 Node/30 Chromium/build y siete contratos/211 IDs](evidence/local.json),
+once mutaciones nuevas/heredadas detectadas y cierre RLS rechazado correctamente.
+Este perfil conserva closurePassed=false; no completa T029–T036 ni elimina sus
+dependencias. Antes de reintentar T029 hay que retirar el fixture propio cuyo
+directorio de recuperación está en [el intento fallido](evidence/rls-attempt.json).

@@ -8,6 +8,10 @@ Título propuesto: `docs(sdd): especificar borrado fiable por sesión (008)`.
 
 ## Cuerpo propuesto
 
+Este cuerpo describe el snapshot documental aprobado `2ee8edc`, anterior a
+implementar. Sus estados pending son históricos. La ejecución posterior vive
+en la rama de código y en [verificación](verification.md); no se mezcla con aquel snapshot.
+
 El flujo actual puede perder el error al desmontar Ajustes, reactivar guardados
 tras un borrado y aplicar efectos tardíos a otra sesión. La spec 008 define
 feedback persistente y recuperación manual según si DELETE fue despachado,

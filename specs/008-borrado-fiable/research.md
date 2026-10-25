@@ -1,6 +1,8 @@
 # Decisiones técnicas 008
 
-Estado: decisiones aprobadas junto al plan el 2026-10-22; alcance en `462a344`.
+Estado: R-001–012 aprobadas junto al plan el 2026-10-22; alcance en `462a344`.
+R-013/014 registran ajustes técnicos de ejecución del 2026-10-24 dentro de ese
+alcance, sin nuevos CHANGE ni una aprobación de producto adicional inferida.
 
 | ID | Decisión propuesta | Motivo y límite |
 | --- | --- | --- |
@@ -16,6 +18,8 @@ Estado: decisiones aprobadas junto al plan el 2026-10-22; alcance en `462a344`.
 | R-010 | Resolver PIN-008-001 por composición central, no editando cinco validadores | Los cinco ya usan el helper 007; un módulo independiente evita ciclos y conserva hashes originales |
 | R-011 | Harnesses 008 nuevos y callbacks de los dobles existentes | DELETE sintético debe borrar filas cuando se mide reescritura; no cambiar fake-supabase congelado |
 | R-012 | Reutilizar loader con cancelación lógica por actor e intento | Conserva migraciones/hidratación; no habrá segunda interpretación de copias ni rollback ficticio |
+| R-013 | Mutar conjuntamente las barreras de entrada visible y carga ordinaria | Quitar solo una conserva la otra y puede ser equivalente; se prueba el bypass coherente del camino completo mediante lecturas/guardados, no un detalle textual aislado |
+| R-014 | Validar las firmas efectivas 008 con el resolutor de la adenda 008 | Las 108 firmas archivadas ya incluyen 006/007; no reaplicar su cadena sobre hashes que ya son posteriores |
 
 ## Carrera de carga y commit
 

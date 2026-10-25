@@ -24,12 +24,25 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm exec node scripts/check-interface-mutations.js
       - run: pnpm exec node scripts/check-save-state-mutations.js
+      - run: pnpm exec node scripts/check-delete-state-mutations.js
       - run: pnpm test:sdd:complete
       - run: pnpm run test:sdd:complete --spec=003-entrenamiento
       - run: pnpm run test:sdd:complete --spec=004-nutricion-objetivos
       - run: pnpm run test:sdd:complete --spec=005-cuerpo-ciclo
       - run: pnpm run test:sdd:complete --spec=006-interfaz
       - run: pnpm run test:sdd:complete --spec=007-guardado-fiable
+      - run: pnpm run test:sdd:complete --spec=008-borrado-fiable
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: evidencia-sdd-008
+          path: |
+            test-results/sdd-008-borrado-fiable-evidence.json
+            test-results/sdd-008-borrado-fiable-pilot.tap
+            test-results/sdd-008-borrado-fiable-browser.json
+            test-results/delete008-mutations.json
+            test-results/delete008-mutation-*.tap
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v6
         if: always()
         with:

@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "generatedAt": "2026-10-24T17:44:48.500Z",
+  "mutations": [
+    {
+      "name": "escape",
+      "test": "interfaz cambio Registrar teclado y foco",
+      "detected": true,
+      "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByRole('dialog', { name: 'Registrar', exact: true })\nExpected: 0\nReceived: 1\nTimeout:  3000ms\n\nCall log:\n  - Expect \"toHaveCount\" getByRole('dialog', { name: 'Registrar', exact: true }) with timeout 3000ms\n  - waiting for getByRole('dialog', { name: 'Registrar', exact: true })\n    10 × locator resolved to 1 element\n       - unexpected value \"1\"\n"
+    },
+    {
+      "name": "label",
+      "test": "interfaz cambio campo Peso en kg",
+      "detected": true,
+      "error": "Error: el input de peso debe tener nombre accesible inequívoco\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByLabel('Peso en kg', { exact: true })\nExpected: 1\nReceived: 0\nTimeout:  3000ms\n\nCall log:\n  - el input de peso debe tener nombre accesible inequívoco getByLabel('Peso en kg', { exact: true }) with timeout 3000ms\n  - waiting for getByLabel('Peso en kg', { exact: true })\n    10 × locator resolved to 0 elements\n       - unexpected value \"0\"\n"
+    },
+    {
+      "name": "highlight",
+      "test": "interfaz cambio resaltado temporal tras consumo de focusCard",
+      "detected": true,
+      "error": "Error: FR-024: consumir focusCard no debe dejar el resaltado permanente\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: locator('#card-peso')\nExpected pattern: not /ft-dc-focus/\nReceived string: \"ft-dc-card span2 ft-dc-focus\"\nTimeout: 3000ms\n\nCall log:\n  - FR-024: consumir focusCard no debe dejar el resaltado permanente locator('#card-peso') with timeout 3000ms\n  - waiting for locator('#card-peso')\n    9 × locator resolved to <div id=\"card-peso\" class=\"ft-dc-card span2 ft-dc-focus\">…</div>\n      - unexpected value \"ft-dc-card span2 ft-dc-focus\"\n"
+    }
+  ],
+  "positiveControls": 3,
+  "cleanupPassed": true
+}

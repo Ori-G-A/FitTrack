@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-24T17:46:00.243Z",
+  "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "mutations": [
+    {
+      "name": "reset-error",
+      "detected": true,
+      "reason": "FR-005: comenzar C no borra A"
+    },
+    {
+      "name": "user-filter",
+      "detected": true,
+      "reason": "FR-007: B no recibe el inicio de A"
+    },
+    {
+      "name": "status-role",
+      "detected": true,
+      "reason": "FR-009: una región accesible conserva"
+    }
+  ],
+  "positiveControls": 4,
+  "cleanupPassed": true
+}

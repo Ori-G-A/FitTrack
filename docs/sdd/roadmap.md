@@ -9,6 +9,17 @@ C-001/002/003 aprobados; [plan técnico](../../specs/008-borrado-fiable/plan.md)
 36 tareas y análisis aprobados por separado; ejecución local E0–E3 autorizada,
 sin autorización de publicar, fusionar ni desplegar 008.
 
+Avance local 008, 2026-10-24: E0–E2 conservadas en `2603ee1`, `a573010` y
+`dd95ae3`; 355 Node/30 Chromium/build en E2, 29 IDs propios completos.
+Cinco mutaciones y dos casos suplementarios aprobados. E3 sigue abierto por
+RLS fresco y checkpoint final; Docker no responde tras iniciarlo.
+[Registro local](../../specs/008-borrado-fiable/verification.md).
+
+Actualización del mismo candidato: perfil local E3 con 358 Node, 30 Chromium,
+build y siete contratos/211 IDs verdes; once mutaciones nuevas/heredadas detectadas.
+RLS terminó fallido, sin limpieza confirmada. Se conserva el fixture propio para
+recuperación; E3 no está cerrada y no hay autorización remota de 008.
+
 Estado histórico, 2026-10-20 (Bogotá): 001–006 integradas; PATCH 1.0.3 ratificada
 y aplicada. La integración documental y sus verificaciones se registran en el
 [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15), con CI verde como requisito.

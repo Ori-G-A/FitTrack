@@ -140,7 +140,7 @@ por FR y prueba sobre BASE antes de su enmienda, según el plan que se apruebe.
 ## Criterios medibles de aceptación
 
 - SC-001: Los 29 IDs tendrán pruebas reales descubiertas y aprobadas al cierre;
-  esta propuesta tiene todos pending y no anticipa ese resultado.
+  al aprobar el alcance todas las filas estaban pending; la evidencia posterior se registra por etapa.
 - SC-002: Caracterizar AS-IS sobre BASE y obtener rojos específicos de cada
   CHANGE antes de implementar; conservar originales y fallos de los checkpoints.
 - SC-003: Probar retorno error y rechazo de signOut por separado, Storage y DELETE
@@ -186,7 +186,8 @@ Permiten preparar el plan; no autorizan implementar sin su aprobación separada.
 
 ## Trazabilidad
 
-Una fila por FR y escenario en [manifiesto](traceability.json), todos pending.
+Una fila por FR y escenario en [manifiesto](traceability.json): 29 complete tras E2.
+El cierre E3 sigue pendiente de checkpoint final y RLS fresco; véase [verificación](verification.md).
 Los nombres previstos se detallan en [validación propuesta](validation-plan.md).
 Plan y tareas aprobados por separado el 2026-10-22; la matriz no afirma pruebas ejecutadas.
 

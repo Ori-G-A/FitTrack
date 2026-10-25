@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-10-24T17:46:09.826Z",
+  "runnerFinished": true,
+  "passed": false,
+  "cleanupConfirmed": false,
+  "projectId": "fittrack-sdd-rls-8b4620a39db7",
+  "recoveryDirectory": "C:\\Users\\orian\\AppData\\Local\\Temp\\fittrack-sdd-rls-NF1uif",
+  "startInterrupted": true,
+  "reason": "Docker Desktop backend se cerró al acceder al socket dockerInference; servicio detenido. Se interrumpió solo el hijo de arranque propio; el runner intentó stop, sin confirmar limpieza.",
+  "nextStep": "Con Engine running, verificar propietario, retirar ese proyecto y confirmar limpieza antes de ejecutar un fixture nuevo. No resetear Docker ni borrar recursos ajenos."
+}

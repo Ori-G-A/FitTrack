@@ -470,3 +470,13 @@ local E0–E3». Aprueba las 36 tareas, decisiones, puertas y enmienda controlad
 del pin contradictorio descritas en el plan. Autoriza ejecución local antes de
 integrar el PR documental, conservando un snapshot aprobado. No autoriza publicar,
 fusionar ni desplegar 008. El cierre exige ocho contratos/234 IDs y RLS local fresco.
+
+## Avance local 008 — 2026-10-24 (Bogotá)
+
+E0–E2 verificadas y conservadas; E3 parcial con perfil local de 358 Node,
+30 Chromium/build, siete contratos/211 IDs y once mutaciones nuevas/heredadas.
+Se añadió T037 por converge dentro de FR-008/011, sin nuevo comportamiento.
+RLS fresco sigue pendiente tras fallar Docker; la limpieza del intento propio
+no se confirmó y se conserva su recuperación. No hay aceptación de esta brecha,
+cierre E3 ni autorización de publicar/fusionar/Vercel.
+[Evidencia](../../specs/008-borrado-fiable/verification.md).

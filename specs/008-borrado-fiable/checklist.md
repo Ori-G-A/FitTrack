@@ -17,5 +17,6 @@ Revisión documental del agente; alcance y aclaraciones aprobados por el propiet
 - [x] Plan, 36 tareas, decisiones y análisis preparados para revisión separada.
 - [x] Plan/tareas/análisis aprobados por separado antes de implementar, el 2026-10-22.
 
-No hay implementación ni PR 008. No se hicieron commits de borradores como
+Implementación local E0–E2 verificada; E3 en curso, sin PR 008 publicado.
+[Verificación](verification.md). No se hicieron commits de borradores como
 etapas aprobadas ni se infirió aprobación desde el diagnóstico.

@@ -1,5 +1,18 @@
 # Preparación verificada de SDD
 
+Actualización local 2026-10-24: 008 E0–E2 verificadas, E2 con 355 Node,
+30 Chromium y build; 29 IDs propios completos, un pin histórico enmendado y
+ocho nuevos intactos. Cinco mutaciones con cinco controles positivos y limpieza,
+dos casos suplementarios de carga y controles negativos del manifiesto aprobados.
+E3 sigue abierta por RLS fresco y checkpoint final. Docker se cierra al acceder
+al socket dockerInference; no se presenta evidencia antigua como una ejecución
+actual ni se autoriza publicación/integración/Vercel. [Registro 008](../../specs/008-borrado-fiable/verification.md).
+
+Perfil local posterior: 358 Node/30 Chromium/build aprobados, siete contratos/211
+IDs verificados y once mutaciones nuevas/heredadas detectadas con limpieza.
+RLS terminó fallido y su limpieza no se confirmó; se conserva recuperación del
+fixture propio. La puerta final lo rechaza. El perfil local no equivale a cierre E3.
+
 Actualización 2026-10-19: 005 verificada localmente E0–E6: 286 Node,
 13 Chromium, 3 RLS reales con guardas/cleanup y build correcto. Cinco contratos
 completos (21/23/21/31/40 IDs), mismo src/resultados y 68 hashes congelados.
