@@ -4,6 +4,11 @@ Estado: R-001–012 aprobadas junto al plan el 2026-10-22; alcance en `462a344`.
 R-013/014 registran ajustes técnicos de ejecución del 2026-10-24 dentro de ese
 alcance, sin nuevos CHANGE ni una aprobación de producto adicional inferida.
 
+R-015, revisión final: distinguir el booleano de fallo de su motivo rechazado.
+Un rechazo puede ser undefined/null/false/0/cadena vacía; el guard no puede usar
+la verdad del motivo para decidir si existe recuperación. T038 reproduce rojo
+en candidato E2 y añade verde suplementario sin alterar los ocho pins E0.
+
 | ID | Decisión propuesta | Motivo y límite |
 | --- | --- | --- |
 | R-001 | Mantener deleteUserData como motor inyectado y añadir coordinador de intento | Una sola secuencia; evita duplicar lógica o acoplarla a React; preserva consumidores estables |

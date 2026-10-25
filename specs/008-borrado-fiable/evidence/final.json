@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "closurePassed": false,
+  "mode": "final",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "reason": "Revalidación completa requerida por T038"
+}

@@ -92,3 +92,14 @@ once mutaciones nuevas/heredadas detectadas y cierre RLS rechazado correctamente
 Este perfil conserva closurePassed=false; no completa T029–T036 ni elimina sus
 dependencias. Antes de reintentar T029 hay que retirar el fixture propio cuyo
 directorio de recuperación está en [el intento fallido](evidence/rls-attempt.json).
+
+## Converge aditivo — revisión final
+
+El sondeo puro de la revisión final reprodujo rechazo con undefined: el error se
+publica, pero la guarda de recuperación confunde el valor falsy con ausencia de
+fallo. No se amplía producto: FR-005/009/010 ya incluyen rechazos y recuperación.
+Se conserva el historial y se añade la tarea siguiente; T035/T036 requieren su cierre.
+
+| ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
+| --- | --- | --- | --- | --- |
+| T038 | pendiente | US2/US3 / FR-005/009/010 | Caracterizar rojo en candidato E2 y corregir rechazos sin Error, incluidos valores falsy; conservar identidad del rechazo, permitir recuperación/cierre manual y repetir checkpoint completo, mutaciones y RLS para el nuevo sourceHash | T027 |

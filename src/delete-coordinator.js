@@ -15,9 +15,9 @@ export function createDeleteCoordinator(effects) {
   };
   const matches = origin => active && origin === actor;
   const current = item => attempt === item && matches(item.actor);
-  const failure = (item, error) => {
+  // El motivo de un rechazo puede ser falsy; el estado no depende de su valor.
+  const failure = item => {
     if (!current(item)) return;
-    item.error = error;
     publish({busy: false, error: true, recoveryId: null});
   };
   function setActor(userId) {
@@ -31,7 +31,7 @@ export function createDeleteCoordinator(effects) {
   function start() {
     if (!active || !actor.userId) return Promise.reject(new Error('No hay una sesión activa'));
     if (attempt) return attempt.promise;
-    const item = {id: ++sequence, actor, error: null, promise: null, recovery: null};
+    const item = {id: ++sequence, actor, promise: null, recovery: null};
     attempt = item;
     publish({blocked: true, busy: true, error: false, phase: 'waiting',
       deleteDispatched: false, dataDeleted: false, recoveryId: null});
@@ -43,12 +43,12 @@ export function createDeleteCoordinator(effects) {
           ...(phase === 'closing' ? {dataDeleted: true} : {})});
       },
     }).then(() => {if (current(item)) publish({busy: false, phase: 'closed'});})
-      .catch(error => {if (current(item)) {failure(item, error); throw error;}});
+      .catch(error => {if (current(item)) {failure(item); throw error;}});
     return item.promise;
   }
   function recover() {
     const item = attempt;
-    if (!item || !current(item) || snapshot.deleteDispatched || !item.error) return Promise.resolve();
+    if (!item || !current(item) || snapshot.deleteDispatched || !snapshot.error) return Promise.resolve();
     if (snapshot.busy) return item.recovery || item.promise;
     const token = ++sequence;
     publish({busy: true, phase: 'recovering', recoveryId: null});
@@ -61,7 +61,7 @@ export function createDeleteCoordinator(effects) {
       // Sigue bloqueado hasta que el adaptador confirme el commit de esos valores.
       publish({phase: 'ready', recoveryId: token});
       return token;
-    }).catch(error => {if (current(item)) {failure(item, error); throw error;}});
+    }).catch(error => {if (current(item)) {failure(item); throw error;}});
     return item.recovery;
   }
   function confirmRecovery(token) {
@@ -74,7 +74,7 @@ export function createDeleteCoordinator(effects) {
   }
   function retryClose() {
     const item = attempt;
-    if (!item || !current(item) || !snapshot.deleteDispatched || !item.error) return Promise.resolve();
+    if (!item || !current(item) || !snapshot.deleteDispatched || !snapshot.error) return Promise.resolve();
     if (snapshot.busy) return item.recovery || item.promise;
     publish({busy: true, phase: 'closing'});
     item.recovery = Promise.resolve().then(() => {
@@ -84,7 +84,7 @@ export function createDeleteCoordinator(effects) {
       if (!current(item)) return;
       if (result?.error) throw result.error;
       publish({busy: false, error: false, phase: 'closed'});
-    }).catch(error => {if (current(item)) {failure(item, error); throw error;}});
+    }).catch(error => {if (current(item)) {failure(item); throw error;}});
     return item.recovery;
   }
   function disconnect() {

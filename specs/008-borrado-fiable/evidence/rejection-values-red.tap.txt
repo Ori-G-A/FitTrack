@@ -1,0 +1,272 @@
+TAP version 13
+# Subtest: borrado008 rechazo sin Error permite recarga temprana
+    # Subtest: undefined
+    not ok 1 - undefined
+      ---
+      duration_ms: 6.3139
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:9:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-009: rechazo falsy también permite recarga manual
+        
+        0 !== 1
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:11:43)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:9:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: null
+    not ok 2 - null
+      ---
+      duration_ms: 1.0067
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:9:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-009: rechazo falsy también permite recarga manual
+        
+        0 !== 1
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:11:43)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:9:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: false
+    not ok 3 - false
+      ---
+      duration_ms: 0.9269
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:9:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-009: rechazo falsy también permite recarga manual
+        
+        0 !== 1
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:11:43)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:9:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: zero
+    not ok 4 - zero
+      ---
+      duration_ms: 0.8017
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:9:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-009: rechazo falsy también permite recarga manual
+        
+        0 !== 1
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:11:43)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:9:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: empty
+    not ok 5 - empty
+      ---
+      duration_ms: 1.2092
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:9:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-009: rechazo falsy también permite recarga manual
+        
+        0 !== 1
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:11:43)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:9:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    1..5
+not ok 1 - borrado008 rechazo sin Error permite recarga temprana
+  ---
+  duration_ms: 15.4227
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:8:1'
+  failureType: 'subtestsFailed'
+  error: '5 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: borrado008 rechazo sin Error permite reintento solo de cierre
+    # Subtest: undefined
+    not ok 1 - undefined
+      ---
+      duration_ms: 1.3128
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:15:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-010: rechazo falsy también permite cierre manual
+        
+        1 !== 2
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2
+      actual: 1
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:17:34)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:15:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: null
+    not ok 2 - null
+      ---
+      duration_ms: 1.1092
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:15:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-010: rechazo falsy también permite cierre manual
+        
+        1 !== 2
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2
+      actual: 1
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:17:34)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:15:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: false
+    not ok 3 - false
+      ---
+      duration_ms: 0.9671
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:15:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-010: rechazo falsy también permite cierre manual
+        
+        1 !== 2
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2
+      actual: 1
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:17:34)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:15:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: zero
+    not ok 4 - zero
+      ---
+      duration_ms: 1.0749
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:15:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-010: rechazo falsy también permite cierre manual
+        
+        1 !== 2
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2
+      actual: 1
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:17:34)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:15:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    # Subtest: empty
+    not ok 5 - empty
+      ---
+      duration_ms: 0.7459
+      type: 'test'
+      location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:15:46'
+      failureType: 'testCodeFailure'
+      error: |-
+        FR-010: rechazo falsy también permite cierre manual
+        
+        1 !== 2
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2
+      actual: 1
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:17:34)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/delete008-rejection-values-tests.mjs:15:38)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+      ...
+    1..5
+not ok 2 - borrado008 rechazo sin Error permite reintento solo de cierre
+  ---
+  duration_ms: 10.0035
+  type: 'test'
+  location: 'C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete008-rejection-values-tests.mjs:14:1'
+  failureType: 'subtestsFailed'
+  error: '5 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..2
+# tests 12
+# suites 0
+# pass 0
+# fail 12
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 103.4193
