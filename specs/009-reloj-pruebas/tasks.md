@@ -20,15 +20,15 @@ El plan y la precisión SC-001 fueron aprobados expresamente.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T008 | pendiente | US1/US2 / FR-004/005/006 | Añadir preparePausedClock con cuatro APIs públicas, sin catch de éxito, esperas del host ni margen futuro; detener antes de App | T007 |
-| T009 | pendiente | US1/US2/US3 / FR-001/003/004/005/007 | Adaptar mountUi; PIN-009-001 con original/rojo/verde y aserciones intactas | T008 |
-| T010 | pendiente | US1/US2/US3 / FR-001/003/004/005/007 | Adaptar función local de guardado; PIN-009-002; preservar nombres, 600 ms y doce escrituras y controles accesibles | T008 |
-| T011 | pendiente | US1/US2/US3 / FR-001/003/004/005/007 | Adaptar montaje de borrado; PIN-009-003; conservar confirmación, error, fechas y rutas | T008 |
-| T012 | pendiente | US3 / FR-007; US3-AS3 | Componer resolutor independiente 009 después de cadenas anteriores en helpers 007/008; sin ciclos, reescritura de baselines ni aceptación genérica de hashes | T009, T010, T011 |
-| T013 | pendiente | US3 / FR-007; US3-AS3 | Actualizar informe de integridad 008 y su aserción de recuentos: 105/3 anteriores, 7/1 nuevos; conservar negativos y nombres, sin cambiar oráculos de negocio | T012 |
-| T014 | pendiente | US1/US2 / FR-001–006; US1-AS1/AS2/AS3; US2-AS1/AS2/AS3 | Pasar cinco casos nuevos y treinta heredados con demoras 0/250/1500; comprobar reloj antes de App y plazos posteriores al montaje | T009, T010, T011, T012, T013 |
-| T015 | pendiente | US3 / FR-007; US3-AS1/AS2/AS3 | Preparar runner 009, huellas/recibos, selección de contrato y CI/artefactos; conservar ocho puertas previas, once mutaciones y RLS separado | T014 |
-| T016 | pendiente | US1–US3 / FR-001–007 | Checkpoint E1 Node/35 Chromium/build, firmas y traza; catorce complete/dos pending; no declarar cierre ni recertificar RLS sin ensayo fresco | T015 |
+| T008 | completada | US1/US2 / FR-004/005/006 | Añadir preparePausedClock con cuatro APIs públicas, sin catch de éxito, esperas del host ni margen futuro; detener antes de App | T007 |
+| T009 | completada | US1/US2/US3 / FR-001/003/004/005/007 | Adaptar mountUi; PIN-009-001 con original/rojo/verde y aserciones intactas | T008 |
+| T010 | completada | US1/US2/US3 / FR-001/003/004/005/007 | Adaptar función local de guardado; PIN-009-002; preservar nombres, 600 ms y doce escrituras y controles accesibles | T008 |
+| T011 | completada | US1/US2/US3 / FR-001/003/004/005/007 | Adaptar montaje de borrado; PIN-009-003; conservar confirmación, error, fechas y rutas | T008 |
+| T012 | completada | US3 / FR-007; US3-AS3 | Componer resolutor independiente 009 después de cadenas anteriores en helpers 007/008; sin ciclos, reescritura de baselines ni aceptación genérica de hashes | T009, T010, T011 |
+| T013 | completada | US3 / FR-007; US3-AS3 | Actualizar informe de integridad 008 y su aserción de recuentos: 105/3 anteriores, 7/1 nuevos; conservar negativos y nombres, sin cambiar oráculos de negocio | T012 |
+| T014 | completada | US1/US2 / FR-001–006; US1-AS1/AS2/AS3; US2-AS1/AS2/AS3 | Pasar cinco casos nuevos y treinta heredados con demoras 0/250/1500; comprobar reloj antes de App y plazos posteriores al montaje | T009, T010, T011, T012, T013 |
+| T015 | completada | US3 / FR-007; US3-AS1/AS2/AS3 | Preparar runner 009, huellas/recibos, selección de contrato y CI/artefactos; conservar ocho puertas previas, once mutaciones y RLS separado | T014 |
+| T016 | completada | US1–US3 / FR-001–007 | Checkpoint E1 Node/35 Chromium/build, firmas y traza; catorce complete/dos pending; no declarar cierre ni recertificar RLS sin ensayo fresco | T015 |
 
 ## E2 — mutaciones y cierre local
 

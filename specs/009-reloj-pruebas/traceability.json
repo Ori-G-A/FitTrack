@@ -1,6 +1,6 @@
 {
   "spec": "009-reloj-pruebas",
-  "note": "E0/G-PIN cerrado: nueve IDs completos/siete pending; dos regresiones originales de carrera, controles preservados y siete archivos congelados.",
+  "note": "E1: catorce IDs completos/dos pendientes hasta mutaciones reales; tres enmiendas canónicas con rojo original y verde dirigido.",
   "requirements": [
     {
       "id": "FR-001",
@@ -44,8 +44,11 @@
     {
       "id": "FR-004",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 host no consume plazos antes ni despues del montaje"
@@ -85,8 +88,10 @@
     {
       "id": "US1-AS2",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido"
       ],
@@ -151,8 +156,11 @@
     {
       "id": "FR-005",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 host no consume plazos antes ni despues del montaje"
@@ -279,8 +287,11 @@
     {
       "id": "US3-AS1",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 host no consume plazos antes ni despues del montaje"
@@ -313,8 +324,10 @@
     {
       "id": "US3-AS3",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas"
+      ],
       "plannedTests": [
         "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas"
       ],

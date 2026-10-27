@@ -48,3 +48,8 @@ al parche y demostrar rechazo aunque se presente un after recalculado.
 Las baselines existentes y PIN-006-001 se conservan. Los tres originales se
 archivan antes de E1; los ayudantes nuevos de validación quedan congelados en
 E0 para impedir adaptarlos silenciosamente al candidato.
+
+## Decisiones de ejecución E1
+
+R-011: CI invoca el runner proofs para ejecutar en orden las CLIs existentes de interfaz/guardado/borrado y la nueva de reloj. Se conservan sus once mutaciones y salidas; el envoltorio registra recibos durante cada ejecución y evita etiquetar reportes anteriores con una huella actual.
+R-012: la expectativa nueva posterior al montaje de guardado incluye sus 600 ms explícitos; antes de App sigue exigiendo el instante original. La corrección del instrumental precedió a la congelación E0 y su intento fallido se conserva.

@@ -1,8 +1,9 @@
+import {preparePausedClock} from '../test-support/paused-clock.js';
 import {test,expect} from '@playwright/test';
 import {buildInterface} from '../test-support/interface-build.js';
 let bundle;test.beforeAll(async()=>{bundle=await buildInterface({entry:'test-support/save-state-entry.jsx'});});
 async function mount(page){
- await page.route('**/*',r=>r.abort());await page.route('https://sdd.invalid/',r=>r.fulfill({contentType:'text/html',body:'<div id="root"></div>'}));await page.goto('https://sdd.invalid/');await page.clock.install({time:new Date('2026-10-21T12:00:00Z')});await page.clock.pauseAt(new Date('2026-10-21T12:00:00Z'));
+ await page.route('**/*',r=>r.abort());await page.route('https://sdd.invalid/',r=>r.fulfill({contentType:'text/html',body:'<div id="root"></div>'}));await page.goto('https://sdd.invalid/');await preparePausedClock(page,new Date('2026-10-21T12:00:00Z'));
  await page.evaluate(()=>{globalThis.__interfaceView={mode:'app'};globalThis.__sddFixture={};});await page.addScriptTag({content:bundle});await expect.poll(()=>page.evaluate(()=>__interfaceApp?.loaded)).toBe(true);await page.clock.runFor(600);await expect.poll(()=>page.evaluate(()=>__sddFixture.writes.length)).toBe(12);
  await page.evaluate(async()=>{__sddFixture.onWrite=async p=>({error:p.key==='weights'?{message:'fallo sintético peso'}:null});await __save007.saveKey('sdd-user-001','weights',[]);});
 }

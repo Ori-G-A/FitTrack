@@ -1,0 +1,30 @@
+{
+  "id": "PIN-009-002",
+  "file": "change-tests/save-state.spec.js",
+  "before": "30c03f1dcf64591ff7b93e9e7baaacbcb49ea4cea6e0fcca68dc4a4232afcfea",
+  "after": "2b6cb4c7a452d03ec539b5a4181361e2c25588c835b2c14e3caed3b8b3cbaec0",
+  "approvedPlan": "56583281819ad86a41ffccb3caf7f9896c0b07e9",
+  "fr": [
+    "FR-004",
+    "FR-005",
+    "FR-007"
+  ],
+  "patchVersion": "clock-public-v1",
+  "generatedAt": "2026-10-27T20:50:41.043Z",
+  "originalProof": {
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "nodeTests": 370,
+    "browserTests": 30,
+    "redReport": "e0-browser-attempt-2.json"
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "browserTests": 5,
+    "combinations": 9,
+    "report": "e1-targeted.json",
+    "sha256": "e1a7f47eeb863473cd4d7840eb8f4f72dc1a9db88a13664641ede70bc426e901"
+  },
+  "assertionsChanged": false,
+  "datesChanged": false,
+  "businessTimeoutsChanged": false
+}

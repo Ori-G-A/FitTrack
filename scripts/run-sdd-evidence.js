@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { verifyTrace } from './sdd-trace.js';
 import { verifyDeleteTrace, verifyDeletePins } from './delete-state-evidence.js';
+import {verifyClockTrace,verifyClockPins,verificationHash,validateClockMutationEvidence} from './clock-state-evidence.js';
 import { selectSpec, contractIds } from './sdd-contract.js';
 import { currentRlsHashes, validateRlsEvidence } from './rls-evidence.js';
 
@@ -61,6 +62,9 @@ function collect(suites) {
   }
 }
 collect(JSON.parse(browserJson).suites);
+if(selectedSpec==='009-reloj-pruebas'&&process.argv.includes('--complete')){
+ results.push(...validateClockMutationEvidence(JSON.parse(readFileSync('test-results/clock009-mutations.json')),verificationHash()));
+}
 if (selectedSpec === '002-identidad-fotos' && existsSync('test-results/rls-evidence.json')) {
   const rls = JSON.parse(readFileSync('test-results/rls-evidence.json', 'utf8'));
   results.push(...validateRlsEvidence(rls, currentRlsHashes()));
@@ -73,7 +77,8 @@ const srcFiles = spawnSync('git', ['ls-files', 'src'], { encoding: 'utf8' }).std
 const sourceHash = createHash('sha256');
 for (const file of srcFiles) sourceHash.update(file).update(readFileSync(file));
 if (selectedSpec === '008-borrado-fiable') verifyDeletePins();
-const verify = selectedSpec === '008-borrado-fiable' ? verifyDeleteTrace : verifyTrace;
+if(selectedSpec==='009-reloj-pruebas')verifyClockPins();
+const verify = selectedSpec === '009-reloj-pruebas' ? verifyClockTrace : selectedSpec === '008-borrado-fiable' ? verifyDeleteTrace : verifyTrace;
 const report = verify(manifest, ids, results, { complete: process.argv.includes('--complete') });
 writeFileSync(`${outputPrefix}-evidence.json`, JSON.stringify({ spec: selectedSpec, generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), results, ...report }, null, 2));
 console.log(`${results.length} pruebas ejecutadas; trazabilidad: ${JSON.stringify(report.counts)}`);
