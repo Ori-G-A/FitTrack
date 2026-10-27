@@ -518,3 +518,13 @@ documentados. No se amplía el alcance de producto aprobado.
 La comprobación HTTP anónima no pudo resolver o alcanzar la URL técnica de
 Vercel. Production está confirmado por el proveedor; la navegación pública no
 se presenta como verificada.
+
+## Alcance 009 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a
+[009](../../specs/009-reloj-pruebas/spec.md): tres AS-IS, cuatro CHANGE y nueve
+escenarios. Aprueba limitar el cambio a los tres montajes reproducidos,
+preservar fechas/plazos/nombres/aserciones y proponer las enmiendas de firmas
+en el plan; distingue la carrera como TEST-002 sin reescribir las referencias
+históricas. Autoriza preparar plan/tareas/análisis para aprobación separada;
+no implementar, publicar, fusionar ni desplegar 009.

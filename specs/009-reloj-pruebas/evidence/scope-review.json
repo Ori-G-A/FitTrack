@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "stage": "scope",
+  "generatedAt": "2026-10-27T16:37:13.439Z",
+  "node": "v24.21.0",
+  "documents": 6,
+  "links": 103,
+  "ids": 16,
+  "pending": 16,
+  "tasks": null,
+  "scopeApproved": true,
+  "planApproved": false,
+  "implementationStarted": false,
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "frozenPins": {
+    "historicalIntact": 107,
+    "amended": 1,
+    "newIntact": 8
+  },
+  "surveyPinsIntact": 3
+}

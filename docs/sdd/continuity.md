@@ -1,6 +1,6 @@
 # Continuidad de FitTrack tras la refactorización SDD
 
-Estado: guía operativa preparada tras integrar 001–006. La constitución vigente
+Estado: guía operativa actualizada tras integrar 001–008. La constitución vigente
 es [1.0.3](../../.specify/memory/constitution.md), ratificada el 2026-10-20;
 la [enmienda](amendment-1.0.3.md) satisface la puerta normativa M7 y su
 integración documental se verifica en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
@@ -8,11 +8,14 @@ No hay alcance nuevo aprobado aquí.
 
 ## Punto de partida verificable
 
-Main integrado: `492be5d22a71a885c9be158aa3401f8a229f7326`.
-[CI](https://github.com/Ori-G-A/FitTrack/actions/runs/39538254800) y Production
-aprobados para ese SHA. [Registro completo](../../specs/006-interfaz/evidence/integration.json).
-Los seis contratos suman 184 IDs completos. Las 101 firmas incluyen 68 pins
-anteriores y 33 de interfaz con dos enmiendas técnicas documentadas.
+Main integrado: `1f6b29d41d05aa3ca9321ab737035a347973f13d`.
+[CI](https://github.com/Ori-G-A/FitTrack/actions/runs/40537644734) y Production
+aprobados para ese SHA. [Registro completo](../../specs/008-borrado-fiable/evidence/integration.json).
+Los ocho contratos suman 234 IDs completos; 370 Node, 30 Chromium, once
+mutaciones y RLS local real con limpieza verificados. La consulta HTTP de la URL
+técnica sigue sin poder resolverse o alcanzarse desde este entorno; no hay
+prueba autenticada de producción. El cierre documental posterior está publicado
+en `6d9aa20` de la rama 008, sin atribuir ese commit a main.
 
 La guía de módulos y comandos está en [AGENTS](../../AGENTS.md). Las variables
 y previews están en [README](../../README.md). Cada spec contiene su contrato,
@@ -41,12 +44,13 @@ hay que leer esos artefactos y sus llamadores, no solo el componente visible.
 
 | Orden propuesto | Resultado | Referencias y decisión necesaria |
 | --- | --- | --- |
-| 1 | Completar la entrega de cierre | PATCH 1.0.3 ratificada; integrar con CI verde y verificar main/Production |
+| 1 | Reforzar la estabilidad de las pruebas temporales | [Propuesta 009](../../specs/009-reloj-pruebas/spec.md): carrera reproducida en tres montajes; alcance aprobado el 2026-10-27, plan pendiente |
 | 2 | Validar el uso real después del despliegue | Prueba autenticada de producción supervisada por el propietario, con cuenta y datos acordados; no ejecutar escrituras implícitas |
-| 3 | Hacer visibles los fallos de guardado/borrado | DATA-003/004/005: aprobar política de feedback y fallo parcial antes del CHANGE |
-| 4 | Reforzar límites de entradas y fotos | BODY-001 y PHOTO-001: decidir validación y fronteras sin cambiar fórmulas clínicas |
-| 5 | Resolver compatibilidades de interfaz y medir rendimiento | UI-006-003/004/005/006 y PERF-001: elegir un objetivo y baseline; no ampliar accesibilidad ni optimización por inferencia |
+| 3 | Reforzar límites de entradas y fotos | BODY-001 y PHOTO-001: decidir validación y fronteras sin cambiar fórmulas clínicas |
+| 4 | Resolver compatibilidades de interfaz y medir rendimiento | UI-006-003/004/005/006 y PERF-001: elegir un objetivo y baseline; no ampliar accesibilidad ni optimización por inferencia |
 
+El cierre inicial/PATCH y los fallos de guardado y borrado ya cuentan con sus
+entregas verificadas; 007/008 no autorizan corregir otros hallazgos.
 Este orden es una recomendación para priorizar, no una aprobación de producto
 ni una nueva numeración de specs. Los demás hallazgos siguen en el roadmap;
 no se consideran cerrados por completar la refactorización.
