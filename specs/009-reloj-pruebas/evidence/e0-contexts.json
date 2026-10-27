@@ -1,0 +1,14 @@
+[
+  {
+    "fixture": "interfaz",
+    "independent": true
+  },
+  {
+    "fixture": "guardado",
+    "independent": true
+  },
+  {
+    "fixture": "borrado",
+    "independent": true
+  }
+]

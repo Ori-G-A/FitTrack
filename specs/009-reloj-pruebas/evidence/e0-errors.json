@@ -1,0 +1,83 @@
+[
+  {
+    "fixture": "interfaz",
+    "delayMs": 0,
+    "stage": "clock.install",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install"
+    ],
+    "beforeApp": null,
+    "error": "centinela de preparación 009",
+    "expectedRejection": true
+  },
+  {
+    "fixture": "interfaz",
+    "delayMs": 0,
+    "stage": "app.inject",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "centinela de preparación 009",
+    "expectedRejection": true
+  },
+  {
+    "fixture": "guardado",
+    "delayMs": 0,
+    "stage": "clock.install",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install"
+    ],
+    "beforeApp": null,
+    "error": "centinela de preparación 009",
+    "expectedRejection": true
+  },
+  {
+    "fixture": "guardado",
+    "delayMs": 0,
+    "stage": "app.inject",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "centinela de preparación 009",
+    "expectedRejection": true
+  },
+  {
+    "fixture": "borrado",
+    "delayMs": 0,
+    "stage": "clock.install",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install"
+    ],
+    "beforeApp": null,
+    "error": "centinela de preparación 009",
+    "expectedRejection": true
+  },
+  {
+    "fixture": "borrado",
+    "delayMs": 0,
+    "stage": "app.inject",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "centinela de preparación 009",
+    "expectedRejection": true
+  }
+]

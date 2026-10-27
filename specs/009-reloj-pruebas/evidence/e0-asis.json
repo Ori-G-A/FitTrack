@@ -1,0 +1,50 @@
+[
+  {
+    "fixture": "interfaz",
+    "delayMs": 0,
+    "stage": "ready",
+    "ready": true,
+    "scriptsInjected": 1,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": {
+      "date": 1792324800000,
+      "performance": 0
+    },
+    "preserved": true
+  },
+  {
+    "fixture": "guardado",
+    "delayMs": 0,
+    "stage": "ready",
+    "ready": true,
+    "scriptsInjected": 1,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": {
+      "date": 1792584000000,
+      "performance": 0
+    },
+    "preserved": true
+  },
+  {
+    "fixture": "borrado",
+    "delayMs": 0,
+    "stage": "ready",
+    "ready": true,
+    "scriptsInjected": 1,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": {
+      "date": 1792843200000,
+      "performance": 0
+    },
+    "preserved": true
+  }
+]

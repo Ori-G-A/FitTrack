@@ -8,13 +8,13 @@ El plan y la precisión SC-001 fueron aprobados expresamente.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T001 | pendiente | US1–US3 / FR-001–007 | Registrar aprobación del plan, precisión SC-001 y ejecución local; conservar snapshot documental aprobado y límites remotos | — |
-| T002 | pendiente | US1/US3 / FR-001/002/007; US3-AS3 | Inventariar 116 firmas efectivas; archivar tres fixtures y verificadores originales; fijar src/SQL/dependencias y huella de verificación | T001 |
-| T003 | pendiente | US1–US3 / FR-001/002/003 | Repetir baseline original Node/30 Chromium/build con runtime fijado; conservar cualquier fallo y repetir checkpoint completo | T002 |
-| T004 | pendiente | US1–US3 / FR-001–007 | Crear instrumental 009, pruebas Node y configuración; usar los montajes reales, demora inyectada y etapas observadas; sin reparación de reloj ni API ausente exigida al original | T003 |
-| T005 | pendiente | US1/US2 / FR-001/002/003/006; US1-AS1/AS3; US2-AS1/AS2/AS3 | Caracterizar fechas/semillas/red y temporalidad original; controles de errores pasan conservando identidad y evidencia de etapa, sin atribuirlos a defecto nuevo | T004 |
-| T006 | pendiente | US1/US2/US3 / FR-004/005; US1-AS2; US3-AS1 | Dos casos de carrera rojos específicos con demora; cubrir cada fixture antes de inyectar App, rechazando errores de sintaxis/importación como rojo válido | T004 |
-| T007 | pendiente | US1–US3 / FR-001–007 | Congelar siete archivos E0, revisar aserciones y fijar G-PIN: nueve IDs completos/siete pending; sourceHash y 116 firmas originales intactos | T005, T006 |
+| T001 | completada | US1–US3 / FR-001–007 | Registrar aprobación del plan, precisión SC-001 y ejecución local; conservar snapshot documental aprobado y límites remotos | — |
+| T002 | completada | US1/US3 / FR-001/002/007; US3-AS3 | Inventariar 116 firmas efectivas; archivar tres fixtures y verificadores originales; fijar src/SQL/dependencias y huella de verificación | T001 |
+| T003 | completada | US1–US3 / FR-001/002/003 | Repetir baseline original Node/30 Chromium/build con runtime fijado; conservar cualquier fallo y repetir checkpoint completo | T002 |
+| T004 | completada | US1–US3 / FR-001–007 | Crear instrumental 009, pruebas Node y configuración; usar los montajes reales, demora inyectada y etapas observadas; sin reparación de reloj ni API ausente exigida al original | T003 |
+| T005 | completada | US1/US2 / FR-001/002/003/006; US1-AS1/AS3; US2-AS1/AS2/AS3 | Caracterizar fechas/semillas/red y temporalidad original; controles de errores pasan conservando identidad y evidencia de etapa, sin atribuirlos a defecto nuevo | T004 |
+| T006 | completada | US1/US2/US3 / FR-004/005; US1-AS2; US3-AS1 | Dos casos de carrera rojos específicos con demora; cubrir cada fixture antes de inyectar App, rechazando errores de sintaxis/importación como rojo válido | T004 |
+| T007 | completada | US1–US3 / FR-001–007 | Congelar siete archivos E0, revisar aserciones y fijar G-PIN: nueve IDs completos/siete pending; sourceHash y 116 firmas originales intactos | T005, T006 |
 
 ## E1 — protocolo y enmiendas controladas
 
