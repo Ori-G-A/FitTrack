@@ -536,3 +536,12 @@ El propietario respondió «Aprobar plan y precisión SC-001; autorizar ejecuci�
 ## Cierre local 009 — 2026-10-27 (Bogotá)
 
 372 Node, 35 Chromium/build, nueve contratos/250 IDs completos, catorce mutaciones con quince controles positivos, nueve negativos de recibos y RLS real fresco con limpieza. 113 firmas anteriores intactas, tres enmiendas canónicas y siete E0 propios intactos. Plan local autorizado cumplido; 27 tareas (T027 aditiva) y dos PRs preparados. [Verificación](../../specs/009-reloj-pruebas/verification.md). Publicación, integración y Vercel requieren decisión específica; no se certifica producción ni toda inestabilidad.
+
+## Entrega remota 009 autorizada — 2026-10-27 (Bogotá)
+
+Sobre el cierre local `6dc93fb`, el propietario respondió «Autorizar publicación,
+integración con CI verde y Vercel». Autoriza publicar ambas ramas y PRs,
+integrarlos con CI remoto verde y permitir el despliegue automático asociado.
+Se integra primero el snapshot documental aprobado `5658328` y después el código.
+Esta decisión sustituye las esperas anteriores de autorización remota de 009;
+no convierte la evidencia local en CI remoto ni certifica una sesión productiva.
