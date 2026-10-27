@@ -499,3 +499,22 @@ integrarlos con CI remoto verde y permitir el despliegue automático asociado.
 Se integra primero el snapshot documental aprobado `2ee8edc` y después el código.
 Esta autorización sustituye las esperas anteriores de decisión remota de 008;
 no convierte la evidencia local en CI remoto ni certifica producción.
+
+## Integración 008 verificada — 2026-10-27 (Bogotá)
+
+Los PRs [#18 documental](https://github.com/Ori-G-A/FitTrack/pull/18) y
+[#19 de código](https://github.com/Ori-G-A/FitTrack/pull/19) están integrados,
+en ese orden, tras aprobar ambos jobs de CI de cada PR. El resultado `1f6b29d`
+aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40537644734)
+y Vercel confirmó Production para ese mismo SHA. Ocho contratos/234 IDs,
+370 pruebas Node, once mutaciones y RLS real local con limpieza confirmados.
+[Registro](../../specs/008-borrado-fiable/evidence/integration.json).
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 008 y el bloqueo Docker ya resuelto. No certifica una sesión
+autenticada ni RLS del backend productivo; TEST-001 y el aviso de bundle siguen
+documentados. No se amplía el alcance de producto aprobado.
+
+La comprobación HTTP anónima no pudo resolver o alcanzar la URL técnica de
+Vercel. Production está confirmado por el proveedor; la navegación pública no
+se presenta como verificada.

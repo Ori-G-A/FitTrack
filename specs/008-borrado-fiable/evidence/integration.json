@@ -1,0 +1,474 @@
+{
+  "area": "008-borrado-fiable",
+  "status": "integrated_ci_and_production_verified",
+  "authorizationDate": "2026-10-27",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "documentation": {
+    "pr": 18,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/18",
+    "head": "2ee8edca15a95012344e0dca3823e8b103b231f3",
+    "ci": 40535077319,
+    "merge": "8f87ab794e547d380c02e459395645565eb8bec4",
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "id": 122298021828,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      },
+      {
+        "id": 122298022562,
+        "name": "test-and-build",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "implementation": {
+    "pr": 19,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/19",
+    "head": "42b1dacea66133b41408e1feef5c357917be1e20",
+    "ci": 40535151293,
+    "merge": "1f6b29d41d05aa3ca9321ab737035a347973f13d",
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "id": 122298283118,
+        "name": "test-and-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 122298283358,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      }
+    ],
+    "nodeTests": 370,
+    "browserTests": 30,
+    "contracts": 8,
+    "completeIds": 234,
+    "mutationsDetected": 11,
+    "rlsContracts": 3,
+    "rlsCleanupPassed": true,
+    "contractsVerified": [
+      {
+        "spec": "001-datos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "003-entrenamiento",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "004-nutricion-objetivos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 31
+      },
+      {
+        "spec": "005-cuerpo-ciclo",
+        "pending": 0,
+        "partial": 0,
+        "complete": 40
+      },
+      {
+        "spec": "006-interfaz",
+        "pending": 0,
+        "partial": 0,
+        "complete": 48
+      },
+      {
+        "spec": "007-guardado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "008-borrado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 29
+      }
+    ],
+    "mutations": [
+      {
+        "passed": true,
+        "positiveControls": 3,
+        "detected": 3,
+        "cleanup": true,
+        "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377"
+      },
+      {
+        "passed": true,
+        "generatedAt": "2026-10-27T15:53:30.163Z",
+        "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+        "mutations": [
+          {
+            "name": "reset-error",
+            "detected": true,
+            "reason": "FR-005: comenzar C no borra A"
+          },
+          {
+            "name": "user-filter",
+            "detected": true,
+            "reason": "FR-007: B no recibe el inicio de A"
+          },
+          {
+            "name": "status-role",
+            "detected": true,
+            "reason": "FR-009: una región accesible conserva"
+          }
+        ],
+        "positiveControls": 4,
+        "cleanupPassed": true
+      },
+      {
+        "passed": true,
+        "generatedAt": "2026-10-27T15:53:38.525Z",
+        "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+        "positiveControls": 5,
+        "mutations": [
+          {
+            "name": "ignore-signout-error",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "core",
+            "reason": "FR-005: ambos resultados rechazan",
+            "patches": [
+              "src/app-data-lifecycle.js"
+            ]
+          },
+          {
+            "name": "resume-after-failure",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "core",
+            "reason": "FR-007\\/010: resultado incierto no reabre",
+            "patches": [
+              "src/app-data-lifecycle.js",
+              "src/app-data-lifecycle.js"
+            ]
+          },
+          {
+            "name": "obsolete-actor-continues",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "app",
+            "reason": "FR-011: resultado A no despacha signOut",
+            "patches": [
+              "src/app-data-lifecycle.js"
+            ]
+          },
+          {
+            "name": "ordinary-recovery-bypass",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "app",
+            "reason": "FR-008: recuperación ordinaria no carga",
+            "patches": [
+              "src/FitTrack.jsx",
+              "src/FitTrack.jsx"
+            ]
+          },
+          {
+            "name": "resume-before-commit",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "coordinator",
+            "reason": "FR-009: resolver lectura no libera guardados",
+            "patches": [
+              "src/delete-coordinator.js"
+            ]
+          }
+        ],
+        "cleanupPassed": true
+      }
+    ]
+  },
+  "limits": [
+    "Sin prueba autenticada de producción",
+    "RLS local desechable; no certifica backend productivo",
+    "TEST-001 y aviso de bundle conservados",
+    "La consulta HTTP anónima no pudo resolver o alcanzar la URL técnica de Vercel; no se verifica navegación pública."
+  ],
+  "integrationDate": "2026-10-27",
+  "verifiedAt": "2026-10-27T16:21:23.362Z",
+  "main": {
+    "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d",
+    "ci": 40537644734,
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "id": 122307117142,
+        "name": "test-and-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 122307117528,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      }
+    ],
+    "nodeTests": 370,
+    "browserTests": 30,
+    "browser": {
+      "startTime": "2026-10-27T16:19:21.739Z",
+      "duration": 50727.792,
+      "expected": 30,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "contracts": [
+      {
+        "spec": "001-datos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "002-identidad-fotos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 23
+      },
+      {
+        "spec": "003-entrenamiento",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "004-nutricion-objetivos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 31
+      },
+      {
+        "spec": "005-cuerpo-ciclo",
+        "pending": 0,
+        "partial": 0,
+        "complete": 40
+      },
+      {
+        "spec": "006-interfaz",
+        "pending": 0,
+        "partial": 0,
+        "complete": 48
+      },
+      {
+        "spec": "007-guardado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "008-borrado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 29
+      }
+    ],
+    "completeIds": 234,
+    "mutations": [
+      {
+        "passed": true,
+        "positiveControls": 3,
+        "detected": 3,
+        "cleanup": true,
+        "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377"
+      },
+      {
+        "passed": true,
+        "generatedAt": "2026-10-27T16:08:30.704Z",
+        "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+        "mutations": [
+          {
+            "name": "reset-error",
+            "detected": true,
+            "reason": "FR-005: comenzar C no borra A"
+          },
+          {
+            "name": "user-filter",
+            "detected": true,
+            "reason": "FR-007: B no recibe el inicio de A"
+          },
+          {
+            "name": "status-role",
+            "detected": true,
+            "reason": "FR-009: una región accesible conserva"
+          }
+        ],
+        "positiveControls": 4,
+        "cleanupPassed": true
+      },
+      {
+        "passed": true,
+        "generatedAt": "2026-10-27T16:08:38.839Z",
+        "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+        "positiveControls": 5,
+        "mutations": [
+          {
+            "name": "ignore-signout-error",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "core",
+            "reason": "FR-005: ambos resultados rechazan",
+            "patches": [
+              "src/app-data-lifecycle.js"
+            ]
+          },
+          {
+            "name": "resume-after-failure",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "core",
+            "reason": "FR-007\\/010: resultado incierto no reabre",
+            "patches": [
+              "src/app-data-lifecycle.js",
+              "src/app-data-lifecycle.js"
+            ]
+          },
+          {
+            "name": "obsolete-actor-continues",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "app",
+            "reason": "FR-011: resultado A no despacha signOut",
+            "patches": [
+              "src/app-data-lifecycle.js"
+            ]
+          },
+          {
+            "name": "ordinary-recovery-bypass",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "app",
+            "reason": "FR-008: recuperación ordinaria no carga",
+            "patches": [
+              "src/FitTrack.jsx",
+              "src/FitTrack.jsx"
+            ]
+          },
+          {
+            "name": "resume-before-commit",
+            "detected": true,
+            "positiveControlPassed": true,
+            "group": "coordinator",
+            "reason": "FR-009: resolver lectura no libera guardados",
+            "patches": [
+              "src/delete-coordinator.js"
+            ]
+          }
+        ],
+        "cleanupPassed": true
+      }
+    ],
+    "mutationsDetected": 11,
+    "rlsContracts": 3,
+    "rlsCleanupPassed": true,
+    "rls": {
+      "generatedAt": "2026-10-27T16:08:36.789Z",
+      "node": "v24.21.0",
+      "cliVersion": "2.121.0",
+      "projectId": "fittrack-sdd-rls-c10585f1cc27",
+      "recoveryDirectory": null,
+      "passed": true,
+      "cleanupPassed": true,
+      "environment": "fittrack-sdd-disposable",
+      "apiOrigin": "http://127.0.0.1:59321",
+      "results": [
+        {
+          "name": "SDD-RLS-001 app_data dos propietarios y anonimo",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-002 Storage privado permite solo prefijo propio",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-003 diagnosticos insert-only sin suplantacion",
+          "status": "passed"
+        }
+      ],
+      "hashes": {
+        "rls-tests/ownership.js": "753c0cda43959865eda0f702985cb6bcd46f4e51caae4521e39f7a4536d15334",
+        "scripts/run-local-rls.js": "f81d0ae9e9880b887a68cdbcd018fd1eff152cdf9be10539b660b568be6b7743",
+        "scripts/local-rls-guard.js": "eb86d1aa52dd6e4534b6186187388a7c3f3deecc19dffa8e1ab2b7c2d4662593",
+        "test-support/rls/fixture-client.js": "9878fd9d87af3ae6ca3362c6650bb9589acf94621ea3c985096badb14f08f92b",
+        "pnpm-lock.yaml": "fc3444c3e416af83bca9274bcf16159712e2064103e730e3ae77c929fbde317d",
+        "supabase/migrations/20260614000000_secure_app_data_rls.sql": "6c8fc101c348bb8645fa78a74a594cb61f604ac4307edfe696e0ef9565a33bbf",
+        "supabase/migrations/20260614010000_private_progress_photos.sql": "83d1f764cefd61a4a47382028c5653a1629070c2629cece855162ac4f1402702",
+        "supabase/migrations/20260615000000_client_error_reports.sql": "f1989ef377df89e9454274d8357e9c8e770ab72b0069025e61f60e4309f0cd99"
+      }
+    },
+    "artifacts": [
+      {
+        "id": 12750541280,
+        "name": "evidencia-sdd-008",
+        "digest": "sha256:3273dab2deed98266e29bfda3387353374c820d185a64f22beb62ecca0cd9d71",
+        "run": 40537644734,
+        "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d"
+      },
+      {
+        "id": 12749907096,
+        "name": "evidencia-sdd-007",
+        "digest": "sha256:b6df1154428f9514fade8f305ecdd004fe540efaa525cb38a2f8f852330e9486",
+        "run": 40537644734,
+        "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d"
+      },
+      {
+        "id": 12749876884,
+        "name": "evidencia-sdd-006",
+        "digest": "sha256:228a8a89a8dd9c9f45fd06ffd29d7023df2c43663473ff55b8d8e7c21d750d25",
+        "run": 40537644734,
+        "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d"
+      },
+      {
+        "id": 12749737452,
+        "name": "evidencia-sdd-004",
+        "digest": "sha256:cd6c82e60bcb3970a13cd0a99e2b4d7d0780de68d6859faeddbaf427775a8d58",
+        "run": 40537644734,
+        "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d"
+      },
+      {
+        "id": 12749697613,
+        "name": "evidencia-sdd-003",
+        "digest": "sha256:82dc2b4bfb741fa9481646aecd3d1e8a3328558d02e0225595a090106db26143",
+        "run": 40537644734,
+        "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d"
+      },
+      {
+        "id": 12749692600,
+        "name": "evidencia-sdd-005",
+        "digest": "sha256:e47f31566ec30215620d19c463a1a86a73ac0e202088a371006e1dffdadaad5b",
+        "run": 40537644734,
+        "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d"
+      },
+      {
+        "id": 12748519096,
+        "name": "evidencia-sdd-002",
+        "digest": "sha256:2cca917e5e379fb7e025edbf4735ed9bc8647a76578668533be94840e0789d54",
+        "run": 40537644734,
+        "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d"
+      }
+    ]
+  },
+  "production": {
+    "deploymentId": 7363670710,
+    "environment": "Production",
+    "sha": "1f6b29d41d05aa3ca9321ab737035a347973f13d",
+    "state": "success",
+    "createdAt": "2026-10-27T16:06:49Z",
+    "url": "https://fit-track-9uviq12y2-orianag40-7859s-projects.vercel.app",
+    "anonymousHttp": {
+      "attempted": true,
+      "verified": false,
+      "reason": "La consulta HTTP anónima no pudo resolver o alcanzar la URL técnica de Vercel.",
+      "authenticatedSmoke": false
+    }
+  }
+}

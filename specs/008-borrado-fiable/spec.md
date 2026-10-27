@@ -1,5 +1,11 @@
 # Spec 008 — borrado fiable y recuperación visible
 
+Estado vigente — 2026-10-27 (Bogotá): 008 integrada mediante #18/#19;
+CI de main y Vercel Production verificados en `1f6b29d`.
+[Entrega remota](evidence/integration.json). Las etapas siguientes conservan
+la cronología local; sus esperas de autorización e integración están cumplidas.
+
+
 Estado: alcance y plan APROBADOS; E0–E3 completas localmente. Publicación/integración/Vercel pendientes.
 Propietario: usuario del proyecto. Fecha: 2026-10-22 (Bogotá).
 Gobierno: [constitución 1.0.3](../../.specify/memory/constitution.md).

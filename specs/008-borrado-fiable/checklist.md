@@ -1,5 +1,11 @@
 # Revisión del alcance 008
 
+Estado vigente — 2026-10-27 (Bogotá): 008 integrada mediante #18/#19;
+CI de main y Vercel Production verificados en `1f6b29d`.
+[Entrega remota](evidence/integration.json). Las etapas siguientes conservan
+la cronología local; sus esperas de autorización e integración están cumplidas.
+
+
 Revisión documental del agente; alcance y aclaraciones aprobados por el propietario.
 
 - [x] Resultado observable y frontera del borrado descritos.
