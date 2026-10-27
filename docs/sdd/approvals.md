@@ -528,3 +528,7 @@ preservar fechas/plazos/nombres/aserciones y proponer las enmiendas de firmas
 en el plan; distingue la carrera como TEST-002 sin reescribir las referencias
 históricas. Autoriza preparar plan/tareas/análisis para aprobación separada;
 no implementar, publicar, fusionar ni desplegar 009.
+
+## Plan 009 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar plan y precisión SC-001; autorizar ejecución local E0–E2». Aprueba las 26 tareas, plan, análisis y precisión SC-001: rojo específico de carrera FR-004/005, preservación de controles de error FR-006 y evidencia completa FR-007 sin inventar defectos previos. Autoriza E0–E2 local antes del PR documental; no publicar, fusionar ni desplegar 009.

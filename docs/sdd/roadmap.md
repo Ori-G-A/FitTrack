@@ -568,3 +568,20 @@ los tres AS-IS, cuatro CHANGE, nueve escenarios y C-001/002/003 de
 [009](../../specs/009-reloj-pruebas/spec.md). TEST-002 identifica la carrera de
 reloj; las referencias antiguas TEST-001 se conservan como historia. Se permite
 preparar plan/tareas/análisis, no implementar ni publicar/integrar/Vercel.
+
+## Planificación 009 preparada — 2026-10-27 (Bogotá)
+
+[Plan](../../specs/009-reloj-pruebas/plan.md), 26 tareas E0–E2 y revisión
+preparados, sin aprobación ni cambios de fixtures. Se proponen tres enmiendas
+técnicas, composición de verificadores, actualización explícita del contador
+de integridad y huella del conjunto de pruebas además de src. La viabilidad
+de API se comprobó con 0/250/1500 ms solo en página vacía.
+La [precisión SC-001](../../specs/009-reloj-pruebas/precision-sc-001.md)
+requiere aceptación: rojo de carrera FR-004/005 y controles/evidencia de
+FR-006/007 sin simular defectos cuando el original ya cumple una garantía.
+Cierre previsto: nueve contratos/250 IDs, catorce mutaciones y RLS fresco.
+Plan, precisión y ejecución local pendientes; sin publicación ni despliegue.
+
+## Plan 009 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar plan y precisión SC-001; autorizar ejecución local E0–E2». Aprueba las 26 tareas, plan, análisis y precisión SC-001: rojo específico de carrera FR-004/005, preservación de controles de error FR-006 y evidencia completa FR-007 sin inventar defectos previos. Autoriza E0–E2 local antes del PR documental; no publicar, fusionar ni desplegar 009.

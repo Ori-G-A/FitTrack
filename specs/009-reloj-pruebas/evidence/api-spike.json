@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "stage": "investigación de API para plan; no implementación ni G-PIN",
+  "generatedAt": "2026-10-27T16:39:10.327Z",
+  "node": "v24.21.0",
+  "playwright": "1.64.0",
+  "chromium": "156.0.8078.4",
+  "sequence": [
+    "install",
+    "setFixedTime",
+    "pauseAt",
+    "setSystemTime"
+  ],
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "pins": [
+    {
+      "file": "test-support/interface-browser.js",
+      "sha256": "94989d588f5af8a6e8c12cd06b27983bb27f8935275562b2521e0204fd84ad63"
+    },
+    {
+      "file": "change-tests/save-state.spec.js",
+      "sha256": "30c03f1dcf64591ff7b93e9e7baaacbcb49ea4cea6e0fcca68dc4a4232afcfea"
+    },
+    {
+      "file": "test-support/delete-state-browser.js",
+      "sha256": "755aa4c3d12ffc970e59767f8437865a625fa1ea60cd76d50b8f41c5fb8d6894"
+    }
+  ],
+  "observations": [
+    {
+      "delayMs": 0,
+      "targetExact": true,
+      "hostDidNotFireTimer": true,
+      "virtualBoundary9Plus1": true
+    },
+    {
+      "delayMs": 250,
+      "targetExact": true,
+      "hostDidNotFireTimer": true,
+      "virtualBoundary9Plus1": true
+    },
+    {
+      "delayMs": 1500,
+      "targetExact": true,
+      "hostDidNotFireTimer": true,
+      "virtualBoundary9Plus1": true
+    }
+  ],
+  "limits": [
+    "Solo página vacía y temporizador sintético; falta caracterizar los tres montajes reales y sus oráculos en E0/E1.",
+    "El protocolo usa solo APIs públicas; no requiere acceso a internals de Playwright."
+  ]
+}

@@ -16,3 +16,9 @@ Revisión documental del agente — 2026-10-27 (Bogotá). No es aprobación huma
 
 La preparación no acredita estabilidad absoluta, una corrección del segundo
 timeout de 007, prueba autenticada de producción ni reparación del DNS local.
+
+- [x] Plan, 26 tareas, matriz y análisis preparados para aprobación separada.
+- [x] Viabilidad pública de API comprobada sin modificar los montajes reales.
+- [x] Plan, tareas y análisis aprobados el 2026-10-27.
+- [x] Precisión SC-001 aceptada expresamente el 2026-10-27.
+- [x] Ejecución local E0–E2 autorizada el 2026-10-27.

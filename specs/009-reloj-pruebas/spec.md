@@ -1,6 +1,6 @@
 # Spec 009 — preparación determinista del reloj de pruebas
 
-Estado: alcance y C-001/002/003 APROBADOS el 2026-10-27; plan pendiente. Propietario: usuario del proyecto.
+Estado: alcance y C-001/002/003 APROBADOS el 2026-10-27; plan y ejecución local E0–E2 APROBADOS. Propietario: usuario del proyecto.
 Fecha: 2026-10-27 (Bogotá). Gobierno:
 [constitución 1.0.3](../../.specify/memory/constitution.md).
 [Survey](../../docs/sdd/reloj-pruebas-survey.md), [diagnóstico](evidence/survey.json).
@@ -66,7 +66,7 @@ la misma causa y no cuenta como rojo contractual de E0.
 
 ## Criterios medibles
 
-- SC-001: tres AS-IS caracterizados en el original y cuatro CHANGE con regresiones rojas específicas antes de cambiar los fixtures; sin usar el diagnóstico como G-PIN.
+- SC-001: caracterizar los tres AS-IS sobre el original; reproducir regresiones rojas específicas de la carrera FR-004/005 antes de modificar los fixtures; registrar los controles de propagación de errores FR-006 como preservación cuando ya pasen, con evidencia de etapa. FR-007 exige rojo original, verde candidato, reintroducción negativa y validación de enmiendas antes del cierre. Reportes/API ausentes y fallos de instrumental no cuentan como rojo de negocio; los sondeos no sustituyen G-PIN.
 - SC-002: los tres montajes pasan con demoras de 0/250/1500 ms y el reloj detenido antes del código de aplicación; demoras posteriores del host no consumen los plazos de producto.
 - SC-003: se mantienen las aserciones temporales y de efectos originales, cero retries añadidos, cero skips y cero ampliaciones de timeout para ocultar esta carrera.
 - SC-004: dieciséis IDs propios completos y los 234 anteriores conservados; el cierre deberá mantener las puertas existentes, incluida evidencia RLS local desechable cuando corresponda al checkpoint. El plan concretará los comandos.
@@ -89,10 +89,16 @@ la misma causa y no cuenta como rojo contractual de E0.
 ## Trazabilidad y aprobación
 
 [Manifiesto](traceability.json): siete requisitos y nueve escenarios, dieciséis
-filas individuales pending. Los nombres, archivos y tareas de pruebas se
-decidirán en el plan después de aprobar el alcance. [Checklist](checklist.md).
+filas individuales pending. Los nombres, archivos y tareas están propuestos en
+el [plan](plan.md) y la [validación](validation-plan.md), sin aprobación.
+La [precisión SC-001](precision-sc-001.md) fue aprobada expresamente y aplicada;
+su documento conserva el criterio anterior y el motivo. [Checklist](checklist.md).
 
 El propietario respondió «Aprobar alcance y las tres aclaraciones» el
 2026-10-27 (Bogotá). Aprueba tres AS-IS, cuatro CHANGE, nueve escenarios y
 C-001/002/003. Autoriza preparar plan/tareas/análisis para aprobación separada;
 no implementar, publicar, fusionar ni desplegar 009.
+
+## Plan aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar plan y precisión SC-001; autorizar ejecución local E0–E2». Autoriza las 26 tareas y la precisión de SC-001, con ejecución local previa al documental. No autoriza publicar, fusionar ni desplegar 009.
