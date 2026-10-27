@@ -34,17 +34,28 @@ El plan y la precisión SC-001 fueron aprobados expresamente.
 
 | ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T017 | pendiente | US1/US3 / FR-004/005/007; US3-AS1/AS2 | Reintroducir patrón original por fixture en tres copias aisladas, controles positivos, error específico y limpieza; huella estable | T016 |
-| T018 | pendiente | US2/US3 / FR-003/007; US2-AS1/AS2/AS3 | Ejecutar once mutaciones heredadas con recibos de huella antes/después; no reutilizar reportes por conservar src igual | T016 |
-| T019 | pendiente | US1/US3 / FR-002/007 | RLS fresco posterior a E1 en entorno local desechable A/B/anónimo, guardas y limpieza; sin .env.local ni backend real | T016 |
-| T020 | pendiente | US1–US3 / FR-001–007 | Checkpoint final íntegro: Node, descubrimiento ordinario Chromium, build, nueve contratos/250 IDs, RLS y mutaciones con misma huella | T017, T018, T019 |
-| T021 | pendiente | US3 / FR-006/007; US3-AS2/AS3 | Ejecutar controles negativos de trazabilidad/enmiendas/recibos: nombre falso, omitido, duplicado, parcial, plan/hash/archivo/huella ajenos y cleanup ausente deben rechazarse | T020 |
-| T022 | pendiente | US3 / FR-007 | Revisar paridad CI/local y artefactos, nuevas importaciones en copias de mutación y ausencia de escapes de red; sin ejecución remota | T020, T021 |
-| T023 | pendiente | US1–US3 / FR-001–007 | Registrar comandos, versiones, conteos reales, bundle sin optimización atribuida, hashes, enlaces y límites de producción/estabilidad | T022 |
-| T024 | pendiente | US1–US3 / FR-001–007 | Converge por cláusula: dieciséis completos, 234 previos conservados, ninguna brecha; añadir tareas ante hallazgos sin reescribir las completadas | T023 |
-| T025 | pendiente | US3 / FR-007 | Preparar PR documental primero y código después con omisiones, enmiendas y reversión coordinada; sin publicar | T024 |
-| T026 | pendiente | US1–US3 / FR-001–007 | Commits lógicos de etapas locales, árbol limpio, evidencia fallida conservada y solicitud posterior de autorización remota | T025 |
+| T017 | completada | US1/US3 / FR-004/005/007; US3-AS1/AS2 | Reintroducir patrón original por fixture en tres copias aisladas, controles positivos, error específico y limpieza; huella estable | T016 |
+| T018 | completada | US2/US3 / FR-003/007; US2-AS1/AS2/AS3 | Ejecutar once mutaciones heredadas con recibos de huella antes/después; no reutilizar reportes por conservar src igual | T016 |
+| T019 | completada | US1/US3 / FR-002/007 | RLS fresco posterior a E1 en entorno local desechable A/B/anónimo, guardas y limpieza; sin .env.local ni backend real | T016 |
+| T020 | completada | US1–US3 / FR-001–007 | Checkpoint final íntegro: Node, descubrimiento ordinario Chromium, build, nueve contratos/250 IDs, RLS y mutaciones con misma huella | T017, T018, T019 |
+| T021 | completada | US3 / FR-006/007; US3-AS2/AS3 | Ejecutar controles negativos de trazabilidad/enmiendas/recibos: nombre falso, omitido, duplicado, parcial, plan/hash/archivo/huella ajenos y cleanup ausente deben rechazarse | T020 |
+| T022 | completada | US3 / FR-007 | Revisar paridad CI/local y artefactos, nuevas importaciones en copias de mutación y ausencia de escapes de red; sin ejecución remota | T020, T021 |
+| T023 | completada | US1–US3 / FR-001–007 | Registrar comandos, versiones, conteos reales, bundle sin optimización atribuida, hashes, enlaces y límites de producción/estabilidad | T022 |
+| T024 | completada | US1–US3 / FR-001–007 | Converge por cláusula: dieciséis completos, 234 previos conservados, ninguna brecha; añadir tareas ante hallazgos sin reescribir las completadas | T023 |
+| T025 | completada | US3 / FR-007 | Preparar PR documental primero y código después con omisiones, enmiendas y reversión coordinada; sin publicar | T024 |
+| T026 | completada | US1–US3 / FR-001–007 | Commits lógicos de etapas locales, árbol limpio, evidencia fallida conservada y solicitud posterior de autorización remota | T025 |
 
 El total Node se registra desde el runner. Los 35 casos Chromium son previsión,
 no ejecución actual. Tras un fallo se repite entero el checkpoint afectado.
 E0 autorizada por aprobación expresa del plan y de la precisión SC-001.
+
+## Converge aditivo — T027
+
+Se conservan las 26 tareas aprobadas. La revisión de E2 encontró que el
+reportador genérico valida la huella de mutaciones, pero no captura y publica
+la huella de su propia ejecución. El cierre T020/T024 exige también T027;
+sus pruebas anteriores se conservan sin atribuirles la huella posterior.
+
+| ID | Estado | Historias / cláusulas | Entrega y criterio | Depende de |
+| --- | --- | --- | --- | --- |
+| T027 | completada | US3 / FR-007; US3-AS1/AS2/AS3 | Capturar huella inicial/final en el reportador genérico y publicarla en cada reporte; archivar pruebas previas, repetir mutaciones con la huella definitiva y comprobar la entrada completa 009 | T016 |

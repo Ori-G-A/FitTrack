@@ -8,31 +8,43 @@ import {contractIds} from './sdd-contract.js';
 import {verifyTrace} from './sdd-trace.js';
 import {verifyDeleteTrace,verifyDeletePins} from './delete-state-evidence.js';
 import {validateRlsEvidence,currentRlsHashes} from './rls-evidence.js';
-assert.equal(process.version,'v24.21.0');const stage=process.argv[2];assert(['e1','proofs','final'].includes(stage));mkdirSync('test-results',{recursive:true});
+assert.equal(process.version,'v24.21.0');const stage=process.argv[2];assert(['e1','proofs','verify-proofs','final'].includes(stage));mkdirSync('test-results',{recursive:true});
 const hash=verificationHash(),src=sourceHash(),startedAt=new Date().toISOString(),cli=createRequire(import.meta.url).resolve('@playwright/test/cli');
 const prefix='test-results/clock009-'+stage,receipts=[];
+const proofJobs=[['interface','scripts/check-interface-mutations.js','test-results/interface-postgreen-mutations.json',3],['save','scripts/check-save-state-mutations.js','test-results/save007-mutations.json',3],['delete','scripts/check-delete-state-mutations.js','test-results/delete008-mutations.json',5],['clock','scripts/check-clock-state-mutations.js','test-results/clock009-mutations.json',3]];
+function validateProofs(proof){
+ assert.equal(proof.passed,true);assert.equal(proof.sourceHash,src);assert.equal(proof.verificationHash,hash);
+ assert.deepEqual(proof.receipts.map(r=>r.label),proofJobs.map(j=>j[0]));assert.deepEqual(proof.reports.map(r=>r.label),proofJobs.map(j=>j[0]));
+ for(let i=0;i<proofJobs.length;i++){
+  const [label,script,file,count]=proofJobs[i],receipt=proof.receipts[i],p=proof.reports[i];
+  assert.deepEqual(receipt.args,[script]);assert.equal(receipt.output,'test-results/clock009-proofs-'+label+'.txt');assert.equal(receipt.exitCode,0);assert.equal(receipt.verificationHash,hash);assert.equal(receipt.beforeHash,hash);assert.equal(receipt.afterHash,hash);
+  assert(Number.isFinite(Date.parse(receipt.startedAt)));assert(Date.parse(receipt.finishedAt)>=Date.parse(receipt.startedAt));assert.equal(digest(receipt.output),receipt.sha256);
+  assert.equal(p.file,file);assert.equal(p.mutations,count);assert.equal(digest(file),p.sha256);
+  const value=JSON.parse(readFileSync(file));assert.equal(value.passed,true);assert.equal(value.cleanupPassed,true);assert.equal(value.sourceHash,src);assert.equal(value.mutations.length,count);
+ }
+ validateClockMutationEvidence(JSON.parse(readFileSync('test-results/clock009-mutations.json')),hash);
+ return proof;
+}
+if(stage==='verify-proofs'){validateProofs(JSON.parse(readFileSync('test-results/clock009-proof-receipts.json')));console.log('Recibos 009 válidos: cuatro ejecuciones y catorce mutaciones.');process.exit(0);}
 function run(label,args){
  assert.equal(verificationHash(),hash);console.log('Checkpoint009 '+stage+': '+label);const start=new Date().toISOString();
  const r=spawnSync(process.execPath,args,{encoding:'utf8',maxBuffer:60*1024*1024,windowsHide:true});const output=prefix+'-'+label+'.txt';writeFileSync(output,r.stdout||'');writeFileSync(output+'.stderr.txt',r.stderr||'');
- assert.equal(verificationHash(),hash);const receipt={label,args,startedAt:start,finishedAt:new Date().toISOString(),verificationHash:hash,exitCode:r.status,output,sha256:digest(output)};receipts.push(receipt);writeFileSync(prefix+'-receipts.json',JSON.stringify(receipts,null,2)+'\n');
+ assert.equal(verificationHash(),hash);const receipt={label,args,startedAt:start,finishedAt:new Date().toISOString(),verificationHash:hash,beforeHash:hash,afterHash:verificationHash(),exitCode:r.status,output,sha256:digest(output)};receipts.push(receipt);writeFileSync(prefix+'-receipts.json',JSON.stringify(receipts,null,2)+'\n');
  if(r.error)throw r.error;if(r.status!==0){if(label==='browser'){try{const j=JSON.parse(r.stdout);console.error(JSON.stringify({errors:j.errors,failed:browserCases(j).filter(t=>t.results.some(r=>r.status!=='passed')).map(t=>({name:t.name,errors:t.results.map(r=>r.errors)}))}));}catch{}}else console.error((r.stderr||r.stdout||'').slice(-5000));throw Error(label+' falló; reporte '+output);}
  return r.stdout;
 }
 if(stage==='proofs'){
- const jobs=[['interface','scripts/check-interface-mutations.js','test-results/interface-postgreen-mutations.json'],['save','scripts/check-save-state-mutations.js','test-results/save007-mutations.json'],['delete','scripts/check-delete-state-mutations.js','test-results/delete008-mutations.json'],['clock','scripts/check-clock-state-mutations.js','test-results/clock009-mutations.json']];
  const reports=[];
- for(const [label,script,proof] of jobs){run(label,[script]);const value=JSON.parse(readFileSync(proof));assert.equal(value.passed,true);assert.equal(value.cleanupPassed,true);assert.equal(value.sourceHash,src);reports.push({label,file:proof,sha256:digest(proof),mutations:value.mutations.length});}
+ for(const [label,script,proof] of proofJobs){run(label,[script]);const value=JSON.parse(readFileSync(proof));assert.equal(value.passed,true);assert.equal(value.cleanupPassed,true);assert.equal(value.sourceHash,src);reports.push({label,file:proof,sha256:digest(proof),mutations:value.mutations.length});}
  assert.equal(reports.reduce((sum,r)=>sum+r.mutations,0),14);validateClockMutationEvidence(JSON.parse(readFileSync('test-results/clock009-mutations.json')),hash);
- const result={passed:true,startedAt,generatedAt:new Date().toISOString(),sourceHash:src,verificationHash:hash,receipts,reports};writeFileSync('test-results/clock009-proof-receipts.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({passed:true,mutations:14,verificationHash:hash}));process.exit(0);
+ const result={passed:true,startedAt,generatedAt:new Date().toISOString(),sourceHash:src,verificationHash:hash,receipts,reports};validateProofs(result);writeFileSync('test-results/clock009-proof-receipts.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({passed:true,mutations:14,verificationHash:hash}));process.exit(0);
 }
 let attempt=1;while(existsSync(clockDirectory+stage+'-attempt-'+attempt+'.json'))attempt++;
 const report={stage,passed:false,attempt,startedAt,node:process.version,sourceHash:src,verificationHash:hash,receipts};
 try{
  let proof;
  if(stage==='final'){
-  proof=JSON.parse(readFileSync('test-results/clock009-proof-receipts.json'));assert.equal(proof.passed,true);assert.equal(proof.verificationHash,hash);assert.equal(proof.receipts.length,4);
-  for(const receipt of proof.receipts){assert.equal(receipt.exitCode,0);assert.equal(receipt.verificationHash,hash);assert.equal(digest(receipt.output),receipt.sha256);}
-  for(const p of proof.reports)assert.equal(digest(p.file),p.sha256);
+  proof=validateProofs(JSON.parse(readFileSync('test-results/clock009-proof-receipts.json')));
  }
  const tap=run('node',['--test','--test-isolation=none','--test-reporter=tap']);assert.match(tap,/# fail 0/);assert.match(tap,/# skipped 0/);assert.match(tap,/# cancelled 0/);
  const browser=JSON.parse(run('browser',[cli,'test','--reporter=json']));assert.equal(browser.stats.expected,35);assert.equal(browser.stats.unexpected,0);assert.equal(browser.stats.skipped,0);assert.equal(browser.stats.flaky,0);assert.deepEqual(browser.errors,[]);

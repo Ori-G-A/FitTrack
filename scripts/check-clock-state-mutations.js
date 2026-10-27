@@ -1,5 +1,5 @@
 import {cpSync,mkdirSync,mkdtempSync,readFileSync,writeFileSync,symlinkSync,unlinkSync,rmSync,realpathSync} from 'node:fs';
-import {join,relative} from 'node:path';
+import {join,relative,basename} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {createRequire} from 'node:module';
 import {randomUUID} from 'node:crypto';
@@ -17,7 +17,7 @@ function run(label){
  return {code:r.status,json};
 }
 try{
- for(const folder of ['src','test-support','change-tests'])cpSync(join(root,folder),join(shadow,folder),{recursive:true});
+ for(const folder of ['src','test-support','change-tests'])cpSync(join(root,folder),join(shadow,folder),{recursive:true,filter:p=>!basename(p).startsWith('.env')});
  for(const file of ['package.json','playwright.clock-state.config.js'])cpSync(join(root,file),join(shadow,file));
  symlinkSync(join(root,'node_modules'),join(shadow,'node_modules'),'junction');
  for(const [fixture,file] of pairs){

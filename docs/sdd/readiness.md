@@ -266,3 +266,7 @@ documentados. No se amplía el alcance de producto aprobado.
 La comprobación HTTP anónima no pudo resolver o alcanzar la URL técnica de
 Vercel. Production está confirmado por el proveedor; la navegación pública no
 se presenta como verificada.
+
+## Cierre local 009 — 2026-10-27 (Bogotá)
+
+372 Node, 35 Chromium/build, nueve contratos/250 IDs completos, catorce mutaciones con quince controles positivos, nueve negativos de recibos y RLS real fresco con limpieza. 113 firmas anteriores intactas, tres enmiendas canónicas y siete E0 propios intactos. Plan local autorizado cumplido; 27 tareas (T027 aditiva) y dos PRs preparados. [Verificación](../../specs/009-reloj-pruebas/verification.md). Publicación, integración y Vercel requieren decisión específica; no se certifica producción ni toda inestabilidad.

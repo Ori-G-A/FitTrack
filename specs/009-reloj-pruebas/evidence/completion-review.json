@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "closurePassed": true,
+  "generatedAt": "2026-10-27T21:23:28.154Z",
+  "node": "v24.21.0",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "nodeTests": 372,
+  "browser": 35,
+  "contracts": 9,
+  "ids": 250,
+  "ownIds": 16,
+  "pins": {
+    "previousVerified": 116,
+    "intact": 113,
+    "amended": 3,
+    "newIntact": 7
+  },
+  "mutations": 14,
+  "mutationPositiveControls": 15,
+  "receiptNegativeControls": 9,
+  "receiptPositiveControls": 2,
+  "rlsTests": 3,
+  "rlsCleanupPassed": true,
+  "tasks": 27,
+  "bundle": {
+    "before": {
+      "mainKb": 512.58,
+      "gzipKb": 149.47
+    },
+    "after": {
+      "mainKb": 512.58,
+      "gzipKb": 149.47
+    },
+    "deltaKb": 0,
+    "deltaGzipKb": 0
+  },
+  "approvedPlan": "56583281819ad86a41ffccb3caf7f9896c0b07e9",
+  "remoteAuthorized": false
+}

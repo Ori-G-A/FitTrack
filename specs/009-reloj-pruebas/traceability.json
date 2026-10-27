@@ -1,6 +1,6 @@
 {
   "spec": "009-reloj-pruebas",
-  "note": "E1: catorce IDs completos/dos pendientes hasta mutaciones reales; tres enmiendas canónicas con rojo original y verde dirigido.",
+  "note": "E2 local: dieciséis IDs propios y nueve contratos/250 IDs completos; RLS fresco, mutaciones y limpieza verificados.",
   "requirements": [
     {
       "id": "FR-001",
@@ -260,8 +260,13 @@
     {
       "id": "FR-007",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas",
+        "reloj009 trazabilidad rechaza resultados falsos omitidos y parciales",
+        "reloj009 reintroduccion del patron original detecta tres montajes"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas",
@@ -308,8 +313,10 @@
     {
       "id": "US3-AS2",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 reintroduccion del patron original detecta tres montajes"
+      ],
       "plannedTests": [
         "reloj009 reintroduccion del patron original detecta tres montajes"
       ],

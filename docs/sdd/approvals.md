@@ -532,3 +532,7 @@ no implementar, publicar, fusionar ni desplegar 009.
 ## Plan 009 aprobado — 2026-10-27 (Bogotá)
 
 El propietario respondió «Aprobar plan y precisión SC-001; autorizar ejecución local E0–E2». Aprueba las 26 tareas, plan, análisis y precisión SC-001: rojo específico de carrera FR-004/005, preservación de controles de error FR-006 y evidencia completa FR-007 sin inventar defectos previos. Autoriza E0–E2 local antes del PR documental; no publicar, fusionar ni desplegar 009.
+
+## Cierre local 009 — 2026-10-27 (Bogotá)
+
+372 Node, 35 Chromium/build, nueve contratos/250 IDs completos, catorce mutaciones con quince controles positivos, nueve negativos de recibos y RLS real fresco con limpieza. 113 firmas anteriores intactas, tres enmiendas canónicas y siete E0 propios intactos. Plan local autorizado cumplido; 27 tareas (T027 aditiva) y dos PRs preparados. [Verificación](../../specs/009-reloj-pruebas/verification.md). Publicación, integración y Vercel requieren decisión específica; no se certifica producción ni toda inestabilidad.

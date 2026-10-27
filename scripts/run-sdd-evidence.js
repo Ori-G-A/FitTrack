@@ -16,6 +16,7 @@ if (readFileSync('.node-version', 'utf8').trim() !== manifestPackage.devEngines.
   throw new Error('El espejo .node-version no coincide con el runtime propietario en package.json');
 }
 mkdirSync('test-results', { recursive: true });
+const verificationBefore = verificationHash();
 function run(args, output) {
   const result = spawnSync(process.execPath, args, { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
   writeFileSync(output, result.stdout || '');
@@ -63,7 +64,7 @@ function collect(suites) {
 }
 collect(JSON.parse(browserJson).suites);
 if(selectedSpec==='009-reloj-pruebas'&&process.argv.includes('--complete')){
- results.push(...validateClockMutationEvidence(JSON.parse(readFileSync('test-results/clock009-mutations.json')),verificationHash()));
+ results.push(...validateClockMutationEvidence(JSON.parse(readFileSync('test-results/clock009-mutations.json')),verificationBefore));
 }
 if (selectedSpec === '002-identidad-fotos' && existsSync('test-results/rls-evidence.json')) {
   const rls = JSON.parse(readFileSync('test-results/rls-evidence.json', 'utf8'));
@@ -80,7 +81,8 @@ if (selectedSpec === '008-borrado-fiable') verifyDeletePins();
 if(selectedSpec==='009-reloj-pruebas')verifyClockPins();
 const verify = selectedSpec === '009-reloj-pruebas' ? verifyClockTrace : selectedSpec === '008-borrado-fiable' ? verifyDeleteTrace : verifyTrace;
 const report = verify(manifest, ids, results, { complete: process.argv.includes('--complete') });
-writeFileSync(`${outputPrefix}-evidence.json`, JSON.stringify({ spec: selectedSpec, generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), results, ...report }, null, 2));
+if (verificationHash() !== verificationBefore) throw new Error('El código de verificación cambió durante la ejecución');
+writeFileSync(`${outputPrefix}-evidence.json`, JSON.stringify({ spec: selectedSpec, generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), verificationHash: verificationBefore, results, ...report }, null, 2));
 console.log(`${results.length} pruebas ejecutadas; trazabilidad: ${JSON.stringify(report.counts)}`);
 if (report.errors.length) { console.error(report.errors.join('\n')); process.exitCode = 1; }
 else console.log(process.argv.includes('--complete') ? 'Contrato completo: todas las filas tienen pruebas ejecutadas y aprobadas; revisar aserciones y puertas de gobierno.' : 'Evidencia válida; consultar estados del manifiesto y puertas de gobierno.');

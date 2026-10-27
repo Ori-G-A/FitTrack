@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-27T21:23:28.778Z",
+  "documents": 17,
+  "links": 168,
+  "tasks": 27,
+  "complete": 27,
+  "acyclic": true,
+  "ids": 16,
+  "pending": 0,
+  "approvedPlannedTestsUnchanged": true,
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "remoteAuthorized": false
+}

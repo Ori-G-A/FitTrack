@@ -53,3 +53,9 @@ E0 para impedir adaptarlos silenciosamente al candidato.
 
 R-011: CI invoca el runner proofs para ejecutar en orden las CLIs existentes de interfaz/guardado/borrado y la nueva de reloj. Se conservan sus once mutaciones y salidas; el envoltorio registra recibos durante cada ejecución y evita etiquetar reportes anteriores con una huella actual.
 R-012: la expectativa nueva posterior al montaje de guardado incluye sus 600 ms explícitos; antes de App sigue exigiendo el instante original. La corrección del instrumental precedió a la congelación E0 y su intento fallido se conserva.
+
+R-013 / T027: el runner 009 registra la huella durante sus ejecuciones, pero el
+reportador genérico todavía no captura su huella inicial ni la publica en el
+artefacto. Se completa ese requisito de FR-007 sin cambiar las siete firmas E0,
+producto ni oráculos. Los recibos de la primera ejecución de mutaciones se
+archivan con su huella real; después del cambio se repiten con la definitiva.

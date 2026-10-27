@@ -44,7 +44,7 @@ hay que leer esos artefactos y sus llamadores, no solo el componente visible.
 
 | Orden propuesto | Resultado | Referencias y decisión necesaria |
 | --- | --- | --- |
-| 1 | Reforzar la estabilidad de las pruebas temporales | [Propuesta 009](../../specs/009-reloj-pruebas/spec.md): carrera reproducida en tres montajes; alcance aprobado el 2026-10-27, plan pendiente |
+| 1 | Completar la entrega de la mejora del reloj | [Propuesta 009](../../specs/009-reloj-pruebas/spec.md): E0–E2 verificadas localmente; publicación, integración y Vercel pendientes de autorización |
 | 2 | Validar el uso real después del despliegue | Prueba autenticada de producción supervisada por el propietario, con cuenta y datos acordados; no ejecutar escrituras implícitas |
 | 3 | Reforzar límites de entradas y fotos | BODY-001 y PHOTO-001: decidir validación y fronteras sin cambiar fórmulas clínicas |
 | 4 | Resolver compatibilidades de interfaz y medir rendimiento | UI-006-003/004/005/006 y PERF-001: elegir un objetivo y baseline; no ampliar accesibilidad ni optimización por inferencia |

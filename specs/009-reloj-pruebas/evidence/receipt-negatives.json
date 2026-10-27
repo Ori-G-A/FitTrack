@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-27T21:17:56.113Z",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "positiveControls": 2,
+  "negativeControls": [
+    {
+      "name": "passed",
+      "rejected": true
+    },
+    {
+      "name": "huella ajena",
+      "rejected": true
+    },
+    {
+      "name": "huella posterior",
+      "rejected": true
+    },
+    {
+      "name": "recibo duplicado",
+      "rejected": true
+    },
+    {
+      "name": "archivo ajeno",
+      "rejected": true
+    },
+    {
+      "name": "salida alterada",
+      "rejected": true
+    },
+    {
+      "name": "proceso fallido",
+      "rejected": true
+    },
+    {
+      "name": "conteo falso",
+      "rejected": true
+    },
+    {
+      "name": "producto ajeno",
+      "rejected": true
+    }
+  ],
+  "recoveryCopy": "test-results/clock009-proof-ledger-cf6cc0d9-3af2-49ce-9f6d-d935d1192f60.json",
+  "restored": true
+}
