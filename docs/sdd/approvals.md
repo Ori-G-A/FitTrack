@@ -490,3 +490,12 @@ de T038 se caracterizaron en candidato previo, sin atribuir rojo al original E0.
 [Converge](../../specs/008-borrado-fiable/converge.md).
 La autorización local queda ejecutada; no se autoriza aún publicar, fusionar ni
 desplegar 008. CI remoto y producción no se infieren desde pruebas locales.
+
+## Entrega remota 008 autorizada — 2026-10-27 (Bogotá)
+
+Sobre el cierre local `00de5f2`, el propietario respondió «Autorizar publicación,
+integración con CI verde y Vercel». Autoriza publicar ambas ramas y PRs,
+integrarlos con CI remoto verde y permitir el despliegue automático asociado.
+Se integra primero el snapshot documental aprobado `2ee8edc` y después el código.
+Esta autorización sustituye las esperas anteriores de decisión remota de 008;
+no convierte la evidencia local en CI remoto ni certifica producción.
