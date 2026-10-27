@@ -1,5 +1,10 @@
 # Roadmap de adopción SDD
 
+Cierre local 008 — 2026-10-24 (Bogotá): 370 Node, 30 Chromium y build; ocho contratos/234 IDs completos; RLS real fresco (tres contratos) y limpieza confirmados; once mutaciones detectadas. 107 firmas anteriores intactas, una enmendada y ocho E0 intactas.
+T037/T038 aditivas completadas, incluido rechazo falsy con rojo/verde.
+[Converge 008](../../specs/008-borrado-fiable/converge.md). Publicación, integración
+y Vercel pendientes de autorización específica; los avances parciales se conservan como historia.
+
 Estado actual, 2026-10-22 (Bogotá): 001–007 integradas; 007 en `0617764`, con
 CI de PR/main y Vercel Production verificados. Siete contratos/205 IDs,
 325 Node, 29 Chromium, RLS real desechable y mutaciones aprobados.
@@ -8,6 +13,17 @@ CI de PR/main y Vercel Production verificados. Siete contratos/205 IDs,
 C-001/002/003 aprobados; [plan técnico](../../specs/008-borrado-fiable/plan.md),
 36 tareas y análisis aprobados por separado; ejecución local E0–E3 autorizada,
 sin autorización de publicar, fusionar ni desplegar 008.
+
+Avance local 008, 2026-10-24: E0–E2 conservadas en `2603ee1`, `a573010` y
+`dd95ae3`; 355 Node/30 Chromium/build en E2, 29 IDs propios completos.
+Cinco mutaciones y dos casos suplementarios aprobados. E3 sigue abierto por
+RLS fresco y checkpoint final; Docker no responde tras iniciarlo.
+[Registro local](../../specs/008-borrado-fiable/verification.md).
+
+Actualización del mismo candidato: perfil local E3 con 358 Node, 30 Chromium,
+build y siete contratos/211 IDs verdes; once mutaciones nuevas/heredadas detectadas.
+RLS terminó fallido, sin limpieza confirmada. Se conserva el fixture propio para
+recuperación; E3 no está cerrada y no hay autorización remota de 008.
 
 Estado histórico, 2026-10-20 (Bogotá): 001–006 integradas; PATCH 1.0.3 ratificada
 y aplicada. La integración documental y sus verificaciones se registran en el
@@ -99,11 +115,11 @@ están en el [survey 008](borrado-fiable-survey.md), sin acreditar incidentes re
 | DATA-001 | Importación aplica setters antes de esperar hidratación; hydratePhotos captura fallos individuales y conserva originales (`src/FitTrack.jsx:814`, `src/photo-storage.js:57`) | Caracterizar secuencia y foto no hidratada; no asumir que falla toda importación por un fallo individual; dueño decide semántica | Clarify 001 |
 | DATA-002 | Borrado elimina fotos antes de app_data sin transacción común (`src/FitTrack.jsx:783`) | Caracterizar fallos de cada paso y aprobar política explícita de recuperación | Clarify 001 |
 | DATA-003 | Bus global podía sobrescribir error al comenzar otro guardado; reproducción histórica en 007 | 007 integrada en main con CI verde y Production verificados; regresiones originales y recuperación por usuario:clave conservadas | Cerrado por 007 en 0617764; evidencia de integración disponible |
-| DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | En un CHANGE posterior, decidir resultado visible y probar retorno error separado de rechazo de promesa | Después de 001; priorizar en cierre M2 |
-| DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | Reproducir con Storage diferido y rechazo; decidir feedback visible persistente y escribir regresión antes de corregir | Revisión al cierre M2; no se cambia en refactor AS-IS |
-| DATA-006 | Tras DELETE confirmado, rechazo de signOut restaura loaded; el diagnóstico reemite doce guardados con valores anteriores | Propuesta 008: impedir reenviar estado previo; recuperación conservadora por etapa | Alcance pendiente de aprobación |
-| DATA-007 | Resultado tardío de borrado A habilita carga de B o despacha signOut sobre B; dos reproducciones del survey | Propuesta 008: aislar intentos de su sesión de origen, incluidos A→B→A y pasos posteriores | Alcance pendiente de aprobación |
-| DATA-008 | Visibilidad durante borrado vuelve a cargar y reanuda guardados; el intervalo comparte callback por inspección | Propuesta 008: recuperación ordinaria no levanta bloqueo; probar visibilidad e intervalo por separado | Alcance pendiente de aprobación |
+| DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | 008 FR-005/010: inspeccionar retorno y rechazo; cierre manual sin repetir borrado | Verificado localmente en 008; pendiente de integración |
+| DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | 008 FR-006/012: feedback persistente en raíz, visible y accesible | Verificado localmente en 008; pendiente de integración |
+| DATA-006 | Tras DELETE confirmado, rechazo de signOut restaura loaded; el diagnóstico reemite doce guardados con valores anteriores | 008 FR-008/010: bloqueo continuo, sin reemitir valores anteriores | Verificado localmente en 008; pendiente de integración |
+| DATA-007 | Resultado tardío de borrado A habilita carga de B o despacha signOut sobre B; dos reproducciones del survey | 008 FR-011: sesión/generación e invalidez de resultados tardíos | Verificado localmente en 008; pendiente de integración |
+| DATA-008 | Visibilidad durante borrado vuelve a cargar y reanuda guardados; el intervalo comparte callback por inspección | 008 FR-008/009: bloquear recuperación ordinaria y confirmar commit de recarga manual | Verificado localmente en 008; pendiente de integración |
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
 | IDEN-001 | Reporter consume fingerprint/cupo antes de consultar sesión y su getSession carece de timeout propio | Pins preparatorios lo reproducen; conservar AS-IS y decidir cambio separado de FR-013 | Clarify 002 C2-004 |
 | PHOTO-001 | Fuente admite 25 MiB; migración Storage limita resultado a 5 MiB sin comprobación local del tamaño comprimido | No prometer aceptación remota por validar origen; decidir si hace falta CHANGE y prueba de frontera del resultado | Survey 002; sin cambio aprobado |

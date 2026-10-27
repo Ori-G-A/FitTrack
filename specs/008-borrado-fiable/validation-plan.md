@@ -1,8 +1,13 @@
 # Validación propuesta 008
 
-Nombres previstos, no pruebas contractuales creadas ni ejecutadas. Todos los
-IDs siguen pending en [trazabilidad](traceability.json). El sondeo del survey
-es diagnóstico independiente, no una baseline ni G-PIN aprobado.
+Cierre local — 2026-10-24 (Bogotá): [370 Node/30 Chromium/build](evidence/final.json),
+29 IDs propios completos, ocho contratos/234 IDs y RLS fresco con limpieza.
+T037/T038 son suplementos posteriores; los ocho archivos E0 permanecen intactos.
+
+Plan aprobado, con nombres conservados en los ocho archivos congelados E0.
+E2 verificó los 29 IDs completos en [trazabilidad](traceability.json);
+[evidencia por etapa](verification.md). El sondeo del survey sigue siendo
+diagnóstico independiente; no se confunde con G-PIN ni con cierre E3.
 
 | Nombre exacto previsto | Tipo | Cláusulas |
 | --- | --- | --- |
@@ -48,9 +53,9 @@ comportamiento concreto antes de implementar, sin aceptar errores del harness
 o APIs inexistentes como rojo válido. El plan propone los archivos y tareas siguientes.
 Las expectativas heredadas contradictorias requerirán enmiendas explícitas por FR.
 
-El cierre futuro exige manifestación completa real, suite/build y RLS fresco
-según el plan que se apruebe. No se añaden ahora puertas CI de 008 ni se ejecutan
-pruebas contra backend real. No hay evidencia contractual nueva por proponer nombres.
+El cierre E3 exige manifestación completa real, suite/build y RLS fresco.
+La puerta CI 008 está preparada; ejecución remota pendiente de autorización.
+No se ejecutan pruebas contra backend productivo. Proponer nombres no constituye evidencia.
 
 ## Archivos y congelación propuestos
 
@@ -65,7 +70,7 @@ pruebas contra backend real. No hay evidencia contractual nueva por proponer nom
 | playwright.delete-state.config.js | Caso Chromium nuevo aislado, sin retries | T012 |
 | playwright.delete-state-legacy.config.js | 29 casos heredados durante E0/E1 | T003, T012 |
 
-Los ocho archivos se congelan juntos en T012; ninguno existe aún por este plan.
+Los ocho archivos se congelaron juntos en T012: [baseline](evidence/baseline.json).
 Los suplementos posteriores de coordinador/arquitectura no se presentarán como
 rojos originales. El manifiesto conserva tests vacío y pending, añadiendo solo
 plannedFiles/plannedTaskIds. Cada nombre conserva su escritura aprobada.
@@ -74,7 +79,7 @@ plannedFiles/plannedTaskIds. Cada nombre conserva su escritura aprobada.
 
 | Puerta | Complete 008 | Pending 008 | Evidencia que permite la transición |
 | --- | --- | --- | --- |
-| Preparación actual | 0 | 29 | Solo revisión documental; no evidencia contractual |
+| Preparación documental histórica | 0 | 29 | Solo revisión documental; no evidencia contractual |
 | E0 / G-PIN | 7 | 22 | FR-001–004 y US1-AS1–AS3 verdes; 13 CHANGE rojos de negocio, ocho archivos firmados |
 | E1 | 8 | 21 | Añadir FR-005 con núcleo verde; no atribuir a App resultados no reevaluados |
 | E2 | 29 | 0 | Todos los casos propios y heredados, Node/Chromium/build completos |

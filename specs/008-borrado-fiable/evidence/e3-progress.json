@@ -1,0 +1,76 @@
+{
+  "stage": "E3",
+  "complete": true,
+  "generatedAt": "2026-10-25T03:35:23.912Z",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "pins": {
+    "historicalIntact": 107,
+    "amended": 1,
+    "newIntact": 8
+  },
+  "mutations": {
+    "passed": true,
+    "count": 5,
+    "positiveControls": 5,
+    "cleanupPassed": true
+  },
+  "supplementary": {
+    "passed": true,
+    "generatedAt": "2026-10-24T17:35:33.524Z",
+    "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+    "supplementary": true,
+    "originalRedClaimed": false,
+    "file": "test/delete-state-load-races.test.js",
+    "sha256": "a22edf426e96cde9a4d219e8b86de870b860696a8f1b0e3ed33a3d5a5e611fb1",
+    "nodeTests": 2,
+    "nodePass": 2
+  },
+  "traceControlsPassed": true,
+  "ciPrepared": true,
+  "rls": {
+    "passed": true,
+    "cleanupConfirmed": true,
+    "projectId": "fittrack-sdd-rls-c9dcac7bad66",
+    "generatedAt": "2026-10-25T03:28:00.700Z",
+    "tests": 3,
+    "previousFixtureRecoveryConfirmed": true
+  },
+  "finalCheckpoint": {
+    "passed": true,
+    "nodeTests": 370,
+    "browser": 30,
+    "contracts": 8,
+    "ids": 234,
+    "closurePassed": true,
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377"
+  },
+  "remoteAuthorization": false,
+  "localCheckpoint": {
+    "passed": true,
+    "nodeTests": 358,
+    "browser": 30,
+    "buildPassed": true,
+    "contracts": 7,
+    "ids": 211,
+    "closurePassed": false,
+    "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad"
+  },
+  "finalGateRejectedIncompleteRls": true,
+  "previousCandidateSourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "earlierRlsAttempt": {
+    "generatedAt": "2026-10-24T17:46:09.826Z",
+    "runnerFinished": true,
+    "passed": false,
+    "cleanupConfirmed": false,
+    "projectId": "fittrack-sdd-rls-8b4620a39db7",
+    "recoveryDirectory": "C:\\Users\\orian\\AppData\\Local\\Temp\\fittrack-sdd-rls-NF1uif",
+    "startInterrupted": true,
+    "reason": "Docker Desktop backend se cerró al acceder al socket dockerInference; servicio detenido. Se interrumpió solo el hijo de arranque propio; el runner intentó stop, sin confirmar limpieza.",
+    "nextStep": "Con Engine running, verificar propietario, retirar ese proyecto y confirmar limpieza antes de ejecutar un fixture nuevo. No resetear Docker ni borrar recursos ajenos.",
+    "recheck": {
+      "generatedAt": "2026-10-25T02:08:56.605Z",
+      "available": false,
+      "reason": "No existe el pipe dockerDesktopLinuxEngine"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { verifyTrace } from './sdd-trace.js';
+import { verifyDeleteTrace, verifyDeletePins } from './delete-state-evidence.js';
 import { selectSpec, contractIds } from './sdd-contract.js';
 import { currentRlsHashes, validateRlsEvidence } from './rls-evidence.js';
 
@@ -71,7 +72,9 @@ if (manifest.spec !== selectedSpec) throw new Error('El manifiesto no correspond
 const srcFiles = spawnSync('git', ['ls-files', 'src'], { encoding: 'utf8' }).stdout.trim().split(/\r?\n/);
 const sourceHash = createHash('sha256');
 for (const file of srcFiles) sourceHash.update(file).update(readFileSync(file));
-const report = verifyTrace(manifest, ids, results, { complete: process.argv.includes('--complete') });
+if (selectedSpec === '008-borrado-fiable') verifyDeletePins();
+const verify = selectedSpec === '008-borrado-fiable' ? verifyDeleteTrace : verifyTrace;
+const report = verify(manifest, ids, results, { complete: process.argv.includes('--complete') });
 writeFileSync(`${outputPrefix}-evidence.json`, JSON.stringify({ spec: selectedSpec, generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), results, ...report }, null, 2));
 console.log(`${results.length} pruebas ejecutadas; trazabilidad: ${JSON.stringify(report.counts)}`);
 if (report.errors.length) { console.error(report.errors.join('\n')); process.exitCode = 1; }

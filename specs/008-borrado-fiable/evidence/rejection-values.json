@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "supplementary": true,
+  "task": "T038",
+  "generatedAt": "2026-10-25T03:23:31.365Z",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "file": "test/delete-state-rejection-values.test.js",
+  "sha256": "7e22fe56bd1999ae5ebec280b67ef9912d9793ebf47b76ba5f5be0a5339d800f",
+  "redCandidateSourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "originalRedClaimed": false,
+  "redTests": 12,
+  "redFailures": 12,
+  "greenTests": 14,
+  "greenPass": 14,
+  "ownTests": 12,
+  "loadRaceTests": 2,
+  "pins": {
+    "historicalIntact": 107,
+    "amended": 1,
+    "newIntact": 8
+  }
+}

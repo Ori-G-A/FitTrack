@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-25T03:23:31.365Z",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "supplementary": true,
+  "originalRedClaimed": false,
+  "file": "test/delete-state-load-races.test.js",
+  "sha256": "a22edf426e96cde9a4d219e8b86de870b860696a8f1b0e3ed33a3d5a5e611fb1",
+  "nodeTests": 2,
+  "nodePass": 2,
+  "earlierProof": {
+    "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+    "generatedAt": "2026-10-24T17:35:33.524Z"
+  },
+  "revalidation": {
+    "passed": true,
+    "runnerTests": 14,
+    "ownCases": 2,
+    "evidence": "rejection-values-green.tap.txt"
+  }
+}

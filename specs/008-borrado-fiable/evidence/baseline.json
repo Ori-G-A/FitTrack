@@ -1,0 +1,672 @@
+{
+  "passed": true,
+  "gate": "G-PIN",
+  "generatedAt": "2026-10-24T17:10:23.657Z",
+  "node": "v24.21.0",
+  "approvedPlan": "2ee8edca15a95012344e0dca3823e8b103b231f3",
+  "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+  "previousPins": [
+    {
+      "file": "browser-tests/interface.spec.js",
+      "sha256": "6d52acdd2932f3b46037bac9b00cf7f7d520237bb3f00e898dcf8e097690b6fe"
+    },
+    {
+      "file": "change-tests/interface-accessibility.spec.js",
+      "sha256": "19c5e7a4363ed34db97f12a54c858ec75c9e9b5aa8093cb0f9850d85327226a1"
+    },
+    {
+      "file": "change-tests/interface-highlight.spec.js",
+      "sha256": "e69c6ef7fb0f3a6d2d0492ece2e372a0b502c7848d54263587c0c05963670b5d"
+    },
+    {
+      "file": "playwright.interface-change.config.js",
+      "sha256": "408a001ecc45d47c3a38d68966e601ef0ef0786723942f970641d16557bf2020"
+    },
+    {
+      "file": "test-support/interface-browser.js",
+      "sha256": "94989d588f5af8a6e8c12cd06b27983bb27f8935275562b2521e0204fd84ad63"
+    },
+    {
+      "file": "test-support/interface-build.js",
+      "sha256": "259e1b5fad8066608588f2e813a8e1e77f49846871c8dc78fe38aacd06b8d672"
+    },
+    {
+      "file": "test-support/interface-cases.js",
+      "sha256": "dd79ef99290fb081c727d21129cafc365105cf761e48d2026b936044022323a6"
+    },
+    {
+      "file": "test-support/interface-dom.js",
+      "sha256": "362eba5bc01780aff67cd8cd70d3491d4dbe9ce5590315d3da5914de6c64ac82"
+    },
+    {
+      "file": "test-support/interface-entry.jsx",
+      "sha256": "5539bb12b313d1d49b5fae1cbb1c73c6d031965239ac9b7bfdafa3821e3591be"
+    },
+    {
+      "file": "test-support/interface-geometry.json",
+      "sha256": "416c105a7fec61cfb73d5c5d73d5354d5680e1ea277c1702a807e6241759a223"
+    },
+    {
+      "file": "test-support/interface-golden.json",
+      "sha256": "d8b94c40e9bb07cdec882cfa8110b9936354184401f01e2a4cd43e981ccdab40"
+    },
+    {
+      "file": "test/interface-account.test.js",
+      "sha256": "f9163e5c3c4f9907ee7213e70db4f425ea4787612541a601809c2492055ba4cf"
+    },
+    {
+      "file": "test/interface-body-routing.test.js",
+      "sha256": "83471bf4c3fc11d3ab5963dded009d06b826c7b108f751b40315d63904ac9451"
+    },
+    {
+      "file": "test/interface-boot.test.js",
+      "sha256": "78e4dbdfae5148f70477a30790991e39ac55fb9b0dc72bd732ac484924521356"
+    },
+    {
+      "file": "test/interface-compatibility.test.js",
+      "sha256": "886f1635c93f2cb8ff2b93a1ecab80dcbfad623ef70dcf2b8162dbe514941686"
+    },
+    {
+      "file": "test/interface-detail.test.js",
+      "sha256": "082afcfad4417e73732ad21976e56baa9cb60325025a2ff5a7c2a52d0c2b6a88"
+    },
+    {
+      "file": "test/interface-diary.test.js",
+      "sha256": "c3f788f099bd907ed439628cde8763f389c13b317f5306bebc88988dc25ecca0"
+    },
+    {
+      "file": "test/interface-dismiss.test.js",
+      "sha256": "f404507ad965d97ccc07db365245b396f36765b01d3e777e3240965d4089877a"
+    },
+    {
+      "file": "test/interface-editorial.test.js",
+      "sha256": "91f5966540f8916635649e62e15bc181ab9613f0cee043536505f3ac36a3e82e"
+    },
+    {
+      "file": "test/interface-metric-focus.test.js",
+      "sha256": "2e72b33c215449f5390702a4b745a63a381f8e0544ca699ad4b63567e2365b66"
+    },
+    {
+      "file": "test/interface-mutants.test.js",
+      "sha256": "f12b34b58077ca182c05fa92b57646875dd31ee4f8f22dba1f710467d43451df"
+    },
+    {
+      "file": "test/interface-navigation.test.js",
+      "sha256": "c636d6ca7acfde1795122f7ad4662d93022cf37591426e0c33e51254f8c9dbe8"
+    },
+    {
+      "file": "test/interface-plan.test.js",
+      "sha256": "c48655df5ab36bfc3711e7ca540761c76ae7ab920cba2b3cf85eba75b043af6f"
+    },
+    {
+      "file": "test/interface-previews.test.js",
+      "sha256": "115c43af3186f6318b38908bf5ecb2c0cb52e4631e2c212da7a873dda4c5ab8a"
+    },
+    {
+      "file": "test/interface-registration.test.js",
+      "sha256": "fee8c550dbb0e9dad4cce54631475443d13ab16446d019fc158fee12628dc56e"
+    },
+    {
+      "file": "test/interface-responsive.test.js",
+      "sha256": "acc1bff1cc49153b694b036efe300b32095f8d382fede69d13015e8b18442a6c"
+    },
+    {
+      "file": "test/interface-routing.test.js",
+      "sha256": "4dee0023665567d3f0d0c1d72c1f740361eaba7ead464f85c6ace7ce93640406"
+    },
+    {
+      "file": "test/interface-screens.test.js",
+      "sha256": "e02d177ea373a34aa7bdd030f4ae14c3875f2821304ad7ba89e65fc2a852d2ba"
+    },
+    {
+      "file": "test/interface-session.test.js",
+      "sha256": "4cc59d0bdd1f01663027f7fb58a9e0c82d05498ad1fd4e3fa1b10b3c3daad04b"
+    },
+    {
+      "file": "test/interface-theme-lifecycle.test.js",
+      "sha256": "f5331314fc97492a0aca30f5d517b5ce1746b43e5220027df0961aeee14a2a4a"
+    },
+    {
+      "file": "test/interface-theme.test.js",
+      "sha256": "ac5800fafbcf2dd90e45832aa6346dee6817128a1a75c0f67c2724569c21ec83"
+    },
+    {
+      "file": "test/interface-toast.test.js",
+      "sha256": "dc1c51eb208effcdc94fa38501f99a5fbe32061c9749ec40bf4a17fce199037a"
+    },
+    {
+      "file": "test/interface-touch.test.js",
+      "sha256": "df68cf4596a7a14c6d86bfd3f4545b769a837730de5ddf3cfc4266b7019b43b3"
+    },
+    {
+      "file": ".gitattributes",
+      "sha256": "4e14828ae37396a15a48f0b83f5b6e974c7f61a84b6a7228b706f1e8bcc8ab9e"
+    },
+    {
+      "file": "browser-tests/body.spec.js",
+      "sha256": "8431bbebb7393981f1e916e2675d17c3777e1073fe2e4343507895a6dc1a7689"
+    },
+    {
+      "file": "test-support/body-build.js",
+      "sha256": "45d8c14efa2b918c9982b783fee694118754812c8370596ab77020aa340d9d9d"
+    },
+    {
+      "file": "test-support/body-dom.js",
+      "sha256": "48209ae73675cdb3659d141ba449612278b66ff9b337fb5297a36609bd8b6424"
+    },
+    {
+      "file": "test-support/body-entry.jsx",
+      "sha256": "149dc33ac73b6f92381425a8d17bbc1d6466c854ab7cd1e383f8cce7b9e35aef"
+    },
+    {
+      "file": "test-support/body-fixtures.js",
+      "sha256": "c5a6cc039c378f1fb4db5b66045c70426327da5001154ccbf368ea4c61281819"
+    },
+    {
+      "file": "test-support/body-golden.json",
+      "sha256": "954d5ab801238439055545e9159008f668018232b3b495271697eb0ae1208c6d"
+    },
+    {
+      "file": "test/body-alerts.test.js",
+      "sha256": "a78dd9fcb498b48e0610c65fe9cbae59ad55e8a07eb0a5dbd10ed5d80da52eea"
+    },
+    {
+      "file": "test/body-compatibility.test.js",
+      "sha256": "9387fe60ffbc9f58caf63a9d2209e72211b0f494c708c446ea19550fac089e4e"
+    },
+    {
+      "file": "test/body-consumers.test.js",
+      "sha256": "64d749292f6504b8a29acefb57dd45c13280c57836f95c6198aa9ba03305c984"
+    },
+    {
+      "file": "test/body-context.test.js",
+      "sha256": "f1c546a4ada338bf2ab5092cfa9249af5976987fb92e14e46ed1fa6edd5a011a"
+    },
+    {
+      "file": "test/body-creatine.test.js",
+      "sha256": "80ef40eb6202b4f84bd82936ff520f4ea5f5d8fd55b1a81678ea023c14dc6cd8"
+    },
+    {
+      "file": "test/body-dashboard.test.js",
+      "sha256": "159321bacd52738971d7e9c365db5d0e8770ef560a38f2eef4f0009822f3efab"
+    },
+    {
+      "file": "test/body-distribution.test.js",
+      "sha256": "09b21afa5b825e1370cd04bcffedae229af8c77f4988197d798c93a6581d48a1"
+    },
+    {
+      "file": "test/body-guidance.test.js",
+      "sha256": "52bc10f5cc9b9dd2f48ca2a01719e429b84eb2312ec94ee24d4e4fd11e18b2c5"
+    },
+    {
+      "file": "test/body-logs.test.js",
+      "sha256": "62c48705e55129a4be3e33372fd979dade3c2a73974136c608af113d23161956"
+    },
+    {
+      "file": "test/body-measurements.test.js",
+      "sha256": "0a40deaede9b030d0335756d15247bb00ecbf7e666f1cb498051643a30d920e9"
+    },
+    {
+      "file": "test/body-metrics.test.js",
+      "sha256": "3c04184881b33df5a6be1c678786ddb9ccbe4eafe57a62e1ee3d26b31841ced7"
+    },
+    {
+      "file": "test/body-ovulation.test.js",
+      "sha256": "c394a0ed8ac4f4e6ef3c25bb36dfc18914972dd3d523b4d02274686f48178131"
+    },
+    {
+      "file": "test/body-phase.test.js",
+      "sha256": "c59ac0feaa24887febb28d3048d73a94302a531301db31c4694d330b2c8e0c7d"
+    },
+    {
+      "file": "test/body-retention.test.js",
+      "sha256": "a0077d927f93bc9a32f4b55af17fee85e72d7947f742b23789ccf37554d4c02d"
+    },
+    {
+      "file": "test/body-routing.test.js",
+      "sha256": "f3e71c1a8f2f3804ed2b373ed9f3b009f530c2ecbf36ff5672f26fd6f52f2561"
+    },
+    {
+      "file": "test/body-sensitivity.test.js",
+      "sha256": "62fa7203bc870f3b742ede295876c9ee160b499c4c9d68c187b11741eb926761"
+    },
+    {
+      "file": "test/body-summary.test.js",
+      "sha256": "107ad1ee3404617fcbde473d20a0f92e5cf541fff24faeae39e71e0f38f3430c"
+    },
+    {
+      "file": "test/body-timeline.test.js",
+      "sha256": "7c158520a8e5105695ccd8e104ce66fecafeaab01c8c15cf5722a5602d728083"
+    },
+    {
+      "file": "test/body-trend.test.js",
+      "sha256": "aa46076190826a6485f7c61090a0bbc734c9a98bc3a881a015fa415f37890681"
+    },
+    {
+      "file": "test/body-weight.test.js",
+      "sha256": "c58489431bdd25014f2510b92fe965eba65c5be8c235e0dd90988f2e23114972"
+    },
+    {
+      "file": "test/body-wellness.test.js",
+      "sha256": "cee5bc7581aa789758291741b6b95f96ec8765786bfe783b5240b273a91b6ff3"
+    },
+    {
+      "file": "test/nutrition-adherence.test.js",
+      "sha256": "9a76f7f47030722b98a114f01b9e04be3474fcde65823072650acc7af6600c6f"
+    },
+    {
+      "file": "test/nutrition-alerts.test.js",
+      "sha256": "9a5111383bf015d4943b791f56dba29f48a5c4fe56744af7b668c0dbe72223d4"
+    },
+    {
+      "file": "test/nutrition-amount.test.js",
+      "sha256": "cdf91809f34200e42480e3d4952ebaed344e91da9371551caf4d4f5e49033ca6"
+    },
+    {
+      "file": "test/nutrition-auto-goals.test.js",
+      "sha256": "2c35254019a6f6810aef8c4bf6801ad6345fb5de191d0aa9af858d3c76a2b805"
+    },
+    {
+      "file": "test/nutrition-catalog.test.js",
+      "sha256": "3fdbe7c3b788ef03488e0df5055b324a21242ff38a65f53f6c2c33230d8105a7"
+    },
+    {
+      "file": "test/nutrition-compatibility.test.js",
+      "sha256": "ce09db733b5bb411c7ef26f7530531f176c009cdbe76f808a48d219659996e55"
+    },
+    {
+      "file": "test/nutrition-dashboard.test.js",
+      "sha256": "3295012641d6110973656023177cc5183a3950eb4dc861c6ad793a795080c6f3"
+    },
+    {
+      "file": "test/nutrition-day.test.js",
+      "sha256": "90080d6a5a994a4c95de76c736957f06ee471275ed0426e1c8b3d0cda13ae5c0"
+    },
+    {
+      "file": "test/nutrition-expected.test.js",
+      "sha256": "16cf2112a5cffc64322766ed5333848e0f391b936919da330062efdaa128bd32"
+    },
+    {
+      "file": "test/nutrition-foods.test.js",
+      "sha256": "56c464f2175c851bcf98994ac879091fe2f05b44128f81fa43f75f604ffe1795"
+    },
+    {
+      "file": "test/nutrition-goals.test.js",
+      "sha256": "2a60db9cbc18d144554f2de7802d641340555287f5d5636a53915bce131f3641"
+    },
+    {
+      "file": "test/nutrition-pace-actions.test.js",
+      "sha256": "9e25400ebf95d255bb177c0448c052f82e465119548674adb88169093c51529c"
+    },
+    {
+      "file": "test/nutrition-pace.test.js",
+      "sha256": "5871e6df81c2677c95804e1ea2f6addeb086ef8f95f1c8bfe2030326c18dec13"
+    },
+    {
+      "file": "test/nutrition-protein.test.js",
+      "sha256": "c220561440589e5333dabd7476951305a67688b2654ac09ea56d335408506f28"
+    },
+    {
+      "file": "test/nutrition-recipes.test.js",
+      "sha256": "b1cb18bb46794d0f560e69b22734b81935583dfb78c2e9e442afeec9a797ab75"
+    },
+    {
+      "file": "test/nutrition-search.test.js",
+      "sha256": "a2f69c3af8fc5c0aa3f983530ed4c7c72de2198ef2ba29de3026682c7d7fbf69"
+    },
+    {
+      "file": "test/nutrition-sensitivity.test.js",
+      "sha256": "069a8b60974933deac3d4e386de20ab470c31238f237f0f4a65f7479dbf09d3b"
+    },
+    {
+      "file": "browser-tests/nutrition.spec.js",
+      "sha256": "6f773eb85a56d7f2ff1a4f17ab306bf185e7ea067c4e199184637d4cf4fb01af"
+    },
+    {
+      "file": "test/training-compatibility.test.js",
+      "sha256": "7c999dfdcb0e39a75c52fbbe795daaf51ece1632f056f6d5b50d9c2baeb12ad8"
+    },
+    {
+      "file": "test/training-duration.test.js",
+      "sha256": "78cc73cd495ebd161e068585a6cd87f865ae6bae8b76dfd804783da0a2252a1d"
+    },
+    {
+      "file": "test/training-guided.test.js",
+      "sha256": "7fd9241f87316fc9b413595403b2a6a489542029159b072dd6b9e40467354b9b"
+    },
+    {
+      "file": "test/training-metrics.test.js",
+      "sha256": "95639b1822b632b612972ee2a1592f16e14f9b126f76b9d7df67cb90889f65e7"
+    },
+    {
+      "file": "test/training-mutants.test.js",
+      "sha256": "805653ac9e95508107452180002311bbb75f7f346fb383bab0ab949aaee87257"
+    },
+    {
+      "file": "test/training-plan.test.js",
+      "sha256": "efaf128dc9f3e4474fbb33270714e44465d384020f74676f520d4d5b6a239dfa"
+    },
+    {
+      "file": "test/training-records.test.js",
+      "sha256": "7eb36d93b9815385058a0482ef255e70d89c43354d2021ef83c92e8bf03c6630"
+    },
+    {
+      "file": "test/training-routines.test.js",
+      "sha256": "e2e399e4687b00dce34b3176f6517a4d282b208ce70f4622ed76db9081c7996e"
+    },
+    {
+      "file": "test/training-timer.test.js",
+      "sha256": "43290d78000726ef3d9866b285aa80e8dd36fd4bf421a26f286f00fc3fafdb8e"
+    },
+    {
+      "file": "test/training-trace.test.js",
+      "sha256": "c077c3f4025db4d15eb8e7668eb14f032366126abaf7b79352c7577f7212e91a"
+    },
+    {
+      "file": "browser-tests/training-journeys.spec.js",
+      "sha256": "871bf0d0d7b6b2f5abdbfee22bb35afae6a15caeb1623541c29c7c00f0c8c217"
+    },
+    {
+      "file": "test/data-backup.test.js",
+      "sha256": "2470c825c95980c7222221726a60c1618adb8f4a7e46c0fcd2daa3ee481c32de"
+    },
+    {
+      "file": "test/data-delete.test.js",
+      "sha256": "a9c636f883e932f7b3320c4b281ae40ec1da6d51bb8add042e2ecbdb79d25cd7"
+    },
+    {
+      "file": "test/data-lifecycle.test.js",
+      "sha256": "3e3d05a0335e3abc0eea810014946b7cb3a82e1514cbe6da08d430d5f62ff920"
+    },
+    {
+      "file": "test/data-operations.test.js",
+      "sha256": "3c7f2a9f1fc894cae009187a915a258c22261502bd50a47e03fb48f183d7a6db"
+    },
+    {
+      "file": "test/data-sync-hooks.test.js",
+      "sha256": "5b825bc66fe3015eb4d96f24443c7b42d02d8917abc8d9eb2fd786c4a56bf5e6"
+    },
+    {
+      "file": "test/data-sync.test.js",
+      "sha256": "09b30fa9050566d9b54c6ae0bc407579b2db707ceaed0cd76761b3b4122773db"
+    },
+    {
+      "file": "test/identity-auth.test.js",
+      "sha256": "f1c86293737a4e4e7cc3296541ae8406f640098adf8afb702daff9cda11e1374"
+    },
+    {
+      "file": "test/identity-diagnostics.test.js",
+      "sha256": "5487267be2445f5139a9d9ae47e7c27651bf325ed4cad7b898ed95141f8a9092"
+    },
+    {
+      "file": "test/identity-photos.test.js",
+      "sha256": "5271ff038be539e89dc6046aad62b7569ae05bba92e112e3e76b95a72ca8da7c"
+    },
+    {
+      "file": "test/identity-recovery.test.js",
+      "sha256": "40cbbb6945192e1e615b9d9837b96c8a6438aae650579b3fb3d9f26ae16472e0"
+    },
+    {
+      "file": "test/identity-session.test.js",
+      "sha256": "e39c2a783a1a84d1dec61a824d278f16557ce3165b432a63a05ff9d4e0109bff"
+    },
+    {
+      "file": "test/save-state-asis.test.js",
+      "sha256": "6536e8590c1b2eb9688225e777a693e18a03c2da3c991136baca2ffac1837314"
+    },
+    {
+      "file": "test/save-state-change.test.js",
+      "sha256": "cf59f5e621f8b87e00d5950a2f4647d5987d7aa3f5229acb3bc6abd1bb5fe93a"
+    },
+    {
+      "file": "test/save-indicator.test.js",
+      "sha256": "36744cf7c4b48d7042cd92b0b54342e824324896c857df202be4feb11f1d4bf3"
+    },
+    {
+      "file": "test-support/save-state-entry.jsx",
+      "sha256": "40dfc906c9d79ea84b5b35ca6f13545f85395c050af89758b9ddf2de97cc8af7"
+    },
+    {
+      "file": "change-tests/save-state.spec.js",
+      "sha256": "30c03f1dcf64591ff7b93e9e7baaacbcb49ea4cea6e0fcca68dc4a4232afcfea"
+    },
+    {
+      "file": "playwright.save-state.config.js",
+      "sha256": "8d35a981f85d81541f9e1812452c4f98c9fa495fa661b0f3831610b1afb2f59c"
+    },
+    {
+      "file": "test/save-state-race.test.js",
+      "sha256": "c5ebf1a058ac00078dbede9b269dae3d6e8ae5346fdcf862080be4005df15894"
+    }
+  ],
+  "pins": [
+    {
+      "file": "test/delete-state-asis.test.js",
+      "sha256": "4d13add0337e8c6b1afe86e6c7c7ed09f8443b86b02c7b425b9ec2bf90fc320b"
+    },
+    {
+      "file": "test/delete-state-core-change.test.js",
+      "sha256": "59ccff5f83937f19ef043d2d70573a3c95914eb8271a5350785f4fa70e3e8004"
+    },
+    {
+      "file": "test/delete-state-app-change.test.js",
+      "sha256": "a6e5d00c5a3ac25312deba65d3759160d7ccb62998503601038c55b80a39ba4c"
+    },
+    {
+      "file": "change-tests/delete-state.spec.js",
+      "sha256": "7f5402cc7aef5c0abd9445399bf75467141157221ebd9415b946ad651bc0dd2e"
+    },
+    {
+      "file": "test-support/delete-state-fixtures.js",
+      "sha256": "737dd831436a1c0dc28c5d19bb89386698b8831bbf57ddf3254bf41cc0946d99"
+    },
+    {
+      "file": "test-support/delete-state-browser.js",
+      "sha256": "755aa4c3d12ffc970e59767f8437865a625fa1ea60cd76d50b8f41c5fb8d6894"
+    },
+    {
+      "file": "playwright.delete-state.config.js",
+      "sha256": "8de900862ac8340b1350e2a5825aee6a7d7e9e8fb36e6784c25af758665b7d7b"
+    },
+    {
+      "file": "playwright.delete-state-legacy.config.js",
+      "sha256": "b86057b60e038e0efd5cd8780a905cff8142fac5310179fa51f6ae0c17028f77"
+    }
+  ],
+  "originalCheckpoint": "original-checkpoint.json",
+  "asis": {
+    "expected": 4,
+    "passed": 4
+  },
+  "red": {
+    "expected": 13,
+    "failed": 13,
+    "node": 12,
+    "browser": 1,
+    "browserWidths": [
+      390,
+      1280
+    ],
+    "unexpected": 0
+  },
+  "nodeRunner": {
+    "tests": 22,
+    "passed": 5,
+    "failed": 17,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "results": [
+    {
+      "name": "borrado008 intento y recuperacion no se duplican",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 feedback sobrevive al desmontaje de Ajustes",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 reintento manual solo cierra sesion",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 visibilidad e intervalo no reactivan guardados",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 recarga temprana fallida conserva bloqueo",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 recarga temprana completa precede a nuevos guardados",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 fallo tardio de A no habilita ni escribe B",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 respuesta de A no cierra ni continua B",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 cambio A B A invalida el intento anterior",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 confirmacion exacta y cancelacion no producen efectos",
+      "status": "passed"
+    },
+    {
+      "name": "borrado008 usuario ausente rechaza antes de efectos",
+      "status": "passed"
+    },
+    {
+      "name": "borrado008 conserva orden cola fotos registros y propietario",
+      "status": "passed"
+    },
+    {
+      "name": "borrado008 conserva efectos parciales sin rollback",
+      "status": "passed"
+    },
+    {
+      "name": "borrado008 cierre distingue retorno error y rechazo",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 resultado de borrado no confirmado conserva bloqueo",
+      "status": "failed"
+    },
+    {
+      "name": "borrado008 no recrea datos tras fallo de cierre",
+      "status": "failed"
+    }
+  ],
+  "browser": [
+    {
+      "name": "borrado008 navegador fallo persiste visible y accesible",
+      "results": [
+        {
+          "workerIndex": 0,
+          "parallelIndex": 0,
+          "status": "failed",
+          "duration": 8486,
+          "error": {
+            "message": "AggregateError: FR-006: feedback accesible pendiente en 2 anchos",
+            "stack": "AggregateError: FR-006: feedback accesible pendiente en 2 anchos\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:12:27",
+            "location": {
+              "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js",
+              "column": 27,
+              "line": 12
+            },
+            "snippet": "  10 |   await button.focus();await expect(button).toBeFocused();await button.press('Enter');await expect.poll(()=>page.evaluate(()=>__sddFixture.reads.length)).toBeGreaterThan(12);\n  11 |  });}catch(error){failures.push(error);}\n> 12 |  if(failures.length)throw new AggregateError(failures,'FR-006: feedback accesible pendiente en '+failures.length+' anchos');\n     |                           ^\n  13 | });\n  14 |"
+          },
+          "errors": [
+            {
+              "location": {
+                "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js",
+                "column": 27,
+                "line": 12
+              },
+              "message": "AggregateError: FR-006: feedback accesible pendiente en 2 anchos\n\n  10 |   await button.focus();await expect(button).toBeFocused();await button.press('Enter');await expect.poll(()=>page.evaluate(()=>__sddFixture.reads.length)).toBeGreaterThan(12);\n  11 |  });}catch(error){failures.push(error);}\n> 12 |  if(failures.length)throw new AggregateError(failures,'FR-006: feedback accesible pendiente en '+failures.length+' anchos');\n     |                           ^\n  13 | });\n  14 |\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:12:27"
+            },
+            {
+              "location": {
+                "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js",
+                "column": 118,
+                "line": 8
+              },
+              "message": "Error: FR-006: fallo visible y accesible tras desmontar Ajustes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('alert')\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - FR-006: fallo visible y accesible tras desmontar Ajustes getByRole('alert') with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('alert')\u001b[22m\n\n\n   6 |  for(const width of [390,1280])try{await test.step(String(width),async()=>{\n   7 |   await page.setViewportSize({width,height:900});await mountDeleteBrowser(page,bundle);\n>  8 |   const alert=page.getByRole('alert');await expect(alert,'FR-006: fallo visible y accesible tras desmontar Ajustes').toBeVisible();await expect(alert).toContainText(/borrado/i);await expect(page.getByText('secreto-backend-no-publicar-008',{exact:false})).toHaveCount(0);\n     |                                                                                                                      ^\n   9 |   const button=page.getByRole('button',{name:'Recargar datos',exact:true});await expect(button).toBeVisible();await expect(button).toBeEnabled();for(const element of [alert,button]){const box=await element.boundingBox();expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(width);expect(box.y).toBeGreaterThanOrEqual(0);expect(box.y+box.height).toBeLessThanOrEqual(900);}\n  10 |   await button.focus();await expect(button).toBeFocused();await button.press('Enter');await expect.poll(()=>page.evaluate(()=>__sddFixture.reads.length)).toBeGreaterThan(12);\n  11 |  });}catch(error){failures.push(error);}\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:8:118\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:6:36"
+            },
+            {
+              "location": {
+                "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js",
+                "column": 118,
+                "line": 8
+              },
+              "message": "Error: FR-006: fallo visible y accesible tras desmontar Ajustes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('alert')\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - FR-006: fallo visible y accesible tras desmontar Ajustes getByRole('alert') with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('alert')\u001b[22m\n\n\n   6 |  for(const width of [390,1280])try{await test.step(String(width),async()=>{\n   7 |   await page.setViewportSize({width,height:900});await mountDeleteBrowser(page,bundle);\n>  8 |   const alert=page.getByRole('alert');await expect(alert,'FR-006: fallo visible y accesible tras desmontar Ajustes').toBeVisible();await expect(alert).toContainText(/borrado/i);await expect(page.getByText('secreto-backend-no-publicar-008',{exact:false})).toHaveCount(0);\n     |                                                                                                                      ^\n   9 |   const button=page.getByRole('button',{name:'Recargar datos',exact:true});await expect(button).toBeVisible();await expect(button).toBeEnabled();for(const element of [alert,button]){const box=await element.boundingBox();expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(width);expect(box.y).toBeGreaterThanOrEqual(0);expect(box.y+box.height).toBeLessThanOrEqual(900);}\n  10 |   await button.focus();await expect(button).toBeFocused();await button.press('Enter');await expect.poll(()=>page.evaluate(()=>__sddFixture.reads.length)).toBeGreaterThan(12);\n  11 |  });}catch(error){failures.push(error);}\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:8:118\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:6:36"
+            }
+          ],
+          "stdout": [],
+          "stderr": [],
+          "retry": 0,
+          "steps": [
+            {
+              "title": "390",
+              "duration": 4669,
+              "error": {
+                "message": "Error: FR-006: fallo visible y accesible tras desmontar Ajustes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('alert')\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - FR-006: fallo visible y accesible tras desmontar Ajustes getByRole('alert') with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('alert')\u001b[22m\n",
+                "stack": "Error: FR-006: fallo visible y accesible tras desmontar Ajustes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('alert')\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - FR-006: fallo visible y accesible tras desmontar Ajustes getByRole('alert') with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('alert')\u001b[22m\n\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:8:118\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:6:36",
+                "location": {
+                  "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js",
+                  "column": 118,
+                  "line": 8
+                },
+                "snippet": "   6 |  for(const width of [390,1280])try{await test.step(String(width),async()=>{\n   7 |   await page.setViewportSize({width,height:900});await mountDeleteBrowser(page,bundle);\n>  8 |   const alert=page.getByRole('alert');await expect(alert,'FR-006: fallo visible y accesible tras desmontar Ajustes').toBeVisible();await expect(alert).toContainText(/borrado/i);await expect(page.getByText('secreto-backend-no-publicar-008',{exact:false})).toHaveCount(0);\n     |                                                                                                                      ^\n   9 |   const button=page.getByRole('button',{name:'Recargar datos',exact:true});await expect(button).toBeVisible();await expect(button).toBeEnabled();for(const element of [alert,button]){const box=await element.boundingBox();expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(width);expect(box.y).toBeGreaterThanOrEqual(0);expect(box.y+box.height).toBeLessThanOrEqual(900);}\n  10 |   await button.focus();await expect(button).toBeFocused();await button.press('Enter');await expect.poll(()=>page.evaluate(()=>__sddFixture.reads.length)).toBeGreaterThan(12);\n  11 |  });}catch(error){failures.push(error);}"
+              }
+            },
+            {
+              "title": "1280",
+              "duration": 2988,
+              "error": {
+                "message": "Error: FR-006: fallo visible y accesible tras desmontar Ajustes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('alert')\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - FR-006: fallo visible y accesible tras desmontar Ajustes getByRole('alert') with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('alert')\u001b[22m\n",
+                "stack": "Error: FR-006: fallo visible y accesible tras desmontar Ajustes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('alert')\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - FR-006: fallo visible y accesible tras desmontar Ajustes getByRole('alert') with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('alert')\u001b[22m\n\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:8:118\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js:6:36",
+                "location": {
+                  "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js",
+                  "column": 118,
+                  "line": 8
+                },
+                "snippet": "   6 |  for(const width of [390,1280])try{await test.step(String(width),async()=>{\n   7 |   await page.setViewportSize({width,height:900});await mountDeleteBrowser(page,bundle);\n>  8 |   const alert=page.getByRole('alert');await expect(alert,'FR-006: fallo visible y accesible tras desmontar Ajustes').toBeVisible();await expect(alert).toContainText(/borrado/i);await expect(page.getByText('secreto-backend-no-publicar-008',{exact:false})).toHaveCount(0);\n     |                                                                                                                      ^\n   9 |   const button=page.getByRole('button',{name:'Recargar datos',exact:true});await expect(button).toBeVisible();await expect(button).toBeEnabled();for(const element of [alert,button]){const box=await element.boundingBox();expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(width);expect(box.y).toBeGreaterThanOrEqual(0);expect(box.y+box.height).toBeLessThanOrEqual(900);}\n  10 |   await button.focus();await expect(button).toBeFocused();await button.press('Enter');await expect.poll(()=>page.evaluate(()=>__sddFixture.reads.length)).toBeGreaterThan(12);\n  11 |  });}catch(error){failures.push(error);}"
+              }
+            }
+          ],
+          "startTime": "2026-10-24T17:10:00.167Z",
+          "annotations": [],
+          "attachments": [
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\delete-state-change\\delete-state-borrado008-na-1e046-ersiste-visible-y-accesible\\error-context.md"
+            }
+          ],
+          "errorLocation": {
+            "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\delete-state.spec.js",
+            "column": 27,
+            "line": 12
+          }
+        }
+      ]
+    }
+  ],
+  "trace": {
+    "pending": 22,
+    "partial": 0,
+    "complete": 7
+  },
+  "realBackendUsed": false,
+  "sourceUnchanged": true,
+  "harnessCorrection": {
+    "beforeFreeze": true,
+    "description": "El acceso real a Cuenta es diferente en móvil y escritorio; checkpoint completo repetido antes de aceptar rojo de negocio."
+  }
+}

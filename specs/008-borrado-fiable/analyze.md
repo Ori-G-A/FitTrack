@@ -1,5 +1,10 @@
 # Revisión cruzada 008
 
+Revisión de cierre — 2026-10-24 (Bogotá): E0–E3 completas, 38 tareas
+y 29 IDs propios verificados; ocho contratos/234 IDs con RLS fresco y limpieza.
+T038 corrigió una brecha de rechazo falsy antes de aceptar el cierre.
+[Converge final](converge.md). Los estados pendientes inferiores son históricos.
+
 Estado: revisión documental del agente, aprobada por el propietario el 2026-10-22;
 no es revisión independiente ni prueba de implementación. [Plan](plan.md),
 [tareas](tasks.md), [decisiones](research.md), [spec aprobada](spec.md).
@@ -40,8 +45,8 @@ pins; solo uno tiene enmienda prevista. Ocho archivos E0 nuevos se congelarán.
 La comprobación documental ejecutada está registrada en
 [plan-review.json](evidence/plan-review.json): IDs, nombres, dependencias, enlaces,
 firmas vigentes y ausencia de cambios de runtime: 36 tareas, 103 enlaces y 108
-firmas verificados con Node 24.21.0; los 29 IDs siguen pending y el modo completo
-los rechaza. No sustituye E0 ni una corrida
+firmas verificados con Node 24.21.0; en esa preparación los 29 IDs seguían pending
+y el modo completo los rechazaba. No sustituye E0 ni una corrida
 de CI. El [sondeo](evidence/survey.json) sigue siendo diagnóstico con dobles.
 
 La restricción tras DELETE incierto puede obligar a salir de sesión aunque el
@@ -59,3 +64,12 @@ adendas aplicadas, nuevas pruebas contractuales ni rama publicada.
 TEST-001 y aviso de bundle conservan su registro; no autorizan reparar harnesses
 congelados ni alterar geometría en esta entrega. Hallazgos ajenos van al roadmap.
 Publicar, fusionar y Vercel requieren autorización específica posterior al cierre.
+
+## Revisión de ejecución — 2026-10-24
+
+E0–E2 verificadas en [registro](verification.md): 29 IDs propios completos,
+355 Node/30 Chromium en E2, un pin enmendado y ocho E0 intactos. T037 añade dos
+casos suplementarios de carga; cinco mutaciones detectadas. El validador nuevo
+usa las firmas efectivas 008 sin reaplicar las enmiendas históricas, y rechaza
+oráculos distintos del plan. E3 permanece abierto por RLS fresco y checkpoint
+final; la preparación de CI y controles no equivale a cierre de sus dependencias.

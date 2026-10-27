@@ -1,0 +1,29 @@
+{
+  "id": "PIN-008-001",
+  "file": "test/data-delete.test.js",
+  "approvedPlan": "2ee8edca15a95012344e0dca3823e8b103b231f3",
+  "fr": [
+    "FR-005",
+    "FR-008",
+    "FR-010"
+  ],
+  "before": "a9c636f883e932f7b3320c4b281ae40ec1da6d51bb8add042e2ecbdb79d25cd7",
+  "after": "8eff108dfd4d100611300a5c7562850942c60d63e70fb803310deae80322265b",
+  "originalProof": {
+    "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+    "nodeTests": 325,
+    "browserTests": 29,
+    "asisPassed": 4,
+    "changeFailed": 13,
+    "archive": "originals/test__data-delete.test.js.txt"
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "coreCases": 3,
+    "nodeRunnerTests": 24,
+    "nodeRunnerPass": 24
+  },
+  "preservedOrderOwnershipAndPartialEffects": true,
+  "reason": "Sustituir recuperación automática y retorno error ignorado por bloqueo persistente y rechazo; esperar commit de loaded antes de observarlo.",
+  "adenda": "specs/001-datos/spec.md FR-011/US3-AS2"
+}

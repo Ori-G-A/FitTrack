@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-10-24T17:46:09.826Z",
+  "runnerFinished": true,
+  "passed": false,
+  "cleanupConfirmed": false,
+  "projectId": "fittrack-sdd-rls-8b4620a39db7",
+  "recoveryDirectory": "C:\\Users\\orian\\AppData\\Local\\Temp\\fittrack-sdd-rls-NF1uif",
+  "startInterrupted": true,
+  "reason": "Docker Desktop backend se cerró al acceder al socket dockerInference; servicio detenido. Se interrumpió solo el hijo de arranque propio; el runner intentó stop, sin confirmar limpieza.",
+  "nextStep": "Recuperación completada y cierre local aprobado; el intento fallido se conserva como historia.",
+  "activeBlock": false,
+  "resolved": true,
+  "resolution": {
+    "passed": true,
+    "cleanupConfirmed": true,
+    "evidence": "rls-recovery.json",
+    "completionEvidence": "completion-review.json"
+  }
+}

@@ -1,0 +1,156 @@
+TAP version 13
+# Subtest: datos borrado orden y recuperacion
+    # Subtest: FR-011 US3-AS1 sin usuario no produce efectos
+    ok 1 - FR-011 US3-AS1 sin usuario no produce efectos
+      ---
+      duration_ms: 2631.9025
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS1 cola espera suspensión y orden
+    ok 2 - FR-011 US3-AS1 cola espera suspensión y orden
+      ---
+      duration_ms: 984.2034
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en listPhotos
+    ok 3 - FR-011 US3-AS2 excepción en listPhotos
+      ---
+      duration_ms: 639.7611
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en removePhotos
+    ok 4 - FR-011 US3-AS2 excepción en removePhotos
+      ---
+      duration_ms: 687.1636
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en deleteData
+    ok 5 - FR-011 US3-AS2 excepción en deleteData
+      ---
+      duration_ms: 643.9442
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en signOut
+    ok 6 - FR-011 US3-AS2 excepción en signOut
+      ---
+      duration_ms: 694.8864
+      type: 'test'
+      ...
+    # Subtest: FR-011 retorno error de signOut no dispara recuperación
+    ok 7 - FR-011 retorno error de signOut no dispara recuperación
+      ---
+      duration_ms: 814.5269
+      type: 'test'
+      ...
+    1..7
+ok 1 - datos borrado orden y recuperacion
+  ---
+  duration_ms: 7105.1456
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador conserva limites de dependencias
+ok 2 - borrado008 coordinador conserva limites de dependencias
+  ---
+  duration_ms: 365.0081
+  type: 'test'
+  ...
+# Subtest: borrado008 confirmacion exacta y cancelacion no producen efectos
+ok 3 - borrado008 confirmacion exacta y cancelacion no producen efectos
+  ---
+  duration_ms: 715.1934
+  type: 'test'
+  ...
+# Subtest: borrado008 usuario ausente rechaza antes de efectos
+ok 4 - borrado008 usuario ausente rechaza antes de efectos
+  ---
+  duration_ms: 1.0444
+  type: 'test'
+  ...
+# Subtest: borrado008 conserva orden cola fotos registros y propietario
+ok 5 - borrado008 conserva orden cola fotos registros y propietario
+  ---
+  duration_ms: 50.2969
+  type: 'test'
+  ...
+# Subtest: borrado008 conserva efectos parciales sin rollback
+ok 6 - borrado008 conserva efectos parciales sin rollback
+  ---
+  duration_ms: 1.556
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador snapshot estable y exclusion por intento
+ok 7 - borrado008 coordinador snapshot estable y exclusion por intento
+  ---
+  duration_ms: 3.7847
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador recarga requiere confirmacion de commit vigente
+ok 8 - borrado008 coordinador recarga requiere confirmacion de commit vigente
+  ---
+  duration_ms: 1.7805
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador lectura fallida y confirmacion obsoleta mantienen aislamiento
+ok 9 - borrado008 coordinador lectura fallida y confirmacion obsoleta mantienen aislamiento
+  ---
+  duration_ms: 1.4528
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador respuesta tardia no borra intento nuevo
+ok 10 - borrado008 coordinador respuesta tardia no borra intento nuevo
+  ---
+  duration_ms: 1.1871
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador cierre manual nunca repite DELETE incierto
+ok 11 - borrado008 coordinador cierre manual nunca repite DELETE incierto
+  ---
+  duration_ms: 1.3765
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador montaje limpieza montaje no revive trabajo anterior
+ok 12 - borrado008 coordinador montaje limpieza montaje no revive trabajo anterior
+  ---
+  duration_ms: 1.889
+  type: 'test'
+  ...
+# Subtest: borrado008 cierre distingue retorno error y rechazo
+    # Subtest: retorno
+    ok 1 - retorno
+      ---
+      duration_ms: 1.1127
+      type: 'test'
+      ...
+    # Subtest: rechazo
+    ok 2 - rechazo
+      ---
+      duration_ms: 0.5216
+      type: 'test'
+      ...
+    1..2
+ok 13 - borrado008 cierre distingue retorno error y rechazo
+  ---
+  duration_ms: 3.3808
+  type: 'test'
+  ...
+# Subtest: borrado008 resultado de borrado no confirmado conserva bloqueo
+ok 14 - borrado008 resultado de borrado no confirmado conserva bloqueo
+  ---
+  duration_ms: 1.0538
+  type: 'test'
+  ...
+# Subtest: borrado008 no recrea datos tras fallo de cierre
+ok 15 - borrado008 no recrea datos tras fallo de cierre
+  ---
+  duration_ms: 1.2389
+  type: 'test'
+  ...
+1..15
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12427.25

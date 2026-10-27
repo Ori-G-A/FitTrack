@@ -1,0 +1,26 @@
+{
+  "supplementary": true,
+  "task": "T038",
+  "redOnCandidate": true,
+  "originalRedClaimed": false,
+  "candidateBefore": "a3a861e",
+  "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-25T03:20:51.074Z",
+  "file": "test/delete-state-rejection-values.test.js",
+  "sha256": "7e22fe56bd1999ae5ebec280b67ef9912d9793ebf47b76ba5f5be0a5339d800f",
+  "tests": 12,
+  "failed": 12,
+  "values": [
+    "undefined",
+    "null",
+    "false",
+    "zero",
+    "empty"
+  ],
+  "fr": [
+    "FR-005",
+    "FR-009",
+    "FR-010"
+  ]
+}

@@ -470,3 +470,32 @@ local E0–E3». Aprueba las 36 tareas, decisiones, puertas y enmienda controlad
 del pin contradictorio descritas en el plan. Autoriza ejecución local antes de
 integrar el PR documental, conservando un snapshot aprobado. No autoriza publicar,
 fusionar ni desplegar 008. El cierre exige ocho contratos/234 IDs y RLS local fresco.
+
+## Avance local 008 — 2026-10-24 (Bogotá)
+
+E0–E2 verificadas y conservadas; E3 parcial con perfil local de 358 Node,
+30 Chromium/build, siete contratos/211 IDs y once mutaciones nuevas/heredadas.
+Se añadió T037 por converge dentro de FR-008/011, sin nuevo comportamiento.
+RLS fresco sigue pendiente tras fallar Docker; la limpieza del intento propio
+no se confirmó y se conserva su recuperación. No hay aceptación de esta brecha,
+cierre E3 ni autorización de publicar/fusionar/Vercel.
+[Evidencia](../../specs/008-borrado-fiable/verification.md).
+
+## Cierre local 008 — 2026-10-24 (Bogotá)
+
+Ejecución local autorizada E0–E3 completada: 370 Node, 30 Chromium y build; ocho contratos/234 IDs completos; RLS real fresco (tres contratos) y limpieza confirmados; once mutaciones detectadas. 107 firmas anteriores intactas, una enmendada y ocho E0 intactas.
+38 tareas, incluidas T037/T038 dentro de requisitos aprobados. Docker y el
+fixture anterior recuperados; nuevo RLS fresco y cleanup aprobados. Las pruebas
+de T038 se caracterizaron en candidato previo, sin atribuir rojo al original E0.
+[Converge](../../specs/008-borrado-fiable/converge.md).
+La autorización local queda ejecutada; no se autoriza aún publicar, fusionar ni
+desplegar 008. CI remoto y producción no se infieren desde pruebas locales.
+
+## Entrega remota 008 autorizada — 2026-10-27 (Bogotá)
+
+Sobre el cierre local `00de5f2`, el propietario respondió «Autorizar publicación,
+integración con CI verde y Vercel». Autoriza publicar ambas ramas y PRs,
+integrarlos con CI remoto verde y permitir el despliegue automático asociado.
+Se integra primero el snapshot documental aprobado `2ee8edc` y después el código.
+Esta autorización sustituye las esperas anteriores de decisión remota de 008;
+no convierte la evidencia local en CI remoto ni certifica producción.

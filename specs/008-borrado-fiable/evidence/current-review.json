@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-25T03:35:33.323Z",
+  "documents": 14,
+  "links": 173,
+  "tasks": 38,
+  "completed": 38,
+  "pending": [],
+  "dependencyGraphAcyclic": true,
+  "pins": {
+    "historicalIntact": 107,
+    "amended": 1,
+    "newIntact": 8
+  },
+  "ownTrace": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 29
+  },
+  "executionStage": "E3 completa, cierre local",
+  "remoteAuthorized": false
+}

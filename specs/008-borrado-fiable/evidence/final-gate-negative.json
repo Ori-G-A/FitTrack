@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-25T02:08:56.546Z",
+  "meaning": "La puerta final rechazó RLS incompleta; no es cierre de negocio.",
+  "closurePassed": false,
+  "reason": "Evidencia RLS incompleta o entorno no coincidente"
+}

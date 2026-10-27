@@ -1,0 +1,10 @@
+{
+  "automatedCheckpointPassed": true,
+  "reviewAccepted": false,
+  "closurePassed": false,
+  "sourceHash": "db61cd101d4a6c79fba23d08832d67cc79ebffb54959cc7ee5a4feed2a42d0ad",
+  "nodeTests": 358,
+  "browser": 30,
+  "contracts": 8,
+  "reviewGap": "T038: rechazo falsy bloquea recuperación"
+}

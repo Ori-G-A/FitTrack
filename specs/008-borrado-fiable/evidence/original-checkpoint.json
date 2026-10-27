@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-24T17:04:23.869Z",
+  "node": "v24.21.0",
+  "approvedPlan": "2ee8edc",
+  "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+  "nodeTests": 325,
+  "nodePass": 325,
+  "nodeSkipped": 0,
+  "browserTests": 29,
+  "browserRetries": 0,
+  "buildPassed": true,
+  "bundle": {
+    "mainKb": 507.26,
+    "mainGzipKb": 147.38,
+    "warningAbove500Kb": true
+  },
+  "realBackendUsed": false
+}
