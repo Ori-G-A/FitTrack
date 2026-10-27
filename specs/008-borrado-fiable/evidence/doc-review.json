@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-23T01:25:47.309Z",
+  "files": 5,
+  "links": 59,
+  "ids": 29,
+  "asis": 4,
+  "change": 9,
+  "scenarios": 16,
+  "plannedNames": 17,
+  "contractCounts": {
+    "pending": 29,
+    "partial": 0,
+    "complete": 0
+  },
+  "completeModeRejectedRows": 29,
+  "scopeApproved": true,
+  "planApproved": false
+}

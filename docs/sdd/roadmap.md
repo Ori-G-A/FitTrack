@@ -1,6 +1,15 @@
 # Roadmap de adopción SDD
 
-Estado actual, 2026-10-20 (Bogotá): 001–006 integradas; PATCH 1.0.3 ratificada
+Estado actual, 2026-10-22 (Bogotá): 001–007 integradas; 007 en `0617764`, con
+CI de PR/main y Vercel Production verificados. Siete contratos/205 IDs,
+325 Node, 29 Chromium, RLS real desechable y mutaciones aprobados.
+[Cierre 007](../../specs/007-guardado-fiable/evidence/integration.json).
+008 [borrado fiable](../../specs/008-borrado-fiable/spec.md) tiene alcance y
+C-001/002/003 aprobados; [plan técnico](../../specs/008-borrado-fiable/plan.md),
+36 tareas y análisis aprobados por separado; ejecución local E0–E3 autorizada,
+sin autorización de publicar, fusionar ni desplegar 008.
+
+Estado histórico, 2026-10-20 (Bogotá): 001–006 integradas; PATCH 1.0.3 ratificada
 y aplicada. La integración documental y sus verificaciones se registran en el
 [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15), con CI verde como requisito.
 006 integrada mediante PRs [#13](https://github.com/Ori-G-A/FitTrack/pull/13) y
@@ -77,6 +86,8 @@ Commits, autorizaciones y límites: [registro](approvals.md).
 Las citas de hallazgos originales corresponden a BASE
 `46697650f18043319a7c96ccdf93ebbdf29e2d75`, no a líneas movidas tras refactorizar.
 El estado actual de 001 está en verification.md de su spec.
+Los hallazgos DATA-006/007/008 usan BASE `0617764` y sus reproducciones sintéticas
+están en el [survey 008](borrado-fiable-survey.md), sin acreditar incidentes reales.
 
 | ID | Hallazgo y reproducción | Aceptación medible | Momento |
 | --- | --- | --- | --- |
@@ -87,9 +98,12 @@ El estado actual de 001 está en verification.md de su spec.
 | PERF-001 | Build inicial avisa chunk index 507,04 kB | Medir coste y decidir presupuesto antes de optimizar; no basta ocultar warning | Survey 006 |
 | DATA-001 | Importación aplica setters antes de esperar hidratación; hydratePhotos captura fallos individuales y conserva originales (`src/FitTrack.jsx:814`, `src/photo-storage.js:57`) | Caracterizar secuencia y foto no hidratada; no asumir que falla toda importación por un fallo individual; dueño decide semántica | Clarify 001 |
 | DATA-002 | Borrado elimina fotos antes de app_data sin transacción común (`src/FitTrack.jsx:783`) | Caracterizar fallos de cada paso y aprobar política explícita de recuperación | Clarify 001 |
-| DATA-003 | Bus global podía sobrescribir error al comenzar otro guardado; reproducción histórica en 007 | 007 aprobada e implementada localmente con regresiones originales y recuperación por usuario:clave; publicación/integración pendientes de autorización | Cierre local 007 verificado; pendiente de entrega remota |
+| DATA-003 | Bus global podía sobrescribir error al comenzar otro guardado; reproducción histórica en 007 | 007 integrada en main con CI verde y Production verificados; regresiones originales y recuperación por usuario:clave conservadas | Cerrado por 007 en 0617764; evidencia de integración disponible |
 | DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | En un CHANGE posterior, decidir resultado visible y probar retorno error separado de rechazo de promesa | Después de 001; priorizar en cierre M2 |
 | DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | Reproducir con Storage diferido y rechazo; decidir feedback visible persistente y escribir regresión antes de corregir | Revisión al cierre M2; no se cambia en refactor AS-IS |
+| DATA-006 | Tras DELETE confirmado, rechazo de signOut restaura loaded; el diagnóstico reemite doce guardados con valores anteriores | Propuesta 008: impedir reenviar estado previo; recuperación conservadora por etapa | Alcance pendiente de aprobación |
+| DATA-007 | Resultado tardío de borrado A habilita carga de B o despacha signOut sobre B; dos reproducciones del survey | Propuesta 008: aislar intentos de su sesión de origen, incluidos A→B→A y pasos posteriores | Alcance pendiente de aprobación |
+| DATA-008 | Visibilidad durante borrado vuelve a cargar y reanuda guardados; el intervalo comparte callback por inspección | Propuesta 008: recuperación ordinaria no levanta bloqueo; probar visibilidad e intervalo por separado | Alcance pendiente de aprobación |
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
 | IDEN-001 | Reporter consume fingerprint/cupo antes de consultar sesión y su getSession carece de timeout propio | Pins preparatorios lo reproducen; conservar AS-IS y decidir cambio separado de FR-013 | Clarify 002 C2-004 |
 | PHOTO-001 | Fuente admite 25 MiB; migración Storage limita resultado a 5 MiB sin comprobación local del tamaño comprimido | No prometer aceptación remota por validar origen; decidir si hace falta CHANGE y prueba de frontera del resultado | Survey 002; sin cambio aprobado |
@@ -470,3 +484,18 @@ E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build
 [Evidencia](../../specs/007-guardado-fiable/verification.md).
 La autorización local del plan está cumplida; publicación, integración y Vercel
 siguen pendientes de decisión específica. DATA-004/005 y producción quedan fuera.
+
+## Integración 007 verificada — 2026-10-22 (Bogotá)
+
+Los PRs [#16 documental](https://github.com/Ori-G-A/FitTrack/pull/16) y
+[#17 de código](https://github.com/Ori-G-A/FitTrack/pull/17) están integrados,
+en ese orden, tras aprobar ambos jobs de CI de cada PR. El resultado `0617764`
+aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39881154170)
+y Vercel confirmó Production para ese mismo SHA. Siete contratos, 205 IDs,
+325 pruebas Node, mutaciones y RLS local real con limpieza confirmados.
+[Registro](../../specs/007-guardado-fiable/evidence/integration.json).
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 007. No certifica una sesión autenticada de producción: la URL
+técnica redirige al acceso de Vercel. TEST-001, DATA-004/005 y el aviso de bundle
+siguen documentados. No se amplía el alcance de producto aprobado.

@@ -1,0 +1,460 @@
+{
+  "spec": "008-borrado-fiable",
+  "note": "Alcance y aclaraciones aprobados; plan de 36 tareas preparado, pendiente de aprobación. Archivos/tareas previstos no son evidencia. Todos pending.",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 confirmacion exacta y cancelacion no producen efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "FR-002",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 usuario ausente rechaza antes de efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "FR-003",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 conserva orden cola fotos registros y propietario"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "FR-004",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 conserva efectos parciales sin rollback"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "FR-005",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 cierre distingue retorno error y rechazo"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "FR-006",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 navegador fallo persiste visible y accesible"
+      ],
+      "plannedFiles": [
+        "change-tests/delete-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T012"
+      ]
+    },
+    {
+      "id": "FR-007",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 feedback sobrevive al desmontaje de Ajustes",
+        "borrado008 resultado de borrado no confirmado conserva bloqueo",
+        "borrado008 no recrea datos tras fallo de cierre"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js",
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008",
+        "T007"
+      ]
+    },
+    {
+      "id": "FR-008",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 no recrea datos tras fallo de cierre",
+        "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js",
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007",
+        "T009"
+      ]
+    },
+    {
+      "id": "FR-009",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 recarga temprana fallida conserva bloqueo",
+        "borrado008 recarga temprana completa precede a nuevos guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "FR-010",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 resultado de borrado no confirmado conserva bloqueo",
+        "borrado008 no recrea datos tras fallo de cierre",
+        "borrado008 reintento manual solo cierra sesion"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js",
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007",
+        "T008"
+      ]
+    },
+    {
+      "id": "FR-011",
+      "story": "US4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 fallo tardio de A no habilita ni escribe B",
+        "borrado008 respuesta de A no cierra ni continua B",
+        "borrado008 cambio A B A invalida el intento anterior"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "FR-012",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 feedback sobrevive al desmontaje de Ajustes"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "FR-013",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 intento y recuperacion no se duplican"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "US1-AS1",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 confirmacion exacta y cancelacion no producen efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "US1-AS2",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 usuario ausente rechaza antes de efectos"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T005"
+      ]
+    },
+    {
+      "id": "US1-AS3",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 conserva orden cola fotos registros y propietario"
+      ],
+      "plannedFiles": [
+        "test/delete-state-asis.test.js"
+      ],
+      "plannedTaskIds": [
+        "T006"
+      ]
+    },
+    {
+      "id": "US1-AS4",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 intento y recuperacion no se duplican"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "US2-AS1",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 navegador fallo persiste visible y accesible",
+        "borrado008 feedback sobrevive al desmontaje de Ajustes"
+      ],
+      "plannedFiles": [
+        "change-tests/delete-state.spec.js",
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T012",
+        "T008"
+      ]
+    },
+    {
+      "id": "US2-AS2",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 resultado de borrado no confirmado conserva bloqueo"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "US2-AS3",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 cierre distingue retorno error y rechazo",
+        "borrado008 no recrea datos tras fallo de cierre"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "US2-AS4",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 cierre distingue retorno error y rechazo",
+        "borrado008 no recrea datos tras fallo de cierre"
+      ],
+      "plannedFiles": [
+        "test/delete-state-core-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T007"
+      ]
+    },
+    {
+      "id": "US2-AS5",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 reintento manual solo cierra sesion"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T008"
+      ]
+    },
+    {
+      "id": "US3-AS1",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "US3-AS2",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 visibilidad e intervalo no reactivan guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T009"
+      ]
+    },
+    {
+      "id": "US3-AS3",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 recarga temprana fallida conserva bloqueo"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "US3-AS4",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 recarga temprana completa precede a nuevos guardados"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T010"
+      ]
+    },
+    {
+      "id": "US4-AS1",
+      "story": "US4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 fallo tardio de A no habilita ni escribe B"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "US4-AS2",
+      "story": "US4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 respuesta de A no cierra ni continua B"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    },
+    {
+      "id": "US4-AS3",
+      "story": "US4",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "borrado008 cambio A B A invalida el intento anterior"
+      ],
+      "plannedFiles": [
+        "test/delete-state-app-change.test.js"
+      ],
+      "plannedTaskIds": [
+        "T011"
+      ]
+    }
+  ]
+}

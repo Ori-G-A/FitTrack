@@ -437,3 +437,36 @@ integrarlos con CI remoto verde y permitir el despliegue automático asociado.
 Se integra primero el snapshot documental aprobado y después el código.
 La evidencia de integración se registrará por SHA; esta autorización no convierte
 el cierre local en CI remoto ni certifica una sesión autenticada de producción.
+
+## Integración 007 verificada — 2026-10-22 (Bogotá)
+
+Los PRs [#16 documental](https://github.com/Ori-G-A/FitTrack/pull/16) y
+[#17 de código](https://github.com/Ori-G-A/FitTrack/pull/17) están integrados,
+en ese orden, tras aprobar ambos jobs de CI de cada PR. El resultado `0617764`
+aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39881154170)
+y Vercel confirmó Production para ese mismo SHA. Siete contratos, 205 IDs,
+325 pruebas Node, mutaciones y RLS local real con limpieza confirmados.
+[Registro](../../specs/007-guardado-fiable/evidence/integration.json).
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 007. No certifica una sesión autenticada de producción: la URL
+técnica redirige al acceso de Vercel. TEST-001, DATA-004/005 y el aviso de bundle
+siguen documentados. No se amplía el alcance de producto aprobado.
+
+## Alcance 008 aprobado — 2026-10-22 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a la propuesta
+[008](../../specs/008-borrado-fiable/spec.md): cuatro AS-IS, nueve CHANGE,
+dieciséis escenarios y C-001/002/003. Aprueba recuperación manual antes del
+despacho de DELETE y bloqueo hasta salir de la sesión después; resultado de datos
+separado del cierre; aislamiento por sesión y prevención de duplicados y
+reactivación ordinaria. No promete rollback ni reintentos destructivos automáticos.
+Autoriza preparar plan, tareas y análisis; no implementar ni publicar/integrar/Vercel.
+
+## Plan 008 aprobado — 2026-10-22 (Bogotá)
+
+El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecución
+local E0–E3». Aprueba las 36 tareas, decisiones, puertas y enmienda controlada
+del pin contradictorio descritas en el plan. Autoriza ejecución local antes de
+integrar el PR documental, conservando un snapshot aprobado. No autoriza publicar,
+fusionar ni desplegar 008. El cierre exige ocho contratos/234 IDs y RLS local fresco.

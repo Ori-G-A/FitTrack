@@ -1,0 +1,64 @@
+{
+  "diagnosticOnly": true,
+  "contractBaseline": false,
+  "passed": true,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-23T01:21:04.778Z",
+  "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+  "sourceUnchanged": true,
+  "realBackendUsed": false,
+  "observations": [
+    {
+      "id": "D008-01",
+      "finding": "DATA-004",
+      "signOutReturnedError": true,
+      "loaded": false,
+      "errorVisible": false,
+      "events": [
+        "listPhotos",
+        "deleteData",
+        "signOut"
+      ]
+    },
+    {
+      "id": "D008-02",
+      "finding": "DATA-005",
+      "settingsUnmountedWhilePending": true,
+      "loadedAfterFailure": true,
+      "errorVisible": false,
+      "events": [
+        "listPhotos"
+      ]
+    },
+    {
+      "id": "D008-03",
+      "finding": "DATA-006",
+      "deleteConfirmed": true,
+      "signOutRejected": true,
+      "automaticWritesAfterDelete": 12,
+      "previousWeightRestored": true
+    },
+    {
+      "id": "D008-04",
+      "finding": "DATA-008",
+      "deletionStillPending": true,
+      "visibilityReloads": 12,
+      "loadedDuringDelete": true,
+      "writeAcceptedDuringDelete": true
+    },
+    {
+      "id": "D008-05",
+      "finding": "DATA-007",
+      "loadOfBStillPending": true,
+      "failureOfAEnablesLoaded": true,
+      "writeToBContainsOldValueOfA": true
+    },
+    {
+      "id": "D008-06",
+      "finding": "DATA-007",
+      "dataDeleteDispatchedForA": true,
+      "activeUserAtSignOut": "sdd-user-002",
+      "signOutDispatchedAfterSwitch": true
+    }
+  ]
+}

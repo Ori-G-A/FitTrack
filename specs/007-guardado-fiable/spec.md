@@ -1,6 +1,6 @@
 # Spec 007 — estado de guardado fiable
 
-Estado: E0–E3 completadas localmente; publicación/integración pendientes de autorización.
+Estado: integrada en main con CI y Production verificados; registro de cierre en verification.md.
 Propietario: usuario del proyecto. Fecha: 2026-10-21 (Bogotá).
 Gobierno: [constitución 1.0.3](../../.specify/memory/constitution.md).
 Evidencia inicial: [survey](../../docs/sdd/guardado-fiable-survey.md).

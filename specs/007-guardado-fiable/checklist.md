@@ -14,4 +14,4 @@ Estado: revisión documental del agente; no aprobación del propietario.
 - [x] Plan, tareas y análisis preparados y aprobados por separado antes de implementar.
 
 E0 y E1 están verificadas; E2/E3 están en ejecución local autorizada.
-La publicación de 007 sigue pendiente de autorización específica.
+La entrega remota se autorizó expresamente y 007 está integrada; ver verification.md.

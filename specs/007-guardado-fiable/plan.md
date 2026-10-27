@@ -1,6 +1,6 @@
 # Plan técnico 007 — guardado fiable
 
-Estado: plan aprobado y E0–E3 completadas localmente; entrega remota sin autorizar.
+Estado: plan cerrado; 007 integrada con CI de main y Production verificados.
 [Alcance aprobado](spec.md), [tareas](tasks.md), [decisiones](research.md),
 [validación](validation-plan.md), [análisis](analyze.md).
 BASE de producto: `4eee59db2efb7ff389acdb5396b4e77ca4094cad`.

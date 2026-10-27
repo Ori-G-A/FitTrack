@@ -1,0 +1,179 @@
+{
+  "area": "007-guardado-fiable",
+  "status": "integrated_ci_and_production_verified",
+  "authorizationDate": "2026-10-21",
+  "integrationDate": "2026-10-22",
+  "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+  "documentation": {
+    "pr": 16,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/16",
+    "head": "e5df628ad80b52ea601b1a3a142c4adf20f474ac",
+    "merge": "da69a9af8369aeda950999a287e4b49225504439",
+    "ci": 39711611488,
+    "ciConclusion": "success"
+  },
+  "implementation": {
+    "pr": 17,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/17",
+    "head": "e0859721e532f1abfdd281fe921c27bd30b173e3",
+    "merge": "06177642060393b85ff0181e371cc18a317d97ea",
+    "ci": 39711631936,
+    "ciConclusion": "success",
+    "nodeTests": 325,
+    "browserTests": 29,
+    "contracts": 7,
+    "completeIds": 205,
+    "mutationsDetected": 3,
+    "rlsContracts": 3,
+    "rlsCleanupPassed": true
+  },
+  "main": {
+    "sha": "06177642060393b85ff0181e371cc18a317d97ea",
+    "ci": 39881154170,
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "id": 120178576473,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      },
+      {
+        "id": 120178576555,
+        "name": "test-and-build",
+        "conclusion": "success"
+      }
+    ],
+    "completeIds": 205,
+    "nodeTests": 325,
+    "rlsCleanupPassed": true,
+    "contracts": [
+      {
+        "spec": "001-datos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "003-entrenamiento",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "004-nutricion-objetivos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 31
+      },
+      {
+        "spec": "005-cuerpo-ciclo",
+        "pending": 0,
+        "partial": 0,
+        "complete": 40
+      },
+      {
+        "spec": "006-interfaz",
+        "pending": 0,
+        "partial": 0,
+        "complete": 48
+      },
+      {
+        "spec": "007-guardado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "002-identidad-fotos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 23
+      }
+    ],
+    "mutations": {
+      "passed": true,
+      "generatedAt": "2026-10-23T00:58:48.959Z",
+      "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+      "mutations": [
+        {
+          "name": "reset-error",
+          "detected": true,
+          "reason": "FR-005: comenzar C no borra A"
+        },
+        {
+          "name": "user-filter",
+          "detected": true,
+          "reason": "FR-007: B no recibe el inicio de A"
+        },
+        {
+          "name": "status-role",
+          "detected": true,
+          "reason": "FR-009: una región accesible conserva"
+        }
+      ],
+      "positiveControls": 4,
+      "cleanupPassed": true
+    },
+    "artifacts": [
+      {
+        "id": 12471430599,
+        "name": "evidencia-sdd-007",
+        "digest": "sha256:dff8ef5cb78a79fdb438d962129ee241a7a6fa85d9d818779384bd20d6b88781",
+        "run": 39881154170,
+        "sha": "06177642060393b85ff0181e371cc18a317d97ea"
+      },
+      {
+        "id": 12471405759,
+        "name": "evidencia-sdd-006",
+        "digest": "sha256:c1f3d63d91baf53b057ba657cbca15ddbff89d13b7abebbd381d56dd370e03c3",
+        "run": 39881154170,
+        "sha": "06177642060393b85ff0181e371cc18a317d97ea"
+      },
+      {
+        "id": 12471380816,
+        "name": "evidencia-sdd-004",
+        "digest": "sha256:6921cd2dffd15d71e35f0899c43d7abb036d75dbc5494d9b9725e24a6047e29f",
+        "run": 39881154170,
+        "sha": "06177642060393b85ff0181e371cc18a317d97ea"
+      },
+      {
+        "id": 12471186932,
+        "name": "evidencia-sdd-005",
+        "digest": "sha256:1103b290959b7253a09467d41f91851fd1fc5c20d5583e56a29c24d49308c964",
+        "run": 39881154170,
+        "sha": "06177642060393b85ff0181e371cc18a317d97ea"
+      },
+      {
+        "id": 12470713570,
+        "name": "evidencia-sdd-003",
+        "digest": "sha256:996de3e31b3023bd281b103d31d156cfa8872687869094dc0b39d23c84ffe56b",
+        "run": 39881154170,
+        "sha": "06177642060393b85ff0181e371cc18a317d97ea"
+      },
+      {
+        "id": 12470299908,
+        "name": "evidencia-sdd-002",
+        "digest": "sha256:3d2fdf291fde89444213dc1c0571df931452eeb93c02b740529a1aebf1dd3428",
+        "run": 39881154170,
+        "sha": "06177642060393b85ff0181e371cc18a317d97ea"
+      }
+    ]
+  },
+  "production": {
+    "deploymentId": 7267450175,
+    "environment": "Production",
+    "sha": "06177642060393b85ff0181e371cc18a317d97ea",
+    "state": "success",
+    "createdAt": "2026-10-23T00:57:22Z",
+    "url": "https://fit-track-49nrof4b3-orianag40-7859s-projects.vercel.app",
+    "anonymousTechnicalUrl": "Redirige al acceso de Vercel; no prueba una sesión en FitTrack"
+  },
+  "limits": [
+    "Sin prueba autenticada de producción",
+    "RLS real verificado en Supabase local desechable; no certifica backend productivo",
+    "TEST-001 del reloj heredado sigue documentado; se conservan fallos y repeticiones",
+    "DATA-004/005 fuera de 007",
+    "Aviso heredado de chunk index mayor de 500 kB"
+  ],
+  "verifiedAt": "2026-10-23T01:09:03.811Z"
+}

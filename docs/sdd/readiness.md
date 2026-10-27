@@ -207,3 +207,18 @@ E0–E3 completadas localmente: 325 Node y 29 Chromium, sin skips/retries; build
 [Evidencia](../../specs/007-guardado-fiable/verification.md).
 La autorización local del plan está cumplida; publicación, integración y Vercel
 siguen pendientes de decisión específica. DATA-004/005 y producción quedan fuera.
+
+## Integración 007 verificada — 2026-10-22 (Bogotá)
+
+Los PRs [#16 documental](https://github.com/Ori-G-A/FitTrack/pull/16) y
+[#17 de código](https://github.com/Ori-G-A/FitTrack/pull/17) están integrados,
+en ese orden, tras aprobar ambos jobs de CI de cada PR. El resultado `0617764`
+aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/39881154170)
+y Vercel confirmó Production para ese mismo SHA. Siete contratos, 205 IDs,
+325 pruebas Node, mutaciones y RLS local real con limpieza confirmados.
+[Registro](../../specs/007-guardado-fiable/evidence/integration.json).
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 007. No certifica una sesión autenticada de producción: la URL
+técnica redirige al acceso de Vercel. TEST-001, DATA-004/005 y el aviso de bundle
+siguen documentados. No se amplía el alcance de producto aprobado.

@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-23T01:39:02.018Z",
+  "runtime": "v24.21.0",
+  "scopeApproved": true,
+  "planApproved": false,
+  "implementationAuthorized": false,
+  "documentFiles": 11,
+  "localLinksVerified": 103,
+  "tasks": 36,
+  "tasksPending": 36,
+  "dependencyGraphAcyclic": true,
+  "ids": 29,
+  "asis": 4,
+  "change": 9,
+  "scenarios": 16,
+  "plannedNames": 17,
+  "plannedBusinessCases": {
+    "asis": 4,
+    "coreChange": 3,
+    "appChange": 9,
+    "browserChange": 1
+  },
+  "manifestCounts": {
+    "pending": 29,
+    "partial": 0,
+    "complete": 0
+  },
+  "completeModeRejectedRows": 29,
+  "effectiveHistoricalPinsVerified": 108,
+  "interfacePins": 101,
+  "savePins": 6,
+  "supplementaryPins": 1,
+  "sourceHash": "0d01417177a2f231d480a09ba77949cf781ce901b161cb2092f8fa2724718802",
+  "protectedRuntimeDiffEmpty": true,
+  "noContractTestsExecuted": true
+}
