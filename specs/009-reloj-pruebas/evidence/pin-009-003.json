@@ -1,0 +1,30 @@
+{
+  "id": "PIN-009-003",
+  "file": "test-support/delete-state-browser.js",
+  "before": "755aa4c3d12ffc970e59767f8437865a625fa1ea60cd76d50b8f41c5fb8d6894",
+  "after": "2c6ea0cc3431e1c47a5c02d071aff3e9d91fd85aaa8c3f25bde2bef736945c07",
+  "approvedPlan": "56583281819ad86a41ffccb3caf7f9896c0b07e9",
+  "fr": [
+    "FR-004",
+    "FR-005",
+    "FR-007"
+  ],
+  "patchVersion": "clock-public-v1",
+  "generatedAt": "2026-10-27T20:50:41.058Z",
+  "originalProof": {
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "nodeTests": 370,
+    "browserTests": 30,
+    "redReport": "e0-browser-attempt-2.json"
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "browserTests": 5,
+    "combinations": 9,
+    "report": "e1-targeted.json",
+    "sha256": "e1a7f47eeb863473cd4d7840eb8f4f72dc1a9db88a13664641ede70bc426e901"
+  },
+  "assertionsChanged": false,
+  "datesChanged": false,
+  "businessTimeoutsChanged": false
+}

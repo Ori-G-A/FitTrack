@@ -1,0 +1,131 @@
+{
+  "stage": "E0 original",
+  "generatedAt": "2026-10-27T20:47:39.560Z",
+  "exitCode": 1,
+  "stats": {
+    "startTime": "2026-10-27T20:47:08.514Z",
+    "duration": 30983.351,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "name": "reloj009 conserva fechas datos y red de tres montajes",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "name": "reloj009 demora de preparacion conserva instante y reloj detenido",
+      "status": "failed",
+      "errors": [
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "AggregateError: FR-004/005: preparación incumplida: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30 | clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30 | clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30 | clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30 | clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30 | clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at failAll (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:9:49)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:33:22"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.pauseAt (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mountUi (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\interface-browser.js:10:19)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:34:27)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:28:11"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.pauseAt (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mountUi (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\interface-browser.js:10:19)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:34:27)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:28:11"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.page.clock.<computed> (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mount (<anonymous>:4:273)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:35:32)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:28:11"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.page.clock.<computed> (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mount (<anonymous>:4:273)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:35:32)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:28:11"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.pauseAt (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mountDeleteBrowser (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\delete-state-browser.js:6:136)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:36:8)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:28:11"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.pauseAt (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mountDeleteBrowser (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\delete-state-browser.js:6:136)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:36:8)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:28:11"
+        }
+      ]
+    },
+    {
+      "name": "reloj009 host no consume plazos antes ni despues del montaje",
+      "status": "failed",
+      "errors": [
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "AggregateError: FR-004/005: preparación incumplida: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30 | clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30 | clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at failAll (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:9:49)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:50:20"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.pauseAt (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mountUi (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\interface-browser.js:10:19)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:34:27)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:38:46"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.page.clock.<computed> (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mount (<anonymous>:4:273)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:35:32)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:38:46"
+        },
+        {
+          "location": {
+            "file": "eval at evaluate (:370:30), <anonymous>",
+            "column": 13,
+            "line": 201
+          },
+          "message": "Error: clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30\n    at Clock2.pauseAt (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:28:154)\n    at mountDeleteBrowser (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\delete-state-browser.js:6:136)\n    at observeClockMount (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\clock-state-fixtures.js:36:8)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\clock-state.spec.js:38:46"
+        }
+      ]
+    },
+    {
+      "name": "reloj009 fallos de preparacion y montaje se registran sin ocultarlos",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "name": "reloj009 contextos independientes conservan su origen",
+      "status": "passed",
+      "errors": []
+    }
+  ],
+  "report": "test-results/clock009-e0-browser-2.json"
+}

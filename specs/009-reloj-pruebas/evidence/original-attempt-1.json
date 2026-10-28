@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "attempt": 1,
+  "generatedAt": "2026-10-27T18:11:56.140Z",
+  "approvedPlan": "56583281819ad86a41ffccb3caf7f9896c0b07e9",
+  "node": "v24.21.0",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "nodeTests": 370,
+  "browser": {
+    "startTime": "2026-10-27T18:15:37.872Z",
+    "duration": 151513.013,
+    "expected": 30,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "buildPassed": true
+}

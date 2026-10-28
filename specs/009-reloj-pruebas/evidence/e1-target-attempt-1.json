@@ -1,0 +1,59 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-27T20:49:34.348Z",
+  "stats": {
+    "startTime": "2026-10-27T20:48:39.821Z",
+    "duration": 54456.125,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "name": "reloj009 conserva fechas datos y red de tres montajes",
+      "results": [
+        {
+          "status": "passed",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "reloj009 demora de preparacion conserva instante y reloj detenido",
+      "results": [
+        {
+          "status": "passed",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "reloj009 host no consume plazos antes ni despues del montaje",
+      "results": [
+        {
+          "status": "passed",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "reloj009 fallos de preparacion y montaje se registran sin ocultarlos",
+      "results": [
+        {
+          "status": "passed",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "reloj009 contextos independientes conservan su origen",
+      "results": [
+        {
+          "status": "passed",
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+[
+  {
+    "fixture": "interfaz",
+    "delayMs": 0,
+    "stage": "ready",
+    "ready": true,
+    "scriptsInjected": 1,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": {
+      "date": 1792324800000,
+      "performance": 0
+    },
+    "passed": true
+  },
+  {
+    "fixture": "interfaz",
+    "delayMs": 250,
+    "stage": "clock.pauseAt",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+    "passed": false,
+    "assertion": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30"
+  },
+  {
+    "fixture": "interfaz",
+    "delayMs": 1500,
+    "stage": "clock.pauseAt",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+    "passed": false,
+    "assertion": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30"
+  },
+  {
+    "fixture": "guardado",
+    "delayMs": 0,
+    "stage": "ready",
+    "ready": true,
+    "scriptsInjected": 1,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": {
+      "date": 1792584000000,
+      "performance": 0
+    },
+    "passed": true
+  },
+  {
+    "fixture": "guardado",
+    "delayMs": 250,
+    "stage": "clock.pauseAt",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+    "passed": false,
+    "assertion": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30"
+  },
+  {
+    "fixture": "guardado",
+    "delayMs": 1500,
+    "stage": "clock.pauseAt",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+    "passed": false,
+    "assertion": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30"
+  },
+  {
+    "fixture": "borrado",
+    "delayMs": 0,
+    "stage": "ready",
+    "ready": true,
+    "scriptsInjected": 1,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": {
+      "date": 1792843200000,
+      "performance": 0
+    },
+    "passed": true
+  },
+  {
+    "fixture": "borrado",
+    "delayMs": 250,
+    "stage": "clock.pauseAt",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+    "passed": false,
+    "assertion": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30"
+  },
+  {
+    "fixture": "borrado",
+    "delayMs": 1500,
+    "stage": "clock.pauseAt",
+    "ready": false,
+    "scriptsInjected": 0,
+    "clockCalls": [
+      "install",
+      "pauseAt"
+    ],
+    "beforeApp": null,
+    "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+    "passed": false,
+    "assertion": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30"
+  }
+]

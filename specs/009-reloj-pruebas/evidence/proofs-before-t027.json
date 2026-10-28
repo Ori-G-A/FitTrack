@@ -1,0 +1,130 @@
+{
+  "closureEligible": false,
+  "reason": "T027 modifica el reportador; esta ejecución no se etiqueta con la huella posterior.",
+  "archivedAt": "2026-10-27T21:03:30.497Z",
+  "report": {
+    "passed": true,
+    "startedAt": "2026-10-27T20:58:10.570Z",
+    "generatedAt": "2026-10-27T21:03:07.339Z",
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "verificationHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+    "receipts": [
+      {
+        "label": "interface",
+        "args": [
+          "scripts/check-interface-mutations.js"
+        ],
+        "startedAt": "2026-10-27T20:58:10.777Z",
+        "finishedAt": "2026-10-27T20:58:48.512Z",
+        "verificationHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "beforeHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "afterHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "exitCode": 0,
+        "output": "test-results/clock009-proofs-interface.txt",
+        "sha256": "ca299ada1efeb12716c29f5c138a6be1cf4f05cec9aea1533b30deb8de5fb583"
+      },
+      {
+        "label": "save",
+        "args": [
+          "scripts/check-save-state-mutations.js"
+        ],
+        "startedAt": "2026-10-27T20:58:48.750Z",
+        "finishedAt": "2026-10-27T20:59:01.874Z",
+        "verificationHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "beforeHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "afterHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "exitCode": 0,
+        "output": "test-results/clock009-proofs-save.txt",
+        "sha256": "6e976f3d6d55111b3a16bdc74753814150bf72b9bf7aeb19e17254a276ffe3a4"
+      },
+      {
+        "label": "delete",
+        "args": [
+          "scripts/check-delete-state-mutations.js"
+        ],
+        "startedAt": "2026-10-27T20:59:02.099Z",
+        "finishedAt": "2026-10-27T20:59:36.159Z",
+        "verificationHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "beforeHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "afterHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "exitCode": 0,
+        "output": "test-results/clock009-proofs-delete.txt",
+        "sha256": "dcb2dc18bb625ddf2bc8255cdeb00dec9fad3677f54e2da1d80fc069a3e0226e"
+      },
+      {
+        "label": "clock",
+        "args": [
+          "scripts/check-clock-state-mutations.js"
+        ],
+        "startedAt": "2026-10-27T20:59:36.404Z",
+        "finishedAt": "2026-10-27T21:03:07.112Z",
+        "verificationHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "beforeHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "afterHash": "30fedef660a139c01d78811751457713bc3abeffdd97eb46a47424a7f604a9a2",
+        "exitCode": 0,
+        "output": "test-results/clock009-proofs-clock.txt",
+        "sha256": "4898650282a7085833c6e3d01a2267babc2663ac6e3e824ac64ab68a7db403de"
+      }
+    ],
+    "reports": [
+      {
+        "label": "interface",
+        "file": "test-results/interface-postgreen-mutations.json",
+        "sha256": "9b1d0697751f4a8a96208df0a05803632c4500d2565a625048f01b3d35e5f9ee",
+        "mutations": 3
+      },
+      {
+        "label": "save",
+        "file": "test-results/save007-mutations.json",
+        "sha256": "7e8a07f7dff664d97b9daad04cb88777f3eea620dbc67a276b69fd2212603563",
+        "mutations": 3
+      },
+      {
+        "label": "delete",
+        "file": "test-results/delete008-mutations.json",
+        "sha256": "dbfea0cd6365935c53b9868ce20b8394264d8fc4238b895a65a282dc6142c9ac",
+        "mutations": 5
+      },
+      {
+        "label": "clock",
+        "file": "test-results/clock009-mutations.json",
+        "sha256": "29ab0eb62b5d3019f2442a2028880917677151f7e5e6a0e0257834d4f8f66d7d",
+        "mutations": 3
+      }
+    ]
+  },
+  "archivedOutputs": [
+    {
+      "original": "test-results/clock009-proofs-interface.txt",
+      "archive": "proofs-before-t027/clock009-proofs-interface.txt"
+    },
+    {
+      "original": "test-results/clock009-proofs-save.txt",
+      "archive": "proofs-before-t027/clock009-proofs-save.txt"
+    },
+    {
+      "original": "test-results/clock009-proofs-delete.txt",
+      "archive": "proofs-before-t027/clock009-proofs-delete.txt"
+    },
+    {
+      "original": "test-results/clock009-proofs-clock.txt",
+      "archive": "proofs-before-t027/clock009-proofs-clock.txt"
+    },
+    {
+      "original": "test-results/interface-postgreen-mutations.json",
+      "archive": "proofs-before-t027/interface-postgreen-mutations.json"
+    },
+    {
+      "original": "test-results/save007-mutations.json",
+      "archive": "proofs-before-t027/save007-mutations.json"
+    },
+    {
+      "original": "test-results/delete008-mutations.json",
+      "archive": "proofs-before-t027/delete008-mutations.json"
+    },
+    {
+      "original": "test-results/clock009-mutations.json",
+      "archive": "proofs-before-t027/clock009-mutations.json"
+    }
+  ]
+}

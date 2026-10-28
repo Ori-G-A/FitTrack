@@ -22,9 +22,7 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm exec node scripts/check-interface-mutations.js
-      - run: pnpm exec node scripts/check-save-state-mutations.js
-      - run: pnpm exec node scripts/check-delete-state-mutations.js
+      - run: pnpm exec node scripts/run-clock-state-checkpoint.js proofs
       - run: pnpm test:sdd:complete
       - run: pnpm run test:sdd:complete --spec=003-entrenamiento
       - run: pnpm run test:sdd:complete --spec=004-nutricion-objetivos
@@ -32,6 +30,19 @@ jobs:
       - run: pnpm run test:sdd:complete --spec=006-interfaz
       - run: pnpm run test:sdd:complete --spec=007-guardado-fiable
       - run: pnpm run test:sdd:complete --spec=008-borrado-fiable
+      - run: pnpm run test:sdd:complete --spec=009-reloj-pruebas
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: evidencia-sdd-009
+          path: |
+            test-results/sdd-009-reloj-pruebas-evidence.json
+            test-results/sdd-009-reloj-pruebas-pilot.tap
+            test-results/sdd-009-reloj-pruebas-browser.json
+            test-results/clock009-proof-receipts.json
+            test-results/clock009-mutations.json
+            test-results/clock009-mutation-*.json
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v6
         if: always()
         with:

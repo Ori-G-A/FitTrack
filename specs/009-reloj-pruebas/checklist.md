@@ -1,5 +1,11 @@
 # Revisión del alcance 009
 
+Estado vigente — 2026-10-27 (Bogotá): E0–E2 cerradas localmente;
+27 tareas, nueve contratos/250 IDs y RLS fresco con limpieza verificados.
+[Converge](converge.md). Las etapas siguientes conservan la cronología.
+Publicación, integración y Vercel 009 pendientes de autorización específica.
+
+
 Revisión documental del agente — 2026-10-27 (Bogotá). No es aprobación humana.
 
 - [x] Resultado técnico y beneficio para verificar FitTrack definidos.

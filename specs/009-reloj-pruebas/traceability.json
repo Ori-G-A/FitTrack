@@ -1,12 +1,15 @@
 {
   "spec": "009-reloj-pruebas",
-  "note": "Alcance aprobado en ed35fb2; plan y precisión SC-001 propuestos, sin aprobación. Dieciséis IDs pending; plannedTests no representa pruebas ejecutadas.",
+  "note": "E2 local: dieciséis IDs propios y nueve contratos/250 IDs completos; RLS fresco, mutaciones y limpieza verificados.",
   "requirements": [
     {
       "id": "FR-001",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 conserva fechas datos y red de tres montajes",
+        "reloj009 contextos independientes conservan su origen"
+      ],
       "plannedTests": [
         "reloj009 conserva fechas datos y red de tres montajes",
         "reloj009 contextos independientes conservan su origen"
@@ -22,8 +25,10 @@
     {
       "id": "FR-002",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 conserva fechas datos y red de tres montajes"
+      ],
       "plannedTests": [
         "reloj009 conserva fechas datos y red de tres montajes"
       ],
@@ -39,8 +44,11 @@
     {
       "id": "FR-004",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 host no consume plazos antes ni despues del montaje"
@@ -60,8 +68,11 @@
     {
       "id": "US1-AS1",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 conserva fechas datos y red de tres montajes",
+        "reloj009 contextos independientes conservan su origen"
+      ],
       "plannedTests": [
         "reloj009 conserva fechas datos y red de tres montajes",
         "reloj009 contextos independientes conservan su origen"
@@ -77,8 +88,10 @@
     {
       "id": "US1-AS2",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido"
       ],
@@ -93,8 +106,10 @@
     {
       "id": "US1-AS3",
       "story": "US1",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 fallos de preparacion y montaje se registran sin ocultarlos"
+      ],
       "plannedTests": [
         "reloj009 fallos de preparacion y montaje se registran sin ocultarlos"
       ],
@@ -109,8 +124,15 @@
     {
       "id": "FR-003",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje",
+        "interfaz navegador temas carga y errores",
+        "guardado007 navegador error visible en movil y escritorio",
+        "guardado007 navegador estado accesible y sin exito falso",
+        "borrado008 navegador fallo persiste visible y accesible"
+      ],
       "plannedTests": [
         "interfaz cambio resaltado temporal tras consumo de focusCard",
         "interfaz cambio resaltado reemplazo y desmontaje",
@@ -134,8 +156,11 @@
     {
       "id": "FR-005",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 host no consume plazos antes ni despues del montaje"
@@ -152,8 +177,11 @@
     {
       "id": "US2-AS1",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
       "plannedTests": [
         "interfaz cambio resaltado temporal tras consumo de focusCard",
         "interfaz cambio resaltado reemplazo y desmontaje"
@@ -170,8 +198,10 @@
     {
       "id": "US2-AS2",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "interfaz navegador temas carga y errores"
+      ],
       "plannedTests": [
         "interfaz navegador temas carga y errores"
       ],
@@ -187,8 +217,12 @@
     {
       "id": "US2-AS3",
       "story": "US2",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "guardado007 navegador error visible en movil y escritorio",
+        "guardado007 navegador estado accesible y sin exito falso",
+        "borrado008 navegador fallo persiste visible y accesible"
+      ],
       "plannedTests": [
         "guardado007 navegador error visible en movil y escritorio",
         "guardado007 navegador estado accesible y sin exito falso",
@@ -207,8 +241,10 @@
     {
       "id": "FR-006",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 fallos de preparacion y montaje se registran sin ocultarlos"
+      ],
       "plannedTests": [
         "reloj009 fallos de preparacion y montaje se registran sin ocultarlos"
       ],
@@ -224,8 +260,13 @@
     {
       "id": "FR-007",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas",
+        "reloj009 trazabilidad rechaza resultados falsos omitidos y parciales",
+        "reloj009 reintroduccion del patron original detecta tres montajes"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas",
@@ -251,8 +292,11 @@
     {
       "id": "US3-AS1",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
       "plannedTests": [
         "reloj009 demora de preparacion conserva instante y reloj detenido",
         "reloj009 host no consume plazos antes ni despues del montaje"
@@ -269,8 +313,10 @@
     {
       "id": "US3-AS2",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 reintroduccion del patron original detecta tres montajes"
+      ],
       "plannedTests": [
         "reloj009 reintroduccion del patron original detecta tres montajes"
       ],
@@ -285,8 +331,10 @@
     {
       "id": "US3-AS3",
       "story": "US3",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas"
+      ],
       "plannedTests": [
         "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas"
       ],
