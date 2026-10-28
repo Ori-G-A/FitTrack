@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-10-28T15:37:11.756Z",
+  "node": "v24.21.0",
+  "cliVersion": "2.121.0",
+  "projectId": "fittrack-sdd-rls-1fb13677c3fa",
+  "recoveryDirectory": null,
+  "passed": true,
+  "cleanupPassed": true,
+  "environment": "fittrack-sdd-disposable",
+  "apiOrigin": "http://127.0.0.1:59321",
+  "results": [
+    {
+      "name": "SDD-RLS-001 app_data dos propietarios y anonimo",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-RLS-002 Storage privado permite solo prefijo propio",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-RLS-003 diagnosticos insert-only sin suplantacion",
+      "status": "passed"
+    }
+  ],
+  "hashes": {
+    "rls-tests/ownership.js": "117a1e1facb347d6d77b3decb396796c6acbfbb5aceb323ee3ad5a0aa05d43ae",
+    "scripts/run-local-rls.js": "d661067fa0f89d2d1a147d6e206ca2f38f4b01942c8ccdc23f08d5efe419d16a",
+    "scripts/local-rls-guard.js": "1ba82a5d80ffe888934f128310e0932be6bd1e548ca87eedab3f26f96d2f60ea",
+    "test-support/rls/fixture-client.js": "957c1cf72e1f64c73e431fae2354ee87db862e6886053e11b7273c37aa5b7b13",
+    "pnpm-lock.yaml": "e94a3105f8ba84ace02221f012cc8c7cd65a8be7cdf6e4229d06b8f5fe624d87",
+    "supabase/migrations/20260614000000_secure_app_data_rls.sql": "6c8fc101c348bb8645fa78a74a594cb61f604ac4307edfe696e0ef9565a33bbf",
+    "supabase/migrations/20260614010000_private_progress_photos.sql": "83d1f764cefd61a4a47382028c5653a1629070c2629cece855162ac4f1402702",
+    "supabase/migrations/20260615000000_client_error_reports.sql": "f1989ef377df89e9454274d8357e9c8e770ab72b0069025e61f60e4309f0cd99"
+  }
+}

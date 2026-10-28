@@ -1,0 +1,27 @@
+{
+  "stage": "verify-proofs",
+  "passed": false,
+  "attempt": 13,
+  "startedAt": "2026-10-28T15:46:53.491Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "node": "v24.21.0",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "receipts": [
+    {
+      "label": "legacy-receipts",
+      "args": [
+        "scripts/run-clock-state-checkpoint.js",
+        "verify-proofs"
+      ],
+      "startedAt": "2026-10-28T15:46:53.823Z",
+      "finishedAt": "2026-10-28T15:46:54.871Z",
+      "exitCode": 1,
+      "file": "specs/010-entradas-cuerpo/evidence/verify-proofs-attempt-13-legacy-receipts.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+      "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"
+    }
+  ],
+  "error": "legacy-receipts falló; revisar specs/010-entradas-cuerpo/evidence/verify-proofs-attempt-13-legacy-receipts.txt"
+}

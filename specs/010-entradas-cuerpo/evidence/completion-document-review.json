@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T20:06:52.900Z",
+  "documents": 19,
+  "links": 267,
+  "tasks": 35,
+  "completedTasks": 33,
+  "pendingAdministrativeTasks": [
+    "T030",
+    "T031"
+  ],
+  "trace": {
+    "pending": 0,
+    "partial": 0,
+    "complete": 24
+  },
+  "nodeTests": 379,
+  "browserTests": 43,
+  "contracts": 10,
+  "completeIds": 274,
+  "postgreenMutations": 19,
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "pins": {
+    "previousVerified": 123,
+    "intact": 117,
+    "amended": 6,
+    "newIntact": 7,
+    "newAmended": 2
+  },
+  "clockPins": {
+    "previousVerified": 116,
+    "intact": 109,
+    "amended": 7,
+    "newIntact": 5,
+    "newAmended": 2
+  },
+  "e1Pins": 8,
+  "legacyBudgets": 35,
+  "remoteAuthorized": false
+}

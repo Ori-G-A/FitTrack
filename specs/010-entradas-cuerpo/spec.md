@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): 010 cerrada localmente, 24 IDs propios y diez contratos/274 IDs completos. [Converge](converge.md), [verificación](verification.md). Los apartados siguientes conservan la cronología y sus aprobaciones; las esperas locales antiguas quedan cumplidas. Publicación/integración/Vercel pendientes de autorización específica.
+
 # Spec 010 — entradas numéricas de Cuerpo
 
 Estado: alcance y C-001/002/003 APROBADOS el 2026-10-27 (Bogotá); plan y ejecución local E0–E2 aprobados.

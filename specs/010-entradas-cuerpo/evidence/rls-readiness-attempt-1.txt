@@ -1,0 +1,5 @@
+RLS: arrancando fixture Supabase local desechable
+RLS: preparación local en curso; salida de credenciales retenida
+RLS: ejecutando matriz real de dos usuarios y anónimo
+RLS: retirando solo el fixture creado por esta ejecución
+RLS: 3 contratos reales aprobados; fixture retirado

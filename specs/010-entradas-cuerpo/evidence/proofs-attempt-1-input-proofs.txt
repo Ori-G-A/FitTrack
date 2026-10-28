@@ -1,0 +1,11 @@
+Mutación cuerpo010: control syntax
+Mutación cuerpo010: defecto syntax
+Mutación cuerpo010: control zero
+Mutación cuerpo010: defecto zero
+Mutación cuerpo010: control partial
+Mutación cuerpo010: defecto partial
+Mutación cuerpo010: control accessible
+Mutación cuerpo010: defecto accessible
+Mutación cuerpo010: control comma
+Mutación cuerpo010: defecto comma
+{"passed":true,"positiveControls":5,"mutations":5,"cleanup":true,"verificationHash":"84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"}

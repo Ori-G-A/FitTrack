@@ -1,6 +1,6 @@
 {
   "spec": "010-entradas-cuerpo",
-  "note": "E0 G-PIN: seis IDs preservados completos y dieciocho pending; tres controles verdes, cinco regresiones rojas y nueve archivos congelados; producto intacto.",
+  "note": "E2 local: 24 IDs propios y diez contratos/274 IDs completos; RLS fresco, mutaciones y limpieza verificados.",
   "requirements": [
     {
       "id": "FR-001",
@@ -73,8 +73,12 @@
       "id": "FR-004",
       "story": "US1",
       "result": "opcionales null y formularios sin contenido",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva bienestar y vacios",
+        "cuerpo010 espacios y ceros conservan ausencia y precision",
+        "cuerpo010 validadores conservan borradores y null"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva bienestar y vacios",
         "cuerpo010 espacios y ceros conservan ausencia y precision",
@@ -98,8 +102,13 @@
       "id": "FR-005",
       "story": "US1",
       "result": "interpretación decimal finita y explícita",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 coma y punto recorren nueve campos",
+        "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+        "cuerpo010 espacios y ceros conservan ausencia y precision",
+        "cuerpo010 valores distinguen decimales vacios y errores"
+      ],
       "plannedTests": [
         "cuerpo010 coma y punto recorren nueve campos",
         "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
@@ -122,8 +131,13 @@
       "id": "FR-006",
       "story": "US1",
       "result": "positivos y cero conocido sin máximos nuevos",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+        "cuerpo010 espacios y ceros conservan ausencia y precision",
+        "cuerpo010 valores distinguen decimales vacios y errores",
+        "cuerpo010 reintroducciones detectan cinco defectos de entrada"
+      ],
       "plannedTests": [
         "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
         "cuerpo010 espacios y ceros conservan ausencia y precision",
@@ -147,8 +161,14 @@
       "id": "FR-007",
       "story": "US2",
       "result": "rechazo completo sin mutación ni pérdida de borrador",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+        "cuerpo010 mezcla invalida conserva borrador sin exito",
+        "cuerpo010 corregir permite un unico guardado",
+        "cuerpo010 validadores conservan borradores y null",
+        "cuerpo010 reintroducciones detectan cinco defectos de entrada"
+      ],
       "plannedTests": [
         "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
         "cuerpo010 mezcla invalida conserva borrador sin exito",
@@ -174,8 +194,11 @@
       "id": "FR-008",
       "story": "US2",
       "result": "errores, nombres y asociación accesibles",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 errores asocian campos en movil y escritorio",
+        "cuerpo010 reintroducciones detectan cinco defectos de entrada"
+      ],
       "plannedTests": [
         "cuerpo010 errores asocian campos en movil y escritorio",
         "cuerpo010 reintroducciones detectan cinco defectos de entrada"
@@ -195,8 +218,11 @@
       "id": "FR-009",
       "story": "US2",
       "result": "corrección y un único guardado local válido",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 corregir permite un unico guardado",
+        "cuerpo010 validadores conservan borradores y null"
+      ],
       "plannedTests": [
         "cuerpo010 corregir permite un unico guardado",
         "cuerpo010 validadores conservan borradores y null"
@@ -218,8 +244,11 @@
       "id": "FR-010",
       "story": "US1",
       "result": "coma decimal utilizable desde la interfaz",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 coma y punto recorren nueve campos",
+        "cuerpo010 reintroducciones detectan cinco defectos de entrada"
+      ],
       "plannedTests": [
         "cuerpo010 coma y punto recorren nueve campos",
         "cuerpo010 reintroducciones detectan cinco defectos de entrada"
@@ -242,8 +271,11 @@
       "id": "US1-AS1",
       "story": "US1",
       "result": "coma/punto en nueve campos",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 coma y punto recorren nueve campos",
+        "cuerpo010 valores distinguen decimales vacios y errores"
+      ],
       "plannedTests": [
         "cuerpo010 coma y punto recorren nueve campos",
         "cuerpo010 valores distinguen decimales vacios y errores"
@@ -264,8 +296,11 @@
       "id": "US1-AS2",
       "story": "US1",
       "result": "espacios y forma decimal",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 espacios y ceros conservan ausencia y precision",
+        "cuerpo010 valores distinguen decimales vacios y errores"
+      ],
       "plannedTests": [
         "cuerpo010 espacios y ceros conservan ausencia y precision",
         "cuerpo010 valores distinguen decimales vacios y errores"
@@ -286,8 +321,12 @@
       "id": "US1-AS3",
       "story": "US1",
       "result": "opcionales y formularios vacíos",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva bienestar y vacios",
+        "cuerpo010 espacios y ceros conservan ausencia y precision",
+        "cuerpo010 validadores conservan borradores y null"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva bienestar y vacios",
         "cuerpo010 espacios y ceros conservan ausencia y precision",
@@ -310,8 +349,11 @@
       "id": "US1-AS4",
       "story": "US1",
       "result": "cero conocido y precisión",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 espacios y ceros conservan ausencia y precision",
+        "cuerpo010 valores distinguen decimales vacios y errores"
+      ],
       "plannedTests": [
         "cuerpo010 espacios y ceros conservan ausencia y precision",
         "cuerpo010 valores distinguen decimales vacios y errores"
@@ -331,8 +373,11 @@
       "id": "US1-AS5",
       "story": "US1",
       "result": "sintaxis inválida rechazada",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+        "cuerpo010 valores distinguen decimales vacios y errores"
+      ],
       "plannedTests": [
         "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
         "cuerpo010 valores distinguen decimales vacios y errores"
@@ -352,8 +397,11 @@
       "id": "US1-AS6",
       "story": "US1",
       "result": "fronteras de cero y negativos",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+        "cuerpo010 valores distinguen decimales vacios y errores"
+      ],
       "plannedTests": [
         "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
         "cuerpo010 valores distinguen decimales vacios y errores"
@@ -373,8 +421,10 @@
       "id": "US2-AS1",
       "story": "US2",
       "result": "error accesible en dos viewports",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 errores asocian campos en movil y escritorio"
+      ],
       "plannedTests": [
         "cuerpo010 errores asocian campos en movil y escritorio"
       ],
@@ -392,8 +442,12 @@
       "id": "US2-AS2",
       "story": "US2",
       "result": "registro previo intacto y sin éxito",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+        "cuerpo010 mezcla invalida conserva borrador sin exito",
+        "cuerpo010 corregir permite un unico guardado"
+      ],
       "plannedTests": [
         "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
         "cuerpo010 mezcla invalida conserva borrador sin exito",
@@ -414,8 +468,10 @@
       "id": "US2-AS3",
       "story": "US2",
       "result": "corrección y guardado único",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 corregir permite un unico guardado"
+      ],
       "plannedTests": [
         "cuerpo010 corregir permite un unico guardado"
       ],
@@ -435,8 +491,11 @@
       "id": "US2-AS4",
       "story": "US2",
       "result": "formulario mixto rechazado completo",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 mezcla invalida conserva borrador sin exito",
+        "cuerpo010 validadores conservan borradores y null"
+      ],
       "plannedTests": [
         "cuerpo010 mezcla invalida conserva borrador sin exito",
         "cuerpo010 validadores conservan borradores y null"
@@ -521,8 +580,15 @@
       "id": "US3-AS4",
       "story": "US3",
       "result": "consumidores y contratos previos preservados",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 capas y alcance de fuente rechazan dependencias ajenas",
+        "cuerpo010 firmas y transicion rechazan enmiendas ajenas",
+        "cuerpo010 trazabilidad rechaza evidencia falsa omitida y parcial",
+        "cuerpo010 reintroducciones detectan cinco defectos de entrada",
+        "cuerpo010 presupuesto propio conserva aserciones y rechaza adendas ajenas",
+        "cuerpo010 agregador conserva nombres reales de contratos historicos"
+      ],
       "plannedTests": [
         "cuerpo010 capas y alcance de fuente rechazan dependencias ajenas",
         "cuerpo010 firmas y transicion rechazan enmiendas ajenas",

@@ -212,7 +212,7 @@ de punto flotante. No es CHANGE ni una corrección del algoritmo.
 El CHANGE aprobado de [010](../010-entradas-cuerpo/spec.md) sustituye únicamente
 las guardas y conversiones permisivas de FR-001/002/003 mediante sus FR-005–010:
 decimales explícitos, finitud/signo/cero, rechazo completo y feedback accesible.
-El candidato local E1 fue verificado; el cierre E2 y la integración aún están
-pendientes. Las otras garantías, fórmulas, datos históricos y BODY-002–005 se
+010 quedó verificada localmente en E0–E2; su integración remota sigue
+pendiente. Las otras garantías, fórmulas, datos históricos y BODY-002–005 se
 conservan. Los textos y recibos anteriores describen el original de 005; sus
 tres pruebas se enmiendan con PIN-010-001/002/003, sin reescribir esa historia.

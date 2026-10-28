@@ -1,0 +1,88 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T15:46:39.857Z",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "positiveControls": 2,
+  "negatives": [
+    {
+      "name": "estado-falso",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-estado-falso.txt"
+    },
+    {
+      "name": "huella-ajena",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-huella-ajena.txt"
+    },
+    {
+      "name": "fuente-ajena",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-fuente-ajena.txt"
+    },
+    {
+      "name": "comando-ajeno",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-comando-ajeno.txt"
+    },
+    {
+      "name": "huella-inicial-ajena",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-huella-inicial-ajena.txt"
+    },
+    {
+      "name": "omitido",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-omitido.txt"
+    },
+    {
+      "name": "duplicado",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-duplicado.txt"
+    },
+    {
+      "name": "digest-falso",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-digest-falso.txt"
+    },
+    {
+      "name": "fecha-invalida",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-fecha-invalida.txt"
+    },
+    {
+      "name": "cleanup-ausente",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-cleanup-ausente.txt"
+    },
+    {
+      "name": "mutacion-omitida",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-mutacion-omitida.txt"
+    },
+    {
+      "name": "legado-comando-ajeno",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-legado-comando-ajeno.txt"
+    },
+    {
+      "name": "legado-recibo-omitido",
+      "rejected": true,
+      "exitCode": 1,
+      "output": "receipt-legado-recibo-omitido.txt"
+    }
+  ],
+  "restored": true
+}

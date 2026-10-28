@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): ejecución local E0–E2 verificada; 31 tareas originales y T032–T035 aditivas. T030/T031 completan el cierre Git y la presentación de entrega; no hay autorización remota.
+
 # Tareas 010 — entradas numéricas de Cuerpo
 
 Estado: 31 tareas APROBADAS el 2026-10-27 (Bogotá); ejecución local E0–E2 autorizada.
@@ -39,14 +41,14 @@ Las claves A1–M1 remiten a nombres exactos en la matriz de validación.
 
 | ID | Estado | Historia / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T022 | pendiente | US1/US2/US3 / FR-005–010; US3-AS4 | Ejecutar cinco mutaciones 010 y catorce postverde heredadas con controles positivos, recibos actuales y limpieza; conservar cuatro mutaciones Cuerpo dentro de Node | T021 |
-| T023 | pendiente | US3 / US3-AS4; SC-004/005 | Negativos de nombres/resultados/adendas/transición/recibos: omitido, duplicado, parcial, plan/hash/comando/fuente ajenos y cleanup ausente deben rechazarse; registrar positivos y restauración | T022 |
-| T024 | pendiente | US3 / US3-AS4; SC-004/005 | Ejecutar RLS local desechable fresco después de E1 con A/B/anónimo y tres contratos reales, guardas y limpieza; sin .env.local/backend real | T021 |
-| T025 | pendiente | US1–US3 / FR-001–010; todos los escenarios | Checkpoint final íntegro Node/43 Chromium/build, diez contratos/274 IDs y recibos de diecinueve mutaciones; RLS nuevo dentro del checkpoint; repetir íntegro si falla | T022, T023, T024 |
-| T026 | pendiente | US1–US3 / FR-001–010; todos los escenarios | Converge por cláusula, aserciones, nombres descubiertos y enmiendas; cero pending/partial/gaps; añadir tareas ante hallazgos, sin reescribir completadas | T025 |
-| T027 | pendiente | US1–US3 / FR-001–010 | Actualizar verification/readiness/roadmap/aprobaciones con comandos, hashes, conteos reales, límites y warning de bundle; no atribuir pruebas productivas inexistentes | T026 |
-| T028 | pendiente | US3 / US3-AS4; SC-004/005 | Preparar PR documental primero y código después: alcance, seis enmiendas, evidencia, omisiones, reversión coordinada y orden de merge; sin publicar | T027 |
-| T029 | pendiente | US1–US3 / todos los FR/escenarios | Preparar informe final de la refactorización inicial y 007–010, con resultados/pendientes y backlog futuro separado; no iniciar 011 | T028 |
+| T022 | completada | US1/US2/US3 / FR-005–010; US3-AS4 | Ejecutar cinco mutaciones 010 y catorce postverde heredadas con controles positivos, recibos actuales y limpieza; conservar cuatro mutaciones Cuerpo dentro de Node | T021 |
+| T023 | completada | US3 / US3-AS4; SC-004/005 | Negativos de nombres/resultados/adendas/transición/recibos: omitido, duplicado, parcial, plan/hash/comando/fuente ajenos y cleanup ausente deben rechazarse; registrar positivos y restauración | T022 |
+| T024 | completada | US3 / US3-AS4; SC-004/005 | Ejecutar RLS local desechable fresco después de E1 con A/B/anónimo y tres contratos reales, guardas y limpieza; sin .env.local/backend real | T021 |
+| T025 | completada | US1–US3 / FR-001–010; todos los escenarios | Checkpoint final íntegro Node/43 Chromium/build, diez contratos/274 IDs y recibos de diecinueve mutaciones; RLS nuevo dentro del checkpoint; repetir íntegro si falla | T022, T023, T024 |
+| T026 | completada | US1–US3 / FR-001–010; todos los escenarios | Converge por cláusula, aserciones, nombres descubiertos y enmiendas; cero pending/partial/gaps; añadir tareas ante hallazgos, sin reescribir completadas | T025 |
+| T027 | completada | US1–US3 / FR-001–010 | Actualizar verification/readiness/roadmap/aprobaciones con comandos, hashes, conteos reales, límites y warning de bundle; no atribuir pruebas productivas inexistentes | T026 |
+| T028 | completada | US3 / US3-AS4; SC-004/005 | Preparar PR documental primero y código después: alcance, seis enmiendas, evidencia, omisiones, reversión coordinada y orden de merge; sin publicar | T027 |
+| T029 | completada | US1–US3 / todos los FR/escenarios | Preparar informe final de la refactorización inicial y 007–010, con resultados/pendientes y backlog futuro separado; no iniciar 011 | T028 |
 | T030 | pendiente | US3 / US3-AS4; SC-004/005 | Commits lógicos locales, revisión de enlaces/diff, fuente y firmas verificadas, árbol limpio; snapshot documental aprobado conservado | T029 |
 | T031 | pendiente | US1–US3 / todos los FR/escenarios | Presentar cierre local y solicitar autorización específica para publicación/integración con CI verde/Vercel; no ejecutar esas acciones sin decisión | T030 |
 
@@ -121,3 +123,11 @@ manifiestos anteriores ni introducir coincidencias aproximadas.
 - T020: nota de sustitución normativa de las entradas de 005, conservando evidencias históricas y BODY-002–005; source limitado a los tres archivos aprobados.
 - T033: firma raíz restaurada y regla LF localizada en evidencia; controles de portabilidad e integridad aprobados y checkpoint E1 repetido íntegramente. El intento 1 fallido se conserva.
 - T034: presupuesto de los seis casos CHANGE nuevos igualado al G-PIN de 120000 ms; ninguna aserción ni límite de los 35 casos anteriores cambió. Replay original 3/5 y nuevo verde dirigido aprobados; adenda propia canónica y negativos verificados. Los intentos previos se conservan. T035 corrige la lectura de nombres históricos con una regresión y repetición completas.
+
+- T024: ensayo RLS local fresco posterior a E1 aprobado, tres contratos reales y limpieza verificada con la huella definitiva. [Recibos](evidence/rls-readiness-attempt-1.json). El checkpoint final volverá a ejecutarlo para verificar frescura dentro de su propia ejecución.
+
+- T022/T023: diecinueve mutaciones postverde detectadas (14 heredadas + 5 propias), controles positivos, trece negativos de recibos/dos positivos y restauración confirmada; ocho archivos E1 intactos con la huella definitiva. [Pruebas negativas](evidence/receipt-negatives.json). Checkpoint final aún pendiente.
+
+- T022/T023: diecinueve mutaciones postverde con controles positivos, trece negativos de recibos/dos positivos, limpieza y restauración confirmadas con la huella definitiva.
+- T025/T026: checkpoint final íntegro aprobado, diez contratos/274 IDs completos, RLS nuevo dentro del checkpoint y entrada genérica 010 completa aparte; sin gaps.
+- T027–T029: documentación, PRs preparados e informe final; backlog futuro separado, sin iniciar 011. T030 verifica Git al cerrar los commits; T031 presenta la solicitud de entrega remota.

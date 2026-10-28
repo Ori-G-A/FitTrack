@@ -1,3 +1,22 @@
+Estado vigente — 2026-10-28 (Bogotá): E0–E2 cerradas localmente; 379 Node, 43 Chromium/build, diez contratos/274 IDs, mutaciones y RLS fresco con limpieza. Publicación/integración/Vercel pendientes de autorización específica. [Converge](converge.md).
+
+Comandos de cierre ejecutados con pnpm 11.11.0 y Node 24.21.0:
+
+```powershell
+pnpm exec node scripts/run-body-inputs-checkpoint.js proofs
+pnpm exec node specs/010-entradas-cuerpo/evidence/receipt-negatives-probe.mjs
+pnpm exec node scripts/run-body-inputs-checkpoint.js final
+pnpm run test:sdd:complete --spec=010-entradas-cuerpo
+```
+
+Los checkpoints conservan argumentos, tiempos, salidas y hashes. El final
+ejecutó Node/Chromium/Vite y otro ensayo RLS fresco con Supabase CLI 2.121.0
+local mediante SDD_SUPABASE_CLI. [Mutaciones](evidence/mutations-body-inputs.json),
+[recibos](evidence/proof-receipts.json) y [entrada estándar](evidence/generic-entry-local.json).
+Build: index 512,58 kB, gzip 149,46 kB; conserva el warning mayor de 500 kB.
+No se cambiaron dependencias/lockfile ni se repitieron auditoría e instalación
+limpia locales para este cambio; CI mantiene instalación frozen-lockfile.
+
 # Verificación local 010
 
 Estado: E0 completada, E1/E2 pendientes. No publicación ni integración autorizadas.
@@ -42,3 +61,11 @@ el fallo de integridad original permanece en los recibos del intento 1.
 379 Node, 43 Chromium y build aprobados sin skips/retries; [E1](evidence/e1.json). Seis enmiendas canónicas legadas y dos técnicas propias, siete archivos E0 intactos y ocho E1 congelados. La repetición completa valida T033/T034.
 
 Los contratos ordinarios están verificados; 002 y las filas dependientes de recibos de mutación no se recertifican como completos en E1. E2 exige diecinueve mutaciones postverde, negativos de recibos y RLS fresco; el contrato de código 010 aún no está cerrado.
+
+## RLS fresco previo al cierre E2
+
+Ensayo local desechable aprobado: tres contratos reales y limpieza. [RLS](evidence/rls-readiness.json), [recibos](evidence/rls-readiness-attempt-1.json). No certifica backend productivo; el checkpoint final exige otro ensayo fresco posterior a su inicio.
+
+## Mutaciones y recibos E2 aprobados
+
+Diecinueve mutaciones postverde detectadas y limpieza confirmada. Trece controles negativos de recibos, dos positivos y restauración; ocho archivos E1 intactos. [Negativos](evidence/receipt-negatives.json). El cierre requiere aún el checkpoint final y la entrada genérica completa.

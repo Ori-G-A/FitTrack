@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): 010 cerrada localmente, 24 IDs propios y diez contratos/274 IDs completos. [Converge](converge.md), [verificación](verification.md). Los apartados siguientes conservan la cronología y sus aprobaciones; las esperas locales antiguas quedan cumplidas. Publicación/integración/Vercel pendientes de autorización específica.
+
 # Revisión del alcance 010
 
 Revisión del agente — 2026-10-27 (Bogotá). No es aprobación humana.

@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "startedAt": "2026-10-28T15:35:59.497Z",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "node": "v24.21.0",
+  "attempt": 1,
+  "args": [
+    "scripts/run-local-rls.js"
+  ],
+  "exitCode": 0,
+  "output": "specs/010-entradas-cuerpo/evidence/rls-readiness-attempt-1.txt",
+  "sha256": "2e25c51fbf49b8913bc2a20fe9ce5a63f4ee6a5afdb9acd1281e7bb9a68c2dcc",
+  "contracts": [
+    {
+      "name": "SDD-RLS-001 app_data dos propietarios y anonimo",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-RLS-002 Storage privado permite solo prefijo propio",
+      "status": "passed"
+    },
+    {
+      "name": "SDD-RLS-003 diagnosticos insert-only sin suplantacion",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-28T15:37:12.393Z"
+}

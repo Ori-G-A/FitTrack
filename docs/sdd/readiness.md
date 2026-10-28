@@ -297,3 +297,14 @@ hallazgos y el aviso de bundle se conservan; no se promete estabilidad absoluta.
 
 Este estado sustituye las esperas históricas de autorización, publicación e
 integración de 009. No concede autorizaciones permanentes para futuras specs.
+
+## Cierre local 010 — 2026-10-28 (Bogotá)
+
+379 Node, 43 Chromium/build, diez contratos/274 IDs, diecinueve
+mutaciones postverde, trece negativos de recibos/dos positivos y RLS fresco
+real con limpieza verificados. Seis enmiendas legadas y dos técnicas propias;
+123 firmas anteriores, nueve E0 y ocho E1 verificadas. [Converge](../../specs/010-entradas-cuerpo/converge.md)
+y [informe final](refactor-final.md). Las 31 tareas originales se conservan
+con T032–T035 aditivas; publicación, integración y Vercel siguen pendientes de
+autorización específica. BODY-001 queda resuelto localmente, sin certificar
+producción ni cerrar los demás hallazgos; no se inicia otra spec por inferencia.

@@ -45,9 +45,9 @@ hay que leer esos artefactos y sus llamadores, no solo el componente visible.
 
 | Orden propuesto | Resultado | Referencias y decisión necesaria |
 | --- | --- | --- |
-| 1 | Validar el uso real después del despliegue | Prueba autenticada de producción supervisada por el propietario, con cuenta y datos acordados; no ejecutar escrituras implícitas |
-| 2 | Reforzar límites de entradas y fotos | BODY-001 y PHOTO-001: decidir validación y fronteras sin cambiar fórmulas clínicas |
-| 3 | Resolver compatibilidades de interfaz y medir rendimiento | UI-006-003/004/005/006 y PERF-001: elegir un objetivo y baseline; no ampliar accesibilidad ni optimización por inferencia |
+| 1 | Entregar 010 ya verificada localmente | Autorizar publicación, integración con CI verde y Vercel; después comprobar main y Production para el mismo SHA |
+| 2 | Validar el uso real después del despliegue | Prueba autenticada supervisada, con cuenta y datos acordados; no ejecutar escrituras implícitas |
+| Futuro | Evaluar el backlog separado | PHOTO-001, BODY-002–005, UI-006-003/004/005/006 y PERF-001 requieren decisiones propias; no iniciar 011 automáticamente |
 
 El cierre inicial/PATCH y los fallos de guardado y borrado ya cuentan con sus
 entregas verificadas; 007/008/009 no autorizan corregir otros hallazgos.
@@ -103,3 +103,14 @@ El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecuci�
 análisis, seis enmiendas acotadas y ejecución local E0–E2 antes del PR documental,
 con snapshot aprobado. Incluye informe final y mantiene RLS local fresco como
 requisito de cierre. No publicar, fusionar ni desplegar sin decisión específica.
+
+## Cierre local 010 — 2026-10-28 (Bogotá)
+
+379 Node, 43 Chromium/build, diez contratos/274 IDs, diecinueve
+mutaciones postverde, trece negativos de recibos/dos positivos y RLS fresco
+real con limpieza verificados. Seis enmiendas legadas y dos técnicas propias;
+123 firmas anteriores, nueve E0 y ocho E1 verificadas. [Converge](../../specs/010-entradas-cuerpo/converge.md)
+y [informe final](refactor-final.md). Las 31 tareas originales se conservan
+con T032–T035 aditivas; publicación, integración y Vercel siguen pendientes de
+autorización específica. BODY-001 queda resuelto localmente, sin certificar
+producción ni cerrar los demás hallazgos; no se inicia otra spec por inferencia.

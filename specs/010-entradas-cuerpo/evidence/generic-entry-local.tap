@@ -1,0 +1,2303 @@
+TAP version 13
+# Subtest: localISO uses local calendar fields
+ok 1 - localISO uses local calendar fields
+  ---
+  duration_ms: 17.7738
+  type: 'test'
+  ...
+# Subtest: authUserChanged ignores token refreshes for the same user
+ok 2 - authUserChanged ignores token refreshes for the same user
+  ---
+  duration_ms: 0.4025
+  type: 'test'
+  ...
+# Subtest: fresh record alerts expire after three days and are capped
+ok 3 - fresh record alerts expire after three days and are capped
+  ---
+  duration_ms: 57.3774
+  type: 'test'
+  ...
+# Subtest: mergePhotoUrls updates existing photos without restoring deleted ones
+ok 4 - mergePhotoUrls updates existing photos without restoring deleted ones
+  ---
+  duration_ms: 0.5128
+  type: 'test'
+  ...
+# Subtest: date helpers handle month boundaries
+ok 5 - date helpers handle month boundaries
+  ---
+  duration_ms: 0.3171
+  type: 'test'
+  ...
+# Subtest: slopePerDay computes a linear trend
+ok 6 - slopePerDay computes a linear trend
+  ---
+  duration_ms: 0.3321
+  type: 'test'
+  ...
+# Subtest: validateBackup rejects malformed collections and fills goal defaults
+ok 7 - validateBackup rejects malformed collections and fills goal defaults
+  ---
+  duration_ms: 1.4679
+  type: 'test'
+  ...
+# Subtest: validateBackup accepts image data and workout structure
+ok 8 - validateBackup accepts image data and workout structure
+  ---
+  duration_ms: 0.5677
+  type: 'test'
+  ...
+# Subtest: lutealRetentionKg recovers the retention offset
+ok 9 - lutealRetentionKg recovers the retention offset
+  ---
+  duration_ms: 1.3387
+  type: 'test'
+  ...
+# Subtest: lutealRetentionKg detrends so a cut is not read as less retention
+ok 10 - lutealRetentionKg detrends so a cut is not read as less retention
+  ---
+  duration_ms: 0.5896
+  type: 'test'
+  ...
+# Subtest: lutealRetentionKg ignores noise, thin phases and caps implausible values
+ok 11 - lutealRetentionKg ignores noise, thin phases and caps implausible values
+  ---
+  duration_ms: 0.8976
+  type: 'test'
+  ...
+# Subtest: lutealRetentionKg returns null when weight loss looks like the luteal phase is lighter
+ok 12 - lutealRetentionKg returns null when weight loss looks like the luteal phase is lighter
+  ---
+  duration_ms: 0.4726
+  type: 'test'
+  ...
+# Subtest: matchedLoadRpeTrend detects rising RPE at equal load as fatigue
+ok 13 - matchedLoadRpeTrend detects rising RPE at equal load as fatigue
+  ---
+  duration_ms: 1.0341
+  type: 'test'
+  ...
+# Subtest: matchedLoadRpeTrend counts distinct fatigued exercises, not combos
+ok 14 - matchedLoadRpeTrend counts distinct fatigued exercises, not combos
+  ---
+  duration_ms: 1.0775
+  type: 'test'
+  ...
+# Subtest: matchedLoadRpeTrend detects falling RPE at equal load as progress
+ok 15 - matchedLoadRpeTrend detects falling RPE at equal load as progress
+  ---
+  duration_ms: 0.2838
+  type: 'test'
+  ...
+# Subtest: matchedLoadRpeTrend ignores noise, short streaks and mismatched loads
+ok 16 - matchedLoadRpeTrend ignores noise, short streaks and mismatched loads
+  ---
+  duration_ms: 0.4511
+  type: 'test'
+  ...
+# Subtest: matchedLoadRpeTrend merges tool variants via canonExercise and averages sets per day
+ok 17 - matchedLoadRpeTrend merges tool variants via canonExercise and averages sets per day
+  ---
+  duration_ms: 0.259
+  type: 'test'
+  ...
+# Subtest: migrateWorkouts supplies legacy defaults
+ok 18 - migrateWorkouts supplies legacy defaults
+  ---
+  duration_ms: 0.3732
+  type: 'test'
+  ...
+# Subtest: el destacado de fuerza usa el 1RM estimado de la sesion
+ok 19 - el destacado de fuerza usa el 1RM estimado de la sesion
+  ---
+  duration_ms: 1.1325
+  type: 'test'
+  ...
+# Subtest: la tendencia de peso se mide por semana sobre la ventana pedida
+ok 20 - la tendencia de peso se mide por semana sobre la ventana pedida
+  ---
+  duration_ms: 0.5124
+  type: 'test'
+  ...
+# Subtest: la adherencia de proteina solo cuenta los dias registrados
+ok 21 - la adherencia de proteina solo cuenta los dias registrados
+  ---
+  duration_ms: 0.4245
+  type: 'test'
+  ...
+# Subtest: dayFeed reúne entreno, comidas y cuerpo del día en una sola lista
+ok 22 - dayFeed reúne entreno, comidas y cuerpo del día en una sola lista
+  ---
+  duration_ms: 77.3995
+  type: 'test'
+  ...
+# Subtest: dayFeed ignora el ruido: sesión vacía, nota en blanco y días ajenos
+ok 23 - dayFeed ignora el ruido: sesión vacía, nota en blanco y días ajenos
+  ---
+  duration_ms: 0.2516
+  type: 'test'
+  ...
+# Subtest: parseRpeTarget entiende rangos y valores sueltos
+ok 24 - parseRpeTarget entiende rangos y valores sueltos
+  ---
+  duration_ms: 0.4667
+  type: 'test'
+  ...
+# Subtest: pasarse un punto del objetivo pide backoff, no progresión
+ok 25 - pasarse un punto del objetivo pide backoff, no progresión
+  ---
+  duration_ms: 0.4758
+  type: 'test'
+  ...
+# Subtest: una serie al fallo en un accesorio también pide backoff
+ok 26 - una serie al fallo en un accesorio también pide backoff
+  ---
+  duration_ms: 0.3567
+  type: 'test'
+  ...
+# Subtest: quedarse corta sube más en tren inferior que en superior
+ok 27 - quedarse corta sube más en tren inferior que en superior
+  ---
+  duration_ms: 0.1852
+  type: 'test'
+  ...
+# Subtest: dentro del rango objetivo se repite la carga
+ok 28 - dentro del rango objetivo se repite la carga
+  ---
+  duration_ms: 0.1712
+  type: 'test'
+  ...
+# Subtest: sin RPE registrado no se aconseja nada
+ok 29 - sin RPE registrado no se aconseja nada
+  ---
+  duration_ms: 0.1786
+  type: 'test'
+  ...
+# Subtest: el tema por defecto es oscuro, que es el aspecto del prototipo
+ok 30 - el tema por defecto es oscuro, que es el aspecto del prototipo
+  ---
+  duration_ms: 0.326
+  type: 'test'
+  ...
+# Subtest: la búsqueda encuentra ejercicios que la fila no llega a mostrar
+ok 31 - la búsqueda encuentra ejercicios que la fila no llega a mostrar
+  ---
+  duration_ms: 1.0335
+  type: 'test'
+  ...
+# Subtest: la búsqueda cubre alimentos, notas y cardio, y ordena por fecha
+ok 32 - la búsqueda cubre alimentos, notas y cardio, y ordena por fecha
+  ---
+  duration_ms: 1.1856
+  type: 'test'
+  ...
+# Subtest: la búsqueda calla con menos de dos caracteres y no inventa resultados
+ok 33 - la búsqueda calla con menos de dos caracteres y no inventa resultados
+  ---
+  duration_ms: 0.2103
+  type: 'test'
+  ...
+# Subtest: la búsqueda respeta el tope de resultados
+ok 34 - la búsqueda respeta el tope de resultados
+  ---
+  duration_ms: 1.0909
+  type: 'test'
+  ...
+# Subtest: la semana empieza en lunes, venga de donde venga la fecha
+ok 35 - la semana empieza en lunes, venga de donde venga la fecha
+  ---
+  duration_ms: 0.2434
+  type: 'test'
+  ...
+# Subtest: cada día del plan sabe si está hecho, pendiente o perdido
+ok 36 - cada día del plan sabe si está hecho, pendiente o perdido
+  ---
+  duration_ms: 0.9618
+  type: 'test'
+  ...
+# Subtest: un día con serie registrada cuenta como hecho aunque no estuviera planificado
+ok 37 - un día con serie registrada cuenta como hecho aunque no estuviera planificado
+  ---
+  duration_ms: 0.4038
+  type: 'test'
+  ...
+# Subtest: el cumplimiento mide semanas completas, no la que está en curso
+ok 38 - el cumplimiento mide semanas completas, no la que está en curso
+  ---
+  duration_ms: 0.7098
+  type: 'test'
+  ...
+# Subtest: sin días asignados el cumplimiento no inventa un porcentaje
+ok 39 - sin días asignados el cumplimiento no inventa un porcentaje
+  ---
+  duration_ms: 0.2949
+  type: 'test'
+  ...
+# Subtest: el número de semana cuenta desde la primera sesión registrada
+ok 40 - el número de semana cuenta desde la primera sesión registrada
+  ---
+  duration_ms: 0.3515
+  type: 'test'
+  ...
+# Subtest: ajustar la carga solo reescribe las series que faltan por hacer
+ok 41 - ajustar la carga solo reescribe las series que faltan por hacer
+  ---
+  duration_ms: 0.2995
+  type: 'test'
+  ...
+# Subtest: un ejercicio con todo registrado no cambia aunque se pida otra carga
+ok 42 - un ejercicio con todo registrado no cambia aunque se pida otra carga
+  ---
+  duration_ms: 0.1737
+  type: 'test'
+  ...
+# Subtest: quitar un ejercicio lo saca de la sesión y deja intactos los demás
+ok 43 - quitar un ejercicio lo saca de la sesión y deja intactos los demás
+  ---
+  duration_ms: 0.1661
+  type: 'test'
+  ...
+# Subtest: sin carga se vacía el kilaje de las series pendientes, no se pone un cero
+ok 44 - sin carga se vacía el kilaje de las series pendientes, no se pone un cero
+  ---
+  duration_ms: 0.2133
+  type: 'test'
+  ...
+# Subtest: un día de descanso sigue teniendo contenido: el Plan lo lee con dayFeed
+ok 45 - un día de descanso sigue teniendo contenido: el Plan lo lee con dayFeed
+  ---
+  duration_ms: 0.2811
+  type: 'test'
+  ...
+# Subtest: los pasos de hoy se leen contra la media de los 7 días anteriores
+ok 46 - los pasos de hoy se leen contra la media de los 7 días anteriores
+  ---
+  duration_ms: 0.38
+  type: 'test'
+  ...
+# Subtest: cada aviso sabe a qué tarjeta de Métricas lleva y respeta la coma decimal
+ok 47 - cada aviso sabe a qué tarjeta de Métricas lleva y respeta la coma decimal
+  ---
+  duration_ms: 24.9494
+  type: 'test'
+  ...
+# Subtest: las comidas del día salen del reparto elegido, no de una lista fija
+ok 48 - las comidas del día salen del reparto elegido, no de una lista fija
+  ---
+  duration_ms: 0.5985
+  type: 'test'
+  ...
+# Subtest: con perfil de hombre no se calcula ni se avisa nada del ciclo
+ok 49 - con perfil de hombre no se calcula ni se avisa nada del ciclo
+  ---
+  duration_ms: 5.2954
+  type: 'test'
+  ...
+# Subtest: cada aviso trae una clave estable para poder descartarlo
+ok 50 - cada aviso trae una clave estable para poder descartarlo
+  ---
+  duration_ms: 3.5412
+  type: 'test'
+  ...
+# Subtest: withTimeout returns operations that finish in time
+ok 51 - withTimeout returns operations that finish in time
+  ---
+  duration_ms: 0.5579
+  type: 'test'
+  ...
+# Subtest: withTimeout rejects stalled operations with a recognizable error
+ok 52 - withTimeout rejects stalled operations with a recognizable error
+  ---
+  duration_ms: 58.009
+  type: 'test'
+  ...
+# Subtest: cuerpo avisos conservan fatiga textos umbrales y claves
+ok 53 - cuerpo avisos conservan fatiga textos umbrales y claves
+  ---
+  duration_ms: 1985.9283
+  type: 'test'
+  ...
+# Subtest: cuerpo capas puras y negativos transitivos
+ok 54 - cuerpo capas puras y negativos transitivos
+  ---
+  duration_ms: 603.888
+  type: 'test'
+  ...
+# Subtest: cuerpo conserva hashes congelados y contratos publicos
+ok 55 - cuerpo conserva hashes congelados y contratos publicos
+  ---
+  duration_ms: 77.829
+  type: 'test'
+  ...
+# Subtest: cuerpo consumidores conservan fachadas fotos y contratos previos
+ok 56 - cuerpo consumidores conservan fachadas fotos y contratos previos
+  ---
+  duration_ms: 191.1659
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo consumidores conservan confianza limites y cautela
+ok 57 - cuerpo ciclo consumidores conservan confianza limites y cautela
+  ---
+  duration_ms: 1244.6612
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo conserva comienzos longitudes y contexto
+ok 58 - cuerpo ciclo conserva comienzos longitudes y contexto
+  ---
+  duration_ms: 221.7132
+  type: 'test'
+  ...
+# Subtest: cuerpo peso conserva creatina saturacion y edicion de objetivo
+ok 59 - cuerpo peso conserva creatina saturacion y edicion de objetivo
+  ---
+  duration_ms: 240.1628
+  type: 'test'
+  ...
+# Subtest: cuerpo metricas y diario conservan selectores y formatos
+ok 60 - cuerpo metricas y diario conservan selectores y formatos
+  ---
+  duration_ms: 477.6963
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo conserva distribucion escalas bins y picos
+ok 61 - cuerpo ciclo conserva distribucion escalas bins y picos
+  ---
+  duration_ms: 159.9451
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo conserva guia insights provisionalidad y textos
+ok 62 - cuerpo ciclo conserva guia insights provisionalidad y textos
+  ---
+  duration_ms: 178.6797
+  type: 'test'
+  ...
+# Subtest: cuerpo010 capas y alcance de fuente rechazan dependencias ajenas
+ok 63 - cuerpo010 capas y alcance de fuente rechazan dependencias ajenas
+  ---
+  duration_ms: 410.3101
+  type: 'test'
+  ...
+# Subtest: cuerpo010 presupuesto propio conserva aserciones y rechaza adendas ajenas
+ok 64 - cuerpo010 presupuesto propio conserva aserciones y rechaza adendas ajenas
+  ---
+  duration_ms: 7.6258
+  type: 'test'
+  ...
+# Subtest: cuerpo010 firmas y transicion rechazan enmiendas ajenas
+ok 65 - cuerpo010 firmas y transicion rechazan enmiendas ajenas
+  ---
+  duration_ms: 1474.0747
+  type: 'test'
+  ...
+# Subtest: cuerpo010 agregador conserva nombres reales de contratos historicos
+ok 66 - cuerpo010 agregador conserva nombres reales de contratos historicos
+  ---
+  duration_ms: 2.0773
+  type: 'test'
+  ...
+# Subtest: cuerpo010 trazabilidad rechaza evidencia falsa omitida y parcial
+ok 67 - cuerpo010 trazabilidad rechaza evidencia falsa omitida y parcial
+  ---
+  duration_ms: 12.257
+  type: 'test'
+  ...
+# Subtest: cuerpo010 valores distinguen decimales vacios y errores
+ok 68 - cuerpo010 valores distinguen decimales vacios y errores
+  ---
+  duration_ms: 1.9389
+  type: 'test'
+  ...
+# Subtest: cuerpo010 validadores conservan borradores y null
+ok 69 - cuerpo010 validadores conservan borradores y null
+  ---
+  duration_ms: 1.852
+  type: 'test'
+  ...
+# Subtest: cuerpo checkin conserva normalizacion identidad timestamps y legado
+ok 70 - cuerpo checkin conserva normalizacion identidad timestamps y legado
+  ---
+  duration_ms: 619.4868
+  type: 'test'
+  ...
+# Subtest: cuerpo medidas conservan campos null conversiones y reemplazo
+ok 71 - cuerpo medidas conservan campos null conversiones y reemplazo
+  ---
+  duration_ms: 603.768
+  type: 'test'
+  ...
+# Subtest: cuerpo peso conserva medias correcciones tendencia y proyeccion
+ok 72 - cuerpo peso conserva medias correcciones tendencia y proyeccion
+  ---
+  duration_ms: 161.9249
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo conserva ovulacion flujo calendario y confianza
+ok 73 - cuerpo ciclo conserva ovulacion flujo calendario y confianza
+  ---
+  duration_ms: 137.4498
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo conserva precedencia fases y desconocido tardio
+ok 74 - cuerpo ciclo conserva precedencia fases y desconocido tardio
+  ---
+  duration_ms: 146.4408
+  type: 'test'
+  ...
+# Subtest: cuerpo peso conserva retencion detrending umbral y cap
+ok 75 - cuerpo peso conserva retencion detrending umbral y cap
+  ---
+  duration_ms: 153.8298
+  type: 'test'
+  ...
+# Subtest: cuerpo conserva seccion fecha montaje y visibilidad
+ok 76 - cuerpo conserva seccion fecha montaje y visibilidad
+  ---
+  duration_ms: 264.7765
+  type: 'test'
+  ...
+# Subtest: cuerpo pins detectan mutaciones controladas
+ok 77 - cuerpo pins detectan mutaciones controladas
+  ---
+  duration_ms: 8827.7382
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo conserva resumen sangrado segmentos y outliers
+ok 78 - cuerpo ciclo conserva resumen sangrado segmentos y outliers
+  ---
+  duration_ms: 214.6627
+  type: 'test'
+  ...
+# Subtest: cuerpo ciclo conserva recalculo timeline duplicados y timestamps
+ok 79 - cuerpo ciclo conserva recalculo timeline duplicados y timestamps
+  ---
+  duration_ms: 242.6317
+  type: 'test'
+  ...
+# Subtest: cuerpo peso conserva regresion tendencia y callbacks de objetivos
+ok 80 - cuerpo peso conserva regresion tendencia y callbacks de objetivos
+  ---
+  duration_ms: 258.3238
+  type: 'test'
+  ...
+# Subtest: cuerpo peso conserva conversiones reemplazo pasos e historial
+ok 81 - cuerpo peso conserva conversiones reemplazo pasos e historial
+  ---
+  duration_ms: 929.5639
+  type: 'test'
+  ...
+# Subtest: cuerpo bienestar conserva borrador fecha guardas y guardado
+ok 82 - cuerpo bienestar conserva borrador fecha guardas y guardado
+  ---
+  duration_ms: 253.0159
+  type: 'test'
+  ...
+# Subtest: reloj009 firmas y enmiendas rechazan alteraciones no autorizadas
+ok 83 - reloj009 firmas y enmiendas rechazan alteraciones no autorizadas
+  ---
+  duration_ms: 657.3665
+  type: 'test'
+  ...
+# Subtest: reloj009 trazabilidad rechaza resultados falsos omitidos y parciales
+ok 84 - reloj009 trazabilidad rechaza resultados falsos omitidos y parciales
+  ---
+  duration_ms: 682.8704
+  type: 'test'
+  ...
+# Subtest: un nuevo periodo corta la influencia de la ovulacion del ciclo anterior
+ok 85 - un nuevo periodo corta la influencia de la ovulacion del ciclo anterior
+  ---
+  duration_ms: 1.5298
+  type: 'test'
+  ...
+# Subtest: un registro de sintomas sin campo de sangrado no cancela un periodo
+ok 86 - un registro de sintomas sin campo de sangrado no cancela un periodo
+  ---
+  duration_ms: 0.537
+  type: 'test'
+  ...
+# Subtest: menstrual logs do not duplicate sleep or energy fields
+ok 87 - menstrual logs do not duplicate sleep or energy fields
+  ---
+  duration_ms: 0.1742
+  type: 'test'
+  ...
+# Subtest: clear menstrual bleeding estimates menstruation
+ok 88 - clear menstrual bleeding estimates menstruation
+  ---
+  duration_ms: 0.1831
+  type: 'test'
+  ...
+# Subtest: spotting does not restart a cycle
+ok 89 - spotting does not restart a cycle
+  ---
+  duration_ms: 0.1664
+  type: 'test'
+  ...
+# Subtest: fertile cervical fluid marks a probable fertile window
+ok 90 - fertile cervical fluid marks a probable fertile window
+  ---
+  duration_ms: 0.2056
+  type: 'test'
+  ...
+# Subtest: flow peak followed by dry fluid marks probable ovulation and early luteal
+ok 91 - flow peak followed by dry fluid marks probable ovulation and early luteal
+  ---
+  duration_ms: 0.4107
+  type: 'test'
+  ...
+# Subtest: luteal early and mid use days after probable ovulation
+ok 92 - luteal early and mid use days after probable ovulation
+  ---
+  duration_ms: 0.2389
+  type: 'test'
+  ...
+# Subtest: luteal late is inferred near the next period
+ok 93 - luteal late is inferred near the next period
+  ---
+  duration_ms: 0.2342
+  type: 'test'
+  ...
+# Subtest: recalculation reclassifies days before a newly logged period
+ok 94 - recalculation reclassifies days before a newly logged period
+  ---
+  duration_ms: 1.9983
+  type: 'test'
+  ...
+# Subtest: insights read sleep and energy from wellness records
+ok 95 - insights read sleep and energy from wellness records
+  ---
+  duration_ms: 7.6391
+  type: 'test'
+  ...
+# Subtest: un check-in sin sangrado gana a la duracion asumida del periodo
+ok 96 - un check-in sin sangrado gana a la duracion asumida del periodo
+  ---
+  duration_ms: 0.3602
+  type: 'test'
+  ...
+# Subtest: el resumen agrupa por ciclo, no por dia, y mide el sangrado
+ok 97 - el resumen agrupa por ciclo, no por dia, y mide el sangrado
+  ---
+  duration_ms: 11.5954
+  type: 'test'
+  ...
+# Subtest: un ciclo fuera de rango no entra en la media
+ok 98 - un ciclo fuera de rango no entra en la media
+  ---
+  duration_ms: 13.9598
+  type: 'test'
+  ...
+# Subtest: la distribucion ubica cada sintoma en su tramo del ciclo
+ok 99 - la distribucion ubica cada sintoma en su tramo del ciclo
+  ---
+  duration_ms: 11.1194
+  type: 'test'
+  ...
+# Subtest: las lecturas de energia por fase vienen etiquetadas con su fase
+ok 100 - las lecturas de energia por fase vienen etiquetadas con su fase
+  ---
+  duration_ms: 4.2798
+  type: 'test'
+  ...
+# Subtest: cada ciclo se segmenta en fases consecutivas, sin repetir tramo
+ok 101 - cada ciclo se segmenta en fases consecutivas, sin repetir tramo
+  ---
+  duration_ms: 7.8952
+  type: 'test'
+  ...
+# Subtest: la guia del dia cambia con la fase y con lo que registraste
+ok 102 - la guia del dia cambia con la fase y con lo que registraste
+  ---
+  duration_ms: 0.7302
+  type: 'test'
+  ...
+# Subtest: sin dos ciclos completos la guia se marca como orientativa
+ok 103 - sin dos ciclos completos la guia se marca como orientativa
+  ---
+  duration_ms: 0.2594
+  type: 'test'
+  ...
+# Subtest: la ovulacion se estima por calendario y el flujo la corrige
+ok 104 - la ovulacion se estima por calendario y el flujo la corrige
+  ---
+  duration_ms: 0.452
+  type: 'test'
+  ...
+# Subtest: sin ciclos registrados no se inventa una ovulacion
+ok 105 - sin ciclos registrados no se inventa una ovulacion
+  ---
+  duration_ms: 0.2288
+  type: 'test'
+  ...
+# Subtest: no afirma lútea tardía cuando el periodo pudo llegar sin registrarse
+ok 106 - no afirma lútea tardía cuando el periodo pudo llegar sin registrarse
+  ---
+  duration_ms: 1.9738
+  type: 'test'
+  ...
+# Subtest: datos limites de dependencia
+ok 107 - datos limites de dependencia
+  ---
+  duration_ms: 174.7548
+  type: 'test'
+  ...
+# Subtest: datos exportacion completa o error
+    # Subtest: FR-009 US2-AS1 copia de memoria con fotos sin esperar guardado
+    ok 1 - FR-009 US2-AS1 copia de memoria con fotos sin esperar guardado
+      ---
+      duration_ms: 2748.4635
+      type: 'test'
+      ...
+    # Subtest: FR-009 foto fallida impide descarga parcial
+    ok 2 - FR-009 foto fallida impide descarga parcial
+      ---
+      duration_ms: 346.9086
+      type: 'test'
+      ...
+    1..2
+ok 108 - datos exportacion completa o error
+  ---
+  duration_ms: 3096.6241
+  type: 'test'
+  ...
+# Subtest: datos importacion validacion y aplicacion parcial
+    # Subtest: FR-010 US2-AS2 rechazos límite exacto cancelación y lectura
+    ok 1 - FR-010 US2-AS2 rechazos límite exacto cancelación y lectura
+      ---
+      duration_ms: 499.2324
+      type: 'test'
+      ...
+    # Subtest: FR-010 aplicación previa a fotos conserva colecciones y foto fallida
+    ok 2 - FR-010 aplicación previa a fotos conserva colecciones y foto fallida
+      ---
+      duration_ms: 700.3301
+      type: 'test'
+      ...
+    1..2
+ok 109 - datos importacion validacion y aplicacion parcial
+  ---
+  duration_ms: 1200.5774
+  type: 'test'
+  ...
+# Subtest: datos borrado orden y recuperacion
+    # Subtest: FR-011 US3-AS1 sin usuario no produce efectos
+    ok 1 - FR-011 US3-AS1 sin usuario no produce efectos
+      ---
+      duration_ms: 308.9922
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS1 cola espera suspensión y orden
+    ok 2 - FR-011 US3-AS1 cola espera suspensión y orden
+      ---
+      duration_ms: 413.7607
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en listPhotos
+    ok 3 - FR-011 US3-AS2 excepción en listPhotos
+      ---
+      duration_ms: 330.5795
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en removePhotos
+    ok 4 - FR-011 US3-AS2 excepción en removePhotos
+      ---
+      duration_ms: 324.3607
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en deleteData
+    ok 5 - FR-011 US3-AS2 excepción en deleteData
+      ---
+      duration_ms: 727.4661
+      type: 'test'
+      ...
+    # Subtest: FR-011 US3-AS2 excepción en signOut
+    ok 6 - FR-011 US3-AS2 excepción en signOut
+      ---
+      duration_ms: 976.9983
+      type: 'test'
+      ...
+    # Subtest: FR-011 retorno error de signOut no dispara recuperación
+    ok 7 - FR-011 retorno error de signOut no dispara recuperación
+      ---
+      duration_ms: 741.7458
+      type: 'test'
+      ...
+    1..7
+ok 110 - datos borrado orden y recuperacion
+  ---
+  duration_ms: 3832.1826
+  type: 'test'
+  ...
+# Subtest: datos carga y descarte de resultados
+    # Subtest: FR-007 US1-AS6 hidratación migraciones y fallos individuales
+    ok 1 - FR-007 US1-AS6 hidratación migraciones y fallos individuales
+      ---
+      duration_ms: 393.74
+      type: 'test'
+      ...
+    # Subtest: FR-007 US1-AS6 error de carga no habilita escritura
+    ok 2 - FR-007 US1-AS6 error de carga no habilita escritura
+      ---
+      duration_ms: 218.6797
+      type: 'test'
+      ...
+    # Subtest: FR-007 US1-AS6 sesión anterior queda descartada tras cleanup
+    ok 3 - FR-007 US1-AS6 sesión anterior queda descartada tras cleanup
+      ---
+      duration_ms: 290.5208
+      type: 'test'
+      ...
+    1..3
+ok 111 - datos carga y descarte de resultados
+  ---
+  duration_ms: 904.1155
+  type: 'test'
+  ...
+# Subtest: datos claves sincronizadas y timer
+ok 112 - datos claves sincronizadas y timer
+  ---
+  duration_ms: 318.2313
+  type: 'test'
+  ...
+# Subtest: datos lectura y escritura por usuario y clave
+    # Subtest: FR-001 FR-002 US1-AS1 filtros payload valores y errores
+    ok 1 - FR-001 FR-002 US1-AS1 filtros payload valores y errores
+      ---
+      duration_ms: 15.2121
+      type: 'test'
+      ...
+    # Subtest: FR-002 plazo exacto y operación remota no cancelada
+    ok 2 - FR-002 plazo exacto y operación remota no cancelada
+      ---
+      duration_ms: 3.6178
+      type: 'test'
+      ...
+    1..2
+ok 113 - datos lectura y escritura por usuario y clave
+  ---
+  duration_ms: 19.6808
+  type: 'test'
+  ...
+# Subtest: datos humo de previews con cliente sintetico
+ok 114 - datos humo de previews con cliente sintetico
+  ---
+  duration_ms: 2286.3479
+  type: 'test'
+  ...
+# Subtest: datos debounce y suscripciones
+ok 115 - datos debounce y suscripciones
+  ---
+  duration_ms: 300.6061
+  type: 'test'
+  ...
+# Subtest: datos cola orden concurrencia y referencia
+ok 116 - datos cola orden concurrencia y referencia
+  ---
+  duration_ms: 26.1875
+  type: 'test'
+  ...
+# Subtest: datos eventos y promesas de guardado
+ok 117 - datos eventos y promesas de guardado
+  ---
+  duration_ms: 4.5286
+  type: 'test'
+  ...
+# Subtest: datos suspension y espera capturada
+ok 118 - datos suspension y espera capturada
+  ---
+  duration_ms: 1.9789
+  type: 'test'
+  ...
+# Subtest: borrado008 firmas conservan cadena y rechazan enmiendas invalidas
+ok 119 - borrado008 firmas conservan cadena y rechazan enmiendas invalidas
+  ---
+  duration_ms: 4.0753
+  type: 'test'
+  ...
+# Subtest: borrado008 intento y recuperacion no se duplican
+ok 120 - borrado008 intento y recuperacion no se duplican
+  ---
+  duration_ms: 399.5033
+  type: 'test'
+  ...
+# Subtest: borrado008 feedback sobrevive al desmontaje de Ajustes
+ok 121 - borrado008 feedback sobrevive al desmontaje de Ajustes
+  ---
+  duration_ms: 344.1502
+  type: 'test'
+  ...
+# Subtest: borrado008 reintento manual solo cierra sesion
+ok 122 - borrado008 reintento manual solo cierra sesion
+  ---
+  duration_ms: 312.2768
+  type: 'test'
+  ...
+# Subtest: borrado008 visibilidad e intervalo no reactivan guardados
+    # Subtest: visibility pendiente
+    ok 1 - visibility pendiente
+      ---
+      duration_ms: 318.0902
+      type: 'test'
+      ...
+    # Subtest: visibility fallido
+    ok 2 - visibility fallido
+      ---
+      duration_ms: 397.2508
+      type: 'test'
+      ...
+    # Subtest: interval pendiente
+    ok 3 - interval pendiente
+      ---
+      duration_ms: 287.1357
+      type: 'test'
+      ...
+    # Subtest: interval fallido
+    ok 4 - interval fallido
+      ---
+      duration_ms: 319.7341
+      type: 'test'
+      ...
+    1..4
+ok 123 - borrado008 visibilidad e intervalo no reactivan guardados
+  ---
+  duration_ms: 1322.9642
+  type: 'test'
+  ...
+# Subtest: borrado008 recarga temprana fallida conserva bloqueo
+ok 124 - borrado008 recarga temprana fallida conserva bloqueo
+  ---
+  duration_ms: 315.9741
+  type: 'test'
+  ...
+# Subtest: borrado008 recarga temprana completa precede a nuevos guardados
+ok 125 - borrado008 recarga temprana completa precede a nuevos guardados
+  ---
+  duration_ms: 319.675
+  type: 'test'
+  ...
+# Subtest: borrado008 fallo tardio de A no habilita ni escribe B
+ok 126 - borrado008 fallo tardio de A no habilita ni escribe B
+  ---
+  duration_ms: 268.0983
+  type: 'test'
+  ...
+# Subtest: borrado008 respuesta de A no cierra ni continua B
+ok 127 - borrado008 respuesta de A no cierra ni continua B
+  ---
+  duration_ms: 278.371
+  type: 'test'
+  ...
+# Subtest: borrado008 cambio A B A invalida el intento anterior
+ok 128 - borrado008 cambio A B A invalida el intento anterior
+  ---
+  duration_ms: 402.8186
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador conserva limites de dependencias
+ok 129 - borrado008 coordinador conserva limites de dependencias
+  ---
+  duration_ms: 133.5699
+  type: 'test'
+  ...
+# Subtest: borrado008 confirmacion exacta y cancelacion no producen efectos
+ok 130 - borrado008 confirmacion exacta y cancelacion no producen efectos
+  ---
+  duration_ms: 628.3925
+  type: 'test'
+  ...
+# Subtest: borrado008 usuario ausente rechaza antes de efectos
+ok 131 - borrado008 usuario ausente rechaza antes de efectos
+  ---
+  duration_ms: 0.4021
+  type: 'test'
+  ...
+# Subtest: borrado008 conserva orden cola fotos registros y propietario
+ok 132 - borrado008 conserva orden cola fotos registros y propietario
+  ---
+  duration_ms: 41.8184
+  type: 'test'
+  ...
+# Subtest: borrado008 conserva efectos parciales sin rollback
+ok 133 - borrado008 conserva efectos parciales sin rollback
+  ---
+  duration_ms: 0.3852
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador snapshot estable y exclusion por intento
+ok 134 - borrado008 coordinador snapshot estable y exclusion por intento
+  ---
+  duration_ms: 0.9222
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador recarga requiere confirmacion de commit vigente
+ok 135 - borrado008 coordinador recarga requiere confirmacion de commit vigente
+  ---
+  duration_ms: 0.7633
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador lectura fallida y confirmacion obsoleta mantienen aislamiento
+ok 136 - borrado008 coordinador lectura fallida y confirmacion obsoleta mantienen aislamiento
+  ---
+  duration_ms: 0.3917
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador respuesta tardia no borra intento nuevo
+ok 137 - borrado008 coordinador respuesta tardia no borra intento nuevo
+  ---
+  duration_ms: 0.4572
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador cierre manual nunca repite DELETE incierto
+ok 138 - borrado008 coordinador cierre manual nunca repite DELETE incierto
+  ---
+  duration_ms: 0.8389
+  type: 'test'
+  ...
+# Subtest: borrado008 coordinador montaje limpieza montaje no revive trabajo anterior
+ok 139 - borrado008 coordinador montaje limpieza montaje no revive trabajo anterior
+  ---
+  duration_ms: 0.3542
+  type: 'test'
+  ...
+# Subtest: borrado008 cierre distingue retorno error y rechazo
+    # Subtest: retorno
+    ok 1 - retorno
+      ---
+      duration_ms: 0.2736
+      type: 'test'
+      ...
+    # Subtest: rechazo
+    ok 2 - rechazo
+      ---
+      duration_ms: 0.1583
+      type: 'test'
+      ...
+    1..2
+ok 140 - borrado008 cierre distingue retorno error y rechazo
+  ---
+  duration_ms: 0.8096
+  type: 'test'
+  ...
+# Subtest: borrado008 resultado de borrado no confirmado conserva bloqueo
+ok 141 - borrado008 resultado de borrado no confirmado conserva bloqueo
+  ---
+  duration_ms: 0.2785
+  type: 'test'
+  ...
+# Subtest: borrado008 no recrea datos tras fallo de cierre
+ok 142 - borrado008 no recrea datos tras fallo de cierre
+  ---
+  duration_ms: 0.3885
+  type: 'test'
+  ...
+# Subtest: borrado008 carga y guardado propios de B siguen independientes de A
+ok 143 - borrado008 carga y guardado propios de B siguen independientes de A
+  ---
+  duration_ms: 355.3096
+  type: 'test'
+  ...
+# Subtest: borrado008 carga ordinaria pendiente no aplica setters durante borrado
+ok 144 - borrado008 carga ordinaria pendiente no aplica setters durante borrado
+  ---
+  duration_ms: 357.5758
+  type: 'test'
+  ...
+# Subtest: borrado008 rechazo sin Error permite recarga temprana
+    # Subtest: undefined
+    ok 1 - undefined
+      ---
+      duration_ms: 0.8681
+      type: 'test'
+      ...
+    # Subtest: null
+    ok 2 - null
+      ---
+      duration_ms: 0.158
+      type: 'test'
+      ...
+    # Subtest: false
+    ok 3 - false
+      ---
+      duration_ms: 0.1793
+      type: 'test'
+      ...
+    # Subtest: zero
+    ok 4 - zero
+      ---
+      duration_ms: 0.2623
+      type: 'test'
+      ...
+    # Subtest: empty
+    ok 5 - empty
+      ---
+      duration_ms: 0.2529
+      type: 'test'
+      ...
+    1..5
+ok 145 - borrado008 rechazo sin Error permite recarga temprana
+  ---
+  duration_ms: 2.4937
+  type: 'test'
+  ...
+# Subtest: borrado008 rechazo sin Error permite reintento solo de cierre
+    # Subtest: undefined
+    ok 1 - undefined
+      ---
+      duration_ms: 0.291
+      type: 'test'
+      ...
+    # Subtest: null
+    ok 2 - null
+      ---
+      duration_ms: 0.1234
+      type: 'test'
+      ...
+    # Subtest: false
+    ok 3 - false
+      ---
+      duration_ms: 0.1269
+      type: 'test'
+      ...
+    # Subtest: zero
+    ok 4 - zero
+      ---
+      duration_ms: 0.1185
+      type: 'test'
+      ...
+    # Subtest: empty
+    ok 5 - empty
+      ---
+      duration_ms: 0.1173
+      type: 'test'
+      ...
+    1..5
+ok 146 - borrado008 rechazo sin Error permite reintento solo de cierre
+  ---
+  duration_ms: 1.3208
+  type: 'test'
+  ...
+# Subtest: borrado008 trazabilidad rechaza oraculos falsos duplicados omitidos y parciales
+ok 147 - borrado008 trazabilidad rechaza oraculos falsos duplicados omitidos y parciales
+  ---
+  duration_ms: 52.6497
+  type: 'test'
+  ...
+# Subtest: sanitizeDiagnostic removes common identifiers and URL parameters
+ok 148 - sanitizeDiagnostic removes common identifiers and URL parameters
+  ---
+  duration_ms: 0.3341
+  type: 'test'
+  ...
+# Subtest: errorDetails limits diagnostic sizes
+ok 149 - errorDetails limits diagnostic sizes
+  ---
+  duration_ms: 0.2665
+  type: 'test'
+  ...
+# Subtest: computeProteinTargets calculates and clamps grams per kilogram
+ok 150 - computeProteinTargets calculates and clamps grams per kilogram
+  ---
+  duration_ms: 0.2729
+  type: 'test'
+  ...
+# Subtest: distributeProtein supports four and five meals
+ok 151 - distributeProtein supports four and five meals
+  ---
+  duration_ms: 0.1766
+  type: 'test'
+  ...
+# Subtest: routine selectors expose all templates without restricting the day
+ok 152 - routine selectors expose all templates without restricting the day
+  ---
+  duration_ms: 0.2329
+  type: 'test'
+  ...
+# Subtest: guessPrimaryMuscle maps common exercise names
+ok 153 - guessPrimaryMuscle maps common exercise names
+  ---
+  duration_ms: 0.664
+  type: 'test'
+  ...
+# Subtest: templateToAppRoutine preserves routine and minimal-version targets
+ok 154 - templateToAppRoutine preserves routine and minimal-version targets
+  ---
+  duration_ms: 0.4538
+  type: 'test'
+  ...
+# Subtest: el equipo se infiere del nombre, y lo explícito gana a lo mencionado de paso
+ok 155 - el equipo se infiere del nombre, y lo explícito gana a lo mencionado de paso
+  ---
+  duration_ms: 0.9445
+  type: 'test'
+  ...
+# Subtest: una rutina vale para el nivel de su ejercicio más exigente
+ok 156 - una rutina vale para el nivel de su ejercicio más exigente
+  ---
+  duration_ms: 0.2573
+  type: 'test'
+  ...
+# Subtest: las plantillas reales se reparten como es su programa
+ok 157 - las plantillas reales se reparten como es su programa
+  ---
+  duration_ms: 0.3032
+  type: 'test'
+  ...
+# Subtest: el reparto de proteína suma el objetivo y ninguna toma se queda corta
+ok 158 - el reparto de proteína suma el objetivo y ninguna toma se queda corta
+  ---
+  duration_ms: 0.2214
+  type: 'test'
+  ...
+# Subtest: identidad capas de fotos sin React DOM ni cliente global
+ok 159 - identidad capas de fotos sin React DOM ni cliente global
+  ---
+  duration_ms: 35.7405
+  type: 'test'
+  ...
+# Subtest: identidad autenticacion credenciales errores y plazo
+    # Subtest: normaliza solo correo y elige operación sin alterar contraseña
+    ok 1 - normaliza solo correo y elige operación sin alterar contraseña
+      ---
+      duration_ms: 8.8192
+      type: 'test'
+      ...
+    # Subtest: propaga retorno error rechazo y excepción síncrona
+    ok 2 - propaga retorno error rechazo y excepción síncrona
+      ---
+      duration_ms: 1.8155
+      type: 'test'
+      ...
+    # Subtest: vence a 15000 ms sin cancelar la respuesta remota
+    ok 3 - vence a 15000 ms sin cancelar la respuesta remota
+      ---
+      duration_ms: 1.1985
+      type: 'test'
+      ...
+    1..3
+ok 160 - identidad autenticacion credenciales errores y plazo
+  ---
+  duration_ms: 12.4502
+  type: 'test'
+  ...
+# Subtest: identidad CHANGE configuracion antes de crear cliente
+    # Subtest: rechaza URL ausente vacía malformada o protocolo ajeno antes del SDK
+    ok 1 - rechaza URL ausente vacía malformada o protocolo ajeno antes del SDK
+      ---
+      duration_ms: 68.8951
+      type: 'test'
+      ...
+    # Subtest: rechaza clave ausente o vacía sin exponer su valor
+    ok 2 - rechaza clave ausente o vacía sin exponer su valor
+      ---
+      duration_ms: 28.107
+      type: 'test'
+      ...
+    # Subtest: configuración válida conserva argumentos originales y cliente exportado
+    ok 3 - configuración válida conserva argumentos originales y cliente exportado
+      ---
+      duration_ms: 190.4165
+      type: 'test'
+      ...
+    1..3
+ok 161 - identidad CHANGE configuracion antes de crear cliente
+  ---
+  duration_ms: 287.9252
+  type: 'test'
+  ...
+# Subtest: identidad diagnosticos activacion deduplicacion y privacidad
+    # Subtest: deshabilitado no consulta sesión ni inserta
+    ok 1 - deshabilitado no consulta sesión ni inserta
+      ---
+      duration_ms: 9.7643
+      type: 'test'
+      ...
+    # Subtest: sin sesión consume fingerprint y no reintenta el duplicado
+    ok 2 - sin sesión consume fingerprint y no reintenta el duplicado
+      ---
+      duration_ms: 21.0444
+      type: 'test'
+      ...
+    # Subtest: sanitiza payload y no envía user_id desde cliente
+    ok 3 - sanitiza payload y no envía user_id desde cliente
+      ---
+      duration_ms: 355.1136
+      type: 'test'
+      ...
+    # Subtest: máximo diez reportes por instancia incluso si fallan
+    ok 4 - máximo diez reportes por instancia incluso si fallan
+      ---
+      duration_ms: 2.7514
+      type: 'test'
+      ...
+    # Subtest: fallos de sesión e inserción se absorben sin recursión
+    ok 5 - fallos de sesión e inserción se absorben sin recursión
+      ---
+      duration_ms: 2.6912
+      type: 'test'
+      ...
+    # Subtest: solo inserción tiene plazo de 5000 ms y no cancela remoto
+    ok 6 - solo inserción tiene plazo de 5000 ms y no cancela remoto
+      ---
+      duration_ms: 3.5024
+      type: 'test'
+      ...
+    # Subtest: instalación conecta eventos y cleanup retira los mismos handlers
+    ok 7 - instalación conecta eventos y cleanup retira los mismos handlers
+      ---
+      duration_ms: 1.3046
+      type: 'test'
+      ...
+    1..7
+ok 162 - identidad diagnosticos activacion deduplicacion y privacidad
+  ---
+  duration_ms: 397.267
+  type: 'test'
+  ...
+# Subtest: identidad fotos validacion firma subida y recuperacion
+    # Subtest: formatos y frontera exacta 25 MiB
+    ok 1 - formatos y frontera exacta 25 MiB
+      ---
+      duration_ms: 14.3027
+      type: 'test'
+      ...
+    # Subtest: ruta saneada firma 86400 y metadatos persistibles
+    ok 2 - ruta saneada firma 86400 y metadatos persistibles
+      ---
+      duration_ms: 1.5093
+      type: 'test'
+      ...
+    # Subtest: subida usa mime permitido upsert y firma posterior
+    ok 3 - subida usa mime permitido upsert y firma posterior
+      ---
+      duration_ms: 3.496
+      type: 'test'
+      ...
+    # Subtest: fallo individual conserva referencia y registra diagnóstico
+    ok 4 - fallo individual conserva referencia y registra diagnóstico
+      ---
+      duration_ms: 0.9439
+      type: 'test'
+      ...
+    # Subtest: subida fallida no firma y firma fallida no compensa subida
+    ok 5 - subida fallida no firma y firma fallida no compensa subida
+      ---
+      duration_ms: 1.7102
+      type: 'test'
+      ...
+    # Subtest: defaults de ID fecha y fotos sin ruta conservan contrato
+    ok 6 - defaults de ID fecha y fotos sin ruta conservan contrato
+      ---
+      duration_ms: 184.4485
+      type: 'test'
+      ...
+    # Subtest: upload vence a 20000 ms antes de iniciar firma
+    ok 7 - upload vence a 20000 ms antes de iniciar firma
+      ---
+      duration_ms: 3.0492
+      type: 'test'
+      ...
+    1..7
+ok 163 - identidad fotos validacion firma subida y recuperacion
+  ---
+  duration_ms: 210.7639
+  type: 'test'
+  ...
+# Subtest: identidad fotos borrado paginacion orden y fallos
+    # Subtest: lista todo antes de eliminar y usa lotes de 100
+    ok 1 - lista todo antes de eliminar y usa lotes de 100
+      ---
+      duration_ms: 3.6167
+      type: 'test'
+      ...
+    # Subtest: ignora nombres vacíos y no borra después de fallo de listado
+    ok 2 - ignora nombres vacíos y no borra después de fallo de listado
+      ---
+      duration_ms: 3.5822
+      type: 'test'
+      ...
+    # Subtest: borrado individual sin ruta no opera y propaga error
+    ok 3 - borrado individual sin ruta no opera y propaga error
+      ---
+      duration_ms: 2.6148
+      type: 'test'
+      ...
+    # Subtest: fallo del segundo lote detiene borrado sin revertir primero
+    ok 4 - fallo del segundo lote detiene borrado sin revertir primero
+      ---
+      duration_ms: 1.7901
+      type: 'test'
+      ...
+    # Subtest: firma listado y borrado vencen a 20000 ms
+    ok 5 - firma listado y borrado vencen a 20000 ms
+      ---
+      duration_ms: 4.0624
+      type: 'test'
+      ...
+    1..5
+ok 164 - identidad fotos borrado paginacion orden y fallos
+  ---
+  duration_ms: 17.0109
+  type: 'test'
+  ...
+# Subtest: identidad fotos compresion y materializacion de copia
+    # Subtest: compresión mantiene proporción sin ampliar y libera objectURL
+    ok 1 - compresión mantiene proporción sin ampliar y libera objectURL
+      ---
+      duration_ms: 2.7543
+      type: 'test'
+      ...
+    # Subtest: lectura fallida libera objectURL y rechaza
+    ok 2 - lectura fallida libera objectURL y rechaza
+      ---
+      duration_ms: 1.0061
+      type: 'test'
+      ...
+    # Subtest: copia conserva inline y materializa remotas sin metadatos transitorios
+    ok 3 - copia conserva inline y materializa remotas sin metadatos transitorios
+      ---
+      duration_ms: 1.7472
+      type: 'test'
+      ...
+    # Subtest: copia rechaza descarga y FileReader fallidos y plazo de fetch
+    ok 4 - copia rechaza descarga y FileReader fallidos y plazo de fetch
+      ---
+      duration_ms: 3.2631
+      type: 'test'
+      ...
+    1..4
+ok 165 - identidad fotos compresion y materializacion de copia
+  ---
+  duration_ms: 9.7256
+  type: 'test'
+  ...
+# Subtest: identidad fotos recuperacion visible intervalo y merge concurrente
+    # Subtest: visible renueva sin restaurar foto eliminada mientras esperaba
+    ok 1 - visible renueva sin restaurar foto eliminada mientras esperaba
+      ---
+      duration_ms: 212.8501
+      type: 'test'
+      ...
+    # Subtest: intervalo registrado a 12 horas renueva solo con documento visible
+    ok 2 - intervalo registrado a 12 horas renueva solo con documento visible
+      ---
+      duration_ms: 186.1791
+      type: 'test'
+      ...
+    # Subtest: visible reintenta carga fallida y sin fotos no firma
+    ok 3 - visible reintenta carga fallida y sin fotos no firma
+      ---
+      duration_ms: 199.5115
+      type: 'test'
+      ...
+    1..3
+ok 166 - identidad fotos recuperacion visible intervalo y merge concurrente
+  ---
+  duration_ms: 599.1113
+  type: 'test'
+  ...
+# Subtest: identidad CHANGE reporting degradado sin filtrar datos
+    # Subtest: fallos de sesión e insert dejan mensaje fijo sin datos externos
+    ok 1 - fallos de sesión e insert dejan mensaje fijo sin datos externos
+      ---
+      duration_ms: 2.5536
+      type: 'test'
+      ...
+    # Subtest: timeout de inserción informa a 5000 ms sin reintentar
+    ok 2 - timeout de inserción informa a 5000 ms sin reintentar
+      ---
+      duration_ms: 0.9626
+      type: 'test'
+      ...
+    # Subtest: logger fallido no rechaza ni provoca otro envío
+    ok 3 - logger fallido no rechaza ni provoca otro envío
+      ---
+      duration_ms: 0.8137
+      type: 'test'
+      ...
+    # Subtest: flag apagado sesión ausente y duplicado no añaden degradación
+    ok 4 - flag apagado sesión ausente y duplicado no añaden degradación
+      ---
+      duration_ms: 2.2204
+      type: 'test'
+      ...
+    1..4
+ok 167 - identidad CHANGE reporting degradado sin filtrar datos
+  ---
+  duration_ms: 7.0647
+  type: 'test'
+  ...
+# Subtest: identidad sesion consulta eventos reintento y limpieza
+    # Subtest: sesión ausente presenta acceso sin leer datos y cleanup desuscribe
+    ok 1 - sesión ausente presenta acceso sin leer datos y cleanup desuscribe
+      ---
+      duration_ms: 147.5169
+      type: 'test'
+      ...
+    # Subtest: error de sesión se muestra y reintento consulta de nuevo
+    ok 2 - error de sesión se muestra y reintento consulta de nuevo
+      ---
+      duration_ms: 144.1969
+      type: 'test'
+      ...
+    # Subtest: timeout 15000 ms muestra error sin consulta de datos
+    ok 3 - timeout 15000 ms muestra error sin consulta de datos
+      ---
+      duration_ms: 142.7064
+      type: 'test'
+      ...
+    # Subtest: eventos mismo usuario no recargan y usuario nuevo cambia propietario
+    ok 4 - eventos mismo usuario no recargan y usuario nuevo cambia propietario
+      ---
+      duration_ms: 363.529
+      type: 'test'
+      ...
+    # Subtest: respuesta de sesión tras desmontaje no inicia carga
+    ok 5 - respuesta de sesión tras desmontaje no inicia carga
+      ---
+      duration_ms: 119.0737
+      type: 'test'
+      ...
+    1..5
+ok 168 - identidad sesion consulta eventos reintento y limpieza
+  ---
+  duration_ms: 918.0807
+  type: 'test'
+  ...
+# Subtest: identidad acceso interfaz validacion mensajes y espera
+    # Subtest: campos vacíos no autentican y registro corto muestra mensaje
+    ok 1 - campos vacíos no autentican y registro corto muestra mensaje
+      ---
+      duration_ms: 164.885
+      type: 'test'
+      ...
+    # Subtest: busy deshabilita formulario y error recupera inputs
+    ok 2 - busy deshabilita formulario y error recupera inputs
+      ---
+      duration_ms: 165.2563
+      type: 'test'
+      ...
+    # Subtest: registro válido confirma correo y otros errores usan message o fallback
+    ok 3 - registro válido confirma correo y otros errores usan message o fallback
+      ---
+      duration_ms: 169.2891
+      type: 'test'
+      ...
+    1..3
+ok 169 - identidad acceso interfaz validacion mensajes y espera
+  ---
+  duration_ms: 500.1079
+  type: 'test'
+  ...
+# Subtest: interfaz conserva alias de cuenta y seleccion local
+ok 170 - interfaz conserva alias de cuenta y seleccion local
+  ---
+  duration_ms: 2000.7334
+  type: 'test'
+  ...
+# Subtest: interfaz navegacion pura y negativos transitivos
+ok 171 - interfaz navegacion pura y negativos transitivos
+  ---
+  duration_ms: 131.7494
+  type: 'test'
+  ...
+# Subtest: interfaz verifica todos los pins congelados de E0
+ok 172 - interfaz verifica todos los pins congelados de E0
+  ---
+  duration_ms: 936.5741
+  type: 'test'
+  ...
+# Subtest: interfaz tema aislado y negativos de dependencias
+ok 173 - interfaz tema aislado y negativos de dependencias
+  ---
+  duration_ms: 355.3892
+  type: 'test'
+  ...
+# Subtest: interfaz shell presenta sin dominio ni servicios y sin ciclos
+ok 174 - interfaz shell presenta sin dominio ni servicios y sin ciclos
+  ---
+  duration_ms: 1024.51
+  type: 'test'
+  ...
+# Subtest: interfaz detecta ciclos en grafo compilado de fixture
+ok 175 - interfaz detecta ciclos en grafo compilado de fixture
+  ---
+  duration_ms: 5.604
+  type: 'test'
+  ...
+# Subtest: interfaz conserva alias seccion fecha y montaje de cuerpo
+ok 176 - interfaz conserva alias seccion fecha y montaje de cuerpo
+  ---
+  duration_ms: 617.4976
+  type: 'test'
+  ...
+# Subtest: interfaz conserva cargas reintentos errores y estado de guardado
+ok 177 - interfaz conserva cargas reintentos errores y estado de guardado
+  ---
+  duration_ms: 2357.6174
+  type: 'test'
+  ...
+# Subtest: interfaz conserva fachadas CSS y contratos anteriores
+ok 178 - interfaz conserva fachadas CSS y contratos anteriores
+  ---
+  duration_ms: 150.1034
+  type: 'test'
+  ...
+# Subtest: interfaz conserva contenido y cierres de desglose
+ok 179 - interfaz conserva contenido y cierres de desglose
+  ---
+  duration_ms: 548.4431
+  type: 'test'
+  ...
+# Subtest: interfaz conserva busqueda filtros limites y vacios de diario
+ok 180 - interfaz conserva busqueda filtros limites y vacios de diario
+  ---
+  duration_ms: 157.6358
+  type: 'test'
+  ...
+# Subtest: interfaz conserva descarte general siete dias y deshacer
+ok 181 - interfaz conserva descarte general siete dias y deshacer
+  ---
+  duration_ms: 146.8586
+  type: 'test'
+  ...
+# Subtest: interfaz conserva componentes fechas movimiento y cleanup
+ok 182 - interfaz conserva componentes fechas movimiento y cleanup
+  ---
+  duration_ms: 300.6117
+  type: 'test'
+  ...
+# Subtest: interfaz conserva filtro ancla resaltado y retorno temprano
+ok 183 - interfaz conserva filtro ancla resaltado y retorno temprano
+  ---
+  duration_ms: 466.916
+  type: 'test'
+  ...
+# Subtest: interfaz mutaciones detectan perdida de fecha tema toast y breakpoint
+ok 184 - interfaz mutaciones detectan perdida de fecha tema toast y breakpoint
+  ---
+  duration_ms: 5801.6054
+  type: 'test'
+  ...
+# Subtest: interfaz trazabilidad rechaza ausentes duplicados omitidos reintentos y parcialidad
+ok 185 - interfaz trazabilidad rechaza ausentes duplicados omitidos reintentos y parcialidad
+  ---
+  duration_ms: 3.9994
+  type: 'test'
+  ...
+# Subtest: interfaz conserva raices activas y entradas de shell
+ok 186 - interfaz conserva raices activas y entradas de shell
+  ---
+  duration_ms: 325.7645
+  type: 'test'
+  ...
+# Subtest: interfaz conserva destinos y fecha del dia del plan
+ok 187 - interfaz conserva destinos y fecha del dia del plan
+  ---
+  duration_ms: 282.1384
+  type: 'test'
+  ...
+# Subtest: interfaz conserva contratos diferentes de ambos previews
+ok 188 - interfaz conserva contratos diferentes de ambos previews
+  ---
+  duration_ms: 2159.7031
+  type: 'test'
+  ...
+# Subtest: interfaz conserva destinos de registrar segun ciclo
+ok 189 - interfaz conserva destinos de registrar segun ciclo
+  ---
+  duration_ms: 1035.116
+  type: 'test'
+  ...
+# Subtest: interfaz conserva CSS y matriz responsive original
+ok 190 - interfaz conserva CSS y matriz responsive original
+  ---
+  duration_ms: 113.8941
+  type: 'test'
+  ...
+# Subtest: interfaz conserva fecha enfocada y tarjeta solicitada
+ok 191 - interfaz conserva fecha enfocada y tarjeta solicitada
+  ---
+  duration_ms: 362.7964
+  type: 'test'
+  ...
+# Subtest: interfaz conserva recorridos y salidas de registro
+ok 192 - interfaz conserva recorridos y salidas de registro
+  ---
+  duration_ms: 214.2211
+  type: 'test'
+  ...
+# Subtest: interfaz conserva foco visual de sesion y salida limpia
+ok 193 - interfaz conserva foco visual de sesion y salida limpia
+  ---
+  duration_ms: 129.0226
+  type: 'test'
+  ...
+# Subtest: interfaz conserva tema de sistema primer render y limpieza
+ok 194 - interfaz conserva tema de sistema primer render y limpieza
+  ---
+  duration_ms: 1240.0426
+  type: 'test'
+  ...
+# Subtest: interfaz conserva preferencia y fallos de almacenamiento
+ok 195 - interfaz conserva preferencia y fallos de almacenamiento
+  ---
+  duration_ms: 933.3966
+  type: 'test'
+  ...
+# Subtest: interfaz conserva toast ultimo mensaje plazo y limpieza
+ok 196 - interfaz conserva toast ultimo mensaje plazo y limpieza
+  ---
+  duration_ms: 135.3603
+  type: 'test'
+  ...
+# Subtest: interfaz conserva cabecera sticky y medidas tactiles
+ok 197 - interfaz conserva cabecera sticky y medidas tactiles
+  ---
+  duration_ms: 128.4525
+  type: 'test'
+  ...
+# Subtest: RLS Docker acepta sockets locales y rechaza pipes de otra maquina
+ok 198 - RLS Docker acepta sockets locales y rechaza pipes de otra maquina
+  ---
+  duration_ms: 0.2929
+  type: 'test'
+  ...
+# Subtest: RLS guarda admite solo destino desechable local explícito sin conectar
+ok 199 - RLS guarda admite solo destino desechable local explícito sin conectar
+  ---
+  duration_ms: 2.8296
+  type: 'test'
+  ...
+# Subtest: RLS guarda rechaza hosts remotos aliases y confusiones de URL
+ok 200 - RLS guarda rechaza hosts remotos aliases y confusiones de URL
+  ---
+  duration_ms: 0.2757
+  type: 'test'
+  ...
+# Subtest: RLS guarda rechaza configuración ambigua y no expone valores en errores
+ok 201 - RLS guarda rechaza configuración ambigua y no expone valores en errores
+  ---
+  duration_ms: 0.391
+  type: 'test'
+  ...
+# Subtest: nutricion adherencia conserva ventana dias registrados y umbral
+ok 202 - nutricion adherencia conserva ventana dias registrados y umbral
+  ---
+  duration_ms: 995.8559
+  type: 'test'
+  ...
+# Subtest: nutricion alertas conservan mantenimiento proteina y otras metricas
+ok 203 - nutricion alertas conservan mantenimiento proteina y otras metricas
+  ---
+  duration_ms: 135.0305
+  type: 'test'
+  ...
+# Subtest: nutricion cantidad conserva validacion escalado guardado y retorno
+ok 204 - nutricion cantidad conserva validacion escalado guardado y retorno
+  ---
+  duration_ms: 212.8444
+  type: 'test'
+  ...
+# Subtest: nutricion capas puras y negativos transitivos
+ok 205 - nutricion capas puras y negativos transitivos
+  ---
+  duration_ms: 2355.8754
+  type: 'test'
+  ...
+# Subtest: nutricion inferencia se invoca despues de guardas con entradas originales
+ok 206 - nutricion inferencia se invoca despues de guardas con entradas originales
+  ---
+  duration_ms: 1.1298
+  type: 'test'
+  ...
+# Subtest: nutricion mantiene hashes congelados propios y anteriores
+ok 207 - nutricion mantiene hashes congelados propios y anteriores
+  ---
+  duration_ms: 36.3721
+  type: 'test'
+  ...
+# Subtest: nutricion objetivos conservan edicion efecto automatico y montaje
+ok 208 - nutricion objetivos conservan edicion efecto automatico y montaje
+  ---
+  duration_ms: 320.7922
+  type: 'test'
+  ...
+# Subtest: nutricion catalogo y migracion conservan valores y unidades
+ok 209 - nutricion catalogo y migracion conservan valores y unidades
+  ---
+  duration_ms: 280.163
+  type: 'test'
+  ...
+# Subtest: nutricion consumidores y previews conservan contratos y fachadas
+ok 210 - nutricion consumidores y previews conservan contratos y fachadas
+  ---
+  duration_ms: 2553.3675
+  type: 'test'
+  ...
+# Subtest: nutricion metricas conservan series medias ventanas y macros
+ok 211 - nutricion metricas conservan series medias ventanas y macros
+  ---
+  duration_ms: 323.088
+  type: 'test'
+  ...
+# Subtest: nutricion diario nutricional conserva totales grupos fechas y borrado
+ok 212 - nutricion diario nutricional conserva totales grupos fechas y borrado
+  ---
+  duration_ms: 155.5041
+  type: 'test'
+  ...
+# Subtest: nutricion real esperado conserva ancla direccion y proyeccion
+ok 213 - nutricion real esperado conserva ancla direccion y proyeccion
+  ---
+  duration_ms: 2.9526
+  type: 'test'
+  ...
+# Subtest: nutricion alimentos conservan crud conversiones orden y deduplicacion
+ok 214 - nutricion alimentos conservan crud conversiones orden y deduplicacion
+  ---
+  duration_ms: 166.0557
+  type: 'test'
+  ...
+# Subtest: nutricion objetivos conservan referencia actividad direccion y sugerencia
+ok 215 - nutricion objetivos conservan referencia actividad direccion y sugerencia
+  ---
+  duration_ms: 0.7105
+  type: 'test'
+  ...
+# Subtest: nutricion ritmo conserva aplicar descartar snapshot y deshacer
+ok 216 - nutricion ritmo conserva aplicar descartar snapshot y deshacer
+  ---
+  duration_ms: 178.1459
+  type: 'test'
+  ...
+# Subtest: nutricion ritmo conserva guardas ventana limites y redondeos
+ok 217 - nutricion ritmo conserva guardas ventana limites y redondeos
+  ---
+  duration_ms: 1.2028
+  type: 'test'
+  ...
+# Subtest: nutricion proteina conserva clamps reparto etiquetas y redondeos
+ok 218 - nutricion proteina conserva clamps reparto etiquetas y redondeos
+  ---
+  duration_ms: 0.3005
+  type: 'test'
+  ...
+# Subtest: nutricion recetas conservan ingredientes porciones y snapshots
+ok 219 - nutricion recetas conservan ingredientes porciones y snapshots
+  ---
+  duration_ms: 156.8459
+  type: 'test'
+  ...
+# Subtest: nutricion busqueda conserva fuentes limites recientes y navegacion
+ok 220 - nutricion busqueda conserva fuentes limites recientes y navegacion
+  ---
+  duration_ms: 228.4927
+  type: 'test'
+  ...
+# Subtest: nutricion mutaciones detectan gramos redondeo montaje y snapshot
+ok 221 - nutricion mutaciones detectan gramos redondeo montaje y snapshot
+  ---
+  duration_ms: 4811.413
+  type: 'test'
+  ...
+# Subtest: nutricion manifiesto rechaza cobertura incompleta y resultados invalidos
+ok 222 - nutricion manifiesto rechaza cobertura incompleta y resultados invalidos
+  ---
+  duration_ms: 0.2965
+  type: 'test'
+  ...
+# Subtest: RLS evidencia acepta solo resultados reales completos del contrato esperado
+ok 223 - RLS evidencia acepta solo resultados reales completos del contrato esperado
+  ---
+  duration_ms: 0.3558
+  type: 'test'
+  ...
+# Subtest: RLS evidencia rechaza obsolescencia omission duplicados y limpieza fallida
+ok 224 - RLS evidencia rechaza obsolescencia omission duplicados y limpieza fallida
+  ---
+  duration_ms: 0.5446
+  type: 'test'
+  ...
+# Subtest: RLS fixture rechaza destino remoto antes de crear cualquier cliente
+ok 225 - RLS fixture rechaza destino remoto antes de crear cualquier cliente
+  ---
+  duration_ms: 0.2462
+  type: 'test'
+  ...
+# Subtest: RLS fixture exige marcador antes de crear cliente privilegiado
+ok 226 - RLS fixture exige marcador antes de crear cliente privilegiado
+  ---
+  duration_ms: 0.6095
+  type: 'test'
+  ...
+# Subtest: RLS intento rechazado invalida evidencia previa sin conectar Docker remoto
+ok 227 - RLS intento rechazado invalida evidencia previa sin conectar Docker remoto
+  ---
+  duration_ms: 199.0459
+  type: 'test'
+  ...
+# Subtest: guardado007 indicador recupera estado al remontar
+ok 228 - guardado007 indicador recupera estado al remontar
+  ---
+  duration_ms: 920.4959
+  type: 'test'
+  ...
+# Subtest: guardado007 arquitectura y negativos de dependencia
+ok 229 - guardado007 arquitectura y negativos de dependencia
+  ---
+  duration_ms: 28.31
+  type: 'test'
+  ...
+# Subtest: guardado007 firmas originales y enmiendas explicitas
+ok 230 - guardado007 firmas originales y enmiendas explicitas
+  ---
+  duration_ms: 46.5126
+  type: 'test'
+  ...
+# Subtest: guardado007 cola mantiene orden concurrencia y referencia
+ok 231 - guardado007 cola mantiene orden concurrencia y referencia
+  ---
+  duration_ms: 0.779
+  type: 'test'
+  ...
+# Subtest: guardado007 debounce conserva 600ms y cleanup
+ok 232 - guardado007 debounce conserva 600ms y cleanup
+  ---
+  duration_ms: 178.122
+  type: 'test'
+  ...
+# Subtest: guardado007 promesa conserva resolucion ante fallo
+ok 233 - guardado007 promesa conserva resolucion ante fallo
+  ---
+  duration_ms: 0.3641
+  type: 'test'
+  ...
+# Subtest: guardado007 conserva ausencia suspension y espera capturada
+ok 234 - guardado007 conserva ausencia suspension y espera capturada
+  ---
+  duration_ms: 1.0139
+  type: 'test'
+  ...
+# Subtest: guardado007 error persiste entre claves y nuevos intentos
+ok 235 - guardado007 error persiste entre claves y nuevos intentos
+  ---
+  duration_ms: 0.8502
+  type: 'test'
+  ...
+# Subtest: guardado007 recuperacion selectiva conserva otros errores
+ok 236 - guardado007 recuperacion selectiva conserva otros errores
+  ---
+  duration_ms: 0.3361
+  type: 'test'
+  ...
+# Subtest: guardado007 sesiones y resultados tardios aislados
+ok 237 - guardado007 sesiones y resultados tardios aislados
+  ---
+  duration_ms: 0.4089
+  type: 'test'
+  ...
+# Subtest: guardado007 cambio de usuario no pinta error ajeno antes del efecto
+ok 238 - guardado007 cambio de usuario no pinta error ajeno antes del efecto
+  ---
+  duration_ms: 94.5418
+  type: 'test'
+  ...
+# Subtest: SDD seleccion de spec mantiene default y rechaza rutas o argumentos ambiguos
+ok 239 - SDD seleccion de spec mantiene default y rechaza rutas o argumentos ambiguos
+  ---
+  duration_ms: 0.3389
+  type: 'test'
+  ...
+# Subtest: SDD contrato incluye CHANGE propuesto y escenarios de varios digitos sin duplicados
+ok 240 - SDD contrato incluye CHANGE propuesto y escenarios de varios digitos sin duplicados
+  ---
+  duration_ms: 0.2578
+  type: 'test'
+  ...
+# Subtest: SDD-MUT-002 detecta quitar aislamiento por usuario
+ok 241 - SDD-MUT-002 detecta quitar aislamiento por usuario
+  ---
+  duration_ms: 18.7693
+  type: 'test'
+  ...
+# Subtest: SDD-MUT-003 detecta romper orden de escrituras
+ok 242 - SDD-MUT-003 detecta romper orden de escrituras
+  ---
+  duration_ms: 45.6153
+  type: 'test'
+  ...
+# Subtest: SDD-PILOT-001 App original carga y guarda con servicios simulados
+ok 243 - SDD-PILOT-001 App original carga y guarda con servicios simulados
+  ---
+  duration_ms: 1589.1858
+  type: 'test'
+  ...
+# Subtest: SDD-PILOT-002 carga pendiente impide escrituras
+ok 244 - SDD-PILOT-002 carga pendiente impide escrituras
+  ---
+  duration_ms: 2363.9159
+  type: 'test'
+  ...
+# Subtest: SDD-MUT-001 el contrato detecta guardar antes de cargar
+ok 245 - SDD-MUT-001 el contrato detecta guardar antes de cargar
+  ---
+  duration_ms: 1810.7415
+  type: 'test'
+  ...
+# Subtest: trazabilidad rechaza prueba inexistente u omitida
+ok 246 - trazabilidad rechaza prueba inexistente u omitida
+  ---
+  duration_ms: 0.1723
+  type: 'test'
+  ...
+# Subtest: trazabilidad completa no acepta evidencia parcial ni filas faltantes
+ok 247 - trazabilidad completa no acepta evidencia parcial ni filas faltantes
+  ---
+  duration_ms: 0.1573
+  type: 'test'
+  ...
+# Subtest: trazabilidad rechaza IDs duplicados y pruebas fallidas
+ok 248 - trazabilidad rechaza IDs duplicados y pruebas fallidas
+  ---
+  duration_ms: 0.1192
+  type: 'test'
+  ...
+# Subtest: Vercel applies the required security headers to every route
+ok 249 - Vercel applies the required security headers to every route
+  ---
+  duration_ms: 2.8715
+  type: 'test'
+  ...
+# Subtest: latestWeight returns the newest dated measurement
+ok 250 - latestWeight returns the newest dated measurement
+  ---
+  duration_ms: 0.1683
+  type: 'test'
+  ...
+# Subtest: goalDirection classifies weight goals
+ok 251 - goalDirection classifies weight goals
+  ---
+  duration_ms: 0.0931
+  type: 'test'
+  ...
+# Subtest: goalSuggestion uses activity, weekly change and protein settings
+ok 252 - goalSuggestion uses activity, weekly change and protein settings
+  ---
+  duration_ms: 0.1541
+  type: 'test'
+  ...
+# Subtest: el aviso de ritmo calla cuando la desviación cabe en el error de medida
+ok 253 - el aviso de ritmo calla cuando la desviación cabe en el error de medida
+  ---
+  duration_ms: 0.2861
+  type: 'test'
+  ...
+# Subtest: el aviso de ritmo calla sin pesajes suficientes o sin ventana completa
+ok 254 - el aviso de ritmo calla sin pesajes suficientes o sin ventana completa
+  ---
+  duration_ms: 0.2218
+  type: 'test'
+  ...
+# Subtest: bajar más rápido de lo previsto sube las kcal, redondeadas a 50
+ok 255 - bajar más rápido de lo previsto sube las kcal, redondeadas a 50
+  ---
+  duration_ms: 0.234
+  type: 'test'
+  ...
+# Subtest: bajar más lento de lo previsto baja las kcal, pero nunca bajo el suelo de 22 kcal/kg
+ok 256 - bajar más lento de lo previsto baja las kcal, pero nunca bajo el suelo de 22 kcal/kg
+  ---
+  duration_ms: 0.1937
+  type: 'test'
+  ...
+# Subtest: aplicar o descartar el aviso lo calla hasta que haya pesajes nuevos
+ok 257 - aplicar o descartar el aviso lo calla hasta que haya pesajes nuevos
+  ---
+  duration_ms: 0.3688
+  type: 'test'
+  ...
+# Subtest: real vs esperado mide contra la recta del objetivo y marca si vas por delante
+ok 258 - real vs esperado mide contra la recta del objetivo y marca si vas por delante
+  ---
+  duration_ms: 0.3091
+  type: 'test'
+  ...
+# Subtest: la proyección usa el ritmo real y desaparece si te alejas de la meta
+ok 259 - la proyección usa el ritmo real y desaparece si te alejas de la meta
+  ---
+  duration_ms: 0.6525
+  type: 'test'
+  ...
+# Subtest: real vs esperado calla con un solo pesaje
+ok 260 - real vs esperado calla con un solo pesaje
+  ---
+  duration_ms: 0.1416
+  type: 'test'
+  ...
+# Subtest: real vs esperado ancla en la ventana de 12 semanas, no en el primer pesaje
+ok 261 - real vs esperado ancla en la ventana de 12 semanas, no en el primer pesaje
+  ---
+  duration_ms: 0.6226
+  type: 'test'
+  ...
+# Subtest: authentication normalizes email and calls the selected Supabase method
+ok 262 - authentication normalizes email and calls the selected Supabase method
+  ---
+  duration_ms: 0.4001
+  type: 'test'
+  ...
+# Subtest: app data reads and writes remain scoped to user and key
+ok 263 - app data reads and writes remain scoped to user and key
+  ---
+  duration_ms: 0.4667
+  type: 'test'
+  ...
+# Subtest: photo uploads use the private bucket and an owner-prefixed path
+ok 264 - photo uploads use the private bucket and an owner-prefixed path
+  ---
+  duration_ms: 9.4693
+  type: 'test'
+  ...
+# Subtest: RLS migrations keep app data and progress photos owner-only
+ok 265 - RLS migrations keep app data and progress photos owner-only
+  ---
+  duration_ms: 6.0811
+  type: 'test'
+  ...
+# Subtest: error reports are insert-only and scoped to the authenticated owner
+ok 266 - error reports are insert-only and scoped to the authenticated owner
+  ---
+  duration_ms: 1.3471
+  type: 'test'
+  ...
+# Subtest: entrenamiento capas puras y coordinacion sin ciclos
+ok 267 - entrenamiento capas puras y coordinacion sin ciclos
+  ---
+  duration_ms: 905.7559
+  type: 'test'
+  ...
+# Subtest: entrenamiento arquitectura detecta React DOM y cliente transitivos
+ok 268 - entrenamiento arquitectura detecta React DOM y cliente transitivos
+  ---
+  duration_ms: 172.4974
+  type: 'test'
+  ...
+# Subtest: entrenamiento conserva los pins fijados antes de extraer
+ok 269 - entrenamiento conserva los pins fijados antes de extraer
+  ---
+  duration_ms: 40.7267
+  type: 'test'
+  ...
+# Subtest: entrenamiento consumidores y previews compatibles
+ok 270 - entrenamiento consumidores y previews compatibles
+  ---
+  duration_ms: 3607.9644
+  type: 'test'
+  ...
+# Subtest: entrenamiento duracion manual eventos y limpieza
+ok 271 - entrenamiento duracion manual eventos y limpieza
+  ---
+  duration_ms: 218.3511
+  type: 'test'
+  ...
+# Subtest: entrenamiento sesion guiada registro correccion y salida
+ok 272 - entrenamiento sesion guiada registro correccion y salida
+  ---
+  duration_ms: 498.4964
+  type: 'test'
+  ...
+# Subtest: entrenamiento metricas historial y fronteras
+ok 273 - entrenamiento metricas historial y fronteras
+  ---
+  duration_ms: 115.3207
+  type: 'test'
+  ...
+# Subtest: entrenamiento consejo y ajustes conservan registros
+ok 274 - entrenamiento consejo y ajustes conservan registros
+  ---
+  duration_ms: 0.8282
+  type: 'test'
+  ...
+# Subtest: entrenamiento mutaciones detectan contrato roto
+ok 275 - entrenamiento mutaciones detectan contrato roto
+  ---
+  duration_ms: 3722.3695
+  type: 'test'
+  ...
+# Subtest: entrenamiento semana cumplimiento y asignacion
+ok 276 - entrenamiento semana cumplimiento y asignacion
+  ---
+  duration_ms: 993.6325
+  type: 'test'
+  ...
+# Subtest: entrenamiento sesion por fecha orden y vaciado
+ok 277 - entrenamiento sesion por fecha orden y vaciado
+  ---
+  duration_ms: 116.9575
+  type: 'test'
+  ...
+# Subtest: entrenamiento carga completa minima y calentamiento
+ok 278 - entrenamiento carga completa minima y calentamiento
+  ---
+  duration_ms: 169.8274
+  type: 'test'
+  ...
+# Subtest: entrenamiento edicion series ejercicios y cardio
+ok 279 - entrenamiento edicion series ejercicios y cardio
+  ---
+  duration_ms: 158.0634
+  type: 'test'
+  ...
+# Subtest: entrenamiento rutinas plantillas y biblioteca
+ok 280 - entrenamiento rutinas plantillas y biblioteca
+  ---
+  duration_ms: 202.1586
+  type: 'test'
+  ...
+# Subtest: entrenamiento timer persistencia reloj y transiciones
+ok 281 - entrenamiento timer persistencia reloj y transiciones
+  ---
+  duration_ms: 661.81
+  type: 'test'
+  ...
+# Subtest: entrenamiento trazabilidad rechaza evidencia incompleta
+ok 282 - entrenamiento trazabilidad rechaza evidencia incompleta
+  ---
+  duration_ms: 2.3182
+  type: 'test'
+  ...
+# Subtest: manual duration saves on Enter, on blur and by itself
+ok 283 - manual duration saves on Enter, on blur and by itself
+  ---
+  duration_ms: 1.7245
+  type: 'test'
+  ...
+# Subtest: el aviso de ritmo persiste su decisión en goals, no en estado local
+ok 284 - el aviso de ritmo persiste su decisión en goals, no en estado local
+  ---
+  duration_ms: 1.6526
+  type: 'test'
+  ...
+# Subtest: el arranque pinta el tema antes de que React monte
+ok 285 - el arranque pinta el tema antes de que React monte
+  ---
+  duration_ms: 3.7347
+  type: 'test'
+  ...
+# Subtest: cada fila del diario aterriza en la pantalla de su tipo
+ok 286 - cada fila del diario aterriza en la pantalla de su tipo
+  ---
+  duration_ms: 4.7989
+  type: 'test'
+  ...
+# Subtest: el día del Plan recibe todo el día, no solo el entreno
+ok 287 - el día del Plan recibe todo el día, no solo el entreno
+  ---
+  duration_ms: 3.9395
+  type: 'test'
+  ...
+# Subtest: los avisos se leen en el Diario y saltan a su tarjeta de Métricas
+ok 288 - los avisos se leen en el Diario y saltan a su tarjeta de Métricas
+  ---
+  duration_ms: 2.3929
+  type: 'test'
+  ...
+# Subtest: la cuenta es una pantalla con dos pestañas y se entra por el nombre
+ok 289 - la cuenta es una pantalla con dos pestañas y se entra por el nombre
+  ---
+  duration_ms: 3.5933
+  type: 'test'
+  ...
+# Subtest: Biblioteca abre con la lista y la ficha vive en el panel derecho
+ok 290 - Biblioteca abre con la lista y la ficha vive en el panel derecho
+  ---
+  duration_ms: 3.5635
+  type: 'test'
+  ...
+# Subtest: registrar comida son tres pantallas y la cantidad es obligatoria
+ok 291 - registrar comida son tres pantallas y la cantidad es obligatoria
+  ---
+  duration_ms: 3.2649
+  type: 'test'
+  ...
+# Subtest: Cuerpo se registra en cuatro pantallas, no en una pila de formularios
+ok 292 - Cuerpo se registra en cuatro pantallas, no en una pila de formularios
+  ---
+  duration_ms: 2.8862
+  type: 'test'
+  ...
+# Subtest: un perfil de hombre no ve nada del ciclo
+ok 293 - un perfil de hombre no ve nada del ciclo
+  ---
+  duration_ms: 971.3063
+  type: 'test'
+  ...
+# Subtest: sin ciclo no salen avisos de ciclo ni corrección por fase
+ok 294 - sin ciclo no salen avisos de ciclo ni corrección por fase
+  ---
+  duration_ms: 0.8293
+  type: 'test'
+  ...
+# Subtest: guardar confirma: hay toast en las cuatro pantallas que escriben
+ok 295 - guardar confirma: hay toast en las cuatro pantallas que escriben
+  ---
+  duration_ms: 4.1227
+  type: 'test'
+  ...
+# Subtest: la rejilla de Métricas es fluida y no parte los gráficos
+ok 296 - la rejilla de Métricas es fluida y no parte los gráficos
+  ---
+  duration_ms: 2.2432
+  type: 'test'
+  ...
+# Subtest: el modo sesión va a pantalla completa, sin rail ni barra inferior
+ok 297 - el modo sesión va a pantalla completa, sin rail ni barra inferior
+  ---
+  duration_ms: 2.6449
+  type: 'test'
+  ...
+# Subtest: en móvil la ficha reemplaza la lista y las cifras no se aprietan
+ok 298 - en móvil la ficha reemplaza la lista y las cifras no se aprietan
+  ---
+  duration_ms: 2.9846
+  type: 'test'
+  ...
+# Subtest: el rail y la barra móvil llevan a lo mismo, y nada queda huérfano
+ok 299 - el rail y la barra móvil llevan a lo mismo, y nada queda huérfano
+  ---
+  duration_ms: 3.369
+  type: 'test'
+  ...
+# Subtest: planificar otro día no son ocho flechas
+ok 300 - planificar otro día no son ocho flechas
+  ---
+  duration_ms: 0.735
+  type: 'test'
+  ...
+# Subtest: en móvil los controles se pueden tocar con el dedo
+ok 301 - en móvil los controles se pueden tocar con el dedo
+  ---
+  duration_ms: 2.8652
+  type: 'test'
+  ...
+# Subtest: la acción principal de cada pantalla no se va al desplazarse
+ok 302 - la acción principal de cada pantalla no se va al desplazarse
+  ---
+  duration_ms: 2.6149
+  type: 'test'
+  ...
+# Subtest: los avisos se pueden descartar, y vuelven si la causa sigue
+ok 303 - los avisos se pueden descartar, y vuelven si la causa sigue
+  ---
+  duration_ms: 1.1147
+  type: 'test'
+  ...
+1..303
+# tests 379
+# suites 0
+# pass 379
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 102567.9165
