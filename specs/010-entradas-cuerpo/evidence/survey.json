@@ -1,0 +1,321 @@
+{
+  "stage": "survey; propuesta pendiente de aprobación; no G-PIN",
+  "generatedAt": "2026-10-28T02:23:27.219Z",
+  "runtime": "v24.21.0",
+  "baseCommit": "73819e62812d51c8473e0ec0908dc9187c737746",
+  "command": "pnpm exec node specs/010-entradas-cuerpo/evidence/survey-probe.mjs",
+  "isolation": "React/JSDOM, datos sintéticos, red bloqueada por body-dom y Supabase sustituido por body-build",
+  "cases": [
+    {
+      "name": "peso negativo mediante entrada DOM y botón",
+      "section": "peso",
+      "collection": "weights",
+      "observedInput": {
+        "path": "DOM",
+        "entered": "-1"
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "kg": -1
+        }
+      ],
+      "events": [
+        "toast"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "Infinity en peso mediante entrada DOM y botón",
+      "section": "peso",
+      "collection": "weights",
+      "observedInput": {
+        "path": "DOM",
+        "entered": "Infinity"
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "kg": {
+            "$nonFinite": "Infinity"
+          }
+        }
+      ],
+      "events": [
+        "toast"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "coma decimal válida en peso como control positivo",
+      "section": "peso",
+      "collection": "weights",
+      "observedInput": {
+        "path": "DOM",
+        "entered": "65,4"
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "kg": 65.4
+        }
+      ],
+      "events": [
+        "toast"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "medida negativa mediante entrada DOM y botón",
+      "section": "medidas",
+      "collection": "measurements",
+      "observedInput": {
+        "path": "DOM",
+        "entered": "-1"
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "cintura": -1,
+          "cadera": null,
+          "pecho": null,
+          "brazo": null,
+          "muslo": null
+        }
+      ],
+      "events": [
+        "toast"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "coma en input number se pierde antes del guardado en JSDOM",
+      "section": "medidas",
+      "collection": "measurements",
+      "observedInput": {
+        "path": "DOM de JSDOM; no certifica teclado de Chromium",
+        "entered": "72,5",
+        "actual": ""
+      },
+      "records": [],
+      "events": [],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "medidas con coma y mezcla válida-inválida mediante borrador",
+      "section": "medidas",
+      "collection": "measurements",
+      "observedInput": {
+        "path": "setter de borrador y coordinador; no entrada de teclado",
+        "entered": {
+          "cintura": "72,5",
+          "cadera": "90"
+        }
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "cintura": {
+            "$nonFinite": "NaN"
+          },
+          "cadera": 90,
+          "pecho": null,
+          "brazo": null,
+          "muslo": null
+        }
+      ],
+      "events": [
+        "toast"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "sueño y pasos negativos mediante entradas DOM y botón",
+      "section": "nota",
+      "collection": "wellness",
+      "observedInput": {
+        "path": "DOM",
+        "entered": {
+          "sleep": "-2",
+          "steps": "-5"
+        }
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "sleep": -2,
+          "restingHr": null,
+          "steps": -5,
+          "energy": null,
+          "notes": ""
+        }
+      ],
+      "events": [
+        "toast",
+        "wellness"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "pulso con coma mediante borrador",
+      "section": "nota",
+      "collection": "wellness",
+      "observedInput": {
+        "path": "setter de borrador y coordinador; no entrada de teclado",
+        "entered": {
+          "restingHr": "60,5"
+        }
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "sleep": null,
+          "restingHr": {
+            "$nonFinite": "NaN"
+          },
+          "steps": null,
+          "energy": null,
+          "notes": "control"
+        }
+      ],
+      "events": [
+        "toast",
+        "wellness"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    },
+    {
+      "name": "cero conocido de sueño y pasos como control positivo",
+      "section": "nota",
+      "collection": "wellness",
+      "observedInput": {
+        "path": "DOM",
+        "entered": {
+          "sleep": "0",
+          "steps": "0"
+        }
+      },
+      "records": [
+        {
+          "id": "00inugxm",
+          "date": "2026-10-18",
+          "sleep": 0,
+          "restingHr": null,
+          "steps": 0,
+          "energy": null,
+          "notes": ""
+        }
+      ],
+      "events": [
+        "toast",
+        "wellness"
+      ],
+      "fixtureErrors": [],
+      "expectationMatched": true
+    }
+  ],
+  "nonFiniteEncoding": "{$nonFinite: string} evita que JSON convierta NaN/Infinity en null y oculte el diagnóstico",
+  "limits": [
+    "No prueba teclado real ni todos los navegadores",
+    "No ejecuta persistencia, RLS ni producción",
+    "No acredita validación nueva ni cobertura contractual de 010"
+  ],
+  "before": {
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "files": [
+      {
+        "file": "src/BodyScreen.jsx",
+        "sha256": "116ae42e1302eb1853389aa8ff2deb45c7613dafcda7d0a4e02ec770cefe2297"
+      },
+      {
+        "file": "src/body-records.js",
+        "sha256": "ea1fcaa748e5c50625cf7cba6725b798bef3bcb7a7ecc79d2ade2f26f97d4308"
+      },
+      {
+        "file": "test/body-weight.test.js",
+        "sha256": "c58489431bdd25014f2510b92fe965eba65c5be8c235e0dd90988f2e23114972"
+      },
+      {
+        "file": "test/body-measurements.test.js",
+        "sha256": "0a40deaede9b030d0335756d15247bb00ecbf7e666f1cb498051643a30d920e9"
+      },
+      {
+        "file": "test/body-wellness.test.js",
+        "sha256": "cee5bc7581aa789758291741b6b95f96ec8765786bfe783b5240b273a91b6ff3"
+      },
+      {
+        "file": "test-support/body-build.js",
+        "sha256": "45d8c14efa2b918c9982b783fee694118754812c8370596ab77020aa340d9d9d"
+      },
+      {
+        "file": "test-support/body-dom.js",
+        "sha256": "48209ae73675cdb3659d141ba449612278b66ff9b337fb5297a36609bd8b6424"
+      },
+      {
+        "file": "test-support/body-entry.jsx",
+        "sha256": "149dc33ac73b6f92381425a8d17bbc1d6466c854ab7cd1e383f8cce7b9e35aef"
+      },
+      {
+        "file": "scripts/clock-state-evidence.js",
+        "sha256": "6554a02e10881c10e580a496b161d670bf2db44ed09d74285fe80e26c642fea9"
+      }
+    ]
+  },
+  "after": {
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "files": [
+      {
+        "file": "src/BodyScreen.jsx",
+        "sha256": "116ae42e1302eb1853389aa8ff2deb45c7613dafcda7d0a4e02ec770cefe2297"
+      },
+      {
+        "file": "src/body-records.js",
+        "sha256": "ea1fcaa748e5c50625cf7cba6725b798bef3bcb7a7ecc79d2ade2f26f97d4308"
+      },
+      {
+        "file": "test/body-weight.test.js",
+        "sha256": "c58489431bdd25014f2510b92fe965eba65c5be8c235e0dd90988f2e23114972"
+      },
+      {
+        "file": "test/body-measurements.test.js",
+        "sha256": "0a40deaede9b030d0335756d15247bb00ecbf7e666f1cb498051643a30d920e9"
+      },
+      {
+        "file": "test/body-wellness.test.js",
+        "sha256": "cee5bc7581aa789758291741b6b95f96ec8765786bfe783b5240b273a91b6ff3"
+      },
+      {
+        "file": "test-support/body-build.js",
+        "sha256": "45d8c14efa2b918c9982b783fee694118754812c8370596ab77020aa340d9d9d"
+      },
+      {
+        "file": "test-support/body-dom.js",
+        "sha256": "48209ae73675cdb3659d141ba449612278b66ff9b337fb5297a36609bd8b6424"
+      },
+      {
+        "file": "test-support/body-entry.jsx",
+        "sha256": "149dc33ac73b6f92381425a8d17bbc1d6466c854ab7cd1e383f8cce7b9e35aef"
+      },
+      {
+        "file": "scripts/clock-state-evidence.js",
+        "sha256": "6554a02e10881c10e580a496b161d670bf2db44ed09d74285fe80e26c642fea9"
+      }
+    ]
+  },
+  "unchanged": true
+}

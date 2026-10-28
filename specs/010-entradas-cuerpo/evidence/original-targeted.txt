@@ -1,0 +1,11 @@
+✔ cuerpo medidas conservan campos null conversiones y reemplazo (2974.5771ms)
+✔ cuerpo peso conserva conversiones reemplazo pasos e historial (578.4657ms)
+✔ cuerpo bienestar conserva borrador fecha guardas y guardado (290.0499ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7547.9742

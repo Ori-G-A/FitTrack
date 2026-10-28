@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T02:16:44.392Z",
+  "documents": 17,
+  "links": 181,
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "pins": {
+    "previousVerified": 116,
+    "intact": 113,
+    "amended": 3,
+    "newIntact": 7
+  },
+  "remoteAuthorized": true
+}

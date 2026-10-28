@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T02:42:34.584Z",
+  "stage": "Revisión documental del plan propuesto; no ejecución E0–E2 ni aprobación humana",
+  "approvedScope": "1fa65613519176547bd543a46d8907624eb2c082",
+  "documents": 13,
+  "links": 162,
+  "tasks": 31,
+  "ids": 24,
+  "trace": {
+    "pending": 24,
+    "partial": 0,
+    "complete": 0
+  },
+  "plannedBrowserTests": 8,
+  "plannedNodeTests": 5,
+  "plannedPostgreenMutations": 19,
+  "plannedContracts": 10,
+  "plannedTotalIds": 274,
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "previousPins": {
+    "previousVerified": 116,
+    "intact": 113,
+    "amended": 3,
+    "newIntact": 7
+  },
+  "effectivePins": 123,
+  "proposedAmendments": 6,
+  "planApproved": false,
+  "implementationAuthorized": false,
+  "remoteAuthorized": false
+}

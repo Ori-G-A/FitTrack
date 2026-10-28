@@ -1,5 +1,11 @@
 # Plan técnico 009 — reloj de pruebas determinista
 
+Estado vigente — 2026-10-27 (Bogotá): 009 integrada mediante #20/#21,
+con CI de main y Vercel Production verificados en `392e797`.
+[Entrega remota](evidence/integration.json). Los apartados siguientes conservan
+la cronología de preparación local y sus autorizaciones ya cumplidas.
+
+
 Estado vigente — 2026-10-27 (Bogotá): E0–E2 cerradas localmente;
 27 tareas, nueve contratos/250 IDs y RLS fresco con limpieza verificados.
 [Converge](converge.md). Las etapas siguientes conservan la cronología.

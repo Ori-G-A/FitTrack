@@ -1,0 +1,461 @@
+{
+  "area": "009-reloj-pruebas",
+  "status": "integrated_ci_and_production_verified",
+  "authorizationDate": "2026-10-27",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "documentation": {
+    "pr": 20,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/20",
+    "head": "56583281819ad86a41ffccb3caf7f9896c0b07e9",
+    "merge": "d98b9a61ad55efde2f473916cd59eb750fb4ff83",
+    "ci": 40586996909,
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "id": 122481003987,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      },
+      {
+        "id": 122481004490,
+        "name": "test-and-build",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "implementation": {
+    "pr": 21,
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/21",
+    "head": "7adec0da9ff41cf2667acb6ecccea68b2f818561",
+    "merge": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+    "ci": 40587032719,
+    "ciConclusion": "success",
+    "nodeTests": 372,
+    "browserTests": 35,
+    "contracts": 9,
+    "completeIds": 250,
+    "mutations": 14,
+    "rlsContracts": 3,
+    "rlsCleanupPassed": true,
+    "primaryEvidence": {
+      "node": 372,
+      "pass": 372,
+      "contracts": [
+        {
+          "spec": "001-datos",
+          "pending": 0,
+          "partial": 0,
+          "complete": 21
+        },
+        {
+          "spec": "003-entrenamiento",
+          "pending": 0,
+          "partial": 0,
+          "complete": 21
+        },
+        {
+          "spec": "004-nutricion-objetivos",
+          "pending": 0,
+          "partial": 0,
+          "complete": 31
+        },
+        {
+          "spec": "005-cuerpo-ciclo",
+          "pending": 0,
+          "partial": 0,
+          "complete": 40
+        },
+        {
+          "spec": "006-interfaz",
+          "pending": 0,
+          "partial": 0,
+          "complete": 48
+        },
+        {
+          "spec": "007-guardado-fiable",
+          "pending": 0,
+          "partial": 0,
+          "complete": 21
+        },
+        {
+          "spec": "008-borrado-fiable",
+          "pending": 0,
+          "partial": 0,
+          "complete": 29
+        },
+        {
+          "spec": "009-reloj-pruebas",
+          "pending": 0,
+          "partial": 0,
+          "complete": 16
+        }
+      ],
+      "proofs": {
+        "passed": true,
+        "mutations": 14,
+        "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9"
+      }
+    },
+    "jobs": [
+      {
+        "id": 122481133011,
+        "name": "test-and-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 122481133392,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "limits": [
+    "Sin prueba autenticada de producción",
+    "RLS real en entorno local desechable; no certifica backend productivo",
+    "La corrección abarca tres montajes; no elimina toda inestabilidad",
+    "Aviso de bundle mayor de 500 kB conservado"
+  ],
+  "integrationDate": "2026-10-27",
+  "main": {
+    "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+    "ci": 40617873796,
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "id": 122584509130,
+        "name": "test-and-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 122584509410,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      }
+    ],
+    "nodeTests": 372,
+    "browserTests": 35,
+    "browser": {
+      "startTime": "2026-10-28T02:12:35.392Z",
+      "duration": 76872.146,
+      "expected": 35,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "contracts": [
+      {
+        "spec": "001-datos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "002-identidad-fotos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 23
+      },
+      {
+        "spec": "003-entrenamiento",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "004-nutricion-objetivos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 31
+      },
+      {
+        "spec": "005-cuerpo-ciclo",
+        "pending": 0,
+        "partial": 0,
+        "complete": 40
+      },
+      {
+        "spec": "006-interfaz",
+        "pending": 0,
+        "partial": 0,
+        "complete": 48
+      },
+      {
+        "spec": "007-guardado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "008-borrado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 29
+      },
+      {
+        "spec": "009-reloj-pruebas",
+        "pending": 0,
+        "partial": 0,
+        "complete": 16
+      }
+    ],
+    "completeIds": 250,
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+    "mutations": 14,
+    "clockMutations": {
+      "passed": true,
+      "generatedAt": "2026-10-28T01:57:09.731Z",
+      "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+      "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+      "positiveControls": 3,
+      "mutations": [
+        {
+          "fixture": "interfaz",
+          "detected": true,
+          "positiveControlPassed": true,
+          "scriptsInjectedOnFailure": 0,
+          "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+          "failedCombinations": [
+            250,
+            1500
+          ]
+        },
+        {
+          "fixture": "guardado",
+          "detected": true,
+          "positiveControlPassed": true,
+          "scriptsInjectedOnFailure": 0,
+          "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+          "failedCombinations": [
+            250,
+            1500
+          ]
+        },
+        {
+          "fixture": "borrado",
+          "detected": true,
+          "positiveControlPassed": true,
+          "scriptsInjectedOnFailure": 0,
+          "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+          "failedCombinations": [
+            250,
+            1500
+          ]
+        }
+      ],
+      "cleanupPassed": true
+    },
+    "proofs": {
+      "passed": true,
+      "startedAt": "2026-10-28T01:56:31.464Z",
+      "generatedAt": "2026-10-28T01:59:33.578Z",
+      "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+      "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+      "receipts": [
+        {
+          "label": "interface",
+          "args": [
+            "scripts/check-interface-mutations.js"
+          ],
+          "startedAt": "2026-10-28T01:56:31.472Z",
+          "finishedAt": "2026-10-28T01:56:51.568Z",
+          "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "beforeHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "afterHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "exitCode": 0,
+          "output": "test-results/clock009-proofs-interface.txt",
+          "sha256": "ca299ada1efeb12716c29f5c138a6be1cf4f05cec9aea1533b30deb8de5fb583"
+        },
+        {
+          "label": "save",
+          "args": [
+            "scripts/check-save-state-mutations.js"
+          ],
+          "startedAt": "2026-10-28T01:56:51.58Z",
+          "finishedAt": "2026-10-28T01:56:57.593Z",
+          "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "beforeHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "afterHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "exitCode": 0,
+          "output": "test-results/clock009-proofs-save.txt",
+          "sha256": "8ee57564a3772ab463b6bada06dbeb65d142b5d671b48fbe2abaf1d41b4a5883"
+        },
+        {
+          "label": "delete",
+          "args": [
+            "scripts/check-delete-state-mutations.js"
+          ],
+          "startedAt": "2026-10-28T01:56:57.604Z",
+          "finishedAt": "2026-10-28T01:57:09.681Z",
+          "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "beforeHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "afterHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "exitCode": 0,
+          "output": "test-results/clock009-proofs-delete.txt",
+          "sha256": "e4660db82acdf23bc23f7a23a999e8890eb0fa0bba1d9579bfc81c98e1a52fa5"
+        },
+        {
+          "label": "clock",
+          "args": [
+            "scripts/check-clock-state-mutations.js"
+          ],
+          "startedAt": "2026-10-28T01:57:09.693Z",
+          "finishedAt": "2026-10-28T01:59:33.568Z",
+          "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "beforeHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "afterHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+          "exitCode": 0,
+          "output": "test-results/clock009-proofs-clock.txt",
+          "sha256": "f7e6c05899204bf086cab09caf02e261ce39b01ec79266a1ec0eb83cc51d30b1"
+        }
+      ],
+      "reports": [
+        {
+          "label": "interface",
+          "file": "test-results/interface-postgreen-mutations.json",
+          "sha256": "9d10bd4806287e3aaf1e97ffb6ad5e1e844f3ab05b089f2d7a759ca76d131320",
+          "mutations": 3
+        },
+        {
+          "label": "save",
+          "file": "test-results/save007-mutations.json",
+          "sha256": "a27c536c286632722d690bae1f809a90d673aaec853862275687f8041a668a05",
+          "mutations": 3
+        },
+        {
+          "label": "delete",
+          "file": "test-results/delete008-mutations.json",
+          "sha256": "fb863db38f8a822fc90dd2422c30021da5ae93e5fc21edfa7020658f5c7d4b4e",
+          "mutations": 5
+        },
+        {
+          "label": "clock",
+          "file": "test-results/clock009-mutations.json",
+          "sha256": "56f89d57299be9b78beca03379776b2ca4ee753a48e47d882758d07fedabc07a",
+          "mutations": 3
+        }
+      ]
+    },
+    "rlsTests": 3,
+    "rlsCleanupPassed": true,
+    "rls": {
+      "generatedAt": "2026-10-28T01:57:00.37Z",
+      "node": "v24.21.0",
+      "cliVersion": "2.121.0",
+      "projectId": "fittrack-sdd-rls-b643bd5bf626",
+      "recoveryDirectory": null,
+      "passed": true,
+      "cleanupPassed": true,
+      "environment": "fittrack-sdd-disposable",
+      "apiOrigin": "http://127.0.0.1:59321",
+      "results": [
+        {
+          "name": "SDD-RLS-001 app_data dos propietarios y anonimo",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-002 Storage privado permite solo prefijo propio",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-003 diagnosticos insert-only sin suplantacion",
+          "status": "passed"
+        }
+      ],
+      "hashes": {
+        "rls-tests/ownership.js": "753c0cda43959865eda0f702985cb6bcd46f4e51caae4521e39f7a4536d15334",
+        "scripts/run-local-rls.js": "f81d0ae9e9880b887a68cdbcd018fd1eff152cdf9be10539b660b568be6b7743",
+        "scripts/local-rls-guard.js": "eb86d1aa52dd6e4534b6186187388a7c3f3deecc19dffa8e1ab2b7c2d4662593",
+        "test-support/rls/fixture-client.js": "9878fd9d87af3ae6ca3362c6650bb9589acf94621ea3c985096badb14f08f92b",
+        "pnpm-lock.yaml": "fc3444c3e416af83bca9274bcf16159712e2064103e730e3ae77c929fbde317d",
+        "supabase/migrations/20260614000000_secure_app_data_rls.sql": "6c8fc101c348bb8645fa78a74a594cb61f604ac4307edfe696e0ef9565a33bbf",
+        "supabase/migrations/20260614010000_private_progress_photos.sql": "83d1f764cefd61a4a47382028c5653a1629070c2629cece855162ac4f1402702",
+        "supabase/migrations/20260615000000_client_error_reports.sql": "f1989ef377df89e9454274d8357e9c8e770ab72b0069025e61f60e4309f0cd99"
+      }
+    },
+    "artifacts": [
+      {
+        "id": 12787125031,
+        "name": "evidencia-sdd-006",
+        "digest": "sha256:fc444500d29e9376500f50d7a0cc8858f5ade81418b3594ee845285924b04878",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12787105038,
+        "name": "evidencia-sdd-004",
+        "digest": "sha256:bf0ab0d90e1eaa114ae6e8ad5dd5eff6e3d500af5c9f76d154bc01296df9c5e3",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12786701603,
+        "name": "evidencia-sdd-007",
+        "digest": "sha256:05be661e5ecce2b0b883ef88e01bf21fbbded3704f43c89a7fed15277e956337",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12786681590,
+        "name": "evidencia-sdd-003",
+        "digest": "sha256:3075f42963f0ed6e680aa8a466af87d7f11a97de93402f38249644f8c59cd9cb",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12786497261,
+        "name": "evidencia-sdd-005",
+        "digest": "sha256:55819b0492c735fa64e2c7257216af6cf4d37789a1b54623760772e5b09d2c85",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12786460351,
+        "name": "evidencia-sdd-002",
+        "digest": "sha256:72e6a1db20808316bb54c6c5874f51dc07f8c982f24fe939c83c4357a0b52fe0",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": true
+      },
+      {
+        "id": 12785964444,
+        "name": "evidencia-sdd-008",
+        "digest": "sha256:91e82e7fab475f361ee8385f81211532dad6f328243547f59ebbc3cb5fbc0588",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12785674793,
+        "name": "evidencia-sdd-009",
+        "digest": "sha256:bbe77b920fdb2942f5708883892f50769d711588801a155f17abbe2f757971e7",
+        "run": 40617873796,
+        "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+        "archiveDigestVerified": true
+      }
+    ]
+  },
+  "remoteAuthorized": true,
+  "verifiedAt": "2026-10-28T02:15:44.950Z",
+  "production": {
+    "deploymentId": 7375090713,
+    "environment": "Production",
+    "sha": "392e797b54478ec96b9bd9d352a1dde5d53c4376",
+    "state": "success",
+    "createdAt": "2026-10-28T01:55:34Z",
+    "url": "https://fit-track-h4ea3ihvb-orianag40-7859s-projects.vercel.app",
+    "anonymousHttp": {
+      "attempted": true,
+      "verified": true,
+      "status": 302,
+      "redirectHost": "vercel.com",
+      "authenticatedSmoke": false
+    }
+  }
+}

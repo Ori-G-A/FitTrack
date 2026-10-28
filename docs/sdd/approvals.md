@@ -545,3 +545,63 @@ integrarlos con CI remoto verde y permitir el despliegue automático asociado.
 Se integra primero el snapshot documental aprobado `5658328` y después el código.
 Esta decisión sustituye las esperas anteriores de autorización remota de 009;
 no convierte la evidencia local en CI remoto ni certifica una sesión productiva.
+
+## Integración 009 verificada — 2026-10-27 (Bogotá)
+
+Los PRs [#20 documental](https://github.com/Ori-G-A/FitTrack/pull/20) y
+[#21 de código](https://github.com/Ori-G-A/FitTrack/pull/21) están integrados,
+en ese orden, con ambos jobs de CI aprobados para cada PR. El resultado
+`392e797` aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40617873796)
+y Vercel confirmó Production para ese mismo SHA. 372 Node, 35 Chromium,
+nueve contratos/250 IDs, catorce mutaciones y RLS fresco real con limpieza
+confirmados. Las huellas de producto y verificación coinciden con el cierre local.
+[Registro](../../specs/009-reloj-pruebas/evidence/integration.json).
+
+La URL técnica respondió HTTP 302 y redirigió al acceso de Vercel; no se realizó
+una prueba autenticada de FitTrack ni se certifican políticas del backend
+productivo. Esta observación sustituye la limitación DNS anterior para esa URL
+en este entorno. La espera de montaje no diagnosticada de 007, los demás
+hallazgos y el aviso de bundle se conservan; no se promete estabilidad absoluta.
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 009. No concede autorizaciones permanentes para futuras specs.
+
+## Propuesta 010 — 2026-10-27 (Bogotá)
+
+El «continua» posterior al cierre remoto de 009 autoriza preparar la siguiente
+propuesta. [010](../../specs/010-entradas-cuerpo/spec.md) contiene cuatro AS-IS,
+seis CHANGE, catorce escenarios y C-001/002/003 pendientes. Se reprodujo el
+original con datos sintéticos, sin modificar producto, pruebas ni contratos.
+No se infiere aprobación de alcance o plan, ni autorización para implementar,
+publicar, integrar o desplegar 010.
+
+## Alcance 010 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a
+[010](../../specs/010-entradas-cuerpo/spec.md): cuatro AS-IS, seis CHANGE,
+catorce escenarios y C-001/002/003. Aprueba decimal explícito coma/punto,
+positivos para peso/medidas/pulso, cero conocido para sueño/pasos, sin máximos
+ni enteros nuevos; rechazo completo con error accesible y borrador conservado,
+sin limpiar historia. Autoriza preparar plan/tareas/análisis y proponer
+enmiendas de 005 y del verificador 009, para aprobación separada. No autoriza
+implementar, publicar, fusionar ni desplegar 010.
+
+## Planificación 010 preparada — 2026-10-27 (Bogotá)
+
+[Plan](../../specs/010-entradas-cuerpo/plan.md), 31 tareas E0–E2, matriz,
+seis enmiendas y análisis preparados para aprobación separada. 24 IDs propios
+pending, con nombres previstos y tareas. Se propone cierre de diez contratos/
+274 IDs, 43 Chromium, diecinueve mutaciones postverde y RLS local fresco con
+limpieza. Las seis firmas y las 123 efectivas actuales se inventariaron sin
+modificarlas; producto, pruebas y verificadores intactos. Plan y ejecución
+local antes del PR documental pendientes; publicación, integración y Vercel
+requieren decisión posterior. 010 es la última entrega actual propuesta:
+informe final y backlog separado, sin iniciar 011 automáticamente.
+
+## Plan 010 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecución local E0–E2» a
+[010](../../specs/010-entradas-cuerpo/plan.md). Aprueba las 31 tareas, plan,
+análisis, seis enmiendas acotadas y ejecución local E0–E2 antes del PR documental,
+con snapshot aprobado. Incluye informe final y mantiene RLS local fresco como
+requisito de cierre. No publicar, fusionar ni desplegar sin decisión específica.
