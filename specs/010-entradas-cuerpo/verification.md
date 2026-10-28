@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): publicación de ambas ramas/PRs, integración con CI remoto verde y Vercel autorizadas. [Decisión](evidence/remote-authorization.json). Pendiente ejecutar y verificar la entrega; las esperas de autorización anteriores son históricas.
+
 Estado vigente — 2026-10-28 (Bogotá): E0–E2 cerradas localmente; 379 Node, 43 Chromium/build, diez contratos/274 IDs, mutaciones y RLS fresco con limpieza. Publicación/integración/Vercel pendientes de autorización específica. [Converge](converge.md).
 
 Comandos de cierre ejecutados con pnpm 11.11.0 y Node 24.21.0:

@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): publicación de ambas ramas/PRs, integración con CI remoto verde y Vercel autorizadas. [Decisión](evidence/remote-authorization.json). Pendiente ejecutar y verificar la entrega; las esperas de autorización anteriores son históricas.
+
 # Converge local 010
 
 Estado: E0–E2 verificadas localmente el 2026-10-28 (Bogotá). Entrega remota sin autorizar.

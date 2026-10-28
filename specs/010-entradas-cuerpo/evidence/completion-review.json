@@ -19,10 +19,9 @@
     "newAmended": 2
   },
   "e1Pins": 8,
-  "remoteAuthorized": false,
-  "awaitingTasks": [
-    "T031"
-  ],
+  "remoteAuthorized": true,
+  "awaitingTasks": [],
   "evidenceCommit": "9a4727866fb535ab8d0e253633f7b507d68b4e15",
-  "localClosureVerifiedAt": "2026-10-28T20:07:59.511Z"
+  "localClosureVerifiedAt": "2026-10-28T20:07:59.511Z",
+  "authorization": "remote-authorization.json"
 }

@@ -1,6 +1,6 @@
 # Informe final de la refactorización FitTrack
 
-Fecha: 2026-10-28 (Bogotá). Estado: cierre local 010 verificado; entrega remota pendiente de autorización.
+Fecha: 2026-10-28 (Bogotá). Estado: cierre local 010 verificado; entrega remota autorizada, pendiente de ejecución/verificación.
 
 ## Resultado entregado
 

@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): las 35 tareas locales están completadas; entrega remota autorizada con CI verde y Vercel, pendiente de ejecución/verificación.
+
 Estado vigente — 2026-10-28 (Bogotá): ejecución local E0–E2 verificada; 31 tareas originales y T032–T035 aditivas. T030 está completada; T031 presenta la solicitud de entrega. No hay autorización remota.
 
 # Tareas 010 — entradas numéricas de Cuerpo
@@ -50,7 +52,7 @@ Las claves A1–M1 remiten a nombres exactos en la matriz de validación.
 | T028 | completada | US3 / US3-AS4; SC-004/005 | Preparar PR documental primero y código después: alcance, seis enmiendas, evidencia, omisiones, reversión coordinada y orden de merge; sin publicar | T027 |
 | T029 | completada | US1–US3 / todos los FR/escenarios | Preparar informe final de la refactorización inicial y 007–010, con resultados/pendientes y backlog futuro separado; no iniciar 011 | T028 |
 | T030 | completada | US3 / US3-AS4; SC-004/005 | Commits lógicos locales, revisión de enlaces/diff, fuente y firmas verificadas, árbol limpio; snapshot documental aprobado conservado | T029 |
-| T031 | pendiente | US1–US3 / todos los FR/escenarios | Presentar cierre local y solicitar autorización específica para publicación/integración con CI verde/Vercel; no ejecutar esas acciones sin decisión | T030 |
+| T031 | completada | US1–US3 / todos los FR/escenarios | Presentar cierre local y solicitar autorización específica para publicación/integración con CI verde/Vercel; no ejecutar esas acciones sin decisión | T030 |
 
 ## Revisión del desglose
 
@@ -133,3 +135,5 @@ manifiestos anteriores ni introducir coincidencias aproximadas.
 - T027–T029: documentación, PRs preparados e informe final; backlog futuro separado, sin iniciar 011. T030 verifica Git al cerrar los commits; T031 presenta la solicitud de entrega remota.
 
 - T030: cierre E2 guardado en 9a4727866fb535ab8d0e253633f7b507d68b4e15 y árbol limpio comprobado antes de este registro administrativo; runtime y huellas coinciden con la evidencia final. La solicitud T031 no autoriza publicar por sí misma.
+
+- T031: solicitud presentada sobre e3b1d04 y respuesta explícita del propietario «Autorizar publicación, integración con CI verde y Vercel». Autoriza ambas ramas/PRs, documental primero y código después con CI remoto verde, y despliegue automático asociado. [Decisión](evidence/remote-authorization.json).

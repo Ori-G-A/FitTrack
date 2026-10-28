@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): publicación de ambas ramas/PRs, integración con CI remoto verde y Vercel autorizadas. [Decisión](evidence/remote-authorization.json). Pendiente ejecutar y verificar la entrega; las esperas de autorización anteriores son históricas.
+
 # PR de código 010 — preparado, sin publicar
 
 Título propuesto: `fix(cuerpo): validar entradas antes de reemplazar registros`.

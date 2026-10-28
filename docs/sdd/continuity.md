@@ -114,3 +114,11 @@ y [informe final](refactor-final.md). Las 31 tareas originales se conservan
 con T032–T035 aditivas; publicación, integración y Vercel siguen pendientes de
 autorización específica. BODY-001 queda resuelto localmente, sin certificar
 producción ni cerrar los demás hallazgos; no se inicia otra spec por inferencia.
+
+## Entrega remota 010 autorizada — 2026-10-28 (Bogotá)
+
+Sobre el cierre local e3b1d04, el propietario respondió «Autorizar publicación,
+integración con CI verde y Vercel». Autoriza ambas ramas/PRs, documental primero
+y código después, con CI remoto verde y despliegue automático asociado.
+[Decisión](../../specs/010-entradas-cuerpo/evidence/remote-authorization.json).
+No se presenta aún como integración o despliegue verificados.
