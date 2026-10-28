@@ -1,4 +1,4 @@
-Estado vigente — 2026-10-28 (Bogotá): ejecución local E0–E2 verificada; 31 tareas originales y T032–T035 aditivas. T030/T031 completan el cierre Git y la presentación de entrega; no hay autorización remota.
+Estado vigente — 2026-10-28 (Bogotá): ejecución local E0–E2 verificada; 31 tareas originales y T032–T035 aditivas. T030 está completada; T031 presenta la solicitud de entrega. No hay autorización remota.
 
 # Tareas 010 — entradas numéricas de Cuerpo
 
@@ -49,7 +49,7 @@ Las claves A1–M1 remiten a nombres exactos en la matriz de validación.
 | T027 | completada | US1–US3 / FR-001–010 | Actualizar verification/readiness/roadmap/aprobaciones con comandos, hashes, conteos reales, límites y warning de bundle; no atribuir pruebas productivas inexistentes | T026 |
 | T028 | completada | US3 / US3-AS4; SC-004/005 | Preparar PR documental primero y código después: alcance, seis enmiendas, evidencia, omisiones, reversión coordinada y orden de merge; sin publicar | T027 |
 | T029 | completada | US1–US3 / todos los FR/escenarios | Preparar informe final de la refactorización inicial y 007–010, con resultados/pendientes y backlog futuro separado; no iniciar 011 | T028 |
-| T030 | pendiente | US3 / US3-AS4; SC-004/005 | Commits lógicos locales, revisión de enlaces/diff, fuente y firmas verificadas, árbol limpio; snapshot documental aprobado conservado | T029 |
+| T030 | completada | US3 / US3-AS4; SC-004/005 | Commits lógicos locales, revisión de enlaces/diff, fuente y firmas verificadas, árbol limpio; snapshot documental aprobado conservado | T029 |
 | T031 | pendiente | US1–US3 / todos los FR/escenarios | Presentar cierre local y solicitar autorización específica para publicación/integración con CI verde/Vercel; no ejecutar esas acciones sin decisión | T030 |
 
 ## Revisión del desglose
@@ -131,3 +131,5 @@ manifiestos anteriores ni introducir coincidencias aproximadas.
 - T022/T023: diecinueve mutaciones postverde con controles positivos, trece negativos de recibos/dos positivos, limpieza y restauración confirmadas con la huella definitiva.
 - T025/T026: checkpoint final íntegro aprobado, diez contratos/274 IDs completos, RLS nuevo dentro del checkpoint y entrada genérica 010 completa aparte; sin gaps.
 - T027–T029: documentación, PRs preparados e informe final; backlog futuro separado, sin iniciar 011. T030 verifica Git al cerrar los commits; T031 presenta la solicitud de entrega remota.
+
+- T030: cierre E2 guardado en 9a4727866fb535ab8d0e253633f7b507d68b4e15 y árbol limpio comprobado antes de este registro administrativo; runtime y huellas coinciden con la evidencia final. La solicitud T031 no autoriza publicar por sí misma.
