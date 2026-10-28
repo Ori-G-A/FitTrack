@@ -1,5 +1,11 @@
 # PR documental 008 — preparación local completa
 
+Estado vigente — 2026-10-27 (Bogotá): 008 integrada mediante #18/#19;
+CI de main y Vercel Production verificados en `1f6b29d`.
+[Entrega remota](evidence/integration.json). Las etapas siguientes conservan
+la cronología local; sus esperas de autorización e integración están cumplidas.
+
+
 Rama: codex/008-borrado-fiable-docs. Snapshot aprobado: 2ee8edca15a95012344e0dca3823e8b103b231f3.
 Publicación, integración y Vercel pendientes de autorización específica. [Ejecución posterior](verification.md).
 

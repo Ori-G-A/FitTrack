@@ -1,5 +1,12 @@
 # Roadmap de adopción SDD
 
+Estado vigente — 2026-10-27 (Bogotá): 001–008 integradas; 008 en `1f6b29d`,
+con CI de PR/main y Vercel Production verificados. Ocho contratos/234 IDs,
+370 Node, RLS local real con limpieza y once mutaciones aprobados.
+[Entrega 008](../../specs/008-borrado-fiable/evidence/integration.json).
+Los registros siguientes conservan la cronología y sus límites.
+
+
 Cierre local 008 — 2026-10-24 (Bogotá): 370 Node, 30 Chromium y build; ocho contratos/234 IDs completos; RLS real fresco (tres contratos) y limpieza confirmados; once mutaciones detectadas. 107 firmas anteriores intactas, una enmendada y ocho E0 intactas.
 T037/T038 aditivas completadas, incluido rechazo falsy con rojo/verde.
 [Converge 008](../../specs/008-borrado-fiable/converge.md). Publicación, integración
@@ -110,19 +117,20 @@ están en el [survey 008](borrado-fiable-survey.md), sin acreditar incidentes re
 | ENV-001 | Fallo de pnpm dentro del sandbox; fuera del aislamiento funciona sin reparar estado global | Evidencia y límites registrados en readiness; usar ejecución autorizada para sus scripts | Diagnóstico local registrado |
 | ENV-002 | Diferencia inicial Node/pnpm local/CI | Node 24.21.0/pnpm 11.11.0 fijados y verificados en CI | Resuelto; CI de main aprobado |
 | DOC-001 | README mencionaba desktop/ ausente | Referencia sustituida por previews existentes; sin declarar código legacy congelado | Resuelto documentalmente |
-| TEST-001 | UI y RLS contienen asserts sobre texto, no ejecución completa | Requisitos tocados tienen pruebas de comportamiento suficientes; mantener evidencia estática útil | M7 / AUTO-003/004 |
+| TEST-001 | UI y RLS contienen asserts sobre texto, no ejecución completa | Requisitos tocados tienen pruebas de comportamiento suficientes; mantener evidencia estática útil | Cobertura 001–006 verificada al cerrar M7/PATCH 1.0.3; conservar las comprobaciones estáticas complementarias |
 | PERF-001 | Build inicial avisa chunk index 507,04 kB | Medir coste y decidir presupuesto antes de optimizar; no basta ocultar warning | Survey 006 |
 | DATA-001 | Importación aplica setters antes de esperar hidratación; hydratePhotos captura fallos individuales y conserva originales (`src/FitTrack.jsx:814`, `src/photo-storage.js:57`) | Caracterizar secuencia y foto no hidratada; no asumir que falla toda importación por un fallo individual; dueño decide semántica | Clarify 001 |
 | DATA-002 | Borrado elimina fotos antes de app_data sin transacción común (`src/FitTrack.jsx:783`) | Caracterizar fallos de cada paso y aprobar política explícita de recuperación | Clarify 001 |
 | DATA-003 | Bus global podía sobrescribir error al comenzar otro guardado; reproducción histórica en 007 | 007 integrada en main con CI verde y Production verificados; regresiones originales y recuperación por usuario:clave conservadas | Cerrado por 007 en 0617764; evidencia de integración disponible |
-| DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | 008 FR-005/010: inspeccionar retorno y rechazo; cierre manual sin repetir borrado | Verificado localmente en 008; pendiente de integración |
-| DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | 008 FR-006/012: feedback persistente en raíz, visible y accesible | Verificado localmente en 008; pendiente de integración |
-| DATA-006 | Tras DELETE confirmado, rechazo de signOut restaura loaded; el diagnóstico reemite doce guardados con valores anteriores | 008 FR-008/010: bloqueo continuo, sin reemitir valores anteriores | Verificado localmente en 008; pendiente de integración |
-| DATA-007 | Resultado tardío de borrado A habilita carga de B o despacha signOut sobre B; dos reproducciones del survey | 008 FR-011: sesión/generación e invalidez de resultados tardíos | Verificado localmente en 008; pendiente de integración |
-| DATA-008 | Visibilidad durante borrado vuelve a cargar y reanuda guardados; el intervalo comparte callback por inspección | 008 FR-008/009: bloquear recuperación ordinaria y confirmar commit de recarga manual | Verificado localmente en 008; pendiente de integración |
+| DATA-004 | Borrado no inspecciona retorno error de signOut (`src/FitTrack.jsx:792`) | 008 FR-005/010: inspeccionar retorno y rechazo; cierre manual sin repetir borrado | Cerrado por 008 en 1f6b29d; CI y Production verificados |
+| DATA-005 | Al deshabilitar loaded durante borrado, Settings se desmonta y su mensaje de fallo puede perderse | 008 FR-006/012: feedback persistente en raíz, visible y accesible | Cerrado por 008 en 1f6b29d; CI y Production verificados |
+| DATA-006 | Tras DELETE confirmado, rechazo de signOut restaura loaded; el diagnóstico reemite doce guardados con valores anteriores | 008 FR-008/010: bloqueo continuo, sin reemitir valores anteriores | Cerrado por 008 en 1f6b29d; CI y Production verificados |
+| DATA-007 | Resultado tardío de borrado A habilita carga de B o despacha signOut sobre B; dos reproducciones del survey | 008 FR-011: sesión/generación e invalidez de resultados tardíos | Cerrado por 008 en 1f6b29d; CI y Production verificados |
+| DATA-008 | Visibilidad durante borrado vuelve a cargar y reanuda guardados; el intervalo comparte callback por inspección | 008 FR-008/009: bloquear recuperación ordinaria y confirmar commit de recarga manual | Cerrado por 008 en 1f6b29d; CI y Production verificados |
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
 | IDEN-001 | Reporter consume fingerprint/cupo antes de consultar sesión y su getSession carece de timeout propio | Pins preparatorios lo reproducen; conservar AS-IS y decidir cambio separado de FR-013 | Clarify 002 C2-004 |
 | PHOTO-001 | Fuente admite 25 MiB; migración Storage limita resultado a 5 MiB sin comprobación local del tamaño comprimido | No prometer aceptación remota por validar origen; decidir si hace falta CHANGE y prueba de frontera del resultado | Survey 002; sin cambio aprobado |
+| TEST-002 | Carrera al instalar el reloj y pausarlo en el mismo instante; nombrada TEST-001 en el registro histórico de 007/008 | 009: preparación determinista, tiempos y oráculos conservados; alcance aprobado, plan pendiente | Abierto; equivalencia aprobada en C-003 de 009 |
 
 Estos hallazgos no son autorización para corregir comportamiento en fase 0.
 
@@ -484,6 +492,11 @@ PR documental, publicación, integración y Vercel no se infieren del alcance.
 
 ## Hallazgo de estabilidad durante 007 — TEST-001
 
+Nota de seguimiento 2026-10-27: este título conserva el identificador usado en
+007/008. La propuesta 009 plantea TEST-002 para la carrera de reloj, distinta
+de la cobertura estática TEST-001 de la tabla. C-003 aprobada el 2026-10-27 establece la equivalencia con TEST-002;
+no se reescriben los registros originales.
+
 `test-support/interface-browser.js` instala el reloj y llama pauseAt con la misma
 fecha en dos acciones separadas. El tercer checkpoint E2 registró «Cannot
 fast-forward to the past» antes de montar App y un segundo montaje agotó su
@@ -515,3 +528,60 @@ Este estado sustituye las esperas históricas de autorización, publicación e
 integración de 007. No certifica una sesión autenticada de producción: la URL
 técnica redirige al acceso de Vercel. TEST-001, DATA-004/005 y el aviso de bundle
 siguen documentados. No se amplía el alcance de producto aprobado.
+
+## Integración 008 verificada — 2026-10-27 (Bogotá)
+
+Los PRs [#18 documental](https://github.com/Ori-G-A/FitTrack/pull/18) y
+[#19 de código](https://github.com/Ori-G-A/FitTrack/pull/19) están integrados,
+en ese orden, tras aprobar ambos jobs de CI de cada PR. El resultado `1f6b29d`
+aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40537644734)
+y Vercel confirmó Production para ese mismo SHA. Ocho contratos/234 IDs,
+370 pruebas Node, once mutaciones y RLS real local con limpieza confirmados.
+[Registro](../../specs/008-borrado-fiable/evidence/integration.json).
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 008 y el bloqueo Docker ya resuelto. No certifica una sesión
+autenticada ni RLS del backend productivo; TEST-001 y el aviso de bundle siguen
+documentados. No se amplía el alcance de producto aprobado.
+
+La comprobación HTTP anónima no pudo resolver o alcanzar la URL técnica de
+Vercel. Production está confirmado por el proveedor; la navegación pública no
+se presenta como verificada.
+
+## Propuesta 009 — 2026-10-27 (Bogotá)
+
+Tras cerrar 008 se propone reforzar la preparación del reloj de pruebas.
+[Survey](reloj-pruebas-survey.md) y [spec 009](../../specs/009-reloj-pruebas/spec.md):
+tres AS-IS, cuatro CHANGE, nueve escenarios/dieciséis IDs pending. El sondeo
+actual reproduce con demora sintética de 250 ms el fallo anterior al montaje
+en interfaz, guardado y borrado, preservando src y las tres firmas originales.
+No equivale a G-PIN ni mide frecuencia natural. Alcance y C-001/002/003
+pendientes de aprobación; sin plan, implementación, publicación ni despliegue
+autorizados para 009. La URL técnica de Production 008 sigue sin poder
+resolverse o alcanzarse desde este entorno; el estado success del proveedor
+no se convierte en prueba funcional autenticada.
+
+## Alcance 009 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones». Aprueba
+los tres AS-IS, cuatro CHANGE, nueve escenarios y C-001/002/003 de
+[009](../../specs/009-reloj-pruebas/spec.md). TEST-002 identifica la carrera de
+reloj; las referencias antiguas TEST-001 se conservan como historia. Se permite
+preparar plan/tareas/análisis, no implementar ni publicar/integrar/Vercel.
+
+## Planificación 009 preparada — 2026-10-27 (Bogotá)
+
+[Plan](../../specs/009-reloj-pruebas/plan.md), 26 tareas E0–E2 y revisión
+preparados, sin aprobación ni cambios de fixtures. Se proponen tres enmiendas
+técnicas, composición de verificadores, actualización explícita del contador
+de integridad y huella del conjunto de pruebas además de src. La viabilidad
+de API se comprobó con 0/250/1500 ms solo en página vacía.
+La [precisión SC-001](../../specs/009-reloj-pruebas/precision-sc-001.md)
+requiere aceptación: rojo de carrera FR-004/005 y controles/evidencia de
+FR-006/007 sin simular defectos cuando el original ya cumple una garantía.
+Cierre previsto: nueve contratos/250 IDs, catorce mutaciones y RLS fresco.
+Plan, precisión y ejecución local pendientes; sin publicación ni despliegue.
+
+## Plan 009 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar plan y precisión SC-001; autorizar ejecución local E0–E2». Aprueba las 26 tareas, plan, análisis y precisión SC-001: rojo específico de carrera FR-004/005, preservación de controles de error FR-006 y evidencia completa FR-007 sin inventar defectos previos. Autoriza E0–E2 local antes del PR documental; no publicar, fusionar ni desplegar 009.

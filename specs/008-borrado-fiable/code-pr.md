@@ -1,5 +1,11 @@
 # PR de código 008 — preparación local completa
 
+Estado vigente — 2026-10-27 (Bogotá): 008 integrada mediante #18/#19;
+CI de main y Vercel Production verificados en `1f6b29d`.
+[Entrega remota](evidence/integration.json). Las etapas siguientes conservan
+la cronología local; sus esperas de autorización e integración están cumplidas.
+
+
 Rama: codex/008-borrado-fiable. Dependencia: documental 2ee8edc. Publicación, integración y Vercel pendientes de autorización específica.
 [Verificación](verification.md), [converge](converge.md), [checkpoint final](evidence/final.json).
 

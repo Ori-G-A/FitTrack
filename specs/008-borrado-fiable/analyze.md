@@ -1,5 +1,11 @@
 # Revisión cruzada 008
 
+Estado vigente — 2026-10-27 (Bogotá): 008 integrada mediante #18/#19;
+CI de main y Vercel Production verificados en `1f6b29d`.
+[Entrega remota](evidence/integration.json). Las etapas siguientes conservan
+la cronología local; sus esperas de autorización e integración están cumplidas.
+
+
 Revisión de cierre — 2026-10-24 (Bogotá): E0–E3 completas, 38 tareas
 y 29 IDs propios verificados; ocho contratos/234 IDs con RLS fresco y limpieza.
 T038 corrigió una brecha de rechazo falsy antes de aceptar el cierre.

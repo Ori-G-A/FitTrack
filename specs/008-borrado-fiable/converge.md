@@ -1,5 +1,11 @@
 # Converge 008 — cierre local
 
+Estado vigente — 2026-10-27 (Bogotá): 008 integrada mediante #18/#19;
+CI de main y Vercel Production verificados en `1f6b29d`.
+[Entrega remota](evidence/integration.json). Las etapas siguientes conservan
+la cronología local; sus esperas de autorización e integración están cumplidas.
+
+
 Estado: E0–E3 verificadas el 2026-10-24 (Bogotá). Sin publicación ni autorización remota.
 [Revisión](evidence/completion-review.json), [checkpoint final](evidence/final.json), [verificación](verification.md).
 

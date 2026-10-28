@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-27T16:31:24.815Z",
+  "node": "v24.21.0",
+  "documents": 5,
+  "links": 74,
+  "ids": 16,
+  "pending": 16,
+  "scopeApproved": false,
+  "planPrepared": false,
+  "implementationStarted": false,
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "originalPinsIntact": 3,
+  "surveyIsGPin": false
+}

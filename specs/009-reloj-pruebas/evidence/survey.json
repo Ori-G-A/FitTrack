@@ -1,0 +1,59 @@
+{
+  "stage": "survey, no G-PIN",
+  "passed": true,
+  "generatedAt": "2026-10-27T16:27:17.183Z",
+  "node": "v24.21.0",
+  "playwright": "1.64.0",
+  "chromium": "156.0.8078.4",
+  "base": "1f6b29d41d05aa3ca9321ab737035a347973f13d",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "pins": [
+    {
+      "file": "test-support/interface-browser.js",
+      "sha256": "94989d588f5af8a6e8c12cd06b27983bb27f8935275562b2521e0204fd84ad63"
+    },
+    {
+      "file": "change-tests/save-state.spec.js",
+      "sha256": "30c03f1dcf64591ff7b93e9e7baaacbcb49ea4cea6e0fcca68dc4a4232afcfea"
+    },
+    {
+      "file": "test-support/delete-state-browser.js",
+      "sha256": "755aa4c3d12ffc970e59767f8437865a625fa1ea60cd76d50b8f41c5fb8d6894"
+    }
+  ],
+  "observations": [
+    {
+      "fixture": "interfaz",
+      "hostDelayMs": 250,
+      "preparationRejected": true,
+      "error": "Cannot fast-forward to the past",
+      "scriptsInjected": 0
+    },
+    {
+      "fixture": "guardado",
+      "hostDelayMs": 250,
+      "preparationRejected": true,
+      "error": "Cannot fast-forward to the past",
+      "scriptsInjected": 0
+    },
+    {
+      "fixture": "borrado",
+      "hostDelayMs": 250,
+      "preparationRejected": true,
+      "error": "Cannot fast-forward to the past",
+      "scriptsInjected": 0
+    },
+    {
+      "fixture": "control API, sin aplicación",
+      "pauseInFutureMs": 10000,
+      "hostDelayMs": 250,
+      "pausedDuringHostDelay": true,
+      "explicitAdvanceMs": 1
+    }
+  ],
+  "limits": [
+    "Demora finita impuesta en el retorno de install; no mide frecuencia de fallos naturales.",
+    "Los tres fallos preceden a inyectar la aplicación; no demuestran un fallo de producto.",
+    "El control de API no implementa una solución en los fixtures."
+  ]
+}

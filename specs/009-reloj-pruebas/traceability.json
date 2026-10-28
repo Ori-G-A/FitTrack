@@ -1,0 +1,308 @@
+{
+  "spec": "009-reloj-pruebas",
+  "note": "Alcance aprobado en ed35fb2; plan y precisión SC-001 propuestos, sin aprobación. Dieciséis IDs pending; plannedTests no representa pruebas ejecutadas.",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 conserva fechas datos y red de tres montajes",
+        "reloj009 contextos independientes conservan su origen"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014"
+      ]
+    },
+    {
+      "id": "FR-002",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 conserva fechas datos y red de tres montajes"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014",
+        "T019"
+      ]
+    },
+    {
+      "id": "FR-004",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T006",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T014"
+      ]
+    },
+    {
+      "id": "US1-AS1",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 conserva fechas datos y red de tres montajes",
+        "reloj009 contextos independientes conservan su origen"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014"
+      ]
+    },
+    {
+      "id": "US1-AS2",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T006",
+        "T014"
+      ]
+    },
+    {
+      "id": "US1-AS3",
+      "story": "US1",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 fallos de preparacion y montaje se registran sin ocultarlos"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014"
+      ]
+    },
+    {
+      "id": "FR-003",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje",
+        "interfaz navegador temas carga y errores",
+        "guardado007 navegador error visible en movil y escritorio",
+        "guardado007 navegador estado accesible y sin exito falso",
+        "borrado008 navegador fallo persiste visible y accesible"
+      ],
+      "plannedFiles": [
+        "change-tests/interface-highlight.spec.js",
+        "browser-tests/interface.spec.js",
+        "change-tests/save-state.spec.js",
+        "change-tests/delete-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014",
+        "T018"
+      ]
+    },
+    {
+      "id": "FR-005",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T006",
+        "T008",
+        "T014"
+      ]
+    },
+    {
+      "id": "US2-AS1",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz cambio resaltado temporal tras consumo de focusCard",
+        "interfaz cambio resaltado reemplazo y desmontaje"
+      ],
+      "plannedFiles": [
+        "change-tests/interface-highlight.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014",
+        "T018"
+      ]
+    },
+    {
+      "id": "US2-AS2",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "interfaz navegador temas carga y errores"
+      ],
+      "plannedFiles": [
+        "browser-tests/interface.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014",
+        "T018"
+      ]
+    },
+    {
+      "id": "US2-AS3",
+      "story": "US2",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "guardado007 navegador error visible en movil y escritorio",
+        "guardado007 navegador estado accesible y sin exito falso",
+        "borrado008 navegador fallo persiste visible y accesible"
+      ],
+      "plannedFiles": [
+        "change-tests/save-state.spec.js",
+        "change-tests/delete-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014",
+        "T018"
+      ]
+    },
+    {
+      "id": "FR-006",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 fallos de preparacion y montaje se registran sin ocultarlos"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T005",
+        "T014",
+        "T021"
+      ]
+    },
+    {
+      "id": "FR-007",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas",
+        "reloj009 trazabilidad rechaza resultados falsos omitidos y parciales",
+        "reloj009 reintroduccion del patron original detecta tres montajes"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js",
+        "test/clock-state-pins.test.js",
+        "test/clock-state-trace.test.js",
+        "scripts/check-clock-state-mutations.js"
+      ],
+      "plannedTaskIds": [
+        "T006",
+        "T007",
+        "T012",
+        "T013",
+        "T017",
+        "T020",
+        "T021"
+      ]
+    },
+    {
+      "id": "US3-AS1",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 demora de preparacion conserva instante y reloj detenido",
+        "reloj009 host no consume plazos antes ni despues del montaje"
+      ],
+      "plannedFiles": [
+        "change-tests/clock-state.spec.js"
+      ],
+      "plannedTaskIds": [
+        "T006",
+        "T014",
+        "T020"
+      ]
+    },
+    {
+      "id": "US3-AS2",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 reintroduccion del patron original detecta tres montajes"
+      ],
+      "plannedFiles": [
+        "scripts/check-clock-state-mutations.js"
+      ],
+      "plannedTaskIds": [
+        "T017",
+        "T020"
+      ]
+    },
+    {
+      "id": "US3-AS3",
+      "story": "US3",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [
+        "reloj009 firmas y enmiendas rechazan alteraciones no autorizadas"
+      ],
+      "plannedFiles": [
+        "test/clock-state-pins.test.js"
+      ],
+      "plannedTaskIds": [
+        "T002",
+        "T007",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T021"
+      ]
+    }
+  ]
+}

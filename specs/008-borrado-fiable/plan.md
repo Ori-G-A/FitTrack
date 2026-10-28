@@ -1,5 +1,11 @@
 # Plan técnico 008 — borrado fiable
 
+Estado vigente — 2026-10-27 (Bogotá): 008 integrada mediante #18/#19;
+CI de main y Vercel Production verificados en `1f6b29d`.
+[Entrega remota](evidence/integration.json). Las etapas siguientes conservan
+la cronología local; sus esperas de autorización e integración están cumplidas.
+
+
 Ejecución local completada — 2026-10-24 (Bogotá): E0–E3 y 38 tareas
 (36 aprobadas más T037/T038 aditivas), con RLS fresco y ocho contratos/234 IDs.
 [Converge](converge.md). Las exclusiones de publicación, fusión y Vercel siguen vigentes.
