@@ -1,5 +1,11 @@
 # Tareas 009 — preparación determinista del reloj
 
+Estado vigente — 2026-10-27 (Bogotá): 009 integrada mediante #20/#21,
+con CI de main y Vercel Production verificados en `392e797`.
+[Entrega remota](evidence/integration.json). Los apartados siguientes conservan
+la cronología de preparación local y sus autorizaciones ya cumplidas.
+
+
 Estado: 26 tareas APROBADAS el 2026-10-27; ejecución local E0–E2 autorizada. [Plan](plan.md), [spec](spec.md),
 [validación](validation-plan.md), [análisis](analyze.md).
 El plan y la precisión SC-001 fueron aprobados expresamente.

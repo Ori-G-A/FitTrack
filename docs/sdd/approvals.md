@@ -545,3 +545,23 @@ integrarlos con CI remoto verde y permitir el despliegue automático asociado.
 Se integra primero el snapshot documental aprobado `5658328` y después el código.
 Esta decisión sustituye las esperas anteriores de autorización remota de 009;
 no convierte la evidencia local en CI remoto ni certifica una sesión productiva.
+
+## Integración 009 verificada — 2026-10-27 (Bogotá)
+
+Los PRs [#20 documental](https://github.com/Ori-G-A/FitTrack/pull/20) y
+[#21 de código](https://github.com/Ori-G-A/FitTrack/pull/21) están integrados,
+en ese orden, con ambos jobs de CI aprobados para cada PR. El resultado
+`392e797` aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40617873796)
+y Vercel confirmó Production para ese mismo SHA. 372 Node, 35 Chromium,
+nueve contratos/250 IDs, catorce mutaciones y RLS fresco real con limpieza
+confirmados. Las huellas de producto y verificación coinciden con el cierre local.
+[Registro](../../specs/009-reloj-pruebas/evidence/integration.json).
+
+La URL técnica respondió HTTP 302 y redirigió al acceso de Vercel; no se realizó
+una prueba autenticada de FitTrack ni se certifican políticas del backend
+productivo. Esta observación sustituye la limitación DNS anterior para esa URL
+en este entorno. La espera de montaje no diagnosticada de 007, los demás
+hallazgos y el aviso de bundle se conservan; no se promete estabilidad absoluta.
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 009. No concede autorizaciones permanentes para futuras specs.

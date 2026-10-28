@@ -1,6 +1,6 @@
 # Continuidad de FitTrack tras la refactorización SDD
 
-Estado: guía operativa actualizada tras integrar 001–008. La constitución vigente
+Estado: guía operativa actualizada tras integrar 001–009. La constitución vigente
 es [1.0.3](../../.specify/memory/constitution.md), ratificada el 2026-10-20;
 la [enmienda](amendment-1.0.3.md) satisface la puerta normativa M7 y su
 integración documental se verifica en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
@@ -8,14 +8,15 @@ No hay alcance nuevo aprobado aquí.
 
 ## Punto de partida verificable
 
-Main integrado: `1f6b29d41d05aa3ca9321ab737035a347973f13d`.
-[CI](https://github.com/Ori-G-A/FitTrack/actions/runs/40537644734) y Production
-aprobados para ese SHA. [Registro completo](../../specs/008-borrado-fiable/evidence/integration.json).
-Los ocho contratos suman 234 IDs completos; 370 Node, 30 Chromium, once
-mutaciones y RLS local real con limpieza verificados. La consulta HTTP de la URL
-técnica sigue sin poder resolverse o alcanzarse desde este entorno; no hay
-prueba autenticada de producción. El cierre documental posterior está publicado
-en `6d9aa20` de la rama 008, sin atribuir ese commit a main.
+Main integrado: `392e797b54478ec96b9bd9d352a1dde5d53c4376`.
+[CI](https://github.com/Ori-G-A/FitTrack/actions/runs/40617873796) y Production
+aprobados para ese SHA. [Registro completo](../../specs/009-reloj-pruebas/evidence/integration.json).
+Los nueve contratos suman 250 IDs completos; 372 Node, 35 Chromium, catorce
+mutaciones y RLS local real con limpieza verificados. La URL técnica responde
+HTTP 302 y redirige al acceso de Vercel; no hay prueba autenticada de FitTrack.
+El registro de cierre posterior se publica en la rama 009, sin atribuirlo al
+commit de main verificado.
+
 
 La guía de módulos y comandos está en [AGENTS](../../AGENTS.md). Las variables
 y previews están en [README](../../README.md). Cada spec contiene su contrato,
@@ -44,13 +45,12 @@ hay que leer esos artefactos y sus llamadores, no solo el componente visible.
 
 | Orden propuesto | Resultado | Referencias y decisión necesaria |
 | --- | --- | --- |
-| 1 | Completar la entrega de la mejora del reloj | [Propuesta 009](../../specs/009-reloj-pruebas/spec.md): E0–E2 verificadas localmente; publicación, integración y Vercel pendientes de autorización |
-| 2 | Validar el uso real después del despliegue | Prueba autenticada de producción supervisada por el propietario, con cuenta y datos acordados; no ejecutar escrituras implícitas |
-| 3 | Reforzar límites de entradas y fotos | BODY-001 y PHOTO-001: decidir validación y fronteras sin cambiar fórmulas clínicas |
-| 4 | Resolver compatibilidades de interfaz y medir rendimiento | UI-006-003/004/005/006 y PERF-001: elegir un objetivo y baseline; no ampliar accesibilidad ni optimización por inferencia |
+| 1 | Validar el uso real después del despliegue | Prueba autenticada de producción supervisada por el propietario, con cuenta y datos acordados; no ejecutar escrituras implícitas |
+| 2 | Reforzar límites de entradas y fotos | BODY-001 y PHOTO-001: decidir validación y fronteras sin cambiar fórmulas clínicas |
+| 3 | Resolver compatibilidades de interfaz y medir rendimiento | UI-006-003/004/005/006 y PERF-001: elegir un objetivo y baseline; no ampliar accesibilidad ni optimización por inferencia |
 
 El cierre inicial/PATCH y los fallos de guardado y borrado ya cuentan con sus
-entregas verificadas; 007/008 no autorizan corregir otros hallazgos.
+entregas verificadas; 007/008/009 no autorizan corregir otros hallazgos.
 Este orden es una recomendación para priorizar, no una aprobación de producto
 ni una nueva numeración de specs. Los demás hallazgos siguen en el roadmap;
 no se consideran cerrados por completar la refactorización.

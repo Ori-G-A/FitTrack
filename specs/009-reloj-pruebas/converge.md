@@ -1,5 +1,11 @@
 # Converge 009 — cierre local
 
+Estado vigente — 2026-10-27 (Bogotá): 009 integrada mediante #20/#21,
+con CI de main y Vercel Production verificados en `392e797`.
+[Entrega remota](evidence/integration.json). Los apartados siguientes conservan
+la cronología de preparación local y sus autorizaciones ya cumplidas.
+
+
 E0–E2 completas, plan 5658328 y precisión SC-001 aprobados. 372 Node, 35 Chromium/build, nueve contratos/250 IDs completos, catorce mutaciones con quince controles positivos, nueve negativos de recibos y RLS real fresco con limpieza.
 
 [Verificación](verification.md), [checkpoint](evidence/final.json), [revisión](evidence/completion-review.json).

@@ -1,5 +1,11 @@
 # PR de código 009 — preparado localmente
 
+Estado vigente — 2026-10-27 (Bogotá): 009 integrada mediante #20/#21,
+con CI de main y Vercel Production verificados en `392e797`.
+[Entrega remota](evidence/integration.json). Los apartados siguientes conservan
+la cronología de preparación local y sus autorizaciones ya cumplidas.
+
+
 Rama codex/009-reloj-pruebas; dependencia documental 5658328.
 Título: `fix(test): detener el reloj antes de montar los fixtures`.
 

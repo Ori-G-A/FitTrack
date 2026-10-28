@@ -1,5 +1,12 @@
 # Roadmap de adopción SDD
 
+Estado vigente — 2026-10-27 (Bogotá): 001–009 integradas; 009 en `392e797`,
+con CI de PR/main y Production verificados. Nueve contratos/250 IDs completos,
+372 Node, 35 Chromium, catorce mutaciones y RLS local real con limpieza.
+[Entrega 009](../../specs/009-reloj-pruebas/evidence/integration.json).
+Los registros siguientes conservan el historial y sus límites.
+
+
 Estado vigente — 2026-10-27 (Bogotá): 001–008 integradas; 008 en `1f6b29d`,
 con CI de PR/main y Vercel Production verificados. Ocho contratos/234 IDs,
 370 Node, RLS local real con limpieza y once mutaciones aprobados.
@@ -130,7 +137,7 @@ están en el [survey 008](borrado-fiable-survey.md), sin acreditar incidentes re
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
 | IDEN-001 | Reporter consume fingerprint/cupo antes de consultar sesión y su getSession carece de timeout propio | Pins preparatorios lo reproducen; conservar AS-IS y decidir cambio separado de FR-013 | Clarify 002 C2-004 |
 | PHOTO-001 | Fuente admite 25 MiB; migración Storage limita resultado a 5 MiB sin comprobación local del tamaño comprimido | No prometer aceptación remota por validar origen; decidir si hace falta CHANGE y prueba de frontera del resultado | Survey 002; sin cambio aprobado |
-| TEST-002 | Carrera al instalar el reloj y pausarlo en el mismo instante; nombrada TEST-001 en el registro histórico de 007/008 | 009: preparación determinista, tiempos y oráculos conservados; alcance aprobado, plan pendiente | Cierre local 009 verificado; pendiente de integración |
+| TEST-002 | Carrera al instalar el reloj y pausarlo en el mismo instante; nombrada TEST-001 en el registro histórico de 007/008 | 009: preparación determinista, tiempos y oráculos conservados; alcance aprobado, plan pendiente | Cerrado por 009 en 392e797; CI de main y Production verificados |
 
 Estos hallazgos no son autorización para corregir comportamiento en fase 0.
 
@@ -589,3 +596,23 @@ El propietario respondió «Aprobar plan y precisión SC-001; autorizar ejecuci�
 ## Cierre local 009 — 2026-10-27 (Bogotá)
 
 372 Node, 35 Chromium/build, nueve contratos/250 IDs completos, catorce mutaciones con quince controles positivos, nueve negativos de recibos y RLS real fresco con limpieza. 113 firmas anteriores intactas, tres enmiendas canónicas y siete E0 propios intactos. Plan local autorizado cumplido; 27 tareas (T027 aditiva) y dos PRs preparados. [Verificación](../../specs/009-reloj-pruebas/verification.md). Publicación, integración y Vercel requieren decisión específica; no se certifica producción ni toda inestabilidad.
+
+## Integración 009 verificada — 2026-10-27 (Bogotá)
+
+Los PRs [#20 documental](https://github.com/Ori-G-A/FitTrack/pull/20) y
+[#21 de código](https://github.com/Ori-G-A/FitTrack/pull/21) están integrados,
+en ese orden, con ambos jobs de CI aprobados para cada PR. El resultado
+`392e797` aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40617873796)
+y Vercel confirmó Production para ese mismo SHA. 372 Node, 35 Chromium,
+nueve contratos/250 IDs, catorce mutaciones y RLS fresco real con limpieza
+confirmados. Las huellas de producto y verificación coinciden con el cierre local.
+[Registro](../../specs/009-reloj-pruebas/evidence/integration.json).
+
+La URL técnica respondió HTTP 302 y redirigió al acceso de Vercel; no se realizó
+una prueba autenticada de FitTrack ni se certifican políticas del backend
+productivo. Esta observación sustituye la limitación DNS anterior para esa URL
+en este entorno. La espera de montaje no diagnosticada de 007, los demás
+hallazgos y el aviso de bundle se conservan; no se promete estabilidad absoluta.
+
+Este estado sustituye las esperas históricas de autorización, publicación e
+integración de 009. No concede autorizaciones permanentes para futuras specs.
