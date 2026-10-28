@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T03:11:03.438Z",
+  "gitAttributes": "specs/010-entradas-cuerpo/evidence/original-files/src/BodyScreen.jsx.txt: eol: lf\nspecs/010-entradas-cuerpo/evidence/original-files/src/body-records.js.txt: eol: lf",
+  "checks": [
+    {
+      "file": "specs/010-entradas-cuerpo/evidence/original-files/src/BodyScreen.jsx.txt",
+      "sha256": "116ae42e1302eb1853389aa8ff2deb45c7613dafcda7d0a4e02ec770cefe2297",
+      "filteredSha256": "116ae42e1302eb1853389aa8ff2deb45c7613dafcda7d0a4e02ec770cefe2297",
+      "equal": true
+    },
+    {
+      "file": "specs/010-entradas-cuerpo/evidence/original-files/src/body-records.js.txt",
+      "sha256": "ea1fcaa748e5c50625cf7cba6725b798bef3bcb7a7ecc79d2ade2f26f97d4308",
+      "filteredSha256": "ea1fcaa748e5c50625cf7cba6725b798bef3bcb7a7ecc79d2ade2f26f97d4308",
+      "equal": true
+    }
+  ],
+  "docker": {
+    "exitCode": 0,
+    "version": "28.3.0",
+    "error": ""
+  }
+}

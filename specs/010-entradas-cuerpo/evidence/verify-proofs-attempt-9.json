@@ -1,0 +1,12 @@
+{
+  "stage": "verify-proofs",
+  "passed": false,
+  "attempt": 9,
+  "startedAt": "2026-10-28T15:46:49.682Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "node": "v24.21.0",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "receipts": [],
+  "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'eb16ff3f6946f6caed4c31b951155bfeaaf5c87d9dea5eb4291d3f605b8c83d3'\n- 'falso'\n"
+}

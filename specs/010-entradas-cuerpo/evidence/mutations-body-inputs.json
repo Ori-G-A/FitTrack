@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T15:41:19.759Z",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "positiveControls": 5,
+  "mutations": [
+    {
+      "name": "syntax",
+      "test": "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+      "detected": true,
+      "positiveControlPassed": true,
+      "error": "Error: FR-005/006/007: kg=1e2 no debe escribir\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"weights\",\n+ ]"
+    },
+    {
+      "name": "zero",
+      "test": "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+      "detected": true,
+      "positiveControlPassed": true,
+      "error": "Error: FR-005/006/007: kg=0 no debe escribir\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"weights\",\n+ ]"
+    },
+    {
+      "name": "partial",
+      "test": "cuerpo010 mezcla invalida conserva borrador sin exito",
+      "detected": true,
+      "positiveControlPassed": true,
+      "error": "Error: FR-007: rechazo completo, sin setter\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"measurements\",\n+ ]"
+    },
+    {
+      "name": "accessible",
+      "test": "cuerpo010 errores asocian campos en movil y escritorio",
+      "detected": true,
+      "positiveControlPassed": true,
+      "error": "Error: FR-008: explicación asociada cintura\n\nexpect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0"
+    },
+    {
+      "name": "comma",
+      "test": "cuerpo010 coma y punto recorren nueve campos",
+      "detected": true,
+      "positiveControlPassed": true,
+      "error": "Error: FR-010: la entrada decimal debe conservarse antes de validar\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"65,4\"\nReceived: \"65.4\""
+    }
+  ],
+  "cleanupPassed": true
+}

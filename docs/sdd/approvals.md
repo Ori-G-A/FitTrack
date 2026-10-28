@@ -605,3 +605,22 @@ El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecuci�
 análisis, seis enmiendas acotadas y ejecución local E0–E2 antes del PR documental,
 con snapshot aprobado. Incluye informe final y mantiene RLS local fresco como
 requisito de cierre. No publicar, fusionar ni desplegar sin decisión específica.
+
+## Cierre local 010 — 2026-10-28 (Bogotá)
+
+379 Node, 43 Chromium/build, diez contratos/274 IDs, diecinueve
+mutaciones postverde, trece negativos de recibos/dos positivos y RLS fresco
+real con limpieza verificados. Seis enmiendas legadas y dos técnicas propias;
+123 firmas anteriores, nueve E0 y ocho E1 verificadas. [Converge](../../specs/010-entradas-cuerpo/converge.md)
+y [informe final](refactor-final.md). Las 31 tareas originales se conservan
+con T032–T035 aditivas; publicación, integración y Vercel siguen pendientes de
+autorización específica. BODY-001 queda resuelto localmente, sin certificar
+producción ni cerrar los demás hallazgos; no se inicia otra spec por inferencia.
+
+## Entrega remota 010 autorizada — 2026-10-28 (Bogotá)
+
+Sobre el cierre local e3b1d04, el propietario respondió «Autorizar publicación,
+integración con CI verde y Vercel». Autoriza ambas ramas/PRs, documental primero
+y código después, con CI remoto verde y despliegue automático asociado.
+[Decisión](../../specs/010-entradas-cuerpo/evidence/remote-authorization.json).
+No se presenta aún como integración o despliegue verificados.

@@ -1,0 +1,29 @@
+{
+  "id": "PIN-010-006",
+  "file": "test/clock-state-pins.test.js",
+  "before": "74c2dcd4c946a51e78661e72118b83358f374eb1652fa59806013262ff08dd9f",
+  "after": "c6a5345386f1263bef1b674c968450c40ba03025da6daf6a780e35de26526267",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "references": [
+    "US3-AS4",
+    "SC-004",
+    "SC-005"
+  ],
+  "patchVersion": "body-inputs-v1",
+  "originalProof": {
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "nodeTests": 372,
+    "browserTests": 35,
+    "baseline": "baseline.json"
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "nodeTests": 6,
+    "browserTests": 8,
+    "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+    "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+    "proof": "candidate-targeted.json"
+  },
+  "unrelatedAssertionsChanged": false,
+  "businessTimeoutsChanged": false
+}

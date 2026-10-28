@@ -1,0 +1,848 @@
+{
+  "stage": "Inventario E0 original antes de nuevos tests",
+  "generatedAt": "2026-10-28T02:44:26.407Z",
+  "approvedScope": "1fa65613519176547bd543a46d8907624eb2c082",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "effectivePins": [
+    {
+      "file": ".gitattributes",
+      "sha256": "4e14828ae37396a15a48f0b83f5b6e974c7f61a84b6a7228b706f1e8bcc8ab9e"
+    },
+    {
+      "file": "browser-tests/body.spec.js",
+      "sha256": "8431bbebb7393981f1e916e2675d17c3777e1073fe2e4343507895a6dc1a7689"
+    },
+    {
+      "file": "browser-tests/interface.spec.js",
+      "sha256": "6d52acdd2932f3b46037bac9b00cf7f7d520237bb3f00e898dcf8e097690b6fe"
+    },
+    {
+      "file": "browser-tests/nutrition.spec.js",
+      "sha256": "6f773eb85a56d7f2ff1a4f17ab306bf185e7ea067c4e199184637d4cf4fb01af"
+    },
+    {
+      "file": "browser-tests/training-journeys.spec.js",
+      "sha256": "871bf0d0d7b6b2f5abdbfee22bb35afae6a15caeb1623541c29c7c00f0c8c217"
+    },
+    {
+      "file": "change-tests/clock-state.spec.js",
+      "sha256": "b88598fc282974098de7bf0feabbddd2c1b4ca0013eb227bd608c5e2ec210f63"
+    },
+    {
+      "file": "change-tests/delete-state.spec.js",
+      "sha256": "7f5402cc7aef5c0abd9445399bf75467141157221ebd9415b946ad651bc0dd2e"
+    },
+    {
+      "file": "change-tests/interface-accessibility.spec.js",
+      "sha256": "19c5e7a4363ed34db97f12a54c858ec75c9e9b5aa8093cb0f9850d85327226a1"
+    },
+    {
+      "file": "change-tests/interface-highlight.spec.js",
+      "sha256": "e69c6ef7fb0f3a6d2d0492ece2e372a0b502c7848d54263587c0c05963670b5d"
+    },
+    {
+      "file": "change-tests/save-state.spec.js",
+      "sha256": "2b6cb4c7a452d03ec539b5a4181361e2c25588c835b2c14e3caed3b8b3cbaec0"
+    },
+    {
+      "file": "playwright.clock-state.config.js",
+      "sha256": "792f1c2d9aa14945e4bea3d0e1ea5e3b894de14fcffc2cdaba6ca85e1b415dde"
+    },
+    {
+      "file": "playwright.delete-state-legacy.config.js",
+      "sha256": "b86057b60e038e0efd5cd8780a905cff8142fac5310179fa51f6ae0c17028f77"
+    },
+    {
+      "file": "playwright.delete-state.config.js",
+      "sha256": "8de900862ac8340b1350e2a5825aee6a7d7e9e8fb36e6784c25af758665b7d7b"
+    },
+    {
+      "file": "playwright.interface-change.config.js",
+      "sha256": "408a001ecc45d47c3a38d68966e601ef0ef0786723942f970641d16557bf2020"
+    },
+    {
+      "file": "playwright.save-state.config.js",
+      "sha256": "8d35a981f85d81541f9e1812452c4f98c9fa495fa661b0f3831610b1afb2f59c"
+    },
+    {
+      "file": "scripts/clock-pin-amendments.js",
+      "sha256": "ff9aa83d6a225acfa1ba4bc2945308acc5544c7915f7a794b9513ba4ad688462"
+    },
+    {
+      "file": "scripts/clock-state-evidence.js",
+      "sha256": "6554a02e10881c10e580a496b161d670bf2db44ed09d74285fe80e26c642fea9"
+    },
+    {
+      "file": "test-support/body-build.js",
+      "sha256": "45d8c14efa2b918c9982b783fee694118754812c8370596ab77020aa340d9d9d"
+    },
+    {
+      "file": "test-support/body-dom.js",
+      "sha256": "48209ae73675cdb3659d141ba449612278b66ff9b337fb5297a36609bd8b6424"
+    },
+    {
+      "file": "test-support/body-entry.jsx",
+      "sha256": "149dc33ac73b6f92381425a8d17bbc1d6466c854ab7cd1e383f8cce7b9e35aef"
+    },
+    {
+      "file": "test-support/body-fixtures.js",
+      "sha256": "c5a6cc039c378f1fb4db5b66045c70426327da5001154ccbf368ea4c61281819"
+    },
+    {
+      "file": "test-support/body-golden.json",
+      "sha256": "954d5ab801238439055545e9159008f668018232b3b495271697eb0ae1208c6d"
+    },
+    {
+      "file": "test-support/clock-state-fixtures.js",
+      "sha256": "d6734ab2f30b0568c9c4ec07aac59dbf7cf99e7458c4e9c1063ac7e1d1c1bbf0"
+    },
+    {
+      "file": "test-support/delete-state-browser.js",
+      "sha256": "2c6ea0cc3431e1c47a5c02d071aff3e9d91fd85aaa8c3f25bde2bef736945c07"
+    },
+    {
+      "file": "test-support/delete-state-fixtures.js",
+      "sha256": "737dd831436a1c0dc28c5d19bb89386698b8831bbf57ddf3254bf41cc0946d99"
+    },
+    {
+      "file": "test-support/interface-browser.js",
+      "sha256": "3c057528103b760d49a9c1c290d3564510818bda4280c016fa8d6a5fd0d1e24f"
+    },
+    {
+      "file": "test-support/interface-build.js",
+      "sha256": "259e1b5fad8066608588f2e813a8e1e77f49846871c8dc78fe38aacd06b8d672"
+    },
+    {
+      "file": "test-support/interface-cases.js",
+      "sha256": "dd79ef99290fb081c727d21129cafc365105cf761e48d2026b936044022323a6"
+    },
+    {
+      "file": "test-support/interface-dom.js",
+      "sha256": "362eba5bc01780aff67cd8cd70d3491d4dbe9ce5590315d3da5914de6c64ac82"
+    },
+    {
+      "file": "test-support/interface-entry.jsx",
+      "sha256": "5539bb12b313d1d49b5fae1cbb1c73c6d031965239ac9b7bfdafa3821e3591be"
+    },
+    {
+      "file": "test-support/interface-geometry.json",
+      "sha256": "416c105a7fec61cfb73d5c5d73d5354d5680e1ea277c1702a807e6241759a223"
+    },
+    {
+      "file": "test-support/interface-golden.json",
+      "sha256": "d8b94c40e9bb07cdec882cfa8110b9936354184401f01e2a4cd43e981ccdab40"
+    },
+    {
+      "file": "test-support/save-state-entry.jsx",
+      "sha256": "40dfc906c9d79ea84b5b35ca6f13545f85395c050af89758b9ddf2de97cc8af7"
+    },
+    {
+      "file": "test/body-alerts.test.js",
+      "sha256": "a78dd9fcb498b48e0610c65fe9cbae59ad55e8a07eb0a5dbd10ed5d80da52eea"
+    },
+    {
+      "file": "test/body-compatibility.test.js",
+      "sha256": "9387fe60ffbc9f58caf63a9d2209e72211b0f494c708c446ea19550fac089e4e"
+    },
+    {
+      "file": "test/body-consumers.test.js",
+      "sha256": "64d749292f6504b8a29acefb57dd45c13280c57836f95c6198aa9ba03305c984"
+    },
+    {
+      "file": "test/body-context.test.js",
+      "sha256": "f1c546a4ada338bf2ab5092cfa9249af5976987fb92e14e46ed1fa6edd5a011a"
+    },
+    {
+      "file": "test/body-creatine.test.js",
+      "sha256": "80ef40eb6202b4f84bd82936ff520f4ea5f5d8fd55b1a81678ea023c14dc6cd8"
+    },
+    {
+      "file": "test/body-dashboard.test.js",
+      "sha256": "159321bacd52738971d7e9c365db5d0e8770ef560a38f2eef4f0009822f3efab"
+    },
+    {
+      "file": "test/body-distribution.test.js",
+      "sha256": "09b21afa5b825e1370cd04bcffedae229af8c77f4988197d798c93a6581d48a1"
+    },
+    {
+      "file": "test/body-guidance.test.js",
+      "sha256": "52bc10f5cc9b9dd2f48ca2a01719e429b84eb2312ec94ee24d4e4fd11e18b2c5"
+    },
+    {
+      "file": "test/body-logs.test.js",
+      "sha256": "62c48705e55129a4be3e33372fd979dade3c2a73974136c608af113d23161956"
+    },
+    {
+      "file": "test/body-measurements.test.js",
+      "sha256": "0a40deaede9b030d0335756d15247bb00ecbf7e666f1cb498051643a30d920e9"
+    },
+    {
+      "file": "test/body-metrics.test.js",
+      "sha256": "3c04184881b33df5a6be1c678786ddb9ccbe4eafe57a62e1ee3d26b31841ced7"
+    },
+    {
+      "file": "test/body-ovulation.test.js",
+      "sha256": "c394a0ed8ac4f4e6ef3c25bb36dfc18914972dd3d523b4d02274686f48178131"
+    },
+    {
+      "file": "test/body-phase.test.js",
+      "sha256": "c59ac0feaa24887febb28d3048d73a94302a531301db31c4694d330b2c8e0c7d"
+    },
+    {
+      "file": "test/body-retention.test.js",
+      "sha256": "a0077d927f93bc9a32f4b55af17fee85e72d7947f742b23789ccf37554d4c02d"
+    },
+    {
+      "file": "test/body-routing.test.js",
+      "sha256": "f3e71c1a8f2f3804ed2b373ed9f3b009f530c2ecbf36ff5672f26fd6f52f2561"
+    },
+    {
+      "file": "test/body-sensitivity.test.js",
+      "sha256": "62fa7203bc870f3b742ede295876c9ee160b499c4c9d68c187b11741eb926761"
+    },
+    {
+      "file": "test/body-summary.test.js",
+      "sha256": "107ad1ee3404617fcbde473d20a0f92e5cf541fff24faeae39e71e0f38f3430c"
+    },
+    {
+      "file": "test/body-timeline.test.js",
+      "sha256": "7c158520a8e5105695ccd8e104ce66fecafeaab01c8c15cf5722a5602d728083"
+    },
+    {
+      "file": "test/body-trend.test.js",
+      "sha256": "aa46076190826a6485f7c61090a0bbc734c9a98bc3a881a015fa415f37890681"
+    },
+    {
+      "file": "test/body-weight.test.js",
+      "sha256": "c58489431bdd25014f2510b92fe965eba65c5be8c235e0dd90988f2e23114972"
+    },
+    {
+      "file": "test/body-wellness.test.js",
+      "sha256": "cee5bc7581aa789758291741b6b95f96ec8765786bfe783b5240b273a91b6ff3"
+    },
+    {
+      "file": "test/clock-state-pins.test.js",
+      "sha256": "74c2dcd4c946a51e78661e72118b83358f374eb1652fa59806013262ff08dd9f"
+    },
+    {
+      "file": "test/clock-state-trace.test.js",
+      "sha256": "03f879d335c51c1ca8eac34f2317500bcf6a6c984d994295d460b2200852b93d"
+    },
+    {
+      "file": "test/data-backup.test.js",
+      "sha256": "2470c825c95980c7222221726a60c1618adb8f4a7e46c0fcd2daa3ee481c32de"
+    },
+    {
+      "file": "test/data-delete.test.js",
+      "sha256": "8eff108dfd4d100611300a5c7562850942c60d63e70fb803310deae80322265b"
+    },
+    {
+      "file": "test/data-lifecycle.test.js",
+      "sha256": "3e3d05a0335e3abc0eea810014946b7cb3a82e1514cbe6da08d430d5f62ff920"
+    },
+    {
+      "file": "test/data-operations.test.js",
+      "sha256": "3c7f2a9f1fc894cae009187a915a258c22261502bd50a47e03fb48f183d7a6db"
+    },
+    {
+      "file": "test/data-sync-hooks.test.js",
+      "sha256": "5b825bc66fe3015eb4d96f24443c7b42d02d8917abc8d9eb2fd786c4a56bf5e6"
+    },
+    {
+      "file": "test/data-sync.test.js",
+      "sha256": "09b30fa9050566d9b54c6ae0bc407579b2db707ceaed0cd76761b3b4122773db"
+    },
+    {
+      "file": "test/delete-state-app-change.test.js",
+      "sha256": "a6e5d00c5a3ac25312deba65d3759160d7ccb62998503601038c55b80a39ba4c"
+    },
+    {
+      "file": "test/delete-state-asis.test.js",
+      "sha256": "4d13add0337e8c6b1afe86e6c7c7ed09f8443b86b02c7b425b9ec2bf90fc320b"
+    },
+    {
+      "file": "test/delete-state-core-change.test.js",
+      "sha256": "59ccff5f83937f19ef043d2d70573a3c95914eb8271a5350785f4fa70e3e8004"
+    },
+    {
+      "file": "test/identity-auth.test.js",
+      "sha256": "f1c86293737a4e4e7cc3296541ae8406f640098adf8afb702daff9cda11e1374"
+    },
+    {
+      "file": "test/identity-diagnostics.test.js",
+      "sha256": "5487267be2445f5139a9d9ae47e7c27651bf325ed4cad7b898ed95141f8a9092"
+    },
+    {
+      "file": "test/identity-photos.test.js",
+      "sha256": "5271ff038be539e89dc6046aad62b7569ae05bba92e112e3e76b95a72ca8da7c"
+    },
+    {
+      "file": "test/identity-recovery.test.js",
+      "sha256": "40cbbb6945192e1e615b9d9837b96c8a6438aae650579b3fb3d9f26ae16472e0"
+    },
+    {
+      "file": "test/identity-session.test.js",
+      "sha256": "e39c2a783a1a84d1dec61a824d278f16557ce3165b432a63a05ff9d4e0109bff"
+    },
+    {
+      "file": "test/interface-account.test.js",
+      "sha256": "f9163e5c3c4f9907ee7213e70db4f425ea4787612541a601809c2492055ba4cf"
+    },
+    {
+      "file": "test/interface-body-routing.test.js",
+      "sha256": "83471bf4c3fc11d3ab5963dded009d06b826c7b108f751b40315d63904ac9451"
+    },
+    {
+      "file": "test/interface-boot.test.js",
+      "sha256": "78e4dbdfae5148f70477a30790991e39ac55fb9b0dc72bd732ac484924521356"
+    },
+    {
+      "file": "test/interface-compatibility.test.js",
+      "sha256": "886f1635c93f2cb8ff2b93a1ecab80dcbfad623ef70dcf2b8162dbe514941686"
+    },
+    {
+      "file": "test/interface-detail.test.js",
+      "sha256": "082afcfad4417e73732ad21976e56baa9cb60325025a2ff5a7c2a52d0c2b6a88"
+    },
+    {
+      "file": "test/interface-diary.test.js",
+      "sha256": "c3f788f099bd907ed439628cde8763f389c13b317f5306bebc88988dc25ecca0"
+    },
+    {
+      "file": "test/interface-dismiss.test.js",
+      "sha256": "f404507ad965d97ccc07db365245b396f36765b01d3e777e3240965d4089877a"
+    },
+    {
+      "file": "test/interface-editorial.test.js",
+      "sha256": "91f5966540f8916635649e62e15bc181ab9613f0cee043536505f3ac36a3e82e"
+    },
+    {
+      "file": "test/interface-metric-focus.test.js",
+      "sha256": "2e72b33c215449f5390702a4b745a63a381f8e0544ca699ad4b63567e2365b66"
+    },
+    {
+      "file": "test/interface-mutants.test.js",
+      "sha256": "f12b34b58077ca182c05fa92b57646875dd31ee4f8f22dba1f710467d43451df"
+    },
+    {
+      "file": "test/interface-navigation.test.js",
+      "sha256": "c636d6ca7acfde1795122f7ad4662d93022cf37591426e0c33e51254f8c9dbe8"
+    },
+    {
+      "file": "test/interface-plan.test.js",
+      "sha256": "c48655df5ab36bfc3711e7ca540761c76ae7ab920cba2b3cf85eba75b043af6f"
+    },
+    {
+      "file": "test/interface-previews.test.js",
+      "sha256": "115c43af3186f6318b38908bf5ecb2c0cb52e4631e2c212da7a873dda4c5ab8a"
+    },
+    {
+      "file": "test/interface-registration.test.js",
+      "sha256": "fee8c550dbb0e9dad4cce54631475443d13ab16446d019fc158fee12628dc56e"
+    },
+    {
+      "file": "test/interface-responsive.test.js",
+      "sha256": "acc1bff1cc49153b694b036efe300b32095f8d382fede69d13015e8b18442a6c"
+    },
+    {
+      "file": "test/interface-routing.test.js",
+      "sha256": "4dee0023665567d3f0d0c1d72c1f740361eaba7ead464f85c6ace7ce93640406"
+    },
+    {
+      "file": "test/interface-screens.test.js",
+      "sha256": "e02d177ea373a34aa7bdd030f4ae14c3875f2821304ad7ba89e65fc2a852d2ba"
+    },
+    {
+      "file": "test/interface-session.test.js",
+      "sha256": "4cc59d0bdd1f01663027f7fb58a9e0c82d05498ad1fd4e3fa1b10b3c3daad04b"
+    },
+    {
+      "file": "test/interface-theme-lifecycle.test.js",
+      "sha256": "f5331314fc97492a0aca30f5d517b5ce1746b43e5220027df0961aeee14a2a4a"
+    },
+    {
+      "file": "test/interface-theme.test.js",
+      "sha256": "ac5800fafbcf2dd90e45832aa6346dee6817128a1a75c0f67c2724569c21ec83"
+    },
+    {
+      "file": "test/interface-toast.test.js",
+      "sha256": "dc1c51eb208effcdc94fa38501f99a5fbe32061c9749ec40bf4a17fce199037a"
+    },
+    {
+      "file": "test/interface-touch.test.js",
+      "sha256": "df68cf4596a7a14c6d86bfd3f4545b769a837730de5ddf3cfc4266b7019b43b3"
+    },
+    {
+      "file": "test/nutrition-adherence.test.js",
+      "sha256": "9a76f7f47030722b98a114f01b9e04be3474fcde65823072650acc7af6600c6f"
+    },
+    {
+      "file": "test/nutrition-alerts.test.js",
+      "sha256": "9a5111383bf015d4943b791f56dba29f48a5c4fe56744af7b668c0dbe72223d4"
+    },
+    {
+      "file": "test/nutrition-amount.test.js",
+      "sha256": "cdf91809f34200e42480e3d4952ebaed344e91da9371551caf4d4f5e49033ca6"
+    },
+    {
+      "file": "test/nutrition-auto-goals.test.js",
+      "sha256": "2c35254019a6f6810aef8c4bf6801ad6345fb5de191d0aa9af858d3c76a2b805"
+    },
+    {
+      "file": "test/nutrition-catalog.test.js",
+      "sha256": "3fdbe7c3b788ef03488e0df5055b324a21242ff38a65f53f6c2c33230d8105a7"
+    },
+    {
+      "file": "test/nutrition-compatibility.test.js",
+      "sha256": "ce09db733b5bb411c7ef26f7530531f176c009cdbe76f808a48d219659996e55"
+    },
+    {
+      "file": "test/nutrition-dashboard.test.js",
+      "sha256": "3295012641d6110973656023177cc5183a3950eb4dc861c6ad793a795080c6f3"
+    },
+    {
+      "file": "test/nutrition-day.test.js",
+      "sha256": "90080d6a5a994a4c95de76c736957f06ee471275ed0426e1c8b3d0cda13ae5c0"
+    },
+    {
+      "file": "test/nutrition-expected.test.js",
+      "sha256": "16cf2112a5cffc64322766ed5333848e0f391b936919da330062efdaa128bd32"
+    },
+    {
+      "file": "test/nutrition-foods.test.js",
+      "sha256": "56c464f2175c851bcf98994ac879091fe2f05b44128f81fa43f75f604ffe1795"
+    },
+    {
+      "file": "test/nutrition-goals.test.js",
+      "sha256": "2a60db9cbc18d144554f2de7802d641340555287f5d5636a53915bce131f3641"
+    },
+    {
+      "file": "test/nutrition-pace-actions.test.js",
+      "sha256": "9e25400ebf95d255bb177c0448c052f82e465119548674adb88169093c51529c"
+    },
+    {
+      "file": "test/nutrition-pace.test.js",
+      "sha256": "5871e6df81c2677c95804e1ea2f6addeb086ef8f95f1c8bfe2030326c18dec13"
+    },
+    {
+      "file": "test/nutrition-protein.test.js",
+      "sha256": "c220561440589e5333dabd7476951305a67688b2654ac09ea56d335408506f28"
+    },
+    {
+      "file": "test/nutrition-recipes.test.js",
+      "sha256": "b1cb18bb46794d0f560e69b22734b81935583dfb78c2e9e442afeec9a797ab75"
+    },
+    {
+      "file": "test/nutrition-search.test.js",
+      "sha256": "a2f69c3af8fc5c0aa3f983530ed4c7c72de2198ef2ba29de3026682c7d7fbf69"
+    },
+    {
+      "file": "test/nutrition-sensitivity.test.js",
+      "sha256": "069a8b60974933deac3d4e386de20ab470c31238f237f0f4a65f7479dbf09d3b"
+    },
+    {
+      "file": "test/save-indicator.test.js",
+      "sha256": "36744cf7c4b48d7042cd92b0b54342e824324896c857df202be4feb11f1d4bf3"
+    },
+    {
+      "file": "test/save-state-asis.test.js",
+      "sha256": "6536e8590c1b2eb9688225e777a693e18a03c2da3c991136baca2ffac1837314"
+    },
+    {
+      "file": "test/save-state-change.test.js",
+      "sha256": "cf59f5e621f8b87e00d5950a2f4647d5987d7aa3f5229acb3bc6abd1bb5fe93a"
+    },
+    {
+      "file": "test/save-state-race.test.js",
+      "sha256": "c5ebf1a058ac00078dbede9b269dae3d6e8ae5346fdcf862080be4005df15894"
+    },
+    {
+      "file": "test/training-compatibility.test.js",
+      "sha256": "7c999dfdcb0e39a75c52fbbe795daaf51ece1632f056f6d5b50d9c2baeb12ad8"
+    },
+    {
+      "file": "test/training-duration.test.js",
+      "sha256": "78cc73cd495ebd161e068585a6cd87f865ae6bae8b76dfd804783da0a2252a1d"
+    },
+    {
+      "file": "test/training-guided.test.js",
+      "sha256": "7fd9241f87316fc9b413595403b2a6a489542029159b072dd6b9e40467354b9b"
+    },
+    {
+      "file": "test/training-metrics.test.js",
+      "sha256": "95639b1822b632b612972ee2a1592f16e14f9b126f76b9d7df67cb90889f65e7"
+    },
+    {
+      "file": "test/training-mutants.test.js",
+      "sha256": "805653ac9e95508107452180002311bbb75f7f346fb383bab0ab949aaee87257"
+    },
+    {
+      "file": "test/training-plan.test.js",
+      "sha256": "efaf128dc9f3e4474fbb33270714e44465d384020f74676f520d4d5b6a239dfa"
+    },
+    {
+      "file": "test/training-records.test.js",
+      "sha256": "7eb36d93b9815385058a0482ef255e70d89c43354d2021ef83c92e8bf03c6630"
+    },
+    {
+      "file": "test/training-routines.test.js",
+      "sha256": "e2e399e4687b00dce34b3176f6517a4d282b208ce70f4622ed76db9081c7996e"
+    },
+    {
+      "file": "test/training-timer.test.js",
+      "sha256": "43290d78000726ef3d9866b285aa80e8dd36fd4bf421a26f286f00fc3fafdb8e"
+    },
+    {
+      "file": "test/training-trace.test.js",
+      "sha256": "c077c3f4025db4d15eb8e7668eb14f032366126abaf7b79352c7577f7212e91a"
+    }
+  ],
+  "proposedAmendments": [
+    {
+      "id": "PIN-010-001",
+      "file": "test/body-weight.test.js",
+      "before": "c58489431bdd25014f2510b92fe965eba65c5be8c235e0dd90988f2e23114972",
+      "cohort": "previous-009"
+    },
+    {
+      "id": "PIN-010-002",
+      "file": "test/body-measurements.test.js",
+      "before": "0a40deaede9b030d0335756d15247bb00ecbf7e666f1cb498051643a30d920e9",
+      "cohort": "previous-009"
+    },
+    {
+      "id": "PIN-010-003",
+      "file": "test/body-wellness.test.js",
+      "before": "cee5bc7581aa789758291741b6b95f96ec8765786bfe783b5240b273a91b6ff3",
+      "cohort": "previous-009"
+    },
+    {
+      "id": "PIN-010-004",
+      "file": "test-support/body-build.js",
+      "before": "45d8c14efa2b918c9982b783fee694118754812c8370596ab77020aa340d9d9d",
+      "cohort": "previous-009"
+    },
+    {
+      "id": "PIN-010-005",
+      "file": "scripts/clock-state-evidence.js",
+      "before": "6554a02e10881c10e580a496b161d670bf2db44ed09d74285fe80e26c642fea9",
+      "cohort": "own-009"
+    },
+    {
+      "id": "PIN-010-006",
+      "file": "test/clock-state-pins.test.js",
+      "before": "74c2dcd4c946a51e78661e72118b83358f374eb1652fa59806013262ff08dd9f",
+      "cohort": "own-009"
+    }
+  ],
+  "unfrozenImpacts": [
+    {
+      "file": "scripts/save-state-evidence.js",
+      "before": "e3f9cc1df896b67edc25cbbce88fe9f3b2e52f79b1fd13e30eeb336e598b9f3a"
+    },
+    {
+      "file": "scripts/delete-state-evidence.js",
+      "before": "58e8af8256e816c2a3d1a39936508586387feb3ea1a99c475ee0fb58551545e0"
+    },
+    {
+      "file": "test/delete-state-trace.test.js",
+      "before": "0935be5bb1f2f9b3499cb36a74e30c4ad3c342a595f852bc2650186e1a12bdbc"
+    }
+  ],
+  "sourceInventory": [
+    {
+      "file": "src/AccountScreen.jsx",
+      "sha256": "03c12742bb94a9e7d5f7bc3c5eaeecc56f6398957882ea3ca1e77469f4fb3f6a"
+    },
+    {
+      "file": "src/AppNavigation.jsx",
+      "sha256": "aedb683b4dbaf7b63be9a593e56480d86ee66b84c9c7fb81acacce39aea81355"
+    },
+    {
+      "file": "src/AuthUI.jsx",
+      "sha256": "a781a683c9ffa3891c8672a379df8d38d0cea1020248bf18a5d6ae923dc2e3e1"
+    },
+    {
+      "file": "src/BodyScreen.jsx",
+      "sha256": "116ae42e1302eb1853389aa8ff2deb45c7613dafcda7d0a4e02ec770cefe2297"
+    },
+    {
+      "file": "src/DashboardScreen.jsx",
+      "sha256": "87af0622f97354a5b14ac82f8b59221e781b0bc22fb9f030a7fdeb54abb5e64c"
+    },
+    {
+      "file": "src/DeleteFeedback.jsx",
+      "sha256": "ffde56c0611c33b91402bfa79cdc0b44e6b0e17643539942b16c312cd33a573b"
+    },
+    {
+      "file": "src/DetailSheet.jsx",
+      "sha256": "866be5bfc347304889f3563a2b2d35433551597acd03704c435f283d7a89cafc"
+    },
+    {
+      "file": "src/DiarioScreen.jsx",
+      "sha256": "113a07677082824f866a16825a8a3ce4bfbf18900cff8c1ffec22ed6cf514e33"
+    },
+    {
+      "file": "src/EditorialUI.jsx",
+      "sha256": "fd1e8f03a508cfbc972fcd95e5dc3353ea9d9b1503fd7307c9185b8e1ef0d991"
+    },
+    {
+      "file": "src/ErrorBoundary.jsx",
+      "sha256": "f6bde708d0eb76540f1a07448705c386a910cb6a910b55dcc5c1ba9758f350ea"
+    },
+    {
+      "file": "src/FitTrack.jsx",
+      "sha256": "27f7e29afbf264c5b65b8af2eb828cc5917f06c35b519dd36a7f4232e3f5cfe8"
+    },
+    {
+      "file": "src/LibraryScreen.jsx",
+      "sha256": "9a21107c85558b75ca5fa8e191e414e1c3df7869325eb2161fac9bf9c11d75eb"
+    },
+    {
+      "file": "src/ModalSheet.jsx",
+      "sha256": "72fb54b0c7f5ce09a261805b91d050f9669f1d08110bd4814fb3be42f31a0bc4"
+    },
+    {
+      "file": "src/NutritionScreen.jsx",
+      "sha256": "a7fb064451b1e6522fc2cdc30e61321977066812bdcca1b3db5f3c3c63654013"
+    },
+    {
+      "file": "src/PerfilScreen.jsx",
+      "sha256": "f60042c8dba01d855c647f717e2358eb5866eeced1531887803e46c6dcd6231b"
+    },
+    {
+      "file": "src/PlanScreen.jsx",
+      "sha256": "e61bbaa9ba45a056436e8328a68bd5758baaea6d30f284f11e7e7c768d7a1468"
+    },
+    {
+      "file": "src/SessionScreen.jsx",
+      "sha256": "3d0ff55ac8134d70e0dcb7090997644131ead22267b00aa3ceffc75c401e3077"
+    },
+    {
+      "file": "src/SettingsScreen.jsx",
+      "sha256": "28b2dbf49fad3717f0681b07792764f05398767347d4c3f6f70f5d2e9659c153"
+    },
+    {
+      "file": "src/TrainingScreen.jsx",
+      "sha256": "959083339b43d688ce35fb4003182ee7d61176ef208f5a92fa02b6d7c687a510"
+    },
+    {
+      "file": "src/alerts.js",
+      "sha256": "0bd37046e0a30e1717ab3d4d15255d9b0e1364b1d88a9fa8bc7916239e18e7a9"
+    },
+    {
+      "file": "src/app-config.js",
+      "sha256": "75e25ee61c024cac0dfcbefd47bc4448ef2e44ee34727b256c6e10cb03319316"
+    },
+    {
+      "file": "src/app-data-lifecycle.js",
+      "sha256": "6d6632025a79dce90e777488f9101f23ab2b37454982e708cbc7a5972d05d65c"
+    },
+    {
+      "file": "src/app-navigation.js",
+      "sha256": "f37ac2ec04aff4912d853262b2fa0256cc371224cd6b32d2947a1a7d27f1db8f"
+    },
+    {
+      "file": "src/app-styles.js",
+      "sha256": "e9383c30442e79cdc421c9cbbfa5ffd997ad39be37ead50b261e7915bf53c1f8"
+    },
+    {
+      "file": "src/app-utils.js",
+      "sha256": "41ba46692d2a2ada2334fa6f2233489950f3cf1703b7f480dfcc2e3f7a4112df"
+    },
+    {
+      "file": "src/async-utils.js",
+      "sha256": "214beea846614cbd8ad8e241b97a258ad1145f61c53a52acbb7ccfb84a6257c9"
+    },
+    {
+      "file": "src/auth-service.js",
+      "sha256": "d2d1b911a4b92a5c10f23a53079710f9008cdba2ef3429d8dab29d64f351a547"
+    },
+    {
+      "file": "src/body-config.js",
+      "sha256": "f93b1a48e4a0c304e1871ec52bfefdd065aca2a8689cb9321cebfe75f2648e61"
+    },
+    {
+      "file": "src/body-metrics.js",
+      "sha256": "97e8ff1b2f79e949a3cfc60ee60c8ff569a3479a9c9d7f5fb1baf8db2b5721f7"
+    },
+    {
+      "file": "src/body-records.js",
+      "sha256": "ea1fcaa748e5c50625cf7cba6725b798bef3bcb7a7ecc79d2ade2f26f97d4308"
+    },
+    {
+      "file": "src/cycle-context.js",
+      "sha256": "b79aa76ab4754a1e233ecffea8e2e2cf2c5817f33a9232cba138bad41ef65d4f"
+    },
+    {
+      "file": "src/cycle-inference.js",
+      "sha256": "7b4eeb12d008d8d56dfc03fab68d9fa7dbeb7df30418888ac385df0e873b5e63"
+    },
+    {
+      "file": "src/cycle-phase.js",
+      "sha256": "ad32e0085eebe11e88ba4bde4cabb0c891661b7bb472f600aaa63f92948bbb1d"
+    },
+    {
+      "file": "src/cycle-readings.js",
+      "sha256": "65591d082a07bf76eac30eeea57c9cf9483946a3e8ffeec58073dd662718e422"
+    },
+    {
+      "file": "src/cycle-summary.js",
+      "sha256": "4a6620cad1ac588b7ce8ede82c8f808c956c06e4995f3c454e1695e7a1692907"
+    },
+    {
+      "file": "src/data-operations.js",
+      "sha256": "0ef4c6d6096cec7e5d2c7e349dcea21d2977cb9325c3ab7915fdf7356b81487d"
+    },
+    {
+      "file": "src/data-sync.js",
+      "sha256": "f74b05db3c0cb9f119455c9f6c923782c029e12a33158417e7ecf3e9469c7118"
+    },
+    {
+      "file": "src/date-utils.js",
+      "sha256": "df16949a7a458204fc0d9dddfb382fb11009051e93715b73195ef7ec85b9ed62"
+    },
+    {
+      "file": "src/delete-coordinator.js",
+      "sha256": "0f4fdbd39c2dfd191ae7536e47b1afcc92152b8f4d6b1e47f49119a8eb99d78f"
+    },
+    {
+      "file": "src/error-reporting.js",
+      "sha256": "5839ec3d37220a247479a0b7cd5ae7b75e511fdcc95a8935fc8904f09b297948"
+    },
+    {
+      "file": "src/error-utils.js",
+      "sha256": "337c8c6b1e1ae60d3a22f0997bf190526473eb998a0067c7eaea583eea83b90a"
+    },
+    {
+      "file": "src/fase1Config.js",
+      "sha256": "7006678c44fe16301720af1f006651104df9a1166482e74f1c41c537dc1c01e2"
+    },
+    {
+      "file": "src/goals-model.js",
+      "sha256": "53949f2354c96ceeff625cfe5fc27b4b6f7d98bf2dffb44ed4a7e51c022024b2"
+    },
+    {
+      "file": "src/goals-operations.js",
+      "sha256": "f075ce252e16b5a4797e5a653478ec197ff5e6299c0352f42b4112beb1b974e9"
+    },
+    {
+      "file": "src/id-utils.js",
+      "sha256": "e562569148a37d7604ab44548521c732994c8f398c2bf0a984bc605388ffd5f1"
+    },
+    {
+      "file": "src/main.jsx",
+      "sha256": "30035e030ce3b09480a8945b1e08768ec345b43a0cfc64b9395921f4abe7dcab"
+    },
+    {
+      "file": "src/nutrition-config.js",
+      "sha256": "9409bc3b0a7484ead2324593434419492070532eadb4c5cfebbcb2faadf5f885"
+    },
+    {
+      "file": "src/nutrition-metrics.js",
+      "sha256": "2992f5729c5f31af5b1a8ea279bc6d25e1627db7d842335cef836b45214358f4"
+    },
+    {
+      "file": "src/nutrition-model.js",
+      "sha256": "dcc1de7cccc6e95aa583f51b0840a1cb0a94b5d44212aa60ca29b1aa8dd41240"
+    },
+    {
+      "file": "src/nutrition-numbers.js",
+      "sha256": "9561f1549616b8acf4690b8e30424336590b23833c9c0d2d047808329d0bace0"
+    },
+    {
+      "file": "src/nutrition-protein.js",
+      "sha256": "01d9c384f04dc62c433a239280316ff64a76ae50940750ed51098f2101b69eaf"
+    },
+    {
+      "file": "src/nutrition-records.js",
+      "sha256": "7c18923cfc2ca5982f72feb2f2993c8d2279d92d0841aa1906f53620995aaa44"
+    },
+    {
+      "file": "src/photo-operations.js",
+      "sha256": "3d9cf9bc981c6a4573a6aa4b3bc15f5208f58751e7894b3ef4089e5e7139a946"
+    },
+    {
+      "file": "src/photo-service.js",
+      "sha256": "0e2d38241ac91b27732759f84232eeea356c2f53cc4c9d87f1a563a8d8af285d"
+    },
+    {
+      "file": "src/photo-storage.js",
+      "sha256": "eb241b04699640f6a4fe34872ce1ae400685e959b0054e00d1675817ad717c7f"
+    },
+    {
+      "file": "src/preview-main.jsx",
+      "sha256": "501ccba0e91276758b9219c1c53b34ad9ca51ed41fd93f119d2cf12149b55e25"
+    },
+    {
+      "file": "src/save-coordinator.js",
+      "sha256": "335dace2de607e27502af7ec70ddfa9d0d09e488840d141542feeec170bbd98b"
+    },
+    {
+      "file": "src/settings-utils.js",
+      "sha256": "22ea6dcc060ea5b1b812eef0b144559cd040bbcbf7ab85e6d0d175196f2ae2ae"
+    },
+    {
+      "file": "src/supabase-config.js",
+      "sha256": "a44a06f787befb1e80548187ac2aefb6527ed0bb03deab382f363f3fb2179a45"
+    },
+    {
+      "file": "src/supabase.js",
+      "sha256": "1cc6c03f6863b94dcbf630a31cdd10056312c753d41b8b29e8309c11995c1bd5"
+    },
+    {
+      "file": "src/toast.jsx",
+      "sha256": "ff3a7122645e5f34bb96f96355c4991fb968a144d2be2f2ffc7e6fe2fd6d6c20"
+    },
+    {
+      "file": "src/training-advice.js",
+      "sha256": "bd1a2d06e74ec9866842efe5e20d9f191be9e48a50af5655ef25135b7c943604"
+    },
+    {
+      "file": "src/training-config.js",
+      "sha256": "23c2467621a61d43c05a65e23d159917a12b1dd30069241f6db4cb4e6f582cdd"
+    },
+    {
+      "file": "src/training-metrics.js",
+      "sha256": "52f45036d7dff35ea18d7aae1ac9f5619b621bc1f6d6f032485af75731b93733"
+    },
+    {
+      "file": "src/training-plan.js",
+      "sha256": "8d1c296d6d4bdadbe4b068620a3d957478badc3655cdaedf7be7d9013015900e"
+    },
+    {
+      "file": "src/training-records.js",
+      "sha256": "ffb62b9cad7676c94bec1891a17b39740ee51154314700c449bf2c965db03cc2"
+    },
+    {
+      "file": "src/training-routines.js",
+      "sha256": "b054761049b63ec3d1ced4fbf42cbf437155f1b271516d89a7eab64291ec37b8"
+    },
+    {
+      "file": "src/ui-theme.js",
+      "sha256": "5f0c97adad1062d5a22d1f0f5123d0ce23858fd693233e19c6cb082e417eaf39"
+    },
+    {
+      "file": "src/use-app-theme.js",
+      "sha256": "e7d165ee3a19e8ed370e82e62a08a01e0c3296cda0823f28405b91211d945794"
+    },
+    {
+      "file": "src/use-delete-flow.js",
+      "sha256": "3caf0f6d90db393dbc2c76839d6536dd185c76b3728eb79ce036db7533e50755"
+    },
+    {
+      "file": "src/use-training-timer.js",
+      "sha256": "a0f38d1c2ddc4ca7f8def29a4ba8c7e5e457e47ac25c5b2a8a7d0bea83b8acbf"
+    },
+    {
+      "file": "src/weight-metrics.js",
+      "sha256": "d783a6653208e3d4c153a8c593fb04c51c0b79c1c8962192b66289897640de09"
+    },
+    {
+      "file": "src/weight-model.js",
+      "sha256": "9942e4e56dedf05711ffe5eac96a8c71e7b0a2d87123b67f08bd5c52172f58c7"
+    }
+  ],
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208"
+}

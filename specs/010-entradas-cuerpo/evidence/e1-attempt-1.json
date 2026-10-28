@@ -1,0 +1,28 @@
+{
+  "stage": "e1",
+  "passed": false,
+  "attempt": 1,
+  "startedAt": "2026-10-28T03:05:52.100Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "node": "v24.21.0",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+  "receipts": [
+    {
+      "label": "node",
+      "args": [
+        "--test",
+        "--test-isolation=none",
+        "--test-reporter=tap"
+      ],
+      "startedAt": "2026-10-28T03:05:52.331Z",
+      "finishedAt": "2026-10-28T03:09:30.359Z",
+      "exitCode": 1,
+      "file": "specs/010-entradas-cuerpo/evidence/e1-attempt-1-node.tap",
+      "sha256": "40f536b96202b2a1667578fa137298c0ee9e1428a472098406212d3c8c873757",
+      "beforeHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+      "afterHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d"
+    }
+  ],
+  "error": "node falló; revisar specs/010-entradas-cuerpo/evidence/e1-attempt-1-node.tap"
+}

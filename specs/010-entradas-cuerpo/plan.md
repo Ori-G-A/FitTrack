@@ -1,3 +1,7 @@
+Estado vigente — 2026-10-28 (Bogotá): publicación de ambas ramas/PRs, integración con CI remoto verde y Vercel autorizadas. [Decisión](evidence/remote-authorization.json). Pendiente ejecutar y verificar la entrega; las esperas de autorización anteriores son históricas.
+
+Estado vigente — 2026-10-28 (Bogotá): 010 cerrada localmente, 24 IDs propios y diez contratos/274 IDs completos. [Converge](converge.md), [verificación](verification.md). Los apartados siguientes conservan la cronología y sus aprobaciones; las esperas locales antiguas quedan cumplidas. Publicación/integración/Vercel pendientes de autorización específica.
+
 # Plan técnico 010 — entradas numéricas de Cuerpo
 
 Estado: APROBADO el 2026-10-27 (Bogotá); ejecución local E0–E2 autorizada. Alcance y C-001/002/003 aprobados en `1fa6561` el 2026-10-27

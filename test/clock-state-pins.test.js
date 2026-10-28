@@ -5,7 +5,7 @@ import {clockPinTargets,canonicalClockSource,clockDigestText,validateClockPinAme
 import {verifyClockPins,clockDirectory} from '../scripts/clock-state-evidence.js';
 
 test('reloj009 firmas y enmiendas rechazan alteraciones no autorizadas',()=>{
- const report=verifyClockPins();assert.equal(report.previousVerified,116);assert.equal(report.newIntact,7);
+ const report=verifyClockPins();assert.equal(report.previousVerified,116);assert.equal(report.newIntact,5);assert.equal(report.newAmended,2);
  // Control de estructura sintético, no evidencia de ejecución de montajes.
  const baseline={...JSON.parse(readFileSync(clockDirectory+'baseline.json')),passed:true,red:{failed:2,fixtures:['interfaz','guardado','borrado']}};
  for(const pin of clockPinTargets){

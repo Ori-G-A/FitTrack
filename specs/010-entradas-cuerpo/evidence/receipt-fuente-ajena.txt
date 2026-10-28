@@ -1,0 +1,24 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'ajena'
+- 'd98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e'
+
+    at validateProofs (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/scripts/run-body-inputs-checkpoint.js:28:41)
+    at file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/scripts/run-body-inputs-checkpoint.js:56:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'ajena',
+  expected: 'd98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

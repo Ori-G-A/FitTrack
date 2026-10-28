@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T15:37:51.527Z",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "positiveControls": 3,
+  "mutations": [
+    {
+      "fixture": "interfaz",
+      "detected": true,
+      "positiveControlPassed": true,
+      "scriptsInjectedOnFailure": 0,
+      "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+      "failedCombinations": [
+        250,
+        1500
+      ]
+    },
+    {
+      "fixture": "guardado",
+      "detected": true,
+      "positiveControlPassed": true,
+      "scriptsInjectedOnFailure": 0,
+      "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+      "failedCombinations": [
+        250,
+        1500
+      ]
+    },
+    {
+      "fixture": "borrado",
+      "detected": true,
+      "positiveControlPassed": true,
+      "scriptsInjectedOnFailure": 0,
+      "error": "clock.native: Error: Cannot fast-forward to the past\n    at ClockController._innerFastForwardTo (eval at evaluate (:370:30), <anonymous>:201:13)\n    at ClockController.pauseAt (eval at evaluate (:370:30), <anonymous>:132:16)\n    at async <anonymous>:396:30",
+      "failedCombinations": [
+        250,
+        1500
+      ]
+    }
+  ],
+  "cleanupPassed": true
+}

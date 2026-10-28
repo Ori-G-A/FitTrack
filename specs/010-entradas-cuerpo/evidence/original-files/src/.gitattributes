@@ -1,0 +1,2 @@
+# Las copias fuente conservan sus bytes originales LF al restaurar en Windows.
+*.txt text eol=lf

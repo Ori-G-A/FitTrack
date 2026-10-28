@@ -1,0 +1,40 @@
+Checkpoint010 verify-proofs: legacy-receipts
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   'scripts/ajeno.js'
+-   'scripts/check-interface-mutations.js'
+  ]
+
+    at validateProofs (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/scripts/run-clock-state-checkpoint.js:20:10)
+    at file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/scripts/run-clock-state-checkpoint.js:28:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [ 'scripts/ajeno.js' ],
+  expected: [ 'scripts/check-interface-mutations.js' ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+
+file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/scripts/run-body-inputs-checkpoint.js:25
+ assert.equal(verificationHash(),hash);if(r.error)throw r.error;if(r.status!==0){console.error((r.stderr||'').slice(-3000));throw Error(label+' falló; revisar '+file);}return r.stdout;
+                                                                                                                                  ^
+
+Error: legacy-receipts falló; revisar specs/010-entradas-cuerpo/evidence/verify-proofs-attempt-13-legacy-receipts.txt
+    at run (file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/scripts/run-body-inputs-checkpoint.js:25:131)
+    at file:///C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/scripts/run-body-inputs-checkpoint.js:56:68
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

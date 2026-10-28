@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T15:35:13.799Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "pins": [
+    {
+      "file": "test/body-inputs-values.test.js",
+      "sha256": "39eae5ad101aecbf8f4b26d599b6d686421553ed358b4ddf826cc0a9e3a86433"
+    },
+    {
+      "file": "test/body-inputs-architecture.test.js",
+      "sha256": "6beb9c9be343221870a85720faf86906d4c188f8685a0c596d06797e534285e8"
+    },
+    {
+      "file": "scripts/check-body-inputs-mutations.js",
+      "sha256": "41217c682f4c0d080009123e450d211b0c01c95035abe7286accf513acc85aa6"
+    },
+    {
+      "file": "scripts/run-body-inputs-checkpoint.js",
+      "sha256": "afa69f4dc72eb9aebe2f7c7d5c362df7036fda3608b111b81f1fb03853efa556"
+    },
+    {
+      "file": "scripts/body-inputs-budget-amendments.js",
+      "sha256": "b224cca53dbbc3a761596a503dfd41a3dd034e453551fa7ec3eac18310bc8397"
+    },
+    {
+      "file": "test/body-inputs-budget.test.js",
+      "sha256": "17b0ed1db0519ef6be7d1a4344d76948f7bdbf062c970356ccbec0422a98f3e6"
+    },
+    {
+      "file": "scripts/body-inputs-runtime-oracles.js",
+      "sha256": "2f19eb7fdfe5196abfab9cc996f19fe456f1acb515127a67b7d75aeea07f302a"
+    },
+    {
+      "file": "test/body-inputs-runtime-oracles.test.js",
+      "sha256": "b1c4143b3d33d4df9fbecc001d46059d34e814e1c5e209d2366a0bef1cdc7c53"
+    }
+  ]
+}

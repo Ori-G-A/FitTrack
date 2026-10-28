@@ -1,0 +1,477 @@
+import { descendingWeights, weightPoints, descendingMeasurements, waistPoints, descendingWellness } from "./body-metrics.js";
+import { replaceWeightRecord, measurementValues, replaceMeasurementRecord, wellnessDraft, replaceWellnessRecord, prepareMenstrualRecord, replaceMenstrualRecord, removeBodyRecord } from "./body-records.js";
+import { BLEEDING_OPTIONS, FLUID_OPTIONS, APPETITE_OPTIONS, PAIN_OPTIONS, PHASE_SHADE, PHASE_NAMES, CONFIDENCE_NAMES } from "./body-config.js";
+import React, { useEffect, useId, useRef, useState } from "react";
+import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CYCLE_PHASES, PHASE_GROUPS, tracksCycle } from "./app-config.js";
+import { addDays, creatineWaterKg, daysBetween, localISO, weightTrendHighlight } from "./app-utils.js";
+import { LUTEAL_LENGTH, cycleContext, dailyGuidance, emptyMenstrualLog, getCycleInsights, inferCyclePhase, normalizeMenstrualLog, ovulationEstimate, summarizeCycles, symptomDistribution } from "./cycle-inference.js";
+import { Headline, ScreenMast } from "./EditorialUI.jsx";
+import { compressImage, deletePhotoFile, uploadPhotoData, validatePhotoFile } from "./photo-storage.js";
+import { toast } from "./toast.jsx";
+
+const uid = () => Math.random().toString(36).slice(2, 10);
+const todayISO = () => localISO();
+const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
+export default function BodyScreen({ section: initialSection = "peso", weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
+  const weightInputId = useId();
+  const creatineStart = goals?.creatineStart || "";
+  const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
+  const creaWaterKg = creatineStart ? creatineWaterKg(creatineStart, todayISO()) : null;
+  const creaSat = creaWaterKg == null ? null : Math.min(100, Math.round((creaWaterKg / 1.5) * 100));
+  const creaWater = creaWaterKg == null ? null : creaWaterKg.toFixed(1);
+  const creaFull = creatineStart ? addDays(creatineStart, 28) : null;
+  const [wDate, setWDate] = useState(initialDate || todayISO()); const [kg, setKg] = useState("");
+  // La coma decimal es la convencion de la app: escribirla no puede invalidar
+  // el pesaje.
+  const parseKg = (value) => Number(String(value).replace(",", "."));
+  const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => replaceWeightRecord(p, wDate, value, uid)); setKg(""); toast(`Peso guardado: ${kg1(value)} kg el ${fmtDate(wDate)}`); };
+  const delW = (id) => setWeights((p) => removeBodyRecord(p, id));
+  const wSorted = descendingWeights(weights);
+  const trend = weightTrendHighlight(weights, todayISO());
+  const wChart = weightPoints(weights, fmtDate);
+  const lastKg = wSorted[0]?.kg ?? null;
+  const kg1 = (value) => value.toFixed(1).replace(".", ",");
+  const bumpKg = (delta) => setKg(kg1(Math.round(((parseKg(kg) || lastKg || 0) + delta) * 10) / 10));
+
+  const [mDate, setMDate] = useState(initialDate || todayISO());
+  const [meas, setMeas] = useState({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
+  const addM = () => {
+    const vals = measurementValues(meas);
+    if (Object.values(vals).every((v) => v === null)) return;
+    setMeasurements((p) => replaceMeasurementRecord(p, mDate, vals, uid));
+    setMeas({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
+    toast(`Medidas guardadas del ${fmtDate(mDate)}`);
+  };
+  const delM = (id) => setMeasurements((p) => removeBodyRecord(p, id));
+  const mSorted = descendingMeasurements(measurements);
+  const cinturaChart = waistPoints(measurements, fmtDate);
+
+  const [welDate, setWelDate] = useState(initialDate || todayISO());
+  const existingWel = wellness.find((w) => w.date === welDate);
+  // Los pasos viven con el resto del dia (sueno, pulso, energia): un numero por
+  // fecha, mismo guardado y misma sincronizacion. No hace falta una tabla aparte
+  // ni una integracion con el reloj para poder mirarlos en el Diario.
+  const [wel, setWel] = useState({ sleep: "", restingHr: "", steps: "", energy: 0, notes: "" });
+  useEffect(() => { setWel(wellnessDraft(existingWel)); }, [welDate]); // eslint-disable-line
+  const saveWel = () => {
+    if (wel.sleep === "" && wel.restingHr === "" && wel.steps === "" && !wel.energy && !wel.notes.trim()) return;
+    toast(`Nota del ${fmtDate(welDate)} guardada`);
+    setWellness((p) => replaceWellnessRecord(p, welDate, wel, uid));
+  };
+  const welSorted = descendingWellness(wellness);
+
+  const delPeriod = (id) => setPeriods((p) => removeBodyRecord(p, id));
+  const fmtNext = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long" });
+  const [cycleDate, setCycleDate] = useState(initialDate || todayISO());
+  const existingCycleLog = menstrualLogs.find((log) => log.date === cycleDate);
+  const [cycleLog, setCycleLog] = useState(emptyMenstrualLog(cycleDate));
+  useEffect(() => { setCycleLog(existingCycleLog ? normalizeMenstrualLog(existingCycleLog) : emptyMenstrualLog(cycleDate)); }, [cycleDate, existingCycleLog]);
+  const phaseEstimate = inferCyclePhase({ date: cycleDate, menstrualLogs, periods, wellness });
+  const ctx = cycleContext(cycleDate, periods, menstrualLogs);
+  const phaseStyle = CYCLE_PHASES[PHASE_GROUPS[phaseEstimate.phase]];
+  // Solo la lectura de la fase estimada de hoy: no tiene sentido leer sobre la lutea
+  // tardia mientras estas menstruando.
+  const cycleInsights = getCycleInsights({ menstrualLogs, periods, wellness }).filter((insight) => !insight.phase || insight.phase === phaseEstimate.phase);
+  const cycleSummary = summarizeCycles(periods, menstrualLogs);
+  const distribution = symptomDistribution({ periods, menstrualLogs });
+  const guidance = dailyGuidance({ date: cycleDate, menstrualLogs, periods, wellness });
+  const ovulation = ovulationEstimate({ date: cycleDate, periods, menstrualLogs });
+  const legend = [...new Map(cycleSummary.cycles.slice(0, 8).flatMap((cycle) => cycle.segments).map((segment) => [segment.phase, segment])).values()];
+  const maxCycleLen = Math.max(cycleSummary.avgCycle, ...cycleSummary.cycles.map((cycle) => cycle.length || cycleSummary.avgCycle));
+  // El check-in es la unica entrada: buildCycleStarts deriva los inicios de ciclo del
+  // sangrado registrado, sin duplicar el registro en `periods`.
+  const saveCycleLog = () => {
+    if (!cycleDate) return;
+    const now = new Date();
+    const normalized = prepareMenstrualRecord(cycleLog, existingCycleLog, cycleDate, now, uid);
+    setMenstrualLogs((prev) => replaceMenstrualRecord(prev, cycleDate, normalized));
+    toast(`Check-in del ${fmtDate(cycleDate)} guardado`);
+  };
+  const delCycleLog = (id) => setMenstrualLogs((prev) => removeBodyRecord(prev, id));
+
+  const photoRef = useRef();
+  const [photoBusy, setPhotoBusy] = useState(false);
+  const [photoErr, setPhotoErr] = useState("");
+  const addPhoto = async (e) => {
+    const file = e.target.files?.[0]; if (!file) return;
+    setPhotoBusy(true); setPhotoErr("");
+    try {
+      validatePhotoFile(file);
+      const dataUrl = await compressImage(file);
+      const photo = await uploadPhotoData(userId, { id: uid(), date: todayISO(), dataUrl });
+      setPhotos((p) => [photo, ...p]);
+    } catch (error) { console.error("addPhoto", error); setPhotoErr(error?.message || "No se pudo guardar la imagen de forma segura."); }
+    setPhotoBusy(false); if (photoRef.current) photoRef.current.value = "";
+  };
+  const delPhoto = async (photo) => {
+    setPhotoErr("");
+    if (photo.storagePath) {
+      try { await deletePhotoFile(photo); }
+      catch (error) { console.error("delPhoto", error); setPhotoErr("No se pudo eliminar la imagen."); return; }
+    }
+    setPhotos((p) => p.filter((x) => x.id !== photo.id));
+  };
+  const pSortedPhotos = [...photos].sort((a, b) => b.date.localeCompare(a.date));
+
+  // Cuerpo es una pantalla con cuatro secciones, no cuatro pantallas: se registra
+  // todo en el mismo sitio y se cambia de seccion sin volver atras. Quien llega
+  // desde el Diario o desde el Plan aterriza en la suya, que es lo que importaba.
+  const cycle = tracksCycle(goals);
+  const SECTIONS = [
+    ["peso", "PESO", "báscula · tendencia · creatina"],
+    ["medidas", "MEDIDAS", "cintura · cadera · pecho · brazo · muslo · fotos"],
+    ["nota", "NOTA DEL DÍA", "sueño · pulso · pasos · energía"],
+    ...(cycle ? [["checkin", "CHECK-IN", "ciclo · sangrado · flujo · síntomas"]] : []),
+  ];
+  const [section, setSection] = useState(SECTIONS.some(([id]) => id === initialSection) ? initialSection : "peso");
+  const sub = SECTIONS.find(([id]) => id === section)?.[2] || "";
+
+  return (
+    <div className="ft-dc">
+      <div className="ft-dc-head">
+        <div>
+          <h1>Cuerpo</h1>
+          <span className="sub">{sub}</span>
+        </div>
+      </div>
+
+      <div className="ft-dc-chips">
+        {SECTIONS.map(([id, label]) => (
+          <button key={id} className={section === id ? "on" : ""} aria-pressed={section === id} onClick={() => setSection(id)}>{label}</button>
+        ))}
+      </div>
+
+      {section === "peso" && trend && (
+        <div className="ft-dc-strip" style={{ "--cols": cycle ? 3 : 2 }}>
+          <div>
+            <span className="k">ÚLTIMO PESO</span>
+            <span className="v">{wSorted[0] ? wSorted[0].kg.toFixed(1).replace(".", ",") : "—"}<small>kg</small></span>
+            <span className="d">{wSorted[0] ? fmtDate(wSorted[0].date) : "sin pesajes"}</span>
+          </div>
+          <div>
+            <span className="k">TENDENCIA</span>
+            <span className="v">{trend.perWeek > 0 ? "+" : ""}{String(trend.perWeek).replace(".", ",")}<small>kg/sem</small></span>
+            <span className="d">últimos {trend.days} días</span>
+          </div>
+          {cycle && (
+            <div>
+              <span className="k">FASE ESTIMADA</span>
+              <span className="v" style={{ fontSize: 19 }}>{PHASE_GROUPS[phaseEstimate.phase] || "—"}</span>
+              <span className="d">confianza {CONFIDENCE_NAMES[phaseEstimate.confidence] || phaseEstimate.confidence}</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div style={{ height: 16 }} />
+      {section === "peso" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Peso corporal</span></div>
+        <div className="ft-lib-nums">
+          <label className="ft-lib-field"><span>Fecha</span>
+            <input className="ft-input ft-mono" type="date" value={wDate} onChange={(e) => setWDate(e.target.value)} />
+          </label>
+          <div className="ft-lib-field" style={{ gridColumn: "span 2" }}><span><label htmlFor={weightInputId}>Peso en kg</label></span>
+            {/* Stepper de 0,1 kg: es el salto real entre dos pesajes, y escribir
+                el numero sigue disponible para cuando la bascula da otra cosa. */}
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <button className="ft-dc-step" aria-label="Bajar 0,1 kg" onClick={() => bumpKg(-0.1)}>−</button>
+              <input id={weightInputId} className="ft-input ft-mono" style={{ textAlign: "center" }} inputMode="decimal" placeholder={lastKg ? kg1(lastKg) : "0,0"}
+                value={kg} onChange={(e) => setKg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addW()} />
+              <button className="ft-dc-step" aria-label="Subir 0,1 kg" onClick={() => bumpKg(0.1)}>+</button>
+            </div>
+          </div>
+        </div>
+        {lastKg != null && (
+          <div className="ft-dc-chips" style={{ paddingTop: 0 }}>
+            {[-0.4, -0.2, 0, 0.2, 0.4].map((delta) => {
+              const value = Math.round((lastKg + delta) * 10) / 10;
+              return (
+                <button key={delta} className={parseKg(kg) === value ? "on" : ""} onClick={() => setKg(kg1(value))}>{kg1(value)}</button>
+              );
+            })}
+          </div>
+        )}
+        <div className="ft-dc-acts">
+          <button className="ft-dc-btn" disabled={!kg} onClick={addW}>Guardar pesaje</button>
+        </div>
+        {wChart.length >= 2 && (
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={wChart} margin={{ top: 14, right: 10, left: -18, bottom: 0 }}>
+              <CartesianGrid stroke="var(--hair)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="var(--muted)" tick={{ fill: "var(--muted)" }} /><YAxis stroke="var(--muted)" tick={{ fill: "var(--muted)" }} domain={["auto", "auto"]} />
+              <Tooltip contentStyle={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
+              <Line type="monotone" dataKey="kg" stroke="var(--accent)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--accent)" }} />
+            </LineChart>
+          </ResponsiveContainer>
+        )}
+        {wSorted.length > 0 && (
+          <details className="ft-acc">
+          <summary>Registros de peso ({wSorted.length})</summary>
+          <div className="ft-list" style={{ marginTop: 10 }}>
+            {wSorted.slice(0, 8).map((w, i) => {
+              const prev = wSorted[i + 1]; const diff = prev ? w.kg - prev.kg : null;
+              return (<div className="ft-li" key={w.id}><span className="li-d">{fmtDate(w.date)}</span><span className="li-main ft-mono">{w.kg.toFixed(1)} kg</span>
+                {diff !== null && <span className="li-sub" style={{ color: diff <= 0 ? "var(--ok)" : "var(--danger)" }}>{diff > 0 ? "+" : ""}{diff.toFixed(1)}</span>}
+                <button className="ft-trash" onClick={() => delW(w.id)}><Trash2 size={15} /></button></div>);
+            })}
+          </div>
+          </details>
+        )}
+      </div>
+      )}
+
+      {section === "peso" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Creatina</span><span>5 g/día</span></div>
+        <div className="ft-row" style={{ marginBottom: creaSat == null ? 0 : 12 }}>
+          <div className="ft-field"><label>Inicio suplementación</label><input className="ft-input ft-mono" type="date" max={todayISO()} value={creatineStart} onChange={(e) => setGoals((g) => ({ ...g, creatineStart: e.target.value }))} /></div>
+        </div>
+        {creaSat != null && (
+          <div className="ft-stats" style={{ marginBottom: 0 }}>
+            <div className="ft-stat"><div className="k">Reservas (est.)</div><div className="v">{creaSat}<small>%</small></div><div className="sub">día {creaDays} de carga</div></div>
+            <div className="ft-stat"><div className="k">Peso por agua (est.)</div><div className="v">+{creaWater}<small>kg</small></div><div className="sub">retención intramuscular</div></div>
+            <div className="ft-stat"><div className="k">Carga completa</div><div className="v" style={{ fontSize: 20 }}>{creaSat >= 98 ? "Lograda" : fmtDate(creaFull)}</div><div className="sub">~28 días a 5 g/día</div></div>
+          </div>
+        )}
+      </div>
+      )}
+
+      {section === "checkin" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Ciclo menstrual</span>{ctx.currentStart && <span>día {ctx.cycleDay} · ciclo ~{ctx.avgCycle} d</span>}</div>
+        <div>
+          <div className="ft-alert info" style={{ marginBottom: 12 }}>
+            <Sparkles size={20} color="var(--blue)" />
+            <div>
+              <div className="t">Las fases son estimaciones</div>
+              <div className="b">Esta herramienta sirve para autoconocimiento y seguimiento personal; no es diagnostico medico ni metodo anticonceptivo.</div>
+            </div>
+          </div>
+          <h3 className="ft-h3" style={{ marginBottom: 10 }}>Check-in menstrual</h3>
+          <div className="ft-row" style={{ marginBottom: 10 }}>
+            <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={cycleDate} onChange={(e) => { if (e.target.value) setCycleDate(e.target.value); }} /></div>
+            <div className="ft-field"><label>Sangrado</label><select className="ft-select" value={cycleLog.bleedingLevel} onChange={(e) => setCycleLog({ ...cycleLog, bleedingLevel: e.target.value, hasSpotting: e.target.value === "spotting" })}>{BLEEDING_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <div className="ft-field"><label>Como estuvo tu flujo</label><select className="ft-select" value={cycleLog.cervicalFluid} onChange={(e) => setCycleLog({ ...cycleLog, cervicalFluid: e.target.value })}>{FLUID_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <button className="ft-btn" onClick={saveCycleLog}><Check size={15} /> Guardar ciclo</button>
+          </div>
+          <div className="ft-row" style={{ marginBottom: 10 }}>
+            <div className="ft-field"><label>Colicos 0-10</label><input className="ft-input ft-mono" type="number" min="0" max="10" inputMode="numeric" value={cycleLog.crampsLevel} onChange={(e) => setCycleLog({ ...cycleLog, crampsLevel: e.target.value })} /></div>
+            <div className="ft-field"><label>Sensibilidad senos</label><select className="ft-select" value={cycleLog.breastSensitivity} onChange={(e) => setCycleLog({ ...cycleLog, breastSensitivity: e.target.value })}>{[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+            <div className="ft-field"><label>Hinchazon</label><select className="ft-select" value={cycleLog.bloatingLevel} onChange={(e) => setCycleLog({ ...cycleLog, bloatingLevel: e.target.value })}>{[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+            <div className="ft-field"><label>Acne</label><select className="ft-select" value={cycleLog.acneLevel} onChange={(e) => setCycleLog({ ...cycleLog, acneLevel: e.target.value })}>{[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+          </div>
+          <div className="ft-row" style={{ marginBottom: 10 }}>
+            <div className="ft-field"><label>Apetito</label><select className="ft-select" value={cycleLog.appetiteChange} onChange={(e) => setCycleLog({ ...cycleLog, appetiteChange: e.target.value })}>{APPETITE_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <div className="ft-field"><label>Dolor pelvico</label><select className="ft-select" value={cycleLog.pelvicPain} onChange={(e) => setCycleLog({ ...cycleLog, pelvicPain: e.target.value })}>{PAIN_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
+            <div className="ft-field" style={{ flex: 2 }}><label>Notas</label><input className="ft-input" placeholder="Opcional" value={cycleLog.notes} onChange={(e) => setCycleLog({ ...cycleLog, notes: e.target.value })} /></div>
+          </div>
+          <div className="ft-alert" style={{ background: "var(--panel2)", border: `1px solid ${phaseStyle.color}55`, marginBottom: 12 }}>
+            <Droplet size={20} color={phaseStyle.color} />
+            <div>
+              <div className="t">Fase estimada: {PHASE_NAMES[phaseEstimate.phase]} · confianza {CONFIDENCE_NAMES[phaseEstimate.confidence]}</div>
+              <div className="b">{phaseEstimate.reason} {phaseStyle.note} {ctx.daysToNext == null ? "" : ctx.daysToNext >= 0 ? `Próximo periodo estimado: ${fmtNext(ctx.nextPeriod)} (~${ctx.daysToNext} días).` : `Tu periodo lleva ~${Math.abs(ctx.daysToNext)} días de retraso respecto a tu media.`}</div>
+              {ovulation && (
+                <div className="b" style={{ marginTop: 4 }}>
+                  Ovulación probable de este ciclo: {fmtNext(ovulation.date)} (día {ovulation.cycleDay}), {ovulation.source === "flujo" ? "según el flujo que registraste" : `estimada restando ${LUTEAL_LENGTH} días al próximo periodo`} · confianza {CONFIDENCE_NAMES[ovulation.confidence]}.
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="ft-alert" style={{ background: "var(--panel2)", border: `1px solid ${phaseStyle.color}33` }}>
+            <Sparkles size={20} color={phaseStyle.color} />
+            <div>
+              <div className="t">Hoy, en {PHASE_NAMES[phaseEstimate.phase]}</div>
+              <div className="b" style={{ display: "grid", gap: 6, marginTop: 4 }}>
+                <div><b>Hormonas.</b> {guidance.hormones}</div>
+                <div><b>Esperable.</b> {guidance.expected}</div>
+                <div><b>Entreno.</b> {guidance.training}</div>
+                <div><b>Comida.</b> {guidance.nutrition}</div>
+                {guidance.notes.map((note) => <div key={note} style={{ color: "var(--muted)" }}>· {note}</div>)}
+                {guidance.provisional && <div style={{ color: "var(--muted)" }}>Con menos de dos ciclos completos esto es orientativo; se afina cuando haya mas registros.</div>}
+              </div>
+            </div>
+          </div>
+          {cycleInsights.length > 0 && (
+            <div className="ft-list" style={{ marginTop: 12 }}>
+              {cycleInsights.slice(0, 2).map((insight) => (
+                <div className="ft-li" key={insight.type}>
+                  <span className="li-main">{insight.message}</span>
+                  <span className="li-sub">confianza {CONFIDENCE_NAMES[insight.confidence]}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        {cycleSummary.cycles.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <h3 className="ft-h3" style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
+              Tendencia
+              <span className="tag">{cycleSummary.samples || "—"} ciclos · media {cycleSummary.avgCycle}d{cycleSummary.spread ? ` ±${cycleSummary.spread}` : ""}{cycleSummary.avgBleed ? ` · sangrado ${cycleSummary.avgBleed}d` : ""}</span>
+            </h3>
+            <div className="ft-list">
+              {cycleSummary.cycles.slice(0, 8).map((cycle) => {
+                const length = cycle.length || cycleSummary.avgCycle; // en curso: se dibuja contra el ciclo medio
+                const bleed = Math.min(cycle.bleedDays || 0, length);
+                return (
+                  <div className="ft-li" key={cycle.start}>
+                    <span className="li-d">{fmtDate(cycle.start)}</span>
+                    <span className="li-main">
+                      <span style={{ position: "relative", display: "flex", width: `${(length / maxCycleLen) * 100}%`, height: 10, borderRadius: 5, background: "var(--line)", overflow: "hidden" }}>
+                        {cycle.segments.map((segment) => (
+                          <span
+                            key={segment.startDay}
+                            title={`${segment.label} · día ${segment.startDay}${segment.days > 1 ? `-${segment.startDay + segment.days - 1}` : ""}`}
+                            style={{ width: `${(segment.days / length) * 100}%`, background: CYCLE_PHASES[PHASE_GROUPS[segment.phase]].color, opacity: PHASE_SHADE[segment.phase] }}
+                          />
+                        ))}
+                        {cycle.ovulation && cycle.ovulation.cycleDay <= length && (
+                          <span
+                            title={`día estimado de ovulación · día ${cycle.ovulation.cycleDay} (por ${cycle.ovulation.source})`}
+                            style={{ position: "absolute", left: `${((cycle.ovulation.cycleDay - 0.5) / length) * 100}%`, top: -2, width: 2, height: 14, background: "var(--text)", opacity: cycle.ovulation.source === "flujo" ? 0.85 : 0.4 }}
+                          />
+                        )}
+                      </span>
+                    </span>
+                    <span className="li-sub">{cycle.length ? `${cycle.length}d` : "en curso"}{cycle.bleedDays ? ` · ${cycle.bleedDays}d sangrado` : ""}</span>
+                    <button className="ft-trash" onClick={() => (cycle.logId ? delCycleLog(cycle.logId) : delPeriod(cycle.periodId))}><Trash2 size={15} /></button>
+                  </div>
+                );
+              })}
+            </div>
+            {legend.length > 0 && (
+              <div className="ft-chips" style={{ marginTop: 10 }}>
+                {legend.map((segment) => (
+                  <span className="ft-chip" key={segment.phase}>
+                    <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, background: CYCLE_PHASES[PHASE_GROUPS[segment.phase]].color, opacity: PHASE_SHADE[segment.phase] }} />
+                    {segment.label}
+                  </span>
+                ))}
+                <span className="ft-chip">
+                  <span style={{ display: "inline-block", width: 2, height: 9, marginRight: 5, background: "var(--text)", verticalAlign: "-1px" }} />
+                  día estimado de ovulación
+                </span>
+              </div>
+            )}
+            {cycleSummary.outliers > 0 && (
+              <div className="ft-prev">{cycleSummary.outliers} ciclo(s) fuera de rango (menos de 18d o mas de 45d) quedan fuera de la media; suelen ser un inicio registrado de mas.</div>
+            )}
+          </div>
+        )}
+        {distribution.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <h3 className="ft-h3" style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
+              Distribucion
+              <span className="tag">dia 1 → dia {cycleSummary.avgCycle}</span>
+            </h3>
+            <div className="ft-list">
+              {distribution.map((track) => (
+                <div className="ft-li" key={track.key}>
+                  <span className="li-d">{track.label}</span>
+                  <span className="li-main" style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 26 }}>
+                    {track.bins.map((value, index) => (
+                      <span key={index} style={{ flex: 1, height: `${Math.max(8, value * 100)}%`, borderRadius: 3, background: value > 0 ? "var(--accent)" : "var(--line)", opacity: value > 0 ? 0.35 + value * 0.65 : 1 }} />
+                    ))}
+                  </span>
+                  <span className="li-sub">{track.peakDay ? `pico dia ${track.peakDay}` : "sin patron"} · {track.days}d</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      )}
+
+      {section === "medidas" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Medidas corporales</span><span>en cm</span></div>
+        <div className="ft-row" style={{ marginBottom: 10 }}>
+          <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={mDate} onChange={(e) => setMDate(e.target.value)} /></div>
+        </div>
+        <div className="ft-row">
+          {["cintura", "cadera", "pecho", "brazo", "muslo"].map((k) => (
+            <div className="ft-field" key={k}><label>{k}</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.1" placeholder="–" value={meas[k]} onChange={(e) => setMeas({ ...meas, [k]: e.target.value })} /></div>
+          ))}
+          <button className="ft-btn" onClick={addM}><Check size={15} /></button>
+        </div>
+        {cinturaChart.length >= 2 && (
+          <ResponsiveContainer width="100%" height={180}>
+            <LineChart data={cinturaChart} margin={{ top: 16, right: 10, left: -20, bottom: 0 }}>
+              <CartesianGrid stroke="var(--hair)" strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="var(--muted)" tick={{ fill: "var(--muted)" }} /><YAxis stroke="var(--muted)" tick={{ fill: "var(--muted)" }} domain={["auto", "auto"]} />
+              <Tooltip contentStyle={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 0, fontFamily: "'IBM Plex Mono'", fontSize: 12 }} />
+              <Line type="monotone" dataKey="cintura" stroke="var(--blue)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--blue)" }} name="Cintura" />
+            </LineChart>
+          </ResponsiveContainer>
+        )}
+        {mSorted.length > 0 && (
+          <details className="ft-acc">
+          <summary>Registros de medidas ({mSorted.length})</summary>
+          <div className="ft-list" style={{ marginTop: 10 }}>
+            {mSorted.slice(0, 6).map((m) => (
+              <div className="ft-li" key={m.id}><span className="li-d">{fmtDate(m.date)}</span>
+                <span className="li-sub" style={{ flex: 1 }}>{["cintura", "cadera", "pecho", "brazo", "muslo"].filter((k) => m[k] != null).map((k) => `${k} ${m[k]}`).join(" · ")}</span>
+                <button className="ft-trash" onClick={() => delM(m.id)}><Trash2 size={15} /></button></div>
+            ))}
+          </div>
+          </details>
+        )}
+      </div>
+      )}
+
+      {section === "nota" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Bienestar diario</span></div>
+        <div className="ft-row" style={{ marginBottom: 10 }}>
+          <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={welDate} onChange={(e) => setWelDate(e.target.value)} /></div>
+          <div className="ft-field"><label>Horas de sueño</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.5" placeholder="0" value={wel.sleep} onChange={(e) => setWel({ ...wel, sleep: e.target.value })} /></div>
+          <div className="ft-field"><label>Pulso en reposo (ppm)</label><input className="ft-input ft-mono" type="number" inputMode="numeric" placeholder="0" title="Al despertar, antes de levantarte" value={wel.restingHr} onChange={(e) => setWel({ ...wel, restingHr: e.target.value })} /></div>
+          <div className="ft-field"><label>Pasos</label><input className="ft-input ft-mono" type="number" inputMode="numeric" placeholder="0" title="Los del reloj o el móvil al final del día" value={wel.steps} onChange={(e) => setWel({ ...wel, steps: e.target.value })} /></div>
+        </div>
+        <label style={{ fontSize: 11, color: "var(--muted)", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 600 }}>Energía / cómo te sentiste</label>
+        <div className="ft-energy" style={{ marginTop: 6, marginBottom: 12 }}>
+          {[1, 2, 3, 4, 5].map((n) => <button key={n} className={wel.energy === n ? "on" : ""} onClick={() => setWel({ ...wel, energy: n })}>{n}</button>)}
+        </div>
+        <textarea className="ft-input" placeholder="Notas del día (dormí mal, viaje, enfermo…)" value={wel.notes} onChange={(e) => setWel({ ...wel, notes: e.target.value })} />
+        <div style={{ marginTop: 12 }}><button className="ft-btn" onClick={saveWel}><Check size={15} /> Guardar bienestar</button></div>
+        {welSorted.length > 0 && (
+          <details className="ft-acc">
+          <summary>Registros de bienestar ({welSorted.length})</summary>
+          <div className="ft-list" style={{ marginTop: 10 }}>
+            {welSorted.slice(0, 6).map((w) => (
+              <div className="ft-li" key={w.id}><span className="li-d">{fmtDate(w.date)}</span>
+                <span className="li-sub">{w.sleep != null ? `${w.sleep}h` : ""} {w.restingHr ? `· ${w.restingHr} ppm` : ""} {w.steps ? `· ${w.steps.toLocaleString("es-ES")} pasos` : ""} {w.energy ? `· energía ${w.energy}/5` : ""}</span>
+                {w.notes && <span className="li-main" style={{ fontWeight: 400, fontStyle: "italic", color: "var(--muted)" }}>“{w.notes}”</span>}
+              </div>
+            ))}
+          </div>
+          </details>
+        )}
+      </div>
+      )}
+
+      {section === "medidas" && (
+      <div className="ft-dc-card">
+        <div className="h"><span>Fotos de progreso</span><span>{photos.length}</span></div>
+        <input ref={photoRef} type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden onChange={addPhoto} />
+        <button className="ft-btn" onClick={() => photoRef.current.click()} disabled={photoBusy}><Camera size={15} /> {photoBusy ? "Procesando…" : "Subir foto de hoy"}</button>
+        {photoErr && <div style={{ color: "var(--danger)", fontSize: 13, marginTop: 10 }}>{photoErr}</div>}
+        <p style={{ color: "var(--muted)", fontSize: 12.5, marginTop: 10, marginBottom: 0 }}>Las fotos se comprimen y se guardan en un espacio privado de Supabase. Se incluyen también en tu copia de seguridad al exportar.</p>
+        {pSortedPhotos.length > 0 && (
+          <div className="ft-photos">
+            {pSortedPhotos.map((ph) => (
+              <div className="ft-photo" key={ph.id}>
+                <img src={ph.dataUrl || ph.signedUrl} alt={ph.date} />
+                <span className="cap">{fmtDate(ph.date)}</span>
+                <button className="ft-photo-del" onClick={() => delPhoto(ph)}><Trash2 size={14} /></button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      )}
+    </div>
+  );
+}

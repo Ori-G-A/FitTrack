@@ -1,0 +1,16 @@
+{
+  "authorized": true,
+  "generatedAt": "2026-10-28T20:10:35.656Z",
+  "decision": "Autorizar publicación, integración con CI verde y Vercel",
+  "closedLocalCommit": "e3b1d046d69eca1320511265908ba2203cbcb589",
+  "documentSnapshot": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "publishBothBranchesAndPRs": true,
+  "mergeOrder": [
+    "documental",
+    "código"
+  ],
+  "requireGreenRemoteCi": true,
+  "allowAutomaticVercelDeployment": true
+}

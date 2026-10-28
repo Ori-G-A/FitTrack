@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T20:07:59.528Z",
+  "evidenceCommit": "9a4727866fb535ab8d0e253633f7b507d68b4e15",
+  "approvedDocumentCommit": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "nodeTests": 379,
+  "browserTests": 43,
+  "contracts": 10,
+  "completeIds": 274,
+  "postgreenMutations": 19,
+  "receiptNegatives": 13,
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "treeCleanBeforeRecord": true,
+  "remoteAuthorized": false
+}

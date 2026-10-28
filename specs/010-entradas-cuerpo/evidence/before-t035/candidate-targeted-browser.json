@@ -1,0 +1,388 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\.bin\\node.exe",
+      "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config=playwright.body-inputs.config.js",
+      "--reporter=json"
+    ],
+    "configFile": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\playwright.body-inputs.config.js",
+    "rootDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/body010-playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack",
+        "testIgnore": [],
+        "testMatch": [
+          "browser-tests/body-inputs.spec.js",
+          "change-tests/body-inputs.spec.js"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\body010-playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack",
+        "snapshotDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack",
+        "testIgnore": [],
+        "testMatch": [
+          "browser-tests/body-inputs.spec.js",
+          "change-tests/body-inputs.spec.js"
+        ],
+        "timeout": 120000,
+        "use": {
+          "browserName": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "browser-tests\\body-inputs.spec.js",
+      "file": "browser-tests/body-inputs.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cuerpo010 original conserva reemplazo e historiales",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14092,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:01:08.108Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8877f9044e917dd3e8d4-f69130aff451621f437f",
+          "file": "browser-tests/body-inputs.spec.js",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 original conserva bienestar y vacios",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10849,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:01:23.379Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8877f9044e917dd3e8d4-22dcc8b8bceb0cf198c5",
+          "file": "browser-tests/body-inputs.spec.js",
+          "line": 18,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "change-tests\\body-inputs.spec.js",
+      "file": "change-tests/body-inputs.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cuerpo010 coma y punto recorren nueve campos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29596,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:01:34.858Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c1108802442e84d4d506-704e06b003c89969e213",
+          "file": "change-tests/body-inputs.spec.js",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 34088,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:02:04.510Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c1108802442e84d4d506-a064c693b0f6aad1bf9b",
+          "file": "change-tests/body-inputs.spec.js",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 mezcla invalida conserva borrador sin exito",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3649,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:02:38.623Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c1108802442e84d4d506-a73f8a541a4bc03e19f9",
+          "file": "change-tests/body-inputs.spec.js",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 errores asocian campos en movil y escritorio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9864,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:02:42.310Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c1108802442e84d4d506-26981fdf44a9e22142e4",
+          "file": "change-tests/body-inputs.spec.js",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 corregir permite un unico guardado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5616,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:02:52.205Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c1108802442e84d4d506-6a1fb056b62362494572",
+          "file": "change-tests/body-inputs.spec.js",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 espacios y ceros conservan ausencia y precision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T15:02:57.851Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c1108802442e84d4d506-5367b1e6c0c4ac167bc9",
+          "file": "change-tests/body-inputs.spec.js",
+          "line": 46,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-28T15:01:04.398Z",
+    "duration": 125305.955,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

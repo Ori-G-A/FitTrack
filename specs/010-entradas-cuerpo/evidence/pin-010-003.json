@@ -1,0 +1,29 @@
+{
+  "id": "PIN-010-003",
+  "file": "test/body-wellness.test.js",
+  "before": "cee5bc7581aa789758291741b6b95f96ec8765786bfe783b5240b273a91b6ff3",
+  "after": "49ecc7621f69f6f42445e750ee229a2a2aad01553855cc34f9ca5f477368046a",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "references": [
+    "FR-005",
+    "FR-009",
+    "FR-010"
+  ],
+  "patchVersion": "body-inputs-v1",
+  "originalProof": {
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "nodeTests": 372,
+    "browserTests": 35,
+    "baseline": "baseline.json"
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "nodeTests": 6,
+    "browserTests": 8,
+    "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+    "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+    "proof": "candidate-targeted.json"
+  },
+  "unrelatedAssertionsChanged": false,
+  "businessTimeoutsChanged": false
+}

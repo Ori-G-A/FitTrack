@@ -1,0 +1,50 @@
+{
+  "stage": "proofs",
+  "passed": true,
+  "attempt": 1,
+  "startedAt": "2026-10-28T15:36:00.082Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "node": "v24.21.0",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "receipts": [
+    {
+      "label": "legacy-proofs",
+      "args": [
+        "scripts/run-clock-state-checkpoint.js",
+        "proofs"
+      ],
+      "startedAt": "2026-10-28T15:36:00.346Z",
+      "finishedAt": "2026-10-28T15:41:18.772Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/proofs-attempt-1-legacy-proofs.txt",
+      "sha256": "be873b29b92aadf492b283fba7fb3e4e7751d787696e40c25f17934147f8f0ee",
+      "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+      "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"
+    },
+    {
+      "label": "input-proofs",
+      "args": [
+        "scripts/check-body-inputs-mutations.js"
+      ],
+      "startedAt": "2026-10-28T15:41:19.299Z",
+      "finishedAt": "2026-10-28T15:44:01.169Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/proofs-attempt-1-input-proofs.txt",
+      "sha256": "beb4fb997a32cf46724efb9c383c3a06cd1ebfa301f992348fb3476b5ec4c389",
+      "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+      "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"
+    }
+  ],
+  "reports": [
+    {
+      "file": "test-results/clock009-proof-receipts.json",
+      "sha256": "bcac2050632f30560ff728481eccc35786e71eee8437746d10aff24387cfa7df"
+    },
+    {
+      "file": "test-results/body010-mutations.json",
+      "sha256": "eb16ff3f6946f6caed4c31b951155bfeaaf5c87d9dea5eb4291d3f605b8c83d3"
+    }
+  ],
+  "generatedAt": "2026-10-28T15:44:02.249Z"
+}
