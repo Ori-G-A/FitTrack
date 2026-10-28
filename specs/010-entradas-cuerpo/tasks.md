@@ -8,14 +8,14 @@ Las claves A1–M1 remiten a nombres exactos en la matriz de validación.
 
 | ID | Estado | Historia / cláusulas | Entrega y criterio | Depende de |
 | --- | --- | --- | --- | --- |
-| T001 | pendiente | US1–US3 / FR-001–010 | Registrar aprobación separada del plan/tareas/análisis y ejecución local E0–E2; conservar snapshot documental aprobado, sin publicar | — |
-| T002 | pendiente | US3 / FR-001–004; US3-AS4 | Inventariar 123 firmas efectivas, src completo/SQL/dependencias y nueve archivos de impacto; archivar seis originales; fijar hashes y versiones | T001 |
-| T003 | pendiente | US1–US3 / FR-001–004; US3-AS1–AS4 | Baseline original íntegra Node/35 Chromium/build, con salidas y huellas; conservar fallos y repetir checkpoint afectado tras corregir | T002 |
-| T004 | pendiente | US1/US2 / FR-005–010; US1-AS1–AS6; US2-AS1–AS4 | Crear fixture de BodyScreen real con contadores de setters, entry propio, cliente falso, red bloqueada y reloj 009; configuración solo para ocho casos nuevos | T003 |
-| T005 | pendiente | US1/US3 / FR-001–004; US1-AS3/AS4; US3-AS1/AS2/AS3 | A1/A2/B6 originales verdes: reemplazo, historial, vacíos/null, bienestar y cero conocido; sin transformar el producto | T004 |
-| T006 | pendiente | US1/US2 / FR-005–010; US1-AS1/AS2/AS5/AS6; US2-AS1–AS4 | B1–B5 rojos por comportamiento original, con motivo por subcláusula; nada de import ausente, selector roto o rechazo de fill por Playwright | T004 |
-| T007 | pendiente | US3 / US3-AS4; SC-004/005 | Crear P1/T1 y helpers completos de firmas/transición/traza; negativos estructurales y transformaciones canónicas, sin aceptar after arbitrario | T002, T004 |
-| T008 | pendiente | US1–US3 / FR-001–010; todos los escenarios | Revisar aserciones y congelar nueve archivos propios E0; G-PIN original, tres controles verdes y cinco rojos; no iniciar E1 si falla | T005, T006, T007 |
+| T001 | completada | US1–US3 / FR-001–010 | Registrar aprobación separada del plan/tareas/análisis y ejecución local E0–E2; conservar snapshot documental aprobado, sin publicar | — |
+| T002 | completada | US3 / FR-001–004; US3-AS4 | Inventariar 123 firmas efectivas, src completo/SQL/dependencias y nueve archivos de impacto; archivar seis originales; fijar hashes y versiones | T001 |
+| T003 | completada | US1–US3 / FR-001–004; US3-AS1–AS4 | Baseline original íntegra Node/35 Chromium/build, con salidas y huellas; conservar fallos y repetir checkpoint afectado tras corregir | T002 |
+| T004 | completada | US1/US2 / FR-005–010; US1-AS1–AS6; US2-AS1–AS4 | Crear fixture de BodyScreen real con contadores de setters, entry propio, cliente falso, red bloqueada y reloj 009; configuración solo para ocho casos nuevos | T003 |
+| T005 | completada | US1/US3 / FR-001–004; US1-AS3/AS4; US3-AS1/AS2/AS3 | A1/A2/B6 originales verdes: reemplazo, historial, vacíos/null, bienestar y cero conocido; sin transformar el producto | T004 |
+| T006 | completada | US1/US2 / FR-005–010; US1-AS1/AS2/AS5/AS6; US2-AS1–AS4 | B1–B5 rojos por comportamiento original, con motivo por subcláusula; nada de import ausente, selector roto o rechazo de fill por Playwright | T004 |
+| T007 | completada | US3 / US3-AS4; SC-004/005 | Crear P1/T1 y helpers completos de firmas/transición/traza; negativos estructurales y transformaciones canónicas, sin aceptar after arbitrario | T002, T004 |
+| T008 | completada | US1–US3 / FR-001–010; todos los escenarios | Revisar aserciones y congelar nueve archivos propios E0; G-PIN original, tres controles verdes y cinco rojos; no iniciar E1 si falla | T005, T006, T007 |
 
 ## E1 — validación, feedback y compatibilidad
 
@@ -57,4 +57,13 @@ Las claves A1–M1 remiten a nombres exactos en la matriz de validación.
 - Las seis enmiendas citan reglas aprobadas y transformaciones acotadas.
 - El verde dirigido no depende de haber declarado previamente verde la adenda.
 - Converge añade tareas y exige repetir el checkpoint completo afectado.
-- Los conteos finales son previsiones hasta ejecutar; las 31 tareas siguen pendientes.
+- Los conteos finales son previsiones hasta ejecutar; la tabla registra los estados vigentes.
+
+## Registro de ejecución local
+
+- T001: aprobación explícita registrada en `c8be7bd`; rama documental `codex/010-entradas-cuerpo-docs` fijada en ese snapshot, sin publicar.
+- T002: inventario E0 de 123 firmas efectivas y fuente, seis archivos congelados y dos fuentes originales archivados; Node 24.21.0 y huellas iguales al original. [Inventario](evidence/original-inventory.json). La baseline íntegra T003 está en ejecución.
+
+- T003: baseline original íntegra aprobada, 372 Node/35 Chromium/build, sin skips/retries.
+- T004–T007: fixture real, dos AS-IS y B6 verdes, cinco CHANGE rojos funcionales y dos tests de metadatos aprobados. El primer control de gráfico requirió avanzar su animación virtual antes de congelar; intentos 1/2 conservados como preparación.
+- T008: checkpoint E0 con huellas antes/después estable, tres verdes/cinco rojos y nueve archivos congelados; sourceHash original y 123 firmas efectivas intactas. [G-PIN](evidence/baseline.json).

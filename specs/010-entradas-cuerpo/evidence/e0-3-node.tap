@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: cuerpo010 firmas y transicion rechazan enmiendas ajenas
+ok 1 - cuerpo010 firmas y transicion rechazan enmiendas ajenas
+  ---
+  duration_ms: 919.8975
+  type: 'test'
+  ...
+# Subtest: cuerpo010 trazabilidad rechaza evidencia falsa omitida y parcial
+ok 2 - cuerpo010 trazabilidad rechaza evidencia falsa omitida y parcial
+  ---
+  duration_ms: 13.3321
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1012.7668

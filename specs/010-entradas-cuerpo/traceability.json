@@ -1,13 +1,16 @@
 {
   "spec": "010-entradas-cuerpo",
-  "note": "Plan/tareas/análisis y E0–E2 local aprobados el 2026-10-27; 24 IDs pendientes de ejecución. Entrega remota no autorizada.",
+  "note": "E0 G-PIN: seis IDs preservados completos y dieciocho pending; tres controles verdes, cinco regresiones rojas y nueve archivos congelados; producto intacto.",
   "requirements": [
     {
       "id": "FR-001",
       "story": "US3",
       "result": "reemplazo por fecha, orden y reinicio de borradores",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva reemplazo e historiales",
+        "cuerpo010 original conserva bienestar y vacios"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva reemplazo e historiales",
         "cuerpo010 original conserva bienestar y vacios"
@@ -28,8 +31,10 @@
       "id": "FR-002",
       "story": "US3",
       "result": "historiales, gráficos, borrado y accesos de peso",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva reemplazo e historiales"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva reemplazo e historiales"
       ],
@@ -47,8 +52,10 @@
       "id": "FR-003",
       "story": "US3",
       "result": "hidratación de bienestar, notas, energía y feedback local",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva bienestar y vacios"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva bienestar y vacios"
       ],
@@ -450,8 +457,10 @@
       "id": "US3-AS1",
       "story": "US3",
       "result": "reemplazo e ID nuevo ordenado",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva reemplazo e historiales"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva reemplazo e historiales"
       ],
@@ -470,8 +479,10 @@
       "id": "US3-AS2",
       "story": "US3",
       "result": "borrador de bienestar preservado",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva bienestar y vacios"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva bienestar y vacios"
       ],
@@ -489,8 +500,10 @@
       "id": "US3-AS3",
       "story": "US3",
       "result": "historiales y acciones intactos",
-      "status": "pending",
-      "tests": [],
+      "status": "complete",
+      "tests": [
+        "cuerpo010 original conserva reemplazo e historiales"
+      ],
       "plannedTests": [
         "cuerpo010 original conserva reemplazo e historiales"
       ],

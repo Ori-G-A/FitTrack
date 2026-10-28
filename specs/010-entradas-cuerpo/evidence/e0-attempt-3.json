@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "stage": "E0 G-PIN",
+  "attempt": 3,
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "startedAt": "2026-10-28T02:54:59.893Z",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "5ed93975663b772143bc8c1be23b9c8d5db7f446ce53c0b73d2748c1d15337ba",
+  "node": "v24.21.0",
+  "receipts": [
+    {
+      "label": "metadata",
+      "args": [
+        "--test",
+        "--test-isolation=none",
+        "--test-reporter=tap",
+        "test/body-inputs-pins.test.js",
+        "test/body-inputs-trace.test.js"
+      ],
+      "startedAt": "2026-10-28T02:55:00.105Z",
+      "finishedAt": "2026-10-28T02:55:01.710Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/e0-3-node.tap",
+      "sha256": "13b5bce5e2e40205f0418d39d34f8559c2b62faaa71fd5c506f7a0614c1b37e5",
+      "beforeHash": "5ed93975663b772143bc8c1be23b9c8d5db7f446ce53c0b73d2748c1d15337ba",
+      "afterHash": "5ed93975663b772143bc8c1be23b9c8d5db7f446ce53c0b73d2748c1d15337ba"
+    },
+    {
+      "label": "browser",
+      "args": [
+        "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\.pnpm\\@playwright+test@1.64.0\\node_modules\\@playwright\\test\\cli.js",
+        "test",
+        "--config=playwright.body-inputs.config.js",
+        "--reporter=json"
+      ],
+      "startedAt": "2026-10-28T02:55:02.162Z",
+      "finishedAt": "2026-10-28T02:56:04.189Z",
+      "exitCode": 1,
+      "file": "specs/010-entradas-cuerpo/evidence/e0-3-browser.json",
+      "sha256": "92ceec8996b47f54e6dcf4c9e1dc73cc1e9b87fdfde860babfa782404d15b502",
+      "beforeHash": "5ed93975663b772143bc8c1be23b9c8d5db7f446ce53c0b73d2748c1d15337ba",
+      "afterHash": "5ed93975663b772143bc8c1be23b9c8d5db7f446ce53c0b73d2748c1d15337ba"
+    }
+  ],
+  "asis": {
+    "passed": 3,
+    "names": [
+      "cuerpo010 original conserva reemplazo e historiales",
+      "cuerpo010 original conserva bienestar y vacios",
+      "cuerpo010 espacios y ceros conservan ausencia y precision"
+    ]
+  },
+  "red": {
+    "failed": 5,
+    "cases": [
+      {
+        "name": "cuerpo010 coma y punto recorren nueve campos",
+        "error": "Error: FR-010: la entrada decimal debe conservarse antes de validar\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"65\u001b[7m,\u001b[27m4\"\u001b[39m\nReceived: \u001b[31m\"65\u001b[7m.\u001b[27m4\"\u001b[39m"
+      },
+      {
+        "name": "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+        "error": "Error: FR-005/006/007: kg=-1 no debe escribir\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"weights\",\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+      },
+      {
+        "name": "cuerpo010 mezcla invalida conserva borrador sin exito",
+        "error": "Error: FR-007: rechazo completo, sin setter\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"measurements\",\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+      },
+      {
+        "name": "cuerpo010 errores asocian campos en movil y escritorio",
+        "error": "Error: FR-008: error anunciado y visible por formulario\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m"
+      },
+      {
+        "name": "cuerpo010 corregir permite un unico guardado",
+        "error": "Error: FR-009: el intento inválido debe conservarse para corregir\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"weights\",\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+      }
+    ]
+  },
+  "generatedAt": "2026-10-28T02:56:04.822Z"
+}

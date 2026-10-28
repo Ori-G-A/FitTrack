@@ -1,0 +1,69 @@
+{
+  "stage": "E0 baseline original",
+  "passed": true,
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "attempt": 1,
+  "startedAt": "2026-10-28T02:44:26.711Z",
+  "runtime": "v24.21.0",
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "receipts": [
+    {
+      "label": "node",
+      "executable": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\.bin\\node.exe",
+      "args": [
+        "--test",
+        "--test-isolation=none",
+        "--test-reporter=tap"
+      ],
+      "startedAt": "2026-10-28T02:44:26.906Z",
+      "finishedAt": "2026-10-28T02:46:24.002Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/original-1-node.tap",
+      "sha256": "30c7124c7d65737a4dd61ca0338823e4ee20696a4521dd7419714c10b78fa52b",
+      "beforeHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+      "afterHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9"
+    },
+    {
+      "label": "browser",
+      "executable": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\.bin\\node.exe",
+      "args": [
+        "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\.pnpm\\@playwright+test@1.64.0\\node_modules\\@playwright\\test\\cli.js",
+        "test",
+        "--reporter=json"
+      ],
+      "startedAt": "2026-10-28T02:46:24.499Z",
+      "finishedAt": "2026-10-28T02:49:12.018Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/original-1-browser.json",
+      "sha256": "80163015aa028708bd7c4dd75f575b5f3420d6e9cc0551b4266a2c37bc4ee467",
+      "beforeHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+      "afterHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9"
+    },
+    {
+      "label": "build",
+      "executable": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\.bin\\node.exe",
+      "args": [
+        "node_modules/vite/bin/vite.js",
+        "build"
+      ],
+      "startedAt": "2026-10-28T02:49:12.522Z",
+      "finishedAt": "2026-10-28T02:49:24.061Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/original-1-build.txt",
+      "sha256": "78fc862b41a25b7c7a8242edc187fea176660b9519e76e7adb7d31b146156f39",
+      "beforeHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+      "afterHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9"
+    }
+  ],
+  "nodeTests": 372,
+  "browser": {
+    "startTime": "2026-10-28T02:46:25.923Z",
+    "duration": 165997.828,
+    "expected": 35,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "finishedAt": "2026-10-28T02:49:24.573Z"
+}
