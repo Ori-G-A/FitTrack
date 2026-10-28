@@ -15,7 +15,8 @@ Revisión del agente — 2026-10-27 (Bogotá). No es aprobación humana.
 - [x] Historia, cálculos, importación, fotos, SQL y dependencias fuera del cambio.
 - [x] Suite/Chromium/build/RLS y evidencia G-PIN no se presentan como ejecutados.
 - [x] Alcance y C-001/002/003 aprobados por el propietario el 2026-10-27.
-- [ ] Plan/tareas/análisis preparados y aprobados por separado.
+- [x] Plan, 31 tareas, matriz, seis enmiendas y análisis preparados.
+- [x] Plan/tareas/análisis y ejecución local E0–E2 aprobados por separado el 2026-10-27.
 
-La aprobación de alcance solo permite preparar la planificación siguiente;
-implementación, publicación, integración y despliegue siguen sin autorizar.
+El plan aprobado autoriza E0–E2 local antes del PR documental;
+publicación, integración y despliegue requieren decisión posterior específica.

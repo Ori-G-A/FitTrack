@@ -642,3 +642,23 @@ ni enteros nuevos; rechazo completo con error accesible y borrador conservado,
 sin limpiar historia. Autoriza preparar plan/tareas/análisis y proponer
 enmiendas de 005 y del verificador 009, para aprobación separada. No autoriza
 implementar, publicar, fusionar ni desplegar 010.
+
+## Planificación 010 preparada — 2026-10-27 (Bogotá)
+
+[Plan](../../specs/010-entradas-cuerpo/plan.md), 31 tareas E0–E2, matriz,
+seis enmiendas y análisis preparados para aprobación separada. 24 IDs propios
+pending, con nombres previstos y tareas. Se propone cierre de diez contratos/
+274 IDs, 43 Chromium, diecinueve mutaciones postverde y RLS local fresco con
+limpieza. Las seis firmas y las 123 efectivas actuales se inventariaron sin
+modificarlas; producto, pruebas y verificadores intactos. Plan y ejecución
+local antes del PR documental pendientes; publicación, integración y Vercel
+requieren decisión posterior. 010 es la última entrega actual propuesta:
+informe final y backlog separado, sin iniciar 011 automáticamente.
+
+## Plan 010 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecución local E0–E2» a
+[010](../../specs/010-entradas-cuerpo/plan.md). Aprueba las 31 tareas, plan,
+análisis, seis enmiendas acotadas y ejecución local E0–E2 antes del PR documental,
+con snapshot aprobado. Incluye informe final y mantiene RLS local fresco como
+requisito de cierre. No publicar, fusionar ni desplegar sin decisión específica.

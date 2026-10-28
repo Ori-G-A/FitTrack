@@ -1,6 +1,6 @@
 # Spec 010 — entradas numéricas de Cuerpo
 
-Estado: alcance y C-001/002/003 APROBADOS el 2026-10-27 (Bogotá); plan pendiente.
+Estado: alcance y C-001/002/003 APROBADOS el 2026-10-27 (Bogotá); plan y ejecución local E0–E2 aprobados.
 Propietario: usuario del proyecto. Fecha: 2026-10-27 (Bogotá).
 Gobierno: [constitución 1.0.3](../../.specify/memory/constitution.md).
 [Survey](../../docs/sdd/entradas-cuerpo-survey.md),
@@ -122,10 +122,18 @@ campo o vaciarlo expresamente; nunca se modificará el histórico sin guardar.
 ## Trazabilidad y aprobación
 
 [Manifiesto](traceability.json): diez requisitos (cuatro AS-IS y seis CHANGE)
-y catorce escenarios; 24 filas individuales pending. Los tests y tareas se
-concretarán en el plan separado. [Checklist](checklist.md).
+y catorce escenarios; 24 filas individuales pending. Los tests y tareas están propuestos en el [plan](plan.md), la
+[validación](validation-plan.md) y las [tareas](tasks.md), pendientes de aprobación.
+[Checklist](checklist.md).
 
 El propietario respondió «Aprobar alcance y las tres aclaraciones» el
 2026-10-27 (Bogotá). Aprueba los cuatro AS-IS, seis CHANGE, catorce escenarios
 y C-001/002/003. Autoriza preparar plan/tareas/análisis para revisión separada;
 no implementar, publicar, fusionar ni desplegar 010.
+
+## Aprobación de planificación — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar plan, tareas y análisis; autorizar ejecución local E0–E2». Aprueba plan, 31 tareas y análisis,
+y autoriza E0–E2 local antes de integrar el PR documental con snapshot aprobado.
+Las esperas de decisión local anteriores son históricas. No autoriza publicar,
+fusionar ni desplegar 010.
