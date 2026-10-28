@@ -71,3 +71,11 @@ Ensayo local desechable aprobado: tres contratos reales y limpieza. [RLS](eviden
 ## Mutaciones y recibos E2 aprobados
 
 Diecinueve mutaciones postverde detectadas y limpieza confirmada. Trece controles negativos de recibos, dos positivos y restauración; ocho archivos E1 intactos. [Negativos](evidence/receipt-negatives.json). El cierre requiere aún el checkpoint final y la entrada genérica completa.
+
+## Integración 010 verificada — 2026-10-28 (Bogotá)
+
+Los PRs [#22 documental](https://github.com/Ori-G-A/FitTrack/pull/22) y [#23 de código](https://github.com/Ori-G-A/FitTrack/pull/23) están integrados, en ese orden, con ambos trabajos de CI aprobados para cada PR. El resultado `e427682` aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40775635221) y Vercel confirmó Production para ese mismo SHA. 379 Node, 43 Chromium, diez contratos/274 IDs, diecinueve mutaciones y RLS real local con limpieza confirmados. Las huellas coinciden con el cierre local. [Registro](evidence/integration.json).
+
+BODY-001 queda resuelto en el alcance aprobado de los nueve campos. Se conservan historia, fórmulas y BODY-002–005. La comprobación del proveedor y de la URL técnica no constituye un smoke autenticado de FitTrack ni certifica las políticas del backend productivo. Los demás hallazgos y el aviso de bundle siguen en el backlog. Esta entrega cierra el alcance actual; no inicia 011.
+
+Este registro posterior se publica en la rama 010; no se atribuye al árbol del commit de main verificado. Las esperas anteriores son históricas y no conceden autorización permanente para otras entregas.

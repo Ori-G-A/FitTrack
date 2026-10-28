@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): 010 integrada mediante #22/#23, con CI de main y Vercel Production verificados en `e427682`. [Entrega remota](evidence/integration.json). Los apartados siguientes conservan la cronología y sus decisiones ya cumplidas.
+
 Estado vigente — 2026-10-28 (Bogotá): publicación de ambas ramas/PRs, integración con CI remoto verde y Vercel autorizadas. [Decisión](evidence/remote-authorization.json). Pendiente ejecutar y verificar la entrega; las esperas de autorización anteriores son históricas.
 
 # PR de código 010 — preparado, sin publicar

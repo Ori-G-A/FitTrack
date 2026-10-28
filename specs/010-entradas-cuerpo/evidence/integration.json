@@ -1,0 +1,695 @@
+{
+  "area": "010-entradas-cuerpo",
+  "documentation": {
+    "pr": 22,
+    "head": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+    "merge": "a527204c36a1c37ef95a52ec2a956f92f4b122b1",
+    "ci": 40761595524,
+    "jobs": [
+      {
+        "id": 123074666972,
+        "name": "test-and-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 123074667580,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      }
+    ],
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/22",
+    "ciConclusion": "success",
+    "mergedAt": "2026-10-28T20:40:44Z"
+  },
+  "implementation": {
+    "pr": 23,
+    "head": "465e2830f182b9c187c6a23763720d9c91254ff5",
+    "merge": "e4276820142e082fc601110e91d85e05ed73e5c3",
+    "ci": 40761626050,
+    "jobs": [
+      {
+        "id": 123074773962,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      },
+      {
+        "id": 123074774333,
+        "name": "test-and-build",
+        "conclusion": "success"
+      }
+    ],
+    "url": "https://github.com/Ori-G-A/FitTrack/pull/23",
+    "ciConclusion": "success",
+    "mergedAt": "2026-10-28T21:53:26Z",
+    "artifacts": [
+      {
+        "id": 12851140162,
+        "name": "evidencia-sdd-004",
+        "digest": "sha256:05bf6954f3bee2a3054a05ca221e70943ec52259e1f794e4869bea8734213bb2",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12851120177,
+        "name": "evidencia-sdd-007",
+        "digest": "sha256:181eda82ff6192a25633c5d75dcca37a38ff1d5444e76f0ffd2e678ae0976073",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12851005519,
+        "name": "evidencia-sdd-009",
+        "digest": "sha256:31825e7b9d289d0f3f489ada03d633fb6f6e4dbffc909ff49927fd134b258354",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": true
+      },
+      {
+        "id": 12850910676,
+        "name": "evidencia-sdd-005",
+        "digest": "sha256:d601b65e90a1e73402e95b44f8ede47e9ef875f0f6f10469512cb1321293a0b8",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12850865826,
+        "name": "evidencia-sdd-003",
+        "digest": "sha256:2d1ded2a66c10c4802b4a1ddfd7210efe7a3fe2afc62e9b7c76c36a6b6acc14a",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12850706550,
+        "name": "evidencia-sdd-006",
+        "digest": "sha256:fea2f2d2315d3e8467fc72fa1065a2cd9d606be96109e1900e741b4843ab75d3",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12849868851,
+        "name": "evidencia-sdd-010",
+        "digest": "sha256:dbc4375d15c4702c0ae7eeb94f4943fe14a77a4651f118b5333d56b4e28e8fa4",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": true
+      },
+      {
+        "id": 12849694263,
+        "name": "evidencia-sdd-008",
+        "digest": "sha256:80927ee93abe7ec15233f04c10e482e84d0643837da03745fec0d9770a82acf9",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12847994061,
+        "name": "evidencia-sdd-002",
+        "digest": "sha256:19cceca58392c2e9acc72e68610b4f598b351baa80c68c4692828267343bd00f",
+        "sha": "465e2830f182b9c187c6a23763720d9c91254ff5",
+        "archiveDigestVerified": true
+      }
+    ],
+    "nodeTests": 379,
+    "browserTests": 43,
+    "mutations": 19,
+    "rlsContracts": 3,
+    "rlsCleanupPassed": true,
+    "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+    "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+    "browser": {
+      "startTime": "2026-10-28T20:45:44.729Z",
+      "duration": 128300.53600000001,
+      "expected": 43,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "rls": {
+      "generatedAt": "2026-10-28T20:17:22.211Z",
+      "node": "v24.21.0",
+      "cliVersion": "2.121.0",
+      "projectId": "fittrack-sdd-rls-a4b546d5b913",
+      "recoveryDirectory": null,
+      "passed": true,
+      "cleanupPassed": true,
+      "environment": "fittrack-sdd-disposable",
+      "apiOrigin": "http://127.0.0.1:59321",
+      "results": [
+        {
+          "name": "SDD-RLS-001 app_data dos propietarios y anonimo",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-002 Storage privado permite solo prefijo propio",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-003 diagnosticos insert-only sin suplantacion",
+          "status": "passed"
+        }
+      ],
+      "hashes": {
+        "rls-tests/ownership.js": "753c0cda43959865eda0f702985cb6bcd46f4e51caae4521e39f7a4536d15334",
+        "scripts/run-local-rls.js": "f81d0ae9e9880b887a68cdbcd018fd1eff152cdf9be10539b660b568be6b7743",
+        "scripts/local-rls-guard.js": "eb86d1aa52dd6e4534b6186187388a7c3f3deecc19dffa8e1ab2b7c2d4662593",
+        "test-support/rls/fixture-client.js": "9878fd9d87af3ae6ca3362c6650bb9589acf94621ea3c985096badb14f08f92b",
+        "pnpm-lock.yaml": "fc3444c3e416af83bca9274bcf16159712e2064103e730e3ae77c929fbde317d",
+        "supabase/migrations/20260614000000_secure_app_data_rls.sql": "6c8fc101c348bb8645fa78a74a594cb61f604ac4307edfe696e0ef9565a33bbf",
+        "supabase/migrations/20260614010000_private_progress_photos.sql": "83d1f764cefd61a4a47382028c5653a1629070c2629cece855162ac4f1402702",
+        "supabase/migrations/20260615000000_client_error_reports.sql": "f1989ef377df89e9454274d8357e9c8e770ab72b0069025e61f60e4309f0cd99"
+      }
+    },
+    "proofs": {
+      "passed": true,
+      "ownPositiveControls": 5,
+      "ownMutations": 5,
+      "legacyMutations": 14,
+      "receipts": {
+        "stage": "proofs",
+        "passed": true,
+        "attempt": 2,
+        "startedAt": "2026-10-28T20:16:56.012Z",
+        "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+        "node": "v24.21.0",
+        "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+        "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+        "receipts": [
+          {
+            "label": "legacy-proofs",
+            "args": [
+              "scripts/run-clock-state-checkpoint.js",
+              "proofs"
+            ],
+            "startedAt": "2026-10-28T20:16:56.023Z",
+            "finishedAt": "2026-10-28T20:20:26.17Z",
+            "exitCode": 0,
+            "file": "specs/010-entradas-cuerpo/evidence/proofs-attempt-2-legacy-proofs.txt",
+            "sha256": "be873b29b92aadf492b283fba7fb3e4e7751d787696e40c25f17934147f8f0ee",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"
+          },
+          {
+            "label": "input-proofs",
+            "args": [
+              "scripts/check-body-inputs-mutations.js"
+            ],
+            "startedAt": "2026-10-28T20:20:26.199Z",
+            "finishedAt": "2026-10-28T20:21:52.848Z",
+            "exitCode": 0,
+            "file": "specs/010-entradas-cuerpo/evidence/proofs-attempt-2-input-proofs.txt",
+            "sha256": "beb4fb997a32cf46724efb9c383c3a06cd1ebfa301f992348fb3476b5ec4c389",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"
+          }
+        ],
+        "reports": [
+          {
+            "file": "test-results/clock009-proof-receipts.json",
+            "sha256": "93dbca533eeee236f0ec7c789706e9a676fe2240beec5c705bff2b4d8bb3cd61"
+          },
+          {
+            "file": "test-results/body010-mutations.json",
+            "sha256": "84fcb3c1c8b82adff37cd01eeaf1c8c1f1f4776fac97d7924e67c286afa9ad6b"
+          }
+        ]
+      },
+      "legacyReceipts": {
+        "passed": true,
+        "startedAt": "2026-10-28T20:16:56.08Z",
+        "generatedAt": "2026-10-28T20:20:26.161Z",
+        "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+        "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+        "receipts": [
+          {
+            "label": "interface",
+            "args": [
+              "scripts/check-interface-mutations.js"
+            ],
+            "startedAt": "2026-10-28T20:16:56.093Z",
+            "finishedAt": "2026-10-28T20:17:21.015Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-interface.txt",
+            "sha256": "35f46f8e607820b0ada41e09b939701a861b214f0cd9a7c26e518dcd8fed145b"
+          },
+          {
+            "label": "save",
+            "args": [
+              "scripts/check-save-state-mutations.js"
+            ],
+            "startedAt": "2026-10-28T20:17:21.034Z",
+            "finishedAt": "2026-10-28T20:17:28.976Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-save.txt",
+            "sha256": "41d6988208adf30a86dd49313010e1ad298103b45ef160e271baf017ff3b3961"
+          },
+          {
+            "label": "delete",
+            "args": [
+              "scripts/check-delete-state-mutations.js"
+            ],
+            "startedAt": "2026-10-28T20:17:28.994Z",
+            "finishedAt": "2026-10-28T20:17:46.434Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-delete.txt",
+            "sha256": "a4479ce1183cfb224ea37c64aac69d85e5efe093ddb7200d33e8a0f1d5d2e544"
+          },
+          {
+            "label": "clock",
+            "args": [
+              "scripts/check-clock-state-mutations.js"
+            ],
+            "startedAt": "2026-10-28T20:17:46.452Z",
+            "finishedAt": "2026-10-28T20:20:26.147Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-clock.txt",
+            "sha256": "e9e2683c515b9882eb4dae5a25fa3ee080866114aedd58dd33a9879be0451373"
+          }
+        ],
+        "reports": [
+          {
+            "label": "interface",
+            "file": "test-results/interface-postgreen-mutations.json",
+            "sha256": "66d9b9eb234f35e545045ee3fe59132297320000ec2a3e864255ef1fd24e31c0",
+            "mutations": 3
+          },
+          {
+            "label": "save",
+            "file": "test-results/save007-mutations.json",
+            "sha256": "288db30d8e47021789e2f51f7e726499364594bce46bdffd5bc4d34bf707193c",
+            "mutations": 3
+          },
+          {
+            "label": "delete",
+            "file": "test-results/delete008-mutations.json",
+            "sha256": "bf9fff36b6e993d6f6870c2e9c3eccec48a405497d64d387a72ee8598369c65d",
+            "mutations": 5
+          },
+          {
+            "label": "clock",
+            "file": "test-results/clock009-mutations.json",
+            "sha256": "088d7795fdf334a1a704a03042d11db8144a2c53997748895574e95045a1f344",
+            "mutations": 3
+          }
+        ]
+      }
+    }
+  },
+  "main": {
+    "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+    "ci": 40775635221,
+    "ciConclusion": "success",
+    "jobs": [
+      {
+        "id": 123124095029,
+        "name": "test-and-build",
+        "conclusion": "success"
+      },
+      {
+        "id": 123124095356,
+        "name": "rls-and-sdd-002",
+        "conclusion": "success"
+      }
+    ],
+    "contracts": [
+      {
+        "spec": "001-datos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "002-identidad-fotos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 23
+      },
+      {
+        "spec": "003-entrenamiento",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "004-nutricion-objetivos",
+        "pending": 0,
+        "partial": 0,
+        "complete": 31
+      },
+      {
+        "spec": "005-cuerpo-ciclo",
+        "pending": 0,
+        "partial": 0,
+        "complete": 40
+      },
+      {
+        "spec": "006-interfaz",
+        "pending": 0,
+        "partial": 0,
+        "complete": 48
+      },
+      {
+        "spec": "007-guardado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 21
+      },
+      {
+        "spec": "008-borrado-fiable",
+        "pending": 0,
+        "partial": 0,
+        "complete": 29
+      },
+      {
+        "spec": "009-reloj-pruebas",
+        "pending": 0,
+        "partial": 0,
+        "complete": 16
+      },
+      {
+        "spec": "010-entradas-cuerpo",
+        "pending": 0,
+        "partial": 0,
+        "complete": 24
+      }
+    ],
+    "completeIds": 274,
+    "artifacts": [
+      {
+        "id": 12857006090,
+        "name": "evidencia-sdd-003",
+        "digest": "sha256:f74e9f03782707556a504949d323b41c0d681296ae0598c5a0fc35f28e213deb",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12856750842,
+        "name": "evidencia-sdd-007",
+        "digest": "sha256:998b230ea1e2bd2f40c949cacb950b6f646ab8e4a08917d1dd3467c7c222b2bb",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12856466611,
+        "name": "evidencia-sdd-009",
+        "digest": "sha256:4e458c03f97fb47cc89ea0e10495596da72f1d25025c297de4c9d399b882c3f6",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": true
+      },
+      {
+        "id": 12856257226,
+        "name": "evidencia-sdd-008",
+        "digest": "sha256:e2a78384b81c38ff6bf2c4b3a66142a848e628b103c51404dd7b04db49f549d7",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12856242070,
+        "name": "evidencia-sdd-010",
+        "digest": "sha256:880083c86ad4a02ae4092085a5099c9b8e520e5ae2dfd8ef07ebfbf8f6f17d5e",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": true
+      },
+      {
+        "id": 12856223688,
+        "name": "evidencia-sdd-006",
+        "digest": "sha256:97e2378062c587b879eac6fa62bfb03f89f35524acc7632bba4095844f7b3cd9",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12855954531,
+        "name": "evidencia-sdd-005",
+        "digest": "sha256:26e79b426982bc50c31628809220ff48dd19453a3eacac2762f10d109b376e98",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12854994637,
+        "name": "evidencia-sdd-004",
+        "digest": "sha256:39e20d56e5fbb8b5d990da1aeb182e7b7348c30648ef23c0316794ccfd383e6d",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": false
+      },
+      {
+        "id": 12854268713,
+        "name": "evidencia-sdd-002",
+        "digest": "sha256:110e17b6ddc85ce9e7b8d203260f7b9909e447fbcc4134109dc46cc1fbf1628e",
+        "run": 40775635221,
+        "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+        "archiveDigestVerified": true
+      }
+    ],
+    "nodeTests": 379,
+    "browserTests": 43,
+    "mutations": 19,
+    "rlsContracts": 3,
+    "rlsCleanupPassed": true,
+    "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+    "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+    "browser": {
+      "startTime": "2026-10-28T22:24:46.214Z",
+      "duration": 129656.81700000001,
+      "expected": 43,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "rls": {
+      "generatedAt": "2026-10-28T21:55:21.787Z",
+      "node": "v24.21.0",
+      "cliVersion": "2.121.0",
+      "projectId": "fittrack-sdd-rls-e10cc8586e19",
+      "recoveryDirectory": null,
+      "passed": true,
+      "cleanupPassed": true,
+      "environment": "fittrack-sdd-disposable",
+      "apiOrigin": "http://127.0.0.1:59321",
+      "results": [
+        {
+          "name": "SDD-RLS-001 app_data dos propietarios y anonimo",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-002 Storage privado permite solo prefijo propio",
+          "status": "passed"
+        },
+        {
+          "name": "SDD-RLS-003 diagnosticos insert-only sin suplantacion",
+          "status": "passed"
+        }
+      ],
+      "hashes": {
+        "rls-tests/ownership.js": "753c0cda43959865eda0f702985cb6bcd46f4e51caae4521e39f7a4536d15334",
+        "scripts/run-local-rls.js": "f81d0ae9e9880b887a68cdbcd018fd1eff152cdf9be10539b660b568be6b7743",
+        "scripts/local-rls-guard.js": "eb86d1aa52dd6e4534b6186187388a7c3f3deecc19dffa8e1ab2b7c2d4662593",
+        "test-support/rls/fixture-client.js": "9878fd9d87af3ae6ca3362c6650bb9589acf94621ea3c985096badb14f08f92b",
+        "pnpm-lock.yaml": "fc3444c3e416af83bca9274bcf16159712e2064103e730e3ae77c929fbde317d",
+        "supabase/migrations/20260614000000_secure_app_data_rls.sql": "6c8fc101c348bb8645fa78a74a594cb61f604ac4307edfe696e0ef9565a33bbf",
+        "supabase/migrations/20260614010000_private_progress_photos.sql": "83d1f764cefd61a4a47382028c5653a1629070c2629cece855162ac4f1402702",
+        "supabase/migrations/20260615000000_client_error_reports.sql": "f1989ef377df89e9454274d8357e9c8e770ab72b0069025e61f60e4309f0cd99"
+      }
+    },
+    "proofs": {
+      "passed": true,
+      "ownPositiveControls": 5,
+      "ownMutations": 5,
+      "legacyMutations": 14,
+      "receipts": {
+        "stage": "proofs",
+        "passed": true,
+        "attempt": 2,
+        "startedAt": "2026-10-28T21:55:05.341Z",
+        "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+        "node": "v24.21.0",
+        "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+        "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+        "receipts": [
+          {
+            "label": "legacy-proofs",
+            "args": [
+              "scripts/run-clock-state-checkpoint.js",
+              "proofs"
+            ],
+            "startedAt": "2026-10-28T21:55:05.357Z",
+            "finishedAt": "2026-10-28T21:58:40.341Z",
+            "exitCode": 0,
+            "file": "specs/010-entradas-cuerpo/evidence/proofs-attempt-2-legacy-proofs.txt",
+            "sha256": "be873b29b92aadf492b283fba7fb3e4e7751d787696e40c25f17934147f8f0ee",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"
+          },
+          {
+            "label": "input-proofs",
+            "args": [
+              "scripts/check-body-inputs-mutations.js"
+            ],
+            "startedAt": "2026-10-28T21:58:40.371Z",
+            "finishedAt": "2026-10-28T22:00:11.413Z",
+            "exitCode": 0,
+            "file": "specs/010-entradas-cuerpo/evidence/proofs-attempt-2-input-proofs.txt",
+            "sha256": "beb4fb997a32cf46724efb9c383c3a06cd1ebfa301f992348fb3476b5ec4c389",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38"
+          }
+        ],
+        "reports": [
+          {
+            "file": "test-results/clock009-proof-receipts.json",
+            "sha256": "2598029ff2b006c575d263971ef54b2c89517a7cc3b7d7df219b3da3787bbc7c"
+          },
+          {
+            "file": "test-results/body010-mutations.json",
+            "sha256": "29ceeaddea11f5e50d43300e1b4dc50b9d769206ef15074ba008dfd3cdc5fb31"
+          }
+        ]
+      },
+      "legacyReceipts": {
+        "passed": true,
+        "startedAt": "2026-10-28T21:55:05.418Z",
+        "generatedAt": "2026-10-28T21:58:40.331Z",
+        "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+        "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+        "receipts": [
+          {
+            "label": "interface",
+            "args": [
+              "scripts/check-interface-mutations.js"
+            ],
+            "startedAt": "2026-10-28T21:55:05.432Z",
+            "finishedAt": "2026-10-28T21:55:30.742Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-interface.txt",
+            "sha256": "35f46f8e607820b0ada41e09b939701a861b214f0cd9a7c26e518dcd8fed145b"
+          },
+          {
+            "label": "save",
+            "args": [
+              "scripts/check-save-state-mutations.js"
+            ],
+            "startedAt": "2026-10-28T21:55:30.769Z",
+            "finishedAt": "2026-10-28T21:55:39.492Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-save.txt",
+            "sha256": "f16e8245ece3f0fe569f3b7a5da72c5cd5c204099c24eec556fe3af5207e5593"
+          },
+          {
+            "label": "delete",
+            "args": [
+              "scripts/check-delete-state-mutations.js"
+            ],
+            "startedAt": "2026-10-28T21:55:39.513Z",
+            "finishedAt": "2026-10-28T21:55:58.223Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-delete.txt",
+            "sha256": "f6dd864d5982f61c911214ec51e6c1dcabde6084069796ff2f7df35094d244e3"
+          },
+          {
+            "label": "clock",
+            "args": [
+              "scripts/check-clock-state-mutations.js"
+            ],
+            "startedAt": "2026-10-28T21:55:58.244Z",
+            "finishedAt": "2026-10-28T21:58:40.316Z",
+            "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "beforeHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "afterHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+            "exitCode": 0,
+            "output": "test-results/clock009-proofs-clock.txt",
+            "sha256": "f4373f7f67285cee6c814fd1d22cf789ef4afdbc0c9a27f8b0d6440195cc56e9"
+          }
+        ],
+        "reports": [
+          {
+            "label": "interface",
+            "file": "test-results/interface-postgreen-mutations.json",
+            "sha256": "899683cb0e9052d9b75b9a690ef559429696058ba83494564aa91e6ffa3fd185",
+            "mutations": 3
+          },
+          {
+            "label": "save",
+            "file": "test-results/save007-mutations.json",
+            "sha256": "e86257490d458866aa4eaa197818e627fd47c11d5be2ad88bc6c3a675e2bbc22",
+            "mutations": 3
+          },
+          {
+            "label": "delete",
+            "file": "test-results/delete008-mutations.json",
+            "sha256": "10a657ab5b3f00b640cd29f383a69ebe4f09d4af5dfca28e547b9c24437e7837",
+            "mutations": 5
+          },
+          {
+            "label": "clock",
+            "file": "test-results/clock009-mutations.json",
+            "sha256": "a3c7765b8011a7c73d28ecadc1a2e89cd885e73abd37f9c43b216db29caac3a3",
+            "mutations": 3
+          }
+        ]
+      }
+    }
+  },
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "status": "integrated_ci_and_production_verified",
+  "remoteAuthorized": true,
+  "authorizationDate": "2026-10-28",
+  "verifiedAt": "2026-10-28T22:27:50.003Z",
+  "limits": [
+    "Sin prueba autenticada de producción",
+    "RLS real en entorno desechable; no certifica backend productivo",
+    "Aviso de bundle mayor de 500 kB conservado"
+  ],
+  "production": {
+    "deploymentId": 7398288992,
+    "environment": "Production",
+    "sha": "e4276820142e082fc601110e91d85e05ed73e5c3",
+    "state": "success",
+    "createdAt": "2026-10-28T21:53:43Z",
+    "verifiedStatusId": 20860155953,
+    "url": "https://fit-track-7r110lrif-orianag40-7859s-projects.vercel.app",
+    "anonymousHttp": {
+      "attempted": true,
+      "verified": true,
+      "status": 302,
+      "redirectHost": "vercel.com",
+      "authenticatedSmoke": false
+    }
+  },
+  "localReceiptControls": {
+    "negative": 13,
+    "positive": 2,
+    "evidence": "receipt-negatives.json",
+    "scope": "Cierre local; no se atribuyen como una nueva ejecución remota"
+  },
+  "closureRecord": {
+    "branch": "codex/010-entradas-cuerpo",
+    "writtenAfterVerifiedMain": true,
+    "inVerifiedMainTree": false
+  },
+  "authorization": "remote-authorization.json"
+}

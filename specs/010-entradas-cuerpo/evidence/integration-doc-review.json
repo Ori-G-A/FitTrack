@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T22:28:21.971Z",
+  "documents": 18,
+  "links": 294,
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "legacyPins": {
+    "previousVerified": 116,
+    "intact": 109,
+    "amended": 7,
+    "newIntact": 5,
+    "newAmended": 2
+  },
+  "ownPins": {
+    "previousVerified": 123,
+    "intact": 117,
+    "amended": 6,
+    "newIntact": 7,
+    "newAmended": 2
+  },
+  "remoteAuthorized": true,
+  "main": "e4276820142e082fc601110e91d85e05ed73e5c3"
+}

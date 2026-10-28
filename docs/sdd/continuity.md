@@ -1,6 +1,6 @@
 # Continuidad de FitTrack tras la refactorización SDD
 
-Estado: guía operativa actualizada tras integrar 001–009. La constitución vigente
+Estado: guía operativa actualizada tras integrar 001–010. La constitución vigente
 es [1.0.3](../../.specify/memory/constitution.md), ratificada el 2026-10-20;
 la [enmienda](amendment-1.0.3.md) satisface la puerta normativa M7 y su
 integración documental se verifica en el [PR #15](https://github.com/Ori-G-A/FitTrack/pull/15).
@@ -8,13 +8,13 @@ No hay alcance nuevo aprobado aquí.
 
 ## Punto de partida verificable
 
-Main integrado: `392e797b54478ec96b9bd9d352a1dde5d53c4376`.
-[CI](https://github.com/Ori-G-A/FitTrack/actions/runs/40617873796) y Production
-aprobados para ese SHA. [Registro completo](../../specs/009-reloj-pruebas/evidence/integration.json).
-Los nueve contratos suman 250 IDs completos; 372 Node, 35 Chromium, catorce
+Main integrado: `e4276820142e082fc601110e91d85e05ed73e5c3`.
+[CI](https://github.com/Ori-G-A/FitTrack/actions/runs/40775635221) y Production
+aprobados para ese SHA. [Registro completo](../../specs/010-entradas-cuerpo/evidence/integration.json).
+Los diez contratos suman 274 IDs completos; 379 Node, 43 Chromium, diecinueve
 mutaciones y RLS local real con limpieza verificados. La URL técnica responde
 HTTP 302 y redirige al acceso de Vercel; no hay prueba autenticada de FitTrack.
-El registro de cierre posterior se publica en la rama 009, sin atribuirlo al
+El registro de cierre posterior se publica en la rama 010, sin atribuirlo al
 commit de main verificado.
 
 
@@ -45,8 +45,7 @@ hay que leer esos artefactos y sus llamadores, no solo el componente visible.
 
 | Orden propuesto | Resultado | Referencias y decisión necesaria |
 | --- | --- | --- |
-| 1 | Entregar 010 ya verificada localmente | Autorizar publicación, integración con CI verde y Vercel; después comprobar main y Production para el mismo SHA |
-| 2 | Validar el uso real después del despliegue | Prueba autenticada supervisada, con cuenta y datos acordados; no ejecutar escrituras implícitas |
+| 1 | Validar el uso real después del despliegue | Prueba autenticada supervisada, con cuenta y datos acordados; no ejecutar escrituras implícitas |
 | Futuro | Evaluar el backlog separado | PHOTO-001, BODY-002–005, UI-006-003/004/005/006 y PERF-001 requieren decisiones propias; no iniciar 011 automáticamente |
 
 El cierre inicial/PATCH y los fallos de guardado y borrado ya cuentan con sus
@@ -122,3 +121,11 @@ integración con CI verde y Vercel». Autoriza ambas ramas/PRs, documental prime
 y código después, con CI remoto verde y despliegue automático asociado.
 [Decisión](../../specs/010-entradas-cuerpo/evidence/remote-authorization.json).
 No se presenta aún como integración o despliegue verificados.
+
+## Integración 010 verificada — 2026-10-28 (Bogotá)
+
+Los PRs [#22 documental](https://github.com/Ori-G-A/FitTrack/pull/22) y [#23 de código](https://github.com/Ori-G-A/FitTrack/pull/23) están integrados, en ese orden, con ambos trabajos de CI aprobados para cada PR. El resultado `e427682` aprobó [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40775635221) y Vercel confirmó Production para ese mismo SHA. 379 Node, 43 Chromium, diez contratos/274 IDs, diecinueve mutaciones y RLS real local con limpieza confirmados. Las huellas coinciden con el cierre local. [Registro](../../specs/010-entradas-cuerpo/evidence/integration.json).
+
+BODY-001 queda resuelto en el alcance aprobado de los nueve campos. Se conservan historia, fórmulas y BODY-002–005. La comprobación del proveedor y de la URL técnica no constituye un smoke autenticado de FitTrack ni certifica las políticas del backend productivo. Los demás hallazgos y el aviso de bundle siguen en el backlog. Esta entrega cierra el alcance actual; no inicia 011.
+
+Este registro posterior se publica en la rama 010; no se atribuye al árbol del commit de main verificado. Las esperas anteriores son históricas y no conceden autorización permanente para otras entregas.

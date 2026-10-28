@@ -1,10 +1,10 @@
 # Informe final de la refactorización FitTrack
 
-Fecha: 2026-10-28 (Bogotá). Estado: cierre local 010 verificado; entrega remota autorizada, pendiente de ejecución/verificación.
+Fecha: 2026-10-28 (Bogotá). Estado: 001–010 integradas; CI de main y Production verificados en e427682.
 
 ## Resultado entregado
 
-La refactorización inicial 001–006 quedó integrada y cerró su adopción SDD con la constitución 1.0.3. Las mejoras 007–009 de guardado, borrado y reloj de pruebas también se integraron. La última entrega actual, 010, está cerrada localmente y preparada para publicación; no se inicia otra spec automáticamente.
+La refactorización inicial 001–006 quedó integrada y cerró su adopción SDD con la constitución 1.0.3. Las mejoras 007–009 de guardado, borrado y reloj de pruebas también se integraron. La última entrega actual, 010, está integrada y desplegada con CI verde; el alcance actual queda cerrado. No se inicia otra spec automáticamente.
 
 010 impide que una entrada numérica inválida reemplace datos de Cuerpo, unifica coma/punto y permite corregir el borrador con errores accesibles. Conserva cero conocido para sueño/pasos y null para ausencia, sin limpiar historia ni cambiar fórmulas.
 
@@ -32,7 +32,7 @@ La refactorización inicial 001–006 quedó integrada y cerró su adopción SDD
 
 Cada cambio de comportamiento tiene alcance aprobado. Las seis enmiendas legadas y dos técnicas propias conservan sus originales y evidencia. Los intentos fallidos se mantienen. Los presupuestos de las 35 pruebas de navegador anteriores permanecen iguales. Se preservan historia, aislamiento por usuario, fórmulas, fotos, navegación y SQL.
 
-La integración 009 verificada corresponde a 392e797. 010 aún no está publicada ni desplegada. Los PRs documental/de código están preparados y su integración exige autorización específica, CI remoto verde, comprobación de main y Production para el mismo SHA.
+010 se integró mediante los PRs [#22](https://github.com/Ori-G-A/FitTrack/pull/22) y [#23](https://github.com/Ori-G-A/FitTrack/pull/23), en ese orden y con CI verde. [CI de main](https://github.com/Ori-G-A/FitTrack/actions/runs/40775635221) y Vercel Production están aprobados para el mismo commit e4276820142e082fc601110e91d85e05ed73e5c3. [Registro remoto](../../specs/010-entradas-cuerpo/evidence/integration.json). El registro documental posterior se publica en la rama 010 y no se atribuye al commit de main verificado.
 
 ## Pendientes fuera de esta entrega
 

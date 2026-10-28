@@ -1,3 +1,5 @@
+Estado vigente — 2026-10-28 (Bogotá): 010 integrada mediante #22/#23, con CI de main y Vercel Production verificados en `e427682`. [Entrega remota](evidence/integration.json). Los apartados siguientes conservan la cronología y sus decisiones ya cumplidas.
+
 Estado vigente — 2026-10-28 (Bogotá): las 35 tareas locales están completadas; entrega remota autorizada con CI verde y Vercel, pendiente de ejecución/verificación.
 
 Estado vigente — 2026-10-28 (Bogotá): ejecución local E0–E2 verificada; 31 tareas originales y T032–T035 aditivas. T030 está completada; T031 presenta la solicitud de entrega. No hay autorización remota.
@@ -137,3 +139,9 @@ manifiestos anteriores ni introducir coincidencias aproximadas.
 - T030: cierre E2 guardado en 9a4727866fb535ab8d0e253633f7b507d68b4e15 y árbol limpio comprobado antes de este registro administrativo; runtime y huellas coinciden con la evidencia final. La solicitud T031 no autoriza publicar por sí misma.
 
 - T031: solicitud presentada sobre e3b1d04 y respuesta explícita del propietario «Autorizar publicación, integración con CI verde y Vercel». Autoriza ambas ramas/PRs, documental primero y código después con CI remoto verde, y despliegue automático asociado. [Decisión](evidence/remote-authorization.json).
+
+## Entrega remota autorizada — T036
+
+| ID | Estado | Historia / cláusulas | Entrega y criterio | Depende de |
+| --- | --- | --- | --- | --- |
+| T036 | completada | US3 / US3-AS4; SC-004/005 | Publicar #22/#23, integrar documental antes del código con CI verde; verificar CI de main, huellas/artefactos, RLS con limpieza y Vercel Production para el mismo SHA; registrar límites y cierre sin iniciar otra spec | T031 y autorización remota explícita |
