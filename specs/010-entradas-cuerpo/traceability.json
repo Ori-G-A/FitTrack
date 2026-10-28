@@ -1,0 +1,246 @@
+{
+  "spec": "010-entradas-cuerpo",
+  "note": "Alcance y C-001/002/003 aprobados; 24 IDs pending. Tests y tareas por concretar en el plan separado, sin implementación autorizada.",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "story": "US3",
+      "result": "reemplazo por fecha, orden y reinicio de borradores",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-002",
+      "story": "US3",
+      "result": "historiales, gráficos, borrado y accesos de peso",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-003",
+      "story": "US3",
+      "result": "hidratación de bienestar, notas, energía y feedback local",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-004",
+      "story": "US1",
+      "result": "opcionales null y formularios sin contenido",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-005",
+      "story": "US1",
+      "result": "interpretación decimal finita y explícita",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-006",
+      "story": "US1",
+      "result": "positivos y cero conocido sin máximos nuevos",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-007",
+      "story": "US2",
+      "result": "rechazo completo sin mutación ni pérdida de borrador",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-008",
+      "story": "US2",
+      "result": "errores, nombres y asociación accesibles",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-009",
+      "story": "US2",
+      "result": "corrección y un único guardado local válido",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "FR-010",
+      "story": "US1",
+      "result": "coma decimal utilizable desde la interfaz",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS1",
+      "story": "US1",
+      "result": "coma/punto en nueve campos",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS2",
+      "story": "US1",
+      "result": "espacios y forma decimal",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS3",
+      "story": "US1",
+      "result": "opcionales y formularios vacíos",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS4",
+      "story": "US1",
+      "result": "cero conocido y precisión",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS5",
+      "story": "US1",
+      "result": "sintaxis inválida rechazada",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US1-AS6",
+      "story": "US1",
+      "result": "fronteras de cero y negativos",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS1",
+      "story": "US2",
+      "result": "error accesible en dos viewports",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS2",
+      "story": "US2",
+      "result": "registro previo intacto y sin éxito",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS3",
+      "story": "US2",
+      "result": "corrección y guardado único",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US2-AS4",
+      "story": "US2",
+      "result": "formulario mixto rechazado completo",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS1",
+      "story": "US3",
+      "result": "reemplazo e ID nuevo ordenado",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS2",
+      "story": "US3",
+      "result": "borrador de bienestar preservado",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS3",
+      "story": "US3",
+      "result": "historiales y acciones intactos",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    },
+    {
+      "id": "US3-AS4",
+      "story": "US3",
+      "result": "consumidores y contratos previos preservados",
+      "status": "pending",
+      "tests": [],
+      "plannedTests": [],
+      "plannedFiles": [],
+      "plannedTaskIds": []
+    }
+  ]
+}

@@ -137,7 +137,7 @@ están en el [survey 008](borrado-fiable-survey.md), sin acreditar incidentes re
 | DOC-002 | Contradicciones editoriales sobre KD e idioma | PATCH 1.0.1 e informe creados en rama propia | Integrada mediante PR #2 |
 | IDEN-001 | Reporter consume fingerprint/cupo antes de consultar sesión y su getSession carece de timeout propio | Pins preparatorios lo reproducen; conservar AS-IS y decidir cambio separado de FR-013 | Clarify 002 C2-004 |
 | PHOTO-001 | Fuente admite 25 MiB; migración Storage limita resultado a 5 MiB sin comprobación local del tamaño comprimido | No prometer aceptación remota por validar origen; decidir si hace falta CHANGE y prueba de frontera del resultado | Survey 002; sin cambio aprobado |
-| TEST-002 | Carrera al instalar el reloj y pausarlo en el mismo instante; nombrada TEST-001 en el registro histórico de 007/008 | 009: preparación determinista, tiempos y oráculos conservados; alcance aprobado, plan pendiente | Cerrado por 009 en 392e797; CI de main y Production verificados |
+| TEST-002 | Carrera al instalar el reloj y pausarlo en el mismo instante; nombrada TEST-001 en el registro histórico de 007/008 | 009: preparación determinista, tiempos y oráculos conservados; alcance y plan ejecutados y verificados | Cerrado por 009 en 392e797; CI de main y Production verificados |
 
 Estos hallazgos no son autorización para corregir comportamiento en fase 0.
 
@@ -616,3 +616,29 @@ hallazgos y el aviso de bundle se conservan; no se promete estabilidad absoluta.
 
 Este estado sustituye las esperas históricas de autorización, publicación e
 integración de 009. No concede autorizaciones permanentes para futuras specs.
+
+## Propuesta 010 — 2026-10-27 (Bogotá)
+
+Se propone corregir BODY-001 en los nueve campos numéricos de Cuerpo.
+[Survey](entradas-cuerpo-survey.md) y [spec](../../specs/010-entradas-cuerpo/spec.md):
+cuatro AS-IS, seis CHANGE y catorce escenarios/24 IDs pending. Nueve casos
+sintéticos reproducidos y tres caracterizaciones originales aprobadas; src,
+instrumental y firmas existentes intactos. La propuesta exige decimal explícito,
+positivos para peso/medidas/pulso, cero conocido para sueño/pasos y rechazo
+completo con error accesible. No limpia historia ni cambia fórmulas.
+
+BODY-001 sigue abierto. Alcance y C-001/002/003 pendientes; sin plan ni ejecución
+productiva o entrega remota autorizados. PHOTO-001 y BODY-002–005 permanecen
+fuera. El plan deberá proponer las enmiendas precisas de 005 y del verificador
+009 para conservar evidencia histórica sin relajar las firmas.
+
+## Alcance 010 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a
+[010](../../specs/010-entradas-cuerpo/spec.md): cuatro AS-IS, seis CHANGE,
+catorce escenarios y C-001/002/003. Aprueba decimal explícito coma/punto,
+positivos para peso/medidas/pulso, cero conocido para sueño/pasos, sin máximos
+ni enteros nuevos; rechazo completo con error accesible y borrador conservado,
+sin limpiar historia. Autoriza preparar plan/tareas/análisis y proponer
+enmiendas de 005 y del verificador 009, para aprobación separada. No autoriza
+implementar, publicar, fusionar ni desplegar 010.

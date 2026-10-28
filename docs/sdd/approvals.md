@@ -565,3 +565,23 @@ hallazgos y el aviso de bundle se conservan; no se promete estabilidad absoluta.
 
 Este estado sustituye las esperas históricas de autorización, publicación e
 integración de 009. No concede autorizaciones permanentes para futuras specs.
+
+## Propuesta 010 — 2026-10-27 (Bogotá)
+
+El «continua» posterior al cierre remoto de 009 autoriza preparar la siguiente
+propuesta. [010](../../specs/010-entradas-cuerpo/spec.md) contiene cuatro AS-IS,
+seis CHANGE, catorce escenarios y C-001/002/003 pendientes. Se reprodujo el
+original con datos sintéticos, sin modificar producto, pruebas ni contratos.
+No se infiere aprobación de alcance o plan, ni autorización para implementar,
+publicar, integrar o desplegar 010.
+
+## Alcance 010 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a
+[010](../../specs/010-entradas-cuerpo/spec.md): cuatro AS-IS, seis CHANGE,
+catorce escenarios y C-001/002/003. Aprueba decimal explícito coma/punto,
+positivos para peso/medidas/pulso, cero conocido para sueño/pasos, sin máximos
+ni enteros nuevos; rechazo completo con error accesible y borrador conservado,
+sin limpiar historia. Autoriza preparar plan/tareas/análisis y proponer
+enmiendas de 005 y del verificador 009, para aprobación separada. No autoriza
+implementar, publicar, fusionar ni desplegar 010.

@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T02:26:59.418Z",
+  "stage": "Revisión documental de propuesta, no aprobación humana ni G-PIN",
+  "documents": 6,
+  "links": 128,
+  "ids": 24,
+  "trace": {
+    "pending": 24,
+    "partial": 0,
+    "complete": 0
+  },
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "verificationHash": "078dd04994509a8cb506b4c2a9a42b5d99e4043e00e1fab547737ae57cee6eb9",
+  "pins": {
+    "previousVerified": 116,
+    "intact": 113,
+    "amended": 3,
+    "newIntact": 7
+  },
+  "surveyCases": 9,
+  "originalTargeted": {
+    "command": "pnpm exec node --test --test-isolation=none test/body-weight.test.js test/body-measurements.test.js test/body-wellness.test.js",
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "evidence": "original-targeted.txt"
+  },
+  "limits": [
+    "No se ejecutaron suite completa, Chromium, build o RLS en esta preparación",
+    "Alcance y aclaraciones pendientes; sin plan ni implementación aprobados"
+  ]
+}

@@ -63,3 +63,23 @@ RLS está probado localmente con usuarios A/B/anónimo y limpieza; no se ha
 verificado una sesión autenticada ni las políticas efectivas de producción.
 Se conserva el warning de chunk mayor de 500 kB. La guía describe software
 observado y contratos aprobados, no consejo médico.
+
+## Propuesta 010 — 2026-10-27 (Bogotá)
+
+La siguiente propuesta concreta es [010: entradas de Cuerpo](../../specs/010-entradas-cuerpo/spec.md),
+preparada en la rama codex/010-entradas-cuerpo a partir del cierre documental
+009. [Survey](entradas-cuerpo-survey.md): nueve casos sintéticos y tres
+caracterizaciones originales aprobadas. BODY-001 sigue abierto; aprobar alcance
+y C-001/002/003 antes de preparar el plan. No hay implementación ni cambios
+en firmas. La entrega remota requiere su propia autorización posterior.
+
+## Alcance 010 aprobado — 2026-10-27 (Bogotá)
+
+El propietario respondió «Aprobar alcance y las tres aclaraciones» a
+[010](../../specs/010-entradas-cuerpo/spec.md): cuatro AS-IS, seis CHANGE,
+catorce escenarios y C-001/002/003. Aprueba decimal explícito coma/punto,
+positivos para peso/medidas/pulso, cero conocido para sueño/pasos, sin máximos
+ni enteros nuevos; rechazo completo con error accesible y borrador conservado,
+sin limpiar historia. Autoriza preparar plan/tareas/análisis y proponer
+enmiendas de 005 y del verificador 009, para aprobación separada. No autoriza
+implementar, publicar, fusionar ni desplegar 010.
