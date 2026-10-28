@@ -1,0 +1,243 @@
+{
+  "passed": true,
+  "generatedAt": "2026-10-28T15:35:13.777Z",
+  "legacyPreserved": 35,
+  "newChangeCases": [
+    {
+      "name": "cuerpo010 coma y punto recorren nueve campos",
+      "timeout": 120000
+    },
+    {
+      "name": "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+      "timeout": 120000
+    },
+    {
+      "name": "cuerpo010 mezcla invalida conserva borrador sin exito",
+      "timeout": 120000
+    },
+    {
+      "name": "cuerpo010 errores asocian campos en movil y escritorio",
+      "timeout": 120000
+    },
+    {
+      "name": "cuerpo010 corregir permite un unico guardado",
+      "timeout": 120000
+    },
+    {
+      "name": "cuerpo010 espacios y ceros conservan ausencia y precision",
+      "timeout": 120000
+    }
+  ],
+  "parity": [
+    {
+      "name": "cuerpo navegador peso medidas y creatina",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "cuerpo navegador bienestar fecha y persistencia de borrador",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "cuerpo navegador checkin incertidumbre y consumidores",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "cuerpo navegador rutas perfiles previews y fotos",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "SDD-E2E-001 cargar y guardar objetivo desde interfaz",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "SDD-E2E-002 exportar y reimportar copia desde interfaz",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "SDD-E2E-003 fallo de guardado visible y dato remoto conservado",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz navegador raices registrar y fechas",
+      "timeout": 90000,
+      "currentTimeout": 90000,
+      "equal": true
+    },
+    {
+      "name": "interfaz navegador cuenta cuerpo y plan",
+      "timeout": 90000,
+      "currentTimeout": 90000,
+      "equal": true
+    },
+    {
+      "name": "interfaz navegador diario busqueda y descartes",
+      "timeout": 90000,
+      "currentTimeout": 90000,
+      "equal": true
+    },
+    {
+      "name": "interfaz navegador metricas tarjeta y desglose",
+      "timeout": 90000,
+      "currentTimeout": 90000,
+      "equal": true
+    },
+    {
+      "name": "interfaz navegador temas carga y errores",
+      "timeout": 90000,
+      "currentTimeout": 90000,
+      "equal": true
+    },
+    {
+      "name": "interfaz navegador responsive geometria y tacto",
+      "timeout": 90000,
+      "currentTimeout": 90000,
+      "equal": true
+    },
+    {
+      "name": "interfaz navegador sesion biblioteca nutricion y previews",
+      "timeout": 90000,
+      "currentTimeout": 90000,
+      "equal": true
+    },
+    {
+      "name": "nutricion navegador registrar cantidades y corregir dia",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "nutricion navegador biblioteca recetas y snapshots",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "nutricion navegador objetivos automaticos y aviso",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "entrenamiento navegador registrar y corregir serie",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "entrenamiento navegador timer y duracion",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "entrenamiento navegador biblioteca y plan",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "reloj009 conserva fechas datos y red de tres montajes",
+      "timeout": 120000,
+      "currentTimeout": 120000,
+      "equal": true
+    },
+    {
+      "name": "reloj009 demora de preparacion conserva instante y reloj detenido",
+      "timeout": 120000,
+      "currentTimeout": 120000,
+      "equal": true
+    },
+    {
+      "name": "reloj009 host no consume plazos antes ni despues del montaje",
+      "timeout": 120000,
+      "currentTimeout": 120000,
+      "equal": true
+    },
+    {
+      "name": "reloj009 fallos de preparacion y montaje se registran sin ocultarlos",
+      "timeout": 120000,
+      "currentTimeout": 120000,
+      "equal": true
+    },
+    {
+      "name": "reloj009 contextos independientes conservan su origen",
+      "timeout": 120000,
+      "currentTimeout": 120000,
+      "equal": true
+    },
+    {
+      "name": "borrado008 navegador fallo persiste visible y accesible",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz cambio Registrar teclado y foco",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz cambio DetailSheet teclado y foco",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz cambio campo Peso en kg",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz cambio campo Correo electrónico",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz cambio campo Contraseña",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz cambio resaltado temporal tras consumo de focusCard",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "interfaz cambio resaltado reemplazo y desmontaje",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "guardado007 navegador error visible en movil y escritorio",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    },
+    {
+      "name": "guardado007 navegador estado accesible y sin exito falso",
+      "timeout": 30000,
+      "currentTimeout": 30000,
+      "equal": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "stage": "e1",
+  "passed": false,
+  "attempt": 2,
+  "startedAt": "2026-10-28T03:11:20.106Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "node": "v24.21.0",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+  "receipts": [
+    {
+      "label": "node",
+      "args": [
+        "--test",
+        "--test-isolation=none",
+        "--test-reporter=tap"
+      ],
+      "startedAt": "2026-10-28T03:11:20.426Z",
+      "finishedAt": "2026-10-28T03:14:57.544Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/e1-attempt-2-node.tap",
+      "sha256": "37b46fad2ee8cdfef0974470b295dac37d6d0d0731531636ea75322fc7f36585",
+      "beforeHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+      "afterHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d"
+    },
+    {
+      "label": "browser",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--reporter=json"
+      ],
+      "startedAt": "2026-10-28T03:14:58.809Z",
+      "finishedAt": "2026-10-28T03:21:26.042Z",
+      "exitCode": 1,
+      "file": "specs/010-entradas-cuerpo/evidence/e1-attempt-2-browser.json",
+      "sha256": "e2c12dbdd3e9410972ec88016f9c7bb8a8eabeb95629aa79c5c98d9509c70156",
+      "beforeHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+      "afterHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d"
+    }
+  ],
+  "nodeTests": 377,
+  "error": "browser falló; revisar specs/010-entradas-cuerpo/evidence/e1-attempt-2-browser.json"
+}

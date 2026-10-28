@@ -1,0 +1,1755 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\.bin\\node.exe",
+      "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--reporter=json"
+    ],
+    "configFile": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\playwright.config.js",
+    "rootDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/browser-tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "as-is",
+        "name": "as-is",
+        "testDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/browser-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "change",
+        "name": "change",
+        "testDir": "C:/Users/orian/OneDrive/Documentos/Libraries_for_data_science/FitTrack/change-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "as-is",
+        "testDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\browser-tests",
+        "snapshotDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\browser-tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "acceptDownloads": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "as-is"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "change",
+        "testDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests",
+        "snapshotDir": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "acceptDownloads": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "change"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "body-inputs.spec.js",
+      "file": "body-inputs.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cuerpo010 original conserva reemplazo e historiales",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8661,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:05.439Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-a7600c9f3ef1a012c392",
+          "file": "body-inputs.spec.js",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 original conserva bienestar y vacios",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:14.870Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-a14ad706d22df122b4be",
+          "file": "body-inputs.spec.js",
+          "line": 18,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "body.spec.js",
+      "file": "body.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cuerpo navegador peso medidas y creatina",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2595,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:21.529Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "85b8a9b5165fa27927a0-e25170d855d79a07954c",
+          "file": "body.spec.js",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "cuerpo navegador bienestar fecha y persistencia de borrador",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:33.576Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "85b8a9b5165fa27927a0-2961db33adac6ed22748",
+          "file": "body.spec.js",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "cuerpo navegador checkin incertidumbre y consumidores",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2217,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:35.111Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "85b8a9b5165fa27927a0-fc204c012a0c683d0a16",
+          "file": "body.spec.js",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "cuerpo navegador rutas perfiles previews y fotos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9127,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:37.364Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "85b8a9b5165fa27927a0-f6b9d9fda05b422175a7",
+          "file": "body.spec.js",
+          "line": 25,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "data-journeys.spec.js",
+      "file": "data-journeys.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "SDD-E2E-001 cargar y guardar objetivo desde interfaz",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3689,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:46.573Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9d03db5d569c4c4c0881-5b8fed0ec1df7c3b0b5f",
+          "file": "data-journeys.spec.js",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "SDD-E2E-002 exportar y reimportar copia desde interfaz",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8052,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:15:53.416Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9d03db5d569c4c4c0881-9061dbc41de29da4ccd2",
+          "file": "data-journeys.spec.js",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "SDD-E2E-003 fallo de guardado visible y dato remoto conservado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3931,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:01.610Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9d03db5d569c4c4c0881-eca3831b7b17af3de314",
+          "file": "data-journeys.spec.js",
+          "line": 43,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "interface.spec.js",
+      "file": "interface.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "interfaz navegador raices registrar y fechas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10505,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:05.692Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93f6feba01eb6145ea76-eb0ccd2f9e607f055e96",
+          "file": "interface.spec.js",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "interfaz navegador cuenta cuerpo y plan",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3398,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:19.071Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93f6feba01eb6145ea76-9676b923fbc1b0f433f9",
+          "file": "interface.spec.js",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "interfaz navegador diario busqueda y descartes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2685,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:22.528Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93f6feba01eb6145ea76-d6333ed023cdf72b50c5",
+          "file": "interface.spec.js",
+          "line": 30,
+          "column": 1
+        },
+        {
+          "title": "interfaz navegador metricas tarjeta y desglose",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4321,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:25.261Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93f6feba01eb6145ea76-c83049274ce873ba9147",
+          "file": "interface.spec.js",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "interfaz navegador temas carga y errores",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1842,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:29.624Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93f6feba01eb6145ea76-47ed8022e59939cbcf4c",
+          "file": "interface.spec.js",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "interfaz navegador responsive geometria y tacto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:31.503Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93f6feba01eb6145ea76-dd90688d43ee2000a33d",
+          "file": "interface.spec.js",
+          "line": 51,
+          "column": 1
+        },
+        {
+          "title": "interfaz navegador sesion biblioteca nutricion y previews",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:44.225Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "93f6feba01eb6145ea76-b3854dcb755b6937d501",
+          "file": "interface.spec.js",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "nutrition.spec.js",
+      "file": "nutrition.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "nutricion navegador registrar cantidades y corregir dia",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3755,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:16:59.579Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63ee621d0bcd80d776c0-608c1213a47e4d9a3932",
+          "file": "nutrition.spec.js",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "nutricion navegador biblioteca recetas y snapshots",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4027,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:17:05.646Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63ee621d0bcd80d776c0-0e8fafa3633793a22ac3",
+          "file": "nutrition.spec.js",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "nutricion navegador objetivos automaticos y aviso",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3355,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:17:09.759Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "63ee621d0bcd80d776c0-791e358e08d34090769f",
+          "file": "nutrition.spec.js",
+          "line": 34,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "training-journeys.spec.js",
+      "file": "training-journeys.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "entrenamiento navegador registrar y corregir serie",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:17:13.233Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "594ee8602b6f4ae79f06-81faea92a72a6a32f275",
+          "file": "training-journeys.spec.js",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "entrenamiento navegador timer y duracion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2984,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:17:19.426Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "594ee8602b6f4ae79f06-af0334758d1ce8a90430",
+          "file": "training-journeys.spec.js",
+          "line": 27,
+          "column": 1
+        },
+        {
+          "title": "entrenamiento navegador biblioteca y plan",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "as-is",
+              "projectName": "as-is",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2753,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:17:22.619Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "594ee8602b6f4ae79f06-76fd4a1d20ccc3b42ab1",
+          "file": "training-journeys.spec.js",
+          "line": 37,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "..\\change-tests\\body-inputs.spec.js",
+      "file": "../change-tests/body-inputs.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cuerpo010 coma y punto recorren nueve campos",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30017,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\body-inputs-browser.js",
+                        "column": 15,
+                        "line": 39
+                      },
+                      "message": "Error: browserContext.close: Target page, context or browser has been closed\n\n   at ..\\test-support\\body-inputs-browser.js:39\n\n  37 |     await run(h);\n  38 |     expect(errors,'El instrumental debe montar sin errores de página').toEqual([]);\n> 39 |   } finally { await context.close(); }\n     |               ^\n  40 | }\n  41 | export function priorBodyRecord(section) {\n  42 |   const base={id:'prior',date:bodyInputDate};\n    at withBodyInputs (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\body-inputs-browser.js:39:15)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\body-inputs.spec.js:5:95"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:17:28.939Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\playwright\\body-inputs-cuerpo010-coma-y-punto-recorren-nueve-campos-change\\error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-3b21fc64166dddf280d3",
+          "file": "../change-tests/body-inputs.spec.js",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 sintaxis y fronteras rechazan sin reemplazar",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30007,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "<anonymous>",
+                        "column": 34,
+                        "line": 50052
+                      },
+                      "message": "Error: browserContext.close: Test ended.\nBrowser logs:\n\n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221830.607:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221830.618:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221830.680:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221832.230:INFO:CONSOLE:23535] \"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold\", source:  (23535)\n[pid=26696][err] [1027/221832.716:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221832.740:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221832.747:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221832.794:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221833.645:INFO:CONSOLE:23535] \"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold\", source:  (23535)\n[pid=26696][err] [1027/221834.010:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221834.032:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221834.078:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696][err] [1027/221834.931:INFO:CONSOLE:23535] \"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold\", source:  (23535)\n[pid=26696][err] [1027/221835.249:INFO:CONSOLE:2447] \"Warning: An update to %s inside a test was not wrapped in act(...).\n[pid=26696][err] \n[pid=26696][err] When testing, code that causes React state updates should be wrapped into act(...):\n[pid=26696][err] \n[pid=26696][err] act(() => {\n[pid=26696][err]   /* fire events that update state */\n[pid=26696][err] });\n[pid=26696][err] /* assert on the output */\n[pid=26696][err] \n[pid=26696][err] This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act%s BodyScreen \n[pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n[pid=26696][err]     at div\n[pid=26696][err]     at Entry (<anonymous>:50645:65)\", source:  (2447)\n[pid=26696] <gracefully close start>\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at [pid=26696][err]     at BodyScreen (<anonymous>:50052:34)\n    at withBodyInputs (C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-support\\body-inputs-browser.js:39:15)\n    at C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\change-tests\\body-inputs.spec.js:13:99"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:18:03.811Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\orian\\OneDrive\\Documentos\\Libraries_for_data_science\\FitTrack\\test-results\\playwright\\body-inputs-cuerpo010-sint-13daa-ras-rechazan-sin-reemplazar-change\\error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-97bc2b5d55cf1b67241e",
+          "file": "../change-tests/body-inputs.spec.js",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 mezcla invalida conserva borrador sin exito",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5605,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:18:37.732Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-0ed31601073dcd649807",
+          "file": "../change-tests/body-inputs.spec.js",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 errores asocian campos en movil y escritorio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:18:44.002Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-a5afc74a6fc835ba1dde",
+          "file": "../change-tests/body-inputs.spec.js",
+          "line": 26,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 corregir permite un unico guardado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5992,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:18:57.383Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-19533f8ad300f816667e",
+          "file": "../change-tests/body-inputs.spec.js",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "cuerpo010 espacios y ceros conservan ausencia y precision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8380,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:19:03.431Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "60c29972d5709afa012a-62264c97772b71c50593",
+          "file": "../change-tests/body-inputs.spec.js",
+          "line": 43,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "..\\change-tests\\clock-state.spec.js",
+      "file": "../change-tests/clock-state.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reloj009 conserva fechas datos y red de tres montajes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7197,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:19:11.921Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a80e47fe0833b9b53a4-d47db52704f5846334d3",
+          "file": "../change-tests/clock-state.spec.js",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "reloj009 demora de preparacion conserva instante y reloj detenido",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 42670,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:19:23.717Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a80e47fe0833b9b53a4-7c3169cf1b0b3861a618",
+          "file": "../change-tests/clock-state.spec.js",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "reloj009 host no consume plazos antes ni despues del montaje",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10476,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:06.462Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a80e47fe0833b9b53a4-539d94dc3f391244ac41",
+          "file": "../change-tests/clock-state.spec.js",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "reloj009 fallos de preparacion y montaje se registran sin ocultarlos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3026,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:17.039Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a80e47fe0833b9b53a4-3cc5763e110ee12a96ea",
+          "file": "../change-tests/clock-state.spec.js",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "reloj009 contextos independientes conservan su origen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13735,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:20.125Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9a80e47fe0833b9b53a4-0e1e0358e98bd02a236f",
+          "file": "../change-tests/clock-state.spec.js",
+          "line": 63,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "..\\change-tests\\delete-state.spec.js",
+      "file": "../change-tests/delete-state.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "borrado008 navegador fallo persiste visible y accesible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5003,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "390",
+                      "duration": 2954
+                    },
+                    {
+                      "title": "1280",
+                      "duration": 1590
+                    }
+                  ],
+                  "startTime": "2026-10-28T03:20:33.978Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4999501bdb386f1f44aa-ba91a98f6b3d61e33d35",
+          "file": "../change-tests/delete-state.spec.js",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "..\\change-tests\\interface-accessibility.spec.js",
+      "file": "../change-tests/interface-accessibility.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "interfaz cambio Registrar teclado y foco",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4806,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:42.005Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "553e3d57027ddaae3ec9-2965862bb0825f460ee4",
+          "file": "../change-tests/interface-accessibility.spec.js",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "interfaz cambio DetailSheet teclado y foco",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3044,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:49.392Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "553e3d57027ddaae3ec9-d9f85e583be1bac237c3",
+          "file": "../change-tests/interface-accessibility.spec.js",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "interfaz cambio campo Peso en kg",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:52.508Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "553e3d57027ddaae3ec9-0d8dab0dae80a87353af",
+          "file": "../change-tests/interface-accessibility.spec.js",
+          "line": 23,
+          "column": 1
+        },
+        {
+          "title": "interfaz cambio campo Correo electrónico",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2048,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:55.038Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "553e3d57027ddaae3ec9-ec3176764238993cc175",
+          "file": "../change-tests/interface-accessibility.spec.js",
+          "line": 26,
+          "column": 84
+        },
+        {
+          "title": "interfaz cambio campo Contraseña",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2535,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:57.142Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "553e3d57027ddaae3ec9-b833ec0594ed486222e5",
+          "file": "../change-tests/interface-accessibility.spec.js",
+          "line": 26,
+          "column": 84
+        }
+      ]
+    },
+    {
+      "title": "..\\change-tests\\interface-highlight.spec.js",
+      "file": "../change-tests/interface-highlight.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "interfaz cambio resaltado temporal tras consumo de focusCard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7265,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:20:59.761Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f15aec5696da0826cee-c244ee9c2e1250f2a04d",
+          "file": "../change-tests/interface-highlight.spec.js",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "interfaz cambio resaltado reemplazo y desmontaje",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:21:09.898Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f15aec5696da0826cee-799c976fba69f004f3d1",
+          "file": "../change-tests/interface-highlight.spec.js",
+          "line": 16,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "..\\change-tests\\save-state.spec.js",
+      "file": "../change-tests/save-state.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "guardado007 navegador error visible en movil y escritorio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2533,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:21:17.267Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e41249c0b1ac77420f2-3638ca5ca7a172ebef8a",
+          "file": "../change-tests/save-state.spec.js",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "guardado007 navegador estado accesible y sin exito falso",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "change",
+              "projectName": "change",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2354,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-28T03:21:22.611Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e41249c0b1ac77420f2-7a17d9edd06035c576a4",
+          "file": "../change-tests/save-state.spec.js",
+          "line": 13,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-28T03:15:02.136Z",
+    "duration": 383690.581,
+    "expected": 41,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

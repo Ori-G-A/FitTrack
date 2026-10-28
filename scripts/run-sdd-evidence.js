@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { verifyTrace } from './sdd-trace.js';
 import { verifyDeleteTrace, verifyDeletePins } from './delete-state-evidence.js';
 import {verifyClockTrace,verifyClockPins,verificationHash,validateClockMutationEvidence} from './clock-state-evidence.js';
+import {verifyBodyInputTrace,verifyBodyInputPins,validateBodyInputMutationEvidence} from './body-inputs-evidence.js';
 import { selectSpec, contractIds } from './sdd-contract.js';
 import { currentRlsHashes, validateRlsEvidence } from './rls-evidence.js';
 
@@ -66,6 +67,10 @@ collect(JSON.parse(browserJson).suites);
 if(selectedSpec==='009-reloj-pruebas'&&process.argv.includes('--complete')){
  results.push(...validateClockMutationEvidence(JSON.parse(readFileSync('test-results/clock009-mutations.json')),verificationBefore));
 }
+if(selectedSpec==='010-entradas-cuerpo'&&process.argv.includes('--complete')){
+ const currentSource=createHash('sha256');for(const file of spawnSync('git',['ls-files','src'],{encoding:'utf8'}).stdout.trim().split(/\r?\n/))currentSource.update(file).update(readFileSync(file));
+ results.push(...validateBodyInputMutationEvidence(JSON.parse(readFileSync('test-results/body010-mutations.json')),verificationBefore,currentSource.digest('hex')));
+}
 if (selectedSpec === '002-identidad-fotos' && existsSync('test-results/rls-evidence.json')) {
   const rls = JSON.parse(readFileSync('test-results/rls-evidence.json', 'utf8'));
   results.push(...validateRlsEvidence(rls, currentRlsHashes()));
@@ -79,7 +84,8 @@ const sourceHash = createHash('sha256');
 for (const file of srcFiles) sourceHash.update(file).update(readFileSync(file));
 if (selectedSpec === '008-borrado-fiable') verifyDeletePins();
 if(selectedSpec==='009-reloj-pruebas')verifyClockPins();
-const verify = selectedSpec === '009-reloj-pruebas' ? verifyClockTrace : selectedSpec === '008-borrado-fiable' ? verifyDeleteTrace : verifyTrace;
+if(selectedSpec==='010-entradas-cuerpo')verifyBodyInputPins();
+const verify = selectedSpec === '010-entradas-cuerpo' ? verifyBodyInputTrace : selectedSpec === '009-reloj-pruebas' ? verifyClockTrace : selectedSpec === '008-borrado-fiable' ? verifyDeleteTrace : verifyTrace;
 const report = verify(manifest, ids, results, { complete: process.argv.includes('--complete') });
 if (verificationHash() !== verificationBefore) throw new Error('El código de verificación cambió durante la ejecución');
 writeFileSync(`${outputPrefix}-evidence.json`, JSON.stringify({ spec: selectedSpec, generatedAt: new Date().toISOString(), node: process.version, sourceHash: sourceHash.digest('hex'), verificationHash: verificationBefore, results, ...report }, null, 2));

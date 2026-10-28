@@ -1,3 +1,4 @@
+import {approvedBodyInputPinHash,bodyInputPinTargets,verifyBodyInputSourceTransition} from './body-inputs-pin-amendments.js';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
@@ -15,11 +16,13 @@ export function verificationFiles(){
 export function verificationHash(){const hash=createHash('sha256');for(const file of verificationFiles())hash.update(file).update(readFileSync(file,'utf8').replace(/\r\n/g,'\n'));return hash.digest('hex');}
 export function verifyClockPins(){
  const baseline=JSON.parse(readFileSync(clockDirectory+'baseline.json'));assert.equal(baseline.previousPins.length,116);assert.equal(new Set(baseline.previousPins.map(p=>p.file)).size,116);assert.equal(baseline.pins.length,7);
- let amended=0;for(const pin of baseline.previousPins){const actual=digest(pin.file);if(actual!==pin.sha256){amended++;assert(clockPinTargets.some(t=>t.file===pin.file));}assert.equal(actual,approvedClockPinHash(pin.file,pin.sha256),pin.file);}
- for(const pin of baseline.pins)assert.equal(digest(pin.file),pin.sha256,pin.file);
- assert.equal(sourceHash(),baseline.sourceHash);
- return {previousVerified:116,intact:116-amended,amended,newIntact:7};
+ let amended=0,newAmended=0;
+ for(const pin of baseline.previousPins){const actual=digest(pin.file);if(actual!==pin.sha256){amended++;assert([...clockPinTargets,...bodyInputPinTargets].some(t=>t.file===pin.file));}assert.equal(actual,approvedBodyInputPinHash(pin.file,approvedClockPinHash(pin.file,pin.sha256)),pin.file);}
+ for(const pin of baseline.pins){const actual=digest(pin.file);if(actual!==pin.sha256)newAmended++;assert.equal(actual,approvedBodyInputPinHash(pin.file,pin.sha256),pin.file);}
+ verifyBodyInputSourceTransition({sourceHash:sourceHash(),verificationHash:verificationHash(),historicalSourceHash:baseline.sourceHash});
+ return {previousVerified:116,intact:116-amended,amended,newIntact:7-newAmended,newAmended};
 }
+
 export function verifyClockTrace(manifest,ids,results,options={}){
  const report=verifyTrace(manifest,ids,results,options);if(manifest.spec!=='009-reloj-pruebas')report.errors.push('Spec 009 incorrecta');
  for(const row of manifest.requirements){if(!Array.isArray(row.plannedTests)||!row.plannedTests.length)report.errors.push('Sin oráculo previsto: '+row.id);else if(row.status!=='pending'&&JSON.stringify(row.tests)!==JSON.stringify(row.plannedTests))report.errors.push('Oráculo diferente del plan: '+row.id);}

@@ -1,0 +1,67 @@
+{
+  "stage": "e1",
+  "passed": false,
+  "attempt": 3,
+  "startedAt": "2026-10-28T15:04:40.783Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "node": "v24.21.0",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+  "receipts": [
+    {
+      "label": "node",
+      "args": [
+        "--test",
+        "--test-isolation=none",
+        "--test-reporter=tap"
+      ],
+      "startedAt": "2026-10-28T15:04:41.014Z",
+      "finishedAt": "2026-10-28T15:07:59.602Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/e1-attempt-3-node.tap",
+      "sha256": "2d73f12f69ee68f47df33a949037618c2669f30f90b3b8716a13d290f68b5b89",
+      "beforeHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+      "afterHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78"
+    },
+    {
+      "label": "browser",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--reporter=json"
+      ],
+      "startedAt": "2026-10-28T15:08:00.770Z",
+      "finishedAt": "2026-10-28T15:15:48.380Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/e1-attempt-3-browser.json",
+      "sha256": "326b003ec5da3ed2fecf26b5cf1d3a21b2f65c53a254faf62fd2dcc626fd6354",
+      "beforeHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+      "afterHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78"
+    },
+    {
+      "label": "build",
+      "args": [
+        "node_modules/vite/bin/vite.js",
+        "build"
+      ],
+      "startedAt": "2026-10-28T15:15:49.283Z",
+      "finishedAt": "2026-10-28T15:16:05.294Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/e1-attempt-3-build.txt",
+      "sha256": "2f95072a285001499dcf5b93ba0d45c872ce1bdf9aa284a6fa03549bd41f75e5",
+      "beforeHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+      "afterHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78"
+    }
+  ],
+  "nodeTests": 378,
+  "browser": {
+    "startTime": "2026-10-28T15:08:03.114Z",
+    "duration": 465068.15,
+    "expected": 43,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "contracts": [],
+  "error": "Falta oráculo ordinario 001-datos FR-001"
+}

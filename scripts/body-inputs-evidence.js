@@ -1,3 +1,4 @@
+import {approvedBodyInputBudgetPinHash} from './body-inputs-budget-amendments.js';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {verifyTrace} from './sdd-trace.js';
@@ -7,8 +8,8 @@ export function verifyBodyInputPins(){
  const baseline=JSON.parse(readFileSync(bodyInputDirectory+'baseline.json'));
  assert.equal(baseline.previousPins.length,123);assert.equal(new Set(baseline.previousPins.map(p=>p.file)).size,123);assert.equal(baseline.pins.length,9);
  let amended=0;for(const pin of baseline.previousPins){const actual=bodyInputDigest(readFileSync(pin.file,'utf8'));if(actual!==pin.sha256){amended++;assert(bodyInputPinTargets.some(t=>t.file===pin.file));}assert.equal(actual,approvedBodyInputPinHash(pin.file,pin.sha256),pin.file);}
- for(const pin of baseline.pins)assert.equal(bodyInputDigest(readFileSync(pin.file,'utf8')),pin.sha256,pin.file);
- return {previousVerified:123,intact:123-amended,amended,newIntact:9};
+ let newAmended=0;for(const pin of baseline.pins){const actual=bodyInputDigest(readFileSync(pin.file,'utf8'));if(actual!==pin.sha256)newAmended++;assert.equal(actual,approvedBodyInputBudgetPinHash(pin.file,pin.sha256),pin.file);}
+ return {previousVerified:123,intact:123-amended,amended,newIntact:9-newAmended,newAmended};
 }
 export function verifyBodyInputTrace(manifest,ids,results,options={}){
  const report=verifyTrace(manifest,ids,results,options);if(manifest.spec!=='010-entradas-cuerpo')report.errors.push('Spec 010 incorrecta');

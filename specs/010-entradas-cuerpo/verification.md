@@ -13,3 +13,32 @@ verificationHash E0: 5ed93975663b772143bc8c1be23b9c8d5db7f446ce53c0b73d2748c1d15
 123 firmas anteriores intactas y nueve propias congeladas. Seis IDs completos/dieciocho pending; ninguna garantía CHANGE cerrada todavía.
 
 RLS fresco, mutaciones y los diez contratos/274 IDs pertenecen al cierre E2 y no se presentan como ejecutados.
+
+## Verde dirigido E1
+
+Seis pruebas Node y ocho Chromium propios aprobados; [recibos](evidence/candidate-targeted.json). Adendas PIN-010-001–006 y transición de fuente emitidas con huellas estables, 117 firmas anteriores intactas/seis enmendadas y nueve E0 intactas.
+
+sourceHash candidato: d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e.
+verificationHash candidato: 5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d.
+
+La suite íntegra E1 sigue en ejecución; mutaciones y RLS fresco aún pendientes. La tarea aditiva T032 protege los archivos fuente históricos ante CRLF sin cambiar producto o pins E0.
+
+## E1 intento 1 y corrección de integridad
+
+El primer checkpoint íntegro obtuvo 371 de 377 pruebas Node aprobadas. Los seis
+fallos corresponden al cambio no previsto del archivo raíz .gitattributes en
+T032; no se ejecutaron Chromium/build de ese intento después del fallo.
+[Recibos y fallo](evidence/e1-attempt-1.json).
+
+T033 restaura su firma `4e14828ae37396a15a48f0b83f5b6e974c7f61a84b6a7228b706f1e8bcc8ab9e`
+y sitúa la protección LF en un archivo nuevo de atributos dentro de la carpeta
+de evidencia, sin modificar un séptimo pin ni los nueve propios E0.
+[Control corregido](evidence/portability-corrected.json). Se está repitiendo
+todo el checkpoint E1. El informe de portabilidad es el último control de filtros;
+el fallo de integridad original permanece en los recibos del intento 1.
+
+## Checkpoint E1 completo aprobado — 2026-10-28
+
+379 Node, 43 Chromium y build aprobados sin skips/retries; [E1](evidence/e1.json). Seis enmiendas canónicas legadas y dos técnicas propias, siete archivos E0 intactos y ocho E1 congelados. La repetición completa valida T033/T034.
+
+Los contratos ordinarios están verificados; 002 y las filas dependientes de recibos de mutación no se recertifican como completos en E1. E2 exige diecinueve mutaciones postverde, negativos de recibos y RLS fresco; el contrato de código 010 aún no está cerrado.

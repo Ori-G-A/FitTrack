@@ -11,5 +11,5 @@ test('borrado008 trazabilidad rechaza oraculos falsos duplicados omitidos y parc
  function rejects(change){const copy=structuredClone(manifest),runner=structuredClone(results);change(copy,runner);assert(verifyDeleteTrace(copy,ids,runner,{complete:true}).errors.length);}
  rejects(m=>m.requirements[0].tests=['nombre inexistente']);rejects(m=>m.requirements[0].tests=m.requirements[1].tests);
  rejects((m,r)=>r.push(r[0]));rejects((m,r)=>r.shift());rejects(m=>m.requirements.pop());rejects(m=>m.requirements.push(m.requirements[0]));rejects(m=>m.requirements[0].status='partial');rejects((m,r)=>r[0].status='retried');rejects(m=>m.spec='otra');
- assert.deepEqual(verifyDeletePins(),{historicalIntact:105,amended:3,newIntact:7,newAmended:1});
+ assert.deepEqual(verifyDeletePins(),{historicalIntact:101,amended:7,newIntact:7,newAmended:1});
 });

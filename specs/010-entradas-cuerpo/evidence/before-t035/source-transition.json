@@ -1,0 +1,24 @@
+{
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "before": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "after": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+  "files": [
+    {
+      "file": "src/BodyScreen.jsx",
+      "before": "116ae42e1302eb1853389aa8ff2deb45c7613dafcda7d0a4e02ec770cefe2297",
+      "after": "c31bf42b8338d37132220f8caefaacf97402cb708fad1ddc7bb61c099fce9ee8"
+    },
+    {
+      "file": "src/body-inputs.js",
+      "before": null,
+      "after": "16d6a9640ba2454c903e80655cd2e0fc2fa23daf3f810d21d2b1c6a355d74db0"
+    },
+    {
+      "file": "src/body-records.js",
+      "before": "ea1fcaa748e5c50625cf7cba6725b798bef3bcb7a7ecc79d2ade2f26f97d4308",
+      "after": "bfcb9214fcb1dfb6fa09f5b97d4cd5b2689ec0fbbf956ed3b161c79a490658fa"
+    }
+  ],
+  "proof": "candidate-targeted.json"
+}

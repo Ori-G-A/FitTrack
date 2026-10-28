@@ -1,0 +1,57 @@
+{
+  "stage": "targeted",
+  "passed": true,
+  "attempt": 1,
+  "startedAt": "2026-10-28T03:02:30.195Z",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "node": "v24.21.0",
+  "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+  "receipts": [
+    {
+      "label": "node-targeted",
+      "args": [
+        "--test",
+        "--test-isolation=none",
+        "--test-reporter=tap",
+        "test/body-weight.test.js",
+        "test/body-measurements.test.js",
+        "test/body-wellness.test.js",
+        "test/body-inputs-values.test.js",
+        "test/body-inputs-architecture.test.js"
+      ],
+      "startedAt": "2026-10-28T03:02:30.521Z",
+      "finishedAt": "2026-10-28T03:02:50.049Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/candidate-targeted.tap",
+      "sha256": "960adf860c285265e6ab588ca31b3998ff8c2cd13c91716035338cbdd94aa3fc",
+      "beforeHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+      "afterHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+      "rawFile": "specs/010-entradas-cuerpo/evidence/targeted-attempt-1-node-targeted.tap"
+    },
+    {
+      "label": "browser-targeted",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--config=playwright.body-inputs.config.js",
+        "--reporter=json"
+      ],
+      "startedAt": "2026-10-28T03:02:51.422Z",
+      "finishedAt": "2026-10-28T03:04:48.401Z",
+      "exitCode": 0,
+      "file": "specs/010-entradas-cuerpo/evidence/candidate-targeted-browser.json",
+      "sha256": "d3da2ee297816d0dd9d7529f0c1da5abebfafb333f91a003275b9d96494efedb",
+      "beforeHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+      "afterHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+      "rawFile": "specs/010-entradas-cuerpo/evidence/targeted-attempt-1-browser-targeted.json"
+    }
+  ],
+  "pins": {
+    "previousVerified": 123,
+    "intact": 117,
+    "amended": 6,
+    "newIntact": 9
+  },
+  "generatedAt": "2026-10-28T03:04:50.110Z"
+}

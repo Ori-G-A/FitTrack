@@ -1,0 +1,30 @@
+{
+  "id": "PIN-010-002",
+  "file": "test/body-measurements.test.js",
+  "before": "0a40deaede9b030d0335756d15247bb00ecbf7e666f1cb498051643a30d920e9",
+  "after": "1f7dedc68ecd388b90d9087c55d1b7d3149b87dddcdf61b3dc9fa3c139fe82e8",
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "references": [
+    "FR-005",
+    "FR-006",
+    "FR-007",
+    "FR-010"
+  ],
+  "patchVersion": "body-inputs-v1",
+  "originalProof": {
+    "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+    "nodeTests": 372,
+    "browserTests": 35,
+    "baseline": "baseline.json"
+  },
+  "candidateTargeted": {
+    "passed": true,
+    "nodeTests": 6,
+    "browserTests": 8,
+    "sourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+    "verificationHash": "5755d70bbd9733dfff185449bd9fdc5495da2b1a8cdd323840abd5a2aebcbc3d",
+    "proof": "candidate-targeted.json"
+  },
+  "unrelatedAssertionsChanged": false,
+  "businessTimeoutsChanged": false
+}

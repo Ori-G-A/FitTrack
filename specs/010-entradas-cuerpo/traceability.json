@@ -527,13 +527,17 @@
         "cuerpo010 capas y alcance de fuente rechazan dependencias ajenas",
         "cuerpo010 firmas y transicion rechazan enmiendas ajenas",
         "cuerpo010 trazabilidad rechaza evidencia falsa omitida y parcial",
-        "cuerpo010 reintroducciones detectan cinco defectos de entrada"
+        "cuerpo010 reintroducciones detectan cinco defectos de entrada",
+        "cuerpo010 presupuesto propio conserva aserciones y rechaza adendas ajenas",
+        "cuerpo010 agregador conserva nombres reales de contratos historicos"
       ],
       "plannedFiles": [
         "test/body-inputs-architecture.test.js",
         "test/body-inputs-pins.test.js",
         "test/body-inputs-trace.test.js",
-        "scripts/check-body-inputs-mutations.js"
+        "scripts/check-body-inputs-mutations.js",
+        "test/body-inputs-budget.test.js",
+        "test/body-inputs-runtime-oracles.test.js"
       ],
       "plannedTaskIds": [
         "T002",
@@ -544,7 +548,11 @@
         "T023",
         "T024",
         "T025",
-        "T026"
+        "T026",
+        "T032",
+        "T033",
+        "T034",
+        "T035"
       ]
     }
   ]

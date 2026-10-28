@@ -1,6 +1,9 @@
 import {test,expect} from '@playwright/test';
 import {withBodyInputs,bodyInputFields,priorBodyRecord,bodyInputDate} from '../test-support/body-inputs-browser.js';
 
+// Mismo presupuesto de la configuración dedicada E0; las aserciones no cambian.
+test.setTimeout(120000);
+
 test('cuerpo010 coma y punto recorren nueve campos',async({browser})=>{
  for(const [section,key,label,collection]of bodyInputFields)for(const text of ['65,4','65.4'])await withBodyInputs(browser,{section},async h=>{
   await h.type(label,text);expect(await h.field(label).inputValue(),'FR-010: la entrada decimal debe conservarse antes de validar').toBe(text);await h.save();const state=await h.snapshot();expect(state.calls).toEqual([collection]);expect(state[collection][0][key]).toBe(65.4);

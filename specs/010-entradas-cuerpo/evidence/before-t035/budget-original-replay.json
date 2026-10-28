@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "sourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "candidateSourceHash": "d98481bc21caa1ade1675c38fef36c33f0a74ff2ab7a1db94d301a4d3388a38e",
+  "verificationHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+  "beforeHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-28T14:57:32.912Z",
+  "args": [
+    "node_modules/@playwright/test/cli.js",
+    "test",
+    "--config=playwright.body-inputs.config.js",
+    "--reporter=json"
+  ],
+  "browserSha": "7a14e4b7cb6a16c95876245b7cd595525a3dcad25cb04b0e12dfebdd7c96eceb",
+  "stats": {
+    "startTime": "2026-10-28T14:57:36.719Z",
+    "duration": 129108.04399999998,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  },
+  "afterHash": "a819855f8877258bf6c014485cae7e057fe53e3b54a6b9cd751a1de443230d78",
+  "cleanupPassed": true
+}

@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: cuerpo010 capas y alcance de fuente rechazan dependencias ajenas
+ok 1 - cuerpo010 capas y alcance de fuente rechazan dependencias ajenas
+  ---
+  duration_ms: 741.7335
+  type: 'test'
+  ...
+# Subtest: cuerpo010 valores distinguen decimales vacios y errores
+ok 2 - cuerpo010 valores distinguen decimales vacios y errores
+  ---
+  duration_ms: 3.8684
+  type: 'test'
+  ...
+# Subtest: cuerpo010 validadores conservan borradores y null
+ok 3 - cuerpo010 validadores conservan borradores y null
+  ---
+  duration_ms: 88.2511
+  type: 'test'
+  ...
+# Subtest: cuerpo medidas conservan campos null conversiones y reemplazo
+ok 4 - cuerpo medidas conservan campos null conversiones y reemplazo
+  ---
+  duration_ms: 2640.9551
+  type: 'test'
+  ...
+# Subtest: cuerpo peso conserva conversiones reemplazo pasos e historial
+ok 5 - cuerpo peso conserva conversiones reemplazo pasos e historial
+  ---
+  duration_ms: 506.9772
+  type: 'test'
+  ...
+# Subtest: cuerpo bienestar conserva borrador fecha guardas y guardado
+ok 6 - cuerpo bienestar conserva borrador fecha guardas y guardado
+  ---
+  duration_ms: 479.5854
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8788.1567

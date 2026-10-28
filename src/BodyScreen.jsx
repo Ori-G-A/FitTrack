@@ -1,5 +1,6 @@
 import { descendingWeights, weightPoints, descendingMeasurements, waistPoints, descendingWellness } from "./body-metrics.js";
-import { replaceWeightRecord, measurementValues, replaceMeasurementRecord, wellnessDraft, replaceWellnessRecord, prepareMenstrualRecord, replaceMenstrualRecord, removeBodyRecord } from "./body-records.js";
+import { replaceWeightRecord, replaceMeasurementRecord, wellnessDraft, replaceWellnessRecord, prepareMenstrualRecord, replaceMenstrualRecord, removeBodyRecord } from "./body-records.js";
+import { BODY_INPUT_LABELS, validateWeightDraft, validateMeasurementsDraft, validateWellnessDraft } from "./body-inputs.js";
 import { BLEEDING_OPTIONS, FLUID_OPTIONS, APPETITE_OPTIONS, PAIN_OPTIONS, PHASE_SHADE, PHASE_NAMES, CONFIDENCE_NAMES } from "./body-config.js";
 import React, { useEffect, useId, useRef, useState } from "react";
 import { Camera, Check, Droplet, Moon, Ruler, Scale, Sparkles, Trash2 } from "lucide-react";
@@ -14,8 +15,19 @@ import { toast } from "./toast.jsx";
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayISO = () => localISO();
 const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "2-digit", month: "short" });
+function BodyInputErrors({ id, errors }) {
+  if (!Object.keys(errors).length) return null;
+  return <div role="alert" style={{ color: "var(--danger, #f87171)", fontSize: 12, marginTop: 8 }}>
+    {Object.entries(errors).map(([field, message]) => <div id={`${id}-${field}`} key={field}>{BODY_INPUT_LABELS[field]}: {message}</div>)}
+  </div>;
+}
 export default function BodyScreen({ section: initialSection = "peso", weights, setWeights, measurements, setMeasurements, wellness, setWellness, periods, setPeriods, menstrualLogs = [], setMenstrualLogs = () => {}, photos, setPhotos, goals, setGoals, userId, initialDate }) {
   const weightInputId = useId();
+  const measurementInputId = useId();
+  const wellnessInputId = useId();
+  const [weightErrors, setWeightErrors] = useState({});
+  const [measurementErrors, setMeasurementErrors] = useState({});
+  const [wellnessErrors, setWellnessErrors] = useState({});
   const creatineStart = goals?.creatineStart || "";
   const creaDays = creatineStart ? Math.max(0, daysBetween(creatineStart, todayISO())) : null;
   const creaWaterKg = creatineStart ? creatineWaterKg(creatineStart, todayISO()) : null;
@@ -26,7 +38,16 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   // La coma decimal es la convencion de la app: escribirla no puede invalidar
   // el pesaje.
   const parseKg = (value) => Number(String(value).replace(",", "."));
-  const addW = () => { const value = parseKg(kg); if (!value) return; setWeights((p) => replaceWeightRecord(p, wDate, value, uid)); setKg(""); toast(`Peso guardado: ${kg1(value)} kg el ${fmtDate(wDate)}`); };
+  useEffect(() => { setWeightErrors({}); }, [wDate]);
+  const addW = () => {
+    if (!String(kg).trim()) return;
+    const parsed = validateWeightDraft(kg);
+    if (!parsed.valid) { setWeightErrors(parsed.errors); return; }
+    setWeightErrors({});
+    setWeights((p) => replaceWeightRecord(p, wDate, parsed.value, uid));
+    setKg("");
+    toast(`Peso guardado: ${kg1(parsed.value)} kg el ${fmtDate(wDate)}`);
+  };
   const delW = (id) => setWeights((p) => removeBodyRecord(p, id));
   const wSorted = descendingWeights(weights);
   const trend = weightTrendHighlight(weights, todayISO());
@@ -37,8 +58,12 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
 
   const [mDate, setMDate] = useState(initialDate || todayISO());
   const [meas, setMeas] = useState({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
+  useEffect(() => { setMeasurementErrors({}); }, [mDate]);
   const addM = () => {
-    const vals = measurementValues(meas);
+    const parsed = validateMeasurementsDraft(meas);
+    if (!parsed.valid) { setMeasurementErrors(parsed.errors); return; }
+    setMeasurementErrors({});
+    const vals = parsed.values;
     if (Object.values(vals).every((v) => v === null)) return;
     setMeasurements((p) => replaceMeasurementRecord(p, mDate, vals, uid));
     setMeas({ cintura: "", cadera: "", pecho: "", brazo: "", muslo: "" });
@@ -55,10 +80,14 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
   // ni una integracion con el reloj para poder mirarlos en el Diario.
   const [wel, setWel] = useState({ sleep: "", restingHr: "", steps: "", energy: 0, notes: "" });
   useEffect(() => { setWel(wellnessDraft(existingWel)); }, [welDate]); // eslint-disable-line
+  useEffect(() => { setWellnessErrors({}); }, [welDate]);
   const saveWel = () => {
-    if (wel.sleep === "" && wel.restingHr === "" && wel.steps === "" && !wel.energy && !wel.notes.trim()) return;
+    const parsed = validateWellnessDraft(wel);
+    if (!parsed.valid) { setWellnessErrors(parsed.errors); return; }
+    setWellnessErrors({});
+    if (Object.values(parsed.values).every((value) => value === null) && !wel.energy && !wel.notes.trim()) return;
     toast(`Nota del ${fmtDate(welDate)} guardada`);
-    setWellness((p) => replaceWellnessRecord(p, welDate, wel, uid));
+    setWellness((p) => replaceWellnessRecord(p, welDate, { ...wel, ...parsed.values }, uid));
   };
   const welSorted = descendingWellness(wellness);
 
@@ -179,6 +208,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <button className="ft-dc-step" aria-label="Bajar 0,1 kg" onClick={() => bumpKg(-0.1)}>−</button>
               <input id={weightInputId} className="ft-input ft-mono" style={{ textAlign: "center" }} inputMode="decimal" placeholder={lastKg ? kg1(lastKg) : "0,0"}
+                aria-invalid={weightErrors.kg ? true : undefined} aria-describedby={weightErrors.kg ? `${weightInputId}-error-kg` : undefined}
                 value={kg} onChange={(e) => setKg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addW()} />
               <button className="ft-dc-step" aria-label="Subir 0,1 kg" onClick={() => bumpKg(0.1)}>+</button>
             </div>
@@ -197,6 +227,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
         <div className="ft-dc-acts">
           <button className="ft-dc-btn" disabled={!kg} onClick={addW}>Guardar pesaje</button>
         </div>
+        <BodyInputErrors id={`${weightInputId}-error`} errors={weightErrors} />
         {wChart.length >= 2 && (
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={wChart} margin={{ top: 14, right: 10, left: -18, bottom: 0 }}>
@@ -392,10 +423,11 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
         </div>
         <div className="ft-row">
           {["cintura", "cadera", "pecho", "brazo", "muslo"].map((k) => (
-            <div className="ft-field" key={k}><label>{k}</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.1" placeholder="–" value={meas[k]} onChange={(e) => setMeas({ ...meas, [k]: e.target.value })} /></div>
+            <div className="ft-field" key={k}><label htmlFor={`${measurementInputId}-${k}`}>{k}</label><input id={`${measurementInputId}-${k}`} className="ft-input ft-mono" type="text" inputMode="decimal" placeholder="–" aria-invalid={measurementErrors[k] ? true : undefined} aria-describedby={measurementErrors[k] ? `${measurementInputId}-error-${k}` : undefined} value={meas[k]} onChange={(e) => setMeas({ ...meas, [k]: e.target.value })} /></div>
           ))}
-          <button className="ft-btn" onClick={addM}><Check size={15} /></button>
+          <button className="ft-btn" aria-label="Guardar medidas" onClick={addM}><Check size={15} /></button>
         </div>
+        <BodyInputErrors id={`${measurementInputId}-error`} errors={measurementErrors} />
         {cinturaChart.length >= 2 && (
           <ResponsiveContainer width="100%" height={180}>
             <LineChart data={cinturaChart} margin={{ top: 16, right: 10, left: -20, bottom: 0 }}>
@@ -426,9 +458,9 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
         <div className="h"><span>Bienestar diario</span></div>
         <div className="ft-row" style={{ marginBottom: 10 }}>
           <div className="ft-field"><label>Fecha</label><input className="ft-input ft-mono" type="date" value={welDate} onChange={(e) => setWelDate(e.target.value)} /></div>
-          <div className="ft-field"><label>Horas de sueño</label><input className="ft-input ft-mono" type="number" inputMode="decimal" step="0.5" placeholder="0" value={wel.sleep} onChange={(e) => setWel({ ...wel, sleep: e.target.value })} /></div>
-          <div className="ft-field"><label>Pulso en reposo (ppm)</label><input className="ft-input ft-mono" type="number" inputMode="numeric" placeholder="0" title="Al despertar, antes de levantarte" value={wel.restingHr} onChange={(e) => setWel({ ...wel, restingHr: e.target.value })} /></div>
-          <div className="ft-field"><label>Pasos</label><input className="ft-input ft-mono" type="number" inputMode="numeric" placeholder="0" title="Los del reloj o el móvil al final del día" value={wel.steps} onChange={(e) => setWel({ ...wel, steps: e.target.value })} /></div>
+          <div className="ft-field"><label htmlFor={`${wellnessInputId}-sleep`}>Horas de sueño</label><input id={`${wellnessInputId}-sleep`} className="ft-input ft-mono" type="text" inputMode="decimal" placeholder="0" aria-invalid={wellnessErrors.sleep ? true : undefined} aria-describedby={wellnessErrors.sleep ? `${wellnessInputId}-error-sleep` : undefined} value={wel.sleep} onChange={(e) => setWel({ ...wel, sleep: e.target.value })} /></div>
+          <div className="ft-field"><label htmlFor={`${wellnessInputId}-restingHr`}>Pulso en reposo (ppm)</label><input id={`${wellnessInputId}-restingHr`} className="ft-input ft-mono" type="text" inputMode="numeric" placeholder="0" title="Al despertar, antes de levantarte" aria-invalid={wellnessErrors.restingHr ? true : undefined} aria-describedby={wellnessErrors.restingHr ? `${wellnessInputId}-error-restingHr` : undefined} value={wel.restingHr} onChange={(e) => setWel({ ...wel, restingHr: e.target.value })} /></div>
+          <div className="ft-field"><label htmlFor={`${wellnessInputId}-steps`}>Pasos</label><input id={`${wellnessInputId}-steps`} className="ft-input ft-mono" type="text" inputMode="numeric" placeholder="0" title="Los del reloj o el móvil al final del día" aria-invalid={wellnessErrors.steps ? true : undefined} aria-describedby={wellnessErrors.steps ? `${wellnessInputId}-error-steps` : undefined} value={wel.steps} onChange={(e) => setWel({ ...wel, steps: e.target.value })} /></div>
         </div>
         <label style={{ fontSize: 11, color: "var(--muted)", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 600 }}>Energía / cómo te sentiste</label>
         <div className="ft-energy" style={{ marginTop: 6, marginBottom: 12 }}>
@@ -436,6 +468,7 @@ export default function BodyScreen({ section: initialSection = "peso", weights, 
         </div>
         <textarea className="ft-input" placeholder="Notas del día (dormí mal, viaje, enfermo…)" value={wel.notes} onChange={(e) => setWel({ ...wel, notes: e.target.value })} />
         <div style={{ marginTop: 12 }}><button className="ft-btn" onClick={saveWel}><Check size={15} /> Guardar bienestar</button></div>
+        <BodyInputErrors id={`${wellnessInputId}-error`} errors={wellnessErrors} />
         {welSorted.length > 0 && (
           <details className="ft-acc">
           <summary>Registros de bienestar ({welSorted.length})</summary>

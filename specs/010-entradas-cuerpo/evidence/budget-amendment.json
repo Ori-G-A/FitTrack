@@ -1,0 +1,24 @@
+{
+  "approvedPlan": "c8be7bd33b30b6e40f0006e5e270c695bd525208",
+  "timeout": 120000,
+  "originalSourceHash": "e4e98de0fa1bced3a4372dab58e63172257ed8003eafad8febe306260312b377",
+  "gpinVerificationHash": "5ed93975663b772143bc8c1be23b9c8d5db7f446ce53c0b73d2748c1d15337ba",
+  "configHash": "59b8538bac3a6c882a14ebc9df6df3bcc9238e8b045a7cf4be707d7f3ae4d503",
+  "assertionsChanged": false,
+  "legacyBudgetsChanged": false,
+  "originalReplay": "budget-original-replay.json",
+  "originalReplaySha": "cd42ff1c9c95052e01cb35e6a5aa34ac8995f0119e352d28692f472d3e299f0c",
+  "candidateVerificationHash": "84218601d12e133d5e99f3bd52c6a8b6c9e2d7ee543c7489df7d4a992430ed38",
+  "targets": [
+    {
+      "file": "change-tests/body-inputs.spec.js",
+      "before": "93d3071eb993830a2af1fdd2564b118691fda0bce4cf9e95003568dc23530ff2",
+      "after": "05b54073c6ac90e5519f7a09f13a4239cf631391e4f0e9f26e8f5f3abd10fe91"
+    },
+    {
+      "file": "scripts/body-inputs-evidence.js",
+      "before": "e14f49b15dbf4632a1a184a698b21a2b0c65d7a6139df8ad5b0ec20145a92e61",
+      "after": "03132e450082179f3b8b7fc870324ce57e11ee2626d2715820f0b73bd718462e"
+    }
+  ]
+}

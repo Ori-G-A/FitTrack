@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "rootHash": "4e14828ae37396a15a48f0b83f5b6e974c7f61a84b6a7228b706f1e8bcc8ab9e",
+  "clockPins": {
+    "previousVerified": 116,
+    "intact": 109,
+    "amended": 7,
+    "newIntact": 5,
+    "newAmended": 2
+  },
+  "scopedAttributes": "specs/010-entradas-cuerpo/evidence/original-files/src/.gitattributes"
+}
